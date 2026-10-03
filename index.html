@@ -389,17 +389,18 @@ nav.bottom:not(.ready) .ind{display:none} nav.bottom:not(.ready) button[aria-sel
 .hero.act{display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; min-height:112px; padding:16px 18px 16px 20px; cursor:pointer; transition:transform .12s} .hero.act:active{transform:scale(.985)}
 .hero.act .body{min-width:0; position:relative; z-index:2} .hero.act h2{margin:2px 0 6px; font-size:var(--t-3xl)}
 .hero.act .ln{min-height:30px; display:flex; align-items:center; font-size:var(--t-sm); font-weight:700; opacity:.9}
-.hero.act .btn.sm{min-height:30px; padding:5px 12px; background:#fff; color:#111; box-shadow:0 2px 8px rgba(0,0,0,.18)}
-.hero.act.done .ln{color:var(--ink); opacity:.85} .hero.act.done .k{color:var(--ink); opacity:.9; text-shadow:0 1px 2px rgba(0,0,0,.35)} .hero.act:not(.done) .k{text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.hero.act .btn.sm{min-height:30px; padding:5px 12px} .hero.act:not(.rest) .btn.sm{background:#fff; color:#111; box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.hero.act.done .ln{color:var(--ink); opacity:.85} .hero.act.done .k{color:var(--ink); opacity:.9; text-shadow:0 1px 2px rgba(0,0,0,.35)} .hero.act:not(.done):not(.rest) .k{text-shadow:0 1px 2px rgba(0,0,0,.25)}
 .hero.act[data-h=noc]:not(.done) .k,.hero.act[data-h=man]:not(.done) .k,.hero.act[data-h=tar]:not(.done) .k{opacity:.9; color:#fff}
-.hero.act:not(.done) h2{text-shadow:0 1px 2px rgba(0,0,0,.18)} .hero.act[data-h=med]:not(.done) h2{text-shadow:none}
+.hero.act:not(.done):not(.rest) h2{text-shadow:0 1px 2px rgba(0,0,0,.18)} .hero.act[data-h=med]:not(.done) h2{text-shadow:none}
 .hero .sky{position:absolute; inset:0; z-index:0} .hero .sky svg{width:100%; height:100%; display:block}
 .hero .skyfade{position:absolute; inset:0; z-index:0; background:linear-gradient(90deg,transparent 22%,color-mix(in srgb,var(--ember) 55%,transparent) 50%,var(--ember) 72%)}
 .hero.aqua .skyfade{background:linear-gradient(90deg,transparent 22%,color-mix(in srgb,var(--aqua) 55%,transparent) 50%,var(--aqua) 72%)}
-.hero.act{background:var(--ember)} .hero.aqua.act{background:var(--aqua)}
+/* el color lleno es de las tarjetas de entrenamiento: las de día libre y movilidad (.rest) quedan en vidrio */
+.hero.act:not(.rest){background:var(--ember)} .hero.aqua.act:not(.rest){background:var(--aqua)}
 .hero.done .skyfade{background:linear-gradient(90deg,transparent 10%,color-mix(in srgb,var(--s1) 70%,transparent) 40%,var(--s1) 62%)} .hero.done .sky{opacity:.22}
 .hero.act .deco,.hero.act .deco2{z-index:1}
-.hero.act:not(.done)::before{content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg,rgba(10,8,30,.42),rgba(10,8,30,.18) 45%,transparent 65%)}
+.hero.act:not(.done):not(.rest)::before{content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg,rgba(10,8,30,.42),rgba(10,8,30,.18) 45%,transparent 65%)}
 .hero.act[data-h=med]:not(.done)::before{background:linear-gradient(90deg,rgba(255,255,255,.22),rgba(255,255,255,.1) 45%,transparent 65%)}
 .hero.act[data-h=med]:not(.done){color:#0a1f3d} .hero.act[data-h=med]:not(.done) .k{opacity:.75} .hero.act[data-h=med]:not(.done) .btn{background:rgba(255,255,255,.94); color:#0a1f3d}
 .hero.act[data-h=man]:not(.done),.hero.act[data-h=tar]:not(.done),.hero.act[data-h=noc]:not(.done){color:#fff} .hero.aqua.act[data-h=man]:not(.done) .btn,.hero.aqua.act[data-h=tar]:not(.done) .btn,.hero.aqua.act[data-h=noc]:not(.done) .btn{background:rgba(255,255,255,.94); color:#03211e}
@@ -4596,6 +4597,18 @@ function renderPerfiles(app){
 }
 
 /* ============ ONBOARDING ============ */
+/* el lugar del primer espacio: se elige en el paso del equipo; hasta que se elija, propone Gimnasio si hay equipo de gimnasio */
+const obLugProp=()=>EQUIPO.some(e=>e.g==="gym"&&has(e.k))?"Gimnasio":"Casa";
+const obLugN=()=>ob.lugPick?lugar().n:obLugProp();
+function obLugSet(n){ const id=lugar().id; CFG.lugares=CFG.lugares.map(l=>l.id!==id?l:Object.assign({},l,{n})); saveCfg(); }
+function obLugMenu(b){ const cur=obLugN(), prop=obLugProp(), sug=n=>!ob.lugPick&&prop===n?"según tu equipo":"";
+  const opts=[["casa","Casa",sug("Casa")],["gym","Gimnasio",sug("Gimnasio")]], N={casa:"Casa",gym:"Gimnasio"};
+  if(cur!=="Casa"&&cur!=="Gimnasio"){ opts.push(["propio",cur,""]); N.propio=cur; }
+  opts.push(["otro","Otro nombre…",""]);
+  chipMenu(b,opts,cur==="Casa"?"casa":cur==="Gimnasio"?"gym":"propio",v=>{ if(v!=="otro"){ ob.lugPick=1; obLugSet(N[v]); render(); return; }
+    setTimeout(()=>popOpen(b,`<div class="lptitle">Otro lugar</div><div class="espnew"><input type="text" id="obLugIn" enterkeyhint="done" autocapitalize="sentences" data-enter="#obLugOk" placeholder="Plaza, oficina, viaje…" maxlength="24" autocomplete="off"><div class="row espok"><div class="grow"></div><button class="btn sm primary" id="obLugOk" type="button">Listo</button></div></div>`,{place:"below",align:"right",cls:"esppop espnw",bind:el=>{
+      const inp=el.querySelector("#obLugIn"); setTimeout(()=>inp.focus(),120);
+      el.querySelector("#obLugOk").onclick=()=>{ const n=inp.value.trim(); if(!n){ inp.focus(); return; } ob.lugPick=1; obLugSet(n); popClose(true); render(); }; }}),0); },{title:"Dónde entrenás"}); }
 function renderOnboard(app){
   const steps=["Vos","Equipo","Pruebas","Tu plan"];
   let h=`<div class="eyebrow" style="margin-top:8px">Primer inicio · ${ob.step+1}/4</div><h1>${steps[ob.step]}</h1><div class="stepbar">${steps.map((_,i)=>`<span class="${i<=ob.step?"on":""}"></span>`).join("")}</div>`;
@@ -4607,7 +4620,7 @@ function renderOnboard(app){
 </div><!--c2-->${semanaAj()}<!--c3-->
       <button class="btn primary wide obgo1" id="obNext">Seguir</button>`;
   } else if(ob.step===1){
-    h+=`<div class="card"><div class="xs dim" style="font-weight:700;margin-bottom:6px">Lo que tenés en <b style="color:var(--ink)">${esc(lugar().n)}</b>. Más espacios, en Equipo.</div>${equipoList()}
+    h+=`<div class="card"><div class="row oblug"><span class="grow" style="font-weight:700">Dónde entrenás</span>${pickHTML("obLug",obLugN())}</div><div class="xs dim" style="font-weight:700;margin:10px 0 6px">Lo que tenés en <b style="color:var(--ink)">${esc(obLugN())}</b>. Más espacios, en Equipo.</div>${equipoList()}
       <button class="btn primary wide" id="obNext" style="margin-top:16px">Seguir</button></div>`;
   } else if(ob.step===2){
     const t=testsDisp()[ob.i]; const v=ob.vals[t.k]??tDefault(t);
@@ -4638,7 +4651,7 @@ function renderOnboard(app){
     if(ob.step===0){ const nom=$("#obNom").value.trim(), p=numc($("#obPeso").value)||0,c=numc($("#obCint").value)||0; if(!nom){ $("#obNom").focus(); return; } if(!p){ $("#obPeso").focus(); return; }
       if(!(CFG.diasFS||[]).length&&!(CFG.diasBS||[]).length){ keepStep0(); const d=app.querySelector(".sdays"); if(d){ d.scrollIntoView({block:"center",behavior:moOk()?"smooth":"auto"}); d.classList.remove("need"); void d.offsetWidth; d.classList.add("need"); } vib(12); toast("Elegí al menos un día"); return; }
       CFG.nombre=nom; const pf=PERFILES.find(x=>x.id===PID); if(pf){ pf.n=nom; savePerfiles(); } ob.vals.peso=p; ob.vals.cint=c; CFG.peso=p; { const al=numc($("#obAlt").value)||0, ed=numc($("#obEdad").value)||0, mt=numc($("#obMeta").value)||0; if(al>=120&&al<=230) CFG.altura=ob.vals.alt=Math.round(al); if(ed>=14&&ed<=100) CFG.edad=ob.vals.edad=Math.round(ed); if(ob.vals.sx) CFG.sexo=ob.vals.sx; if(mt>=35&&mt<=250&&Math.abs(mt-p)>=0.5){ ob.vals.meta=mt; if(CFG.metaPeso!==mt){ CFG.metaPeso=mt; CFG.metaIni={v:p,f:hoyISO()}; } } } const f=hoyISO(); MED[f]=Object.assign(MED[f]||{},{peso:p}); if(c) MED[f].cintura=c; saveDoc("medidas",MED,f); saveCfg(); ob.step=1; }
-    else if(ob.step===1){ ob.step=2; ob.i=0; }
+    else if(ob.step===1){ if(!ob.lugPick) obLugSet(obLugN()); ob.step=2; ob.i=0; }
     else if(ob.step===2){ const t=testsDisp()[ob.i]; ob.vals[t.k]=ob.vals[t.k]??tDefault(t); if(ob.i<testsDisp().length-1) ob.i++; else ob.step=3; }
     else { const tv=Object.assign({},ob.vals); ["peso","cint","alt","edad","sx","meta"].forEach(k=>delete tv[k]); CFG.tests=Object.assign({fecha:hoyISO()},tv); skillsFromTests(CFG.tests); delete CFG.badges; /* lo que ya traías se anota sin festejos: las insignias se ganan entrenando */ { const RR=nDiasA("f")?rutRecF(CFG.tests):[], rid=RR.some(o=>o.p.id===ob.vals.rut)?ob.vals.rut:(RR[0]&&RR[0].p.id); if(rid&&rid!=="rot"&&progMeta(rid)){ CFG.prog=CFG.prog||{}; CFG.prog.f={id:rid,start:hoyISO()}; progLoad(rid).catch(()=>{}); } } CFG.onboarded=true; saveCfg(); view="home"; }
     animNext=true; render(); window.scrollTo({top:0});
@@ -4648,7 +4661,7 @@ function renderOnboard(app){
   function keepStep0(){ const n=$("#obNom"),p=$("#obPeso"),c=$("#obCint"),a=$("#obAlt"),e=$("#obEdad"),m=$("#obMeta"); if(n) CFG.nombre=n.value; if(p) ob.vals.peso=numc(p.value)||""; if(c) ob.vals.cint=numc(c.value)||""; if(a) ob.vals.alt=numc(a.value)||""; if(e) ob.vals.edad=numc(e.value)||""; if(m) ob.vals.meta=numc(m.value)||""; }
   bindPickers(app,()=>{ keepStep0(); render(); }); if(ob.step===0) bindSemanaAj(app,keepStep0);
   const og=$("#obGtg"); if(og) og.onclick=()=>{ CFG.gtg=!CFG.gtg; CFG.widgets=CFG.gtg?["dom","fon","hang"]:[]; keepStep0(); render(); };
-  bindEquipo(app);
+  bindEquipo(app); { const b=app.querySelector("#obLug"); if(b) b.onclick=()=>obLugMenu(b); }
   app.querySelectorAll("[data-ob]").forEach(b=>b.onclick=()=>{ const t=testsDisp()[ob.i]; const c=ob.vals[t.k]??tDefault(t); ob.vals[t.k]=Math.max(0,c+ +b.dataset.ob*(t.unit==="s"?5:1)); render(); });
   app.querySelectorAll("[data-yn]").forEach(b=>b.onclick=()=>{ ob.vals[testsDisp()[ob.i].k]=+b.dataset.yn; render(); });
   const rs=app.querySelector("[data-restart]"); if(rs) rs.onclick=()=>startRest(180);

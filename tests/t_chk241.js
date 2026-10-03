@@ -2,7 +2,7 @@ const {chromium}=require('playwright');
 const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 for(const [w,h] of [[390,844],[844,390]]){ const tag=`${w}×${h}`; const p=await (await b.newContext({viewport:{width:w,height:h}})).newPage(); p.on('pageerror',e=>errs.push(e.message)); const E=(f,a)=>p.evaluate(f,a), W8=ms=>p.waitForTimeout(ms);
-  await p.goto('http://127.0.0.1:8765/'+src); await W8(500); await E(()=>document.querySelector('#newP').click()); await W8(400);
+  await p.goto('http://127.0.0.1:8765/'+src); await W8(500); await E(()=>{ PERF.modo='max'; perfApply(); }); await E(()=>document.querySelector('#newP').click()); await W8(400);
   await E(()=>{ document.querySelector('#obNom').value='Fer'; document.querySelector('#obPeso').value='82'; CFG.diasFS=[0,1,3,5]; CFG.diasBS=[2,4,6]; CFG.lugares[0].equipo={barra:1,paralelas:1,mancuernas:1,tobilleras:1,bici:1,soga:1}; ob.vals=Object.assign(ob.vals||{},{dom:8,fon:8,flex:8,hang:30,rod:8,bulg:8,bici:5}); });
   for(let i=0;i<30;i++){ const st=await E(()=>{ if(ob&&ob.step===3) return 'plan'; const e=document.querySelector('#obNext'); if(e){ e.click(); return 'n'; } return 'd'; }); await W8(200); if(st!=='n') break; }
   await W8(600);

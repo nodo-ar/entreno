@@ -3,7 +3,7 @@ const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const mk=async(o={})=>{ const ctx=await b.newContext({viewport:{width:390,height:844},reducedMotion:o.rm?'reduce':'no-preference'}); const p=await ctx.newPage(); p.on('pageerror',e=>errs.push(e.message));
   await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(900);
-  await p.evaluate(o=>{ if(!o.ahorro){ PERF.modo='max'; perfApply(); } CELON=true; ['lp','swipe','scrub','mini2'].forEach(k=>{ try{ hintDone(k); }catch(e){} }); CFG.movNo=null; const h=hoyISO(); for(let i=SESS.length-1;i>=0;i--) if(SESS[i].fecha===h) SESS.splice(i,1); go('home'); },o); await p.waitForTimeout(400); return p; };
+  await p.evaluate(o=>{ PERF.modo=o.ahorro?'ahorro':'max'; perfApply(); CELON=true; ['lp','swipe','scrub','mini2'].forEach(k=>{ try{ hintDone(k); }catch(e){} }); CFG.movNo=null; const h=hoyISO(); for(let i=SESS.length-1;i>=0;i--) if(SESS[i].fecha===h) SESS.splice(i,1); go('home'); },o); await p.waitForTimeout(400); return p; };
 const W8=(p,ms)=>p.waitForTimeout(ms), G=p=>p.evaluate(()=>document.querySelectorAll('[data-mo]').length);
 // ---------- cardio ----------
 let p=await mk();
