@@ -3,7 +3,7 @@ const {chromium}=require('playwright');
 const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
-  await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400);
+  await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await p.evaluate(()=>{ PERF.modo='max'; perfApply(); });
   const W=ms=>p.waitForTimeout(ms);
   await p.evaluate(()=>document.querySelector('#newP').click()); await W(400);
   let r=await p.evaluate(()=>({fs:CFG.diasFS.length,bs:CFG.diasBS.length,eq:Object.keys(CFG.lugares[0].equipo).length,gtg:CFG.gtg,ph:document.querySelector('#obNom').placeholder,empty:(document.querySelector('.wkempty')||{}).textContent}));

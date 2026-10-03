@@ -1,4 +1,6 @@
 module.exports=async(p)=>{
+/* efectos completos, como en el teléfono: en este entorno la detección cae en ahorro y esconde errores. Una prueba que quiera otro modo lo fija después. */
+await p.evaluate(()=>{ PERF.modo='max'; perfApply(); });
 await p.evaluate(()=>{document.querySelector('#newP').click()}); await p.waitForTimeout(200);
 await p.evaluate(()=>{document.querySelector('#obNom').value='Fer';document.querySelector('#obPeso').value='82';
   /* desde v267 un perfil nuevo arranca vacío: las pruebas usan el perfil de siempre */

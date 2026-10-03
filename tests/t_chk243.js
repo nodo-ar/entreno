@@ -23,7 +23,8 @@ const ui=await E(()=>({ph:document.querySelector('#app .bigtimer .ph').innerText
 ok(/Dominadas/.test(ui.ph)&&/1 de 12/.test(ui.sub)&&!/descansá/.test(ui.sub)&&/^3\s*reps$/.test((ui.q||'').trim())&&!ui.niv,'en curso: el ejercicio, las reps a la derecha sin prosa · '+ui.ph+' | '+ui.sub.replace(/\n/g,' '));
 ok(/^Dominadas pronas, 3, 1 minuto$/.test(ui.voz),'voz: nombre, reps y duración · '+ui.voz);
 const lv=await E(()=>{ const s=liveState(); return s&&s.title+' | '+s.body; });
-ok(/DOMINADAS PRONAS ×3/.test(lv),'notificación: el ejercicio con sus reps · '+lv);
+/* desde v270 la notificación va corta: título con lo de ahora (ejercicio, reps y tiempo), cuerpo con lo que sigue */
+ok(/^Dominadas pronas ×3 · \d+:\d\d \| Sigue: /.test(lv),'notificación: el ejercicio con sus reps · '+lv);
 await E(()=>{ window.__voz=[]; bike.sel='Tabata en casa'; bike.ph=2; startPhase(); }); await W8(300);
 const tv=await E(()=>{ const p=curProt().ph[2]; return {p,voz:window.__voz.slice()}; });
 ok(tv.p[0]==='rest'&&tv.voz.length===0,'voz: la pausa de 10 s no habla, solo suena');
