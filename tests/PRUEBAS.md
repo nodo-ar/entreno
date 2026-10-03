@@ -1,7 +1,7 @@
 # Cómo correr las pruebas (desde v261)
 
-- Todo: `nohup node suite.js prevX.html > suite_runN.txt 2>&1 &` y esperar "pruebas en". ~16 min, 53 pruebas.
-- Algunas: `node suite.js prevX.html chk261 chk264`.
+- Todo: `nohup node suite.js > suite_runN.txt 2>&1 &` (prueba `index.html`; otra página: `node suite.js otra.html`) y esperar "pruebas en". ~16 min, 53 pruebas.
+- Algunas: `node suite.js chk261 chk264`.
 - `fast.js`: modo rápido (reloj falso + sin animaciones + espera pedidos de red). Se usa solo con `-r ./fast.js`.
 - `suite_lentas.txt`: van en modo normal (gestos, transiciones de vista, rotación, scroll).
 - `suite_solas.txt`: van solas al final (chk237, gesto rápido sensible a la carga).

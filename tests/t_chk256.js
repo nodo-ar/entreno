@@ -1,6 +1,6 @@
 // v254: lo mismo se resuelve igual en toda la app
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev.html';
+const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const W8=(p,t)=>p.waitForTimeout(t);
   const open=async(W,H,live)=>{ const p=await (await b.newContext({viewport:{width:W,height:H}})).newPage(); p.on('pageerror',e=>errs.push(e.message));

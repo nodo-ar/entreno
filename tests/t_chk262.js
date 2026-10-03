@@ -1,6 +1,6 @@
 // v259: terminar sin querer → deshacer al terminar, Seguir en el cierre, en ⋯ y al mantener apretada
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev.html'; let ok=0,bad=0; const T=(c,m)=>{ if(c) ok++; else { bad++; console.log('FAIL',m); } }; const errs=[];
+const src=process.argv[2]||'index.html'; let ok=0,bad=0; const T=(c,m)=>{ if(c) ok++; else { bad++; console.log('FAIL',m); } }; const errs=[];
 (async()=>{ const b=await chromium.launch(); const ctx=await b.newContext({viewport:{width:390,height:844}}); const p=await ctx.newPage(); p.on('pageerror',e=>errs.push(e.message));
   await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(300); await seed(p); await p.waitForTimeout(400);
   await p.evaluate(()=>{ PERF.modo='max'; perfApply(); CELON=true; ['lp','swipe','scrub','mini2','tree'].forEach(k=>{ try{ hintDone(k); }catch(e){} }); decir=()=>{}; beep=()=>{}; NAV.length=0; });

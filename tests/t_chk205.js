@@ -1,4 +1,4 @@
-const src=process.argv[2]||'prev.html';
+const src=process.argv[2]||'index.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[]; const bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); };
 const p=await (await b.newContext({viewport:{width:390,height:800}})).newPage(); p.on('pageerror',e=>errs.push(e.message));

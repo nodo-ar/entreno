@@ -1,6 +1,6 @@
 // v257: girar el teléfono te deja en la misma pantalla; descartar desde el reproductor no te mueve ni lo rompe
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev.html';
+const src=process.argv[2]||'index.html';
 const PH=[[390,844],[844,390]], TB=[[820,1180],[1180,820]];
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const W8=(p,t)=>p.waitForTimeout(t);

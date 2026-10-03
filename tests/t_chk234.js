@@ -1,5 +1,5 @@
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev.html', THR=+(process.argv[3]||6);
+const src=process.argv[2]||'index.html', THR=+(process.argv[3]||6);
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const mk=async(o={})=>{ const ctx=await b.newContext({viewport:o.vp||{width:390,height:844},deviceScaleFactor:1}); const p=await ctx.newPage(); p.on('pageerror',e=>errs.push(e.message));
   await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(900);
