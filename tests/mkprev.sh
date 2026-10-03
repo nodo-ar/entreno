@@ -1,4 +1,4 @@
 #!/bin/bash
-# Arma una vista previa local del index.html del artifact (le agrega el charset).
-# Uso (desde la raíz): bash tests/mkprev.sh index.html prev.html
-awk 'NR==1{print "<meta charset=\"utf-8\">" $0; next} NR==3{print ""; next} {print}' "$1" > "$2"
+# Arma la vista previa con el mismo script que publica: así se prueba lo mismo que se sube.
+# Uso (desde la raíz): bash tests/mkprev.sh prev.html
+cd "$(dirname "$0")/.." && node tools/armar.js --html "${@: -1}"
