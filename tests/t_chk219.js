@@ -1,8 +1,9 @@
+const src=process.argv[2]||'prev.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const ctx=await b.newContext({viewport:{width:390,height:844},hasTouch:false}); await ctx.addInitScript(()=>{ window.__V=[]; Object.defineProperty(navigator,'vibrate',{value:(p)=>{ window.__V.push(JSON.stringify(p)); return true; },configurable:true}); });
 const p=await ctx.newPage(); p.on('pageerror',e=>errs.push(e.message));
-await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
+await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
 const E=(f,a)=>p.evaluate(f,a), W8=ms=>p.waitForTimeout(ms);
 const V=async()=>{ const v=await E(()=>__V.slice()); await E(()=>{ __V.length=0; }); return v; };
 await E(()=>{ CELON=true; window.decir=()=>{}; window.beep=()=>{}; const w=wdIdx(hoyISO()); CFG.diasFS=[w]; CFG.diasBS=[]; CFG.prog={}; });

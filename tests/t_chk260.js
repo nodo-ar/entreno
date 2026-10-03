@@ -1,10 +1,10 @@
 // v258: íconos dibujados en vez de caracteres (› ‹ ✓ ✕ × ＋ − + ↑ ↓ → ↳ ⤢ ★ ⚑ ⌃ ⌄ ⋯)
 const {chromium}=require('playwright'); const seed=require('./seed.js'); const fs=require('fs');
-const src=process.argv[2]||'prevR.html';
+const src=process.argv[2]||'prev.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const W8=(p,t)=>p.waitForTimeout(t);
   // el código: ninguno de estos caracteres queda como ícono
-  { const s=fs.readFileSync(src,'utf8'); for(const g of ['›','‹','✓','✕','＋','↳','⤢','★','⚑','⌃','⌄']) T(!s.includes(g),`el código no usa ${g}`);
+  { const s=fs.readFileSync(require('path').join(__dirname,'..',src),'utf8'); for(const g of ['›','‹','✓','✕','＋','↳','⤢','★','⚑','⌃','⌄']) T(!s.includes(g),`el código no usa ${g}`);
     T(!/>[×✕]<\/(button|i)>/.test(s),'ningún botón cierra con × de texto'); T(!/">[−+]<\/button>/.test(s),'ningún botón − / + de texto'); T(!/content:"[›⤢]"/.test(s),'ningún ::before/::after con caracteres'); }
   const GL=['›','‹','✓','✕','＋','↳','⤢','★','⚑','⌃','⌄','↑','↓','→','⋯','↔'];
   const SC=[

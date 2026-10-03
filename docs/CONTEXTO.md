@@ -4,7 +4,7 @@ Este repo es Nodo Entreno. Arranca de la v269 de Barra y Bici (su nombre anterio
 
 ## Dónde está cada cosa
 
-- Plan por etapas (doc vivo): https://claude.ai/code/artifact/0c701248-5872-43a7-aff0-e30a465f1f91
+- Plan por etapas (doc vivo): https://claude.ai/artifact/2Y5ffQ88CjkJNvwSkxpCr4
 - App publicada hoy (artifact, v269): https://claude.ai/artifact/XCckppgjBPBSuurb7h3fpm
 - Organización: `nodo-ar` (antes `tandem-ar`). Familia de apps: Nodo (Nodo Entreno, Nodo Gastos, Nodo Pizarra).
 - Identificadores Android propuestos: `ar.nodo.entreno`, `ar.nodo.gastos`, `ar.nodo.pizarra`.

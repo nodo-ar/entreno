@@ -1,6 +1,6 @@
 // v253: fila de arriba — todo de vidrio y de 40; Cuerpo en una cápsula; la isla nunca pisa botones ni el título
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prevR.html';
+const src=process.argv[2]||'prev.html';
 const SC=[['hist',"histTab='res'; go('hist')"],['vos',"go('vos')"],['equipo',"eqFrom='ajustes'; go('equipo')"],['dia',"histEx=SESS.find(x=>x.kind==='fuerza').id; go('dia')"],['programa',"progSel='base_cali'; go('programa')"],['cuerpo',"go('cuerpo')"],['resumen',"resumenWk=semanaKey(hoyISO()); resMode='sem'; go('resumen')"],['ejercicio',"exSel=Object.values(CAT)[3].n; go('ejercicio')"],['fuerza',"go('fuerza')"],['stat',"statK='carga'; go('stat')"]];
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const W8=(p,t)=>p.waitForTimeout(t);

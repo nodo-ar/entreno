@@ -1,6 +1,6 @@
 // v256: el reproductor — acoplar y desacoplar con una sola forma, al costado como en horizontal, en el lugar del +, y pantallas ya desplazadas
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prevR.html';
+const src=process.argv[2]||'prev.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const W8=(p,t)=>p.waitForTimeout(t);
   const open=async(W,H)=>{ const p=await (await b.newContext({viewport:{width:W,height:H}})).newPage(); p.on('pageerror',e=>errs.push(e.message));

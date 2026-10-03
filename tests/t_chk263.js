@@ -1,6 +1,6 @@
 // v260: carga por músculo + Estirar después según lo entrenado hoy
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev216.html';
+const src=process.argv[2]||'prev.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const open=async(W,H)=>{ const p=await (await b.newContext({viewport:{width:W||390,height:H||844}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
     await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(300); await seed(p); await p.waitForTimeout(400);

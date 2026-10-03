@@ -1,7 +1,8 @@
+const src=process.argv[2]||'prev.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[]; const bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); };
 for(const W of [390,360]){ const p=await (await b.newContext({viewport:{width:W,height:800}})).newPage(); p.on('pageerror',e=>errs.push(W+' '+e.message));
-await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(2200);
+await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(2200);
 const E=(f,a)=>p.evaluate(f,a); const W8=ms=>p.waitForTimeout(ms);
 const ovf=async(tag)=>{ const r=await E(()=>{ const vw=innerWidth; const out=[]; document.querySelectorAll('#app *').forEach(e=>{ if(e.closest('.prrec,.prdays,.hrrow,.bdgrail,.swa,.segx,.tvp,.swfil')) return; const r=e.getBoundingClientRect(); if(r.width&&(r.right>vw+1||r.left<-1)) out.push((e.className&&e.className.baseVal!==undefined?e.className.baseVal:e.className)+'|'+Math.round(r.left)+'-'+Math.round(r.right)); }); return {sw:document.documentElement.scrollWidth,vw,out:out.slice(0,5)}; }); ok(r.sw<=r.vw&&!r.out.length,`ovf ${W} ${tag} ${JSON.stringify(r)}`); };
 await E(()=>{ CELON=true; PERF.modo='eq'; perfApply(); CFG.prog={}; saveCfg(); });
@@ -20,7 +21,7 @@ ok(await E(()=>view==='habilidad'&&skSel==='pull'),'psk -> habilidad');
 // programa sin paquete: esqueleto y después los días
 await E(()=>{ delete PRK.espagat; try{ localStorage.removeItem(LSK+'.pk.espagat'); }catch(e){} }); const skel=await E(()=>{ const h=prDays(progMeta('espagat'),1,null); return (h.match(/prday sk/g)||[]).length; }); await E(()=>{ progSel='espagat'; go('programa'); }); await W8(1500);
 const ld=await E(()=>({d:document.querySelectorAll('.prday:not(.sk)').length,th:document.querySelectorAll('.prday .prdth .photo').length,sm:document.querySelector('.prday small').textContent,start:!!document.querySelector('#prStart'),gs:(document.querySelector('.prgs')||{}).textContent}));
-ok(skel===4&&ld.d===4&&ld.th>=4&&/×/.test(ld.sm)&&ld.start&&/Reemplaza tu rotación de movilidad/.test(ld.gs),'espagat load '+skel+' '+JSON.stringify(ld)); await ovf('prog espagat');
+ok(skel===4&&ld.d===4&&ld.th>=4&&/×/.test(ld.sm)&&ld.start&&/Reemplaza a tu movilidad de siempre/.test(ld.gs),'espagat load '+skel+' '+JSON.stringify(ld)); await ovf('prog espagat');
 await E(()=>{ progSel='z2'; go('programa'); }); await W8(1600);
 const z=await E(()=>({pb:document.querySelectorAll('.prday .phasebar').length,pills:document.querySelectorAll('.prkv .pill').length,sub:[...document.querySelectorAll('.prday small')].map(x=>x.textContent).join('|'),gs:document.querySelector('.prgs').textContent,src:!!document.querySelector('.prsrc')}));
 ok(z.pb===3&&z.pills===5&&/suave/.test(z.sub)&&/Reemplaza a De 0 a 5 km/.test(z.gs),'z2 '+JSON.stringify(z)); await ovf('prog z2');
@@ -28,19 +29,20 @@ await E(()=>{ progSel='cinco'; go('programa'); }); await W8(1500); ok(await E(()
 // catálogo
 await E(()=>{ prFil='todo'; progFrom='home'; go('programas'); }); await W8(900);
 const [HEROES_N,HEROES_F]=await E(()=>[HEROES.length,HEROES.filter(h=>h.a==='f'||h.a==='x').length]);
-const ct=await E(()=>({cur:document.querySelectorAll('.prcur').length,dup:[...document.querySelectorAll('.ajlist [data-prog]:not(.prcur)')].map(x=>x.dataset.prog).filter(x=>x==='base_cali'||x==='c0a5').length,rows:document.querySelectorAll('.prr[data-prog]').length,hr:document.querySelectorAll('.hrt').length,n:getComputedStyle(document.querySelector('.hrgrid')).gridTemplateColumns.split(' ').length,rec:[...document.querySelectorAll('.prc .pill')].map(x=>x.textContent),hsub:!!document.querySelector('.hsub'),dots:document.querySelectorAll('.hrt[data-hero="hercules"] .hrv i').length}));
-ok(ct.cur===2&&ct.rows===13&&ct.dup===0&&ct.hr===HEROES_N&&ct.n===3&&!ct.hsub&&ct.dots===3,'catálogo '+JSON.stringify(ct)); await ovf('cat');
+const ct=await E(()=>({cur:document.querySelectorAll('.prcur').length,dup:[...document.querySelectorAll('.ajlist [data-prog]:not(.prcur)')].map(x=>x.dataset.prog).filter(x=>x==='base_cali'||x==='c0a5').length,rows:document.querySelectorAll('.prr[data-prog]').length,rot:!!document.querySelector('.prr[data-prog="rot"]'),hr:document.querySelectorAll('.hrt').length,grid:!!document.querySelector('.hrgrid'),rec:[...document.querySelectorAll('.prc .pill')].map(x=>x.textContent),hsub:!!document.querySelector('.hsub'),dots:document.querySelectorAll('.hrt[data-hero="hercules"] .hrv i').length}));
+/* desde v263 los desafíos no están en el catálogo de rutinas (tienen su pantalla) y la rotación es una rutina más */
+ok(ct.cur===2&&ct.rows===16&&ct.rot&&ct.dup===0&&ct.hr===0&&!ct.grid&&!ct.hsub&&ct.dots===0,'catálogo '+JSON.stringify(ct)); await ovf('cat');
 const dupc=await E(()=>{ const ids=[...document.querySelectorAll('[data-prog]')].map(x=>x.dataset.prog); return ids.filter(x=>x==='base_cali').length; }); ok(dupc===1,'sin duplicado '+dupc);
 await E(()=>document.querySelector('[data-prf="f"]').click()); await W8(600);
-const cf=await E(()=>({hr:document.querySelectorAll('.hrt').length,n:getComputedStyle(document.querySelector('.hrgrid')).gridTemplateColumns.split(' ').length,cur:document.querySelectorAll('.prcur').length}));
-ok(cf.hr===HEROES_F&&cf.n===3&&cf.cur===1,'filtro fuerza '+JSON.stringify(cf)); await ovf('cat f');
+const cf=await E(()=>({hr:document.querySelectorAll('.hrt').length,grid:!!document.querySelector('.hrgrid'),cur:document.querySelectorAll('.prcur').length}));
+ok(cf.hr===0&&!cf.grid&&cf.cur===1,'filtro fuerza '+JSON.stringify(cf)); await ovf('cat f');
 // pantalla previa: programas / héroes
 await E(()=>{ fzSel=null; go('fuerza'); }); await W8(900);
 const fz=await E(()=>({g:!!document.querySelector('[data-goprog="f"]'),h:!!document.querySelector('[data-gohero="f"]'),stk:document.querySelectorAll('[data-gohero] .hrstk>span').length,sub:document.querySelector('[data-goprog] small').textContent}));
 ok(fz.g&&fz.h&&fz.stk===4&&/en curso/.test(fz.sub),'fzsel '+JSON.stringify(fz)); await ovf('fzsel');
 await E(()=>document.querySelector('[data-gohero="f"]').click()); await W8(1400);
-const sc=await E(()=>({v:view,f:prFil,top:Math.round(document.querySelector('#prHeroes').getBoundingClientRect().top),y:Math.round(scrollY),mx:Math.round(document.documentElement.scrollHeight-innerHeight)}));
-ok(sc.v==='programas'&&sc.f==='f'&&(sc.top<160||Math.abs(sc.y-sc.mx)<=2)&&sc.y>0,'gohero scroll '+JSON.stringify(sc));
+const sc=await E(()=>({v:view,f:dsFil,hr:document.querySelectorAll('.hrt').length}));
+ok(sc.v==='desafios'&&sc.f==='f'&&sc.hr===HEROES_F,'gohero -> desafíos de fuerza '+JSON.stringify(sc));
 ok(await E(()=>{ document.querySelector('#back').click(); return true; }),'back'); await W8(800); ok(await E(()=>view==='fuerza'),'back -> fuerza');
 await E(()=>{ bike.sel=null; go('bici'); }); await W8(800); ok(await E(()=>!!document.querySelector('[data-gohero="b"]')),'bici hero row'); await ovf('bksel');
 await E(()=>{ estSel={m:'full',z:[]}; go('estirar'); }); await W8(800); ok(await E(()=>!!document.querySelector('[data-gohero="m"]')),'estirar hero row');

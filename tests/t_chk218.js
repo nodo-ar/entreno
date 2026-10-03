@@ -1,7 +1,8 @@
+const src=process.argv[2]||'prev.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
-await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
+await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
 const E=(f,a)=>p.evaluate(f,a), W8=ms=>p.waitForTimeout(ms);
 await E(()=>{ CELON=true; window.__snd=[]; const cb=window.campana; window.decir=t=>__snd.push('voz:'+t); window.campana=()=>{ __snd.push('campana'); cb(); }; const w=wdIdx(hoyISO()); CFG.diasFS=[w]; CFG.prog={}; nuevoDraft('Torso A'); cur=0; loadStepper(); go('fuerza'); }); await W8(700);
 await p.mouse.click(200,300); // un toque destraba el audio
