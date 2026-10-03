@@ -115,7 +115,7 @@ ok(cc.chips===0&&cc.menu==='todo,f,o,b,m,x','filtro de programas: menú, sin chi
 await E(()=>{ prFil='f'; render(); }); await W8(300);
 const cf=await E(()=>[...document.querySelectorAll('.ajhd.sgh')].map(x=>x.textContent).join('|'));
 /* desde v263 las secciones van por días, con objetivos aparte */
-ok(/^Entran en tus \d días/.test(cf)&&/\|Objetivos/.test(cf)&&/Con cardio/.test(cf)&&!/Calistenia|En casa|Gimnasio/.test(cf),'secciones fuerza '+cf);
+ok(/^Entran en tus 4 días\d+\|Con más días[^|]*\|Objetivos[^|]*\|Te falta equipo[^|]*\|Con cardio\d+$/.test(cf)&&!/Calistenia|En casa|Gimnasio/.test(cf),'secciones fuerza '+cf);
 const ids=await E(()=>PROG_IDX.map(p=>p.id));
 for(const id of ids){ await E(id=>{ progSel=id; go('programa'); },id); await W8(W===390?650:350); const d=await E(()=>({days:document.querySelectorAll('.prday:not(.sk)').length,sk:document.querySelectorAll('.prday.sk').length})); ok(d.days>0&&!d.sk,'ficha '+id+' '+JSON.stringify(d)); await ovf('ficha '+id); }
 // recomendaciones: con barra, mancuernas y bici aparece el mixto

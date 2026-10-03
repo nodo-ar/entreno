@@ -41,8 +41,12 @@ await E(()=>{ fzSel=null; go('fuerza'); }); await W8(900);
 const fz=await E(()=>({g:!!document.querySelector('[data-goprog="f"]'),h:!!document.querySelector('[data-gohero="f"]'),stk:document.querySelectorAll('[data-gohero] .hrstk>span').length,sub:document.querySelector('[data-goprog] small').textContent}));
 ok(fz.g&&fz.h&&fz.stk===4&&/en curso/.test(fz.sub),'fzsel '+JSON.stringify(fz)); await ovf('fzsel');
 await E(()=>document.querySelector('[data-gohero="f"]').click()); await W8(1400);
-const sc=await E(()=>({v:view,f:dsFil,hr:document.querySelectorAll('.hrt').length}));
-ok(sc.v==='desafios'&&sc.f==='f'&&sc.hr===HEROES_F,'gohero -> desafíos de fuerza '+JSON.stringify(sc));
+/* desde v263 los desafíos tienen su pantalla: la grilla y los niveles se verifican ahí */
+const hrs=()=>E(()=>({v:view,f:dsFil,hr:document.querySelectorAll('.hrt').length,n:getComputedStyle(document.querySelector('.hrgrid')).gridTemplateColumns.split(' ').length,dots:document.querySelectorAll('.hrt[data-hero="hercules"] .hrv i').length}));
+const sc=await hrs(); ok(sc.v==='desafios'&&sc.f==='f'&&sc.hr===HEROES_F&&sc.n===3&&sc.dots===3,'gohero -> desafíos de fuerza '+JSON.stringify(sc)); await ovf('desafios f');
+await E(()=>{ dsFil='todo'; render(); }); await W8(600);
+const sa=await hrs(); ok(sa.hr===HEROES_N&&sa.n===3&&sa.dots===3,'desafíos: todos '+JSON.stringify(sa)); await ovf('desafios');
+await E(()=>{ dsFil='f'; render(); }); await W8(400);
 ok(await E(()=>{ document.querySelector('#back').click(); return true; }),'back'); await W8(800); ok(await E(()=>view==='fuerza'),'back -> fuerza');
 await E(()=>{ bike.sel=null; go('bici'); }); await W8(800); ok(await E(()=>!!document.querySelector('[data-gohero="b"]')),'bici hero row'); await ovf('bksel');
 await E(()=>{ estSel={m:'full',z:[]}; go('estirar'); }); await W8(800); ok(await E(()=>!!document.querySelector('[data-gohero="m"]')),'estirar hero row');
