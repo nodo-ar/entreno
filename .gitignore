@@ -1,6 +1,8 @@
 node_modules/
-/prev*.html
 tests/suite_ultima.log
 tests/suite_run*.txt
 *.png
 .DS_Store
+!/iconos/*.png
+!/assets/**/*.png
+_site/

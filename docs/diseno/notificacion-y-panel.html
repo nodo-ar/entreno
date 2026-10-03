@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notificación y panel flotante</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#E9EAEC;color:#1F2328}
+h1{font-size:19px;margin:22px 16px 4px}h2{font-size:16px;margin:0 0 4px}
+p.lead{margin:0 16px 18px;color:#5B6169;max-width:900px}
+.theme{padding:18px 16px;border-radius:18px;margin:0 16px 18px}
+.dark{background:#0E1013;color:#E8EAED}.light{background:#F7F7F8;color:#1F2328}
+.sub{font-size:12.5px;opacity:.72;max-width:880px;margin:0 0 14px}
+.tag{font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;opacity:.6;margin:0 0 8px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.cap{font-size:12px;opacity:.7;margin-top:8px}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+/* teléfono */
+.phone{border-radius:28px;padding:10px 10px 18px;position:relative;overflow:hidden;min-height:430px}
+.dark .phone{background:linear-gradient(170deg,#1c2433,#0b0e14)}
+.light .phone{background:linear-gradient(170deg,#dbe3ec,#f2ede4)}
+.sb{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:2px 6px 10px}
+.sb .r{margin-left:auto;display:flex;gap:4px;opacity:.8}
+.sb .r i{width:12px;height:9px;border-radius:2px;background:currentColor;display:block;opacity:.8}
+.chip{display:inline-flex;align-items:center;gap:5px;color:#fff;border-radius:999px;padding:2px 8px 2px 6px;font-weight:700;font-variant-numeric:tabular-nums}
+.chip svg{width:13px;height:13px}
+
+/* notificación */
+.nt{border-radius:22px;padding:12px 14px 12px;margin:0 2px 10px}
+.dark .nt{background:#20242B;color:#E8EAED}.light .nt{background:#FBFBFC;color:#1F2328;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.nh{display:flex;align-items:center;gap:7px;font-size:11.5px;opacity:.75}
+.nh svg.ai{width:18px;height:18px;border-radius:5px}
+.nh .chev{margin-left:auto;opacity:.6}
+.nt b.t{display:block;font-size:14.5px;margin-top:6px;font-variant-numeric:tabular-nums}
+.nt span.x{display:block;font-size:12.5px;opacity:.75;margin-top:1px}
+.pb{position:relative;display:flex;gap:3px;margin:12px 0 4px;height:6px;align-items:center}
+.pb i{display:block;height:6px;border-radius:3px;flex:1}
+.pb .tk{position:absolute;top:50%;width:22px;height:22px;border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 0 0 3px var(--nbg)}
+.dark .nt{--nbg:#20242B}.light .nt{--nbg:#FBFBFC}
+.pb .tk svg{width:13px;height:13px}
+.pb .pt{position:absolute;top:50%;width:6px;height:6px;border-radius:50%;transform:translate(-50%,-50%);background:var(--nbg);opacity:.9}
+.acts{display:flex;gap:8px;margin-top:12px}
+.acts a{flex:1;text-align:center;font-size:12.5px;font-weight:600;padding:8px 6px;border-radius:999px}
+.dark .acts a{background:#2C313A}.light .acts a{background:#EEF0F3}
+.acts a.p{color:#fff}
+
+/* pantalla bloqueada */
+.lock{text-align:center;padding-top:14px}
+.lock .clk{font-size:64px;font-weight:300;letter-spacing:-2px;line-height:1}
+.lock .dt{font-size:13px;opacity:.75;margin:6px 0 22px}
+
+/* app ajena de fondo */
+.other{border-radius:16px;padding:12px;margin:0 2px}
+.dark .other{background:#171B22}.light .other{background:#FFFFFF}
+.other .bar{height:10px;border-radius:5px;margin:0 0 10px;opacity:.16;background:currentColor}
+.other .img{height:120px;border-radius:12px;margin:6px 0 12px;opacity:.1;background:currentColor}
+
+/* panel flotante */
+.pip{position:absolute;right:16px;bottom:22px;width:62%;aspect-ratio:3/2;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.45);background:#0C0F14;color:#F3F5F8}
+.pip .in{position:absolute;inset:0;padding:10px 12px;display:flex;flex-direction:column}
+.pip .top{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.pip .top .dot{width:7px;height:7px;border-radius:50%}
+.pip .top .r{margin-left:auto;opacity:.65;font-variant-numeric:tabular-nums;letter-spacing:0;text-transform:none;font-weight:600}
+.pip .big{font-size:34px;font-weight:800;line-height:1;margin-top:auto;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.pip .big small{font-size:13px;font-weight:600;opacity:.65;letter-spacing:0;margin-left:4px}
+.pip .nm{font-size:12px;font-weight:600;opacity:.9;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pip .seg{display:flex;gap:3px;margin-top:8px}
+.pip .seg i{flex:1;height:4px;border-radius:2px;display:block;background:#2B313B}
+.pip .ring{position:absolute;right:12px;top:30px;width:56px;height:56px}
+.pip .nm.short{max-width:100%}
+.pip.ctl::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.pip .ctls{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;gap:16px}
+.pip .ctls span{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center}
+.pip .ctls svg{width:18px;height:18px}
+.pip .corner{position:absolute;z-index:2;top:7px;display:flex;gap:6px}
+.pip .corner svg{width:14px;height:14px;opacity:.9}
+
+/* tablet */
+.tablet{border-radius:26px;padding:14px;position:relative;overflow:hidden;aspect-ratio:16/10}
+.dark .tablet{background:linear-gradient(170deg,#1c2433,#0b0e14)}.light .tablet{background:linear-gradient(170deg,#dbe3ec,#f2ede4)}
+.tablet .cols{display:grid;grid-template-columns:1fr 2fr;gap:12px;height:100%}
+.tablet .pip{width:34%;right:22px;bottom:auto;top:22px}
+.tablet .pip .big{font-size:44px}
+</style></head><body>
+<h1>Notificación y panel flotante · Nodo Entreno</h1>
+<p class="lead">Dos piezas para usar el teléfono o la tablet sin perder la sesión. La notificación usa el formato de "actualización en vivo" de Android 16: barra de progreso por tramos con un ícono que avanza, chip con el tiempo en la barra de estado y hasta tres botones. El panel flotante es la misma app achicada en una ventanita encima de lo que estés usando. Los colores siguen la app: ember para fuerza, aqua para cardio.</p>
+<div id="root"></div>
+<script>
+const EMB='#FF6B3D', EMBd='#E8501F', AQ='#2EE2CF', AQd='#0F9D90';
+const G={
+ barra:`<svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="11" width="18" height="2" rx="1"/><rect x="5" y="7" width="3" height="10" rx="1.5"/><rect x="16" y="7" width="3" height="10" rx="1.5"/></svg>`,
+ bici:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h5l3 7M10 9l2 7h2"/></svg>`,
+ check:`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`,
+ pausa:`<svg viewBox="0 0 24 24" fill="#fff"><rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/></svg>`,
+ mas:`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>`,
+ sig:`<svg viewBox="0 0 24 24" fill="#fff"><path d="M6 5l9 7-9 7z"/><rect x="16" y="5" width="2.6" height="14" rx="1"/></svg>`,
+ expand:`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>`,
+ cerrar:`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`
+};
+const appIco=`<svg class="ai" viewBox="0 0 120 120"><defs><linearGradient id="nbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#181C23"/><stop offset="1" stop-color="#0A0C10"/></linearGradient></defs><rect width="120" height="120" rx="27" fill="url(#nbg)"/><line x1="22" y1="60" x2="98" y2="60" stroke="#A65741" stroke-width="7" stroke-linecap="round"/><rect x="25" y="37" width="14" height="46" rx="7" fill="#3D424A"/><rect x="81" y="37" width="14" height="46" rx="7" fill="${EMB}"/></svg>`;
+const sb=(chip)=>`<div class="sb"><span>12:40</span>${chip||''}<span class="r"><i></i><i></i><i></i></span></div>`;
+const chip=(c,g,t)=>`<span class="chip" style="background:${c}">${G[g]}${t}</span>`;
+/* barra de progreso: segs=[[peso,color]], pos 0..1, puntos en fracciones */
+const pb=(segs,pos,tc,g,pts=[])=>{const tot=segs.reduce((a,s)=>a+s[0],0);return `<div class="pb">${segs.map(([w,c])=>`<i style="flex:${w};background:${c}"></i>`).join('')}${pts.map(p=>`<span class="pt" style="left:${p*100}%"></span>`).join('')}<span class="tk" style="left:${pos*100}%;background:${tc}">${G[g]}</span></div>`;};
+const nt=({tipo,t,x,bar,acts,exp=true})=>`<div class="nt"><div class="nh">${appIco}<span>Nodo Entreno · ${tipo}</span><span class="chev">${exp?'⌃':'⌄'}</span></div><b class="t">${t}</b><span class="x">${x}</span>${bar}${exp&&acts?`<div class="acts">${acts.map((a,i)=>`<a class="${i===0?'p':''}" style="${i===0?`background:${a[1]}`:''}">${a[0]}</a>`).join('')}</div>`:''}</div>`;
+
+const off=t=>t==='dark'?'#3A404A':'#D5D9DF';
+/* estados */
+const S={
+ serie:t=>({tipo:'Fuerza',t:'Búlgara · serie 2 de 4',x:'10 kg · 8 a 12 reps · 3 de 6 ejercicios',
+   bar:pb([[1,EMB],[1,EMB],[1,EMB+'99'],[1,off(t)],[1,off(t)],[1,off(t)]],0.42,EMB,'barra'),acts:[['Serie hecha',EMBd],['Saltar'],['Pausa']]}),
+ desc:t=>({tipo:'Fuerza',t:'Descanso · 1:24',x:'Sigue búlgara, serie 3 de 4 · 10 kg',
+   bar:pb([[1,EMB],[1,EMB],[1,EMB+'99'],[1,off(t)],[1,off(t)],[1,off(t)]],0.46,EMB,'barra'),acts:[['+30 s',EMBd],['Saltar descanso']]}),
+ bici:t=>({tipo:'Cardio',t:'Fuerte · 3:12',x:'Bloque 2 de 4 · nivel 6 · sigue suave',
+   bar:pb([[10,AQd],[4,EMB],[3,off(t)],[4,EMB+'99'],[3,off(t)],[4,off(t)],[3,off(t)],[4,off(t)],[5,off(t)]],0.4,AQd,'bici',[0.25,0.47,0.69]),acts:[['Pausa',AQd],['Siguiente']]})
+};
+const secNotif=t=>`<section class="theme ${t}"><div class="tag">Notificación · ${t==='dark'?'tema oscuro':'tema claro'} del sistema</div>
+<div class="grid">
+ <div><div class="phone">${sb(chip(EMBd,'barra','2/4'))}${nt(S.serie(t))}</div><div class="cap">Fuerza, serie en curso. El chip de arriba dice en qué serie vas; la barra muestra los ejercicios de la sesión y el ícono avanza con vos.</div></div>
+ <div><div class="phone">${sb(chip(EMBd,'barra','1:24'))}${nt(S.desc(t))}</div><div class="cap">Descanso. El chip pasa a la cuenta regresiva, así lo ves desde cualquier app sin bajar la cortina. Al terminar vibra y vuelve a la serie.</div></div>
+ <div><div class="phone">${sb(chip(AQd,'bici','3:12'))}<div class="lock"><div class="clk">12:40</div><div class="dt">sábado 3 de octubre</div></div>${nt(S.bici(t))}</div><div class="cap">Bici en la pantalla bloqueada. Cada tramo de la barra es una fase con su color (calentar en aqua, fuerte en ember, suave en gris) y los puntos marcan los bloques.</div></div>
+</div></section>`;
+
+/* panel flotante */
+const pipFuerza=(ctl)=>`<div class="pip ${ctl?'ctl':''}"><div class="in"><div class="top"><span class="dot" style="background:${EMB}"></span>Fuerza<span class="r">3/6 · 18:40</span></div>
+<div class="big">8–12<small>reps · 10 kg</small></div><div class="nm">Búlgara · serie 2 de 4</div>
+<div class="seg"><i style="background:${EMB}"></i><i style="background:${EMB}"></i><i style="background:${EMB}55"></i><i></i></div></div>
+${ctl?`<div class="corner" style="left:9px">${G.expand}</div><div class="corner" style="right:9px">${G.cerrar}</div><div class="ctls"><span>${G.check}</span><span>${G.mas}</span><span>${G.pausa}</span></div>`:''}</div>`;
+const ring=(f,c)=>{const r=26,C=2*Math.PI*r;return `<svg class="ring" viewBox="0 0 64 64"><circle cx="32" cy="32" r="${r}" fill="none" stroke="#2B313B" stroke-width="6"/><circle cx="32" cy="32" r="${r}" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${C*f} ${C}" transform="rotate(-90 32 32)"/></svg>`;};
+const pipDesc=()=>`<div class="pip"><div class="in"><div class="top"><span class="dot" style="background:#8B96A6"></span>Descanso<span class="r">3/6</span></div>
+<div class="big">1:24</div><div class="nm">Sigue búlgara · serie 3</div>
+<div class="seg"><i style="background:${EMB}"></i><i style="background:${EMB}"></i><i style="background:${EMB}"></i><i></i></div></div>${ring(.62,EMB)}</div>`;
+const pipBici=(big)=>`<div class="pip"><div class="in"><div class="top"><span class="dot" style="background:${EMB}"></span>Fuerte<span class="r">nivel 6 · 14:20</span></div>
+<div class="big">3:12</div><div class="nm">Bloque 2 de 4 · sigue suave 3:00</div>
+<div class="seg" style="gap:2px"><i style="flex:10;background:${AQd}"></i><i style="flex:4;background:${EMB}"></i><i style="flex:3;background:#8B96A6"></i><i style="flex:4;background:${EMB}88"></i><i style="flex:3"></i><i style="flex:4"></i><i style="flex:3"></i><i style="flex:4"></i><i style="flex:5"></i></div></div></div>`;
+const other=()=>`<div class="other"><div class="bar" style="width:40%"></div><div class="img"></div><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar" style="width:65%"></div><div class="img" style="height:70px"></div><div class="bar" style="width:70%"></div></div>`;
+const secPip=t=>`<section class="theme ${t}"><div class="tag">Panel flotante · sobre otra app (${t==='dark'?'fondo oscuro':'fondo claro'})</div>
+<div class="grid">
+ <div><div class="phone">${sb(chip(EMBd,'barra','2/4'))}${other()}${pipFuerza(false)}</div><div class="cap">Serie en curso. Lo grande es lo que tenés que hacer; abajo, las series del ejercicio.</div></div>
+ <div><div class="phone">${sb(chip(EMBd,'barra','2/4'))}${other()}${pipFuerza(true)}</div><div class="cap">Al tocarlo aparecen tres botones: serie hecha, +30 s y pausa. Arriba, volver a la app o cerrar el panel (la sesión sigue).</div></div>
+ <div><div class="phone">${sb(chip(EMBd,'barra','1:24'))}${other()}${pipDesc()}</div><div class="cap">Descanso: la cuenta regresiva grande y el anillo que se vacía. Vibra al terminar.</div></div>
+</div>
+<div class="tag" style="margin-top:18px">En la tablet</div>
+<div class="grid" style="grid-template-columns:2fr 1fr">
+ <div><div class="tablet">${sb(chip(AQd,'bici','3:12'))}<div class="cols">${other()}${other()}</div>${pipBici()}</div><div class="cap">Bici con la tablet en el manubrio, mirando otra cosa. El panel es más grande y sigue mostrando la fase, el tiempo y la barra de la sesión.</div></div>
+ <div class="sub" style="align-self:center">Mismo panel en todos los tamaños: una línea arriba (qué estás haciendo y dónde vas), un número grande (lo que importa ahora) y la barra de la sesión abajo. Va siempre en el tema oscuro de la app, para que no encandile encima de otra app.</div>
+</div></section>`;
+document.getElementById('root').innerHTML=`<div style="margin:0 16px 8px"><h2>1 · La notificación</h2></div>`+secNotif('dark')+secNotif('light')+`<div style="margin:6px 16px 8px"><h2>2 · El panel flotante</h2></div>`+secPip('dark')+secPip('light');
+</script>
+</body></html>

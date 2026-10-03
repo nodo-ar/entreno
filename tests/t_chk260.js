@@ -1,6 +1,6 @@
 // v258: íconos dibujados en vez de caracteres (› ‹ ✓ ✕ × ＋ − + ↑ ↓ → ↳ ⤢ ★ ⚑ ⌃ ⌄ ⋯)
 const {chromium}=require('playwright'); const seed=require('./seed.js'); const fs=require('fs');
-const src=process.argv[2]||'prev.html';
+const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const W8=(p,t)=>p.waitForTimeout(t);
   // el código: ninguno de estos caracteres queda como ícono

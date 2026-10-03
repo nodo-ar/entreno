@@ -2,7 +2,7 @@
 // · modo rápido por defecto (fast.js), de a varias en paralelo
 // · lo que falla se repite solo y en modo normal: si ahí pasa, era del modo rápido o de tiempos
 const {spawn}=require('child_process'); const fs=require('fs'); const os=require('os');
-const A=process.argv.slice(2); const src=A.find(a=>/\.html$/.test(a))||'prev.html';
+const A=process.argv.slice(2); const src=A.find(a=>/\.html$/.test(a))||'index.html';
 const J=+(A[A.indexOf('-j')+1]||0)||Math.max(1,os.cpus().length); const normal=A.includes('--normal');
 const LISTA=['chk210','chk205','chk202','chk204','chk214','chk215','chk216','chk218','chk219','chk220','chk221','chk223','chk224','chk225','chk226','chk227','chk228','chk229','chk230','chk231','chk232','chk233','chk234','chk235','chk236','chk237','chk238','chk239','chk240','chk241','chk242','chk243','chk244','chk245','chk246','chk247','chk248','chk249','chk250','chk251','chk252','chk253','chk254','chk255','chk256','chk257','chk258','chk259','chk260','chk261','chk262','chk263','chk264','chk265','chk266','chk267','chk268','chk269','chk270','chk271'];
 const pedidas=A.filter(a=>/^chk\d+$/.test(a)); const tests=(pedidas.length?pedidas:LISTA).filter(t=>fs.existsSync(`t_${t}.js`));

@@ -1,6 +1,6 @@
 // v245: inicio en horizontal — la semana a la izquierda, el día a la derecha (clics reales)
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev.html';
+const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const open=async(W,H)=>{ const p=await (await b.newContext({viewport:{width:W,height:H}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
     await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(600);

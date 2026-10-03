@@ -1,6 +1,6 @@
 // v263: Programas → Rutinas, rutina → sesión, la rotación como rutina por defecto, sesión suelta y Desafíos en Progreso
 const {chromium}=require('playwright'); const seed=require('./seed.js'); const fs=require('fs');
-const src=process.argv[2]||'prev.html';
+const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   { const s=fs.readFileSync(require('path').join(__dirname,'..',src),'utf8'); T(!/>Programas y héroes</.test(s)&&!/Guardar como rutina/.test(s)&&!/Empezar programa/.test(s),'sin los nombres viejos en la interfaz'); }
   const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage(); p.on('pageerror',e=>errs.push(e.message));

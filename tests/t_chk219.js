@@ -1,4 +1,4 @@
-const src=process.argv[2]||'prev.html';
+const src=process.argv[2]||'index.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const ctx=await b.newContext({viewport:{width:390,height:844},hasTouch:false}); await ctx.addInitScript(()=>{ window.__V=[]; Object.defineProperty(navigator,'vibrate',{value:(p)=>{ window.__V.push(JSON.stringify(p)); return true; },configurable:true}); });

@@ -1,5 +1,5 @@
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev.html';
+const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 for(const [W,Hh,isle] of [[360,640,0],[360,640,'isle'],[390,844,0],[390,844,'isle'],[412,800,'isle'],[412,915,0],[320,568,0],[390,844,'card'],[390,844,'tab'],[360,640,'card']]){
   const p=await (await b.newContext({viewport:{width:W,height:Hh},deviceScaleFactor:1})).newPage(); p.on('pageerror',e=>{ if(!/reading 'ph'/.test(e.message)) errs.push(e.message); });
