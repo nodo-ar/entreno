@@ -1,4 +1,4 @@
-/* Barra y Bici — service worker: solo para la notificación en vivo del entrenamiento */
+/* Nodo Entreno — service worker: solo para la notificación en vivo del entrenamiento */
 self.addEventListener("install",e=>self.skipWaiting());
 self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
 self.addEventListener("notificationclick",e=>{

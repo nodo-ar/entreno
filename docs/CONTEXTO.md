@@ -1,6 +1,6 @@
 # Contexto para seguir
 
-Este repo es Nodo Entreno. Arranca de la v269 de Barra y Bici (su nombre anterior), publicada hasta ahora como artifact de claude.ai. Dentro de la app el nombre todavía dice Barra y Bici: el cambio de nombre es un PR aparte, con tableros.
+Este repo es Nodo Entreno. Arranca de la v269 de Barra y Bici (su nombre anterior), publicada hasta ahora como artifact de claude.ai. Dentro de la app ya se llama Nodo Entreno; los nombres internos (`barrabici.v4`, el `app:"barra-y-bici"` del exportado, `byb-fotos`, `byb-live`) quedan como estaban para no perder datos ni respaldos.
 
 ## Dónde está cada cosa
 
