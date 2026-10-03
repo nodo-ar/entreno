@@ -1,0 +1,11 @@
+{
+  "name": "nodo-entreno-pruebas",
+  "private": true,
+  "description": "Pruebas de punta a punta de Nodo Entreno",
+  "scripts": {
+    "suite": "node suite.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0"
+  }
+}

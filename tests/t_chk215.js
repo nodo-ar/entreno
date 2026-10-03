@@ -1,0 +1,28 @@
+const {chromium}=require('playwright'); const seed=require('./seed.js');
+(async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
+const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
+const E=(f,a)=>p.evaluate(f,a), W8=ms=>p.waitForTimeout(ms);
+await E(()=>{ CELON=true; CELQ.length=0; ['lp','swipe','scrub','mini2'].forEach(k=>{ try{ hintDone(k); }catch(e){} }); });
+const set=o=>E(o=>{ const h=hoyISO(), w=wdIdx(h); CFG.diasFS=[w]; CFG.diasBS=[]; CFG.prog={}; CFG.mov={on:!o.movoff,post:true,libre:true,hora:null}; CFG.goal=o.goal||null; CFG.molestias=o.mol||[];
+  for(let i=SESS.length-1;i>=0;i--) if(SESS[i].fecha===h) SESS.splice(i,1); mov=null; draft=null; bike.running=false;
+  if(o.f){ const pd=buildDay('Torso A'); SESS.push({id:'fx',kind:'fuerza',fecha:h,tipo:'Torso A',dur:48,ej:pd.ej.slice(0,4).map((e,i)=>({n:e.n,z:e.z,bw:e.bw,series:[{r:10,kg:22.5,pr:i<o.f},{r:9,kg:22.5}]})),vol:3120}); }
+  SESS.sort((a,c)=>c.fecha.localeCompare(a.fecha)); NAV.length=0; go('home'); },o);
+await set({f:2,movoff:1}); await W8(800);
+ok(await E(()=>!document.querySelector('#app .hm')),'sin pills en la card');
+ok(await E(()=>/2 récords/.test(document.querySelector('#app .prfoot').textContent)),'pie de récords: '+await E(()=>document.querySelector('#app .prfoot')?.textContent));
+const st=await E(()=>document.querySelector('#app .wkst')?.textContent||''); ok(/semanas seguidas al 80 %/.test(st),'racha en Semana: '+st);
+const r=await E(()=>{ const x=rachaSem(); const c=constSemana(semanaKey(hoyISO()),true); return {x,c}; }); ok(r.c>=80&&r.x.cur,'racha usa la misma regla que Constancia '+JSON.stringify(r));
+await E(()=>document.querySelector('#app .wkst').click()); await W8(800); ok(await E(()=>view==='stat'&&histEx==='constancia'),'racha → Progreso › Constancia');
+ok(await E(()=>document.querySelector('#app .topbar #back')?.getAttribute('aria-label'))==='Volver a Semana','volver dice Semana');
+await set({f:1,movoff:0}); await W8(800); const mv=await E(()=>document.querySelector('#app .mvfoot:not(.prfoot) .grow')?.textContent); ok(/^Movilidad después · \d+ min/.test(mv||''),'pie de movilidad: '+mv);
+ok(await E(()=>{ const a=document.querySelector('#app .mvfoot:not(.prfoot) .grow'); return a.scrollHeight<=a.clientHeight+2; }),'pie en un renglón');
+const G0=await E(()=>goalCands()[0]), A0=await E(()=>Object.keys(ART_MOV)[0]), H3=await E(()=>addDays(hoyISO(),3)); await set({goal:G0,mol:[{a:A0,hasta:H3}]}); await W8(800);
+ok(await E(()=>{ const g=document.querySelector('#app .goalrow'), pw=document.querySelector('#app .prh[data-proghome]'); return g&&pw&&(pw.compareDocumentPosition(g)&Node.DOCUMENT_POSITION_FOLLOWING); }),'norte abajo, después de Programas');
+ok(await E(()=>/hasta el \S+/.test(document.querySelector('#app .molrow').textContent)),'molestia: '+await E(()=>document.querySelector('#app .molrow small').textContent));
+await E(()=>document.querySelector('#app .goalrow').click()); await W8(900); ok(await E(()=>view)==='arbol','norte → árbol');
+await set({f:2}); await W8(500); await E(()=>{ histEx='fx'; finCtx={mov:null}; go('fin'); }); await W8(800); ok(await E(()=>/2 récords/.test(document.querySelector('#app .finpr')?.textContent||'')),'fin: récords arriba');
+await E(()=>{ NAV.length=0; go('home'); }); await W8(400); await E(()=>{ quickB('suave',null); }); await W8(500); await E(()=>{ draft=null; fzSel=null; go('fuerza'); }); await W8(900);
+ok(await E(()=>{ const g=document.querySelector('#goFz'); const c=document.querySelector('#goFzC'); return g.classList.contains('busy')&&(!c||c.hidden)&&g.getBoundingClientRect().height<60; }),'en curso: un renglón, sin Corta');
+ok(await E(()=>bPast('Superá un récord')==='Superaste un récord'),'insignia en pasado');
+console.log(bad.length?'FALLAS:\n'+bad.join('\n'):'TODO OK','\nERRS',JSON.stringify(errs.slice(0,5))); await b.close(); })();
