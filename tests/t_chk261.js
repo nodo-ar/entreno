@@ -1,6 +1,6 @@
 // v258: menús flotantes sobrios y claros
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev216.html';
+const src=process.argv[2]||'prev.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const W8=(p,t)=>p.waitForTimeout(t);
   const open=async(W,H,sch)=>{ const ctx=await b.newContext({viewport:{width:W||390,height:H||844},colorScheme:sch||'dark'}); const p=await ctx.newPage(); p.on('pageerror',e=>errs.push(e.message));

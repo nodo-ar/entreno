@@ -1,5 +1,5 @@
 const {chromium}=require('playwright');
-const src=process.argv[2]||'prev216.html';
+const src=process.argv[2]||'prev.html';
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 for(const [w,h] of [[390,844],[844,390]]){ const tag=`${w}×${h}`; const p=await (await b.newContext({viewport:{width:w,height:h}})).newPage(); p.on('pageerror',e=>errs.push(e.message)); const E=(f,a)=>p.evaluate(f,a), W8=ms=>p.waitForTimeout(ms);
   await p.goto('http://127.0.0.1:8765/'+src); await W8(500); await E(()=>document.querySelector('#newP').click()); await W8(400);

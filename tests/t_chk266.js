@@ -1,8 +1,8 @@
 // v263: Programas → Rutinas, rutina → sesión, la rotación como rutina por defecto, sesión suelta y Desafíos en Progreso
 const {chromium}=require('playwright'); const seed=require('./seed.js'); const fs=require('fs');
-const src=process.argv[2]||'prev216.html';
+const src=process.argv[2]||'prev.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
-  { const s=fs.readFileSync(src,'utf8'); T(!/>Programas y héroes</.test(s)&&!/Guardar como rutina/.test(s)&&!/Empezar programa/.test(s),'sin los nombres viejos en la interfaz'); }
+  { const s=fs.readFileSync(require('path').join(__dirname,'..',src),'utf8'); T(!/>Programas y héroes</.test(s)&&!/Guardar como rutina/.test(s)&&!/Empezar programa/.test(s),'sin los nombres viejos en la interfaz'); }
   const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
   await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(300); await seed(p); await p.waitForTimeout(400);
   await p.evaluate(()=>{ PERF.modo='max'; perfApply(); CELON=true; ['lp','swipe','scrub','mini2','tree'].forEach(k=>{ try{ hintDone(k); }catch(e){} }); decir=()=>{}; beep=()=>{}; NAV.length=0; CFG.prog={}; CFG.diasFS=[1,3,5]; CFG.diasBS=[0,2,4]; });

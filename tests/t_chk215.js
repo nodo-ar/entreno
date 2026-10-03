@@ -1,7 +1,8 @@
+const src=process.argv[2]||'prev.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
-await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
+await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
 const E=(f,a)=>p.evaluate(f,a), W8=ms=>p.waitForTimeout(ms);
 await E(()=>{ CELON=true; CELQ.length=0; ['lp','swipe','scrub','mini2'].forEach(k=>{ try{ hintDone(k); }catch(e){} }); });
 const set=o=>E(o=>{ const h=hoyISO(), w=wdIdx(h); CFG.diasFS=[w]; CFG.diasBS=[]; CFG.prog={}; CFG.mov={on:!o.movoff,post:true,libre:true,hora:null}; CFG.goal=o.goal||null; CFG.molestias=o.mol||[];

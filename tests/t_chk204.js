@@ -1,7 +1,8 @@
+const src=process.argv[2]||'prev.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[]; const bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); };
 for(const W of [390,360]){ const p=await (await b.newContext({viewport:{width:W,height:800}})).newPage(); p.on('pageerror',e=>errs.push(W+' '+e.message));
-await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1800);
+await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1800);
 const E=(f,a)=>p.evaluate(f,a); const W8=ms=>p.waitForTimeout(ms);
 const ovf=async(tag)=>{ const r=await E(()=>{ const vw=innerWidth; const out=[]; document.querySelectorAll('#app *').forEach(e=>{ if(e.closest('.prrec,.prdays,.hrrow,.bdgrail,.swa,.segx,.tvp,.exnav,.swfil')) return; const r=e.getBoundingClientRect(); if(r.width&&(r.right>vw+1||r.left<-1)) out.push((e.className&&e.className.baseVal!==undefined?e.className.baseVal:e.className)+'|'+Math.round(r.left)+'-'+Math.round(r.right)); }); return {sw:document.documentElement.scrollWidth,vw,out:out.slice(0,5)}; }); ok(r.sw<=r.vw&&!r.out.length,`ovf ${W} ${tag} ${JSON.stringify(r)}`); };
 await E(()=>{ CELON=true; PERF.modo='eq'; perfApply(); CFG.prog={}; ['lp','swipe','scrub'].forEach(hintDone); saveCfg(); });
@@ -9,7 +10,7 @@ await E(()=>{ CELON=true; PERF.modo='eq'; perfApply(); CFG.prog={}; ['lp','swipe
 await E(async()=>{ await progLoad('recomp'); await progLoad('base_cali'); CFG.prog={f:{id:'base_cali',start:hoyISO()}}; saveCfg(); });
 await E(()=>{ progSel='recomp'; go('programa'); }); await W8(900);
 const r0=await E(()=>({gs:document.querySelector('.prgs').textContent,kv:[...document.querySelectorAll('.prkv dt')].map(x=>x.textContent).join(),dots:document.querySelectorAll('.prday .prdk').length,days:document.querySelectorAll('.prday:not(.sk)').length,sub:[...document.querySelectorAll('.prday small')].map(x=>x.textContent).join('|')}));
-ok(/Reemplaza a Base de calistenia/.test(r0.gs)&&r0.kv==='Objetivo,Progresión,Punto de partida,Semana,Equipo,Técnicas'&&r0.dots===7&&r0.days===7&&/en 3 grupos/.test(r0.sub),'recomp ficha '+JSON.stringify(r0)); await ovf('recomp ficha');
+ok(/Reemplaza a Base de calistenia/.test(r0.gs)&&r0.kv==='Objetivo,Progresión,Punto de partida,Semana,Equipo,Técnicas,Desafío'&&r0.dots===7&&r0.days===7&&/en 3 grupos/.test(r0.sub),'recomp ficha '+JSON.stringify(r0)); await ovf('recomp ficha');
 await E(()=>{ const x=document.querySelector('#prStart'); if(x) x.click(); else window.__miss=(window.__miss||[]).concat('#prStart'); }); await W8(900);
 const r1=await E(()=>({prog:JSON.stringify(CFG.prog),f:(progLive('f')||{}).label,b:(progLive('b')||{}).label,fi:(progLive('f')||{}).i,bi:(progLive('b')||{}).i,nt:nextTipo(),go:(document.querySelector('#prGo')||{}).textContent}));
 ok(!/base_cali/.test(r1.prog)&&/recomp/.test(r1.prog)&&r1.f==='Recomposición · Torso A'&&r1.b==='Recomposición · Bici suave'&&r1.fi===0&&r1.bi===1&&r1.nt==='Recomposición · Torso A'&&/Torso A/.test(r1.go),'recomp start '+JSON.stringify(r1));
@@ -107,13 +108,14 @@ await E(()=>{ draft=null; closeRest(); CFG.prog={}; ['barra_ol','banco','polea']
 const bc=await E(async()=>{ delete PRK.base_cali; localStorage.setItem(LSK+'.pk.base_cali',JSON.stringify({id:'base_cali',v:1,ses:[{t:'f',n:'Viejo',wu:'torso',ej:[],rep:{}}]})); const a=progPack('base_cali'); const o=await progLoad('base_cali'); return {a:!!a,v:o.v,g:!!o.ses[0].g}; });
 ok(!bc.a&&bc.v===3&&bc.g,'paquete con versión '+JSON.stringify(bc));
 // ---------- catálogo y fichas de los 30 ----------
-for(const f of ['todo','f','b','m','x']){ await E(f=>{ prFil=f; progFrom='home'; go('programas'); },f); await W8(500); await ovf('cat '+f); }
+for(const f of ['todo','f','o','b','m','x']){ await E(f=>{ prFil=f; progFrom='home'; go('programas'); },f); await W8(500); await ovf('cat '+f); }
 await E(()=>{ prFil='todo'; render(); }); await W8(400); await E(()=>{ const b=document.querySelector('#prPickB'); if(b) b.click(); }); await W8(400);
 const cc=await E(()=>({chips:document.querySelectorAll('.prfil button').length,menu:[...document.querySelectorAll('.pop [data-cm]')].map(x=>x.dataset.cm).join()})); await E(()=>{ try{ popClose(true); }catch(e){} });
-ok(cc.chips===0&&cc.menu==='todo,f,b,m,x','filtro de programas: menú, sin chips '+JSON.stringify(cc));
+ok(cc.chips===0&&cc.menu==='todo,f,o,b,m,x','filtro de programas: menú, sin chips '+JSON.stringify(cc));
 await E(()=>{ prFil='f'; render(); }); await W8(300);
 const cf=await E(()=>[...document.querySelectorAll('.ajhd.sgh')].map(x=>x.textContent).join('|'));
-ok(/Calistenia/.test(cf)&&/En casa/.test(cf)&&/Gimnasio/.test(cf)&&/Con cardio/.test(cf),'secciones fuerza '+cf);
+/* desde v263 las secciones van por días, con objetivos aparte */
+ok(/^Entran en tus 4 días\d+\|Con más días[^|]*\|Objetivos[^|]*\|Te falta equipo[^|]*\|Con cardio\d+$/.test(cf)&&!/Calistenia|En casa|Gimnasio/.test(cf),'secciones fuerza '+cf);
 const ids=await E(()=>PROG_IDX.map(p=>p.id));
 for(const id of ids){ await E(id=>{ progSel=id; go('programa'); },id); await W8(W===390?650:350); const d=await E(()=>({days:document.querySelectorAll('.prday:not(.sk)').length,sk:document.querySelectorAll('.prday.sk').length})); ok(d.days>0&&!d.sk,'ficha '+id+' '+JSON.stringify(d)); await ovf('ficha '+id); }
 // recomendaciones: con barra, mancuernas y bici aparece el mixto

@@ -1,7 +1,8 @@
+const src=process.argv[2]||'prev.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[]; const bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); };
 const p=await (await b.newContext({viewport:{width:390,height:800}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
-await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1500);
+await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1500);
 const E=(f,a)=>p.evaluate(f,a); const W8=ms=>p.waitForTimeout(ms);
 const back=async()=>{ await E(()=>{ const x=document.querySelector('#app .topbar .back'); if(x) x.click(); else window.__nb=1; }); await W8(700); };
 const st=()=>E(()=>({v:view,f:prFil,p:progSel,sk:skSel,n:NAV.length}));

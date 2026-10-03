@@ -1,8 +1,9 @@
 // v210: conexiones nuevas + etiquetas de volver + vocabulario
+const src=process.argv[2]||'prev.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[]; const bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const p=await (await b.newContext({viewport:{width:390,height:800}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
-await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1500);
+await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1500);
 const E=(f,a)=>p.evaluate(f,a); const W8=ms=>p.waitForTimeout(ms);
 const back=async()=>{ await E(()=>document.querySelector('#app .topbar #back').click()); await W8(700); };
 const lbl=()=>E(()=>{ const x=document.querySelector('#app .topbar #back'); return x?x.getAttribute('aria-label'):null; });
@@ -49,7 +50,7 @@ ok((await lbl())==='Volver a Semana','programa desde Semana: '+(await lbl()));
 ok(await E(()=>document.querySelector('#app').textContent.includes('Semana ')&&!document.querySelector('#app').textContent.includes('Primera semana')),'programa: "Semana N", no "Primera semana"');
 
 // vocabulario: no quedan las formas viejas en pantallas clave
-const bads=['Arrancar','Ya lo hice','Registrar otro día','salidas','Otras rutinas','Lo de todos los días','kg movidos','Mejor marca','Primera marca','Plan cumplido','planes ','desafíos'];
+const bads=['Arrancar','Ya lo hice','Registrar otro día','salidas','Otras rutinas','Lo de todos los días','kg movidos','Mejor marca','Primera marca','Plan cumplido','planes ','Héroes','héroes'];
 const scr=[['home',()=>{ go('home'); }],['fuerza',()=>{ draft=null; fzSel=null; go('fuerza'); }],['bici',()=>{ bike.sel=null; go('bici'); }],['statc',()=>{ histEx='cardio'; go('stat'); }],['statf',()=>{ histEx='fuerza'; go('stat'); }],['statd',()=>{ histEx='dias'; go('stat'); }],['hist',()=>{ histTab='res'; go('hist'); }],['heroe',()=>{ heroSel='hercules'; heroV=0; go('heroe'); }],['programas',()=>{ prFil='todo'; go('programas'); }]];
 for(const [k,f] of scr){ await E(f); await W8(700); const t=await E(()=>document.querySelector('#app').innerText); const hit=bads.filter(w=>t.includes(w)); ok(!hit.length,k+' sin formas viejas '+(hit.length?JSON.stringify(hit):'')); }
 // menú "más" de fuerza

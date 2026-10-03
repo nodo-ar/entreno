@@ -1,5 +1,5 @@
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prev216.html';
+const src=process.argv[2]||'prev.html';
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const W8=(p,ms)=>p.waitForTimeout(ms);
 for(const [w,h,mob] of [[390,844,1],[360,560,1],[844,390,1],[1180,820,0],[820,1180,1]]){ const tag=`${w}×${h}`;

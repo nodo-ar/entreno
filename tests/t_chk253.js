@@ -1,6 +1,6 @@
 // v251: cada sesión arranca con la isla arriba; flotando, se pega a la esquina más cercana
 const {chromium}=require('playwright'); const seed=require('./seed.js');
-const src=process.argv[2]||'prevR.html';
+const src=process.argv[2]||'prev.html';
 (async()=>{ const b=await chromium.launch(); const errs=[]; let ok=0, bad=0; const T=(c,m)=>{ if(c){ ok++; } else { bad++; console.log('FAIL',m); } };
   const W8=(p,t)=>p.waitForTimeout(t);
   const ctxOpen=async(W,H)=>{ const ctx=await b.newContext({viewport:{width:W,height:H}}); const p=await ctx.newPage(); p.on('pageerror',e=>errs.push(e.message));

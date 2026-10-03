@@ -1,7 +1,8 @@
+const src=process.argv[2]||'prev.html';
 const {chromium}=require('playwright'); const seed=require('./seed.js');
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage(); p.on('pageerror',e=>errs.push(e.message));
-await p.goto('http://127.0.0.1:8765/prev216.html'); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
+await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1200);
 const E=(f,a)=>p.evaluate(f,a), W8=ms=>p.waitForTimeout(ms);
 await E(async()=>{ CELON=true; CELQ.length=0; ['lp','swipe','scrub','mini2'].forEach(k=>{ try{ hintDone(k); }catch(e){} }); await progLoad('base_cali'); });
 const reset=()=>E(()=>{ const h=hoyISO(), w=wdIdx(h); try{ popClose(true); }catch(e){} try{ if(restInt) closeRest(); }catch(e){} try{ if(bike.running) bikeDiscard(); }catch(e){} document.querySelectorAll('.utoast').forEach(x=>x.remove()); bike.running=false; mov=null; draft=null; homeFront=null; CFG.diasFS=[w]; CFG.diasBS=[]; CFG.prog={f:{id:'base_cali',start:addDays(h,-10)}}; for(let i=SESS.length-1;i>=0;i--) if(SESS[i].fecha===h) SESS.splice(i,1); NAV.length=0; });
