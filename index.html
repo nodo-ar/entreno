@@ -5193,7 +5193,7 @@ function liveState(){
   if(mov&&view==="mov"){ const it=mov.plan.items, k=it[mov.i]; if(k){ const M=MOV[k],nx=it[mov.i+1]; return {kind:"m",tag:"byb-live",title:`Movilidad · ${mov.i+1} de ${it.length} · ${mmss(mov.left)}${mov.paused?" · pausa":""}`,body:M.lados&&!mov.lado?"Sigue: "+M.n+", otro lado":"Sigue: "+(nx?MOV[nx].n:"terminar"),actions:[{action:"pause",title:mov.paused?"Seguir":"Pausa"},{action:"phase",title:"Siguiente"}],ev:`m:${mov.i}:${mov.lado?1:0}`}; } }
   if(bike.running&&view==="bici"){ const b=curProt(),p=b.ph[bike.ph]; const left=bike.paused?bike.pauseLeft:Math.max(0,Math.round((bike.phEnd-Date.now())/1000));
     const nx=b.ph[bike.ph+1], niv=x=>bike.modo==="bici"&&x[0]!=="piso"?" · nivel "+nivel(x[0]):"";
-    return {kind:"b",tag:"byb-live",title:`${phLbl(p)} · ${mmss(left)}${bike.paused?" · pausa":""}`,body:nx?`Sigue: ${phLbl(nx).toLowerCase()}${niv(nx)}`:"Sigue: terminar",actions:[{action:"pause",title:bike.paused?"Seguir":"Pausa"},{action:"phase",title:"Saltar fase"}],ev:`b:${bike.ph}`}; }
+    return {kind:"b",tag:"byb-live",title:`${phLbl(p)}${p[3]&&p[3].q?" ×"+p[3].q:""} · ${mmss(left)}${bike.paused?" · pausa":""}`,body:nx?`Sigue: ${phLbl(nx).toLowerCase()}${niv(nx)}`:"Sigue: terminar",actions:[{action:"pause",title:bike.paused?"Seguir":"Pausa"},{action:"phase",title:"Saltar fase"}],ev:`b:${bike.ph}`}; }
   return null;
 }
 const LIVE_BADGE="iconos/ic_stat_entreno.png";
