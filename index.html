@@ -5139,7 +5139,7 @@ function bindFuerza(){
       popClose(true); draft.plan.ej[cur]={key:el.dataset.swap,n:c.n,z:c.z,bw:!!c.bw,t:!!c.t,uni:!!c.uni,rest:c.rest,img:c.img,cue:c.cue,sets:meta.sets,lo,hi}; if(meta.tr&&trDe(el.dataset.swap)===meta.tr.p) draft.plan.ej[cur].tr=trMeta(meta.tr.p,el.dataset.swap); draft.ej[cur]={n:c.n,z:c.z,bw:!!c.bw,t:c.t||undefined,series:[],fatiga:0,sub:true}; loadStepper(); render(); vib(6); })}); };
   app.querySelectorAll("[data-fat]").forEach(b=>b.onclick=()=>{ vib("ok"); const v=+b.dataset.fat; draft.ej[cur].fatiga=draft.ej[cur].fatiga===v?0:v; app.querySelectorAll("[data-fat]").forEach(x=>x.classList.toggle("on",+x.dataset.fat===draft.ej[cur].fatiga)); const w=faltaEsf(draft.ej[cur]); const sg=app.querySelector(".efseg"); if(sg) sg.classList.toggle("warn",w); const rb=app.querySelector(`.exnav [data-go="${cur}"]`); if(rb) rb.classList.toggle("warn",w); });
   clearInterval(LIVE.fzInt); LIVE.fzInt=setInterval(()=>{ const t=$("#fzT"); if(!t||!draft){ clearInterval(LIVE.fzInt); return; } t.textContent=mmss(Math.floor((Date.now()-draft.t0)/1000)); },1000);
-  $("#discard").onclick=function(){ const ed=!!draft.edit; const saved=draft, sc=cur; const id=draft.id; draft=null; closeRest(); if(ed){ histEx=id; goBack("dia"); } else go("home"); undoToast(ed?"Edición cancelada":"Fuerza descartada",()=>{ draft=saved; cur=sc; loadStepper(); go("fuerza"); },{k:"f",d:saved.tipo+(saved.ej.some(x=>x.series.length)?` · ${(n=>n+(n===1?" serie":" series"))(saved.ej.reduce((a,x)=>a+x.series.length,0))}`:"")}); };
+  $("#discard").onclick=function(){ const ed=!!draft.edit; const saved=draft, sc=cur; const id=draft.id; liveClear(); draft=null; closeRest(); if(ed){ histEx=id; goBack("dia"); } else go("home"); undoToast(ed?"Edición cancelada":"Fuerza descartada",()=>{ draft=saved; cur=sc; loadStepper(); go("fuerza"); },{k:"f",d:saved.tipo+(saved.ej.some(x=>x.series.length)?` · ${(n=>n+(n===1?" serie":" series"))(saved.ej.reduce((a,x)=>a+x.series.length,0))}`:"")}); };
   $("#finish").onclick=()=>terminarFuerza();
   async function terminarFuerza(){
     fzAntesDeGuardar(); const s=clean(draft); delete s.wu; delete s.wuOpen; delete s.t0; delete s.plan; s.ej=s.ej.filter(e=>e.series.length); s.skills=s.skills.filter(x=>x.val>0); if(s.obj&&!s.ej.some(e=>e.obj)) delete s.obj;
@@ -5177,26 +5177,40 @@ async function liveInit(){ if(LIVE.reg) return "ok"; const sup=liveSupport(); if
 async function liveEnable(){ const st=await liveInit(); if(st!=="ok") return st; let p=Notification.permission; if(p!=="granted"){ try{ p=await Notification.requestPermission(); }catch(e){ p="denied"; } } if(p!=="granted") return "denied"; CFG.live=true; saveCfg(); LIVE.st="on"; livePush(true); return "ok"; }
 function liveDisable(){ CFG.live=false; saveCfg(); LIVE.st="off"; liveClear(); }
 async function liveClear(){ clearInterval(LIVE.int); LIVE.int=null; LIVE.last=""; if(LIVE.reg){ try{ (await LIVE.reg.getNotifications({tag:"byb-live"})).forEach(n=>n.close()); }catch(e){} } }
-/* Estado que describe la notificación: se calcula siempre, use o no notificaciones (lo reutiliza el APK nativo) */
+/* Estado que describe la notificación: se calcula siempre, use o no notificaciones (lo reutiliza el APK nativo).
+   Textos cortos para que Android no los corte: el título es lo de ahora, el cuerpo lo que sigue. Dos botones como máximo.
+   ev: clave de un cambio importante (fin del descanso, cambio de fase o de postura); cuando cambia, la notificación vuelve a sonar y sube. */
 function liveState(){
   const resting=!!(restInt||( $("#rest")&&!$("#rest").hidden ));
-  if(draft&&(view==="fuerza")){ const mins=Math.round((Date.now()-draft.t0)/60000); const inEx=cur<draft.ej.length; const meta=inEx?draft.plan.ej[cur]:null, e=inEx?draft.ej[cur]:null;
-    const nxt=inEx&&cur+1<draft.ej.length?draft.plan.ej[cur+1].n:null;
-    if(resting){ const left=Math.max(0,Math.round((restEnd-Date.now())/1000)); const nextSet=e&&e.series.length<meta.sets?`${meta.n} · serie ${e.series.length+1}/${meta.sets}`:(nxt?`después: ${nxt}`:"última");
-      return {kind:"f",tag:"byb-live",title:left>0?`Descanso ${mmss(left)}`:"Descanso listo",body:nextSet,actions:[{action:"skip",title:"Saltar"},{action:"plus",title:"+30 s"}],urgent:left<=0}; }
-    if(inEx) return {kind:"f",tag:"byb-live",title:`${draft.tipo} · ${mins} min`,body:`${meta.n} · serie ${e.series.length+1}/${meta.sets} · ${stepR} reps${stepKg?` +${stepKg} kg`:""}`,actions:[{action:"set",title:"Serie hecha"},{action:"next",title:"Siguiente"}]};
-    const sk=draft.skills[cur-draft.ej.length]; return {kind:"f",tag:"byb-live",title:`${draft.tipo} · ${mins} min`,body:`Habilidad: ${SKILLS[sk.k].n}`,actions:[{action:"next",title:"Siguiente"}]}; }
-  if(mov&&view==="mov"){ const k=mov.plan.items[mov.i]; if(k){ const M=MOV[k],nx=mov.plan.items[mov.i+1]; return {kind:"m",tag:"byb-live",title:`${M.n}${M.lados?(mov.lado?" · otro lado":" · primer lado"):""} · ${mov.left} s`,body:`Movilidad ${mov.i+1}/${mov.plan.items.length}${nx?" · después: "+MOV[nx].n:""}`,actions:[{action:"pause",title:mov.paused?"Seguir":"Pausar"},{action:"phase",title:"Siguiente"}],urgent:mov.left<=3}; } }
-  if(bike.running&&view==="bici"){ const b=curProt(),p=b.ph[bike.ph]; const left=bike.paused?bike.pauseLeft:Math.max(0,Math.round((bike.phEnd-Date.now())/1000)); const mins=Math.round((Date.now()-bike.t0-(bike.pausedMs||0))/60000);
-    const nx=b.ph[bike.ph+1]; const parts=[phLbl(p).toUpperCase()+(p[3]&&p[3].q?` ×${p[3].q}`:"")+(bike.modo==="bici"&&p[0]!=="piso"?` · nivel ${bike.niv}`:""),`faltan ${mmss(left)}`];
-    if(bike.gps&&bike.gps.km>0.05){ parts.push(dec(bike.gps.km,2)+" km"); parts.push(fmtRitmo(mins/bike.gps.km)+" /km"); }
-    if(bike.jumps) parts.push(bike.jumps.n+" saltos");
-    if(nx&&left<=20) parts.push(`después ${phLbl(nx)}${bike.modo==="bici"&&nx[0]!=="piso"?" niv "+nivel(nx[0]):""}`);
-    return {kind:"b",tag:"byb-live",title:`${CARDIO[bike.modo].n} · ${bike.sel} · ${mmss(mins*60)}${bike.paused?" · pausa":""}`,body:parts.join(" · "),actions:[{action:"pause",title:bike.paused?"Reanudar":"Pausar"},{action:"phase",title:"Saltar fase"}],urgent:left<=3}; }
+  if(draft&&(view==="fuerza")){ const inEx=cur<draft.ej.length; const meta=inEx?draft.plan.ej[cur]:null, e=inEx?draft.ej[cur]:null;
+    const nxt=cur+1<draft.ej.length?draft.plan.ej[cur+1].n:(cur+1<draft.ej.length+draft.skills.length?SKILLS[draft.skills[cur+1-draft.ej.length].k].n:null);
+    const k=e?e.series.length:0, sig=n=>"Sigue: "+(n||"terminar");
+    if(resting){ const left=Math.max(0,Math.round((restEnd-Date.now())/1000));
+      return {kind:"f",tag:"byb-live",title:left>0?`Descanso · ${mmss(left)}`:"Descanso · listo",body:inEx&&k<meta.sets?sig(`serie ${k+1} de ${meta.sets}`):sig(nxt),actions:[{action:"plus",title:"+30 s"},{action:"skip",title:"Saltar"}],ev:left<=0?`f:rest:${cur}:${k}`:null}; }
+    if(inEx){ if(k>=meta.sets) return {kind:"f",tag:"byb-live",title:`${meta.n} · hecho`,body:sig(nxt),actions:[{action:"next",title:"Siguiente"}]};
+      const t=`${meta.n} · serie ${k+1} de ${meta.sets}`; return {kind:"f",tag:"byb-live",title:t.length>30?`${meta.n} · ${k+1}/${meta.sets}`:t,body:sig(k+1<meta.sets?`serie ${k+2} de ${meta.sets}`:nxt),actions:[{action:"set",title:"Serie hecha"},{action:"next",title:"Siguiente"}]}; }
+    const sk=draft.skills[cur-draft.ej.length]; return {kind:"f",tag:"byb-live",title:`Habilidad · ${SKILLS[sk.k].n}`,body:sig(nxt),actions:[{action:"next",title:"Siguiente"}]}; }
+  if(mov&&view==="mov"){ const it=mov.plan.items, k=it[mov.i]; if(k){ const M=MOV[k],nx=it[mov.i+1]; return {kind:"m",tag:"byb-live",title:`Movilidad · ${mov.i+1} de ${it.length} · ${mmss(mov.left)}${mov.paused?" · pausa":""}`,body:M.lados&&!mov.lado?"Sigue: "+M.n+", otro lado":"Sigue: "+(nx?MOV[nx].n:"terminar"),actions:[{action:"pause",title:mov.paused?"Seguir":"Pausa"},{action:"phase",title:"Siguiente"}],ev:`m:${mov.i}:${mov.lado?1:0}`}; } }
+  if(bike.running&&view==="bici"){ const b=curProt(),p=b.ph[bike.ph]; const left=bike.paused?bike.pauseLeft:Math.max(0,Math.round((bike.phEnd-Date.now())/1000));
+    const nx=b.ph[bike.ph+1], niv=x=>bike.modo==="bici"&&x[0]!=="piso"?" · nivel "+nivel(x[0]):"";
+    return {kind:"b",tag:"byb-live",title:`${phLbl(p)} · ${mmss(left)}${bike.paused?" · pausa":""}`,body:nx?`Sigue: ${phLbl(nx).toLowerCase()}${niv(nx)}`:"Sigue: terminar",actions:[{action:"pause",title:bike.paused?"Seguir":"Pausa"},{action:"phase",title:"Saltar fase"}],ev:`b:${bike.ph}`}; }
   return null;
 }
-async function livePush(force){ if(!CFG||!CFG.live||!LIVE.reg) return; const st=liveState(); if(!st){ if(LIVE.last) liveClear(); return; } const key=st.title+"|"+st.body+"|"+st.actions.map(a=>a.title).join(); if(!force&&key===LIVE.last) return; LIVE.last=key;
-  try{ await LIVE.reg.showNotification(st.title,{body:st.body,tag:st.tag,renotify:!!st.urgent,silent:!st.urgent,requireInteraction:true,actions:st.actions.slice(0,Notification.maxActions||2),badge:undefined,data:{kind:st.kind}}); }catch(e){} }
+const LIVE_BADGE="iconos/ic_stat_entreno.png";
+async function livePush(force){ if(!CFG||!CFG.live||!LIVE.reg) return; const st=liveState();
+  if(!st){ const fin=!liveKind(); if(LIVE.last){ if(fin&&LIVE.ses) liveEnd(); else liveClear(); } if(fin) LIVE.ses=null; return; }
+  if(!LIVE.ses||LIVE.ses.kind!==st.kind) LIVE.ses={kind:st.kind,t0:(st.kind==="f"&&draft?draft.t0:st.kind==="b"?bike.t0:0)||Date.now(),ev:st.ev};
+  /* el primer estado de la sesión no suena; después, cada cambio de ev sí */
+  const alerta=!!st.ev&&st.ev!==LIVE.ses.ev; LIVE.ses.ev=st.ev||LIVE.ses.ev;
+  const key=st.title+"|"+st.body+"|"+st.actions.map(a=>a.title).join(); if(!force&&!alerta&&key===LIVE.last) return; LIVE.last=key;
+  try{ await LIVE.reg.showNotification(st.title,{body:st.body,tag:st.tag,badge:LIVE_BADGE,renotify:alerta,silent:!alerta,requireInteraction:true,actions:st.actions.slice(0,2),data:{kind:st.kind}}); }catch(e){} }
+/* al terminar (no al descartar): avisa si la notificación estaba a la vista */
+function liveFin(){ if(LIVE.ses&&LIVE.last) liveEnd(); else liveClear(); }
+/* fin de la sesión: un último aviso que suena y se va solo */
+async function liveEnd(){ const s=LIVE.ses; LIVE.ses=null; clearInterval(LIVE.int); LIVE.int=null; LIVE.last=""; if(!LIVE.reg) return;
+  const mins=Math.max(1,Math.round((Date.now()-s.t0)/60000)), tit="Sesión terminada";
+  try{ await LIVE.reg.showNotification(tit,{body:`${{f:"Fuerza",b:"Cardio",m:"Movilidad"}[s.kind]||"Sesión"} · ${mins} min`,tag:"byb-live",badge:LIVE_BADGE,renotify:true,silent:false,data:{kind:s.kind}});
+    setTimeout(async()=>{ try{ (await LIVE.reg.getNotifications({tag:"byb-live"})).forEach(n=>{ if(n.title===tit) n.close(); }); }catch(e){} },15000); }catch(e){} }
 function liveLoop(){ if(!CFG||!CFG.live) return; if(!LIVE.int) LIVE.int=setInterval(()=>livePush(false),1000); livePush(false); }
 function liveAction(a){ if(a==="closed") return; if(a==="open"){ if(draft) go("fuerza"); else if(bike.running) go("bici"); else if(mov) go("mov"); return; }
   if(draft&&view==="fuerza"){ if(a==="set"){ const ok=document.querySelector(".sr:not(.done) [data-ok]"); if(ok) ok.click(); else { const meta=draft.plan.ej[cur]; draft.ej[cur].series.push({r:stepR,kg:stepKg}); render(); startRest(meta.rest); } }
@@ -5434,7 +5448,7 @@ function renderBiciTimer(app){
   holdBtn($("#bkEnd"),end);
   $("#bkMore").onclick=function(){ const mb=this; moreMenu(mb,[["sk",T_NEXT,"Saltar fase",0,skip],bike.modo==="bici"&&!bike.ble&&navigator.bluetooth&&["ble",`<svg viewBox="0 0 24 24"><path d="M7 8l10 8l-5 4v-16l5 4l-10 8"/></svg>`,"Conectar sensor de cadencia",0,()=>{ bleConnect(); render(); }],["end",T_STOP,"Terminar y guardar",0,end],["d",T_TRASH,"Descartar sesión",1,bikeDiscard]]); };
 }
-async function finishBike(partial){ clearInterval(bike.int); bike.paused=false; bike.pausedMs=0; liveClear(); const b=curProt(); const min=Math.max(1,Math.round((Date.now()-bike.t0)/60000)); const totalMin=b.ph.reduce((a,x)=>a+x[1],0)/60; let k=kcal(b.met,Math.min(min,totalMin),CFG.peso);
+async function finishBike(partial){ clearInterval(bike.int); bike.paused=false; bike.pausedMs=0; liveFin(); const b=curProt(); const min=Math.max(1,Math.round((Date.now()-bike.t0)/60000)); const totalMin=b.ph.reduce((a,x)=>a+x[1],0)/60; let k=kcal(b.met,Math.min(min,totalMin),CFG.peso);
   const s={id:"b-"+Date.now(),kind:"bici",modo:bike.modo,fecha:hoyISO(),tipo:bike.sel+(partial&&!GPS_MODES.includes(bike.modo)&&bike.modo!=="soga"?" (parcial)":""),min};
   if(!partial){ const pc=progLive("b"); if(pc&&bike.sel===pc.label) s.prog={id:pc.m.id,i:pc.i}; if(HB&&bike.sel===HB.key){ s.hero={id:HB.id,v:HB.v,fmt:"int",full:true}; } } HB=null;
   const g=gpsStop(); if(g&&g.km>0.05){ Object.assign(s,g); k=Math.round(CFG.peso*g.km*(bike.modo==="correr"?1.0:0.53)); }
@@ -7029,7 +7043,7 @@ async function heroFinish(auto){ const H=draft&&draft.hero; if(!H) return; clear
   if(!auto&&((H.fmt==="tiempo"&&H.r===0)||(H.fmt==="chipper"&&H.it===0))){ heroResume(); toast("Todavía no terminaste nada"); return; }
   const ej=H.its.filter(e=>!e.c).map(e=>{ let n=1; if(H.fmt==="tiempo"||H.fmt==="amrap") n=Math.max(1,done); if(H.fmt==="emom") n=Math.ceil((H.dur/60)/H.its.length); if(H.fmt==="chipper"&&H.its.indexOf(e)>=H.it) n=0; return {n:e.n,z:e.z||"abd",bw:!!e.bw,t:e.t||undefined,series:Array.from({length:n},()=>({r:e.q,kg:0})),fatiga:0}; }).filter(e=>e.series.length);
   const s={id:draft.id,kind:"fuerza",fecha:draft.fecha,tipo:h.n,dur:Math.max(1,Math.round(el/60)),ej,skills:[],hero:{id:H.id,v:H.v,fmt:H.fmt,seg:el,r:H.fmt==="amrap"?H.r:H.fmt==="tiempo"?H.r:undefined,full:H.fmt==="chipper"?H.it>=H.its.length:H.fmt==="tiempo"?H.r>=H.rondas:true}};
-  s.vol=volumen(s); const prevB=heroBest(h,H.v); draft=null; closeRest(); liveClear(); await saveSession(s); beep(3,880); histEx=s.id; finCtx={hero:{prev:prevB},mov:{key:"Libre",label:h.n}}; go("fin"); }
+  s.vol=volumen(s); const prevB=heroBest(h,H.v); liveFin(); draft=null; closeRest(); await saveSession(s); beep(3,880); histEx=s.id; finCtx={hero:{prev:prevB},mov:{key:"Libre",label:h.n}}; go("fin"); }
 function heroDiscard(){ if(!draft||!draft.hero) return; clearInterval(HERO_INT); const saved=draft; draft=null; liveClear(); go("home"); undoToast("Desafío descartado",()=>{ draft=saved; heroResume(); go("fuerza"); },{k:"f",d:saved.tipo}); }
 /* héroe: la etiqueta rueda, el tramo hecho de la barra se llena, el resaltado baja a lo que sigue; en EMOM el minuto nuevo rueda */
 let HRMO={};
@@ -7570,7 +7584,7 @@ function renderAjustes(app){
     bindTemaBtn(app,t=>{ const v=$("#ajTemaV"); if(v) v.textContent=t==="dark"?"Oscuro":"Claro"; }); const at=$("#ajTema"); if(at){ at.onclick=e=>{ if(SPL){ if(e&&e.target&&e.target.closest&&e.target.closest("#temaBtn")) return; if(ajSec!=="apariencia"){ ajSec="apariencia"; AJAUTO=false; vib("tic"); render(); } return; } const tb=$("#temaBtn"); if(tb) tb.click(); }; at.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); at.click(); } }; }
     app.querySelectorAll(SPL?".ajside [data-sec]":"[data-sec]").forEach(b=>b.onclick=()=>{ if(!SPL&&b.dataset.sec==="equipo"){ go("equipo"); return; } if(!SPL&&b.dataset.sec==="programas"){ progFrom="ajustes"; prFil="todo"; go("programas"); return; } if(!SPL&&b.dataset.sec==="catalogo"){ catFrom="ajustes"; go("catalogo"); return; } if(!SPL&&b.dataset.sec==="molestias"){ openMol([]); return; } if(SPL&&b.dataset.sec==="catalogo") catFrom="ajustes"; if(SPL&&b.dataset.sec==="programas"){ progFrom="ajustes"; prFil="todo"; } if(SPL){ if(ajSec===b.dataset.sec) return; ajSec=b.dataset.sec; AJAUTO=false; ajFrom=null; vib("tic"); render(); scrollTo({top:0}); return; } SCRM["aj:"]=scrollY; ajSec=b.dataset.sec; animNext=true; render(); scrollTo({top:0}); });
     if(SPL){ app.querySelectorAll(".ajside [data-sec]").forEach(b=>{ const on=b.dataset.sec===ajSec; b.classList.toggle("on",on); if(on) b.setAttribute("aria-current","page"); }); const tm=$("#ajTema"); if(tm) tm.classList.toggle("on",ajSec==="apariencia"); }
-    $("#switchP").onclick=()=>{ PID=null; CFG=null; lsSave(); draft=null; go("home"); }; { const d=$("#delP"); if(d) d.onclick=()=>borrarPersona(); } };
+    $("#switchP").onclick=()=>{ liveClear(); PID=null; CFG=null; lsSave(); draft=null; go("home"); }; { const d=$("#delP"); if(d) d.onclick=()=>borrarPersona(); } };
   if(!ajSec){ paint(app,V(`<div class="topbar"><button class="back gb" id="back" aria-label="Volver a Vos">${I_BACK}</button></div><h1>Ajustes</h1><div class="stag">${ajList()}</div>`)); $("#back").onclick=()=>goBack("vos"); ajListBind(); return; }
   const [tit]=AJS[ajSec]; let h=SPL?`<div class="ajsplit"><aside class="ajside"><div class="topbar"><button class="back gb" id="back" aria-label="Volver a Vos">${I_BACK}</button></div><h1>Ajustes</h1><div class="ajroot">${ajList()}</div></aside><section class="ajmain" aria-label="${esc(tit)}"><div class="ajmhr"><h2 class="ajmh">${tit}</h2><div class="ajact" id="ajAct"></div></div><div class="stag">`:`<div class="topbar"><button class="back gb" id="back" aria-label="Volver a Ajustes">${I_BACK}</button></div><h1>${tit}</h1><div class="stag">`;
   if(ajSec==="vos") h+=`<div class="ajlist"><label class="srow"><div class="st"><div class="n">Nombre</div></div><input type="text" id="aNom" class="sinp" enterkeyhint="done" autocapitalize="words" value="${esc(CFG.nombre||"")}" autocomplete="off"></label>
@@ -8162,7 +8176,7 @@ function lpMenu(el){ const M=lpItems(el); if(!M){ el.classList.remove("lp-press"
       if(a==="mb:card"){ MINI.pos=miniMode()==="tab"?[MINI.side==="l"?0:1,MINI.ty]:miniMode()==="fab"?[navVert()?0:1,1]:[.5,0]; miniSetMode("card"); return; }
       if(a.startsWith("l:")){ const x=a.slice(2), lk=liveKind();
         if(x==="end"){ if(lk==="b") finishBike(!GPS_MODES.includes(bike.modo)&&bike.modo!=="soga"); else if(lk==="m") finishMov(); return; }
-        if(x==="discard"){ if(lk==="b") bikeDiscard(); else if(lk==="m") movDiscard(); else if(lk==="f"&&draft&&!draft.edit){ const saved=draft, sc=cur; draft=null; closeRest(); liveClear(); vivoSave(); vib([10,40,10]); render(); undoToast("Fuerza descartada",()=>{ draft=saved; cur=sc; loadStepper(); vivoSave(); render(); },{k:"f",d:saved.tipo}); } return; }
+        if(x==="discard"){ if(lk==="b") bikeDiscard(); else if(lk==="m") movDiscard(); else if(lk==="f"&&draft&&!draft.edit){ const saved=draft, sc=cur; liveClear(); draft=null; closeRest(); vivoSave(); vib([10,40,10]); render(); undoToast("Fuerza descartada",()=>{ draft=saved; cur=sc; loadStepper(); vivoSave(); render(); },{k:"f",d:saved.tipo}); } return; }
         if(x==="open"&&el.closest("#app")) VT_HERO=el; liveDo(x); return; }
       if(a.startsWith("m:")){ const x=a.slice(2), md=movDe(hoyISO()); if(x==="ver"&&md){ const L=delDia(hoyISO(),"mov"); if(L.length>1) calDaySheet(hoyISO(),el,"mov"); else { histEx=md.id; go("dia"); } } else if(x==="zonas"){ if(!puedeArrancar("m",el)) return; estSel={m:"full",z:[],openZ:true}; go("estirar"); } else if(x==="go") startMov({full:true}); return; }
       if(a==="x:f"){ quickF(nextTipo(),el); return; }
