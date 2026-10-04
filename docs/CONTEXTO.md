@@ -29,7 +29,7 @@ Este repo es Nodo Entreno. Arranca de la v269 de Barra y Bici (su nombre anterio
 - Hasta la etapa 3 apuntan a `http://127.0.0.1:8765/`.
 - Pendiente para la etapa 3 (reloj falso y CI): chk237 falla siempre en el entorno de Claude Code en la nube, también sola y en modo normal ("un toque rápido de costado cambia de tipo", en 1180×820 y 820×1180).
 - También para la etapa 3: chk249 depende del día. Los domingos el perfil de prueba no tiene cardio y la prueba no encuentra "Empezar" en horizontal; falla igual en main.
-- Inestable: chk232 falla en la suite completa (de a 4 en paralelo) y pasa sola, en modo normal. Le pasa en casi todas las corridas desde el 3/10. Revisarla con el reloj falso de la etapa 3.
+- Inestables: chk232, chk233 y chk258 fallan solo en la suite completa (de a 4 en paralelo) y pasan solas, en modo normal. Les pasa en casi todas las corridas desde el 3/10. Revisarlas con el reloj falso de la etapa 3.
 
 ## Cómo se trabaja con Fer
 

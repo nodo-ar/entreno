@@ -1,6 +1,12 @@
 // v270: la app sin conexión. Arma el sitio en un subdirectorio, como GitHub Pages, y usa el service worker real: guarda letra, íconos y lo usado, y cada versión estrena caché
 const {chromium}=require('playwright'); const seed=require('./seed.js'); const {execSync}=require('child_process'); const path=require('path');
-const U='http://127.0.0.1:8765/_sitio_prueba/'; const arma=v=>execSync('node tools/armar.js _sitio_prueba',{cwd:path.join(__dirname,'..'),env:Object.assign({},process.env,{APP_V:v})}).toString().trim();
+/* servidor propio del sitio armado, con una llave para que la página tarde (red lenta) */
+const http=require('http'), fs=require('fs'); const RAIZ=path.join(__dirname,'..','_sitio_prueba'); let LENTO=0;
+const TIPOS={html:'text/html; charset=utf-8',js:'text/javascript',json:'application/json',woff:'font/woff',png:'image/png',svg:'image/svg+xml',webmanifest:'application/manifest+json'};
+const srv=http.createServer((q,res)=>{ let f=decodeURIComponent(q.url.split('?')[0]).replace(/^\/s\//,''); if(f===''||f.endsWith('/')) f+='index.html';
+  const ruta=path.join(RAIZ,f); const dar=()=>fs.readFile(ruta,(e,d)=>{ if(e){ res.writeHead(404); res.end(); return; } res.writeHead(200,{'content-type':TIPOS[f.split('.').pop()]||'application/octet-stream','cache-control':'no-cache'}); res.end(d); });
+  if(LENTO&&f==='index.html') setTimeout(dar,LENTO); else dar(); }).listen(8767);
+const U='http://127.0.0.1:8767/s/'; const arma=v=>execSync('node tools/armar.js _sitio_prueba',{cwd:path.join(__dirname,'..'),env:Object.assign({},process.env,{APP_V:v})}).toString().trim();
 (async()=>{ arma('v900'); const b=await chromium.launch(); const ctx=await b.newContext({viewport:{width:390,height:844}}); const p=await ctx.newPage(); const errs=[]; p.on('pageerror',e=>errs.push(e.message));
   let ok=0,bad=0; const T=(c,m)=>{ if(c) ok++; else { bad++; console.log('FAIL',m); } };
   await p.goto(U); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(500);
@@ -33,4 +39,13 @@ const U='http://127.0.0.1:8765/_sitio_prueba/'; const arma=v=>execSync('node too
   T(r.ver==='v901'&&r.keys.length===1&&r.keys[0]==='entreno-v901','versión nueva: se actualiza y borra la caché vieja · '+JSON.stringify(r));
   await ctx.setOffline(true); await p.reload(); await p.waitForTimeout(1200); r=await p.evaluate(()=>({ver:APP_V,view}));
   T(r.ver==='v901'&&r.view==='home','sin conexión, abre la versión nueva · '+JSON.stringify(r));
+  /* red lenta: la página tarda 8 s; a los 3 s abre la guardada, y la nueva queda guardada para la próxima */
+  await ctx.setOffline(false); LENTO=8000; let t0=Date.now(); await p.reload(); let ms=Date.now()-t0; r=await p.evaluate(()=>({ver:APP_V,view}));
+  T(ms>=2500&&ms<6000&&r.ver==='v901'&&r.view==='home','red lenta: abre la guardada a los 3 s · '+ms+' ms '+JSON.stringify(r));
+  arma('v902'); t0=Date.now(); await p.reload(); ms=Date.now()-t0; r=await p.evaluate(()=>({ver:APP_V}));
+  T(ms<6000&&r.ver==='v901','red lenta con versión nueva publicada: abre la guardada, sin esperar · '+ms+' ms '+JSON.stringify(r));
+  await p.waitForTimeout(9000); /* la red termina en segundo plano y guarda la página nueva */
+  t0=Date.now(); await p.reload(); ms=Date.now()-t0; await p.waitForTimeout(500); r=await p.evaluate(()=>({ver:APP_V}));
+  T(r.ver==='v902','la próxima apertura ya trae la versión nueva · '+ms+' ms '+JSON.stringify(r));
+  LENTO=0; srv.close();
   console.log('ok',ok,'bad',bad,'errs',JSON.stringify(errs.slice(0,3))); await b.close(); })();

@@ -3,6 +3,7 @@
 /* La versión la pone tools/armar.js al publicar (una por commit): cada publicación estrena caché y borra la anterior. */
 const VERSION="dev";
 const CACHE="entreno-"+VERSION;
+const ESPERA=3000; /* lo que se espera a la red antes de abrir la página guardada */
 /* lo que se guarda al instalar: la letra, los íconos y el manifiesto; la página se guarda al abrirla */
 const FIJOS=["./","manifest.webmanifest",
   "assets/fonts/NodoSans-Regular.woff","assets/fonts/NodoSans-Medium.woff","assets/fonts/NodoSans-SemiBold.woff",
@@ -17,10 +18,15 @@ self.addEventListener("fetch",e=>{
   const r=e.request; if(r.method!=="GET") return;
   const u=new URL(r.url), base=self.registration.scope; if(!u.href.startsWith(base)) return;
   const rel=u.pathname.slice(new URL(base).pathname.length);
-  /* la página: primero la red, así cada publicación llega enseguida; sin conexión, la última guardada */
+  /* la página: primero la red, así cada publicación llega enseguida. Si la red no contesta en 3 s (o no hay conexión),
+     la última guardada; la red sigue y, cuando llega, deja la página nueva guardada para la próxima apertura */
   if(rel===""||rel==="index.html"){
-    e.respondWith(fetch(r).then(res=>{ if(res.ok){ const cp=res.clone(); caches.open(CACHE).then(c=>c.put("./",cp)); } return res; })
-      .catch(()=>caches.match("./",{cacheName:CACHE})));
+    const red=fetch(r);
+    e.waitUntil(red.then(res=>{ if(res.ok){ const cp=res.clone(); return caches.open(CACHE).then(c=>c.put("./",cp)); } }).catch(()=>{}));
+    const guardada=()=>caches.match("./",{cacheName:CACHE});
+    e.respondWith(new Promise(listo=>{ let dado=false; const dar=x=>{ if(!dado&&x){ dado=true; clearTimeout(tope); listo(x); } };
+      const tope=setTimeout(()=>guardada().then(dar),ESPERA);
+      red.then(dar,()=>guardada().then(g=>{ dar(g); if(!dado) listo(Response.error()); })); }));
     return; }
   /* letra, íconos, manifiesto, animaciones y rutinas: no cambian dentro de una versión; de la caché, y lo que falte se guarda al pedirlo */
   if(FIJOS.includes(rel)||rel.startsWith("ex/")||rel.startsWith("prog/")){
