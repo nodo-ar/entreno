@@ -6,7 +6,7 @@ const CACHE="entreno-"+VERSION;
 const ESPERA=3000; /* lo que se espera a la red antes de abrir la página guardada */
 /* lo que se guarda al instalar: la letra, los íconos y el manifiesto; la página se guarda al abrirla */
 const FIJOS=["./","manifest.webmanifest",
-  "assets/fonts/NodoSans-Regular.woff","assets/fonts/NodoSans-Medium.woff","assets/fonts/NodoSans-SemiBold.woff",
+  "assets/fonts/NodoSans-Regular.woff","assets/fonts/NodoSans-Medium.woff","assets/fonts/NodoSans-SemiBold.woff","assets/fonts/NodoSans-Bold.woff",
   "assets/fonts/NodoSansAncha-Medium.woff","assets/fonts/NodoSansAncha-SemiBold.woff",
   "assets/fonts/NodoMono-Regular.woff","assets/fonts/NodoMono-Medium.woff",
   "iconos/icon-192.png","iconos/icon-512.png","iconos/maskable-512.png","iconos/apple-touch-icon.png","iconos/favicon-32.png","iconos/ic_stat_entreno.png","iconos/entreno.svg"];

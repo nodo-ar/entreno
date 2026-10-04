@@ -52,7 +52,7 @@ El grafito es el silencio; la luz es lo único que habla. Un pantallazo de Nodo 
 Tres familias propias, derivadas de Mona Sans y Geist Mono (licencia SIL OFL 1.1). Viajan dentro de cada app, así se ven igual en cualquier teléfono.
 
 - **Nodo Sans Ancha** (Medium, Semibold) para títulos y nombres de sesión: ancho expandido, con presencia.
-- **Nodo Sans** (Regular, Medium, Semibold) para todo lo que se lee. Cifras tabulares por defecto, con cero sin barra.
+- **Nodo Sans** (Regular, Medium, Semibold, Bold) para todo lo que se lee. Cifras tabulares por defecto, con cero sin barra.
 - **Nodo Mono** (Regular, Medium) para los números que se leen de un vistazo: relojes, kilos, repeticiones, montos.
 - **Cada punto es un nodo**: en las tres, los puntos de la i, la j, el punto, los dos puntos, el punto medio, la diéresis y el signo dividir son círculos.
 - **El cero de Nodo Mono lleva su nodo**: un punto en el centro, del mismo tamaño que los dos puntos del reloj.
