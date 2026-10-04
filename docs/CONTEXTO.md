@@ -1,6 +1,6 @@
 # Contexto para seguir
 
-Este repo es Nodo Entreno. Arranca de la v269 de Barra y Bici (su nombre anterior), publicada hasta ahora como artifact de claude.ai. Dentro de la app el nombre todavía dice Barra y Bici: el cambio de nombre es un PR aparte, con tableros.
+Este repo es Nodo Entreno. Arranca de la v269 de Barra y Bici (su nombre anterior), publicada hasta ahora como artifact de claude.ai. Dentro de la app ya se llama Nodo Entreno; los nombres internos (`barrabici.v4`, el `app:"barra-y-bici"` del exportado, `byb-fotos`, `byb-live`) quedan como estaban para no perder datos ni respaldos.
 
 ## Dónde está cada cosa
 
@@ -24,10 +24,12 @@ Este repo es Nodo Entreno. Arranca de la v269 de Barra y Bici (su nombre anterio
 
 ## Pruebas
 
-- `tests/suite.js` corre las 60 pruebas (~16–20 min). Si fallan más de 3, no las repite: son del cambio, no de tiempos.
+- `tests/suite.js` corre las 64 pruebas (~13–20 min). Si fallan más de 3, no las repite: son del cambio, no de tiempos.
 - chk232, chk237, chk239 y chk204 a veces fallan por tiempos.
 - Hasta la etapa 3 apuntan a `http://127.0.0.1:8765/`.
 - Pendiente para la etapa 3 (reloj falso y CI): chk237 falla siempre en el entorno de Claude Code en la nube, también sola y en modo normal ("un toque rápido de costado cambia de tipo", en 1180×820 y 820×1180).
+- También para la etapa 3: chk249 depende del día. Los domingos el perfil de prueba no tiene cardio y la prueba no encuentra "Empezar" en horizontal; falla igual en main.
+- Inestables: chk232, chk233 y chk258 fallan solo en la suite completa (de a 4 en paralelo) y pasan solas, en modo normal. Les pasa en casi todas las corridas desde el 3/10. Revisarlas con el reloj falso de la etapa 3.
 
 ## Cómo se trabaja con Fer
 

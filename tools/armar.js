@@ -7,6 +7,7 @@ const git=c=>execSync('git '+c,{cwd:RAIZ,stdio:['ignore','pipe','ignore']}).toSt
 
 /* base: la última etiqueta vNNN; si todavía no está, la APP_V de index.html contando desde el commit que la puso */
 function version(base){
+  if(process.env.APP_V) return process.env.APP_V; /* para probar una versión a mano */
   const fmt=(t,n,sha)=>+n?`${t}+${n} · ${sha}`:t;
   try{ const m=git('describe --tags --match "v[0-9]*" --long --abbrev=7').match(/^(v\d+)-(\d+)-g([0-9a-f]+)$/); if(m) return fmt(m[1],m[2],m[3]); }catch(e){}
   try{ const c=git(`log -1 --format=%H -S 'const APP_V="${base}"' -- index.html`); if(c) return fmt(base,git(`rev-list --count ${c}..HEAD`),git('rev-parse --short=7 HEAD')); }catch(e){}
@@ -17,7 +18,10 @@ const re=/const APP_V="([^"]*)"/; const m=h.match(re); if(!m) throw new Error('n
 const v=version(m[1]); if(v) h=h.replace(re,`const APP_V="${v}"`);
 fs.rmSync(D,{recursive:true,force:true}); fs.mkdirSync(D,{recursive:true});
 fs.writeFileSync(path.join(D,'index.html'),h);
-for(const f of ['sw.js','manifest.webmanifest']) fs.copyFileSync(path.join(RAIZ,f),path.join(D,f));
-for(const d of ['ex','prog','iconos']) fs.cpSync(path.join(RAIZ,d),path.join(D,d),{recursive:true});
+fs.copyFileSync(path.join(RAIZ,'manifest.webmanifest'),path.join(D,'manifest.webmanifest'));
+/* el service worker estrena caché con cada versión, así la app instalada se actualiza y borra la anterior */
+{ const sw=fs.readFileSync(path.join(RAIZ,'sw.js'),'utf8'), rv=/const VERSION="[^"]*"/; if(!rv.test(sw)) throw new Error('no encuentro VERSION en sw.js');
+  fs.writeFileSync(path.join(D,'sw.js'),sw.replace(rv,`const VERSION="${(v||m[1]).replace(/[^\w.+-]+/g,'-')}"`)); }
+for(const d of ['ex','prog','iconos','assets/fonts']) fs.cpSync(path.join(RAIZ,d),path.join(D,d),{recursive:true});
 fs.writeFileSync(path.join(D,'.nojekyll'),'');
 console.log(`armado ${path.relative(RAIZ,D)} · versión ${v||m[1]}`);
