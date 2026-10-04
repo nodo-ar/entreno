@@ -12,7 +12,7 @@ const src=process.argv[2]||'index.html';
   await p.evaluate(()=>{ CFG.prog={f:{id:'base_cali',start:hoyISO()}}; go('home'); }); await W(800);
   let r=await p.evaluate(()=>({S:dsProp(),row:(document.querySelector('#app .dsrow')||{}).textContent||''}));
   T(r.S&&r.S.k==='e'&&r.S.h.id==='perseo'&&r.S.v===1,'entrada: Perseo, nivel intermedio por 6 dominadas '+JSON.stringify(r.S&&{k:r.S.k,h:r.S.h.id,v:r.S.v}));
-  T(/Desafío de entrada/.test(r.row)&&/¿Perseo · Intermedio\?/.test(r.row),'la línea en Inicio · '+r.row.replace(/\s+/g,' '));
+  T(/Desafío de entrada/.test(r.row)&&/Perseo · nivel intermedio/.test(r.row)&&!/¿/.test(r.row),'la línea en Inicio · '+r.row.replace(/\s+/g,' '));
   await p.evaluate(()=>document.querySelector('#dsGo').click()); await W(700);
   r=await p.evaluate(()=>({v:view,h:heroSel,hv:heroV,prop:(document.querySelector('#app .hrprop')||{}).textContent||''}));
   T(r.v==='heroe'&&r.h==='perseo'&&r.hv===1&&/Entrada · Base de calistenia/.test(r.prop),'abre Perseo en Intermedio, con para qué '+JSON.stringify(r));
