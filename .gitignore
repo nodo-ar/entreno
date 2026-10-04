@@ -6,3 +6,4 @@ tests/suite_run*.txt
 !/iconos/*.png
 !/assets/**/*.png
 _site/
+_sitio_prueba/

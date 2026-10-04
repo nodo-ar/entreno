@@ -1,6 +1,33 @@
-/* Nodo Entreno — service worker: solo para la notificación en vivo del entrenamiento */
-self.addEventListener("install",e=>self.skipWaiting());
-self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
+/* Nodo Entreno — service worker: la app sin conexión y la notificación en vivo del entrenamiento */
+
+/* La versión la pone tools/armar.js al publicar (una por commit): cada publicación estrena caché y borra la anterior. */
+const VERSION="dev";
+const CACHE="entreno-"+VERSION;
+/* lo que se guarda al instalar: la letra, los íconos y el manifiesto; la página se guarda al abrirla */
+const FIJOS=["./","manifest.webmanifest",
+  "assets/fonts/NodoSans-Regular.woff","assets/fonts/NodoSans-Medium.woff","assets/fonts/NodoSans-SemiBold.woff",
+  "assets/fonts/NodoSansAncha-Medium.woff","assets/fonts/NodoSansAncha-SemiBold.woff",
+  "assets/fonts/NodoMono-Regular.woff","assets/fonts/NodoMono-Medium.woff",
+  "iconos/icon-192.png","iconos/icon-512.png","iconos/maskable-512.png","iconos/apple-touch-icon.png","iconos/favicon-32.png","iconos/ic_stat_entreno.png","iconos/entreno.svg"];
+
+self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FIJOS.map(u=>new Request(u,{cache:"reload"})))).then(()=>self.skipWaiting())));
+self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith("entreno-")&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+
+self.addEventListener("fetch",e=>{
+  const r=e.request; if(r.method!=="GET") return;
+  const u=new URL(r.url), base=self.registration.scope; if(!u.href.startsWith(base)) return;
+  const rel=u.pathname.slice(new URL(base).pathname.length);
+  /* la página: primero la red, así cada publicación llega enseguida; sin conexión, la última guardada */
+  if(rel===""||rel==="index.html"){
+    e.respondWith(fetch(r).then(res=>{ if(res.ok){ const cp=res.clone(); caches.open(CACHE).then(c=>c.put("./",cp)); } return res; })
+      .catch(()=>caches.match("./",{cacheName:CACHE})));
+    return; }
+  /* letra, íconos, manifiesto, animaciones y rutinas: no cambian dentro de una versión; de la caché, y lo que falte se guarda al pedirlo */
+  if(FIJOS.includes(rel)||rel.startsWith("ex/")||rel.startsWith("prog/")){
+    e.respondWith(caches.open(CACHE).then(c=>c.match(r,{ignoreSearch:true}).then(hit=>hit||fetch(r).then(res=>{ if(res.ok) c.put(r,res.clone()); return res; }))));
+  }
+});
+
 self.addEventListener("notificationclick",e=>{
   const action=e.action||"open";
   if(action==="open") e.notification.close();

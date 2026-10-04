@@ -24,11 +24,12 @@ Este repo es Nodo Entreno. Arranca de la v269 de Barra y Bici (su nombre anterio
 
 ## Pruebas
 
-- `tests/suite.js` corre las 60 pruebas (~16–20 min). Si fallan más de 3, no las repite: son del cambio, no de tiempos.
+- `tests/suite.js` corre las 64 pruebas (~13–20 min). Si fallan más de 3, no las repite: son del cambio, no de tiempos.
 - chk232, chk237, chk239 y chk204 a veces fallan por tiempos.
 - Hasta la etapa 3 apuntan a `http://127.0.0.1:8765/`.
 - Pendiente para la etapa 3 (reloj falso y CI): chk237 falla siempre en el entorno de Claude Code en la nube, también sola y en modo normal ("un toque rápido de costado cambia de tipo", en 1180×820 y 820×1180).
 - También para la etapa 3: chk249 depende del día. Los domingos el perfil de prueba no tiene cardio y la prueba no encuentra "Empezar" en horizontal; falla igual en main.
+- Inestable: chk232 falla en la suite completa (de a 4 en paralelo) y pasa sola, en modo normal. Le pasa en casi todas las corridas desde el 3/10. Revisarla con el reloj falso de la etapa 3.
 
 ## Cómo se trabaja con Fer
 
