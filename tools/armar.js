@@ -18,6 +18,6 @@ const v=version(m[1]); if(v) h=h.replace(re,`const APP_V="${v}"`);
 fs.rmSync(D,{recursive:true,force:true}); fs.mkdirSync(D,{recursive:true});
 fs.writeFileSync(path.join(D,'index.html'),h);
 for(const f of ['sw.js','manifest.webmanifest']) fs.copyFileSync(path.join(RAIZ,f),path.join(D,f));
-for(const d of ['ex','prog','iconos']) fs.cpSync(path.join(RAIZ,d),path.join(D,d),{recursive:true});
+for(const d of ['ex','prog','iconos','assets/fonts']) fs.cpSync(path.join(RAIZ,d),path.join(D,d),{recursive:true});
 fs.writeFileSync(path.join(D,'.nojekyll'),'');
 console.log(`armado ${path.relative(RAIZ,D)} · versión ${v||m[1]}`);
