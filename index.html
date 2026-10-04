@@ -20,8 +20,8 @@
 @font-face{font-family:"Nodo Sans Ancha"; src:url(assets/fonts/NodoSansAncha-SemiBold.woff) format("woff"); font-weight:600; font-style:normal; font-display:swap}
 @font-face{font-family:"Nodo Mono"; src:url(assets/fonts/NodoMono-Regular.woff) format("woff"); font-weight:400; font-style:normal; font-display:swap}
 @font-face{font-family:"Nodo Mono"; src:url(assets/fonts/NodoMono-Medium.woff) format("woff"); font-weight:500; font-style:normal; font-display:swap}
-/* relojes grandes: los dígitos de Nodo Mono (ancho fijo, el cero con su nodo) y los dos puntos de Nodo Sans, que no dejan aire a los costados */
-@font-face{font-family:"Nodo Reloj"; src:url(assets/fonts/NodoMono-Medium.woff) format("woff"); font-weight:500; font-style:normal; font-display:swap}
+/* relojes: los dígitos de Nodo Mono (ancho fijo, el cero con su nodo) y los dos puntos de Nodo Sans, que no dejan aire a los costados; las letras ("descanso", "en pausa") siguen en Nodo Sans */
+@font-face{font-family:"Nodo Reloj"; src:url(assets/fonts/NodoMono-Medium.woff) format("woff"); font-weight:500; font-style:normal; font-display:swap; unicode-range:U+0030-0039}
 @font-face{font-family:"Nodo Reloj"; src:url(assets/fonts/NodoSans-Medium.woff) format("woff"); font-weight:500; font-style:normal; font-display:swap; unicode-range:U+003A}
 /* ============ TOKENS (dark-first) ============ */
 :root{
@@ -36,7 +36,7 @@
   --glass:rgba(18,21,27,.72);
   --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:22px;
   /* tipografía: Nodo Sans Ancha para títulos, Nodo Sans para el texto, Nodo Mono para relojes; números siempre tabulares */
-  --f-ui:"Nodo Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --f-disp:"Nodo Sans Ancha","Nodo Sans",system-ui,sans-serif; --f-num:var(--f-ui); --f-mono:"Nodo Mono",ui-monospace,monospace; --f-reloj:"Nodo Reloj","Nodo Mono",ui-monospace,monospace;
+  --f-ui:"Nodo Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --f-disp:"Nodo Sans Ancha","Nodo Sans",system-ui,sans-serif; --f-num:var(--f-ui); --f-mono:"Nodo Mono",ui-monospace,monospace; --f-reloj:"Nodo Reloj","Nodo Sans",system-ui,sans-serif;
   /* escala única: 10 pasos */
   --t-2xs:10px; --t-xs:11px; --t-s:12px; --t-sm:13px; --t-md:15px; --t-lg:17px; --t-xl:20px; --t-2xl:22px; --t-3xl:28px; --t-4xl:34px; --t-num:56px;
   /* una sola curva: llega y se queda, nada rebota (docs/marca, Movimiento) */
@@ -91,10 +91,12 @@ html,body{height:100%} html{font-synthesis:none}
 @media (prefers-color-scheme: light){ :root:not([data-theme="dark"]) .bgfx #bgc{opacity:.4; mix-blend-mode:multiply; filter:saturate(1.1)} }
 body{background:var(--bg); color:var(--ink); font-family:var(--f-ui); font-optical-sizing:auto; font-size:var(--t-md); line-height:1.4; margin:0; -webkit-tap-highlight-color:transparent; font-weight:500}
 .wrap{max-width:540px; margin:0 auto; padding:0 16px; padding-block:8px 104px}
-h1,h2,h3{font-family:var(--f-disp); margin:0; text-wrap:balance; letter-spacing:-.01em; word-spacing:.05em; font-weight:700}
+h1,h2,h3{font-family:var(--f-disp); margin:0; text-wrap:balance; letter-spacing:-.01em; word-spacing:.05em; font-weight:600}
 h1{font-size:var(--t-4xl); line-height:1.05; font-weight:600; letter-spacing:-.014em} b,strong{font-weight:700} h2{font-size:var(--t-2xl); line-height:1.1} h3{font-size:var(--t-lg); line-height:1.2}
 p{margin:.4em 0}
 .num{font-family:var(--f-num); font-variant-numeric:tabular-nums; font-weight:600} svg text{font-variant-numeric:tabular-nums}
+/* todo reloj que corre con ":" (cardio, tarjeta en curso, isla, descanso, encabezado de la serie, pausas cortas): una sola letra, sin saltos */
+.reloj{font-family:var(--f-reloj); font-variant-numeric:tabular-nums}
 .eyebrow{font-size:var(--t-xs); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); font-weight:600}
 .muted{color:var(--ink-2)} .dim{color:var(--ink-3)} .sm{font-size:var(--t-sm)} .xs{font-size:var(--t-xs)}
 .card{padding:16px; background:color-mix(in srgb,var(--s1) 34%,transparent); backdrop-filter:blur(calc(22px * var(--bk,1))) saturate(1.25); -webkit-backdrop-filter:blur(calc(22px * var(--bk,1))) saturate(1.25); isolation:isolate; border:1px solid rgba(255,255,255,.07); box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 8px 24px -16px rgba(0,0,0,.6); border-radius:18px; margin-top:12px}
@@ -605,7 +607,7 @@ details summary::before{content:""; display:block; width:16px; height:16px; flex
 .helpsheet{max-height:70vh; overflow-y:auto; font-size:var(--t-md); color:var(--ink-2)} .helpsheet p{margin:.5em 0} .helpsheet b{color:var(--ink)}
 .cchip .cb{white-space:nowrap} .cchip{position:fixed; left:16px; right:16px; bottom:calc(88px + env(safe-area-inset-bottom,0px)); z-index:75; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; padding:12px 12px 12px 14px; border-radius:var(--r-md); background:color-mix(in srgb,var(--s1) 78%,transparent); backdrop-filter:blur(calc(24px * var(--bk,1))) saturate(1.9); -webkit-backdrop-filter:blur(calc(24px * var(--bk,1))) saturate(1.9); border:1px solid rgba(255,255,255,.1); box-shadow:inset 0 1px 0 rgba(255,255,255,.1), 0 16px 40px -12px rgba(0,0,0,.7); max-width:508px; margin:0 auto; animation:chipin .32s var(--spring)}
 .cchip .ci{width:40px; height:40px; border-radius:12px; background:var(--rose-soft); color:var(--rose); display:grid; place-items:center} .cchip .ci svg{width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.cchip .ct{min-width:0} .cchip .ct b{display:block; font-family:var(--f-disp); font-size:var(--t-md); font-weight:700; letter-spacing:-.01em; line-height:1.15} .cchip .ct span{display:block; font-size:var(--t-xs); color:var(--ink-3); font-weight:600; margin-top:2px}
+.cchip .ct{min-width:0} .cchip .ct b{display:block; font-family:var(--f-disp); font-size:var(--t-md); font-weight:600; letter-spacing:-.01em; line-height:1.15} .cchip .ct span{display:block; font-size:var(--t-xs); color:var(--ink-3); font-weight:600; margin-top:2px}
 .cchip .cb{display:flex; gap:6px} .cchip .cb button{border:1px solid var(--line-2); background:var(--s2); color:var(--ink); font-weight:700; font-size:var(--t-sm); min-height:38px; padding:0 14px; border-radius:10px; transition:transform .1s} .cchip .cb button:active{transform:scale(.95)}
 .cchip .cb [data-yes]{background:var(--rose); border-color:var(--rose); color:#fff}
 @keyframes chipin{from{transform:translateY(18px) scale(.97); opacity:0} to{transform:none; opacity:1}}
@@ -615,12 +617,12 @@ details summary::before{content:""; display:block; width:16px; height:16px; flex
 .prot{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; background:color-mix(in srgb,var(--s1) 34%,transparent); backdrop-filter:blur(calc(22px * var(--bk,1))) saturate(1.9); -webkit-backdrop-filter:blur(calc(22px * var(--bk,1))) saturate(1.9); border-color:rgba(255,255,255,.09); border-radius:var(--r-md); padding:16px; margin-top:8px; border:1px solid var(--line); cursor:pointer; transition:border-color .2s,background .2s}
 .prot.sel{border-color:var(--aqua); background:var(--aqua-soft)}
 .prot .k{font-family:var(--f-num); font-size:var(--t-2xl); font-weight:700; color:var(--aqua); text-align:right; font-variant-numeric:tabular-nums} .prot .k small{font-size:var(--t-2xs); color:var(--ink-3); display:block; font-weight:600; letter-spacing:.06em; text-transform:uppercase}
-.prot .n{font-weight:700; font-size:var(--t-md); font-family:var(--f-disp)} .prot .d{font-size:var(--t-xs); color:var(--ink-3); font-weight:600}
+.prot .n{font-weight:600; font-size:var(--t-md); font-family:var(--f-disp)} .prot .d{font-size:var(--t-xs); color:var(--ink-3); font-weight:600}
 .phasebar{display:flex; height:8px; border-radius:4px; overflow:hidden; gap:1px; margin:10px 0} .phasebar i{display:block; height:100%}
 .ph-warm{background:var(--aqua-deep)} .ph-hard{background:var(--ember)} .ph-easy{background:var(--s3)} .ph-cool{background:var(--aqua-deep)} .ph-rest{background:color-mix(in srgb,var(--ink-3) 30%,var(--s2))}
-.bigtimer{text-align:center; padding:24px 0 12px} .bigtimer .ph{font-family:var(--f-disp); font-weight:700; font-size:var(--t-4xl); letter-spacing:-.02em}
+.bigtimer{text-align:center; padding:24px 0 12px} .bigtimer .ph{font-family:var(--f-disp); font-weight:600; font-size:var(--t-4xl); letter-spacing:-.02em}
 .bigtimer .ph.hard{color:var(--ember)} .bigtimer .ph.easy{color:var(--ink-2)} .bigtimer .ph.warm,.bigtimer .ph.cool{color:var(--aqua)}
-.bigtimer .t{font-family:var(--f-reloj); font-size:84px; font-weight:500; letter-spacing:-.02em; line-height:1; font-variant-numeric:tabular-nums} .bigtimer .sub{font-size:var(--t-sm); color:var(--ink-3); margin-top:6px; font-weight:700}
+.bigtimer .t{font-size:84px; font-weight:500; letter-spacing:-.02em; line-height:1; font-variant-numeric:tabular-nums} .bigtimer .sub{font-size:var(--t-sm); color:var(--ink-3); margin-top:6px; font-weight:700}
 .bigtimer .res{display:inline-block; margin-top:10px; font-family:var(--f-num); font-size:var(--t-sm); background:var(--s2); border-radius:99px; padding:6px 14px; font-weight:700; font-variant-numeric:tabular-nums}
 .live{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:12px}
 .live .lv{background:var(--s2); border-radius:var(--r-sm); padding:10px 8px; text-align:center}
@@ -691,14 +693,14 @@ svg text{fill:var(--ink-3)} .empty{color:var(--ink-3); font-size:var(--t-sm); pa
 .semaforo .dot{width:46px; height:46px; border-radius:50%; box-shadow:0 0 0 6px color-mix(in srgb,currentColor 18%,transparent)}
 .semaforo.ok{background:var(--lime-soft); color:var(--lime)} .semaforo.ok .dot{background:var(--lime)} .semaforo.warn{background:var(--amber-soft); color:var(--amber)} .semaforo.warn .dot{background:var(--amber)}
 .semaforo.bad{background:var(--rose-soft); color:var(--rose)} .semaforo.bad .dot{background:var(--rose)} .semaforo.wait{background:var(--s2); color:var(--ink-2)} .semaforo.wait .dot{background:var(--line-2); box-shadow:none}
-.semaforo b{display:block; font-size:var(--t-md); font-family:var(--f-disp); font-weight:700} .semaforo span{font-size:var(--t-sm); font-weight:600; opacity:.9}
+.semaforo b{display:block; font-size:var(--t-md); font-family:var(--f-disp); font-weight:600} .semaforo span{font-size:var(--t-sm); font-weight:600; opacity:.9}
 .equip{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--line)} .equip:last-child{border-bottom:0}
 .equip .n{font-weight:700; font-size:var(--t-sm)} .equip .d{font-size:var(--t-xs); color:var(--ink-3); font-weight:600}
 .sw{width:52px; height:30px; border-radius:15px; border:0; background:var(--s3); position:relative; transition:background .2s} .sw::after{content:""; position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; transition:left .2s var(--spring); box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .sw.on{background:var(--ember)} .sw.on::after{left:25px}
 .lock{font-size:var(--t-2xs); color:var(--amber); background:var(--amber-soft); border-radius:99px; padding:2px 8px; font-weight:600; letter-spacing:.06em; text-transform:uppercase}
 .stepbar{display:flex; gap:4px; margin:12px 0 16px} .stepbar span{flex:1; height:4px; border-radius:2px; background:var(--s3); transition:background .3s} .stepbar span.on{background:var(--ember)}
-.avatar{width:44px; height:44px; border-radius:50%; display:grid; place-items:center; font-family:var(--f-disp); font-weight:700; font-size:var(--t-lg); color:#fff; background:linear-gradient(135deg,var(--ember-deep),var(--ember))}
+.avatar{width:44px; height:44px; border-radius:50%; display:grid; place-items:center; font-family:var(--f-disp); font-weight:600; font-size:var(--t-lg); color:#fff; background:linear-gradient(135deg,var(--ember-deep),var(--ember))}
 .avatar.b{background:linear-gradient(135deg,var(--aqua-deep),var(--aqua)); color:#03211e}
 .profile{display:flex; align-items:center; gap:12px; padding:12px 16px; background:color-mix(in srgb,var(--s1) 34%,transparent); backdrop-filter:blur(calc(22px * var(--bk,1))) saturate(1.9); -webkit-backdrop-filter:blur(calc(22px * var(--bk,1))) saturate(1.9); border:1px solid var(--line); border-radius:var(--r-md); margin-top:8px; width:100%; text-align:left; transition:transform .1s} .profile:active{transform:scale(.98)}
 .toast{position:fixed; left:50%; transform:translateX(-50%) translateY(10px); bottom:calc(84px + env(safe-area-inset-bottom,0px)); background:var(--ink); color:var(--bg); padding:10px 18px; border-radius:99px; font-size:var(--t-sm); font-weight:700; z-index:70; opacity:0; transition:opacity .2s,transform .25s var(--spring); pointer-events:none} .toast.show{opacity:1; transform:translateX(-50%)}
@@ -713,7 +715,7 @@ nav.bottom[hidden],nav.bottom[hidden]~#fab{display:none}
 .sheet.dyn{z-index:62; max-height:86vh; overflow-y:auto}
 .nsrow{display:grid; grid-template-columns:44px 1fr auto; align-items:center; gap:12px; width:100%; text-align:left; padding:10px; border-radius:var(--r-md); border:1px solid var(--line); background:color-mix(in srgb,var(--s2) 60%,transparent); color:var(--ink); margin-top:8px; transition:transform .1s} .nsrow:active{transform:scale(.98)}
 .nsrow .ic{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:color-mix(in srgb,var(--c) 16%,transparent); color:var(--c)} .nsrow .ic svg{width:24px; height:24px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.nsrow b{display:block; font-family:var(--f-disp); font-size:var(--t-md); font-weight:700; letter-spacing:-.01em} .nsrow .d{font-size:var(--t-xs); color:var(--ink-3); font-weight:600; margin-top:1px}
+.nsrow b{display:block; font-family:var(--f-disp); font-size:var(--t-md); font-weight:600; letter-spacing:-.01em} .nsrow .d{font-size:var(--t-xs); color:var(--ink-3); font-weight:600; margin-top:1px}
 .nsrow .go{color:var(--ink-3); font-size:var(--t-xl); padding-right:4px}
 .nsrow.mv{grid-template-columns:44px 1fr; cursor:default} .nsrow.mv .zs{grid-column:1/-1; display:flex; flex-wrap:wrap; gap:6px; align-items:center}
 .zchip{border:1px solid var(--line-2); background:transparent; color:var(--ink-2); font-weight:600; font-size:var(--t-s); padding:6px 11px; border-radius:99px} .zchip.on{background:var(--ink); border-color:var(--ink); color:var(--bg)}
@@ -809,7 +811,7 @@ button,[role=button]{touch-action:manipulation}
 @keyframes fmin{from{opacity:0; transform:translateY(26px) scale(.6)}}
 .fmb{display:flex; align-items:center; gap:10px; padding:6px 16px 6px 6px; border-radius:99px; border:1px solid var(--line); background:var(--s1); box-shadow:0 8px 22px -10px rgba(0,0,0,.55); color:var(--ink); text-align:left; box-shadow:0 10px 28px -12px rgba(0,0,0,.55); transition:transform .1s} .fmb:active{transform:scale(.96)}
 .fmb .ic{width:40px; height:40px; flex:0 0 40px; border-radius:50%; display:grid; place-items:center; background:color-mix(in srgb,var(--c) 18%,transparent); color:var(--c)} .fmb .ic svg{width:21px; height:21px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.fmb b{display:block; font-family:var(--f-disp); font-weight:700; font-size:var(--t-md); line-height:1.1} .fmb small{display:block; font-size:var(--t-xs); color:var(--ink-2); font-weight:600; margin-top:1px; white-space:nowrap}
+.fmb b{display:block; font-family:var(--f-disp); font-weight:600; font-size:var(--t-md); line-height:1.1} .fmb small{display:block; font-size:var(--t-xs); color:var(--ink-2); font-weight:600; margin-top:1px; white-space:nowrap}
 .fmx{width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:color-mix(in srgb,var(--s1) 88%,transparent); backdrop-filter:blur(calc(22px * var(--bk,1))); color:var(--ink-2); display:grid; place-items:center; box-shadow:0 10px 28px -12px rgba(0,0,0,.55)} .fmx svg{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; transition:transform .25s} .fmx.on svg{transform:rotate(180deg)}
 .fmz{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px; max-width:300px; padding:8px; border-radius:18px; background:color-mix(in srgb,var(--s1) 88%,transparent); backdrop-filter:blur(calc(22px * var(--bk,1))); border:1px solid var(--line); animation:fmin .3s cubic-bezier(.2,.7,.2,1) both}
 /* deshacer, estirar, volver */
@@ -856,7 +858,7 @@ body.fask-on #app .stag>.dock{margin-top:84px}
 .estlist{display:flex; flex-direction:column; gap:8px; margin-top:12px}
 .estop{display:grid; grid-template-columns:40px 1fr auto; align-items:center; gap:12px; width:100%; padding:12px; border-radius:var(--r-md); border:1px solid var(--line); background:color-mix(in srgb,var(--s1) 34%,transparent); backdrop-filter:blur(calc(22px * var(--bk,1))) saturate(1.9); -webkit-backdrop-filter:blur(calc(22px * var(--bk,1))) saturate(1.9); color:var(--ink); text-align:left; transition:transform .1s,border-color .2s,background .2s} .estop:active{transform:scale(.98)}
 .estop .ic{width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:var(--lime-soft); color:var(--lime)} .estop .ic svg{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.estop b{display:block; font-family:var(--f-disp); font-size:var(--t-md); font-weight:700} .estop small{display:block; font-size:var(--t-xs); color:var(--ink-3); font-weight:600; margin-top:1px} .estop .mn{font:700 var(--t-xl) var(--f-num); color:var(--lime); text-align:right; font-variant-numeric:tabular-nums} .estop .mn small{display:block; font-size:var(--t-2xs); color:var(--ink-3)}
+.estop b{display:block; font-family:var(--f-disp); font-size:var(--t-md); font-weight:600} .estop small{display:block; font-size:var(--t-xs); color:var(--ink-3); font-weight:600; margin-top:1px} .estop .mn{font:700 var(--t-xl) var(--f-num); color:var(--lime); text-align:right; font-variant-numeric:tabular-nums} .estop .mn small{display:block; font-size:var(--t-2xs); color:var(--ink-3)}
 .estop.on{border-color:var(--lime); background:color-mix(in srgb,var(--lime) 9%,transparent)}
 .edgeback{position:fixed; left:0; top:50%; z-index:90; width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:color-mix(in srgb,var(--s1) 85%,transparent); border:1px solid var(--line); color:var(--ink-2); transform:translate(-40px,-50%) scale(.6); pointer-events:none; box-shadow:0 8px 24px -8px rgba(0,0,0,.5)} .edgeback svg{width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round} .edgeback.go{background:var(--ember); color:#fff; border-color:transparent}
 .pop.exmore{min-width:210px}
@@ -929,7 +931,7 @@ body.vthide #minibar{visibility:hidden; opacity:0; transition:none}
 .lnow .lt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
 .lnow .lt b{font-size:var(--t-lg); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .lnow .lt small{font-size:var(--t-s); font-weight:600; opacity:.92; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.lbig{text-align:right; line-height:1; flex:0 0 auto} .lbig b{display:block; font-family:var(--f-reloj); font-size:var(--t-4xl); font-weight:500; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+.lbig{text-align:right; line-height:1; flex:0 0 auto} .lbig b{display:block; font-size:var(--t-4xl); font-weight:500; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
 .lbig small{display:block; margin-top:3px; font-size:var(--t-2xs); letter-spacing:.14em; text-transform:uppercase; font-weight:600; opacity:.85}
 .lseg{display:flex; gap:3px; margin-top:12px; height:6px}
 .lseg i{flex:1; min-width:4px; border-radius:3px; background:color-mix(in srgb,currentColor 22%,transparent); overflow:hidden}
@@ -1082,7 +1084,7 @@ body.kpopen #rest.restbar{transform:translateY(calc(-1 * var(--kph,300px) + 12px
 .restbar #restsig{font-size:var(--t-xs); font-weight:600; color:var(--ink-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .restbar #restsig:empty{display:none}
 .restbar #restlbl{font-size:var(--t-sm); font-weight:700; color:var(--ink); white-space:nowrap}
-.restbar #restt{font:500 var(--t-2xl) var(--f-mono); letter-spacing:-.02em; color:var(--ink); transition:font-size .25s,color .3s; font-variant-numeric:tabular-nums; min-width:3.1ch}
+.restbar #restt{font-size:var(--t-2xl); font-weight:500; line-height:normal; letter-spacing:-.02em; color:var(--ink); transition:font-size .25s,color .3s; font-variant-numeric:tabular-nums; min-width:3.1ch}
 /* últimos 10 s: solo el número toma el color de fuerza */
 #rest.warn #restt{color:var(--ember)}
 /* terminado: cuenta lo que te pasaste, sin colores nuevos; la acción pasa a ser seguir */
@@ -1104,7 +1106,7 @@ body.kpopen #rest.bye{animation:none; opacity:0}
 .restbar .rbb.pri{background:var(--s2); color:var(--ink)}
 .restbar .rbb:active{transform:scale(.95)}
 #rest.restbar.xl .rbrow{flex-wrap:wrap; padding:18px 14px 22px} #rest.restbar.xl .rbl{flex:1 0 100%; flex-direction:column; align-items:center; gap:4px; margin-bottom:14px}
-#rest.restbar.xl .rbtx{align-items:center} #rest.restbar.xl #restt{font-family:var(--f-reloj); font-size:56px; line-height:1} #rest.restbar.xl .rbb{flex:1; height:46px}
+#rest.restbar.xl .rbtx{align-items:center} #rest.restbar.xl #restt{font-size:56px; line-height:1} #rest.restbar.xl .rbb{flex:1; height:46px}
 #rest.restbar.xl .rbadj{flex:2}
 #rest.restbar.xl .rbadj .rbb{height:44px}
 #rest.restbar.xl .rbtrack{bottom:10px}
@@ -1623,7 +1625,7 @@ svg.ico2 .hd{fill:currentColor!important; stroke:none!important} svg.ico2 .fa{fi
 .skld{width:22px; height:22px; flex:0 0 22px; border-radius:50%; display:grid; place-items:center; font:600 var(--t-xs) var(--f-num); border:1.5px solid var(--line); font-variant-numeric:tabular-nums} .sklad .ok .skld{background:var(--c); border-color:var(--c); color:var(--bg)} .sklad .ok .skld svg{width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:3.4} .sklad .cur .skld{border-color:var(--c); color:var(--c)}
 .fzhero{padding:16px}
 .fzh1{display:flex; gap:14px; align-items:center} .fzic{width:52px; height:52px; flex:0 0 52px; border-radius:16px; display:grid; place-items:center; background:color-mix(in srgb,var(--ember) 16%,transparent); color:var(--ember)} .fzic svg{width:30px; height:30px; fill:currentColor} .fzic.sm{width:40px; height:40px; flex:0 0 40px; border-radius:12px} .fzic.sm svg{width:23px; height:23px} .fzic.ln{background:var(--s2); color:var(--ink-2)} .fzic.ln svg{fill:none; stroke:currentColor; stroke-width:2}
-.fzh1 small{display:block; font-size:var(--t-xs); font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ember)} .fzh1 b{display:block; font-family:var(--f-disp); font-size:var(--t-2xl); font-weight:700; letter-spacing:-.02em; line-height:1.1} .fzh1 .grow>span{display:block; font-size:var(--t-sm); font-weight:700; color:var(--ink-3); margin-top:2px}
+.fzh1 small{display:block; font-size:var(--t-xs); font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ember)} .fzh1 b{display:block; font-family:var(--f-disp); font-size:var(--t-2xl); font-weight:600; letter-spacing:-.02em; line-height:1.1} .fzh1 .grow>span{display:block; font-size:var(--t-sm); font-weight:700; color:var(--ink-3); margin-top:2px}
 .fzmeta{display:flex; gap:14px; margin-top:12px; font-size:var(--t-s); font-weight:600; color:var(--ink-3)} .fzmeta b{color:var(--ink)}
 .fztags{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
 .fzlist{margin-top:12px; border-top:1px solid var(--line)} .fzlist>div{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:var(--t-sm); font-weight:700} .fzlist i{font-style:normal; width:18px; font-size:var(--t-xs); color:var(--ink-3)} .fzlist span{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap} .fzlist b{font-size:var(--t-s); color:var(--ink-3)} .fzlist .por span{color:var(--rose)} .fzlist .sk i{color:var(--amber)} .fzlist .sk .lvico{width:14px; height:14px} .fzlist .sk b{color:var(--amber); font-family:inherit}
@@ -1797,7 +1799,7 @@ button.card.ajrow{border-radius:18px}
 .hpeek.aqua{background:linear-gradient(135deg,var(--aqua-deep),var(--aqua)); color:#03211e}
 .hpeek.done{background:color-mix(in srgb,var(--s2) 70%,transparent); color:var(--ink); filter:none; border:1px solid var(--line)}
 .hpeek .k{display:flex; align-items:center; gap:5px; font-size:var(--t-xs); letter-spacing:.12em; text-transform:uppercase; font-weight:600; opacity:.92; white-space:nowrap} .hpeek .k svg{width:15px; height:15px}
-.hpeek b{font-family:var(--f-disp); font-size:var(--t-md); font-weight:700; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:-2px}
+.hpeek b{font-family:var(--f-disp); font-size:var(--t-md); font-weight:600; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:-2px}
 .hpeek .pi{display:flex; align-items:center; gap:4px; font:600 var(--t-xs) var(--f-num); opacity:.9; white-space:nowrap; font-variant-numeric:tabular-nums} .hpeek .pi svg{width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:3}
 .hpeek.done .pi{color:var(--lime)} .hpeek.done.aqua .k{color:var(--aqua)} .hpeek.done:not(.aqua) .k{color:var(--ember)}
 .hstack .swghost{position:absolute; left:0; right:0; top:48px; margin:0; pointer-events:none}
@@ -1806,7 +1808,7 @@ button.card.ajrow{border-radius:18px}
 .card.pasos input{width:96px; border:0; background:transparent; padding:0; font:700 var(--t-2xl)/1.1 var(--f-num); letter-spacing:-.02em; color:var(--ink); -moz-appearance:textfield; font-variant-numeric:tabular-nums} .card.pasos input::-webkit-inner-spin-button{display:none} .card.pasos input:focus{outline:none; border-bottom:2px solid var(--lime)}
 .pbar{height:6px; border-radius:99px; background:var(--s3); margin-top:6px; overflow:hidden} .pbar i{display:block; height:100%; border-radius:99px; background:var(--lime)}
 .pkhead{display:flex; align-items:center; gap:12px} .pkhead .ic{width:36px; height:36px; flex:0 0 36px; border-radius:10px; display:grid; place-items:center; background:color-mix(in srgb,var(--c) 18%,transparent); color:var(--c)} .pkhead .ic svg{width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.pkhead b{display:block; font-family:var(--f-disp); font-size:var(--t-md); font-weight:700} .pkhead span:not(.ic){display:block; font-size:var(--t-xs); color:var(--ink-3); font-weight:600; margin-top:1px}
+.pkhead b{display:block; font-family:var(--f-disp); font-size:var(--t-md); font-weight:600} .pkhead span:not(.ic){display:block; font-size:var(--t-xs); color:var(--ink-3); font-weight:600; margin-top:1px}
 .pklbl{font-size:var(--t-xs); font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); margin-top:14px}
 .seg.c2{grid-template-columns:1fr 1fr} .seg.c2 button{min-height:44px; padding:0 6px} .seg.lm button.on{background:var(--lime-soft); border-color:var(--lime); color:var(--lime)}
 /* ajustes */
@@ -1947,7 +1949,7 @@ button.srow:active,label.srow:active{background:var(--s2); border-radius:12px}
 /* fin */
 .hrfin{text-align:center; padding:22px 16px 18px} .hrei.xl{width:60px; height:60px; border-radius:18px; margin:0 auto; background:var(--c)} .hrei.xl .hre{width:32px; height:32px; stroke:#fff; stroke-width:1.8}
 .hrfin h2{margin:12px 0 2px} .hrfv{font-size:var(--t-sm); color:var(--ink-3); font-weight:600}
-.hrfb{margin-top:14px; font-family:var(--f-disp); font-size:var(--t-num); font-weight:700; letter-spacing:-.03em; line-height:1} .hrfu{margin-top:4px; font-size:var(--t-sm); color:var(--ink-3); font-weight:600}
+.hrfb{margin-top:14px; font-family:var(--f-disp); font-size:var(--t-num); font-weight:600; letter-spacing:-.03em; line-height:1} .hrfu{margin-top:4px; font-size:var(--t-sm); color:var(--ink-3); font-weight:600}
 .hrfd{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:12px; font-size:var(--t-sm); color:var(--ink-3); font-weight:600} .hrfd .dlt{margin:0; min-width:0}
 .hrtot h3{margin-bottom:4px} .hrtr{display:flex; align-items:center; gap:12px; padding:9px 0; border-top:1px solid var(--line)} .hrtr .prth{width:38px; height:38px; flex:0 0 38px; border-radius:10px} .hrtr>b{font-size:var(--t-md); font-weight:700}
 .hrtq{display:flex; flex-direction:column; align-items:flex-end} .hrtq b{font-size:var(--t-lg); font-weight:700} .hrtq small{font-size:var(--t-xs); color:var(--ink-3); font-weight:600}
@@ -2031,7 +2033,7 @@ button.srow:active,label.srow:active{background:var(--s2); border-radius:12px}
 .setc.sub b{color:var(--ink-2)}
 .sejn .sstag{vertical-align:2px}
 .ssmini{color:var(--ember)} .ssmini b{font-weight:700}
-.tyhint .tymini{margin-left:auto; font:700 var(--t-sm) var(--f-num); color:var(--aqua)}
+.tyhint .tymini{margin-left:auto; font-size:var(--t-sm); font-weight:700; line-height:normal; color:var(--aqua)}
 .fzlist i.fzss{color:var(--ember); font-weight:700}
 /* pantalla que no se pudo dibujar */
 .errcard h3{margin-bottom:4px} .errcard .row{margin-top:14px}
@@ -2076,7 +2078,7 @@ html.perf-fc .celart::before{animation:none}
 .prfh{display:flex; align-items:center; gap:14px; margin-top:8px}
 .prfm{display:flex; align-items:flex-end; gap:3px; height:24px; flex:0 0 auto}
 .prfm i{width:6px; border-radius:2px; background:var(--s3)} .prfm i.on{background:var(--c)}
-.prfh b{display:block; font-family:var(--f-disp); font-size:var(--t-2xl); font-weight:700; letter-spacing:-.015em; line-height:1.15}
+.prfh b{display:block; font-family:var(--f-disp); font-size:var(--t-2xl); font-weight:600; letter-spacing:-.015em; line-height:1.15}
 .prfh small{display:block; font-size:var(--t-sm); color:var(--ink-3); font-weight:500; margin-top:2px}
 .prfsp{display:block; width:100%; height:46px; margin-top:14px}
 .prfcap{font-size:var(--t-xs); color:var(--ink-3); font-weight:500; margin-top:6px}
@@ -2186,7 +2188,7 @@ html.perf-nv #minibar.isle{background-color:#08090b}
 #minibar.isle .ir{position:relative; width:28px; height:28px; flex:0 0 28px; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--ci) calc(var(--p,0)*360deg),rgba(255,255,255,.14) 0)}
 #minibar.isle .ir::before{content:""; position:absolute; inset:2.5px; border-radius:50%; background:#08090b}
 #minibar.isle .ir .mb-ic{position:relative; width:auto; height:auto; flex:none; background:none; color:var(--ci)} #minibar.isle .ir .mb-ic svg{width:15px; height:15px}
-#minibar.isle b{margin:0; font:700 var(--t-md) var(--f-num); letter-spacing:-.02em; color:var(--ci); font-variant-numeric:tabular-nums}
+#minibar.isle b{margin:0; font-size:var(--t-md); font-weight:700; line-height:normal; letter-spacing:-.02em; color:var(--ci); font-variant-numeric:tabular-nums}
 #minibar.isle .zl{display:flex; align-items:center; gap:5px; max-width:118px; font:600 var(--t-s) var(--f-ui); color:rgba(255,255,255,.75)} #minibar.isle .zl span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 #minibar.isle .zl i{width:7px; height:7px; flex:0 0 7px; border-radius:50%}
 #minibar.isle .mb-b.pri{width:28px; height:28px; flex:0 0 28px; border-radius:50%; background:var(--ci); color:#08090b; margin-left:2px}
@@ -2364,7 +2366,7 @@ body.mbdock .tvp{height:calc(100dvh - 140px)}
 .skhd{display:flex; align-items:center; gap:12px}
 .skim{width:56px; height:56px; flex:0 0 56px; border-radius:14px; overflow:hidden; display:grid; place-items:center}
 .skim .photo{width:100%; height:100%; aspect-ratio:auto; border-radius:0} .skim .skic{width:100%; height:100%; border-radius:14px}
-.sktt{font-family:var(--f-disp); font-size:var(--t-2xl); font-weight:700; letter-spacing:-.02em; line-height:1.15; margin-top:3px}
+.sktt{font-family:var(--f-disp); font-size:var(--t-2xl); font-weight:600; letter-spacing:-.02em; line-height:1.15; margin-top:3px}
 .skbar{display:flex; gap:4px; margin:14px 0 12px} .skbar i{flex:1; height:6px; border-radius:3px; background:var(--s3)} .skbar i.on{background:var(--c)} .skbar i.cur{background:color-mix(in srgb,var(--c) 45%,var(--s3))}
 .sktl b{color:var(--ink)!important}
 .skcue{margin:14px 0 0; font-size:var(--t-md); line-height:1.45; color:var(--ink-2)}
@@ -2832,7 +2834,7 @@ button.frow:active{background:var(--s2)}
 .bigtimer .ph.piso{color:var(--ember); font-size:var(--t-2xl); line-height:1.15; padding:0 12px; text-wrap:balance}
 .bigtimer .sub .phw.piso{color:var(--ember)}
 .bigtimer .ph.rest{color:var(--ink-2)} .bigtimer .sub .phw.rest{color:var(--ink-2)} .phasebar.cdrun b.ph-rest{background:var(--ink-3)}
-.cdq{flex:0 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:62px; height:62px; padding:0 6px; border-radius:14px; background:color-mix(in srgb,var(--ember) 14%,transparent); color:var(--ember)} .cdpiso .cdq b{font-family:var(--f-disp); font-size:28px; font-weight:700; line-height:1; color:var(--ember)} .cdpiso .cdq small{font-size:var(--t-xs); font-weight:700; margin-top:3px; opacity:.92}
+.cdq{flex:0 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:62px; height:62px; padding:0 6px; border-radius:14px; background:color-mix(in srgb,var(--ember) 14%,transparent); color:var(--ember)} .cdpiso .cdq b{font-family:var(--f-disp); font-size:28px; font-weight:600; line-height:1; color:var(--ember)} .cdpiso .cdq small{font-size:var(--t-xs); font-weight:700; margin-top:3px; opacity:.92}
 .pdr .d b{color:var(--ink); font-weight:700}
 body.ses-run #app .bigtimer .ph.piso{font-size:clamp(22px,3.4vh,36px)}
 .cdpiso{display:flex; align-items:center; gap:12px; margin:0 0 12px; padding:10px; border-radius:16px; background:var(--s2)}
@@ -2999,7 +3001,7 @@ body[data-v=bici] .splside .fzr{--c:var(--aqua)} body[data-v=estirar] .splside .
   html body #minibar.isle.isle.isle .it{display:flex; flex-direction:column; min-width:0; flex:1 1 auto; line-height:1.15}
   html body #minibar.isle.isle.isle .it b{margin:0; font:700 var(--t-sm) var(--f-ui); color:#fff; letter-spacing:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:none; opacity:1}
   html body #minibar.isle.isle.isle .it small{font:600 var(--t-xs) var(--f-ui); color:rgba(255,255,255,.6); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-  html body #minibar.isle.isle.isle .itm{margin:0 2px 0 4px; font:700 var(--t-xl) var(--f-num); letter-spacing:-.02em; color:var(--ci); max-width:none; opacity:1; flex:0 0 auto}
+  html body #minibar.isle.isle.isle .itm{margin:0 2px 0 4px; font-size:var(--t-xl); font-weight:500; line-height:normal; letter-spacing:-.02em; color:var(--ci); max-width:none; opacity:1; flex:0 0 auto}
   html body #minibar.isle.isle.isle .mb-b.pri{width:30px; height:30px; flex:0 0 30px; opacity:1; margin:0; border:0}
   html body #minibar.isle.isle.isle .mb-b.pri svg{width:14px; height:14px}
   /* flotante: la tarjeta en vivo, en chico */
@@ -3007,7 +3009,7 @@ body[data-v=bici] .splside .fzr{--c:var(--aqua)} body[data-v=estirar] .splside .
   #minibar:not(.isle):not(.tab) .mb-k{flex:1; min-width:0; font:700 var(--t-xs) var(--f-ui); letter-spacing:.08em; text-transform:uppercase; color:var(--c); white-space:nowrap; overflow:hidden; text-overflow:ellipsis} #minibar .mb-k i{font-style:normal; color:var(--ink-3); letter-spacing:.04em}
   #minibar:not(.isle):not(.tab) .mb-now{display:flex; align-items:flex-end; gap:10px; margin-top:10px}
   #minibar .mb-tt{flex:1; min-width:0} #minibar .mb-tt b{margin:0; font-size:var(--t-md); line-height:1.2} #minibar .mb-tt small{display:block; margin-top:2px; font-size:var(--t-xs); font-weight:600; color:var(--ink-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-  #minibar .mb-big{display:flex; flex-direction:column; align-items:flex-end; flex:0 0 auto} #minibar .mb-big b{margin:0; font:500 30px/1 var(--f-mono); letter-spacing:-.03em; color:var(--c); font-variant-numeric:tabular-nums} #minibar .mb-big small{margin-top:3px; font:700 var(--t-2xs) var(--f-ui); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+  #minibar .mb-big{display:flex; flex-direction:column; align-items:flex-end; flex:0 0 auto} #minibar .mb-big b{margin:0; font-size:30px; line-height:1; font-weight:500; letter-spacing:-.03em; color:var(--c); font-variant-numeric:tabular-nums} #minibar .mb-big small{margin-top:3px; font:700 var(--t-2xs) var(--f-ui); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
   #minibar .mb-seg{display:flex; gap:3px; margin-top:10px; height:4px} #minibar .mb-seg i{flex:1; min-width:3px; border-radius:2px; background:color-mix(in srgb,var(--c) 16%,transparent); overflow:hidden} #minibar .mb-seg b{display:block; height:100%; margin:0; background:var(--c); transition:width .9s linear}
   #minibar .mb-acts{display:flex; gap:8px; margin-top:12px} #minibar .mb-a{flex:1 1 0; min-width:0; height:38px; border-radius:12px; border:1px solid var(--line); background:var(--s2); color:var(--ink); font:700 var(--t-sm) var(--f-ui); display:flex; align-items:center; justify-content:center; gap:6px; padding:0 10px; white-space:nowrap}
   #minibar .mb-a.pri{flex:1.6 1 0; background:var(--c); border-color:transparent; color:var(--bg)} #minibar .mb-a span{overflow:hidden; text-overflow:ellipsis} #minibar .mb-a small{font-weight:600; opacity:.8}
@@ -3197,7 +3199,7 @@ body[data-v=home] #app .splhd{--hdr:112px} body[data-v=home] #app .splhd>h1{whit
   /* reposo: lo próximo, tu norte, ramas */
   .tpanel.rest .tpin{padding:16px 10px 12px}
   .tprh{padding:2px 8px 10px} .tprh small{display:block; font:700 var(--t-2xs)/1.3 var(--f-ui); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3)} .tprh small .num{letter-spacing:.02em}
-  .tprh b{display:block; margin-top:4px; font:700 var(--t-xl)/1.15 var(--f-disp); letter-spacing:-.01em}
+  .tprh b{display:block; margin-top:4px; font:600 var(--t-xl)/1.15 var(--f-disp); letter-spacing:-.01em}
   .tprl{display:flex; flex-direction:column; gap:2px}
   .tpanel.rest .nxr:active,.tprg:active,.tprb:active{background:color-mix(in srgb,var(--ink) 8%,transparent)}
   .tpre{margin:2px 8px 4px; font-size:var(--t-sm); color:var(--ink-3)}
@@ -3312,7 +3314,7 @@ svg.gi-d{--isw:3.4}
 <div class="wrap" id="app"></div>
 
 <div id="rest" class="restbar" hidden>
-  <div class="rbrow"><button type="button" class="rbl" id="restxl" aria-label="Agrandar"><b class="num" id="restt">1:30</b><span class="rbtx"><span id="restlbl">Descanso</span><small id="restsig"></small></span></button>
+  <div class="rbrow"><button type="button" class="rbl" id="restxl" aria-label="Agrandar"><b class="num reloj" id="restt">1:30</b><span class="rbtx"><span id="restlbl">Descanso</span><small id="restsig"></small></span></button>
   <span class="rbadj"><button type="button" class="rbb" data-restadd="-15" aria-label="15 segundos menos">−15</button><button type="button" class="rbb" data-restadd="30" aria-label="30 segundos más">+30</button></span><button type="button" class="rbb pri" id="restskip">Saltar</button><button type="button" id="restclose" hidden></button></div>
   <i class="rbtrack"><i class="rbfill" id="restbar" style="width:100%"></i></i>
 </div>
@@ -4893,7 +4895,7 @@ function renderHome(app){
       /* las dos cards son cards completas; la de atrás es la misma card corrida arriba, achicada y recortada.
          Cambiar = intercambiar clases: fondo, arte, título y todo se transforman juntos, sin reemplazos */
       const info=t=>{ if(t==="m") return TICK+`${mvI.np} ${mvI.np===1?"postura":"posturas"}`; const isF=t==="f", dn=isF?f:b, hr=isF?CFG.hora:(CFG.horaB||"man"); return (dn?TICK:"")+(dn?(isF?`${f.ej.length} ${f.ej.length===1?"ejercicio":"ejercicios"} · ${(f.vol||0).toLocaleString("es-AR")} kg`:`${b.min} min · ${b.kcal} kcal`):HORAS[hr]); };
-      const ord=[front,...ts.filter(t=>t!==front)]; const mk=(t,html)=>{ const bk=t!==front, lvl=ord.indexOf(t); let x=html.replace('<div class="hero ',`<div data-stk="${t}" class="hero stk ${bk?"back":"front"} ${lvl===2?"b2":""} `); const e=x.lastIndexOf("</div>"); const L=t==="l"?liveInfo():null; return x.slice(0,e)+(t==="l"?`<span class="hpi"><i class="ldot"></i><span id="lcHpi">${L&&L.hpi?L.hpi:""}</span></span>`:`<span class="hpi">${info(t)}</span>`)+x.slice(e); };
+      const ord=[front,...ts.filter(t=>t!==front)]; const mk=(t,html)=>{ const bk=t!==front, lvl=ord.indexOf(t); let x=html.replace('<div class="hero ',`<div data-stk="${t}" class="hero stk ${bk?"back":"front"} ${lvl===2?"b2":""} `); const e=x.lastIndexOf("</div>"); const L=t==="l"?liveInfo():null; return x.slice(0,e)+(t==="l"?`<span class="hpi"><i class="ldot"></i><span id="lcHpi" class="reloj">${L&&L.hpi?L.hpi:""}</span></span>`:`<span class="hpi">${info(t)}</span>`)+x.slice(e); };
       hs+=`<div class="hstack stk2 ${cards.length>=3?"n3":""}">${cards.map(c=>mk(c[0],c[1])).join("")}</div>`; }
     else hs+=cards.map(c=>c[1]).join(""); }catch(e){ errLog(e,"home:stack"); hs=[live,heroF,heroB,heroM].filter(Boolean).join(""); }
     hs+=safe(sugBar,"home:sug",""); hs+=safe(dsBar,"home:ds","");
@@ -5076,7 +5078,7 @@ function renderFuerza(app){
   const nser0=draft.ej.reduce((a,x)=>a+x.series.length,0);
   const nserT=p.ej.reduce((a,x)=>a+x.sets,0), vol=volumen(draft);
   const tag=p.deload?`<em class="fzt">Descarga</em>`:p.intro&&!draft.edit?`<em class="fzt">Primeras sesiones</em>`:p.corta?`<em class="fzt">Corta</em>`:"";
-  let h=`<div class="topbar"><button class="back gb" id="back" aria-label="Volver">${I_BACK}</button><div class="grow tbtitle ${tag?"tap":""}" ${tag?'id="fzTag" role="button"':""}><b>${esc(tipo)}</b><small>${draft.edit?`<span>Editando ${fmtFecha(draft.fecha)}</span> · `:`<span id="fzT" class="num">${mmss(Math.floor((Date.now()-draft.t0)/1000))}</span> · `}<span class="num">${nser0}/${nserT}</span> series${tag?" · "+tag:""}</small></div><button class="iconbtn gb" id="fzMore" aria-label="Más opciones">${I_DOTS}</button><span hidden><button class="iconbtn" id="discard" aria-label="Descartar">${draft.edit?I_XS:T_TRASH}</button><button class="iconbtn" id="fHelp">?</button></span><button class="btn sm ${nser0||draft.edit?"primary pri":"fzfin"}" id="finish">${draft.edit?"Guardar":"Terminar"}</button></div>`;
+  let h=`<div class="topbar"><button class="back gb" id="back" aria-label="Volver">${I_BACK}</button><div class="grow tbtitle ${tag?"tap":""}" ${tag?'id="fzTag" role="button"':""}><b>${esc(tipo)}</b><small>${draft.edit?`<span>Editando ${fmtFecha(draft.fecha)}</span> · `:`<span id="fzT" class="num reloj">${mmss(Math.floor((Date.now()-draft.t0)/1000))}</span> · `}<span class="num">${nser0}/${nserT}</span> series${tag?" · "+tag:""}</small></div><button class="iconbtn gb" id="fzMore" aria-label="Más opciones">${I_DOTS}</button><span hidden><button class="iconbtn" id="discard" aria-label="Descartar">${draft.edit?I_XS:T_TRASH}</button><button class="iconbtn" id="fHelp">?</button></span><button class="btn sm ${nser0||draft.edit?"primary pri":"fzfin"}" id="finish">${draft.edit?"Guardar":"Terminar"}</button></div>`;
   const wuDone=draft.wu.filter(Boolean).length;
   const wuAll=p.wu.length&&wuDone===p.wu.length;
   h+=`<div class="card ${wuAll?"wudone":""}"><details ${draft.wuOpen?"open":""} id="wuDet"><summary>${wuAll?`<span class="wuok">${TICK}</span>`:`<span class="wuic">${IC2.warm}</span>`}Entrada en calor <span class="num xs dim" style="margin-left:auto">${wuDone}/${p.wu.length}</span></summary><div style="margin-top:8px">${p.wu.map((w,i)=>`<div class="wu">${photo(w.img,w.still,"sq")}<div><div class="n">${esc(w.n)}</div><div class="d">${esc(w.d)}</div></div><button class="chk ${draft.wu[i]?"on":""}" data-wu="${i}">${TICK}</button></div>`).join("")}</div></details></div>`;
@@ -5446,7 +5448,7 @@ function renderBiciTimer(app){
   const HX=bike.modo==="hiit", po=p[3]||{};
   const sub=p[0]==="piso"?(HX?`${pi} de ${pisos}`:`en el piso · ${pi} de ${pisos}`):p[0]==="rest"?"respirá":p[0]==="hard"?(hards>1?`bloque ${hi} de ${hards}`:"a fondo"):p[0]==="easy"?(HX?"marchá en el lugar":"recuperá"):p[0]==="warm"?(CAT[p[2]]?lc1(CAT[p[2]].n)+", suave":"subí de a poco"):"aflojá";
   paint(app,V(`<div class="topbar"><button class="back gb" id="bkBack" aria-label="${backLbl("bici")}">${I_BACK}</button><div class="grow tbtitle"><b>${esc(bike.sel)}</b><small>${esc(CARDIO[bike.modo].n)} · <span class="num">${Math.round(done/60)}/${Math.round(total/60)}</span> min</small></div><button class="iconbtn gb" id="bkMore" aria-label="Más opciones">${I_DOTS}</button></div><div class="phasebar cdrun">${b.ph.map((x,i)=>`<i class="ph-${x[0]} ${i<bike.ph?"pd":i===bike.ph?"pc":"pf"}" style="flex:${x[1]}">${i===bike.ph?`<b id="bkBar" class="ph-${x[0]}" style="width:0%"></b>`:""}</i>`).join("")}</div>
-    <div class="card"><div class="bigtimer"><div class="ph ${p[0]}">${esc(phLbl(p))}</div><div class="t" id="bkT">${bike.paused?mmss(bike.pauseLeft):mmss(Math.max(0,Math.round((bike.phEnd-Date.now())/1000)))}</div><div class="sub">${sub}${nx?` · sigue <b class="phw ${nx[0]}">${esc(lc1(phLbl(nx)))}</b> <span class="num">${mmss(nx[1])}</span>`:" · última fase"}</div></div>
+    <div class="card"><div class="bigtimer"><div class="ph ${p[0]}">${esc(phLbl(p))}</div><div class="t reloj" id="bkT">${bike.paused?mmss(bike.pauseLeft):mmss(Math.max(0,Math.round((bike.phEnd-Date.now())/1000)))}</div><div class="sub">${sub}${nx?` · sigue <b class="phw ${nx[0]}">${esc(lc1(phLbl(nx)))}</b> <span class="num">${mmss(nx[1])}</span>`:" · última fase"}</div></div>
       ${p[0]==="piso"||CAT[p[2]]?pisoCard(p[2],p[3]):HX&&nx&&nx[0]==="piso"&&(p[0]==="rest"||p[0]==="easy")?pisoCard(nx[2],Object.assign({},nx[3]||{},{nt:"Sigue · "+(CAT[nx[2]]||{}).n}),"nx"):""}${bike.modo==="bici"&&p[0]!=="piso"?`<div class="cdlv"><button type="button" data-niv="-1" aria-label="Bajar nivel">${G_REM}</button><div><b id="lvNiv" class="num">${bike.niv}</b><span id="lvSug">${bike.niv!==nivel(p[0])?"nivel · sugerido "+nivel(p[0]):"nivel"}</span></div><button type="button" data-niv="1" aria-label="Subir nivel">${G_ADD}</button></div>`:""}
       ${imeterHTML(intensidadAhora())}
       ${xport({p:"bk",paused:bike.paused,c:"var(--aqua)",on:"var(--on-aqua)",last:!nx})}</div>
@@ -6638,12 +6640,12 @@ function miniRender(){ let el=$("#minibar"); const st=miniState(); document.body
   const pri=st.k!=="f"?`<button type="button" class="mb-b pri" data-mb="pause" aria-label="${st.paused?"Seguir":"Pausar"}">${st.paused?T_PLAYER:T_PAUSE}</button>`:LQ?`<button type="button" class="mb-b pri" data-mb="l:${LQ[0]}" aria-label="${esc(LQ[2])}">${LQ[1]}</button>`:"";
   const prv=st.pr!=null?Math.max(0,Math.min(1,st.pr)):0;
   const LS=navVert(), LV=LS&&mode==="card"?liveInfo():null; MINI.lk=LV?LV.key:null; document.body.classList.toggle("mbrail",RAIL);
-  if(LS&&mode==="isle") el.innerHTML=`<span class="ir" id="mbIr" style="--p:${prv.toFixed(3)}"><span class="mb-ic">${st.ico}</span></span><span class="it"><b id="mbT">${esc(st.t)}</b><small id="mbS">${esc(st.sub)}</small></span><b class="num itm" id="mbTime">${st.time}</b>${pri}`;
+  if(LS&&mode==="isle") el.innerHTML=`<span class="ir" id="mbIr" style="--p:${prv.toFixed(3)}"><span class="mb-ic">${st.ico}</span></span><span class="it"><b id="mbT">${esc(st.t)}</b><small id="mbS">${esc(st.sub)}</small></span><b class="num itm reloj" id="mbTime">${st.time}</b>${pri}`;
   else if(FAB) el.innerHTML=`<span class="ir" id="mbIr" style="--p:${prv.toFixed(3)}"><span class="mb-ic">${st.ico}</span><span class="mb-pz">${T_PAUSE}</span></span>`;
-  else if(mode==="tab"||mode==="fab") el.innerHTML=`<span class="ir" id="mbIr" style="--p:${prv.toFixed(3)}"><span class="mb-ic">${st.ico}</span></span><b class="num" id="mbTime">${st.time}</b>${pri}`;
+  else if(mode==="tab"||mode==="fab") el.innerHTML=`<span class="ir" id="mbIr" style="--p:${prv.toFixed(3)}"><span class="mb-ic">${st.ico}</span></span><b class="num reloj" id="mbTime">${st.time}</b>${pri}`;
   else if(LV) el.innerHTML=miniPipHTML(st,LV);
-  else if(mode==="isle") el.innerHTML=`<span class="ir" id="mbIr" style="--p:${prv.toFixed(3)}"><span class="mb-ic">${st.ico}</span></span><b class="num" id="mbTime">${st.time}</b><span class="zl"><i id="mbZ" style="background:${st.z||"var(--ci)"}"></i><span id="mbT">${esc(st.t.split(" · ")[0])}</span></span>${pri}`;
-  else el.innerHTML=`<div class="mb-top"><span class="mb-ic">${st.ico}</span><span class="mb-time num" id="mbTime">${st.time}</span>${st.z?`<i class="mb-z" id="mbZ" style="background:${st.z}"></i>`:""}${st.k!=="f"?`<button type="button" class="mb-b pri" data-mb="pause" aria-label="${st.paused?"Seguir":"Pausar"}">${st.paused?T_PLAYER:T_PAUSE}</button>`:LQ?`<button type="button" class="mb-b pri" data-mb="l:${LQ[0]}" aria-label="${esc(LQ[2])}">${LQ[1]}</button>`:""}<button type="button" class="mb-b" data-mb="more" aria-label="Controles de la sesión">${I_DOTS}</button></div><b id="mbT">${esc(st.t)}</b><span class="mb-s" id="mbS">${esc(st.sub)}</span>${st.pr!=null?`<span class="mb-pr"><i id="mbPr" style="width:${Math.round(Math.max(0,Math.min(1,st.pr))*100)}%"></i></span>`:""}`;
+  else if(mode==="isle") el.innerHTML=`<span class="ir" id="mbIr" style="--p:${prv.toFixed(3)}"><span class="mb-ic">${st.ico}</span></span><b class="num reloj" id="mbTime">${st.time}</b><span class="zl"><i id="mbZ" style="background:${st.z||"var(--ci)"}"></i><span id="mbT">${esc(st.t.split(" · ")[0])}</span></span>${pri}`;
+  else el.innerHTML=`<div class="mb-top"><span class="mb-ic">${st.ico}</span><span class="mb-time num reloj" id="mbTime">${st.time}</span>${st.z?`<i class="mb-z" id="mbZ" style="background:${st.z}"></i>`:""}${st.k!=="f"?`<button type="button" class="mb-b pri" data-mb="pause" aria-label="${st.paused?"Seguir":"Pausar"}">${st.paused?T_PLAYER:T_PAUSE}</button>`:LQ?`<button type="button" class="mb-b pri" data-mb="l:${LQ[0]}" aria-label="${esc(LQ[2])}">${LQ[1]}</button>`:""}<button type="button" class="mb-b" data-mb="more" aria-label="Controles de la sesión">${I_DOTS}</button></div><b id="mbT">${esc(st.t)}</b><span class="mb-s" id="mbS">${esc(st.sub)}</span>${st.pr!=null?`<span class="mb-pr"><i id="mbPr" style="width:${Math.round(Math.max(0,Math.min(1,st.pr))*100)}%"></i></span>`:""}`;
   el.querySelectorAll("[data-mb]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const a=b.dataset.mb; if(a==="more"){ if(POP.el&&POP.anchor===el){ popClose(); return; } const mh=$("#miniHint"); if(mh) mh.remove(); vib(6); lpMenu(el); return; } if(a.startsWith("l:")){ vib(8); liveDo(a.slice(2)); miniRender(); return; } vib(8); if(st.k==="b"){ if(a==="pause") bikePause(); else { const p=curProt(); bike.ph++; if(bike.ph>=p.ph.length) finishBike(); else startPhase(); } } else if(st.k==="m"){ if(a==="pause") movPause(); else movNext(); } miniRender(); });
   if(LS) try{ tbGeo(); }catch(e){}
   if(fresh&&mode==="card") setTimeout(miniHint,900); if(MINI.flip){ el.classList.remove("pop-in"); miniPlace(); } else if(fresh||was||MINI.k!==st.k){ el.style.transition="none"; miniPlace(); el.offsetWidth; el.style.transition=""; el.classList.remove("pop-in"); if(!MINI.vt){ el.offsetWidth; el.classList.add("pop-in"); } } else miniPlace(); MINI.k=st.k; }
@@ -6685,7 +6687,7 @@ addEventListener("resize",()=>miniPlace());
 function miniPipHTML(st,L){ const segs=(L.segs||[]).map(x=>`<i class="${x.cur?"cur":""}"${x.w?` style="flex:${x.w}"`:""}><b ${x.cur?'id="mbSg"':""} style="width:${Math.round(x.f*100)}%"></b></i>`).join("");
   const act=(L.act||[]).filter(a=>a[0]!=="open").map(([a,ic,t,p])=>`<button type="button" class="mb-a ${p?"pri":""}" data-mb="l:${a}">${ic||""}<span>${esc(t)}${a==="set"?` <small class="num">${esc(liveSetLbl())}</small>`:""}</span></button>`).join("");
   return `<div class="mb-top"><span class="mb-ic">${st.ico}</span><span class="mb-k">${esc(L.lbl||"")}<i> · ${st.paused?"en pausa":"en curso"}</i></span><button type="button" class="mb-b" data-mb="more" aria-label="Controles de la sesión">${I_DOTS}</button></div>
-    <div class="mb-now"><span class="mb-tt"><b id="mbT">${esc(L.t||st.t)}</b><small id="mbS">${esc(L.sub||st.sub)}</small></span><span class="mb-big"><b class="num" id="mbTime">${L.big||st.time}</b><small id="mbBl">${esc(L.bl||"")}</small></span></div>
+    <div class="mb-now"><span class="mb-tt"><b id="mbT">${esc(L.t||st.t)}</b><small id="mbS">${esc(L.sub||st.sub)}</small></span><span class="mb-big"><b class="num reloj" id="mbTime">${L.big||st.time}</b><small id="mbBl">${esc(L.bl||"")}</small></span></div>
     ${segs?`<div class="mb-seg">${segs}</div>`:""}${act?`<div class="mb-acts">${act}</div>`:""}`; }
 function miniUpd(){ const st=miniState(); const el=$("#minibar"); if(!st||!el||el.hidden||el.classList.contains("mb-out")){ if(!!st!==!!(el&&!el.hidden&&!el.classList.contains("mb-out"))) miniRender(); return; } if(MINI.k!==st.k){ miniRender(); return; } const set=(id,v)=>{ const e=$("#"+id); if(e&&e.textContent!==v) e.textContent=v; };
   if(MINI.lk){ const L=liveInfo(); if(!L||L.key!==MINI.lk){ miniRender(); return; } set("mbTime",L.big); set("mbT",L.t); set("mbS",L.sub); set("mbBl",L.bl||""); const sg=$("#mbSg"), cs=(L.segs||[]).find(x=>x.cur); if(sg&&cs) sg.style.width=Math.round(cs.f*100)+"%"; return; }
@@ -7308,7 +7310,7 @@ function ssBar(p,i){ const L=grpL(p.ej[i]); if(!L) return ""; const I=grpIdx(p,L
   const pos=I.indexOf(i), big=n>4, V=big?[...new Set([0,1,2].map(q=>I[(pos+q)%n]))]:I;
   return `<div class="ssbar"><div class="ssh"><span class="ssk">${grpKind(n)} ${L}</span><span class="ssr num">${big?`Estación ${pos+1} de ${n} · vuelta ${rd} de ${sets}`:`Ronda ${rd} de ${sets}`}</span></div><div class="sstabs">${V.map(j=>{ const mm=p.ej[j], k=draft.ej[j].series.length, ok=k>=mm.sets;
     return `<button type="button" class="sst ${j===i?"cur":""} ${ok?"ok":""}" data-go="${j}"><span class="ssth">${photo(mm.img,0,"sq")}</span><span style="min-width:0"><b>${esc(mm.n)}</b><small>${j===i?`serie ${Math.min(mm.sets,k+1)} de ${mm.sets}`:ok?"listo":k?`${k} de ${mm.sets} hechas`:"después"}</small></span><span class="ssdots">${Array.from({length:mm.sets},(_,q)=>`<i class="${q<k?"on":""}"></i>`).join("")}</span></button>`; }).join("")}</div>
-    <div class="ssflow"><span>${I_SSF}${rin?`${restTxt(rin)} entre ejercicios`:"Sin pausa entre ejercicios"}</span>${PAUSA&&I.includes(cur)?`<span class="ssrest num ssmini">Sigue en <b id="miniT">${mmss(pausaLeft())}</b></span>`:`<span class="ssrest num">Descanso ${restTxt(rout)}</span>`}</div></div>`; }
+    <div class="ssflow"><span>${I_SSF}${rin?`${restTxt(rin)} entre ejercicios`:"Sin pausa entre ejercicios"}</span>${PAUSA&&I.includes(cur)?`<span class="ssrest num ssmini">Sigue en <b class="reloj" id="miniT">${mmss(pausaLeft())}</b></span>`:`<span class="ssrest num">Descanso ${restTxt(rout)}</span>`}</div></div>`; }
 /* número de la serie: botón que cambia el tipo */
 function srN(meta,t,i,done){ const ty=done?t.ty:(meta.st||[])[i]; if(done&&t.pr&&!ty) return `<button type="button" class="num n" data-ty="${i}" aria-label="Serie ${i+1}, récord">${T_TROPHY}</button>`;
   return `<button type="button" class="num n ${ty?"ty ty-"+ty:""}" data-ty="${i}" aria-label="Serie ${i+1}${ty?", "+TY[ty][1]:""}">${tyB(ty,i)}</button>`; }
@@ -7319,7 +7321,7 @@ function srSub(meta,e,i){ const t=e.series[i]; if(!t||!t.sub) return ""; const r
   if(fzPend(e)===i){ const c=100+i, r=rp?Math.max(2,Math.round(t.r/3)):Math.max(3,t.r-2), kg=rp?+t.kg||0:Math.round((+t.kg||0)*0.75*2)/2;
     h+=`<div class="sr sub nx ${rp?"rp":""}"><span class="num n">${ic}</span><span class="num prev">${lb}</span>${meta.t?`<span></span><input type="hidden" value="0" data-kg="${c}">`:`<input class="num kpin" type="text" inputmode="none" readonly value="${kpFmt(kg)}" data-kg="${c}">`}<input class="num kpin" type="text" inputmode="none" readonly value="${r}" data-r="${c}"><button class="ok" data-ok="${c}" aria-label="Hecha">${TICK}</button></div>`; }
   return h; }
-function tyHint(meta,e){ const j=fzPend(e); if(j!=null){ const t=e.series[j]; return `<div class="tyhint"><span class="tyb ty-${t.ty}">${TY[t.ty][0]}</span><span><b>${t.ty==="d"?"Sin descanso:":"Pausa de 15 s:"}</b> ${t.ty==="d"?"bajá el peso y seguí.":"sacá unas reps más."}</span>${t.ty==="r"&&PAUSA?`<b class="num tymini" id="miniT">${mmss(pausaLeft())}</b>`:""}</div>`; }
+function tyHint(meta,e){ const j=fzPend(e); if(j!=null){ const t=e.series[j]; return `<div class="tyhint"><span class="tyb ty-${t.ty}">${TY[t.ty][0]}</span><span><b>${t.ty==="d"?"Sin descanso:":"Pausa de 15 s:"}</b> ${t.ty==="d"?"bajá el peso y seguí.":"sacá unas reps más."}</span>${t.ty==="r"&&PAUSA?`<b class="num tymini reloj" id="miniT">${mmss(pausaLeft())}</b>`:""}</div>`; }
   const i=e.series.length, ty=(meta.st||[])[i]; if(!ty||i>=meta.sets) return ""; return `<div class="tyhint"><span class="tyb ty-${ty}">${tyB(ty,i)}</span><span><b>Serie ${i+1} · ${TY[ty][1]}.</b> ${TY[ty][2]}</span></div>`; }
 function tyMenu(btn){ const i=+btn.dataset.ty, meta=draft.plan.ej[cur], e=draft.ej[cur], t=e.series[i]; const curTy=(t?t.ty:(meta.st||[])[i])||"n";
   const opts=[["n","Normal","",`<span class="tyb ty-n">${i+1}</span>`],...Object.entries(TY).map(([k,v])=>[k,v[1],v[2],`<span class="tyb ty-${k}">${tyB(k,i)}</span>`])];
@@ -8246,7 +8248,7 @@ function liveCard(){ const L=liveInfo(); if(!L) return "";
   const act=L.act.map(([a,ic,t,pri])=>`<button type="button" class="${pri?"pri":""}" data-lact="${a}">${ic||""}${t}${a==="set"?` <small>${esc(liveSetLbl())}</small>`:""}</button>`).join("");
   return `<div class="hero lv ${L.c} ${L.paused?"paused":""} ${L.resting?"resting":""}" data-card="live:${L.k}" data-lk="${esc(L.key)}" role="button" tabindex="0"><div class="deco"></div><div class="deco2"></div><div class="body">
     <div class="k"><i class="ldot"></i>${esc(L.lbl)}<span class="kst"> · ${L.paused?"en pausa":"en curso"}</span></div><h2>${esc(L.tipo)}</h2>
-    <div class="lnow"><span class="lt"><b id="lcT">${esc(L.t)}</b><small id="lcS">${esc(L.sub)}</small></span><span class="lbig num"><b id="lcTime">${L.big}</b><small id="lcBl">${L.bl}</small></span></div>
+    <div class="lnow"><span class="lt"><b id="lcT">${esc(L.t)}</b><small id="lcS">${esc(L.sub)}</small></span><span class="lbig num"><b class="reloj" id="lcTime">${L.big}</b><small id="lcBl">${L.bl}</small></span></div>
     <div class="lseg">${seg}</div><div class="lact">${act}</div></div></div>`; }
 /* refrescar lo de la sesión sin repintar la pantalla en la que estás */
 function sesOn(){ return (view==="bici"&&bike.running)||(view==="mov"&&!!mov)||(view==="fuerza"&&!!draft); }
@@ -8254,7 +8256,7 @@ function sesRefresh(){ if(sesOn()){ render(); return; } if(view==="home"&&!liveR
 function bindLiveBtns(root){ root.querySelectorAll("[data-lact]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const c=b.closest(".hero.lv"); if(c&&c.classList.contains("back")){ stkSwap(c); return; } if(b.dataset.lact==="open") VT_HERO=c; liveDo(b.dataset.lact); }); }
 function liveRefresh(){ if(view!=="home") return false; const c=document.querySelector("#app .hero.lv"); if(!c) return false; const L=liveInfo(); if(!L) return false;
   let html=liveCard(); const stk=c.dataset.stk;
-  if(stk){ const cls=["stk",...["front","back","b2"].filter(x=>c.classList.contains(x))].join(" "); html=html.replace('<div class="hero ',`<div data-stk="${stk}" class="hero ${cls} `); const e=html.lastIndexOf("</div>"); html=html.slice(0,e)+`<span class="hpi"><i class="ldot"></i><span id="lcHpi">${L.hpi||""}</span></span>`+html.slice(e); }
+  if(stk){ const cls=["stk",...["front","back","b2"].filter(x=>c.classList.contains(x))].join(" "); html=html.replace('<div class="hero ',`<div data-stk="${stk}" class="hero ${cls} `); const e=html.lastIndexOf("</div>"); html=html.slice(0,e)+`<span class="hpi"><i class="ldot"></i><span id="lcHpi" class="reloj">${L.hpi||""}</span></span>`+html.slice(e); }
   const t=document.createElement("template"); t.innerHTML=html.trim(); const n=t.content.firstElementChild; if(!n) return false;
   const sty=c.getAttribute("style"), lp=c.classList.contains("lp-press");
   [...c.attributes].forEach(a=>{ if(a.name!=="style"&&!n.hasAttribute(a.name)) c.removeAttribute(a.name); }); [...n.attributes].forEach(a=>{ if(a.name!=="style") c.setAttribute(a.name,a.value); }); if(sty!=null) c.setAttribute("style",sty); if(lp) c.classList.add("lp-press");
