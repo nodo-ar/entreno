@@ -1,11 +1,11 @@
-// Fecha fija para las pruebas: node -r ./fecha.js t_chkNNN.js (con APP_FECHA=aaaa-mm-dd; por defecto, la fecha fija de la suite)
-// · corre la fecha de la página a ese día (misma hora del día que el reloj real), sin tocar los temporizadores
+// Fecha fija para las pruebas: node -r ./fecha.js t_chkNNN.js (con APP_FECHA=aaaa-mm-ddThh:mm; por defecto, el momento fijo de la suite)
+// · corre el reloj de la página a ese momento y desde ahí avanza normal, sin tocar los temporizadores
 // · con fast.js (modo rápido) se carga antes y fast.js arranca su reloj falso en esa misma fecha
 // La app usa la fecha del teléfono para el plan de la semana, la rotación y el historial: sin esto, la suite da distinto según el día.
 const pw=require('playwright');
-const DIA=process.env.APP_FECHA||'2026-10-08';
-const ahora=new Date(); const [a,m,d]=DIA.split('-').map(Number);
-const objetivo=new Date(a,m-1,d,ahora.getHours(),ahora.getMinutes(),ahora.getSeconds(),ahora.getMilliseconds());
+const DIA=process.env.APP_FECHA||'2026-10-08T10:00';
+const ahora=new Date(); const [f,h='10:00']=DIA.split('T'); const [a,m,d]=f.split('-').map(Number), [hh,mm]=h.split(':').map(Number);
+const objetivo=new Date(a,m-1,d,hh,mm,0,0);
 const DESFASE=objetivo.getTime()-ahora.getTime(); process.env.__APP_DESFASE=String(DESFASE);
 const INIT=`(()=>{ const D=Date, off=${DESFASE}; if(D.__fecha) return;
   function F(...a){ if(!new.target) return new D(D.now()+off).toString(); return a.length?new D(...a):new D(D.now()+off); }
