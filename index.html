@@ -8990,15 +8990,16 @@ async function exportar(){ const o={app:"barra-y-bici",v:1,ver:APP_V,exportado:n
   let dl=null; try{ dl=window.claude&&window.claude.use?await window.claude.use("downloads"):null; }catch(e){ dl=null; }
   if(dl){ try{ await dl.save({filename:fn,data:new Blob([data],{type:"application/json"})}); ok(); }catch(e){ if(!e||e.code!=="declined") toast(e&&e.code==="rate_limited"?"Esperá un toque y probá de nuevo":"No se pudo guardar"); } return; }
   try{ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([data],{type:"application/json"})); a.download=fn; document.body.appendChild(a); a.click(); a.remove(); ok(); }catch(e){ toast("No se pudo descargar"); } }
-async function importar(o){ let n=0; const ids=new Set(SESS.map(x=>x.id)), nuevos=[], prevD={}, prevM={}, cfg0=JSON.stringify(CFG);
+async function importar(o){ let n=0; const ids=new Set(SESS.map(x=>x.id)), nuevos=[], prevD={}, prevM={}, cfg0=JSON.stringify(CFG), sinHistoria=!SESS.length;
   (o.sess||[]).forEach(x=>{ if(x&&x.id&&x.fecha&&!ids.has(x.id)){ SESS.push(x); nuevos.push(x.id); n++; if(DB&&PID) col("sesiones").doc(x.id).set(clean(x)).catch(()=>{}); } }); SESS.sort((a,b)=>b.fecha.localeCompare(a.fecha));
   const mrg=(src,dst,c,prev)=>Object.entries(src||{}).forEach(([k,v])=>{ const l=dst[k]; if(!l||(v.updated||0)>(l.updated||0)){ prev[k]=l?JSON.stringify(l):null; dst[k]=v; saveDoc(c,dst,k); } }); mrg(o.diario,DIARIO,"diario",prevD); mrg(o.med,MED,"medidas",prevM);
-  let cfgCh=false; if(o.cfg&&(o.cfg.updated||0)>(CFG.updated||0)){ const keep={nombre:CFG.nombre,lastExport:CFG.lastExport}; CFG=migrar(Object.assign(defCfg(),o.cfg,keep)); cfgCh=true; }
+  /* los ajustes del respaldo entran si son más nuevos, o si este perfil todavía no tiene historia (un teléfono nuevo: el perfil recién creado siempre es más nuevo que el respaldo) */
+  let cfgCh=false; if(o.cfg&&(sinHistoria||(o.cfg.updated||0)>(CFG.updated||0))){ const keep={nombre:CFG.nombre,lastExport:CFG.lastExport}; CFG=migrar(Object.assign(defCfg(),o.cfg,keep)); cfgCh=true; }
   saveCfg(); lsSave(); render();
   const md=Object.keys(prevM).length; if(!n&&!md&&!Object.keys(prevD).length&&!cfgCh){ toast("Ya tenías todo"); return; }
   undoToast(n?`${n} ${n===1?"sesión importada":"sesiones importadas"}`:"Datos importados",async()=>{ for(const id of nuevos) await delSession(id);
     const back=(prev,dst,c)=>Object.entries(prev).forEach(([k,v])=>{ if(v==null){ delete dst[k]; if(DB) col(c).doc(k).delete().catch(()=>{}); } else { dst[k]=JSON.parse(v); saveDoc(c,dst,k); } }); back(prevD,DIARIO,"diario"); back(prevM,MED,"medidas");
-    if(cfgCh){ CFG=JSON.parse(cfg0); saveCfg(); } lsSave(); render(); },{k:"imp",d:`de ${o.perfil&&o.perfil.n||"otro perfil"}${md?` · ${md} medidas`:""}`}); }
+    /* los ajustes vuelven siempre: al importar, la app también recalcula progresiones (skUp) con las sesiones nuevas */ CFG=JSON.parse(cfg0); saveCfg(); lsSave(); render(); },{k:"imp",d:`de ${o.perfil&&o.perfil.n||"otro perfil"}${md?` · ${md} medidas`:""}`}); }
 devLoadLocal();
 
 /* ============ BACKGROUND ============ */
