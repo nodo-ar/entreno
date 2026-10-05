@@ -4,30 +4,37 @@
 
 ## Dónde quedó
 
-- **Publicado**: el PR #4 en GitHub Pages ([corrida 37203371846](https://github.com/nodo-ar/entreno/actions/runs/37203371846)). Incluye la marca Nodo, Nodo Sans Bold (700), los relojes en Nodo Reloj y la app sin conexión (service worker con la letra y los íconos).
-- **Sin verificar en un teléfono real**: Fer todavía no confirmó que la versión publicada ande en su teléfono.
+- **Publicado: v269+7** (`fabf0d2`), registro en `docs/versiones/v269+7.md`.
+  - **PR #6**: pesos de letra; chk204 y chk239 esperan la condición que miran.
+  - **PR #7**: la suite corre con fecha y hora fijas.
+  - Las dos publicaciones terminaron bien y la vuelta atrás quedó probada.
+- **Verificado en el teléfono de Fer** (2026-10-05): «funciona todo perfecto». Desde las sesiones de Claude Code la URL pública no se puede abrir: la política de red del entorno bloquea `nodo-ar.github.io`.
 - **Kit del Equipo Nodo**: fusionado (PR #5). Los agentes y la skill `equipo-nodo` se cargan al abrir cada sesión.
-- **Ítem 1 del backlog** (PR #6, rama `claude/pesos-y-esperas`, aprobado por Fer el 2026-10-05, falta fusionar):
-  - chk204 y chk239 esperan la condición que miran, con topes de 10 s y 2 s. Eran fallas de tiempo, no de diseño. En la suite 10 veces seguidas, las dos pasaron 10/10.
-  - Pesos de letra: los textos de 13 px o menos y la opción elegida de los segmentados en 700; lo demás en 600. Tableros en la conversación y acta en `docs/actas/001-pesos-y-esperas.md`.
-  - Bandera roja de Casandra, bajada: Fer aprobó por escrito (2026-10-05, «dale para adelante con tus recomendaciones») que las opciones sin elegir de `.seg`, `.segx`, `.tseg` y `.yn` bajen de 700 a 600, que el texto chico dentro de los segmentados quede en 600 y que todo vaya en un solo PR.
+- **Actas**:
+  - 001: pesos y esperas; la bandera roja la bajó Fer por escrito.
+  - 002: la suite no depende del día.
 
-## Decisiones ya tomadas por Fer (2026-10-04)
+## Decisiones ya tomadas por Fer
 
-1. **chk204 y chk239**: primero averiguar por qué fallan. Si es por diseño, mostrar captura y no taparlo con una espera. Si es por tiempo, esperar la condición que miran, nunca un tiempo fijo más largo. Después, correr la suite 10 veces seguidas y reportar cuántas pasaron.
-2. **Pesos de letra**: 700 para el estado elegido de los controles segmentados, los textos de 13 px o menos que eran 600 y el botón principal de cada pantalla; 600 para todo lo demás, incluidos los botones de esfuerzo sin marcar. El cambio de peso al elegir no tiene que mover nada.
+- **2026-10-04**: chk204/chk239 (esperar la condición, nunca un tiempo fijo más largo) y la regla de pesos (700 para lo elegido, los textos de 13 px o menos y el botón principal; 600 para el resto).
+- **2026-10-05**, aceptando las recomendaciones:
+  - las opciones sin elegir de los segmentados van en 600;
+  - el texto chico dentro de un segmentado queda en 600;
+  - el ítem 1 iba en un solo PR;
+  - el texto largo de la notificación de movilidad se acorta con «…» (backlog 2);
+  - el día futuro que se pierde al girar va después del respaldo (backlog 3).
+- **Regla general (2026-10-05)**: seguir las recomendaciones de Claude Code siempre que respeten el foco de las apps (modernas, sobrias y coherentes con el resto de la app). Los cambios que se ven igual llevan tablero antes de publicar.
 
 ## Esperando a Fer
 
-- Fusionar el PR #6 (ítem 1, ya aprobado). Después Claude Code verifica lo publicado, prueba la vuelta atrás y escribe el registro en `docs/versiones/`.
-- Que pruebe la versión publicada en su teléfono: con conexión, cerrar y abrir; después en modo avión, abrir y marcar una serie.
+- Nada por ahora.
 
 ## Conocido en la suite
 
-- Dependen del día: chk249, chk259, chk262, chk263 y chk274 fallan los lunes (y chk249 también los domingos), igual en `main`. Ver el ítem 2 del backlog.
+- Corre siempre como si fuera el jueves 2026-10-08 a las 10:00 (`tests/fecha.js`). Para otro momento: `APP_FECHA=aaaa-mm-ddThh:mm`.
 - Inestables en paralelo, pasan solas: chk232, chk233, chk238, chk258 y chk264.
 - chk237: pendiente para la etapa 3.
 
 ## Próximo paso
 
-Publicar el ítem 1 (verificar en producción y escribir el registro). En curso: el ítem 2 del backlog, la suite sin depender del día (vuelta 2, rama `claude/suite-sin-dia`).
+El ítem 1 del backlog: el respaldo que se puede comprobar (vuelta 3). Después, el texto largo de la notificación (con tablero).
