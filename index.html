@@ -2188,7 +2188,7 @@ html.perf-nv #minibar.isle{background-color:#08090b}
 #minibar.isle .ir{position:relative; width:28px; height:28px; flex:0 0 28px; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--ci) calc(var(--p,0)*360deg),rgba(255,255,255,.14) 0)}
 #minibar.isle .ir::before{content:""; position:absolute; inset:2.5px; border-radius:50%; background:#08090b}
 #minibar.isle .ir .mb-ic{position:relative; width:auto; height:auto; flex:none; background:none; color:var(--ci)} #minibar.isle .ir .mb-ic svg{width:15px; height:15px}
-#minibar.isle b.reloj{font-weight:500} #minibar.isle b{margin:0; font-size:var(--t-md); font-weight:700; line-height:normal; letter-spacing:-.02em; color:var(--ci); font-variant-numeric:tabular-nums}
+#minibar.isle b{margin:0; font-size:var(--t-md); font-weight:700; line-height:normal; letter-spacing:-.02em; color:var(--ci); font-variant-numeric:tabular-nums}
 #minibar.isle .zl{display:flex; align-items:center; gap:5px; max-width:118px; font:700 var(--t-s) var(--f-ui); color:rgba(255,255,255,.75)} #minibar.isle .zl span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 #minibar.isle .zl i{width:7px; height:7px; flex:0 0 7px; border-radius:50%}
 #minibar.isle .mb-b.pri{width:28px; height:28px; flex:0 0 28px; border-radius:50%; background:var(--ci); color:#08090b; margin-left:2px}
@@ -3312,8 +3312,8 @@ svg.gi-d{--isw:3.4}
 /* ============ PESOS: una sola regla para toda la app ============
    700: la opción elegida de un control segmentado, los textos de 13 px o menos y el botón principal (.btn, en 700 desde su regla).
    600: lo demás, incluidas las opciones sin elegir de los segmentados. Los segmentados reparten el ancho por igual, así el peso no mueve nada. */
-:is(.seg,.segx,.htabs,.cortaseg,.swfil,.tseg,.ritmos,.yn,.intensity,.faces,.modes) button,.effort{font-weight:600}
-:is(.seg,.segx,.htabs,.cortaseg,.swfil,.tseg,.ritmos,.yn,.intensity,.faces,.modes) button.on,.effort.on{font-weight:700}
+:is(.seg,.segx,.tseg,.ritmos,.yn) button,.effort{font-weight:600}
+:is(.seg,.segx,.tseg,.ritmos,.yn) button.on,.effort.on{font-weight:700}
 /* los números (.num, 600) dentro de un texto de 13 px o menos van con el peso de su línea: 700 */
 :is(.srow .d,.srow .v,.ajrow .v,.fzlist,.tbtitle small,.cdniv,.prf,.fmr,.eqt2 .s,.exprc,.bigtimer .sub,small) .num:not(.reloj),.num:is(.xs,.sm,.prev):not(.reloj),small.num{font-weight:700}
 </style>
