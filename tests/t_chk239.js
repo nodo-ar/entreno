@@ -2,6 +2,8 @@ const {chromium}=require('playwright'); const seed=require('./seed.js');
 const src=process.argv[2]||'index.html';
 (async()=>{ const b=await chromium.launch(); const errs=[], bad=[]; const ok=(c,m)=>{ if(!c) bad.push(m); else console.log('ok ',m); };
 const W8=(p,ms)=>p.waitForTimeout(ms);
+/* espera la condición que se mira, no un tiempo fijo: pregunta cada 50 ms y sigue apenas se cumple; si no se cumple antes del tope, es una falla */
+const hasta=async(p,f,a,tope)=>{ const t0=Date.now(); while(Date.now()-t0<tope){ if(await p.evaluate(f,a)){ console.log('ESPERA',Date.now()-t0,'ms'); return true; } await W8(p,50); } console.log('ESPERA',Date.now()-t0,'ms (tope)'); return false; };
 for(const [w,h] of [[390,844],[844,390]]){ const tag=`${w}×${h}`;
   const p=await (await b.newContext({viewport:{width:w,height:h},colorScheme:'dark'})).newPage(); p.on('pageerror',e=>errs.push(e.message)); const E=(f,a)=>p.evaluate(f,a);
   await p.goto('http://127.0.0.1:8765/'+src); await W8(p,400); await seed(p); await W8(p,900);
@@ -51,7 +53,7 @@ for(const [w,h] of [[390,844],[844,390]]){ const tag=`${w}×${h}`;
   await p.mouse.move(w*.5,h*.8); await p.mouse.wheel(0,400); await W8(p,400); const sy1=await E(()=>scrollY);
   ok((lk.pop&&lk.lk&&sy1===sy0),`${tag}: con un menú abierto (${anyBtn}) la pantalla de atrás no se mueve (${sy0}→${sy1})`);
   await E(()=>popClose(true)); await W8(p,300); ok(await E(()=>!document.documentElement.classList.contains('plock')),`${tag}: al cerrar se libera`);
-  await p.mouse.wheel(0,300); await W8(p,400); ok(await E(()=>scrollY)>sy0,`${tag}: después se desplaza normal`);
+  await p.mouse.wheel(0,300); ok(await hasta(p,y=>scrollY>y,sy0,2000),`${tag}: después se desplaza normal`);
   // festejo
   await E(()=>{ scrollTo(0,0); CELQ.length=0; CELON=false; CELQ.push({k:'mv_hom',lvl:1}); celebMaybe(true); }); await W8(p,1400);
   ok(await E(()=>!!document.querySelector('.celov')&&document.documentElement.classList.contains('plock')),`${tag}: con un festejo, el fondo queda quieto`);

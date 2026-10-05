@@ -4,6 +4,8 @@ const {chromium}=require('playwright'); const seed=require('./seed.js');
 for(const W of [390,360]){ const p=await (await b.newContext({viewport:{width:W,height:800}})).newPage(); p.on('pageerror',e=>errs.push(W+' '+e.message));
 await p.goto('http://127.0.0.1:8765/'+src); await p.waitForTimeout(400); await seed(p); await p.waitForTimeout(1800);
 const E=(f,a)=>p.evaluate(f,a); const W8=ms=>p.waitForTimeout(ms);
+/* espera la condición que se mira, no un tiempo fijo: pregunta cada 50 ms y sigue apenas se cumple; si no se cumple antes del tope, es una falla */
+const hasta=async(f,a,tope)=>{ const t0=Date.now(); while(Date.now()-t0<tope){ if(await E(f,a)){ ESPERA.push(Date.now()-t0); return true; } await W8(50); } ESPERA.push(Date.now()-t0); return false; }; const ESPERA=[];
 const ovf=async(tag)=>{ const r=await E(()=>{ const vw=innerWidth; const out=[]; document.querySelectorAll('#app *').forEach(e=>{ if(e.closest('.prrec,.prdays,.hrrow,.bdgrail,.swa,.segx,.tvp,.exnav,.swfil')) return; const r=e.getBoundingClientRect(); if(r.width&&(r.right>vw+1||r.left<-1)) out.push((e.className&&e.className.baseVal!==undefined?e.className.baseVal:e.className)+'|'+Math.round(r.left)+'-'+Math.round(r.right)); }); return {sw:document.documentElement.scrollWidth,vw,out:out.slice(0,5)}; }); ok(r.sw<=r.vw&&!r.out.length,`ovf ${W} ${tag} ${JSON.stringify(r)}`); };
 await E(()=>{ CELON=true; PERF.modo='eq'; perfApply(); CFG.prog={}; ['lp','swipe','scrub'].forEach(hintDone); saveCfg(); });
 // ---------- mixto: Recomposición ----------
@@ -117,9 +119,9 @@ const cf=await E(()=>[...document.querySelectorAll('.ajhd.sgh')].map(x=>x.textCo
 /* desde v263 las secciones van por días, con objetivos aparte */
 ok(/^Entran en tus 4 días\d+\|Con más días[^|]*\|Objetivos[^|]*\|Te falta equipo[^|]*\|Con cardio\d+$/.test(cf)&&!/Calistenia|En casa|Gimnasio/.test(cf),'secciones fuerza '+cf);
 const ids=await E(()=>PROG_IDX.map(p=>p.id));
-for(const id of ids){ await E(id=>{ progSel=id; go('programa'); },id); await W8(W===390?650:350); const d=await E(()=>({days:document.querySelectorAll('.prday:not(.sk)').length,sk:document.querySelectorAll('.prday.sk').length})); ok(d.days>0&&!d.sk,'ficha '+id+' '+JSON.stringify(d)); await ovf('ficha '+id); }
+for(const id of ids){ await E(id=>{ progSel=id; go('programa'); },id); ok(await hasta(id=>{ const v=document.querySelector('#app .view'); /* las animaciones finitas de la vista y de lo de adentro (los latidos infinitos no cuentan) */ return !!progPack(id)&&!!document.querySelector('#app .prday')&&!document.querySelector('#app .prday.sk')&&!!v&&v.getAnimations({subtree:true}).every(x=>x.playState!=='running'||x.effect.getTiming().iterations===Infinity); },id,10000),'ficha '+id+': carga y entra en menos de 10 s'); const d=await E(()=>({days:document.querySelectorAll('.prday:not(.sk)').length,sk:document.querySelectorAll('.prday.sk').length})); ok(d.days>0&&!d.sk,'ficha '+id+' '+JSON.stringify(d)); await ovf('ficha '+id); }
 // recomendaciones: con barra, mancuernas y bici aparece el mixto
 const rc=await E(()=>progRecs().map(o=>o.p.id).join(','));
 ok(/recomp/.test(rc)||!has('bici'),'recs '+rc);
-console.log('MISS',W,await E(()=>window.__miss||[])); await p.close(); }
+console.log('ESPERA',W,'máx',Math.max(...ESPERA),'ms · media',Math.round(ESPERA.reduce((s,x)=>s+x,0)/ESPERA.length),'ms'); ESPERA.length=0; console.log('MISS',W,await E(()=>window.__miss||[])); await p.close(); }
 console.log('BAD',JSON.stringify(bad,null,1)); console.log('ERRS',JSON.stringify(errs)); await b.close(); })();
