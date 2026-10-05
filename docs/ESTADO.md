@@ -8,9 +8,7 @@
   - **PR #6**: pesos de letra; chk204 y chk239 esperan la condición que miran.
   - **PR #7**: la suite corre con fecha y hora fijas.
   - Las dos publicaciones terminaron bien y la vuelta atrás quedó probada.
-- **Sin verificar en un teléfono real**:
-  - La URL pública no se puede abrir desde las sesiones de Claude Code: la política de red del entorno bloquea `nodo-ar.github.io`. Fer puede sumarla en «Network access» del entorno.
-  - Fer todavía no confirmó que la versión publicada ande en su teléfono.
+- **Verificado en el teléfono de Fer** (2026-10-05): «funciona todo perfecto». Desde las sesiones de Claude Code la URL pública no se puede abrir: la política de red del entorno bloquea `nodo-ar.github.io`.
 - **Kit del Equipo Nodo**: fusionado (PR #5). Los agentes y la skill `equipo-nodo` se cargan al abrir cada sesión.
 - **Actas**:
   - 001: pesos y esperas; la bandera roja la bajó Fer por escrito.
@@ -22,13 +20,14 @@
 - **2026-10-05**, aceptando las recomendaciones:
   - las opciones sin elegir de los segmentados van en 600;
   - el texto chico dentro de un segmentado queda en 600;
-  - el ítem 1 iba en un solo PR.
+  - el ítem 1 iba en un solo PR;
+  - el texto largo de la notificación de movilidad se acorta con «…» (backlog 2);
+  - el día futuro que se pierde al girar va después del respaldo (backlog 3).
+- **Regla general (2026-10-05)**: seguir las recomendaciones de Claude Code siempre que respeten el foco de las apps (modernas, sobrias y coherentes con el resto de la app). Los cambios que se ven igual llevan tablero antes de publicar.
 
 ## Esperando a Fer
 
-- **Texto largo de la notificación de movilidad** (backlog 2). Recomendación: acortar el nombre con «…». Con el OK, brief y tablero.
-- **Orden de los ítems**: si el día futuro que se pierde al girar (backlog 3) va antes o después del respaldo (backlog 1). Recomendación: después.
-- **Prueba en el teléfono**: con conexión, cerrar y abrir; ver la versión v269+7 en Ajustes. Después, en modo avión, abrir y marcar una serie.
+- Nada por ahora.
 
 ## Conocido en la suite
 
@@ -38,4 +37,4 @@
 
 ## Próximo paso
 
-El ítem 1 del backlog: el respaldo que se puede comprobar. No cambia nada visible, salvo que haga falta arreglar algo; se trabaja con una vuelta del equipo.
+El ítem 1 del backlog: el respaldo que se puede comprobar (vuelta 3). Después, el texto largo de la notificación (con tablero).
