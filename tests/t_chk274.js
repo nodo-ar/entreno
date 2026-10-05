@@ -26,6 +26,8 @@ const src=process.argv[2]||'index.html';
   r=await N(()=>{ finishBike(); },600); n=last(r); T(n.t==='Sesión terminada'&&/^Cardio · /.test(n.body)&&n.silent===false,'bici: fin de la sesión suena · '+JSON.stringify(n));
   r=await N(()=>{ go('home'); startMov('full'); },1200); n=last(r);
   if(n.t){ forma(n,'movilidad'); T(/^Movilidad · 1 de \d+ · \d+:\d\d$/.test(n.t)&&/^Sigue: /.test(n.body)&&n.actions.join()==='Pausa,Siguiente','movilidad: posición, lo que sigue · '+JSON.stringify(n));
-    r=await N(()=>{ liveAction('phase'); },500); T(r.some(x=>/^Movilidad · 2 de /.test(x.t)&&x.silent===false),'movilidad: la postura nueva suena · '+JSON.stringify(r.map(x=>[x.t,x.silent]))); }
+    /* si la primera postura es de dos lados, «siguiente» pasa primero al otro lado (también suena) y recién después a la postura 2 */
+    r=await N(()=>{ liveAction('phase'); },500); if(!r.some(x=>/^Movilidad · 2 de /.test(x.t))){ T(r.some(x=>/^Movilidad · 1 de /.test(x.t)&&x.silent===false),'movilidad: el otro lado suena · '+JSON.stringify(r.map(x=>[x.t,x.silent]))); r=await N(()=>{ liveAction('phase'); },500); }
+    T(r.some(x=>/^Movilidad · 2 de /.test(x.t)&&x.silent===false),'movilidad: la postura nueva suena · '+JSON.stringify(r.map(x=>[x.t,x.silent]))); }
   else T(false,'movilidad: no arrancó · '+JSON.stringify(r));
   console.log('ok',ok,'bad',bad,'errs',JSON.stringify(errs.slice(0,4))); await b.close(); })();
