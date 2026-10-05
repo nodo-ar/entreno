@@ -6,7 +6,9 @@ const pw=require('playwright');
 const CSS='*,*::before,*::after{transition-duration:1ms!important;transition-delay:0s!important;animation-duration:1ms!important;animation-delay:0s!important}';
 const INIT=`(()=>{ try{ delete Document.prototype.startViewTransition; }catch(e){} window.__inflight=0; const of=window.fetch; window.fetch=function(...a){ window.__inflight++; return of.apply(this,a).finally(()=>{ setTimeout(()=>{ window.__inflight--; },0); }); }; const st=document.createElement('style'); st.id='__fast'; st.textContent=${JSON.stringify(CSS)}; const add=()=>{ if(!document.getElementById('__fast')) (document.head||document.documentElement).appendChild(st); }; if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',add); else add(); })();`;
 const real=ms=>new Promise(r=>setTimeout(r,ms));
-const wrapPage=async p=>{ await p.clock.install(); await p.addInitScript(INIT);
+/* con fecha.js cargado antes, el reloj falso arranca en la fecha fija de la suite */
+process.env.__APP_RAPIDO='1';
+const wrapPage=async p=>{ await p.clock.install(process.env.__APP_DESFASE?{time:Date.now()+Number(process.env.__APP_DESFASE)}:undefined); await p.addInitScript(INIT);
   /* cada espera: el reloj avanza al instante; si hay pedidos de red en vuelo (fotos, programas), se espera de verdad a que lleguen */
   p.waitForTimeout=async ms=>{ try{ await p.clock.runFor(Math.max(1,Math.round(ms)));
       const t0=Date.now(); while(Date.now()-t0<Math.max(ms,300)){ const n=await p.evaluate(()=>window.__inflight||0); if(!n) break; await real(15); await p.clock.runFor(16); }

@@ -8,7 +8,7 @@ const LISTA=['chk210','chk205','chk202','chk204','chk214','chk215','chk216','chk
 const pedidas=A.filter(a=>/^chk\d+$/.test(a)); const tests=(pedidas.length?pedidas:LISTA).filter(t=>fs.existsSync(`t_${t}.js`));
 /* las que dependen de tiempos reales (gestos, animaciones medidas): van en modo normal */
 const LENTAS=new Set((fs.existsSync('suite_lentas.txt')?fs.readFileSync('suite_lentas.txt','utf8'):'').split(/\s+/).filter(Boolean));
-const correr=(t,rapido)=>new Promise(res=>{ const t0=Date.now(); const args=[...(rapido?['-r','./fast.js']:[]),`t_${t}.js`,src];
+const correr=(t,rapido)=>new Promise(res=>{ const t0=Date.now(); const args=['-r','./fecha.js',...(rapido?['-r','./fast.js']:[]),`t_${t}.js`,src]; /* fecha fija: la suite da lo mismo cualquier día */
   const ch=spawn('node',args,{cwd:__dirname}); let out=''; ch.stdout.on('data',d=>out+=d); ch.stderr.on('data',d=>out+=d);
   const k=setTimeout(()=>{ out+='\nTIMEOUT'; ch.kill('SIGKILL'); },300e3);
   ch.on('close',code=>{ clearTimeout(k); const fallas=out.split('\n').filter(l=>/^FAIL |TIMEOUT|Error:|^\s+at /.test(l)).slice(0,4);

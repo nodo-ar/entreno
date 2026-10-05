@@ -1,4 +1,6 @@
 module.exports=async(p)=>{
+/* con la fecha fija (fecha.js), la página tiene que ver ese día: si no, la prueba correría con la fecha real y daría verde según el día */
+if(process.env.__APP_FECHA_DIA){ const d=await p.evaluate(()=>{ const x=new Date(); return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'); }); if(d!==process.env.__APP_FECHA_DIA) throw new Error(`la fecha fija no se aplicó: la página ve ${d} y la suite fija ${process.env.__APP_FECHA_DIA}`); }
 /* efectos completos, como en el teléfono: en este entorno la detección cae en ahorro y esconde errores. Una prueba que quiera otro modo lo fija después. */
 await p.evaluate(()=>{ PERF.modo='max'; perfApply(); });
 await p.evaluate(()=>{document.querySelector('#newP').click()}); await p.waitForTimeout(200);
