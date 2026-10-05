@@ -6,11 +6,11 @@
 
 - **Publicado**: el PR #4 en GitHub Pages ([corrida 37203371846](https://github.com/nodo-ar/entreno/actions/runs/37203371846)). Incluye la marca Nodo, Nodo Sans Bold (700), los relojes en Nodo Reloj y la app sin conexión (service worker con la letra y los íconos).
 - **Sin verificar en un teléfono real**: Fer todavía no confirmó que la versión publicada ande en su teléfono.
-- **Kit del Equipo Nodo**: PR #5 (`equipo-nodo/kit`), abierto. Claude Code no lo pudo fusionar porque el control de permisos de la sesión no le deja fusionar sin revisión: lo fusiona Fer.
-- **Ítem 1 del backlog** (rama `claude/pesos-y-esperas`, PR propio, sin fusionar ni publicar):
+- **Kit del Equipo Nodo**: fusionado (PR #5). Los agentes y la skill `equipo-nodo` se cargan al abrir cada sesión.
+- **Ítem 1 del backlog** (PR #6, rama `claude/pesos-y-esperas`, aprobado por Fer el 2026-10-05, falta fusionar):
   - chk204 y chk239 esperan la condición que miran, con topes de 10 s y 2 s. Eran fallas de tiempo, no de diseño. En la suite 10 veces seguidas, las dos pasaron 10/10.
   - Pesos de letra: los textos de 13 px o menos y la opción elegida de los segmentados en 700; lo demás en 600. Tableros en la conversación y acta en `docs/actas/001-pesos-y-esperas.md`.
-  - Casandra tiene una bandera roja abierta: la bajada a 600 de las opciones sin elegir de `.seg`, `.segx`, `.tseg` y `.yn`, que eran 700. El tablero extra ya la muestra; falta que Fer la apruebe por escrito.
+  - Bandera roja de Casandra, bajada: Fer aprobó por escrito (2026-10-05, «dale para adelante con tus recomendaciones») que las opciones sin elegir de `.seg`, `.segx`, `.tseg` y `.yn` bajen de 700 a 600, que el texto chico dentro de los segmentados quede en 600 y que todo vaya en un solo PR.
 
 ## Decisiones ya tomadas por Fer (2026-10-04)
 
@@ -19,12 +19,7 @@
 
 ## Esperando a Fer
 
-- Fusionar el PR #5 (kit).
-- En el PR del ítem 1:
-  - aprobar o no, por escrito, que las opciones sin elegir de los segmentados bajen de 700 a 600 (baja la bandera roja);
-  - decidir si los textos chicos dentro de los segmentados (`.seg button small`, `.ritmos small`) siguen la elección o quedan en 600;
-  - decidir si queda en un PR o se separan las pruebas;
-  - dar el OK al tablero.
+- Fusionar el PR #6 (ítem 1, ya aprobado). Después Claude Code verifica lo publicado, prueba la vuelta atrás y escribe el registro en `docs/versiones/`.
 - Que pruebe la versión publicada en su teléfono: con conexión, cerrar y abrir; después en modo avión, abrir y marcar una serie.
 
 ## Conocido en la suite
@@ -35,4 +30,4 @@
 
 ## Próximo paso
 
-Con el OK de Fer al ítem 1: fusionar, publicar y escribir el registro en `docs/versiones/`. Después, el ítem 2 del backlog (la suite sin depender del día).
+Publicar el ítem 1 (verificar en producción y escribir el registro). En curso: el ítem 2 del backlog, la suite sin depender del día (vuelta 2, rama `claude/suite-sin-dia`).

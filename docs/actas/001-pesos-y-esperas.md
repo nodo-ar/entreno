@@ -68,7 +68,7 @@ Los agentes del kit todavía no estaban cargados en la sesión (el kit va en el 
 
 ## Bandera roja
 Casandra: «hay texto chico cambiado sin ver (menús, bienvenida, estados vacíos) y `.seg`/`.yn` bajan a 600 sin que el brief lo declare · se baja cuando haya un tablero en grafito y en claro de esas pantallas, con `.seg` y `.yn` antes y después, y Fer apruebe esa bajada por escrito».
-Estado: el tablero extra ya está. Falta que Fer apruebe por escrito la bajada.
+Estado: **bajada**. El tablero extra mostró las pantallas que faltaban y Fer aprobó por escrito las tres recomendaciones (2026-10-05): las opciones sin elegir en 600, el texto chico de los segmentados en 600 y un solo PR.
 
 ## Entrega de esta fase
 - Rama `claude/pesos-y-esperas` y su PR.
