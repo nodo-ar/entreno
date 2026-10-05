@@ -4068,7 +4068,7 @@ function migrar(c){ if(c.notasEj){ const o={}; Object.entries(c.notasEj).forEach
 const lugar=()=>CFG.lugares.find(l=>l.id===CFG.lugar)||CFG.lugares[0];
 const clean=o=>JSON.parse(JSON.stringify(o));
 function lsLoad(){ try{ const g=JSON.parse(localStorage.getItem(LSK+".g")||"{}"); PERFILES=g.perfiles||[]; PID=g.pid||null; if(PID){ const o=JSON.parse(localStorage.getItem(LSK+"."+PID)||"{}"); SESS=o.sess||[]; DIARIO=o.diario||{}; MED=o.med||{}; CFG=migrar(Object.assign(defCfg(),o.cfg||{})); } }catch(e){} }
-function lsSave(){ try{ localStorage.setItem(LSK+".g",JSON.stringify({perfiles:PERFILES,pid:PID})); if(PID) localStorage.setItem(LSK+"."+PID,JSON.stringify({sess:SESS,diario:DIARIO,med:MED,cfg:CFG})); }catch(e){} }
+function lsSave(){ try{ localStorage.setItem(LSK+".g",JSON.stringify({perfiles:PERFILES,pid:PID})); if(PID) localStorage.setItem(LSK+"."+PID,JSON.stringify({sess:SESS,diario:DIARIO,med:MED,cfg:CFG})); return true; }catch(e){ return false; } }
 const col=n=>DB.collection("perfiles/"+PID+"/"+n);
 async function initStore(){
   lsLoad(); render();
@@ -8981,24 +8981,48 @@ function ajExtra(){ const le=CFG.lastExport;
 function bindAjExtra(app){ $("#bkExp").onclick=exportar; $("#bkImp").onclick=()=>$("#bkFile").click();
   $("#bkFile").onchange=async ev=>{ const f=ev.target.files[0]; ev.target.value=""; if(!f) return; let o; try{ o=JSON.parse(await f.text()); }catch(e){ toast("Ese archivo no es un respaldo"); return; }
     if(!o||o.app!=="barra-y-bici"||!Array.isArray(o.sess)){ toast("Ese archivo no es un respaldo"); return; }
-    const ids=new Set(SESS.map(x=>x.id)); const nuevas=o.sess.filter(x=>x&&x.id&&!ids.has(x.id)).length; const med=Object.keys(o.med||{}).filter(k=>!MED[k]).length;
+    if(typeof o.v==="number"&&o.v>1){ toast("Ese respaldo es de una versión más nueva: actualizá la app"); return; }
     importar(o); };
   $("#dvNew").onclick=()=>openDev(devCtx()); bindDvList(); devSync().then(ok=>{ if(ok&&view==="ajustes") bindDvList(); }); }
 async function exportar(){ const o={app:"barra-y-bici",v:1,ver:APP_V,exportado:new Date().toISOString(),perfil:{id:PID,n:CFG.nombre},cfg:CFG,sess:SESS,diario:DIARIO,med:MED}; const data=JSON.stringify(o);
-  const fn=`nodo-entreno_${(CFG.nombre||"perfil").toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g,"-")}_${hoyISO()}.json`;
+  const fn=`nodo-entreno_${(CFG.nombre||"perfil").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"perfil"}_${hoyISO()}.json`;
   const ok=()=>{ CFG.lastExport=Date.now(); saveCfg(); if(view==="ajustes") render(); };
   let dl=null; try{ dl=window.claude&&window.claude.use?await window.claude.use("downloads"):null; }catch(e){ dl=null; }
   if(dl){ try{ await dl.save({filename:fn,data:new Blob([data],{type:"application/json"})}); ok(); }catch(e){ if(!e||e.code!=="declined") toast(e&&e.code==="rate_limited"?"Esperá un toque y probá de nuevo":"No se pudo guardar"); } return; }
   try{ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([data],{type:"application/json"})); a.download=fn; document.body.appendChild(a); a.click(); a.remove(); ok(); }catch(e){ toast("No se pudo descargar"); } }
-async function importar(o){ let n=0; const ids=new Set(SESS.map(x=>x.id)), nuevos=[], prevD={}, prevM={}, cfg0=JSON.stringify(CFG);
-  (o.sess||[]).forEach(x=>{ if(x&&x.id&&x.fecha&&!ids.has(x.id)){ SESS.push(x); nuevos.push(x.id); n++; if(DB&&PID) col("sesiones").doc(x.id).set(clean(x)).catch(()=>{}); } }); SESS.sort((a,b)=>b.fecha.localeCompare(a.fecha));
-  const mrg=(src,dst,c,prev)=>Object.entries(src||{}).forEach(([k,v])=>{ const l=dst[k]; if(!l||(v.updated||0)>(l.updated||0)){ prev[k]=l?JSON.stringify(l):null; dst[k]=v; saveDoc(c,dst,k); } }); mrg(o.diario,DIARIO,"diario",prevD); mrg(o.med,MED,"medidas",prevM);
-  let cfgCh=false; if(o.cfg&&(o.cfg.updated||0)>(CFG.updated||0)){ const keep={nombre:CFG.nombre,lastExport:CFG.lastExport}; CFG=migrar(Object.assign(defCfg(),o.cfg,keep)); cfgCh=true; }
-  saveCfg(); lsSave(); render();
-  const md=Object.keys(prevM).length; if(!n&&!md&&!Object.keys(prevD).length&&!cfgCh){ toast("Ya tenías todo"); return; }
+/* qué se acepta de un respaldo (docs/respaldo.md): lo que no pasa se descarta y se cuenta, antes de tocar nada */
+const RESP={ fecha:f=>typeof f==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(f)&&iso(new Date(f+"T12:00:00"))===f,
+  num:(v,max)=>v==null||(typeof v==="number"&&isFinite(v)&&v>=0&&v<=max), txt:(v,max)=>v==null||(typeof v==="string"&&v.length<=max),
+  lista:v=>v==null||Array.isArray(v), obj:v=>!!v&&typeof v==="object"&&!Array.isArray(v),
+  ses(x){ if(!this.obj(x)||typeof x.id!=="string"||!x.id||x.id.length>80||!this.fecha(x.fecha)||!["fuerza","bici","mov"].includes(x.kind)||!this.txt(x.tipo,120)) return false;
+    for(const k of ["dur","min","kcal","km","vol","ritmo"]) if(!this.num(x[k],1e7)) return false;
+    for(const k of ["splits","ruta","items","zonas","skills"]) if(!this.lista(x[k])) return false;
+    if(x.kind==="fuerza"){ if(!Array.isArray(x.ej)) return false; for(const e of x.ej){ if(!this.obj(e)||typeof e.n!=="string"||!e.n||e.n.length>120||!Array.isArray(e.series)) return false; for(const s of e.series) if(!this.obj(s)||!this.num(s.r,10000)||!this.num(s.kg,10000)) return false; } }
+    return true; },
+  dias(o){ return this.obj(o)?Object.fromEntries(Object.entries(o).filter(([k,v])=>this.fecha(k)&&this.obj(v))):{}; },
+  cfg(c){ if(!this.obj(c)) return null; const d=v=>v==null||(Array.isArray(v)&&v.every(n=>Number.isInteger(n)&&n>=0&&n<=6));
+    if(!d(c.diasFS)||!d(c.diasBS)||(c.lugares!=null&&!(Array.isArray(c.lugares)&&c.lugares.length&&c.lugares.every(l=>this.obj(l))))) return null;
+    for(const k of ["diasF","diasB","peso"]) if(!this.num(c[k],1000)) return null; return c; } };
+async function importar(o){ const ids=new Set(SESS.map(x=>x.id)), nuevos=[], prevD={}, prevM={}, cfg0=JSON.stringify(CFG), sinHistoria=!SESS.length;
+  const foto=JSON.stringify({sess:SESS,diario:DIARIO,med:MED}), volver=()=>{ const f=JSON.parse(foto); SESS=f.sess; DIARIO=f.diario; MED=f.med; CFG=JSON.parse(cfg0); };
+  const vistos=new Set(), entran=[]; let desc=0;
+  o.sess.forEach(x=>{ if(!RESP.ses(x)){ if(x&&typeof x==="object") desc++; return; } if(ids.has(x.id)||vistos.has(x.id)) return; vistos.add(x.id); entran.push(x); });
+  const dia=RESP.dias(o.diario), med=RESP.dias(o.med), oc=RESP.cfg(o.cfg);
+  const igual=(a,b)=>{ const s=v=>JSON.stringify(Object.entries(v||{}).filter(([k])=>k!=="updated").sort()); return s(a)===s(b); };
+  let cfgCh=false;
+  /* se aplica todo en memoria y se guarda una sola vez: si el teléfono no tiene lugar, vuelve todo como estaba */
+  entran.forEach(x=>{ SESS.push(x); nuevos.push(x.id); }); SESS.sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  const mrg=(src,dst,prev)=>Object.entries(src).forEach(([k,v])=>{ const l=dst[k]; if(l&&igual(l,v)) return; if(!l||(v.updated||0)>(l.updated||0)){ prev[k]=l?JSON.stringify(l):null; dst[k]=v; } }); mrg(dia,DIARIO,prevD); mrg(med,MED,prevM);
+  /* los ajustes del respaldo entran si son más nuevos, o si este perfil todavía no tiene historia (un teléfono nuevo: el perfil recién creado siempre es más nuevo que el respaldo) */
+  if(oc&&(sinHistoria||(oc.updated||0)>(CFG.updated||0))){ const keep={nombre:CFG.nombre,lastExport:CFG.lastExport}; CFG=migrar(Object.assign(defCfg(),oc,keep)); cfgCh=true; }
+  const n=nuevos.length, md=Object.keys(prevM).length, dd=Object.keys(prevD).length;
+  if(!n&&!md&&!dd&&!cfgCh){ volver(); toast(desc?"No había nada que se pudiera importar":"Ya tenías todo"); return; }
+  if(!lsSave()){ volver(); lsSave(); toast("No hay lugar en el teléfono para este respaldo"); return; }
+  if(DB&&PID) entran.forEach(x=>col("sesiones").doc(x.id).set(clean(x)).catch(()=>{}));
+  Object.keys(prevD).forEach(k=>saveDoc("diario",DIARIO,k)); Object.keys(prevM).forEach(k=>saveDoc("medidas",MED,k)); saveCfg(); render();
   undoToast(n?`${n} ${n===1?"sesión importada":"sesiones importadas"}`:"Datos importados",async()=>{ for(const id of nuevos) await delSession(id);
     const back=(prev,dst,c)=>Object.entries(prev).forEach(([k,v])=>{ if(v==null){ delete dst[k]; if(DB) col(c).doc(k).delete().catch(()=>{}); } else { dst[k]=JSON.parse(v); saveDoc(c,dst,k); } }); back(prevD,DIARIO,"diario"); back(prevM,MED,"medidas");
-    if(cfgCh){ CFG=JSON.parse(cfg0); saveCfg(); } lsSave(); render(); },{k:"imp",d:`de ${o.perfil&&o.perfil.n||"otro perfil"}${md?` · ${md} medidas`:""}`}); }
+    /* los ajustes vuelven siempre: al importar, la app también recalcula progresiones (skUp) con las sesiones nuevas */ CFG=JSON.parse(cfg0); saveCfg(); lsSave(); render(); },{k:"imp",d:`de ${o.perfil&&o.perfil.n||"otro perfil"}${md?` · ${md} ${md===1?"medida":"medidas"}`:""}${desc?` · ${desc} ${desc===1?"descartada":"descartadas"}`:""}`}); }
 devLoadLocal();
 
 /* ============ BACKGROUND ============ */
