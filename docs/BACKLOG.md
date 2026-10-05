@@ -13,6 +13,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 
 ## Después
 
+4b. **[error] Dos pestañas se pisan** (de la vuelta 3, el revoltoso): un guardado desde una pestaña vieja de la app borra lo que guardó la otra (por ejemplo, una importación). Sin cambio visible: arreglo de cómo se guarda.
 5. **Barrido de la suite por días y horas** (de la vuelta 2, Casandra): correr de vez en cuando las pruebas que dependen de la fecha en los siete días y a la 1:30 (`APP_FECHA`), fuera de cada PR, para que la fecha fija no tape errores como los ítems 2 y 3. Avisa, no frena.
 6. **Auditoría de coherencia.** Buscar dónde la app resuelve lo mismo de formas distintas (ejemplo conocido: las pestañas Semana/Mes de Resumen frente al selector «Esta semana» de Cuerpo). Entregar la lista con capturas y una propuesta por caso; se arregla de a uno.
 7. **Horizontal en todas las pantallas** con el patrón de Ajustes (lista a la izquierda, ítem abierto a la derecha).
@@ -24,6 +25,9 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 13. **Duraciones de `.segx`** (.25 s y .38 s), que no son tokens del manual de movimiento.
 
 ## Ideas (necesitan brief y OK)
+
+- **[idea] Fotos de progreso en el respaldo** (de la vuelta 3): hoy viven solo en el teléfono y no viajan en el respaldo; si se pierde el teléfono, se pierden. Opciones: sumarlas al archivo (más pesado), un segundo archivo de fotos, o avisar en Ajustes que no viajan.
+- **[idea] Exportar todos los perfiles juntos.**
 
 14. **[idea] Rutina según los días.** Al empezar, la app pregunta cuántos días por semana vas a entrenar y ofrece rutinas que se adaptan (torso/pierna, Arnold, full body…). Para Fer, «rutina» es el plan semanal, no los ejercicios de una sesión.
 15. **[idea] Héroes como desafíos.** Que la app proponga desafíos según el progreso o la rutina.
