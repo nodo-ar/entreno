@@ -25,3 +25,12 @@ K.deshacer.cerrar = ya => {
   if (ya || K.reduce()){ t.remove(); return; }
   t.classList.add("out"); setTimeout(() => t.remove(), 220);
 };
+/* aviso sin deshacer: algo que no se pudo hacer, dicho en una línea */
+K.aviso = texto => {
+  K.deshacer.cerrar(true);
+  const t = document.createElement("div");
+  t.className = "utoast solo"; t.setAttribute("role", "alert");
+  t.innerHTML = `<span class="utx">${K.esc(texto)}</span>`;
+  document.body.appendChild(t);
+  K.deshacer._el = t; K.deshacer._t = setTimeout(() => K.deshacer.cerrar(), K.DESHACER_MS);
+};

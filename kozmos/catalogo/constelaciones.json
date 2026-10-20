@@ -1,0 +1,1472 @@
+{
+ "version": 1,
+ "familias": [
+  {
+   "id": "fu",
+   "nombre": "Dominio del cuerpo",
+   "texto": "Calistenia de verdad: lo que se ve en una plaza y pocos logran."
+  },
+  {
+   "id": "ra",
+   "nombre": "Rango",
+   "texto": "Movilidad que se nota: posiciones que piden años."
+  },
+  {
+   "id": "mo",
+   "nombre": "Motor",
+   "texto": "Aguante medido con lo que la app sabe contar."
+  }
+ ],
+ "constelaciones": [
+  {
+   "id": "parada-de-manos",
+   "nombre": "Parada de manos",
+   "familia": "fu",
+   "meta": "Treinta segundos libre y la flexión en vertical.",
+   "estrellas": [
+    {
+     "id": "parada-de-manos.munecas-15s",
+     "nombre": "Muñecas en el dorso 15 s",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "munecas-dorso",
+      "tipo": "segundos",
+      "umbral": 15
+     },
+     "requiere": [],
+     "equipo": [
+      "pared"
+     ]
+    },
+    {
+     "id": "parada-de-manos.cuervo-10s",
+     "nombre": "Cuervo 10 s",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "cuervo",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "parada-de-manos.munecas-15s"
+     ],
+     "equipo": [
+      "pared"
+     ]
+    },
+    {
+     "id": "parada-de-manos.pared-30s",
+     "nombre": "Contra la pared 30 s",
+     "magnitud": 4,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "vertical-pared",
+      "tipo": "segundos",
+      "umbral": 30
+     },
+     "requiere": [
+      "parada-de-manos.cuervo-10s"
+     ],
+     "equipo": [
+      "pared"
+     ]
+    },
+    {
+     "id": "parada-de-manos.pared-60s",
+     "nombre": "Contra la pared 60 s",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "vertical-pared",
+      "tipo": "segundos",
+      "umbral": 60
+     },
+     "requiere": [
+      "parada-de-manos.pared-30s"
+     ],
+     "equipo": [
+      "pared"
+     ]
+    },
+    {
+     "id": "parada-de-manos.pike-elevado-8",
+     "nombre": "Pike con pies elevados ×8",
+     "magnitud": 3,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "pike-elevado",
+      "tipo": "repeticiones",
+      "umbral": 8
+     },
+     "requiere": [
+      "parada-de-manos.pared-60s"
+     ],
+     "equipo": [
+      "pared"
+     ]
+    },
+    {
+     "id": "parada-de-manos.libre-5s",
+     "nombre": "Libre 5 s",
+     "magnitud": 2,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "vertical-libre",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [
+      "parada-de-manos.pike-elevado-8"
+     ],
+     "equipo": [
+      "pared"
+     ]
+    },
+    {
+     "id": "parada-de-manos.flexion-vertical-3",
+     "nombre": "Flexión en vertical contra la pared ×3",
+     "magnitud": 2,
+     "orden": 7,
+     "prueba": {
+      "ejercicio": "flexion-vertical-pared",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "parada-de-manos.libre-5s"
+     ],
+     "equipo": [
+      "pared"
+     ]
+    },
+    {
+     "id": "parada-de-manos.libre-15s",
+     "nombre": "Libre 15 s",
+     "magnitud": 1,
+     "orden": 8,
+     "prueba": {
+      "ejercicio": "vertical-libre",
+      "tipo": "segundos",
+      "umbral": 15
+     },
+     "requiere": [
+      "parada-de-manos.flexion-vertical-3"
+     ],
+     "equipo": [
+      "pared"
+     ]
+    },
+    {
+     "id": "parada-de-manos.libre-30s",
+     "nombre": "Libre 30 s",
+     "magnitud": 1,
+     "orden": 9,
+     "prueba": {
+      "ejercicio": "vertical-libre",
+      "tipo": "segundos",
+      "umbral": 30
+     },
+     "requiere": [
+      "parada-de-manos.libre-15s"
+     ],
+     "equipo": [
+      "pared"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "muscle-up",
+   "nombre": "Muscle-up",
+   "familia": "fu",
+   "meta": "Pasar arriba de la barra, limpio.",
+   "estrellas": [
+    {
+     "id": "muscle-up.fondo-ruso",
+     "nombre": "Fondo ruso",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "fondo-ruso",
+      "tipo": "logrado",
+      "umbral": 1
+     },
+     "requiere": [],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "muscle-up.explosiva-3",
+     "nombre": "Dominada explosiva al pecho ×3",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "dominada-explosiva",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "muscle-up.fondo-ruso"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "muscle-up.negativa-3",
+     "nombre": "Negativa de muscle-up ×3",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "muscle-up-negativa",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "muscle-up.explosiva-3"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "muscle-up.impulso-1",
+     "nombre": "Con impulso ×1",
+     "magnitud": 2,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "muscle-up-impulso",
+      "tipo": "repeticiones",
+      "umbral": 1
+     },
+     "requiere": [
+      "muscle-up.negativa-3"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "muscle-up.estricto-3",
+     "nombre": "Muscle-up ×3",
+     "magnitud": 1,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "muscle-up",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "muscle-up.impulso-1"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "front-lever",
+   "nombre": "Front lever",
+   "familia": "fu",
+   "meta": "El cuerpo horizontal colgado de la barra.",
+   "estrellas": [
+    {
+     "id": "front-lever.colgado-60s",
+     "nombre": "Colgado activo 60 s",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "colgado-activo",
+      "tipo": "segundos",
+      "umbral": 60
+     },
+     "requiere": [],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "front-lever.bolita-10s",
+     "nombre": "Bolita 10 s",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "fl-bolita",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "front-lever.colgado-60s"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "front-lever.tuck-10s",
+     "nombre": "Tuck 10 s",
+     "magnitud": 4,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "fl-tuck",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "front-lever.bolita-10s"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "front-lever.tuck-20s",
+     "nombre": "Tuck 20 s",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "fl-tuck",
+      "tipo": "segundos",
+      "umbral": 20
+     },
+     "requiere": [
+      "front-lever.tuck-10s"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "front-lever.tuck-avanzado-10s",
+     "nombre": "Tuck avanzado 10 s",
+     "magnitud": 3,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "fl-tuck-avanzado",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "front-lever.tuck-20s"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "front-lever.una-pierna-10s",
+     "nombre": "Una pierna 10 s",
+     "magnitud": 2,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "fl-una-pierna",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "front-lever.tuck-avanzado-10s"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "front-lever.straddle-5s",
+     "nombre": "Straddle 5 s",
+     "magnitud": 2,
+     "orden": 7,
+     "prueba": {
+      "ejercicio": "fl-straddle",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [
+      "front-lever.una-pierna-10s"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "front-lever.completo-5s",
+     "nombre": "Front lever 5 s",
+     "magnitud": 1,
+     "orden": 8,
+     "prueba": {
+      "ejercicio": "front-lever",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [
+      "front-lever.straddle-5s"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "planche",
+   "nombre": "Planche",
+   "familia": "fu",
+   "meta": "El cuerpo horizontal sobre las manos.",
+   "estrellas": [
+    {
+     "id": "planche.lean-15s",
+     "nombre": "Planche lean 15 s",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "planche-lean",
+      "tipo": "segundos",
+      "umbral": 15
+     },
+     "requiere": []
+    },
+    {
+     "id": "planche.pseudo-5",
+     "nombre": "Flexión pseudo planche ×5",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "flexion-pseudo-planche",
+      "tipo": "repeticiones",
+      "umbral": 5
+     },
+     "requiere": [
+      "planche.lean-15s"
+     ]
+    },
+    {
+     "id": "planche.tuck-5s",
+     "nombre": "Tuck 5 s",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "planche-tuck",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [
+      "planche.pseudo-5"
+     ]
+    },
+    {
+     "id": "planche.tuck-15s",
+     "nombre": "Tuck 15 s",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "planche-tuck",
+      "tipo": "segundos",
+      "umbral": 15
+     },
+     "requiere": [
+      "planche.tuck-5s"
+     ]
+    },
+    {
+     "id": "planche.tuck-avanzado-10s",
+     "nombre": "Tuck avanzado 10 s",
+     "magnitud": 2,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "planche-tuck-avanzado",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "planche.tuck-15s"
+     ]
+    },
+    {
+     "id": "planche.straddle-5s",
+     "nombre": "Straddle 5 s",
+     "magnitud": 1,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "planche-straddle",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [
+      "planche.tuck-avanzado-10s"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "un-brazo",
+   "nombre": "Un brazo",
+   "familia": "fu",
+   "meta": "Dominada y flexión a un brazo.",
+   "estrellas": [
+    {
+     "id": "un-brazo.colgado-15s",
+     "nombre": "Colgado a un brazo 15 s",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "colgado-un-brazo",
+      "tipo": "segundos",
+      "umbral": 15
+     },
+     "requiere": [],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "un-brazo.flexion-arquera-5",
+     "nombre": "Flexión arquera ×5",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "flexion-arquera",
+      "tipo": "repeticiones",
+      "umbral": 5
+     },
+     "requiere": [
+      "un-brazo.colgado-15s"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "un-brazo.dominada-arquera-5",
+     "nombre": "Dominada arquera ×5",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "dominada-arquera",
+      "tipo": "repeticiones",
+      "umbral": 5
+     },
+     "requiere": [
+      "un-brazo.flexion-arquera-5"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "un-brazo.negativa-3",
+     "nombre": "Negativa a un brazo ×3",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "dominada-un-brazo-negativa",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "un-brazo.dominada-arquera-5"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "un-brazo.flexion-3",
+     "nombre": "Flexión a un brazo ×3",
+     "magnitud": 2,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "flexion-un-brazo",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "un-brazo.negativa-3"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
+     "id": "un-brazo.dominada-1",
+     "nombre": "Dominada a un brazo ×1",
+     "magnitud": 1,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "dominada-un-brazo",
+      "tipo": "repeticiones",
+      "umbral": 1
+     },
+     "requiere": [
+      "un-brazo.flexion-3"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "bandera",
+   "nombre": "Bandera humana",
+   "familia": "fu",
+   "meta": "De costado en un poste, el cuerpo en el aire.",
+   "estrellas": [
+    {
+     "id": "bandera.rodillas-5s",
+     "nombre": "Con rodillas 5 s",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "bandera-rodillas",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [],
+     "equipo": [
+      "poste"
+     ]
+    },
+    {
+     "id": "bandera.abierta-5s",
+     "nombre": "Abierta 5 s",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "bandera-abierta",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [
+      "bandera.rodillas-5s"
+     ],
+     "equipo": [
+      "poste"
+     ]
+    },
+    {
+     "id": "bandera.completa-5s",
+     "nombre": "Completa 5 s",
+     "magnitud": 2,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "bandera",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [
+      "bandera.abierta-5s"
+     ],
+     "equipo": [
+      "poste"
+     ]
+    },
+    {
+     "id": "bandera.completa-10s",
+     "nombre": "Completa 10 s",
+     "magnitud": 1,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "bandera",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "bandera.completa-5s"
+     ],
+     "equipo": [
+      "poste"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "draco",
+   "nombre": "Draco",
+   "familia": "fu",
+   "meta": "V-sit y dragon flag: el tronco de un gimnasta.",
+   "estrellas": [
+    {
+     "id": "draco.lsit-10s",
+     "nombre": "L-sit 10 s",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "l-sit",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": []
+    },
+    {
+     "id": "draco.lsit-20s",
+     "nombre": "L-sit 20 s",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "l-sit",
+      "tipo": "segundos",
+      "umbral": 20
+     },
+     "requiere": [
+      "draco.lsit-10s"
+     ]
+    },
+    {
+     "id": "draco.dragon-bolita-3",
+     "nombre": "Dragon flag en bolita ×3",
+     "magnitud": 4,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "dragon-flag-bolita",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "draco.lsit-20s"
+     ]
+    },
+    {
+     "id": "draco.pies-arriba-10s",
+     "nombre": "L-sit con pies arriba 10 s",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "l-sit-alto",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "draco.dragon-bolita-3"
+     ]
+    },
+    {
+     "id": "draco.dragon-una-pierna-3",
+     "nombre": "Dragon flag a una pierna ×3",
+     "magnitud": 2,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "dragon-flag-una-pierna",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "draco.pies-arriba-10s"
+     ]
+    },
+    {
+     "id": "draco.vsit-5s",
+     "nombre": "V-sit 5 s",
+     "magnitud": 2,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "v-sit",
+      "tipo": "segundos",
+      "umbral": 5
+     },
+     "requiere": [
+      "draco.dragon-una-pierna-3"
+     ]
+    },
+    {
+     "id": "draco.dragon-3",
+     "nombre": "Dragon flag ×3",
+     "magnitud": 1,
+     "orden": 7,
+     "prueba": {
+      "ejercicio": "dragon-flag",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "draco.vsit-5s"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "una-pierna",
+   "nombre": "Una pierna",
+   "familia": "fu",
+   "meta": "Pistol, shrimp y nórdico completos.",
+   "estrellas": [
+    {
+     "id": "una-pierna.pistol-silla-5",
+     "nombre": "Pistol a una silla ×5",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "pistol-silla",
+      "tipo": "repeticiones",
+      "umbral": 5
+     },
+     "requiere": []
+    },
+    {
+     "id": "una-pierna.shrimp-3",
+     "nombre": "Shrimp ×3",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "shrimp",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "una-pierna.pistol-silla-5"
+     ]
+    },
+    {
+     "id": "una-pierna.pistol-3",
+     "nombre": "Pistol ×3",
+     "magnitud": 4,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "pistol",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "una-pierna.shrimp-3"
+     ]
+    },
+    {
+     "id": "una-pierna.nordico-negativa-5",
+     "nombre": "Nórdico, negativa lenta ×5",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "nordico-negativa",
+      "tipo": "repeticiones",
+      "umbral": 5
+     },
+     "requiere": [
+      "una-pierna.pistol-3"
+     ]
+    },
+    {
+     "id": "una-pierna.pistol-6",
+     "nombre": "Pistol ×6",
+     "magnitud": 2,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "pistol",
+      "tipo": "repeticiones",
+      "umbral": 6
+     },
+     "requiere": [
+      "una-pierna.nordico-negativa-5"
+     ]
+    },
+    {
+     "id": "una-pierna.shrimp-6",
+     "nombre": "Shrimp ×6",
+     "magnitud": 2,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "shrimp",
+      "tipo": "repeticiones",
+      "umbral": 6
+     },
+     "requiere": [
+      "una-pierna.pistol-6"
+     ]
+    },
+    {
+     "id": "una-pierna.nordico-1",
+     "nombre": "Nórdico ×1",
+     "magnitud": 1,
+     "orden": 7,
+     "prueba": {
+      "ejercicio": "nordico",
+      "tipo": "repeticiones",
+      "umbral": 1
+     },
+     "requiere": [
+      "una-pierna.shrimp-6"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lastre",
+   "nombre": "Lastre",
+   "familia": "fu",
+   "meta": "Dominada con la mitad de tu peso colgada.",
+   "estrellas": [
+    {
+     "id": "lastre.dominada-10",
+     "nombre": "Dominada +10 % de tu peso",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "dominada-lastre",
+      "tipo": "porcentaje",
+      "umbral": 10
+     },
+     "requiere": [],
+     "equipo": [
+      "barra",
+      "paralelas",
+      "lastre"
+     ]
+    },
+    {
+     "id": "lastre.fondo-25",
+     "nombre": "Fondo +25 %",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "fondo-lastre",
+      "tipo": "porcentaje",
+      "umbral": 25
+     },
+     "requiere": [
+      "lastre.dominada-10"
+     ],
+     "equipo": [
+      "barra",
+      "paralelas",
+      "lastre"
+     ]
+    },
+    {
+     "id": "lastre.dominada-25",
+     "nombre": "Dominada +25 %",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "dominada-lastre",
+      "tipo": "porcentaje",
+      "umbral": 25
+     },
+     "requiere": [
+      "lastre.fondo-25"
+     ],
+     "equipo": [
+      "barra",
+      "paralelas",
+      "lastre"
+     ]
+    },
+    {
+     "id": "lastre.fondo-50",
+     "nombre": "Fondo +50 %",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "fondo-lastre",
+      "tipo": "porcentaje",
+      "umbral": 50
+     },
+     "requiere": [
+      "lastre.dominada-25"
+     ],
+     "equipo": [
+      "barra",
+      "paralelas",
+      "lastre"
+     ]
+    },
+    {
+     "id": "lastre.dominada-50",
+     "nombre": "Dominada +50 %",
+     "magnitud": 2,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "dominada-lastre",
+      "tipo": "porcentaje",
+      "umbral": 50
+     },
+     "requiere": [
+      "lastre.fondo-50"
+     ],
+     "equipo": [
+      "barra",
+      "paralelas",
+      "lastre"
+     ]
+    },
+    {
+     "id": "lastre.fondo-100",
+     "nombre": "Fondo +100 %",
+     "magnitud": 1,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "fondo-lastre",
+      "tipo": "porcentaje",
+      "umbral": 100
+     },
+     "requiere": [
+      "lastre.dominada-50"
+     ],
+     "equipo": [
+      "barra",
+      "paralelas",
+      "lastre"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "espagat",
+   "nombre": "Espagat",
+   "familia": "ra",
+   "meta": "Lateral y frontal, al piso.",
+   "estrellas": [
+    {
+     "id": "espagat.sentadilla-30s",
+     "nombre": "Sentadilla profunda libre 30 s",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "sentadilla-profunda",
+      "tipo": "segundos",
+      "umbral": 30
+     },
+     "requiere": []
+    },
+    {
+     "id": "espagat.cosaca-15s",
+     "nombre": "Cosaca 15 s",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "cosaca",
+      "tipo": "segundos",
+      "umbral": 15
+     },
+     "requiere": [
+      "espagat.sentadilla-30s"
+     ]
+    },
+    {
+     "id": "espagat.lateral-90-10s",
+     "nombre": "Lateral a 90° 10 s",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "espagat-lateral-90",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "espagat.cosaca-15s"
+     ]
+    },
+    {
+     "id": "espagat.lateral",
+     "nombre": "Lateral completo",
+     "magnitud": 2,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "espagat-lateral",
+      "tipo": "logrado",
+      "umbral": 1
+     },
+     "requiere": [
+      "espagat.lateral-90-10s"
+     ]
+    },
+    {
+     "id": "espagat.frontal",
+     "nombre": "Frontal completo",
+     "magnitud": 1,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "espagat-frontal",
+      "tipo": "logrado",
+      "umbral": 1
+     },
+     "requiere": [
+      "espagat.lateral"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "puente",
+   "nombre": "Puente y pancake",
+   "familia": "ra",
+   "meta": "Espalda y cadera abiertas del todo.",
+   "estrellas": [
+    {
+     "id": "puente.manos-atras",
+     "nombre": "Manos juntas atrás",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "manos-atras",
+      "tipo": "logrado",
+      "umbral": 1
+     },
+     "requiere": []
+    },
+    {
+     "id": "puente.dedos-piso",
+     "nombre": "Dedos al piso",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "dedos-al-piso",
+      "tipo": "logrado",
+      "umbral": 1
+     },
+     "requiere": [
+      "puente.manos-atras"
+     ]
+    },
+    {
+     "id": "puente.pared-20s",
+     "nombre": "Brazos a la pared 20 s",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "hombros-pared",
+      "tipo": "segundos",
+      "umbral": 20
+     },
+     "requiere": [
+      "puente.dedos-piso"
+     ]
+    },
+    {
+     "id": "puente.pike",
+     "nombre": "Pike: pecho a las piernas",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "pike-pecho",
+      "tipo": "logrado",
+      "umbral": 1
+     },
+     "requiere": [
+      "puente.pared-20s"
+     ]
+    },
+    {
+     "id": "puente.completo-10s",
+     "nombre": "Puente completo 10 s",
+     "magnitud": 2,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "puente",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "puente.pike"
+     ]
+    },
+    {
+     "id": "puente.pancake",
+     "nombre": "Pancake: pecho al piso",
+     "magnitud": 1,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "pancake",
+      "tipo": "logrado",
+      "umbral": 1
+     },
+     "requiere": [
+      "puente.completo-10s"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "diez-km",
+   "nombre": "10 km",
+   "familia": "mo",
+   "meta": "Una hora corriendo, después bajo 50 minutos.",
+   "estrellas": [
+    {
+     "id": "diez-km.10min",
+     "nombre": "10 min seguidos",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "umbral": 10
+     },
+     "requiere": []
+    },
+    {
+     "id": "diez-km.30min",
+     "nombre": "30 min, unos 5 km",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "umbral": 30
+     },
+     "requiere": [
+      "diez-km.10min"
+     ]
+    },
+    {
+     "id": "diez-km.45min",
+     "nombre": "45 min",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "umbral": 45
+     },
+     "requiere": [
+      "diez-km.30min"
+     ]
+    },
+    {
+     "id": "diez-km.60min",
+     "nombre": "60 min, unos 10 km",
+     "magnitud": 2,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "umbral": 60
+     },
+     "requiere": [
+      "diez-km.45min"
+     ]
+    },
+    {
+     "id": "diez-km.sub-50",
+     "nombre": "10 km bajo 50 min",
+     "magnitud": 1,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "10km",
+      "tipo": "menos-minutos",
+      "umbral": 50
+     },
+     "requiere": [
+      "diez-km.60min"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "motor",
+   "nombre": "Motor",
+   "familia": "mo",
+   "meta": "Una hora de bici y el 4×4 noruego completo.",
+   "estrellas": [
+    {
+     "id": "motor.bici-20",
+     "nombre": "Bici 20 min seguidos",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "umbral": 20
+     },
+     "requiere": [],
+     "equipo": [
+      "bici"
+     ]
+    },
+    {
+     "id": "motor.bici-40",
+     "nombre": "Bici 40 min",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "umbral": 40
+     },
+     "requiere": [
+      "motor.bici-20"
+     ],
+     "equipo": [
+      "bici"
+     ]
+    },
+    {
+     "id": "motor.intervalos-1",
+     "nombre": "Primeros intervalos",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones",
+      "umbral": 1
+     },
+     "requiere": [
+      "motor.bici-40"
+     ],
+     "equipo": [
+      "bici"
+     ]
+    },
+    {
+     "id": "motor.intervalos-8",
+     "nombre": "8 sesiones de intervalos",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones",
+      "umbral": 8
+     },
+     "requiere": [
+      "motor.intervalos-1"
+     ],
+     "equipo": [
+      "bici"
+     ]
+    },
+    {
+     "id": "motor.bici-60",
+     "nombre": "Bici 60 min",
+     "magnitud": 2,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "umbral": 60
+     },
+     "requiere": [
+      "motor.intervalos-8"
+     ],
+     "equipo": [
+      "bici"
+     ]
+    },
+    {
+     "id": "motor.intervalos-12",
+     "nombre": "12 sesiones de intervalos",
+     "magnitud": 1,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones",
+      "umbral": 12
+     },
+     "requiere": [
+      "motor.bici-60"
+     ],
+     "equipo": [
+      "bici"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "soga",
+   "nombre": "Soga",
+   "familia": "mo",
+   "meta": "Mil saltos y el criss-cross.",
+   "estrellas": [
+    {
+     "id": "soga.100",
+     "nombre": "100 saltos",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "soga",
+      "tipo": "repeticiones",
+      "umbral": 100
+     },
+     "requiere": [],
+     "equipo": [
+      "soga"
+     ]
+    },
+    {
+     "id": "soga.400",
+     "nombre": "400 saltos",
+     "magnitud": 4,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "soga",
+      "tipo": "repeticiones",
+      "umbral": 400
+     },
+     "requiere": [
+      "soga.100"
+     ],
+     "equipo": [
+      "soga"
+     ]
+    },
+    {
+     "id": "soga.double-under-1",
+     "nombre": "Un double under",
+     "magnitud": 3,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "double-under",
+      "tipo": "repeticiones",
+      "umbral": 1
+     },
+     "requiere": [
+      "soga.400"
+     ],
+     "equipo": [
+      "soga"
+     ]
+    },
+    {
+     "id": "soga.double-under-20",
+     "nombre": "Double under ×20",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "double-under",
+      "tipo": "repeticiones",
+      "umbral": 20
+     },
+     "requiere": [
+      "soga.double-under-1"
+     ],
+     "equipo": [
+      "soga"
+     ]
+    },
+    {
+     "id": "soga.criss-cross-10",
+     "nombre": "Criss-cross ×10",
+     "magnitud": 2,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "criss-cross",
+      "tipo": "repeticiones",
+      "umbral": 10
+     },
+     "requiere": [
+      "soga.double-under-20"
+     ],
+     "equipo": [
+      "soga"
+     ]
+    },
+    {
+     "id": "soga.1000",
+     "nombre": "1000 saltos seguidos",
+     "magnitud": 1,
+     "orden": 6,
+     "prueba": {
+      "ejercicio": "soga",
+      "tipo": "repeticiones",
+      "umbral": 1000
+     },
+     "requiere": [
+      "soga.criss-cross-10"
+     ],
+     "equipo": [
+      "soga"
+     ]
+    }
+   ]
+  }
+ ]
+}

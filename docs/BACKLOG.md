@@ -30,6 +30,12 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Pruebas que faltan** (Casandra): cambio de versión con la app abierta y red lenta.
 - **Dominio propio para Kozmos** (decidido por Fer): conseguirlo y configurarlo antes de publicar, en la etapa 6. Ahí se baja la bandera roja de Casandra.
 - **Dejar escrita la letra de Kozmos** (Mona Sans y Geist Mono en lugar de la tipografía Nodo): viene de la dirección de arte B.
+- **Exportar e importar el diario de Kozmos** (el soberano): condición antes de que haya datos reales. Etapa 4.
+- **Aviso y deshacer a la vez** (Casandra): un aviso de error cierra el deshacer que estaba pendiente.
+- **La fecha de Anotar pasada la medianoche** (Casandra): con la app abierta, «Hoy» queda en ayer.
+- **Qué es cada estrella** (la persona): «Bolita», «Tuck» o «Draco» no se entienden solos. Una línea de explicación en el menú de Estrella cuando llegue el catálogo de ejercicios (etapa 5).
+- **Tu peso como dato fijo en Lastre** (la persona): hoy se ve como otro selector, aunque queda guardado.
+- **Estrellas según tu equipo**: hoy se muestran todas; con el perfil de equipo (etapa 4), las que no podés hacer se esconden salvo en la constelación abierta.
 - **Biblioteca en la barra**: los bocetos de miniaturas la mostraban; el prototipo tiene Progreso y Vos. Definir con Fer cuando haya ejercicios.
 
 ## Ideas (necesitan brief y OK)

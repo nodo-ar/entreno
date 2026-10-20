@@ -1,4 +1,4 @@
-/* ===== Pantallas de la etapa 1: las cuatro pestañas, todavía sin datos ===== */
+/* ===== Pantallas: Hoy, Progreso y Vos (Cielo vive en cielo.js) ===== */
 K.P = {};
 
 /* Vacío: la misma pieza en todas las pantallas sin datos (dibujo chico, título y una frase, alineados a la izquierda) */
@@ -15,24 +15,14 @@ K.P.hoy = () => {
   return K.enc({titulo: "Hoy", sub: f}) + K.vacio(`<svg viewBox="0 0 140 56">${g}</svg>`, "Todavía no hay nada para hoy", "Acá vas a ver la próxima estrella y lo que toca entrenar.");
 };
 
-/* Cielo: un cielo de muestra, sin constelaciones todavía */
-K.cieloMuestra = (semilla, W, H) => {
-  const r = azar(semilla); let g = "";
-  for (let i = 0; i < W * H / 700; i++) g += `<circle cx="${(r() * W).toFixed(1)}" cy="${(r() * H).toFixed(1)}" r="${(r() * .9 + .8).toFixed(2)}" fill="var(--ink-3)" opacity="${(r() * .5 + .4).toFixed(2)}"/>`;
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${g}</svg>`;
-};
-K.P.cielo = () => K.enc({titulo: "Cielo", sub: "Todavía sin estrellas"}) +
-  K.vacio("", "Tus constelaciones van a aparecer acá", "Cada habilidad que perseguís es una constelación, y cada marca que alcanzás enciende una estrella.", "cielo-vacio")
-    .replace('<div class="ilus" aria-hidden="true"></div>', `<div class="cielo-fondo" aria-hidden="true">${K.cieloMuestra(9, 320, 440)}</div>`);
-
 /* Progreso: siete semanas en blanco */
 K.P.progreso = () => K.enc({titulo: "Progreso", sub: "Tus semanas"}) +
   K.vacio(`<svg viewBox="0 0 140 56">${[0, 1, 2, 3, 4, 5, 6].map(i => `<rect x="${i * 20 + 2}" y="44" width="14" height="8" rx="4" fill="var(--s2)"/>`).join("")}</svg>`,
     "Todavía no hay semanas", "Después de tu primera sesión vas a ver tus minutos y tus marcas.");
 
 /* Vos: el tema se elige con un menú desplegable; Acerca se abre a la derecha en horizontal y como otra pantalla en vertical */
-K.P.vos = (abierto) => {
-  const det = abierto === "acerca";
+K.P.vos = r => {
+  const det = r.sub === "acerca";
   return `<div class="split${det ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Vos", sub: "Ajustes"})}
     <div class="aj">
       <button type="button" class="ajr" id="tema-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("auto")}</span><span>Tema</span><em>${K.esc(K.tema.nombre())}</em>${K.ic("chevd", "chev")}</button>
@@ -40,7 +30,7 @@ K.P.vos = (abierto) => {
     </div></div>
     <div class="abierto">${K.P.acerca()}</div></div>`;
 };
-K.P.acerca = () => K.enc({titulo: "Acerca de Kozmos", sub: "Ajustes", volver: "#/vos", det: true}) +
+K.P.acerca = () => K.enc({titulo: "Acerca de Kozmos", sub: "Ajustes", volver: "#/vos", raiz: true, det: true}) +
   `<section class="cd acerca">${K.logo(64)}<h2>Kozmos</h2>
    <p class="lema"><i>Per aspera ad astra.</i> Por lo difícil, a las estrellas.</p>
    <p class="mute">Funciona sin conexión. Lo que hacés queda en este teléfono: sin cuentas ni servidores.</p>

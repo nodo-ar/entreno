@@ -17,14 +17,16 @@ K.I = {
   info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
   undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
   chev:'<path d="M9 5l7 7-7 7"/>',
-  chevd:'<path d="M6 9l6 6 6-6"/>'
+  chevd:'<path d="M6 9l6 6 6-6"/>',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>',
+  cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'
 };
 K.ic = (k, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${K.I[k] || ""}</svg>`;
 
 /* El logo: disco negro con un punto, y una estrella chica arriba a la derecha */
 K.logo = (px = 40) => `<svg width="${px}" height="${px}" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="34" fill="var(--ink)"/><circle cx="42" cy="42" r="9" fill="var(--bg)"/><circle cx="60" cy="24" r="4" fill="var(--bg)"/></svg>`;
 
-/* Preferencias: viven en este teléfono. El diario de entrenamientos irá en IndexedDB (etapa 4). */
+/* Preferencias: viven en este teléfono. Lo que entrenás va aparte, en el diario (IndexedDB). */
 K.PREFS = "kozmos.prefs.v1";
 K.prefs = {
   leer(){ try{ return JSON.parse(localStorage.getItem(K.PREFS)) || {}; }catch(e){ return {}; } },

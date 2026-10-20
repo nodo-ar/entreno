@@ -15,15 +15,15 @@ p{margin:0}
 
 #app{max-width:560px; margin:0 auto; padding:0 16px calc(104px + env(safe-area-inset-bottom,0px)); padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
 /* las transiciones entran de costado: que nunca aparezca desplazamiento horizontal mientras tanto */
-body{overflow-x:clip}
+html,body{overflow-x:clip}
 .view{display:flex; flex-direction:column; gap:12px}
-.view.vt-tab{animation:vin-t .3s var(--ease) backwards}
-.view.vt-fwd{animation:vin-r .34s var(--ease) backwards}
-.view.vt-back{animation:vin-l .34s var(--ease) backwards}
+.vt-tab{animation:vin-t .3s var(--ease) backwards}
+.vt-fwd{animation:vin-r .34s var(--ease) backwards}
+.vt-back{animation:vin-l .34s var(--ease) backwards}
 @keyframes vin-t{from{transform:translateY(6px); opacity:.6}}
 @keyframes vin-r{from{transform:translateX(34px)}}
 @keyframes vin-l{from{transform:translateX(-34px)}}
-@media (prefers-reduced-motion:reduce){ .view[class*="vt-"]{animation:none} }
+@media (prefers-reduced-motion:reduce){ [class*="vt-"]{animation:none} }
 
 /* tarjeta */
 .cd{background:var(--s1); border:1px solid var(--line); border-radius:var(--r-lg); padding:16px; display:grid; gap:8px}
