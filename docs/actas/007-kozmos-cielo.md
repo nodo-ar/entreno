@@ -24,3 +24,5 @@ Hoy, la sesión, Progreso y el respaldo llegan en las etapas 3 y 4. Las estrella
 
 ## Decisiones para Fer
 1. OK al tablero de la etapa 2.
+
+**Respuesta de Fer (2026-10-20)**: «perfecto todo, seguí». Tablero aprobado; sigue la etapa 3.
