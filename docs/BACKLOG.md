@@ -24,7 +24,6 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 
 ## Kozmos (de la vuelta 6)
 
-- **Disparador real de la isla** (hoy solo la muestra la prueba). Etapa de sesión.
 - **Uso del «⋯»**: queda la pieza, sin pantalla que la necesite todavía.
 - **Fijar Playwright en un `package.json`** (el soberano). PR aparte.
 - **Pruebas que faltan** (Casandra): cambio de versión con la app abierta y red lenta.
@@ -36,6 +35,10 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Qué es cada estrella** (la persona): «Bolita», «Tuck» o «Draco» no se entienden solos. Una línea de explicación en el menú de Estrella cuando llegue el catálogo de ejercicios (etapa 5).
 - **Tu peso como dato fijo en Lastre** (la persona): hoy se ve como otro selector, aunque queda guardado.
 - **Estrellas según tu equipo**: hoy se muestran todas; con el perfil de equipo (etapa 4), las que no podés hacer se esconden salvo en la constelación abierta.
+- **Calorías por sesión** (decidido por Fer: solo por sesión, aproximadas): piden peso y esfuerzo por ejercicio. Etapa 4.
+- **Probar la sesión en un Android real** (la ingeniera de campo): vibración, campana con pantalla bloqueada, wake lock.
+- **Wake lock con video** para navegadores sin la API (la ingeniera de campo).
+- **Audio después de recuperar una sesión**: queda mudo hasta el primer toque.
 - **Biblioteca en la barra**: los bocetos de miniaturas la mostraban; el prototipo tiene Progreso y Vos. Definir con Fer cuando haya ejercicios.
 
 ## Ideas (necesitan brief y OK)

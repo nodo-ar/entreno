@@ -1,0 +1,98 @@
+/* ===== Hoy, rumbo, sesión y resumen (etapa 3) ===== */
+.small{font-size:var(--t-sm)}
+.hoy{display:flex; flex-direction:column; gap:12px}
+.hoy-a,.hoy-b{display:flex; flex-direction:column; gap:12px}
+.hoy-prox{padding:0; overflow:hidden; gap:0}
+.hoy-cielo .cons-svg{display:block; width:100%; height:auto; max-height:150px}
+.hoy-prox-tx{display:grid; gap:8px; padding:12px 16px 16px; border-top:1px solid var(--line)}
+.hoy-prox-tx .ln{font-size:var(--t-sm)}
+.hoy-toca{gap:10px}
+.toca{font-weight:600}
+.toca .num{font-size:var(--t-sm); font-weight:700; color:var(--ink-2); white-space:nowrap}
+.btn .ic{width:18px; height:18px}
+.rumbo-vacio{gap:8px}
+.rumbo-vacio .cons-svg{display:block; width:100%; height:auto; max-height:120px; margin:-6px 0 4px}
+.rumbo-fila[aria-pressed="true"]{background:var(--s2)}
+.rumbo-fila[aria-pressed="true"] .tile{background:var(--s1)}
+.rumbo-fila .ck{width:18px; height:18px}
+.rumbo-listo{position:sticky; bottom:calc(84px + env(safe-area-inset-bottom,0px)); margin-top:4px; box-shadow:var(--shadow)}
+.rumbo-fila .ck{width:24px; height:24px; padding:4px; border-radius:50%; background:var(--ink); color:var(--bg); stroke-width:3}
+.si-no{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.si-no .btn[aria-pressed="true"]{background:var(--solid); color:var(--on-solid); border-color:var(--solid)}
+.ses.cierre .ses-a{flex:1}
+
+/* sin barra en la sesión y el resumen: la pantalla es toda tuya */
+body.en-sesion nav.barra{display:none}
+body.en-sesion #tbar{display:none}
+body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.ses-acc .ses-donde{flex:1; text-align:center}
+.ses{isolation:isolate; display:flex; flex-direction:column; gap:14px; min-height:calc(100dvh - 84px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
+/* la ✕ y el ⋯ de la sesión, más grandes: manos transpiradas o con tiza */
+.ses-acc .ib{width:48px; height:48px; flex-basis:48px}
+.esp-ib{width:48px; flex:none}
+.ses-a{display:flex; flex-direction:column; gap:10px}
+.ses-b{display:flex; flex-direction:column; gap:12px; margin-top:auto}
+.stp{display:flex; gap:4px; margin-top:6px}
+.stp i{flex:1; height:4px; border-radius:2px; background:var(--s2)}
+.stp i.d{background:var(--ink)}
+.stp i.n{background:var(--c)}
+.ses-tit{padding:6px 0 0}
+.ses-tit .lb{display:block; margin-bottom:6px}
+.ses-tit h1{font-size:var(--t-3xl); line-height:1.05}
+.ses-ind{max-width:36ch; font-size:var(--t-sm)}
+.ses-pausa{color:var(--ink)}
+.ses.serie .ses-a,.ses.descanso .ses-a{flex:1}
+.ses-reloj{display:grid; justify-items:center; gap:6px; padding:16px 0; margin:auto 0}
+.ses.descanso .ses-a{justify-content:center}
+.ses-luego{text-align:center; font-size:var(--t-sm)}
+.reloj{font-family:var(--f-mono); font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.04em}
+.reloj.big{font-size:88px; line-height:.95}
+.ses-sig{font-size:var(--t-sm)}
+.ses-sig .reloj{font-size:var(--t-md); font-weight:600}
+.tres-btn{display:grid; grid-template-columns:1fr 1fr 1.6fr; gap:8px}
+.tres-btn .btn{padding:0 10px}
+.tres-btn .btn.sec{font-size:var(--t-md)}
+.ses-anota{gap:12px}
+.ses-anota>.ln{font-size:var(--t-sm); padding-top:6px; border-top:1px solid var(--line)}
+.ses-anota .aj{border:0}
+/* el anillo del descanso: se vacía mientras recuperás */
+.anillo-desc{position:relative; width:min(240px,66vw); aspect-ratio:1; margin:8px auto 0}
+.anillo-desc svg{width:100%; height:100%; display:block}
+.anillo-desc circle{fill:none; stroke-width:10}
+.anillo-desc .pista{stroke:var(--s2)}
+.anillo-desc .arco{stroke:var(--c); stroke-linecap:round; transition:stroke-dasharray .25s linear}
+.anillo-desc.listo .pista{stroke:var(--c)}
+.anillo-tx{position:absolute; inset:0; display:grid; place-content:center; justify-items:center; gap:4px}
+.anillo-tx .reloj{font-size:72px; line-height:1}
+.anillo-desc.listo .anillo-tx .lb{font-size:var(--t-md); color:var(--ink)}
+/* fin del descanso: toda la pantalla destella en el color de la familia, para verlo desde el piso */
+.ses.descanso.fin::before{content:""; position:fixed; inset:0; z-index:-1; background:var(--cs); animation:destello 1.4s var(--ease) 3 both}
+@keyframes destello{0%,100%{opacity:.35} 50%{opacity:1}}
+.marca-ses{display:grid; place-items:center; color:var(--ink-3)}
+.marca-ses .ic{width:12px; height:12px}
+
+/* resumen */
+.res{display:flex; flex-direction:column; gap:14px}
+.res-a,.res-b{display:flex; flex-direction:column; gap:12px}
+.res-txt{display:grid; gap:6px; padding:4px 2px}
+.res-txt h1.res-tit{font-size:var(--t-3xl); line-height:1.05}
+.res-txt p{max-width:36ch}
+.res-datos{display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
+.res-dato{padding:12px; gap:2px; border-radius:var(--r-md)}
+.res-dato .num{font-size:var(--t-2xl); font-weight:600}
+
+@media (prefers-reduced-motion:reduce){ .anillo-desc .arco{transition:none} .ses.descanso.fin::before{animation:none; opacity:.7} }
+
+/* horizontal: lo que no cambia queda a la izquierda, lo que tocás a la derecha */
+@media (orientation:landscape) and (max-height:520px){
+  .hoy,.res{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; align-items:start}
+  .hoy-cielo .cons-svg{max-height:120px}
+  body.en-sesion #app{padding-left:max(20px,env(safe-area-inset-left,0px))}
+  .ses{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; min-height:0; align-items:center}
+  .ses-b{margin-top:0}
+  .ses-reloj{padding:8px 0 0}
+  .reloj.big{font-size:64px}
+  .anillo-desc{width:min(170px,40vh)}
+  .anillo-tx .reloj{font-size:52px}
+  .res-a .cons-svg{max-height:220px}
+}

@@ -1,6 +1,6 @@
 /* ===== Cielo y Constelación (etapa 2): el catálogo, tu cielo calculado y las marcas anotadas a mano ===== */
 K.hoy = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
-K.cieloActual = () => K.cielo.calcular(K.CATALOGO, K.diario.mediciones, K.hoy());
+K.cieloActual = () => K.cielo.calcular(K.CATALOGO, K.diario.mediciones, K.hoy(), K.diario.sesiones);
 K.familia = id => K.CATALOGO.familias.find(f => f.id === id);
 /* la que se abre sola en horizontal: la última que practicaste, o la primera */
 K.destacada = cielo => (cielo.constelaciones.filter(c => c.ultima).sort((a, b) => b.ultima.localeCompare(a.ultima))[0] || cielo.constelaciones[0]).id;
@@ -44,9 +44,11 @@ K.P.constelacion = c => {
       <span class="st" aria-hidden="true"></span><span class="nom">${K.esc(e.nombre)}<span class="vh">, ${e.estado === "encendida" ? "encendida" : e.estado === "proxima" ? "próxima" : "por delante"}</span></span>
       <span class="num mg">${e.mejor !== null && e.estado !== "encendida" ? K.esc(K.cielo.corto(e.prueba, e.mejor)) : "m" + e.magnitud}</span></button>`).join("");
   const marcas = [...c.marcas].reverse().slice(0, 12).map(m => {
-    const e = c.estrellas.find(x => x.id === m.estrella);
-    return `<div class="marca"><span class="num mute">${K.esc(K.fechaCorta(m.fecha))}</span><span>${K.esc(e.nombre)}</span><span class="num">${K.esc(K.cielo.corto(e.prueba, m.valor))}</span>
-      <button type="button" class="ib chico" data-borrar="${K.esc(m.id)}" aria-label="Borrar la marca de ${K.esc(e.nombre)}">${K.ic("x")}</button></div>`;
+    const e = c.estrellas.find(x => x.id === m.estrella) || c.estrellas.find(x => x.prueba.ejercicio === m.ejercicio && x.prueba.tipo === m.tipo) || c.estrellas[0];
+    /* lo anotado a mano se borra acá; lo de una sesión es parte de la sesión */
+    const fin = m.origen === "serie" ? `<span class="marca-ses lb" title="En una sesión">${K.ic("play")}</span>`
+      : `<button type="button" class="ib chico" data-borrar="${K.esc(m.id)}" aria-label="Borrar la marca de ${K.esc(e.nombre)}">${K.ic("x")}</button>`;
+    return `<div class="marca"><span class="num mute">${K.esc(K.fechaCorta(m.fecha))}</span><span>${K.esc(e.nombre)}</span><span class="num">${K.esc(K.cielo.corto({tipo: m.tipo || e.prueba.tipo}, m.valor))}</span>${fin}</div>`;
   }).join("");
   return K.enc({titulo: c.nombre, sub: fam.nombre, volver: "#/cielo", raiz: true, det: true}) +
     `<p class="cons-meta mute">${K.esc(c.meta)}</p>

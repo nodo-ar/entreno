@@ -1,9 +1,16 @@
 /* ===== App: rutas, transiciones y arranque ===== */
-/* Rutas: #/hoy · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>] · #/progreso · #/vos · #/vos/acerca
+/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/sesion · #/hoy/resumen/<sesión> · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>] · #/progreso · #/vos · #/vos/acerca
    Lo que no existe cae en el lugar más cercano que sí. */
 K.ruta = () => {
   const [tab = "hoy", a = "", b = "", n = ""] = location.hash.replace(/^#\/?/, "").split("/");
   if (!K.PESTANAS.some(p => p[0] === tab)) return {tab: "hoy", sub: "", hondo: 0};
+  if (tab === "hoy"){
+    if (a === "rumbo") return {tab, sub: a, hondo: 1};
+    /* la sesión existe solo mientras corre; el resumen, si la sesión está guardada */
+    if (a === "sesion" && K.sesion.activa()) return {tab, sub: a, hondo: 1};
+    if (a === "resumen" && K.diario.sesiones.some(s => s.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
+    return {tab, sub: "", hondo: 0};
+  }
   if (tab === "vos") return a === "acerca" ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
   if (tab === "cielo"){
     const c = K.CATALOGO.constelaciones.find(x => x.id === a);
@@ -28,6 +35,9 @@ K.mostrar = (anim = "") => {
   v.className = "view" + (anim && !K.reduce() && !panel ? " vt-" + anim : "");
   if (panel && !K.reduce()) panel.classList.add("vt-" + anim);
   app.replaceChildren(v);
+  /* en la sesión y su resumen no hay barra: la pantalla es toda tuya */
+  document.body.classList.toggle("en-sesion", tab === "hoy" && (sub === "sesion" || sub === "resumen"));
+  K.sesion.alLatir();
   K.nav.marcar(tab);
   K.encabezado.observar(v);
   const h1 = K.$$(".enc-tit h1", v).find(x => x.offsetParent !== null);
@@ -54,6 +64,16 @@ document.addEventListener("click", e => {
   if (a){ K._quieto = !!a.dataset.quieto && K.horizontal(); K.ir(a.dataset.ir, K._quieto); return; }
   const m = e.target.closest("#tema-menu");
   if (m){ K.menuTema(m); return; }
+  const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio]");
+  if (s){
+    if (s.dataset.spaso) K.ses.paso(s.dataset.campo, Number(s.dataset.spaso));
+    else if (s.dataset.rumbo) K.rumboTocar(s.dataset.rumbo);
+    else if (s.dataset.desc) K.ses.ajustar(Number(s.dataset.desc));
+    else if (s.dataset.salio) K.ses.salio(Number(s.dataset.salio));
+    else ({"s-empezar": () => K.ses.empezar(), "s-listo": () => K.ses.listo(), "s-seguir": () => K.ses.seguir(),
+      "s-terminar": () => K.ses.terminar(), "s-cortar": () => K.ses.cortar(), "s-mas": () => K.ses.menu(s), "hoy-mas": () => K.hoyMenu(s)})[s.id]();
+    return;
+  }
   const t = e.target.closest("#f-estrella, #f-fecha, #f-guardar, [data-paso], [data-borrar]");
   if (!t) return;
   if (t.id === "f-estrella") K.anotar.menuEstrella(t);
@@ -62,10 +82,14 @@ document.addEventListener("click", e => {
   else if (t.dataset.paso) K.anotar.paso(t.dataset.campo, Number(t.dataset.paso));
   else K.anotar.borrar(t.dataset.borrar);
 });
-document.addEventListener("input", e => { const c = e.target.closest?.(".pmv"); if (c) K.anotar.escribir(c.dataset.campo, c.value); });
+document.addEventListener("input", e => {
+  const c = e.target.closest?.(".pmv"); if (!c) return;
+  if (c.classList.contains("spv")) K.ses.escribir(c.dataset.campo, c.value); else K.anotar.escribir(c.dataset.campo, c.value);
+});
 /* las constelaciones del cielo se abren también con el teclado */
 document.addEventListener("keydown", e => {
   if ((e.key === "Enter" || e.key === " ") && e.target.matches?.('[role="link"][data-ir]')){ e.preventDefault(); e.target.dispatchEvent(new MouseEvent("click", {bubbles: true})); }
+  if (e.key === "Enter" && e.target.matches?.(".pmv.spv")){ e.preventDefault(); e.target.blur(); return; }
   if (e.key === "Enter" && e.target.matches?.(".pmv")){ e.preventDefault(); K.anotar.guardar(); }
 });
 
@@ -102,7 +126,13 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) K.di
 /* arranque: primero se lee el diario, después se dibuja */
 K.encabezado.armar();
 K.nav.armar();
-K.diario.abrir().then(() => K.mostrar());
+/* una sesión que quedó en curso (la app se cerró o el teléfono la mató) sigue donde estaba */
+K.sesion.alCambiar = () => K.refrescar(); /* otra pestaña tocó la sesión */
+K.diario.abrir().then(async () => {
+  const r = await K.sesion.restaurar();
+  K.mostrar();
+  if (r === "guardada") K.aviso("La sesión que quedó abierta se guardó como cortada.");
+});
 
 /* sin conexión desde la segunda apertura */
 if ("serviceWorker" in navigator && location.protocol !== "file:")

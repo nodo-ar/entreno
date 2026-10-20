@@ -1,10 +1,11 @@
 /* ===== Diario: lo que hace cada persona, en IndexedDB de este teléfono =====
-   Base «kozmos», versión 1: «mediciones» (intentos contra una estrella) y «perfil» (clave → valor).
+   Base «kozmos». Versión 1: «mediciones» (intentos contra una estrella) y «perfil» (clave → valor).
+   Versión 2: «sesiones» (cada entrenamiento hecho, con sus bloques y series).
    Al arrancar se lee todo a memoria; cada cambio se escribe y recién entonces se da por hecho. */
 K.diario = (() => {
-  const BASE = "kozmos", VERSION = 1;
+  const BASE = "kozmos", VERSION = 2;
   let db = null;
-  const d = {mediciones: [], perfil: {}, guarda: false};
+  const d = {mediciones: [], sesiones: [], perfil: {}, guarda: false};
   const pedir = r => new Promise((ok, mal) => { r.onsuccess = () => ok(r.result); r.onerror = () => mal(r.error); });
   const tx = (store, modo, fn) => new Promise((ok, mal) => {
     const t = db.transaction(store, modo); const r = fn(t.objectStore(store));
@@ -20,6 +21,7 @@ K.diario = (() => {
           b.createObjectStore("mediciones", {keyPath: "id"}).createIndex("estrella", "estrella");
           b.createObjectStore("perfil");
         }
+        if (ev.oldVersion < 2) b.createObjectStore("sesiones", {keyPath: "id"}).createIndex("fecha", "fecha");
       };
       /* si otra pestaña vieja traba la base, no se espera para siempre: la app abre igual y avisa al anotar */
       let tarde = false;
@@ -37,33 +39,51 @@ K.diario = (() => {
   /* vuelve a leer todo (por ejemplo, al volver a la pestaña: otra pudo haber anotado algo) */
   d.releer = async () => {
     if (!db) return false;
-    const t = db.transaction(["mediciones", "perfil"]);
-    const [ms, ks, vs] = await Promise.all([pedir(t.objectStore("mediciones").getAll()), pedir(t.objectStore("perfil").getAllKeys()), pedir(t.objectStore("perfil").getAll())]);
-    const antes = JSON.stringify([d.mediciones.map(m => m.id), d.perfil]);
-    d.mediciones = ms.sort((a, b) => (a.fecha + a.creada).localeCompare(b.fecha + b.creada));
+    const t = db.transaction(["mediciones", "perfil", "sesiones"]);
+    const [ms, ks, vs, ss] = await Promise.all([pedir(t.objectStore("mediciones").getAll()), pedir(t.objectStore("perfil").getAllKeys()), pedir(t.objectStore("perfil").getAll()), pedir(t.objectStore("sesiones").getAll())]);
+    const firma = () => JSON.stringify([d.mediciones.map(m => m.id), d.sesiones.map(x => x.id), d.perfil]);
+    const antes = firma();
+    d.mediciones = ms.sort(orden);
+    d.sesiones = ss.sort(orden);
     d.perfil = Object.fromEntries(ks.map((k, i) => [k, vs[i]]));
-    return antes !== JSON.stringify([d.mediciones.map(m => m.id), d.perfil]);
+    return antes !== firma();
   };
-  const id = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+  /* lo primero que se guarda pide que el navegador no borre estos datos por falta de espacio */
+  const persistir = () => { if (!d._persiste){ d._persiste = true; navigator.storage?.persist?.().catch(() => {}); } };
+  const orden = (a, b) => (a.fecha + a.creada).localeCompare(b.fecha + b.creada);
+  const id = d.nuevoId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
   /* anotar: {estrella, valor, fecha, origen, ...} → la medición guardada; si no se puede guardar, error y no queda nada */
   d.anotar = async m => {
     if (!db) throw new Error(d.motivo || "sin lugar para guardar");
     const n = {id: id(), origen: "anotado", creada: new Date().toISOString(), ...m};
     await tx("mediciones", "readwrite", s => s.put(n));
-    /* la primera marca pide que el navegador no borre estos datos por falta de espacio */
-    if (!d._persiste){ d._persiste = true; navigator.storage?.persist?.().catch(() => {}); }
-    d.mediciones = [...d.mediciones, n].sort((a, b) => (a.fecha + a.creada).localeCompare(b.fecha + b.creada));
+    persistir();
+    d.mediciones = [...d.mediciones, n].sort(orden);
     return n;
   };
   d.devolver = async m => { /* deshacer un borrado: vuelve tal cual estaba */
     if (!db) throw new Error("sin lugar para guardar");
     await tx("mediciones", "readwrite", s => s.put(m));
-    d.mediciones = [...d.mediciones.filter(x => x.id !== m.id), m].sort((a, b) => (a.fecha + a.creada).localeCompare(b.fecha + b.creada));
+    d.mediciones = [...d.mediciones.filter(x => x.id !== m.id), m].sort(orden);
   };
   d.borrar = async mid => {
     if (!db) throw new Error("sin lugar para guardar");
     await tx("mediciones", "readwrite", s => s.delete(mid));
     d.mediciones = d.mediciones.filter(x => x.id !== mid);
+  };
+  /* una sesión terminada (o cortada) se guarda entera de una vez; deshacer la borra */
+  d.guardarSesion = async x => {
+    if (!db) throw new Error(d.motivo || "sin lugar para guardar");
+    const n = {creada: new Date().toISOString(), ...x};
+    await tx("sesiones", "readwrite", s => s.put(n));
+    persistir();
+    d.sesiones = [...d.sesiones.filter(y => y.id !== n.id), n].sort(orden);
+    return n;
+  };
+  d.borrarSesion = async sid => {
+    if (!db) throw new Error("sin lugar para guardar");
+    await tx("sesiones", "readwrite", s => s.delete(sid));
+    d.sesiones = d.sesiones.filter(x => x.id !== sid);
   };
   d.perfilPoner = async (k, v) => {
     if (!db) throw new Error("sin lugar para guardar");

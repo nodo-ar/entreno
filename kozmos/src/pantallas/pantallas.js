@@ -1,19 +1,8 @@
-/* ===== Pantallas: Hoy, Progreso y Vos (Cielo vive en cielo.js) ===== */
+/* ===== Pantallas: Progreso y Vos (Cielo vive en cielo.js; Hoy y la sesión, en hoy.js) ===== */
 K.P = {};
 
 /* Vacío: la misma pieza en todas las pantallas sin datos (dibujo chico, título y una frase, alineados a la izquierda) */
 K.vacio = (dibujo, titulo, texto, cls = "") => `<section class="cd vacio ${cls}"><div class="ilus" aria-hidden="true">${dibujo}</div><b>${titulo}</b><p>${texto}</p></section>`;
-const azar = semilla => { let s = semilla; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; };
-
-/* Hoy: un pedacito de cielo con la próxima estrella en anillo */
-K.P.hoy = () => {
-  const f = new Date().toLocaleDateString("es-AR", {weekday: "long", day: "numeric", month: "long"});
-  const r = azar(3); let g = "";
-  for (let i = 0; i < 16; i++) g += `<circle cx="${(r() * 140).toFixed(1)}" cy="${(r() * 56).toFixed(1)}" r="${(r() * .6 + .7).toFixed(2)}" fill="var(--ink-3)"/>`;
-  g += `<path d="M14 42 L46 30 L78 36 L112 16" fill="none" stroke="var(--ink-3)" stroke-width="1"/><circle cx="14" cy="42" r="2.6" fill="var(--ink-3)"/><circle cx="46" cy="30" r="2.6" fill="var(--ink-3)"/><circle cx="78" cy="36" r="2.6" fill="var(--ink-3)"/>
-    <circle cx="112" cy="16" r="7" fill="none" stroke="var(--ink)" stroke-width="2"/><circle cx="112" cy="16" r="2.4" fill="var(--ink)"/>`;
-  return K.enc({titulo: "Hoy", sub: f}) + K.vacio(`<svg viewBox="0 0 140 56">${g}</svg>`, "Todavía no hay nada para hoy", "Acá vas a ver la próxima estrella y lo que toca entrenar.");
-};
 
 /* Progreso: siete semanas en blanco */
 K.P.progreso = () => K.enc({titulo: "Progreso", sub: "Tus semanas"}) +

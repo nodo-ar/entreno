@@ -19,7 +19,10 @@ K.I = {
   chev:'<path d="M9 5l7 7-7 7"/>',
   chevd:'<path d="M6 9l6 6 6-6"/>',
   x:'<path d="M6 6l12 12M18 6 6 18"/>',
-  cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'
+  cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  play:'<path d="M8 5v14l11-7z" fill="currentColor"/>',
+  pause:'<path d="M8 5v14M16 5v14"/>',
+  skip:'<path d="M6 5v14l9-7z" fill="currentColor"/><path d="M18 5v14"/>'
 };
 K.ic = (k, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${K.I[k] || ""}</svg>`;
 
