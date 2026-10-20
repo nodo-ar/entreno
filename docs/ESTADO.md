@@ -1,16 +1,13 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-05 · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-20 · la escribe quien cierra cada sesión.
 
 ## Dónde quedó
 
-- **Publicado**: el PR #4 en GitHub Pages ([corrida 37203371846](https://github.com/nodo-ar/entreno/actions/runs/37203371846)). Incluye la marca Nodo, Nodo Sans Bold (700), los relojes en Nodo Reloj y la app sin conexión (service worker con la letra y los íconos).
-- **Sin verificar en un teléfono real**: Fer todavía no confirmó que la versión publicada ande en su teléfono.
+- **Publicado**: v269+8 · `28f875c`, el PR #9 (respaldo que se puede comprobar, backlog 3), en GitHub Pages el 2026-10-20 ([corrida 39467598041](https://github.com/nodo-ar/entreno/actions/runs/39467598041)). Registro en `docs/versiones/v269+8.md`, con la vuelta atrás probada.
+- **Antes, también publicados**: el PR #6 (pesos de letra y esperas, ítem 1) y el PR #7 (la suite no depende del día, ítem 2).
+- **Sin verificar en la página publicada**: el entorno de Claude no llega a `nodo-ar.github.io`. La verificación queda para Fer en el teléfono, o para una sesión con ese dominio permitido en la red del entorno.
 - **Kit del Equipo Nodo**: fusionado (PR #5). Los agentes y la skill `equipo-nodo` se cargan al abrir cada sesión.
-- **Ítem 1 del backlog** (PR #6, rama `claude/pesos-y-esperas`, aprobado por Fer el 2026-10-05, falta fusionar):
-  - chk204 y chk239 esperan la condición que miran, con topes de 10 s y 2 s. Eran fallas de tiempo, no de diseño. En la suite 10 veces seguidas, las dos pasaron 10/10.
-  - Pesos de letra: los textos de 13 px o menos y la opción elegida de los segmentados en 700; lo demás en 600. Tableros en la conversación y acta en `docs/actas/001-pesos-y-esperas.md`.
-  - Bandera roja de Casandra, bajada: Fer aprobó por escrito (2026-10-05, «dale para adelante con tus recomendaciones») que las opciones sin elegir de `.seg`, `.segx`, `.tseg` y `.yn` bajen de 700 a 600, que el texto chico dentro de los segmentados quede en 600 y que todo vaya en un solo PR.
 
 ## Decisiones ya tomadas por Fer (2026-10-04)
 
@@ -19,15 +16,14 @@
 
 ## Esperando a Fer
 
-- Fusionar el PR #6 (ítem 1, ya aprobado). Después Claude Code verifica lo publicado, prueba la vuelta atrás y escribe el registro en `docs/versiones/`.
-- Que pruebe la versión publicada en su teléfono: con conexión, cerrar y abrir; después en modo avión, abrir y marcar una serie.
+- Que pruebe la versión publicada (v269+8) en su teléfono: abrir con conexión; si ve la versión vieja, cerrar la app del todo y abrirla de nuevo. Después, en modo avión, abrir y marcar una serie. Si quiere, exportar e importar un respaldo.
+- Decidir las ideas que dejó la vuelta 3: fotos en el respaldo y exportar todos los perfiles juntos.
 
 ## Conocido en la suite
 
-- Dependen del día: chk249, chk259, chk262, chk263 y chk274 fallan los lunes (y chk249 también los domingos), igual en `main`. Ver el ítem 2 del backlog.
-- Inestables en paralelo, pasan solas: chk232, chk233, chk238, chk258 y chk264.
-- chk237: pendiente para la etapa 3.
+- Inestables en paralelo, pasan solas: chk232, chk233, chk238, chk258 y chk264. chk276 ya espera el aviso (no un tiempo fijo); con mucha carga falló 1 de 22 veces.
+- chk237: anotada como pendiente para la etapa 3; en las dos vueltas del 2026-10-20 pasó.
 
 ## Próximo paso
 
-Publicar el ítem 1 (verificar en producción y escribir el registro). En curso: el ítem 2 del backlog, la suite sin depender del día (vuelta 2, rama `claude/suite-sin-dia`).
+El ítem 4 del backlog: APK con publicación automática.
