@@ -34,3 +34,5 @@ Tercera etapa de Kozmos: Hoy arma la sesión, la app la lleva con sus relojes y 
 1. OK al tablero de la etapa 3 (https://claude.ai/artifact/9EP8UbgMRQKH16nkVWDYtQ).
 2. Calorías en la etapa 4.
 3. Las reglas del plan del día (10 %, no repetir fuerza, 70 % al volver).
+
+**Respuesta de Fer (2026-10-20)**: «ok, dale seguí». Tablero aprobado; calorías en la etapa 4; las reglas del plan del día quedan como están. Sigue la etapa 4.
