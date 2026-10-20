@@ -6,7 +6,8 @@ K.nav = {
     n.className = "barra"; n.setAttribute("aria-label", "Secciones");
     n.innerHTML = `<span class="ind" aria-hidden="true"></span>` + K.PESTANAS.map(([k, t]) =>
       `<button type="button" data-tab="${k}" aria-label="${t}">${K.ic(k)}<span class="nm">${t}</span></button>`).join("");
-    n.addEventListener("click", e => { const b = e.target.closest("button[data-tab]"); if (b) K.ir("#/" + b.dataset.tab); });
+    /* tocar la pestaña en la que ya estás vuelve a su raíz sin sumar pasos */
+    n.addEventListener("click", e => { const b = e.target.closest("button[data-tab]"); if (b) K.ir("#/" + b.dataset.tab, K.ruta().tab === b.dataset.tab); });
     document.body.appendChild(n);
     addEventListener("resize", () => K.nav.indicador(true));
     return n;

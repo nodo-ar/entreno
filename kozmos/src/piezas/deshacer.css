@@ -2,7 +2,7 @@
 .utoast{position:fixed; left:0; right:0; margin:0 auto; width:max-content; min-width:min(300px,calc(100vw - 32px)); max-width:calc(100vw - 32px); bottom:calc(84px + env(safe-area-inset-bottom,0px)); z-index:80; display:flex; align-items:center; gap:10px; padding:6px 6px 6px 18px; border-radius:26px; background:var(--solid); color:var(--on-solid); box-shadow:var(--shadow); animation:utin .3s var(--ease) both}
 @keyframes utin{from{opacity:0; transform:translateY(14px)}}
 .utoast.out{animation:utout .2s forwards} @keyframes utout{to{opacity:0; transform:translateY(8px)}}
-.utoast .utx{flex:1; min-width:0; font-size:var(--t-sm); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.utoast .utx{flex:1; min-width:0; font-size:var(--t-sm); font-weight:700; line-height:1.25; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
 .utoast .utu{position:relative; flex:none; height:40px; padding:0 14px 0 40px; border:0; border-radius:20px; background:color-mix(in srgb,var(--on-solid) 16%,transparent); color:var(--on-solid); font-size:var(--t-sm); font-weight:700; cursor:pointer}
 .utoast .utu:active{transform:scale(.96)}
 /* el anillo que se vacía: cuánto queda para deshacer */
@@ -12,3 +12,5 @@
 @keyframes utring{to{stroke-dashoffset:62.8}}
 .utoast.quieto .utr circle{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){ .utoast,.utoast.out{animation:none} }
+/* aviso sin deshacer: puede ocupar dos líneas */
+.utoast.solo{padding:14px 20px; min-height:52px} .utoast.solo .utx{white-space:normal}

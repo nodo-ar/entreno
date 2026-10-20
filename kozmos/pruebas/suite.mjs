@@ -1,4 +1,5 @@
-// Pruebas de la etapa 1 de Kozmos: arma la app, la sirve en un puerto local y la recorre con Playwright.
+// Pruebas de Kozmos: primero las que no necesitan pantalla (catálogo y cielo); después arma la app,
+// la sirve en un puerto local y la recorre con Playwright.
 // Uso: node kozmos/pruebas/suite.mjs [nombre ...]   (sin nombres corre todas)
 import http from "node:http";
 import fs from "node:fs";
@@ -11,10 +12,12 @@ const require = createRequire(import.meta.url);
 const {chromium} = require("playwright");
 const RAIZ = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const APP = path.join(RAIZ, "app");
+execFileSync(process.execPath, [path.join(RAIZ, "pruebas", "puras.mjs")], {stdio: ["ignore", "ignore", "inherit"]}); /* si falla, corta acá */
+console.log("ok     sin pantalla (catálogo y cielo)");
 execFileSync(process.execPath, [path.join(RAIZ, "tools", "armar.mjs"), APP], {stdio: "inherit"});
 
 /* servidor mínimo: el service worker necesita http */
-const TIPOS = {".html": "text/html; charset=utf-8", ".js": "text/javascript", ".webmanifest": "application/manifest+json", ".woff2": "font/woff2", ".png": "image/png", ".svg": "image/svg+xml"};
+const TIPOS = {".html": "text/html; charset=utf-8", ".js": "text/javascript", ".webmanifest": "application/manifest+json", ".woff2": "font/woff2", ".png": "image/png", ".svg": "image/svg+xml", ".png": "image/png"};
 let MODO = ""; /* "portal": la página redirige a otra (wifi con ingreso) · "caido": la página contesta 503 */
 const srv = http.createServer((q, r) => {
   const ruta = new URL(q.url, "http://x").pathname;
@@ -74,7 +77,7 @@ prueba("cuatro-pestanas", async () => {
 
 prueba("sin-desborde-360", async () => {
   const {ctx, p} = await pagina({width: 360, height: 740});
-  for (const h of ["#/hoy", "#/cielo", "#/progreso", "#/vos", "#/vos/acerca", "#/vos/constructor", "#/xyz"]){
+  for (const h of ["#/hoy", "#/cielo", "#/cielo/front-lever", "#/cielo/parada-de-manos/anotar", "#/cielo/lastre/anotar/1", "#/cielo/espagat/anotar/4", "#/progreso", "#/vos", "#/vos/acerca", "#/vos/constructor", "#/xyz"]){
     await ir(p, h);
     const w = await p.evaluate(() => document.documentElement.scrollWidth);
     ok(w <= 360, `${h}: ancho ${w}`);
@@ -83,7 +86,7 @@ prueba("sin-desborde-360", async () => {
 });
 
 prueba("encabezado-compacto", async () => {
-  const {ctx, p} = await pagina({width: 390, height: 360});
+  const {ctx, p} = await pagina({width: 360, height: 640});
   await ir(p, "#/cielo");
   ok(!(await p.evaluate(() => document.body.classList.contains("compacto"))), "arranca compacto");
   await p.mouse.wheel(0, 260); await p.waitForFunction(() => document.body.classList.contains("compacto"));
@@ -93,7 +96,7 @@ prueba("encabezado-compacto", async () => {
   await p.setViewportSize({width: 390, height: 300});
   await ir(p, "#/vos/acerca");
   await p.mouse.wheel(0, 400); await p.waitForTimeout(250);
-  const r = await p.evaluate(() => { const b = [...document.querySelectorAll('.enc-acc [data-ir="#/vos"]')].find(x => x.offsetParent).getBoundingClientRect(); return [b.top, b.bottom, scrollY]; });
+  const r = await p.evaluate(() => { const b = [...document.querySelectorAll('.enc-acc [data-volver="#/vos"]')].find(x => x.offsetParent).getBoundingClientRect(); return [b.top, b.bottom, scrollY]; });
   ok(r[2] > 0, "Acerca no se desplazó");
   ok(r[0] >= 0 && r[1] <= 300, "volver se fue de la pantalla: " + r);
   await ctx.close();
@@ -221,6 +224,12 @@ prueba("rutas-raras", async () => {
   await ir(p, "#/xyz");
   ok(await p.textContent(".enc-tit h1") === "Hoy", "una ruta desconocida no cae en Hoy");
   ok(!(await p.evaluate(() => document.body.innerText)).includes("undefined"), "aparece «undefined»");
+  const h1 = () => p.evaluate(() => [...document.querySelectorAll(".enc-tit h1")].find(h => h.offsetParent).textContent);
+  await ir(p, "#/cielo/xyz"); ok(await h1() === "Cielo", "#/cielo/xyz no cae en Cielo");
+  await ir(p, "#/cielo/front-lever/otra"); ok(await h1() === "Front lever", "#/cielo/front-lever/otra no cae en la constelación");
+  await ir(p, "#/cielo/front-lever/anotar/99"); ok(await h1() === "Anotar una marca", "una estrella que no existe no abre anotar");
+  ok(await p.textContent("#f-estrella em") === "Colgado activo 60 s", "con una estrella que no existe no arranca en la próxima");
+  ok(!(await p.evaluate(() => document.body.innerText)).includes("undefined"), "aparece «undefined»");
   await ctx.close();
 });
 
@@ -249,6 +258,187 @@ prueba("movimiento-reducido", async () => {
   await ir(p, "#/hoy");
   await p.click('nav.barra button[data-tab="cielo"]');
   ok(!(await p.evaluate(() => /vt-/.test(document.querySelector("main.view").className))), "anima con movimiento reducido");
+  await ctx.close();
+});
+
+
+/* ===== Etapa 2: el cielo ===== */
+const titulo = p => p.evaluate(() => [...document.querySelectorAll(".enc-tit h1")].find(h => h.offsetParent)?.textContent);
+const esperarTitulo = (p, t) => p.waitForFunction(t => [...document.querySelectorAll(".enc-tit h1")].find(h => h.offsetParent)?.textContent === t, t);
+const estadosFL = p => p.$$eval(".est-fila", fs => fs.map(f => f.classList.contains("encendida") ? "e" : f.classList.contains("proxima") ? "p" : "-").join(""));
+
+prueba("cielo-catalogo", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/cielo");
+  ok(await p.$$eval(".cons-fila", x => x.length) === 14, "no hay 14 constelaciones en la lista");
+  ok(await p.$$eval(".cielo-svg .cons", x => x.length) === 14, "no hay 14 constelaciones en el cielo");
+  ok(await p.textContent(".enc-tit small") === "Todavía sin estrellas", "el cielo vacío dice otra cosa");
+  ok(await p.$$eval(".cielo-svg .es.on", x => x.length) === 0, "hay estrellas encendidas sin marcas");
+  ok(await p.$$eval(".cielo-svg .es.nx", x => x.length) === 14, "cada constelación tiene que mostrar su próxima");
+  await p.click('.cons-fila[data-ir="#/cielo/front-lever"]');
+  await esperarTitulo(p, "Front lever");
+  ok(await estadosFL(p) === "p-------", "Front lever vacía: " + await estadosFL(p));
+  /* el cielo también se abre tocando la constelación, o con el teclado */
+  await ir(p, "#/cielo");
+  await p.focus('.cielo-svg .cons[data-ir="#/cielo/soga"]'); await p.keyboard.press("Enter");
+  await esperarTitulo(p, "Soga");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("anotar-enciende-y-queda", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/cielo");
+  await p.click('.cons-fila[data-ir="#/cielo/front-lever"]'); await esperarTitulo(p, "Front lever");
+  await p.click('.btn[data-ir="#/cielo/front-lever/anotar"]'); await esperarTitulo(p, "Anotar una marca");
+  /* arranca vacío: un toque sin mirar no puede encender una estrella */
+  ok(await p.inputValue("#f-valor") === "", "arranca con un número puesto");
+  await p.click("#f-guardar"); await p.waitForSelector(".utoast.solo");
+  ok(await titulo(p) === "Anotar una marca", "guardó sin número");
+  await p.fill("#f-valor", "60"); await p.click("#f-guardar"); await esperarTitulo(p, "Front lever");
+  await p.waitForSelector(".utoast");
+  ok((await p.textContent(".utoast .utx")) === "Encendiste una estrella en Front lever.", "el aviso no festeja la estrella: " + await p.textContent(".utoast .utx"));
+  ok(await estadosFL(p) === "ep------", "no se encendió: " + await estadosFL(p));
+  ok(await p.$(".cons-svg .es.nace"), "la estrella nueva no se anima");
+  /* guardar vuelve con el botón atrás: no quedan pasos de más */
+  ok(await p.evaluate(() => location.hash) === "#/cielo/front-lever", "no volvió a la constelación");
+  await p.goBack(); await esperarTitulo(p, "Cielo");
+  ok(await p.textContent(".enc-tit small") === "1 de 86 estrellas", "Cielo no cuenta la estrella: " + await p.textContent(".enc-tit small"));
+  ok(await p.textContent('.cons-fila[data-ir="#/cielo/front-lever"] em') === "1 de 8", "la fila no cuenta la estrella");
+  ok(await p.evaluate(() => { const m = K.diario.mediciones[0]; return m.ejercicio === "colgado-activo" && m.tipo === "segundos" && m.catalogo === K.CATALOGO.version; }), "la marca no guarda qué midió");
+  /* queda guardada en el teléfono */
+  await p.reload(); await p.waitForSelector("main.view");
+  ok(await p.textContent(".enc-tit small") === "1 de 86 estrellas", "al volver a abrir se perdió la marca");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("anotar-deshacer-y-borrar", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/cielo/front-lever/anotar/1");
+  await p.fill("#f-valor", "60"); await p.click("#f-guardar"); await esperarTitulo(p, "Front lever");
+  await p.click(".utoast .utu");
+  await p.waitForFunction(() => !document.querySelector(".est-fila.encendida"));
+  await p.reload(); await p.waitForSelector(".est-fila");
+  ok(await estadosFL(p) === "p-------", "deshacer no borró la marca guardada");
+  /* una marca que no enciende nada, y borrarla con deshacer */
+  await ir(p, "#/cielo/front-lever/anotar/1");
+  await p.fill("#f-valor", "45"); await p.click("#f-guardar"); await esperarTitulo(p, "Front lever");
+  ok((await p.textContent(".utoast .utx")) === "Anotaste 45 s en Colgado activo 60 s", "aviso: " + await p.textContent(".utoast .utx"));
+  ok((await p.textContent(".cons-estado .ln")).includes("45 s"), "no muestra la mejor marca");
+  ok(await p.getAttribute(".cons-estado .bar", "aria-valuenow") === "75", "el avance no es 45 de 60");
+  await p.click(".marca [data-borrar]");
+  await p.waitForFunction(() => !document.querySelector(".marca"));
+  ok((await p.textContent(".utoast .utx")) === "Borraste una marca", "borrar no ofrece deshacer");
+  await p.click(".utoast .utu"); await p.waitForSelector(".marca");
+  await p.reload(); await p.waitForSelector(".marca");
+  ok(await p.$$eval(".marca", x => x.length) === 1, "deshacer el borrado no la devolvió");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("anotar-tipos", async () => {
+  const {ctx, p} = await pagina();
+  /* el mismo ejercicio: 25 s en «Tuck 20 s» encienden también «Tuck 10 s» */
+  await ir(p, "#/cielo/front-lever/anotar/4");
+  ok(await p.textContent("#f-estrella em") === "Tuck 20 s", "no abre la estrella pedida");
+  await p.fill("#f-valor", "25"); await p.click("#f-guardar"); await esperarTitulo(p, "Front lever");
+  ok((await p.textContent(".utoast .utx")) === "Encendiste 2 estrellas en Front lever.", "aviso: " + await p.textContent(".utoast .utx"));
+  ok(await estadosFL(p) === "p-ee----", "tuck 10 y 20: " + await estadosFL(p));
+  /* un número que no es número no se guarda */
+  await ir(p, "#/cielo/front-lever/anotar/1");
+  await p.fill("#f-valor", "abc"); await p.click("#f-guardar");
+  await p.waitForSelector(".utoast.solo");
+  ok(await titulo(p) === "Anotar una marca", "guardó un valor roto");
+  /* dos toques seguidos guardan una sola marca */
+  await ir(p, "#/cielo/soga/anotar/1"); await p.fill("#f-valor", "50");
+  await p.evaluate(() => { document.querySelector("#f-guardar").click(); document.querySelector("#f-guardar").click(); });
+  await esperarTitulo(p, "Soga");
+  ok(await p.evaluate(() => K.diario.mediciones.filter(m => m.estrella === "soga.100").length) === 1, "el doble toque guardó dos marcas");
+  /* tocar la pestaña en la que estás vuelve a su raíz sin apilar */
+  await ir(p, "#/cielo/soga/anotar/1"); const hl = await p.evaluate(() => history.length);
+  await p.click('nav.barra button[data-tab="cielo"]'); await esperarTitulo(p, "Cielo");
+  ok(await p.evaluate(() => history.length) === hl, "la pestaña sumó un paso");
+  await ir(p, "#/cielo/front-lever/anotar/1");
+  /* − y + */
+  await p.fill("#f-valor", "10"); await p.click('[data-paso="1"]'); await p.click('[data-paso="1"]'); await p.click('[data-paso="-1"]');
+  ok(await p.inputValue("#f-valor") === "11", "− y + no suman de a uno");
+  /* lo logrado: un solo botón */
+  await ir(p, "#/cielo/espagat/anotar/4");
+  ok(await p.textContent("#f-guardar") === "Lo logré" && !(await p.$("#f-valor")), "lo logrado pide un número");
+  await p.click("#f-guardar"); await esperarTitulo(p, "Espagat");
+  ok(await p.$eval(".est-fila:nth-child(4)", f => f.classList.contains("encendida")), "«Lateral completo» no se encendió");
+  /* lastre: kilos y tu peso, y el peso queda para la próxima */
+  await ir(p, "#/cielo/lastre/anotar/1");
+  await p.fill("#f-peso", "80"); await p.fill("#f-lastre", "8");
+  ok(await p.textContent("#f-pct") === "+10 %", "8 de 80 no da +10 %: " + await p.textContent("#f-pct"));
+  await p.click("#f-guardar"); await esperarTitulo(p, "Lastre");
+  ok(await p.$eval(".est-fila", f => f.classList.contains("encendida")), "+10 % no enciende «Dominada +10 %»");
+  await ir(p, "#/cielo/lastre/anotar/2");
+  ok(await p.inputValue("#f-peso") === "80", "no recuerda tu peso");
+  ok(await p.inputValue("#f-lastre") === "", "el lastre arranca con un número puesto");
+  /* el día se elige con un menú */
+  await ir(p, "#/cielo/soga/anotar/1");
+  await p.click("#f-fecha"); await p.click('.pmi:nth-of-type(2)');
+  ok(await p.textContent("#f-fecha em") === "Ayer", "no cambia el día");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("cielo-horizontal", async () => {
+  const {ctx, p} = await pagina({width: 844, height: 390});
+  await ir(p, "#/cielo");
+  const vis = () => p.evaluate(() => ["lado", "abierto"].map(c => !!document.querySelector(".split>." + c).offsetParent));
+  ok((await vis()).every(Boolean), "Cielo no muestra lista y constelación juntas");
+  ok(await p.evaluate(() => document.querySelector(".split>.abierto h1").textContent) === "Parada de manos", "no abre la primera constelación");
+  ok(await p.$(".cons-fila[data-sel]") && await p.getAttribute(".cons-fila[data-sel]", "data-ir") === "#/cielo/parada-de-manos", "la fila abierta no se marca");
+  const antes = await p.evaluate(() => [document.querySelector(".split>.lado .aj").getBoundingClientRect().top, history.length]);
+  await p.click('.cons-fila[data-ir="#/cielo/motor"]');
+  await p.waitForFunction(() => document.querySelector(".split>.abierto h1")?.textContent === "Motor");
+  const desp = await p.evaluate(() => [document.querySelector(".split>.lado .aj").getBoundingClientRect().top, history.length]);
+  ok(Math.abs(desp[0] - antes[0]) < 1 && desp[1] === antes[1], "abrir una constelación movió la lista o sumó un paso");
+  ok(!(await p.evaluate(() => [...document.querySelectorAll('.split>.abierto [data-raiz]')].some(b => b.offsetParent && getComputedStyle(b).visibility !== "hidden"))), "en horizontal se ve volver a la lista");
+  /* anotar se abre a la derecha, con volver a la constelación */
+  await p.click('.split>.abierto .btn[data-ir="#/cielo/motor/anotar"]');
+  await p.waitForFunction(() => document.querySelector(".split>.abierto h1")?.textContent === "Anotar una marca");
+  ok((await vis()).every(Boolean), "anotar tapó la lista");
+  ok(!(await p.evaluate(() => /vt-/.test(document.querySelector("main.view").className) || /vt-/.test(document.querySelector(".split>.lado").className))), "al anotar se movió la lista");
+  await p.fill("#f-valor", "25"); await p.click("#f-guardar");
+  await p.waitForFunction(() => document.querySelector(".split>.abierto h1")?.textContent === "Motor");
+  ok(await p.textContent('.cons-fila[data-ir="#/cielo/motor"] em') === "1 de 6", "la lista no se actualizó");
+  const tops = await p.evaluate(() => [...document.querySelectorAll(".split h1")].map(h => Math.round(h.getBoundingClientRect().top)));
+  ok(Math.abs(tops[0] - tops[1]) <= 1, "los títulos de los dos paneles no se alinean: " + tops);
+  ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, "desborde en horizontal");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("volver-sin-pasos-de-mas", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/cielo");
+  const h0 = await p.evaluate(() => history.length);
+  await p.click('.cons-fila[data-ir="#/cielo/draco"]'); await esperarTitulo(p, "Draco");
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Cielo");
+  await p.click('.cons-fila[data-ir="#/cielo/draco"]'); await esperarTitulo(p, "Draco");
+  ok(await p.evaluate(() => history.length) === h0 + 1, "volver sumó pasos al historial");
+  /* entrar directo a una constelación (por ejemplo, desde un enlace): volver lleva al cielo igual */
+  await ir(p, "#/cielo/draco/anotar");
+  await p.reload(); await p.waitForSelector("main.view");
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Draco");
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Cielo");
+  await ctx.close();
+});
+
+prueba("sin-lugar-para-guardar", async () => {
+  /* un navegador que no deja usar IndexedDB: se ve igual, avisa y no se rompe */
+  const {ctx, p} = await pagina();
+  await p.addInitScript(() => { Object.defineProperty(window, "indexedDB", {get(){ throw new Error("bloqueado"); }}); });
+  await ir(p, "#/cielo/front-lever/anotar");
+  ok(await p.$(".aviso-tenue"), "no avisa que no puede guardar");
+  await p.fill("#f-valor", "60"); await p.click("#f-guardar"); await p.waitForSelector(".utoast.solo");
+  ok((await p.textContent(".utoast .utx")).startsWith("No se pudo guardar"), "no dice que no pudo guardar");
+  ok(await titulo(p) === "Anotar una marca", "hizo como que guardó");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
 

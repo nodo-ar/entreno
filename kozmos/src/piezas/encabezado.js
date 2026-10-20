@@ -1,8 +1,9 @@
 /* ===== Encabezado ===== */
-/* enc({titulo, sub, volver, acciones}): volver es una ruta; acciones es el HTML de los botones de la derecha (por ejemplo el ⋯) */
-K.enc = ({titulo, sub = "", volver = "", acciones = "", det = false}) =>
+/* enc({titulo, sub, volver, raiz, acciones}): volver es una ruta (raiz: vuelve a la lista, que en horizontal ya está a la vista);
+   acciones es el HTML de los botones de la derecha (por ejemplo el ⋯) */
+K.enc = ({titulo, sub = "", volver = "", raiz = false, acciones = "", det = false}) =>
   /* las acciones van fuera del encabezado para que queden pegadas arriba mientras se desplaza toda la pantalla */
-  `<div class="enc-acc">${volver ? `<button class="ib" type="button" data-ir="${volver}" aria-label="Volver">${K.ic("back")}</button>` : ""}<span class="esp"></span>${acciones}</div>
+  `<div class="enc-acc">${volver ? `<button class="ib" type="button" data-volver="${volver}"${raiz ? " data-raiz" : ""} aria-label="Volver">${K.ic("back")}</button>` : ""}<span class="esp"></span>${acciones}</div>
    <header class="enc"><div class="enc-tit${det ? " det" : ""}">${sub ? `<small class="lb">${K.esc(sub)}</small>` : ""}<h1>${K.esc(titulo)}</h1></div></header>`;
 K.mas = (id, etiqueta = "Más opciones") => `<button class="ib" type="button" id="${id}" aria-haspopup="menu" aria-expanded="false" aria-label="${etiqueta}">${K.ic("dots")}</button>`;
 

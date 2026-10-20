@@ -16,3 +16,4 @@
 body.compacto #tbar{opacity:1; border-bottom-color:var(--line)}
 body.compacto #tbt{opacity:1; transform:none}
 @media (prefers-reduced-motion:reduce){ #tbt{transition:opacity .2s} }
+.enc-tit h1:focus{outline:none}
