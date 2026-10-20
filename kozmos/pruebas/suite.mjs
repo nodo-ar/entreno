@@ -877,16 +877,27 @@ prueba("rutina-superserie", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
   await p.evaluate(() => K.diario.perfilPoner("equipo", ["barra"]));
+  /* una prueba de otra constelación (o una larga, de minutos) no se mete antes de la rutina */
+  await p.evaluate(() => K.diario.anotar({estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 55, fecha: "2026-10-19", catalogo: 1}));
   await ir(p, "#/hoy/rutinas/base_cali"); await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
+  ok(await p.evaluate(() => K.hoyPlan().bloques.every(b => !b.prueba)), "la rutina arranca con una prueba que no entrena");
   await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo");
   /* la entrada en calor se puede saltear entera */
   await p.click("#s-mas"); await p.click('.pmi[data-id="saltear"]'); await p.waitForSelector(".ses.serie");
   const ejs = [];
   for (let i = 0; i < 4; i++){
     ejs.push(await p.evaluate(() => K.sesion.paso().ejercicio));
-    await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso"); await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
+    await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+    if (i === 0){ await tick(p, 1000); ok(!(await p.$(".ses.descanso.fin")) && await reloj(p, "queda-lb") === "Sin descanso", "entre los dos de la superserie no hay descanso ni destello"); }
+    await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
   }
   ok(ejs.join() === "dominada-negativa,sentadilla,dominada-negativa,sentadilla", "la superserie no alterna: " + ejs);
+  /* cortada después de la mitad no cuenta... y la sesión real, con su entrada en calor, vuelve entera del respaldo */
+  await p.click("#s-cortar"); await p.waitForSelector(".res");
+  const r = await p.evaluate(() => { const x = K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, K.CATALOGO.version))); return {d: x.descartadas, n: x.sesiones.length, err: x.error, cal: K.diario.sesiones.at(-1).bloques[0].series[0]}; });
+  ok(!r.err && r.d === 0 && r.n === 1, "el respaldo pierde la sesión de rutina: " + JSON.stringify(r));
+  ok(r.cal.ejercicio === null && r.cal.tipo === "tramos", "la entrada en calor no queda como tramos: " + JSON.stringify(r.cal));
+  ok(await p.evaluate(() => K.rutinaActual().cur.i === 0), "una sesión cortada antes de la mitad hizo avanzar la rutina");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -910,6 +921,25 @@ prueba("hazana-por-tiempo", async () => {
   await ir(p, "#/hoy/hazanas/hercules");
   await p.click("#hz-nivel"); await p.click('.pmi[data-id="1"]');
   ok(!(await p.textContent(".hz-items")).includes("Todavía nada"), "no muestra tu mejor");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("hazanas-por-minuto-y-tramos", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy/hazanas/pegaso");
+  ok(/^[1-9]\d* pasadas fuertes/.test(await p.textContent(".hz-items .lb")), "Pegaso no cuenta sus pasadas: " + await p.textContent(".hz-items .lb"));
+  /* Draco, cada minuto: 12 min de verdad, aunque la plancha dure 30 s */
+  await ir(p, "#/hoy/hazanas/draco"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.tramo");
+  ok((await p.textContent(".ses.tramo .anillo-tx .lb")).includes("30 s y descansás"), "no dice cuánto se trabaja en el minuto");
+  for (let i = 0; i < 20 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
+  await p.click("#s-terminar"); await p.waitForSelector(".res");
+  const x = await p.evaluate(() => K.diario.sesiones.at(-1));
+  ok(x.duracion >= 12 * 60 && x.hazana.completa, "el EMOM no dura sus minutos: " + x.duracion);
+  ok(await p.textContent(".res-tit") === "Draco, hecha.", "el resumen: " + await p.textContent(".res-tit"));
+  /* Casiopea, un flujo de posturas */
+  await ir(p, "#/hoy/hazanas/casiopea"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.tramo");
+  for (let i = 0; i < 30 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
+  ok(await fase(p) === "cierre", "el flujo no termina solo");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });

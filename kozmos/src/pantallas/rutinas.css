@@ -9,6 +9,8 @@
 .rut-dia.hoy{color:var(--ink)}
 .rut-dia.hoy span:first-child::before{content:""; display:inline-block; width:8px; height:8px; margin-right:8px; border-radius:50%; background:var(--ink); vertical-align:1px}
 .rut-dia:not(.hoy){color:var(--ink-2)}
+/* el botón principal queda al alcance del pulgar, encima de la barra, como «Listo» en Tu rumbo */
+.rut>.btn,.hzn>.btn{position:sticky; bottom:calc(84px + env(safe-area-inset-bottom,0px)); z-index:2; box-shadow:var(--shadow)}
 .ajr .ses-fila small{display:block; font-weight:600; font-size:var(--t-xs); margin-top:2px}
 
 /* Hoy: la rutina que seguís y el día de descanso */
@@ -37,6 +39,8 @@
 .res-a:empty{display:none}
 
 @media (orientation:landscape) and (max-height:520px){
+  .rut>.btn,.hzn>.btn{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
   .ses.tramo .anillo-desc{width:min(170px,40vh)}
   .circ-items>.ln{padding:6px 0}
 }
+.lado .ajr>em.num{white-space:nowrap}

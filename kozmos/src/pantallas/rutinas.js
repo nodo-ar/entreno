@@ -27,7 +27,7 @@ K.P.rutina = id => {
   const enc = K.enc({titulo: r.nombre, sub: "Rutinas", volver: "#/hoy/rutinas", raiz: true, det: true, acciones: sigo ? K.mas("rut-mas", "Opciones de la rutina") : ""});
   const dato = (n, t) => `<div class="cd res-dato"><span class="num">${K.esc(n)}</span><span class="lb">${t}</span></div>`;
   const est = r.alimenta.map(eid => { const c = cielo.constelaciones.find(k => k.estrellas.some(y => y.id === eid)); return c && {c, e: c.estrellas.find(y => y.id === eid)}; }).filter(Boolean);
-  const lleva = `<span class="lb pie">Lleva a</span><section class="aj">${est.map(({c, e}) => `<button type="button" class="ajr" data-ir="#/cielo/${c.id}"><span class="tile"><i class="dot" style="--c:var(--${c.familia})"></i></span>
+  const lleva = `<span class="lb pie">Entrena para</span><section class="aj">${est.map(({c, e}) => `<button type="button" class="ajr" data-ir="#/cielo/${c.id}"><span class="tile"><i class="dot" style="--c:var(--${c.familia})"></i></span>
       <span class="ses-fila">${K.esc(e.nombre)}<small class="mute">${K.esc(c.nombre)}</small></span><em>${e.encendida ? "Encendida" : e.estado === "proxima" ? "La próxima" : ""}</em>${K.ic("chev", "chev")}</button>`).join("")}</section>`;
   /* una semana: la que vas, o la primera */
   const sem = sigo && !ru.cur.terminada ? ru.cur.semana - 1 : 0, desde = sem * r.dias;
@@ -62,8 +62,8 @@ const formatoTx = (h, n) => ({
   chipper: "Todo en orden, una sola vez, lo más rápido que puedas.",
   amrap: `Todas las vueltas que entren en ${n.minutos} min.`,
   emom: `Al empezar cada minuto, lo que toca. ${n.minutos} min.`,
-  intervalos: `${(n.tramos || []).filter(x => x.clase === "fuerte").length} pasadas fuertes, con pausa entre medio.`,
-  flujo: `${(n.tramos || []).filter(x => x.clase === "postura").length} posturas, una detrás de otra.`
+  intervalos: `${K.rutina.desplegar(n.tramos || []).filter(x => x.clase === "fuerte").length} pasadas fuertes, con pausa entre medio.`,
+  flujo: `${K.rutina.desplegar(n.tramos || []).filter(x => x.clase === "postura").length} posturas, una detrás de otra.`
 })[h.formato] || "";
 K._nivel = {};
 const nivelDe = h => K._nivel[h.id] ?? 0;

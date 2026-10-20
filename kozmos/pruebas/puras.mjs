@@ -462,6 +462,8 @@ prueba("hazana-formatos", () => {
   ok(rutina.deHazana(h("amrap"), 0).bloques[0].formato === "amrap", "amrap");
   const e = rutina.deHazana(h("emom"), 0).bloques[0];
   ok(e.clase === "tramos" && e.tramos.length === 6 && e.tramos.every(x => x.seg === 60) && e.tramos[1].ejercicio === "flexion", "emom: un minuto por ítem, alternando");
+  const em = rutina.deHazana({...h("emom"), niveles: [{minutos: 4, items: [{ejercicio: "flexion", seg: 30}]}]}, 0).bloques[0];
+  ok(em.tramos.every(x => x.seg === 60 && x.trabajo === 30), "emom: un ítem por segundos no acorta el minuto");
   ok(rutina.mejorEs(h("tiempo")) === "menos" && rutina.mejorEs(h("amrap")) === "mas" && rutina.mejorEs(h("emom")) === "hecha", "cómo se cuenta lo mejor");
   const ss = [{hazana: {id: "h", nivel: 0, valor: 300}}, {hazana: {id: "h", nivel: 0, valor: 250}}, {hazana: {id: "h", nivel: 0, valor: 100, completa: false}},
     {hazana: {id: "h", nivel: 0, valor: 90}, cortada: true}, {hazana: {id: "h", nivel: 1, valor: 50}}];
@@ -474,6 +476,7 @@ prueba("rutina-en-curso", () => {
   const c = rutina.enCurso(r, "2026-10-01", [s("2026-09-30"), s("2026-10-01"), s("2026-10-02"), s("2026-10-03"), s("2026-10-04", "otra")]);
   ok(c.i === 3 && c.semana === 2 && c.dia === 1, "cuenta las de esta rutina desde que la elegiste");
   ok(rutina.enCurso(r, "", Array(9).fill(s("2026-10-01"))).terminada, "todas hechas: terminada");
+  ok(rutina.enCurso(r, "", [{...s("2026-10-01"), cortada: true, rutina: {id: "r", sesion: 0, mitad: false}}, {...s("2026-10-02"), cortada: true, rutina: {id: "r", sesion: 0, mitad: true}}]).i === 1, "cortada antes de la mitad no cuenta");
 });
 prueba("tus-dias", () => {
   ok(rutina.diaSemana("2026-10-19") === 0 && rutina.diaSemana("2026-10-25") === 6, "0 es lunes, 6 es domingo");

@@ -162,6 +162,7 @@ K.sesion = (() => {
     else {
       const desc = S.s < b.series - 1 ? p.descanso : Math.max(p.descanso, K.plan.ENTRE_BLOQUES);
       S.fase = "descanso"; S.desde = t; S.hasta = t + desc * 1000; S.total = desc;
+      if (!desc) S.avisos.fin = true; /* sin descanso (superserie): nada que avisar */
     }
     s.vibrar("ok"); guardarVivo(); programar();
   };
@@ -239,11 +240,12 @@ K.sesion = (() => {
     const pl = S.plan, hz = pl.hazana && S.hechos.find(h => h.tipo === "hazana");
     return {id: S.id, fecha: S.fecha, inicio: new Date(S.inicio).toISOString(), fin: new Date(fin).toISOString(),
       duracion: Math.round(s.total()), cortada: !!cortada, catalogo: K.CATALOGO.version, ...(K.diario.perfil.peso ? {pesoKg: K.diario.perfil.peso} : {}),
-      ...(pl.rutina ? {rutina: {...pl.rutina}} : {}),
+      /* cortada, una sesión de rutina cuenta para avanzar solo si hiciste al menos la mitad: el que corta por falta de tiempo no queda trabado */
+      ...(pl.rutina ? {rutina: {...pl.rutina, ...(cortada ? {mitad: S.hechos.length * 2 >= pl.bloques.reduce((t, b) => t + (b.series || 1), 0)} : {})}} : {}),
       ...(pl.hazana ? {hazana: {...pl.hazana, valor: hz ? hz.valor : 0, completa: !!(hz && hz.completa)}} : {}),
       bloques: pl.bloques.map((b, i) => ({orden: i, ...(b.constelacion ? {constelacion: b.constelacion} : {}), familia: b.familia, ...(b.estrella ? {estrella: b.estrella} : {}),
         objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}), ...(b.clase ? {clase: b.clase, nombre: b.nombre} : {}),
-        series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: h.ejercicio ?? b.ejercicio, tipo: h.tipo ?? b.tipo, ...(b.estrella ? {estrella: b.estrella} : {}), objetivo: h.objetivo ?? b.objetivo, valor: h.valor,
+        series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: "ejercicio" in h ? h.ejercicio : b.ejercicio, tipo: h.tipo ?? b.tipo, ...(b.estrella ? {estrella: b.estrella} : {}), objetivo: h.objetivo ?? b.objetivo, valor: h.valor,
           ...(h.seg !== undefined ? {seg: Math.round(h.seg)} : {}), ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, pesoKg: h.pesoKg} : {})}))})).filter(b => b.series.length)};
   };
   /* terminar: asienta lo último, guarda y suelta todo. Devuelve {registro, antes} o null si no había nada hecho. */

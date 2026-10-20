@@ -19,7 +19,7 @@ K.respaldo = (() => {
   const tipoSerie = t => tipo(t) || t === "tramos" || t === "hazana";
   const medicion = m => obj(m) && txt(m.id, 80) && txt(m.estrella) && fecha(m.fecha) && num(m.valor, 1e6) && tipo(m.tipo)
     && (m.ejercicio === undefined || txt(m.ejercicio)) && (m.origen === undefined || txt(m.origen, 20));
-  const serie = x => obj(x) && (txt(x.ejercicio) || (x.tipo === "tramos" && x.ejercicio === null)) && tipoSerie(x.tipo) && x.tipo !== undefined && num(x.valor, 1e6);
+  const serie = x => obj(x) && (txt(x.ejercicio) || (x.tipo === "tramos" && x.ejercicio == null)) && tipoSerie(x.tipo) && x.tipo !== undefined && num(x.valor, 1e6);
   const entero = (v, max) => Number.isInteger(v) && v >= 0 && v <= max;
   const sesion = x => obj(x) && txt(x.id, 80) && fecha(x.fecha) && num(x.duracion, 864000) && Array.isArray(x.bloques)
     && x.bloques.every(b => obj(b) && (b.constelacion === undefined || txt(b.constelacion)) && Array.isArray(b.series) && b.series.every(serie))

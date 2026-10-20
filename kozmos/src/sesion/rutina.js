@@ -78,7 +78,7 @@ K.rutina = (() => {
     if (h.formato === "tiempo" || h.formato === "chipper" || h.formato === "amrap")
       b = {...base, clase: "circuito", formato: h.formato === "amrap" ? "amrap" : "tiempo", rondas: h.formato === "chipper" ? 1 : (n.rondas || 1), minutos: n.minutos || 0, items, series: 1};
     else if (h.formato === "emom")
-      b = {...base, clase: "tramos", tramos: Array.from({length: n.minutos}, (_, m) => ({clase: "trabajo", seg: 60, ...items[m % items.length]}))};
+      b = {...base, clase: "tramos", tramos: Array.from({length: n.minutos}, (_, m) => { const x = items[m % items.length]; return {...x, clase: "trabajo", seg: 60, ...(x.seg ? {trabajo: x.seg} : {})}; })};
     else b = {...base, clase: "tramos", tramos: tramos(n.tramos || [], ej, equipo)};
     if (b.clase === "tramos") b.series = b.tramos.length;
     return {bloques: [b], minutos: minutos([b]), hazana: {id: h.id, nivel}, nombre: h.nombre};
@@ -107,7 +107,7 @@ K.rutina = (() => {
   /* la rutina que seguís y por dónde vas: la sesión que toca es la que sigue a las hechas desde que la elegiste */
   function enCurso(r, desde, sesiones){
     if (!r) return null;
-    const i = sesiones.filter(s => s.rutina && s.rutina.id === r.id && (!desde || s.fecha >= desde)).length;
+    const i = sesiones.filter(s => s.rutina && s.rutina.id === r.id && (!desde || s.fecha >= desde) && (!s.cortada || s.rutina.mitad !== false)).length;
     const dias = r.dias || 1;
     return {i, total: r.sesiones.length, terminada: i >= r.sesiones.length, semana: Math.floor(i / dias) + 1, dia: i % dias + 1};
   }

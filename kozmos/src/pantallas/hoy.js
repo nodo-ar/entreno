@@ -39,8 +39,10 @@ K.hoyPlan = () => {
   const base = K.plan.armar(K.cieloActual(), K.rumbo(), K.diario.sesiones, K.hoy()), ru = K.rutinaActual();
   if (!ru || ru.cur.terminada) return base;
   const plan = K.rutina.deRutina(ru.r, ru.cur.i, ctxRutina());
-  const pruebas = base.bloques.filter(b => b.prueba);
-  return {...plan, bloques: [...pruebas, ...plan.bloques], ventana: base.ventana, volviste: false, minutos: plan.minutos + pruebas.length * 5};
+  /* con rutina, la ventana abre solo para lo que la rutina entrena, y nunca una prueba larga (minutos) antes de la sesión */
+  const lleva = new Set(ru.r.alimenta.map(id => id.split(".")[0]));
+  const pruebas = base.bloques.filter(b => b.prueba && lleva.has(b.constelacion) && b.tipo !== "minutos");
+  return {...plan, bloques: [...pruebas, ...plan.bloques], ventana: pruebas.map(b => b.constelacion), volviste: false, minutos: plan.minutos + pruebas.length * 5};
 };
 /* lo que dice una fila de «Hoy toca»: qué y cuánto */
 const corto = (tipo, o) => o === "max" ? "máx" : tipo === "segundos" ? `${o} s` : String(o);
@@ -117,7 +119,7 @@ K.hoyRutina = ({r, cur}, sin) => {
   const top = `<section class="cd hoy-rut"><span class="lb">Tu rutina · semana ${cur.semana} de ${r.semanas}</span><b class="t1">${K.esc(r.nombre)}</b>
       <div class="bar" style="--c:var(--${r.familia})" role="progressbar" aria-label="Avance de la rutina" aria-valuemin="0" aria-valuemax="${cur.total}" aria-valuenow="${cur.i}"><i style="width:${(cur.i / cur.total * 100).toFixed(1)}%"></i></div>
       <span class="ln mute"><span>Día ${cur.dia} de ${r.dias}</span><span class="num">${cur.i} de ${cur.total}</span></span>
-      ${sig ? `<span class="ln mute small"><span>Lleva a</span><span>${K.esc(sig.nombre)}</span></span>` : ""}</section>`;
+      ${sig ? `<span class="ln mute small"><span>Entrena para</span><span>${K.esc(sig.nombre)}</span></span>` : ""}</section>`;
   const ventana = plan.ventana.length ? `<p class="hoy-ventana small"><b>Ventana abierta:</b> probá ${plan.ventana.map(id => K.esc(cielo.constelaciones.find(c => c.id === id).proxima.nombre)).join(" y ")}.</p>` : "";
   const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${K.esc(s.nombre)}</span></div>${ventana}${filasToca(plan.bloques)}
     ${s.nota ? `<p class="mute small">${K.esc(s.nota)}</p>` : ""}</section>`;
@@ -154,7 +156,7 @@ K.rumboTocar = async id => {
 /* ===== Sesión en curso: un solo reloj grande; en el descanso anotás lo que salió ===== */
 const ANILLO = 2 * Math.PI * 88;
 const arco = (q, tot) => `${(Math.max(0, q) / tot * ANILLO).toFixed(1)} ${ANILLO.toFixed(1)}`;
-const quedaTx = (q, tot) => q <= 0 ? "Ya podés seguir" : `de ${K.reloj(tot)}`;
+const quedaTx = (q, tot) => !tot ? "Sin descanso" : q <= 0 ? "Ya podés seguir" : `de ${K.reloj(tot)}`;
 /* el número grande de una serie: la cuenta para prepararse, el reloj que corre o lo que toca */
 const grandeSerie = b => {
   const pr = K.sesion.prep();
@@ -206,11 +208,12 @@ K.P.sesion = () => {
   if (S.fase === "cierre") return acc + `<div class="ses cierre"><div class="ses-a">${pasos}<div class="enc-tit ses-tit">${nom}<h1>${K.esc(e.nombre)}</h1></div>${pausa}
       <div class="ses-reloj"><span class="reloj big num" data-r="total">${K.reloj(K.sesion.total())}</span><span class="lb">toda la sesión</span></div></div>
     <div class="ses-b">${tarjeta}<button type="button" class="btn" id="s-terminar">Terminar</button></div></div>`;
-  const q = K.sesion.queda(), tot = S.total || 1;
-  return acc + `<div class="ses descanso${q <= 0 ? " fin" : ""}" style="--c:var(--${b.familia});--cs:var(--${b.familia}-soft)" data-r="ses"><div class="ses-a"><div class="enc-tit vh"><h1>Descanso</h1></div>${pausa}
+  /* en una superserie no hay descanso entre los dos ejercicios: se anota y se sigue, sin destello */
+  const q = K.sesion.queda(), tot = S.total || 1, fin = q <= 0 && S.total > 0;
+  return acc + `<div class="ses descanso${fin ? " fin" : ""}" style="--c:var(--${b.familia});--cs:var(--${b.familia}-soft)" data-r="ses"><div class="ses-a"><div class="enc-tit vh"><h1>Descanso</h1></div>${pausa}
       <div class="anillo-desc${q <= 0 ? " listo" : ""}" data-r="anillo">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" class="pista"/><circle cx="100" cy="100" r="88" class="arco" data-r="arco" stroke-dasharray="${arco(q, tot)}" transform="rotate(-90 100 100)"/></svg>
-        <div class="anillo-tx"><span class="reloj num" data-r="queda" role="timer" aria-live="off">${K.reloj(Math.max(0, Math.ceil(q)))}</span><span class="lb" data-r="queda-lb">${quedaTx(q, tot)}</span></div></div>
+        <div class="anillo-tx"><span class="reloj num" data-r="queda" role="timer" aria-live="off">${K.reloj(Math.max(0, Math.ceil(q)))}</span><span class="lb" data-r="queda-lb">${quedaTx(q, S.total)}</span></div></div>
       <p class="ses-luego mute">Sigue: ${K.esc(K.sesion.proxima())}</p></div>
     <div class="ses-b">${tarjeta}<div class="tres-btn"><button type="button" class="btn sec" data-desc="-15" aria-label="15 segundos menos de descanso">−15 s</button><button type="button" class="btn sec" data-desc="15" aria-label="15 segundos más de descanso">+15 s</button><button type="button" class="btn" id="s-seguir">Seguir</button></div></div></div>`;
 };
@@ -218,7 +221,7 @@ K.P.sesion = () => {
 /* ===== Tramos: cardio, intervalos, cada minuto y movilidad. Cada tramo corre solo y pasa al siguiente con un pitido. ===== */
 const CLASE = {entrada: "Entrada en calor", fuerte: "Fuerte", suave: "Suave", pausa: "Descanso", trabajo: "A trabajar", postura: "Postura", vuelta: "Vuelta a la calma"};
 const tramoTx = x => x.ejercicio ? K.ej(x.ejercicio).nombre : CLASE[x.clase] || "";
-const tramoLb = x => x.reps ? `×${x.reps}` : `de ${K.reloj(x.seg)}`;
+const tramoLb = x => x.reps ? `×${x.reps}` : x.trabajo ? `${x.trabajo} s y descansás` : `de ${K.reloj(x.seg)}`;
 const avanceBloque = (S, b) => { const tot = b.tramos.reduce((a, x) => a + x.seg, 0), antes = b.tramos.slice(0, S.s).reduce((a, x) => a + x.seg, 0); return Math.min(1, (antes + K.sesion.enFase()) / tot); };
 K.P.tramo = (S, b) => {
   const x = b.tramos[S.s], sig = b.tramos[S.s + 1], q = K.sesion.queda(), pausa = S.pausa !== null ? `<p class="ses-pausa lb">En pausa</p>` : "";
@@ -323,10 +326,10 @@ K.sesion.alLatir = () => {
     if (S.fase === "descanso"){
       const q = K.sesion.queda(), tot = S.total || 1;
       pon("queda", K.reloj(Math.max(0, Math.ceil(q))));
-      pon("queda-lb", quedaTx(q, tot));
+      pon("queda-lb", quedaTx(q, S.total));
       K.$('[data-r="arco"]', v)?.setAttribute("stroke-dasharray", arco(q, tot));
       K.$('[data-r="anillo"]', v)?.classList.toggle("listo", q <= 0);
-      K.$('[data-r="ses"]', v)?.classList.toggle("fin", q <= 0);
+      K.$('[data-r="ses"]', v)?.classList.toggle("fin", q <= 0 && S.total > 0);
     }
     return;
   }
@@ -476,7 +479,7 @@ K.P.resumen = (id, desde = "hoy") => {
   return arriba + `
     <div class="res" data-sesion="${K.esc(x.id)}"><div class="res-a">${c ? `<section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>` : ""}</div>
     <div class="res-b"><div class="enc-tit res-txt">${tx}</div>
-      <div class="res-datos">${hz ? dato(K.hazanaValor(hz.h, x.hazana.valor, true), hz.h.formato === "amrap" ? "vueltas" : hz.h.formato === "tiempo" || hz.h.formato === "chipper" ? "tiempo" : "hecha") + dato(K.rutina.NIVELES[x.hazana.nivel], "nivel") + dato(Math.max(1, Math.round(x.duracion / 60)), "min")
+      <div class="res-datos">${hz ? (K.rutina.mejorEs(hz.h) === "hecha" ? dato(K.reloj(x.duracion), "tiempo") : dato(K.hazanaValor(hz.h, x.hazana.valor, true), hz.h.formato === "amrap" ? "vueltas" : "tiempo")) + dato(K.rutina.NIVELES[x.hazana.nivel], "nivel") + dato(Math.max(1, Math.round(x.duracion / 60)), "min")
         : sp && sp.tipo !== "logrado" ? dato(K.cielo.corto(sp, sp.valor), "esta vez") + (marcaAntes !== null ? dato(K.cielo.corto(sp, marcaAntes), "tu marca") : "")
         : dato(Math.max(1, Math.round(x.duracion / 60)), "min") + dato(nSeries, nSeries === 1 ? "serie" : "series") + tercero}</div>
       ${kcal ? `<p class="ln mute small res-kcal"><span>Calorías, aproximadas</span><span class="num">${kcal} kcal</span></p>` : ""}
@@ -484,7 +487,7 @@ K.P.resumen = (id, desde = "hoy") => {
 };
 
 /* 754 s → «12:34»; 7 vueltas → «7 vueltas»; corto, para un dato: «7» */
-K.hazanaValor = (h, v, corto) => h.formato === "amrap" ? (corto ? String(v) : `${v} ${v === 1 ? "vuelta" : "vueltas"}`) : h.formato === "tiempo" || h.formato === "chipper" ? K.reloj(v) : "Sí";
+K.hazanaValor = (h, v, corto) => h.formato === "amrap" ? (corto ? String(v) : `${v} ${v === 1 ? "vuelta" : "vueltas"}`) : h.formato === "tiempo" || h.formato === "chipper" ? K.reloj(v) : "hecha";
 
 /* el ⋯ del resumen: borrar esta sesión, con deshacer */
 K.resumenMenu = btn => {
