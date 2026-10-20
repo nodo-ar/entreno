@@ -1,0 +1,14 @@
+/* ===== Barra flotante (de Entreno): píldora de vidrio abajo; la pestaña elegida muestra su nombre y un indicador que se desliza.
+   Es clara a propósito: el negro lleno queda solo para el botón principal de cada pantalla. ===== */
+nav.barra{position:fixed; left:50%; transform:translateX(-50%); bottom:calc(12px + env(safe-area-inset-bottom,0px)); z-index:50; width:min(calc(100vw - 32px),360px); display:flex; gap:2px; padding:5px; border-radius:99px; background:var(--glass); backdrop-filter:blur(28px) saturate(1.4); -webkit-backdrop-filter:blur(28px) saturate(1.4); border:1px solid var(--line); box-shadow:0 8px 20px -14px rgba(0,0,0,.35); transition:translate .38s var(--ease)}
+nav.barra .ind{position:absolute; left:0; top:5px; bottom:5px; width:0; border-radius:99px; background:var(--s2); pointer-events:none; transition:transform .42s var(--ease),width .42s var(--ease)}
+nav.barra button{position:relative; z-index:1; flex:1 1 auto; min-width:0; height:48px; padding:0 10px; border:0; border-radius:99px; background:transparent; color:var(--ink-2); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:var(--t-sm); font-weight:700; white-space:nowrap; transition:color .3s var(--ease)}
+nav.barra button .ic{width:22px; height:22px}
+nav.barra button .nm{display:block; max-width:0; margin-left:0; opacity:0; overflow:hidden; transition:max-width .42s var(--ease),margin-left .42s var(--ease),opacity .18s}
+nav.barra button[aria-current="page"]{color:var(--ink)}
+nav.barra button[aria-current="page"] .nm{max-width:90px; margin-left:7px; opacity:1; transition:max-width .42s var(--ease),margin-left .42s var(--ease),opacity .25s .12s}
+nav.barra:not(.lista) .ind{display:none}
+nav.barra:not(.lista) button[aria-current="page"]{background:var(--s2)}
+body.sin-barra nav.barra{translate:0 calc(100% + 40px); pointer-events:none}
+nav.barra.medir *{transition:none!important}
+@media (prefers-reduced-motion:reduce){ nav.barra .ind, nav.barra button .nm{transition:none} }

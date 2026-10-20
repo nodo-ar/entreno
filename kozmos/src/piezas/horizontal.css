@@ -1,0 +1,20 @@
+/* ===== Horizontal (de Entreno): la barra pasa a ser un riel a la izquierda; las pantallas con lista muestran la lista a la izquierda y lo abierto a la derecha. Lo que no cambia queda quieto. ===== */
+@media (orientation:landscape) and (max-height:520px){
+  nav.barra{left:calc(12px + env(safe-area-inset-left,0px)); top:50%; bottom:auto; transform:translateY(-50%); width:auto; flex-direction:column; padding:5px}
+  nav.barra .ind{left:5px; right:5px; top:5px; bottom:auto; width:auto!important}
+  nav.barra button{flex:none; width:52px; height:52px; padding:0}
+  nav.barra button .nm{display:none}
+  body.sin-barra nav.barra{translate:calc(-100% - 40px) 0}
+  #app{max-width:none; padding-left:calc(92px + env(safe-area-inset-left,0px)); padding-right:max(20px,env(safe-area-inset-right,0px)); padding-bottom:24px}
+  .utoast{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  #tbt{width:min(100% - 220px,400px)}
+  .enc-tit h1{font-size:var(--t-2xl)}
+  /* dos paneles */
+  .split{display:grid; grid-template-columns:minmax(280px,38%) minmax(0,1fr); gap:24px; align-items:start}
+  .split>.lado{position:sticky; top:0; max-height:100dvh; overflow-y:auto; scrollbar-width:none; padding-bottom:24px}
+  .split>.lado::-webkit-scrollbar{display:none}
+  .split>.abierto{min-width:0}
+}
+@media not ((orientation:landscape) and (max-height:520px)){
+  .split>.abierto{display:none}
+}

@@ -22,6 +22,16 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 11. **Limpiar CSS que no se usa**: `.swfil`, `.cortaseg`, `.intensity`, `.faces`, `.modes`, `.htabs` y las funciones `pickers` / `pickerCards`. Sin cambio visible.
 12. **Duraciones de `.segx`** (.25 s y .38 s), que no son tokens del manual de movimiento.
 
+## Kozmos (de la vuelta 6)
+
+- **Disparador real de la isla** (hoy solo la muestra la prueba). Etapa de sesión.
+- **Uso del «⋯»**: queda la pieza, sin pantalla que la necesite todavía.
+- **Fijar Playwright en un `package.json`** (el soberano). PR aparte.
+- **Pruebas que faltan** (Casandra): cambio de versión con la app abierta y red lenta.
+- **Dominio propio para Kozmos** (decidido por Fer): conseguirlo y configurarlo antes de publicar, en la etapa 6. Ahí se baja la bandera roja de Casandra.
+- **Dejar escrita la letra de Kozmos** (Mona Sans y Geist Mono en lugar de la tipografía Nodo): viene de la dirección de arte B.
+- **Biblioteca en la barra**: los bocetos de miniaturas la mostraban; el prototipo tiene Progreso y Vos. Definir con Fer cuando haya ejercicios.
+
 ## Ideas (necesitan brief y OK)
 
 13. **[idea] Rutina según los días.** Al empezar, la app pregunta cuántos días por semana vas a entrenar y ofrece rutinas que se adaptan (torso/pierna, Arnold, full body…). Para Fer, «rutina» es el plan semanal, no los ejercicios de una sesión.

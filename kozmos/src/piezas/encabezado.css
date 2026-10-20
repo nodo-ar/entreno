@@ -1,0 +1,18 @@
+/* ===== Encabezado (de Entreno): título grande que, al desplazar, se achica a una barra de vidrio arriba; las acciones (⋯, volver) siguen a la vista ===== */
+.enc{position:relative; margin-top:-12px}
+.enc-acc{position:sticky; top:calc(8px + env(safe-area-inset-top,0px)); margin-top:calc(8px + env(safe-area-inset-top,0px)); z-index:46; display:flex; align-items:center; gap:8px; min-height:44px; pointer-events:none}
+.enc-acc>*{pointer-events:auto}
+.enc-acc .esp{flex:1}
+.ib{width:40px; height:40px; flex:0 0 40px; padding:0; border-radius:50%; border:1px solid var(--line); background:var(--glass); backdrop-filter:blur(20px) saturate(1.6); -webkit-backdrop-filter:blur(20px) saturate(1.6); color:var(--ink); display:grid; place-items:center; cursor:pointer; transition:transform .1s}
+.ib:active{transform:scale(.92)}
+.ib[aria-expanded="true"]{background:var(--s2)}
+.enc-tit{padding:2px 2px 6px}
+.enc-tit small{display:block; margin-bottom:6px}
+.enc-tit h1{font-size:var(--t-3xl)}
+.enc-tit.det h1{font-size:var(--t-2xl)}
+/* barra compacta: aparece cuando el título grande se va de la pantalla */
+#tbar{position:fixed; top:0; left:0; right:0; z-index:45; height:calc(60px + env(safe-area-inset-top,0px)); padding-top:env(safe-area-inset-top,0px); pointer-events:none; opacity:0; transition:opacity .22s; background:color-mix(in srgb,var(--bg) 86%,transparent); backdrop-filter:blur(26px) saturate(1.6); -webkit-backdrop-filter:blur(26px) saturate(1.6); border-bottom:1px solid transparent}
+#tbt{position:absolute; left:0; right:0; top:calc(env(safe-area-inset-top,0px) + 18px); margin:0 auto; width:min(100% - 128px,400px); text-align:center; font-weight:800; font-stretch:112%; font-size:var(--t-lg); line-height:24px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:0; transform:translateY(10px); transition:transform .3s var(--ease),opacity .2s}
+body.compacto #tbar{opacity:1; border-bottom-color:var(--line)}
+body.compacto #tbt{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){ #tbt{transition:opacity .2s} }

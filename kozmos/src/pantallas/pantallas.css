@@ -1,0 +1,29 @@
+/* ===== Pantallas de la etapa 1 ===== */
+/* Cielo vacío: el campo de estrellas de fondo y el texto abajo, siempre a la vista */
+.cielo-vacio{position:relative; overflow:hidden; min-height:440px; align-content:end; padding:120px 18px 22px}
+.cielo-fondo{position:absolute; inset:0}
+.cielo-fondo svg{width:100%; height:100%; display:block}
+.cielo-vacio::after{content:""; position:absolute; inset:auto 0 0 0; height:62%; background:linear-gradient(to top,var(--s1) 55%,transparent); pointer-events:none}
+.cielo-vacio>b,.cielo-vacio>p{position:relative; z-index:1}
+.acerca{justify-items:center; text-align:center; gap:10px; padding:28px 18px}
+.acerca h2{font-size:var(--t-2xl)}
+.acerca .lema{max-width:30ch}
+.acerca .lema i{font-weight:700}
+.acerca p{max-width:34ch}
+.pie,.ayuda{padding:4px 4px 0}
+/* las dos mitades de Vos se apilan igual que una pantalla */
+.split>.lado{display:flex; flex-direction:column; gap:12px}
+/* Vos en vertical: el ajuste abierto ocupa la pantalla */
+@media not ((orientation:landscape) and (max-height:520px)){
+  .split.en-detalle>.lado{display:none}
+  .split.en-detalle>.abierto{display:flex; flex-direction:column; gap:12px}
+}
+@media (orientation:landscape) and (max-height:520px){
+  .split>.abierto{display:flex; flex-direction:column; gap:12px}
+  .split>.abierto .enc{display:block}
+  .split>.abierto .enc-acc [data-ir]{visibility:hidden}
+  .ajr[data-sel]{background:var(--s2)}
+  .ajr[data-sel] .tile{background:var(--s1)}
+  .cielo-vacio{min-height:calc(100dvh - 130px)}
+  .split>.abierto{padding-top:0}
+}
