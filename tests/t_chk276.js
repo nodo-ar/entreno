@@ -13,7 +13,9 @@ const limpio=async (b,nom='Fer')=>{ const ctx=await b.newContext({viewport:{widt
   for(let i=0;i<15;i++){ const sigue=await p.evaluate(nom=>{ const n=document.querySelector('#obNom'); if(n&&!n.value) n.value=nom; const w=document.querySelector('#obPeso'); if(w&&!w.value) w.value='82'; if(!CFG.diasFS||!CFG.diasFS.length) CFG.diasFS=[0,2,4]; if(!CFG.diasBS||!CFG.diasBS.length) CFG.diasBS=[1,3]; const s=document.querySelector('#obNext'); if(!s) return false; s.click(); return true; },nom); if(!sigue) break; await p.waitForTimeout(350); }
   await p.evaluate(()=>{ CELON=true; ['lp','swipe','scrub','mini2','tree'].forEach(k=>{ try{ hintDone(k); }catch(e){} }); }); return p; };
 const importa=async(p,file)=>{ await p.evaluate(()=>{ go('ajustes'); }); await p.waitForTimeout(500); await p.evaluate(()=>{ ajSec='datos'; try{ render(); }catch(e){} }); await p.waitForTimeout(300);
-  await p.setInputFiles('#bkFile',file); await p.waitForTimeout(900); return p.evaluate(()=>{ const u=document.querySelector('#utoast'), t=document.querySelector('#toast.show'); return ((u?u.innerText:'')+' '+(t?t.textContent:'')).replace(/\n/g,' ').trim(); }); };
+  /* espera a que aparezca el aviso, no un tiempo fijo: con el equipo cargado 900 ms no alcanzaban */
+  await p.evaluate(()=>{ const u=document.querySelector('#utoast'); if(u) u.remove(); const t=document.querySelector('#toast'); if(t) t.classList.remove('show'); });
+  await p.setInputFiles('#bkFile',file); await p.waitForFunction(()=>document.querySelector('#utoast')||document.querySelector('#toast.show'),null,{timeout:8000}).catch(()=>{}); await p.waitForTimeout(150); return p.evaluate(()=>{ const u=document.querySelector('#utoast'), t=document.querySelector('#toast.show'); return ((u?u.innerText:'')+' '+(t?t.textContent:'')).replace(/\n/g,' ').trim(); }); };
 (async()=>{ const b=await chromium.launch();
   // 1 · el teléfono de siempre, con historia: exportar
   const ctx=await b.newContext({viewport:{width:390,height:844},acceptDownloads:true}); const p=await ctx.newPage(); p.on('pageerror',e=>errs.push(e.message));
