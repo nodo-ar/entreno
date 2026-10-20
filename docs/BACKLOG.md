@@ -4,9 +4,9 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 
 ## Ahora
 
-1. **Estabilidad de la suite y pesos de letra** (decidido, ver `docs/ESTADO.md`). Un PR. Tablero en grafito y en claro con inicio, sesión en curso, isla, serie con descanso, resumen y horizontal. *Hecho en `claude/pesos-y-esperas`; espera el OK de Fer (acta 001).*
-2. **La suite no depende del día.** chk249, chk259, chk262, chk263 y chk274 fallan según el día de la semana (los lunes, y chk249 también los domingos), igual en `main`: la semilla y las pruebas usan la fecha real. Fijar la fecha de las pruebas (reloj de la página) para que la suite dé lo mismo cualquier día. Sin cambio visible.
-3. **Respaldo que se puede comprobar.** Verificar que exportar e importar funciona de punta a punta en un teléfono limpio, sin perder nada. Documentar en `docs/` el formato del archivo exportado (nombre, estructura, versión) sin cambiar el nombre interno. Sumar una prueba automática de ida y vuelta (exportar → borrar → importar → comparar).
+1. **Estabilidad de la suite y pesos de letra** (decidido, ver `docs/ESTADO.md`). Un PR. Tablero en grafito y en claro con inicio, sesión en curso, isla, serie con descanso, resumen y horizontal. *Publicado (PR #6, acta 001).*
+2. **La suite no depende del día.** chk249, chk259, chk262, chk263 y chk274 fallan según el día de la semana (los lunes, y chk249 también los domingos), igual en `main`: la semilla y las pruebas usan la fecha real. Fijar la fecha de las pruebas (reloj de la página) para que la suite dé lo mismo cualquier día. Sin cambio visible. *Publicado (PR #7, acta 002).*
+3. **Respaldo que se puede comprobar.** Verificar que exportar e importar funciona de punta a punta en un teléfono limpio, sin perder nada. Documentar en `docs/` el formato del archivo exportado (nombre, estructura, versión) sin cambiar el nombre interno. Sumar una prueba automática de ida y vuelta (exportar → borrar → importar → comparar). *Publicado (PR #9, acta 003, v269+8).*
 4. **APK con publicación automática.** Empaquetar la app para Android y publicar cada versión en GitHub Releases desde Actions, con número de versión y notas en palabras de la gente. Que el enlace «última versión» funcione.
    - **[Fer]** Registrarse temprano como desarrollador en la verificación de Google para apps instaladas por fuera de Play Store (cuenta gratuita para aficionados). Google empezó a exigirla en septiembre de 2026 en algunos países y la extiende a todo el mundo en 2027. Antes de dar esto por cerrado, buscá el estado actual de esa regla: cambia seguido.
    - Casandra: en Android 13 o más, las apps instaladas por fuera de la tienda tienen restringidos algunos permisos (accesibilidad, administración del dispositivo). Entreno no los necesita; si alguna función los pidiera, se frena y se consulta.
@@ -21,10 +21,13 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 10. **«Terminar» frente a «Siguiente»** en la sesión: los dos naranjas y en 700; un solo botón principal por pantalla. Brief y tablero.
 11. **Limpiar CSS que no se usa**: `.swfil`, `.cortaseg`, `.intensity`, `.faces`, `.modes`, `.htabs` y las funciones `pickers` / `pickerCards`. Sin cambio visible.
 12. **Duraciones de `.segx`** (.25 s y .38 s), que no son tokens del manual de movimiento.
+13. **Dos pestañas se pisan** (de la vuelta 3, el revoltoso): un guardado desde una pestaña vieja borra lo que guardó la otra. No es solo de importar. Sin cambio visible.
 
 ## Ideas (necesitan brief y OK)
 
-13. **[idea] Rutina según los días.** Al empezar, la app pregunta cuántos días por semana vas a entrenar y ofrece rutinas que se adaptan (torso/pierna, Arnold, full body…). Para Fer, «rutina» es el plan semanal, no los ejercicios de una sesión.
-14. **[idea] Héroes como desafíos.** Que la app proponga desafíos según el progreso o la rutina.
-15. **[idea] Respaldo entre los tuyos.** Una copia cifrada del historial en el teléfono de alguien de confianza, sin servidor (directo si están cerca, por relevos públicos cifrados si están lejos). Es la pieza base de la familia Nodo: arrancar por un boceto y una investigación de las opciones.
-16. **[idea] Sesión compartida en pantalla grande.** Varias personas en el mismo espacio, sin login ni base central, con una tele o tablet que muestra dónde está cada uno, si descansa o si la estación está libre. Pensado también para gimnasios y circuitos. Modo boceto.
+14. **[idea] Rutina según los días.** Al empezar, la app pregunta cuántos días por semana vas a entrenar y ofrece rutinas que se adaptan (torso/pierna, Arnold, full body…). Para Fer, «rutina» es el plan semanal, no los ejercicios de una sesión.
+15. **[idea] Héroes como desafíos.** Que la app proponga desafíos según el progreso o la rutina.
+16. **[idea] Respaldo entre los tuyos.** Una copia cifrada del historial en el teléfono de alguien de confianza, sin servidor (directo si están cerca, por relevos públicos cifrados si están lejos). Es la pieza base de la familia Nodo: arrancar por un boceto y una investigación de las opciones.
+17. **[idea] Sesión compartida en pantalla grande.** Varias personas en el mismo espacio, sin login ni base central, con una tele o tablet que muestra dónde está cada uno, si descansa o si la estación está libre. Pensado también para gimnasios y circuitos. Modo boceto.
+18. **[idea] Fotos de progreso en el respaldo** (de la vuelta 3). Hoy viven solo en el teléfono y no viajan en el archivo. Decisión de producto de Fer, con opciones.
+19. **[idea] Exportar todos los perfiles juntos** (de la vuelta 3). Hoy cada perfil se exporta por separado.
