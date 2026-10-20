@@ -16,10 +16,12 @@ const CSS = ["base/letra.css", "base/tokens.css", "base/base.css", "piezas/nav.c
 const JS = ["base/base.js", "piezas/nav.js", "piezas/encabezado.js", "piezas/menu.js", "piezas/deshacer.js", "piezas/isla.js",
   "pantallas/pantallas.js", "app.js"];
 
-/* versión: «k-abc1234» por commit; KOZMOS_V la fuerza a mano */
+/* versión: «k-abc1234» por commit (o «k-abc1234+cambios»); KOZMOS_V la fuerza a mano */
 function version(){
   if (process.env.KOZMOS_V) return process.env.KOZMOS_V;
-  try { return "k-" + execSync("git rev-parse --short=7 HEAD", {cwd: RAIZ, stdio: ["ignore", "pipe", "ignore"]}).toString().trim(); }
+  const git = c => execSync("git " + c, {cwd: RAIZ, stdio: ["ignore", "pipe", "ignore"]}).toString().trim();
+  /* con cambios sin guardar, la versión lo dice: así dos armados distintos nunca se llaman igual */
+  try { return "k-" + git("rev-parse --short=7 HEAD") + (git("status --porcelain -- .") ? "+cambios" : ""); }
   catch (e) { return "k-dev"; }
 }
 const leer = f => fs.readFileSync(path.join(SRC, f), "utf8");

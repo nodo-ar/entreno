@@ -10,4 +10,5 @@
 .utoast .utr circle{fill:none; stroke:currentColor; stroke-width:2.4; stroke-dasharray:62.8; animation:utring var(--dur,5s) linear forwards}
 .utoast .utr circle.f{stroke-opacity:.25; animation:none}
 @keyframes utring{to{stroke-dashoffset:62.8}}
+.utoast.quieto .utr circle{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){ .utoast,.utoast.out{animation:none} }

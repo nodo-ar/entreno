@@ -27,7 +27,7 @@ K.menu = {
     m.addEventListener("click", e => { const b = e.target.closest(".pmi"); if (b) fin(b.dataset.id); });
     m.addEventListener("keydown", e => {
       const i = its.indexOf(document.activeElement);
-      if (e.key === "Escape" || e.key === "Tab"){ e.preventDefault(); fin(); }
+      if (e.key === "Escape" || e.key === "Tab"){ e.preventDefault(); e.stopPropagation(); fin(); }
       else if (e.key === "ArrowDown"){ e.preventDefault(); its[(i + 1) % its.length].focus(); }
       else if (e.key === "ArrowUp"){ e.preventDefault(); its[(i - 1 + its.length) % its.length].focus(); }
     });

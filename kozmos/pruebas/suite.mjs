@@ -15,7 +15,14 @@ execFileSync(process.execPath, [path.join(RAIZ, "tools", "armar.mjs"), APP], {st
 
 /* servidor mínimo: el service worker necesita http */
 const TIPOS = {".html": "text/html; charset=utf-8", ".js": "text/javascript", ".webmanifest": "application/manifest+json", ".woff2": "font/woff2", ".png": "image/png", ".svg": "image/svg+xml"};
+let MODO = ""; /* "portal": la página redirige a otra (wifi con ingreso) · "caido": la página contesta 503 */
 const srv = http.createServer((q, r) => {
+  const ruta = new URL(q.url, "http://x").pathname;
+  if (ruta === "/portal.html"){ r.writeHead(200, {"content-type": "text/html; charset=utf-8"}); r.end("<title>Portal</title><h1>Ingresá al wifi</h1>"); return; }
+  if (ruta === "/" || ruta === "/index.html"){
+    if (MODO === "portal"){ r.writeHead(302, {location: "/portal.html"}); r.end(); return; }
+    if (MODO === "caido"){ r.writeHead(503); r.end("caído"); return; }
+  }
   let f = decodeURIComponent(new URL(q.url, "http://x").pathname); if (f.endsWith("/")) f += "index.html";
   const p = path.join(APP, f);
   if (!p.startsWith(APP) || !fs.existsSync(p)){ r.writeHead(404); r.end(); return; }
@@ -67,7 +74,7 @@ prueba("cuatro-pestanas", async () => {
 
 prueba("sin-desborde-360", async () => {
   const {ctx, p} = await pagina({width: 360, height: 740});
-  for (const h of ["#/hoy", "#/cielo", "#/progreso", "#/vos", "#/vos/tema", "#/vos/acerca"]){
+  for (const h of ["#/hoy", "#/cielo", "#/progreso", "#/vos", "#/vos/acerca", "#/vos/constructor", "#/xyz"]){
     await ir(p, h);
     const w = await p.evaluate(() => document.documentElement.scrollWidth);
     ok(w <= 360, `${h}: ancho ${w}`);
@@ -82,51 +89,56 @@ prueba("encabezado-compacto", async () => {
   await p.mouse.wheel(0, 260); await p.waitForFunction(() => document.body.classList.contains("compacto"));
   ok(await p.textContent("#tbt") === "Cielo", "la barra compacta no dice Cielo");
   await p.mouse.wheel(0, -600); await p.waitForFunction(() => !document.body.classList.contains("compacto"));
-  /* en Vos, el ⋯ sigue a la vista al desplazar */
+  /* las acciones del encabezado (acá, volver) siguen a la vista al desplazar */
   await p.setViewportSize({width: 390, height: 300});
-  await ir(p, "#/vos");
+  await ir(p, "#/vos/acerca");
   await p.mouse.wheel(0, 400); await p.waitForTimeout(250);
-  const r = await p.evaluate(() => { const b = document.querySelector("#vos-mas").getBoundingClientRect(); return [b.top, b.bottom, scrollY]; });
-  ok(r[2] > 0, "Vos no se desplazó");
-  ok(r[0] >= 0 && r[1] <= 300, "el ⋯ se fue de la pantalla: " + r);
+  const r = await p.evaluate(() => { const b = [...document.querySelectorAll('.enc-acc [data-ir="#/vos"]')].find(x => x.offsetParent).getBoundingClientRect(); return [b.top, b.bottom, scrollY]; });
+  ok(r[2] > 0, "Acerca no se desplazó");
+  ok(r[0] >= 0 && r[1] <= 300, "volver se fue de la pantalla: " + r);
   await ctx.close();
 });
 
 prueba("menu-y-deshacer", async () => {
   const {ctx, p} = await pagina();
   await ir(p, "#/vos");
-  await p.click("#vos-mas");
+  await p.click("#tema-menu");
   await p.waitForSelector('.pop[role="menu"]');
-  ok(await p.getAttribute("#vos-mas", "aria-expanded") === "true", "el ⋯ no dice que está abierto");
+  ok(await p.getAttribute("#tema-menu", "aria-expanded") === "true", "la fila no dice que el menú está abierto");
   ok(await p.evaluate(() => document.activeElement.getAttribute("aria-checked")) === "true", "el foco no arranca en lo elegido");
   await p.keyboard.press("ArrowDown");
   ok(await p.evaluate(() => document.activeElement.dataset.id) === "light", "la flecha no baja");
   await p.keyboard.press("Escape");
   await p.waitForFunction(() => !document.querySelector(".pop:not(.out)"));
-  ok(await p.evaluate(() => document.activeElement.id) === "vos-mas", "el foco no vuelve al ⋯");
-  /* elegir Oscuro: se aplica sin preguntar y se puede deshacer */
-  await p.click("#vos-mas"); await p.click('.pmi[data-id="dark"]');
+  ok(await p.evaluate(() => document.activeElement.id) === "tema-menu", "el foco no vuelve a la fila");
+  /* elegir Oscuro: se aplica sin preguntar, el foco queda en la fila y se puede deshacer */
+  await p.click("#tema-menu"); await p.click('.pmi[data-id="dark"]');
   ok(await p.getAttribute("html", "data-theme") === "dark", "no pasó a oscuro");
+  ok(await p.evaluate(() => document.activeElement.id) === "tema-menu", "después de elegir, el foco se pierde");
+  ok((await p.textContent("#tema-menu em")) === "Oscuro", "la fila no muestra el tema nuevo");
   await p.waitForSelector(".utoast");
   ok((await p.textContent(".utoast .utx")).includes("oscuro"), "el aviso no dice qué cambió");
+  /* abrir y cerrar otro menú con Escape no se lleva el deshacer */
+  await p.click("#tema-menu"); await p.keyboard.press("Escape");
+  ok(await p.$(".utoast:not(.out)"), "Escape en el menú borró el deshacer");
   await p.click(".utoast .utu");
   ok(await p.getAttribute("html", "data-theme") === null, "deshacer no volvió a automático");
   ok(await p.evaluate(() => K.tema.actual()) === "auto", "deshacer no guardó automático");
-  /* el aviso se va solo */
-  await p.evaluate(() => { K.DESHACER_MS = 300; });
-  await p.click('nav.barra button[data-tab="vos"]');
-  await ir(p, "#/vos/tema");
-  await p.click('[data-tema="light"]');
-  await p.waitForSelector(".utoast"); await p.waitForFunction(() => !document.querySelector(".utoast"), null, {timeout: 2000});
-  ok(await p.getAttribute('[data-tema="light"]', "aria-checked") === "true", "la opción elegida no se marca");
+  /* el aviso se va solo, salvo mientras lo tenés en foco */
+  await p.evaluate(() => { K.DESHACER_MS = 400; });
+  await p.click("#tema-menu"); await p.click('.pmi[data-id="light"]');
+  await p.waitForSelector(".utoast"); await p.focus(".utoast .utu"); await p.waitForTimeout(700);
+  ok(await p.$(".utoast:not(.out)"), "el deshacer se fue mientras estaba en foco");
+  await p.focus("#tema-menu");
+  await p.waitForFunction(() => !document.querySelector(".utoast"), null, {timeout: 2000});
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
 
 prueba("tema-queda-guardado", async () => {
   const {ctx, p} = await pagina(undefined, {colorScheme: "light"});
-  await ir(p, "#/vos/tema");
-  await p.click('[data-tema="dark"]');
+  await ir(p, "#/vos");
+  await p.click("#tema-menu"); await p.click('.pmi[data-id="dark"]');
   await p.reload(); await p.waitForSelector("main.view");
   ok(await p.getAttribute("html", "data-theme") === "dark", "el tema no quedó guardado");
   const bg = await p.evaluate(() => getComputedStyle(document.body).backgroundColor);
@@ -142,15 +154,20 @@ prueba("horizontal", async () => {
   ok((await vis()).every(Boolean), "Vos no muestra lista y ajuste juntos");
   /* abrir otro ajuste no mueve la lista ni anima la pantalla */
   const antes = await p.evaluate(() => document.querySelector(".split>.lado .aj").getBoundingClientRect().top);
+  const pasos = await p.evaluate(() => history.length);
   await p.click('.ajr[data-ir="#/vos/acerca"]');
   await p.waitForFunction(() => document.querySelector(".split>.abierto h1")?.textContent === "Acerca de Kozmos");
   ok(!(await p.evaluate(() => /vt-/.test(document.querySelector("main.view").className))), "la pantalla se animó");
   ok(await p.evaluate(() => document.querySelector(".split>.abierto h1").textContent) === "Acerca de Kozmos", "no abrió Acerca");
   const desp = await p.evaluate(() => document.querySelector(".split>.lado .aj").getBoundingClientRect().top);
   ok(Math.abs(desp - antes) < 1, "la lista se movió");
+  ok(await p.evaluate(() => history.length) === pasos, "abrir un ajuste en horizontal sumó un paso al botón atrás");
+  /* los dos títulos quedan alineados */
+  const tops = await p.evaluate(() => [...document.querySelectorAll(".split h1")].map(h => Math.round(h.getBoundingClientRect().top)));
+  ok(tops.length === 2 && Math.abs(tops[0] - tops[1]) <= 1, "los títulos de los dos paneles no se alinean: " + tops);
   ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, "desborde en horizontal");
   /* girar: vertical en un ajuste → horizontal muestra los dos paneles */
-  await p.setViewportSize({width: 390, height: 844}); await ir(p, "#/vos/tema");
+  await p.setViewportSize({width: 390, height: 844}); await ir(p, "#/vos/acerca");
   ok(JSON.stringify(await vis()) === "[false,true]", "en vertical el ajuste no ocupa la pantalla");
   await p.setViewportSize({width: 844, height: 390}); await p.waitForTimeout(150);
   ok((await vis()).every(Boolean), "al girar no aparecen los dos paneles");
@@ -162,9 +179,9 @@ prueba("isla", async () => {
   const {ctx, p} = await pagina();
   await ir(p, "#/vos");
   await p.evaluate(() => K.isla.mostrar({texto: "Descanso 1:08", p: .62, familia: "fu", ir: "#/hoy"}));
-  const r = await p.evaluate(() => { const i = document.querySelector("#isla").getBoundingClientRect(), a = document.querySelector("#vos-mas").getBoundingClientRect(); return {top: i.top, bottom: i.bottom, cx: i.left + i.width / 2, acc: a.top}; });
+  const r = await p.evaluate(() => { const i = document.querySelector("#isla").getBoundingClientRect(), a = document.querySelector(".enc-tit").getBoundingClientRect(); return {top: i.top, bottom: i.bottom, cx: i.left + i.width / 2, acc: a.top}; });
   ok(r.top < 60 && Math.abs(r.cx - 195) < 2, "la isla no está arriba al centro");
-  ok(r.acc >= r.bottom, "la isla tapa las acciones del encabezado");
+  ok(r.acc >= r.bottom, "la isla tapa el título");
   await p.click("#isla"); await p.waitForFunction(() => location.hash === "#/hoy");
   await p.evaluate(() => K.isla.ocultar());
   ok(await p.evaluate(() => document.querySelector("#isla").hidden && !document.body.classList.contains("con-isla")), "la isla no se oculta");
@@ -186,14 +203,44 @@ prueba("sin-conexion", async () => {
 
 prueba("pesos-de-letra", async () => {
   const {ctx, p} = await pagina();
-  await ir(p, "#/vos/tema");
+  await ir(p, "#/vos");
+  await p.click("#tema-menu"); await p.waitForSelector(".pop");
   const w = await p.evaluate(() => {
     const fw = s => getComputedStyle(document.querySelector(s)).fontWeight;
-    return {lb: fw(".lb") || "", sel: fw('.op[aria-checked="true"]'), nosel: fw('.op[aria-checked="false"]'), ayuda: fw(".ayuda"), tab: fw('nav.barra [aria-current="page"]')};
+    return {lb: fw(".lb"), sel: fw('.pmi[aria-checked="true"]'), nosel: fw('.pmi[aria-checked="false"]'), valor: fw(".ajr em"), fila: fw(".ajr"), tab: fw('nav.barra [aria-current="page"]')};
   });
-  const ver = await p.evaluate(() => { location.hash = "#/vos/acerca"; return new Promise(r => setTimeout(() => r(getComputedStyle(document.querySelector(".acerca .lb")).fontWeight), 100)); });
-  ok(w.sel === "700" && w.nosel === "600", "lo elegido no va en 700 y lo demás en 600: " + JSON.stringify(w));
-  ok(w.ayuda === "700" && w.tab === "700" && ver === "700", "texto de 13 px o menos no va en 700: " + JSON.stringify(w));
+  ok(w.sel === "700" && w.nosel === "600" && w.fila === "600", "lo elegido no va en 700 y lo demás en 600: " + JSON.stringify(w));
+  ok(w.lb === "700" && w.valor === "700" && w.tab === "700", "texto de 13 px o menos no va en 700: " + JSON.stringify(w));
+  await ctx.close();
+});
+
+prueba("rutas-raras", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/vos/constructor");
+  ok(await p.evaluate(() => [...document.querySelectorAll(".enc-tit h1")].find(h => h.offsetParent).textContent) === "Vos", "#/vos/constructor no muestra Vos");
+  await ir(p, "#/xyz");
+  ok(await p.textContent(".enc-tit h1") === "Hoy", "una ruta desconocida no cae en Hoy");
+  ok(!(await p.evaluate(() => document.body.innerText)).includes("undefined"), "aparece «undefined»");
+  await ctx.close();
+});
+
+prueba("portal-y-red-caida", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "");
+  await p.evaluate(() => navigator.serviceWorker.ready);
+  await p.reload(); await p.waitForSelector("main.view");
+  ok(await p.evaluate(() => !!navigator.serviceWorker.controller), "el service worker no controla la página");
+  try {
+    /* un wifi con ingreso redirige: se sigue viendo Kozmos y no se guarda el portal */
+    MODO = "portal"; await p.reload(); await p.waitForSelector("main.view", {timeout: 8000});
+    ok(await p.textContent(".enc-tit h1") === "Hoy", "con el portal no se ve Kozmos");
+    await ctx.setOffline(true); await p.reload(); await p.waitForSelector("main.view", {timeout: 8000});
+    ok(await p.title() === "Kozmos", "sin conexión quedó guardado el portal");
+    await ctx.setOffline(false);
+    /* la red contesta 503 (por ejemplo, mientras se publica): la copia guardada */
+    MODO = "caido"; await p.reload(); await p.waitForSelector("main.view", {timeout: 8000});
+    ok(await p.textContent(".enc-tit h1") === "Hoy", "con la red caída no abre la copia guardada");
+  } finally { MODO = ""; }
   await ctx.close();
 });
 

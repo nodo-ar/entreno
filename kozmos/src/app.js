@@ -1,10 +1,11 @@
 /* ===== App: rutas, transiciones y arranque ===== */
-/* Rutas: #/hoy · #/cielo · #/progreso · #/vos · #/vos/tema · #/vos/acerca */
+/* Rutas: #/hoy · #/cielo · #/progreso · #/vos · #/vos/acerca */
 K.ruta = () => {
   const [tab = "hoy", sub = ""] = location.hash.replace(/^#\/?/, "").split("/");
-  return K.PESTANAS.some(p => p[0] === tab) ? {tab, sub} : {tab: "hoy", sub: ""};
+  if (!K.PESTANAS.some(p => p[0] === tab)) return {tab: "hoy", sub: ""};
+  return {tab, sub: tab === "vos" && sub === "acerca" ? sub : ""};
 };
-K.ir = h => { if (location.hash !== h) location.hash = h; else K.mostrar(); };
+K.ir = (h, reemplazar) => { if (location.hash === h) K.mostrar(); else if (reemplazar) location.replace(h); else location.hash = h; };
 K.horizontal = () => matchMedia("(orientation: landscape) and (max-height: 520px)").matches;
 
 K.mostrar = (anim = "") => {
@@ -21,19 +22,19 @@ K.mostrar = (anim = "") => {
   K._ultima = {tab, sub};
 };
 /* volver a dibujar sin moverse (por ejemplo, al cambiar el tema) */
-K.refrescar = () => { const y = scrollY; K.mostrar(); scrollTo(0, y); };
+K.refrescar = () => {
+  const y = scrollY, f = document.activeElement?.id;
+  K.mostrar(); scrollTo(0, y);
+  if (f) document.getElementById(f)?.focus({preventScroll: true});
+};
 
-/* clics: data-ir navega; el ⋯ de Vos abre su menú; las opciones de tema cambian el tema */
+/* clics: data-ir navega; la fila Tema abre su menú desplegable */
 document.addEventListener("click", e => {
   const a = e.target.closest("[data-ir]");
-  if (a){ K._quieto = !!a.dataset.quieto && K.horizontal(); K.ir(a.dataset.ir); return; }
-  const t = e.target.closest("[data-tema]");
-  if (t){ K.cambiarTema(t.dataset.tema); return; }
-  const m = e.target.closest("#vos-mas");
-  if (m) K.menu.abrir(m, {titulo: "Tema", items: [
-    ...K.TEMAS.map(([v, n, ic]) => ({id: v, texto: n, ic, elegido: K.tema.actual() === v})),
-    "-", {id: "acerca", texto: "Acerca de Kozmos", ic: "info"}],
-    elegir: id => id === "acerca" ? K.ir("#/vos/acerca") : K.cambiarTema(id)});
+  /* en horizontal, abrir un ajuste no suma pasos al botón atrás: la lista y lo abierto son una sola pantalla */
+  if (a){ K._quieto = !!a.dataset.quieto && K.horizontal(); K.ir(a.dataset.ir, K._quieto); return; }
+  const m = e.target.closest("#tema-menu");
+  if (m) K.menuTema(m);
 });
 
 addEventListener("hashchange", () => {

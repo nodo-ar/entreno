@@ -9,7 +9,13 @@ K.deshacer = (texto, volver) => {
   t.innerHTML = `<span class="utx">${K.esc(texto)}</span><button type="button" class="utu"><svg class="utr" viewBox="0 0 24 24" aria-hidden="true"><circle class="f" cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="10"/></svg>Deshacer</button>`;
   document.body.appendChild(t);
   K.$(".utu", t).addEventListener("click", () => { K.deshacer.cerrar(); volver(); });
-  K.deshacer._t = setTimeout(() => K.deshacer.cerrar(), K.DESHACER_MS);
+  /* el tiempo se frena mientras lo tenés en foco o el dedo encima, y sigue al salir */
+  let queda = K.DESHACER_MS, desde = 0;
+  const correr = () => { desde = Date.now(); clearTimeout(K.deshacer._t); K.deshacer._t = setTimeout(() => K.deshacer.cerrar(), queda); t.classList.remove("quieto"); };
+  const frenar = () => { clearTimeout(K.deshacer._t); queda = Math.max(800, queda - (Date.now() - desde)); t.classList.add("quieto"); };
+  t.addEventListener("focusin", frenar); t.addEventListener("focusout", correr);
+  t.addEventListener("pointerenter", frenar); t.addEventListener("pointerleave", correr);
+  correr();
   K.deshacer._el = t;
 };
 K.deshacer.cerrar = ya => {

@@ -2,6 +2,13 @@
 
 Última actualización: 2026-10-05 · la escribe quien cierra cada sesión.
 
+## Kozmos (2026-10-20)
+
+- Fer decidió empezar de cero una app nueva, Kozmos, en este mismo repo. Entreno sigue publicado sin cambios hasta que Fer apruebe el tablero de Kozmos.
+- **Etapa 1, el esqueleto**: en `kozmos/`, rama `claude/project-thread-985fzq`, PR en borrador. Acta `docs/actas/006-kozmos-esqueleto.md`. Suite propia: `node kozmos/pruebas/suite.mjs` (13 pruebas en verde).
+- **Esperando a Fer**: OK al tablero; estilo de la barra de navegación; la bandera roja del mismo dominio (para la etapa 6).
+- **Próximo**: etapa 2, el cielo de lectura.
+
 ## Dónde quedó
 
 - **Publicado**: el PR #4 en GitHub Pages ([corrida 37203371846](https://github.com/nodo-ar/entreno/actions/runs/37203371846)). Incluye la marca Nodo, Nodo Sans Bold (700), los relojes en Nodo Reloj y la app sin conexión (service worker con la letra y los íconos).

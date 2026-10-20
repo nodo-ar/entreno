@@ -1,8 +1,10 @@
 /* ===== Pantallas de la etapa 1 ===== */
-.cielo-vacio{position:relative; padding:0; overflow:hidden; min-height:440px; align-content:end}
+/* Cielo vacío: el campo de estrellas de fondo y el texto abajo, siempre a la vista */
+.cielo-vacio{position:relative; overflow:hidden; min-height:440px; align-content:end; padding:120px 18px 22px}
 .cielo-fondo{position:absolute; inset:0}
 .cielo-fondo svg{width:100%; height:100%; display:block}
-.cielo-vacio .vacio{position:relative; padding:24px 18px; background:linear-gradient(to top,var(--s1) 55%,transparent)}
+.cielo-vacio::after{content:""; position:absolute; inset:auto 0 0 0; height:62%; background:linear-gradient(to top,var(--s1) 55%,transparent); pointer-events:none}
+.cielo-vacio>b,.cielo-vacio>p{position:relative; z-index:1}
 .acerca{justify-items:center; text-align:center; gap:10px; padding:28px 18px}
 .acerca h2{font-size:var(--t-2xl)}
 .acerca .lema{max-width:30ch}
@@ -21,5 +23,7 @@
   .split>.abierto .enc{display:block}
   .split>.abierto .enc-acc [data-ir]{visibility:hidden}
   .ajr[data-sel]{background:var(--s2)}
+  .ajr[data-sel] .tile{background:var(--s1)}
+  .cielo-vacio{min-height:calc(100dvh - 130px)}
   .split>.abierto{padding-top:0}
 }

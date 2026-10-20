@@ -1,8 +1,9 @@
 /* ===== Encabezado ===== */
 /* enc({titulo, sub, volver, acciones}): volver es una ruta; acciones es el HTML de los botones de la derecha (por ejemplo el ⋯) */
 K.enc = ({titulo, sub = "", volver = "", acciones = "", det = false}) =>
-  `<header class="enc"><div class="enc-acc">${volver ? `<button class="ib" type="button" data-ir="${volver}" aria-label="Volver">${K.ic("back")}</button>` : ""}<span class="esp"></span>${acciones}</div>
-   <div class="enc-tit${det ? " det" : ""}">${sub ? `<small class="lb">${K.esc(sub)}</small>` : ""}<h1>${K.esc(titulo)}</h1></div></header>`;
+  /* las acciones van fuera del encabezado para que queden pegadas arriba mientras se desplaza toda la pantalla */
+  `<div class="enc-acc">${volver ? `<button class="ib" type="button" data-ir="${volver}" aria-label="Volver">${K.ic("back")}</button>` : ""}<span class="esp"></span>${acciones}</div>
+   <header class="enc"><div class="enc-tit${det ? " det" : ""}">${sub ? `<small class="lb">${K.esc(sub)}</small>` : ""}<h1>${K.esc(titulo)}</h1></div></header>`;
 K.mas = (id, etiqueta = "Más opciones") => `<button class="ib" type="button" id="${id}" aria-haspopup="menu" aria-expanded="false" aria-label="${etiqueta}">${K.ic("dots")}</button>`;
 
 K.encabezado = {

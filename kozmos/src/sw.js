@@ -17,12 +17,15 @@ self.addEventListener("fetch", e => {
   /* la página: primero la red, así cada publicación llega enseguida; si no contesta en 3 s, la guardada */
   if (rel === "" || rel === "index.html"){
     const red = fetch(r);
-    e.waitUntil(red.then(res => { if (res.ok){ const cp = res.clone(); return caches.open(CACHE).then(c => c.put("./", cp)); } }).catch(() => {}));
+    /* solo se guarda la app de verdad: nada que venga redirigido (el portal de un wifi) ni un error */
+    const buena = res => res.ok && !res.redirected;
+    e.waitUntil(red.then(res => { if (buena(res)){ const cp = res.clone(); return caches.open(CACHE).then(c => c.put("./", cp)); } }).catch(() => {}));
     const guardada = () => caches.match("./", {cacheName: CACHE});
     e.respondWith(new Promise(listo => {
       let dado = false; const dar = x => { if (!dado && x){ dado = true; clearTimeout(tope); listo(x); } };
       const tope = setTimeout(() => guardada().then(dar), ESPERA);
-      red.then(dar, () => guardada().then(g => { dar(g); if (!dado) listo(Response.error()); }));
+      /* si la red contesta mal, mejor la copia guardada; si no hay copia, lo que haya contestado */
+      red.then(res => buena(res) ? dar(res) : guardada().then(g => dar(g || res)), () => guardada().then(g => { dar(g); if (!dado) listo(Response.error()); }));
     }));
     return;
   }
