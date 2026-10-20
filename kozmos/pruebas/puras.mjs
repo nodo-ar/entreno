@@ -14,7 +14,11 @@ vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "cielo", "cielo.js"), "ut
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "plan.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "calorias.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "diario", "respaldo.js"), "utf8"), ctx);
-const {cielo, plan, calorias, respaldo} = ctx.K;
+vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "rutina.js"), "utf8"), ctx);
+const {cielo, plan, calorias, respaldo, rutina} = ctx.K;
+const RUT_DIR = path.join(RAIZ, "catalogo", "rutinas");
+const RUTINAS = fs.readdirSync(RUT_DIR).filter(f => f.endsWith(".json")).map(f => [f, JSON.parse(fs.readFileSync(path.join(RUT_DIR, f), "utf8"))]);
+const HAZANAS = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "hazanas.json"), "utf8"));
 const EJ = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "ejercicios.json"), "utf8"));
 
 const PRUEBAS = [];
@@ -357,6 +361,138 @@ prueba("respaldo-ida-y-vuelta", () => {
   roto.perfil.peso = 9000;
   const rr = respaldo.leer(JSON.stringify(roto));
   ok(rr.descartadas === 2 && rr.mediciones.length === 1 && rr.sesiones.length === 1 && rr.perfil.peso === undefined, "lo roto se descarta y se cuenta; lo repetido entra una vez: " + JSON.stringify([rr.descartadas, rr.mediciones.length, rr.sesiones.length, rr.perfil]));
+});
+
+/* ===== Rutinas y hazañas (etapa 5) ===== */
+const EJM = () => Object.fromEntries(EJ.ejercicios.map(e => [e.id, e]));
+const ESTRELLAS = new Set(CAT.constelaciones.flatMap(c => c.estrellas.map(e => e.id)));
+const EQUIPOS = ["barra", "paralelas", "pared", "poste", "lastre", "bici", "soga", "mancuernas", "kettlebell"];
+const CLASES = ["entrada", "fuerte", "suave", "pausa", "trabajo", "postura", "vuelta"];
+const alts = x => [].concat(x || []);
+function revisarTramos(ts, ej, donde){
+  ok(Array.isArray(ts) && ts.length, `${donde}: tramos vacíos`);
+  for (const t of rutina.desplegar(ts)){
+    ok(CLASES.includes(t.clase), `${donde}: clase de tramo ${t.clase}`);
+    ok(Number.isInteger(t.seg) && t.seg > 0, `${donde}: tramo sin segundos`);
+    for (const e of alts(t.ejercicio)) ok(ej[e], `${donde}: ejercicio ${e} no existe`);
+  }
+}
+prueba("catalogo-rutinas", () => {
+  const ej = EJM(), ids = new Set(), fams = new Set(CAT.familias.map(f => f.id));
+  ok(RUTINAS.length === 26, `esperaba 26 rutinas, hay ${RUTINAS.length}`);
+  for (const [f, r] of RUTINAS){
+    ok(f === r.id + ".json", `${f}: el archivo se llama como su id`);
+    ok(!ids.has(r.id), `rutina repetida: ${r.id}`); ids.add(r.id);
+    ok(fams.has(r.familia) && r.nombre && r.texto, `${r.id}: familia, nombre o texto`);
+    ok(r.sesiones.length === r.semanas * r.dias, `${r.id}: ${r.sesiones.length} sesiones para ${r.semanas} × ${r.dias}`);
+    ok(r.alimenta.length && r.alimenta.every(e => ESTRELLAS.has(e)), `${r.id}: alimenta una estrella que no existe`);
+    ok((r.equipo || []).every(e => EQUIPOS.includes(e)), `${r.id}: equipo desconocido`);
+    r.sesiones.forEach((s, i) => {
+      ok(s.nombre && s.bloques.length, `${r.id} sesión ${i + 1}: sin nombre o sin bloques`);
+      for (const b of s.bloques){
+        if (b.tramos){ revisarTramos(b.tramos, ej, `${r.id} sesión ${i + 1}`); continue; }
+        ok(alts(b.ejercicio).length && alts(b.ejercicio).every(e => ej[e]), `${r.id} sesión ${i + 1}: ejercicio ${b.ejercicio}`);
+        ok(["repeticiones", "segundos"].includes(b.tipo), `${r.id} sesión ${i + 1}: tipo ${b.tipo}`);
+      }
+      /* lo que arma la app tiene que poder correrse */
+      const p = rutina.deRutina(r, i, {ej});
+      ok(p.bloques.length && p.minutos >= 5, `${r.id} sesión ${i + 1}: no arma nada`);
+      for (const b of p.bloques) if (!b.clase) ok(b.pasos.every(x => x.objetivo === "max" || (Number.isFinite(x.objetivo) && x.objetivo > 0)), `${r.id} sesión ${i + 1}: objetivo raro`);
+    });
+  }
+});
+prueba("catalogo-hazanas", () => {
+  const ej = EJM(), FORMATOS = ["tiempo", "chipper", "amrap", "emom", "intervalos", "flujo"];
+  ok(HAZANAS.hazanas.length === 8, "esperaba 8 hazañas");
+  for (const h of HAZANAS.hazanas){
+    ok(FORMATOS.includes(h.formato) && h.nombre && h.texto, `${h.id}: formato, nombre o texto`);
+    ok(h.niveles.length === 3, `${h.id}: siempre tres niveles`);
+    h.niveles.forEach((n, k) => {
+      if (n.tramos) revisarTramos(n.tramos, ej, `${h.id} nivel ${k}`);
+      else ok(n.items.length && n.items.every(x => alts(x.ejercicio).every(e => ej[e])), `${h.id} nivel ${k}: ítems`);
+      const p = rutina.deHazana(h, k, {ej});
+      ok(p && p.bloques.length === 1 && p.minutos >= 5, `${h.id} nivel ${k}: no arma nada`);
+    });
+  }
+});
+const R = (bloques, extra = {}) => ({id: "r", familia: "fu", semanas: 1, dias: 1, alimenta: [], sesiones: [{nombre: "Uno", bloques}], ...extra});
+const EJP = {dominada: {equipo: ["barra"]}, remo: {}, flexion: {}, fondo: {equipo: ["paralelas"]}};
+prueba("rutina-equipo-elige", () => {
+  const r = R([{ejercicio: ["dominada", "remo"], tipo: "repeticiones", series: 2, objetivo: 5}]);
+  ok(rutina.deRutina(r, 0, {ej: EJP, equipo: ["barra"]}).bloques[0].ejercicio === "dominada", "con barra, la dominada");
+  ok(rutina.deRutina(r, 0, {ej: EJP, equipo: []}).bloques[0].ejercicio === "remo", "sin barra, la alternativa");
+  ok(rutina.deRutina(r, 0, {ej: EJP}).bloques[0].ejercicio === "dominada", "sin equipo cargado, la primera");
+  ok(JSON.stringify(rutina.falta({equipo: ["barra", "soga"]}, EJP, ["barra"])) === '["soga"]' && rutina.falta({equipo: ["soga"]}, EJP, null).length === 0, "lo que pide y no tenés");
+});
+prueba("rutina-rango-sube", () => {
+  const r = R([{ejercicio: "flexion", tipo: "repeticiones", series: 3, rango: [5, 8]}]);
+  const obj = ses => rutina.deRutina(r, 0, {ej: EJP, sesiones: ses}).bloques[0].pasos.map(p => p.objetivo).join();
+  const hizo = v => [{bloques: [{series: [{ejercicio: "flexion", tipo: "repeticiones", valor: v}]}]}];
+  ok(obj([]) === "5,5,5", "la primera vez, el mínimo");
+  ok(obj(hizo(6)) === "7,7,7", "después, uno más que tu mejor serie de la vez pasada");
+  ok(obj(hizo(20)) === "8,8,8" && obj(hizo(2)) === "5,5,5", "dentro del rango");
+});
+prueba("rutina-superserie", () => {
+  const r = R([{ejercicio: "flexion", tipo: "repeticiones", series: 2, objetivo: 10, grupo: "A"}, {ejercicio: "remo", tipo: "repeticiones", series: 2, objetivo: 8, grupo: "A"},
+    {ejercicio: "flexion", tipo: "segundos", series: 1, porSerie: "max"}]);
+  const p = rutina.deRutina(r, 0, {ej: EJP});
+  ok(p.bloques.length === 2, "el grupo A se junta en un bloque");
+  ok(p.bloques[0].pasos.map(x => x.ejercicio).join() === "flexion,remo,flexion,remo", "se alternan serie a serie");
+  ok(p.bloques[1].pasos[0].objetivo === "max", "un solo «max» vale para todas las series");
+});
+prueba("rutina-elegir-columna", () => {
+  const r = R([{ejercicio: "flexion", tipo: "repeticiones", series: 2, elegir: {umbrales: [5, 10], columnas: [[2, 3], [5, 6], [10, 12]]}}]);
+  const col = v => rutina.deRutina(r, 0, {ej: EJP, sesiones: v === null ? [] : [{bloques: [{series: [{ejercicio: "flexion", tipo: "repeticiones", valor: v}]}]}]}).bloques[0].pasos.map(p => p.objetivo).join();
+  ok(col(null) === "2,3" && col(4) === "2,3" && col(5) === "5,6" && col(30) === "10,12", "tu mejor serie elige la columna");
+});
+prueba("rutina-tramos-y-medir", () => {
+  const r = R([{nombre: "Trote", tramos: [{clase: "entrada", seg: 300}, {repetir: 3, tramos: [{clase: "fuerte", seg: 120}, {clase: "suave", seg: 60}]}], mide: {ejercicio: "trote", tipo: "minutos", de: "fuerte-seguido"}}]);
+  const b = rutina.deRutina(r, 0).bloques[0];
+  ok(b.clase === "tramos" && b.tramos.length === 7 && b.series === 7, "repetir se despliega");
+  ok(rutina.medir(b, [300, 120, 60, 180, 60, 120, 60]) === 3, "fuerte-seguido: el tramo fuerte más largo, en minutos");
+  ok(rutina.medir({...b, mide: {de: "total"}}, [600, 600]) === 20, "total: todo el bloque");
+  ok(rutina.medir({...b, mide: {tipo: "sesiones"}}, [300, 120, 60, 120, 60, 120, 60]) === 1 && rutina.medir({...b, mide: {tipo: "sesiones"}}, [300]) === 0, "sesiones: cuenta si hiciste el 80 %");
+});
+prueba("hazana-formatos", () => {
+  const items = [{ejercicio: ["dominada", "remo"], reps: 5}, {ejercicio: "flexion", reps: 10}];
+  const h = f => ({id: "h", nombre: "H", familia: "fu", formato: f, niveles: [{rondas: 3, minutos: 6, items}, {}, {}]});
+  const t = rutina.deHazana(h("tiempo"), 0, {ej: EJP, equipo: []}).bloques[0];
+  ok(t.clase === "circuito" && t.rondas === 3 && t.items[0].ejercicio === "remo", "por tiempo: circuito con el equipo que tenés");
+  ok(rutina.deHazana(h("chipper"), 0).bloques[0].rondas === 1, "chipper: una sola vuelta");
+  ok(rutina.deHazana(h("amrap"), 0).bloques[0].formato === "amrap", "amrap");
+  const e = rutina.deHazana(h("emom"), 0).bloques[0];
+  ok(e.clase === "tramos" && e.tramos.length === 6 && e.tramos.every(x => x.seg === 60) && e.tramos[1].ejercicio === "flexion", "emom: un minuto por ítem, alternando");
+  const em = rutina.deHazana({...h("emom"), niveles: [{minutos: 4, items: [{ejercicio: "flexion", seg: 30}]}]}, 0).bloques[0];
+  ok(em.tramos.every(x => x.seg === 60 && x.trabajo === 30), "emom: un ítem por segundos no acorta el minuto");
+  ok(rutina.mejorEs(h("tiempo")) === "menos" && rutina.mejorEs(h("amrap")) === "mas" && rutina.mejorEs(h("emom")) === "hecha", "cómo se cuenta lo mejor");
+  const ss = [{hazana: {id: "h", nivel: 0, valor: 300}}, {hazana: {id: "h", nivel: 0, valor: 250}}, {hazana: {id: "h", nivel: 0, valor: 100, completa: false}},
+    {hazana: {id: "h", nivel: 0, valor: 90}, cortada: true}, {hazana: {id: "h", nivel: 1, valor: 50}}];
+  ok(rutina.mejorHazana(h("tiempo"), 0, ss) === 250 && rutina.mejorHazana(h("amrap"), 0, ss) === 300 && rutina.mejorHazana(h("tiempo"), 2, ss) === null, "lo cortado o incompleto no es marca");
+});
+prueba("rutina-en-curso", () => {
+  const r = {id: "r", dias: 3, sesiones: Array(9).fill({})};
+  const s = (f, id = "r") => ({fecha: f, rutina: {id, sesion: 0}});
+  ok(JSON.stringify(rutina.enCurso(r, "2026-10-01", [])) === JSON.stringify({i: 0, total: 9, terminada: false, semana: 1, dia: 1}), "sin hacer nada, la primera");
+  const c = rutina.enCurso(r, "2026-10-01", [s("2026-09-30"), s("2026-10-01"), s("2026-10-02"), s("2026-10-03"), s("2026-10-04", "otra")]);
+  ok(c.i === 3 && c.semana === 2 && c.dia === 1, "cuenta las de esta rutina desde que la elegiste");
+  ok(rutina.enCurso(r, "", Array(9).fill(s("2026-10-01"))).terminada, "todas hechas: terminada");
+  ok(rutina.enCurso(r, "", [{...s("2026-10-01"), cortada: true, rutina: {id: "r", sesion: 0, mitad: false}}, {...s("2026-10-02"), cortada: true, rutina: {id: "r", sesion: 0, mitad: true}}]).i === 1, "cortada antes de la mitad no cuenta");
+});
+prueba("tus-dias", () => {
+  ok(rutina.diaSemana("2026-10-19") === 0 && rutina.diaSemana("2026-10-25") === 6, "0 es lunes, 6 es domingo");
+  ok(rutina.toca(undefined, "2026-10-20") && rutina.toca([], "2026-10-20"), "sin elegir, todos los días");
+  ok(rutina.toca([0, 2, 4], "2026-10-21") && !rutina.toca([0, 2, 4], "2026-10-20"), "lunes, miércoles y viernes");
+  ok(rutina.faltan([0, 2, 4], "2026-10-20") === 1 && rutina.faltan([0, 2, 4], "2026-10-23") === 3 && rutina.faltan([1], "2026-10-20") === 7, "cuántos días faltan para el próximo");
+});
+prueba("respaldo-rutinas", () => {
+  const s = {id: "s1", fecha: "2026-10-20", duracion: 1200, rutina: {id: "z2", sesion: 0}, hazana: {id: "hercules", nivel: 1, valor: 600, completa: true},
+    bloques: [{familia: "mo", clase: "tramos", nombre: "Bici", series: [{ejercicio: null, tipo: "tramos", valor: 1, seg: 1200}]}]};
+  const d = {mediciones: [], sesiones: [s], perfil: {rutina: {id: "z2", desde: "2026-10-01"}, dias: [0, 2, 4]}};
+  const r = respaldo.leer(JSON.stringify(respaldo.armar(d, "k-prueba", 1, new Date("2026-10-20T12:00:00Z"))));
+  ok(!r.error && r.descartadas === 0 && r.sesiones.length === 1, "una sesión de rutina y hazaña se lee entera: " + (r.error || r.descartadas));
+  ok(JSON.stringify(r.perfil.rutina) === JSON.stringify(d.perfil.rutina) && JSON.stringify(r.perfil.dias) === "[0,2,4]", "la rutina y tus días viajan en el perfil");
+  const mal = respaldo.leer(JSON.stringify({...respaldo.armar({...d, perfil: {dias: [9]}}, "k", 1, new Date()), sesiones: [{...s, rutina: {id: 3}}]}));
+  ok(mal.sesiones.length === 0 && mal.perfil.dias === undefined, "lo roto no entra");
 });
 
 let fallas = 0;

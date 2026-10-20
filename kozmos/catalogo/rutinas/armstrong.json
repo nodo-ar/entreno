@@ -1,0 +1,2611 @@
+{
+ "id": "armstrong",
+ "nombre": "Cinco días de dominadas",
+ "familia": "fu",
+ "texto": "Cinco días por semana para sumar dominadas seguidas. Cada día, un estímulo distinto.",
+ "semanas": 6,
+ "dias": 5,
+ "minutos": 25,
+ "equipo": [
+  "barra"
+ ],
+ "alimenta": [
+  "muscle-up.explosiva-3",
+  "un-brazo.dominada-arquera-5"
+ ],
+ "fuente": "el programa Armstrong de los Marines de EE. UU.",
+ "sesiones": [
+  {
+   "nombre": "Máximas",
+   "nota": "Flexiones a la mañana. Dominadas 2 o 3 h después.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 5,
+     "porSerie": [
+      "max",
+      "max",
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    }
+   ]
+  },
+  {
+   "nombre": "Pirámide",
+   "nota": "Si un escalón no sale, pasá a la última al máximo. Descansá 10 s por cada rep que hiciste.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 11,
+     "porSerie": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      "max"
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Tres agarres",
+   "nota": "3 series por agarre, con tu número de reps.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Series de entrenamiento",
+   "nota": "Series hasta que una no salga. Con 9 o más, sumás una rep.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 12,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "El más difícil",
+   "nota": "Repetís el de tres agarres.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Máximas",
+   "nota": "Flexiones a la mañana. Dominadas 2 o 3 h después.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 5,
+     "porSerie": [
+      "max",
+      "max",
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    }
+   ]
+  },
+  {
+   "nombre": "Pirámide",
+   "nota": "Si un escalón no sale, pasá a la última al máximo. Descansá 10 s por cada rep que hiciste.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 11,
+     "porSerie": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      "max"
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Tres agarres",
+   "nota": "3 series por agarre, con tu número de reps.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Series de entrenamiento",
+   "nota": "Series hasta que una no salga. Con 9 o más, sumás una rep.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 12,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "El más difícil",
+   "nota": "Repetís el de tres agarres.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Máximas",
+   "nota": "Flexiones a la mañana. Dominadas 2 o 3 h después.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 5,
+     "porSerie": [
+      "max",
+      "max",
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    }
+   ]
+  },
+  {
+   "nombre": "Pirámide",
+   "nota": "Si un escalón no sale, pasá a la última al máximo. Descansá 10 s por cada rep que hiciste.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 11,
+     "porSerie": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      "max"
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Tres agarres",
+   "nota": "3 series por agarre, con tu número de reps.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Series de entrenamiento",
+   "nota": "Series hasta que una no salga. Con 9 o más, sumás una rep.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 12,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "El más difícil",
+   "nota": "Repetís el de tres agarres.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Máximas",
+   "nota": "Flexiones a la mañana. Dominadas 2 o 3 h después.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 5,
+     "porSerie": [
+      "max",
+      "max",
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    }
+   ]
+  },
+  {
+   "nombre": "Pirámide",
+   "nota": "Si un escalón no sale, pasá a la última al máximo. Descansá 10 s por cada rep que hiciste.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 11,
+     "porSerie": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      "max"
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Tres agarres",
+   "nota": "3 series por agarre, con tu número de reps.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Series de entrenamiento",
+   "nota": "Series hasta que una no salga. Con 9 o más, sumás una rep.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 12,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "El más difícil",
+   "nota": "Repetís el de tres agarres.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Máximas",
+   "nota": "Flexiones a la mañana. Dominadas 2 o 3 h después.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 5,
+     "porSerie": [
+      "max",
+      "max",
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    }
+   ]
+  },
+  {
+   "nombre": "Pirámide",
+   "nota": "Si un escalón no sale, pasá a la última al máximo. Descansá 10 s por cada rep que hiciste.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 11,
+     "porSerie": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      "max"
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Tres agarres",
+   "nota": "3 series por agarre, con tu número de reps.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Series de entrenamiento",
+   "nota": "Series hasta que una no salga. Con 9 o más, sumás una rep.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 12,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "El más difícil",
+   "nota": "Repetís el de tres agarres.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Máximas",
+   "nota": "Flexiones a la mañana. Dominadas 2 o 3 h después.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 5,
+     "porSerie": [
+      "max",
+      "max",
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    }
+   ]
+  },
+  {
+   "nombre": "Pirámide",
+   "nota": "Si un escalón no sale, pasá a la última al máximo. Descansá 10 s por cada rep que hiciste.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 11,
+     "porSerie": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      "max"
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Tres agarres",
+   "nota": "3 series por agarre, con tu número de reps.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "Series de entrenamiento",
+   "nota": "Series hasta que una no salga. Con 9 o más, sumás una rep.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 12,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  },
+  {
+   "nombre": "El más difícil",
+   "nota": "Repetís el de tres agarres.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "flexion",
+      "flexion-inclinada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "porSerie": [
+      "max",
+      "max",
+      "max"
+     ],
+     "descanso": 90
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    },
+    {
+     "ejercicio": [
+      "dominada-ancha",
+      "dominada"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      4,
+      6
+     ],
+     "descanso": 60
+    }
+   ]
+  }
+ ]
+}

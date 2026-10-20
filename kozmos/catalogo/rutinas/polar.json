@@ -1,0 +1,1101 @@
+{
+ "id": "polar",
+ "nombre": "Polarizado 80/20",
+ "familia": "mo",
+ "texto": "Casi todo suave y un poco muy fuerte: más base sin quemarte.",
+ "semanas": 9,
+ "dias": 4,
+ "minutos": 50,
+ "equipo": [
+  "bici"
+ ],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.bici-40",
+  "motor.bici-60"
+ ],
+ "fuente": "Stephen Seiler (entrenamiento polarizado)",
+ "sesiones": [
+  {
+   "nombre": "Suave",
+   "nota": "45 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2220
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×8",
+   "nota": "4 × 8′ fuertes (unos 90 % de tu máximo) con 2′ suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 480
+        },
+        {
+         "clase": "suave",
+         "seg": 120
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "45 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2220
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "70 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3720
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "45 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2220
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×8",
+   "nota": "4 × 8′ fuertes (unos 90 % de tu máximo) con 2′ suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 480
+        },
+        {
+         "clase": "suave",
+         "seg": 120
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "45 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2220
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "75 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 4020
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "40 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1920
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×4",
+   "nota": "4 × 4′ fuertes (90 % de tu máximo) con 3′ suaves. Semana liviana.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "40 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1920
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "60 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3120
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "50 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2520
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×8",
+   "nota": "4 × 8′ fuertes (unos 90 % de tu máximo) con 2′ suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 480
+        },
+        {
+         "clase": "suave",
+         "seg": 120
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "50 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2520
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "80 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 4320
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "50 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2520
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×8",
+   "nota": "4 × 8′ fuertes (unos 90 % de tu máximo) con 2′ suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 480
+        },
+        {
+         "clase": "suave",
+         "seg": 120
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "50 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2520
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "85 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 4620
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "45 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2220
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×4",
+   "nota": "4 × 4′ fuertes (90 % de tu máximo) con 3′ suaves. Semana liviana.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "45 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2220
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "65 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3420
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "55 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2820
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×8",
+   "nota": "4 × 8′ fuertes (unos 90 % de tu máximo) con 2′ suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 480
+        },
+        {
+         "clase": "suave",
+         "seg": 120
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "55 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2820
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "90 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 4920
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "55 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2820
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×8",
+   "nota": "4 × 8′ fuertes (unos 90 % de tu máximo) con 2′ suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 480
+        },
+        {
+         "clase": "suave",
+         "seg": 120
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "55 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2820
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "95 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 5220
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "50 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2520
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "4×4",
+   "nota": "4 × 4′ fuertes (90 % de tu máximo) con 3′ suaves. Semana liviana.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave",
+   "nota": "50 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2520
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "70 min suaves: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3720
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  }
+ ]
+}

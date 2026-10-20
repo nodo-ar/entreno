@@ -1,0 +1,1341 @@
+{
+ "id": "once",
+ "nombre": "11 minutos",
+ "familia": "mo",
+ "texto": "Cinco minutos exigentes con marcha entre medio. Once minutos en total.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 11,
+ "equipo": [],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "Archila, Bostad, Joyner y Gibala (2021)",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "5 × 1 min exigente, 1 min de marcha entre medio. 11 min.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "suave",
+       "seg": 60
+      },
+      {
+       "clase": "trabajo",
+       "seg": 60,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

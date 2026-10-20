@@ -77,7 +77,7 @@ prueba("cuatro-pestanas", async () => {
 
 prueba("sin-desborde-360", async () => {
   const {ctx, p} = await pagina({width: 360, height: 740});
-  for (const h of ["#/hoy", "#/cielo", "#/cielo/front-lever", "#/cielo/parada-de-manos/anotar", "#/cielo/lastre/anotar/1", "#/cielo/espagat/anotar/4", "#/progreso", "#/vos", "#/vos/acerca", "#/vos/constructor", "#/xyz"]){
+  for (const h of ["#/hoy", "#/cielo", "#/cielo/front-lever", "#/cielo/parada-de-manos/anotar", "#/cielo/lastre/anotar/1", "#/cielo/espagat/anotar/4", "#/progreso", "#/vos", "#/vos/acerca", "#/vos/dias", "#/hoy/rutinas", "#/hoy/rutinas/base_cali", "#/hoy/hazanas", "#/hoy/hazanas/orion", "#/vos/constructor", "#/xyz"]){
     await ir(p, h);
     const w = await p.evaluate(() => document.documentElement.scrollWidth);
     ok(w <= 360, `${h}: ancho ${w}`);
@@ -839,6 +839,163 @@ prueba("avisos", async () => {
   await ir(p, "#/cielo/front-lever"); await p.click('[data-probar="front-lever"]'); await p.waitForSelector(".ses.prueba");
   await tick(p, 66000);
   ok((await p.evaluate(() => window.__V)).length === 0, "vibró con «Solo sonido»");
+  await ctx.close();
+});
+
+/* ===== Etapa 5: rutinas, hazañas y tus días ===== */
+const menuHoy = async (p, id) => { await p.click("#hoy-mas"); await p.click(`.pmi[data-id="${id}"]`); };
+prueba("rutina-cardio-entera", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["motor"]);
+  await menuHoy(p, "rutinas"); await esperarTitulo(p, "Rutinas");
+  ok(await p.$$eval(".lado .ajr", x => x.length) === 26, "no están las 26 rutinas");
+  await p.click('[data-ir="#/hoy/rutinas/c0a5"]'); await esperarTitulo(p, "De 0 a 5 km");
+  ok(await p.$$eval(".rut-dia", x => x.length) === 3, "la semana no tiene 3 días");
+  await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
+  ok((await p.textContent(".hoy-rut")).includes("semana 1 de 9"), "Hoy no muestra la rutina: " + await p.textContent(".hoy-rut"));
+  await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo");
+  ok(await p.textContent(".ses-tit h1") === "Entrada en calor", "el primer tramo: " + await p.textContent(".ses-tit h1"));
+  await tick(p, 301000);
+  ok(await p.evaluate(() => K.sesion.estado().s === 1) && await p.textContent(".ses-tit h1") === "Fuerte", "no pasó solo al tramo siguiente");
+  ok((await p.evaluate(() => window.__V)).length > 0, "no vibró al cambiar de tramo");
+  /* la pausa frena el tramo */
+  await p.click("#s-pausa"); const antes = await reloj(p, "queda"); await tick(p, 20000);
+  ok(await reloj(p, "queda") === antes, "la pausa no frenó el tramo"); await p.click("#s-pausa");
+  for (let i = 0; i < 40 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
+  ok(await fase(p) === "cierre", "no llegó al final: " + await fase(p));
+  await p.click("#s-terminar"); await p.waitForSelector(".res");
+  const reg = await p.evaluate(() => K.diario.sesiones[K.diario.sesiones.length - 1]);
+  ok(reg.rutina?.id === "c0a5" && reg.rutina.sesion === 0, "la sesión no quedó como de la rutina");
+  ok(reg.bloques[0].series.some(x => x.ejercicio === "trote" && x.tipo === "minutos" && x.valor === 1), "no anotó el trote: " + JSON.stringify(reg.bloques[0].series));
+  ok((await p.textContent(".res")).includes("Lo que sigue"), "el resumen no dice lo que sigue");
+  await p.click("[data-volver]"); await esperarTitulo(p, "Hoy");
+  ok((await p.textContent(".hoy-rut")).includes("1 de 27"), "la rutina no avanzó");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("rutina-superserie", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await p.evaluate(() => K.diario.perfilPoner("equipo", ["barra"]));
+  /* una prueba de otra constelación (o una larga, de minutos) no se mete antes de la rutina */
+  await p.evaluate(() => K.diario.anotar({estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 55, fecha: "2026-10-19", catalogo: 1}));
+  await ir(p, "#/hoy/rutinas/base_cali"); await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
+  ok(await p.evaluate(() => K.hoyPlan().bloques.every(b => !b.prueba)), "la rutina arranca con una prueba que no entrena");
+  await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo");
+  /* la entrada en calor se puede saltear entera */
+  await p.click("#s-mas"); await p.click('.pmi[data-id="saltear"]'); await p.waitForSelector(".ses.serie");
+  const ejs = [];
+  for (let i = 0; i < 4; i++){
+    ejs.push(await p.evaluate(() => K.sesion.paso().ejercicio));
+    await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+    if (i === 0){ await tick(p, 1000); ok(!(await p.$(".ses.descanso.fin")) && await reloj(p, "queda-lb") === "Sin descanso", "entre los dos de la superserie no hay descanso ni destello"); }
+    await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
+  }
+  ok(ejs.join() === "dominada-negativa,sentadilla,dominada-negativa,sentadilla", "la superserie no alterna: " + ejs);
+  /* cortada después de la mitad no cuenta... y la sesión real, con su entrada en calor, vuelve entera del respaldo */
+  await p.click("#s-cortar"); await p.waitForSelector(".res");
+  const r = await p.evaluate(() => { const x = K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, K.CATALOGO.version))); return {d: x.descartadas, n: x.sesiones.length, err: x.error, cal: K.diario.sesiones.at(-1).bloques[0].series[0]}; });
+  ok(!r.err && r.d === 0 && r.n === 1, "el respaldo pierde la sesión de rutina: " + JSON.stringify(r));
+  ok(r.cal.ejercicio === null && r.cal.tipo === "tramos", "la entrada en calor no queda como tramos: " + JSON.stringify(r.cal));
+  ok(await p.evaluate(() => K.rutinaActual().cur.i === 0), "una sesión cortada antes de la mitad hizo avanzar la rutina");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("hazana-por-tiempo", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await menuHoy(p, "hazanas"); await esperarTitulo(p, "Hazañas");
+  ok(await p.$$eval(".lado .ajr", x => x.length) === 8, "no están las 8 hazañas");
+  await p.click('[data-ir="#/hoy/hazanas/hercules"]'); await esperarTitulo(p, "Hércules");
+  await p.click("#hz-nivel"); await p.click('.pmi[data-id="1"]');
+  ok((await p.textContent("#hz-nivel")).includes("Intermedio"), "el nivel no cambió");
+  const rondas = await p.evaluate(() => K.HAZANAS.hazanas.find(h => h.id === "hercules").niveles[1].rondas);
+  await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
+  ok(await reloj(p, "fase-lb") === "Preparate", "no hay tiempo para prepararse");
+  await tick(p, 5000);
+  for (let i = 0; i < rondas; i++){ await tick(p, 60000); await p.click("#s-vuelta"); }
+  await p.waitForSelector(".ses.cierre");
+  await p.click("#s-terminar"); await p.waitForSelector(".res");
+  const reg = await p.evaluate(() => K.diario.sesiones[K.diario.sesiones.length - 1]);
+  ok(reg.hazana?.id === "hercules" && reg.hazana.nivel === 1 && Math.abs(reg.hazana.valor - rondas * 60) <= 2, "la hazaña no anotó el tiempo: " + JSON.stringify(reg.hazana));
+  await ir(p, "#/hoy/hazanas/hercules");
+  await p.click("#hz-nivel"); await p.click('.pmi[data-id="1"]');
+  ok(!(await p.textContent(".hz-items")).includes("Todavía nada"), "no muestra tu mejor");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("hazanas-por-minuto-y-tramos", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy/hazanas/pegaso");
+  ok(/^[1-9]\d* pasadas fuertes/.test(await p.textContent(".hz-items .lb")), "Pegaso no cuenta sus pasadas: " + await p.textContent(".hz-items .lb"));
+  /* Draco, cada minuto: 12 min de verdad, aunque la plancha dure 30 s */
+  await ir(p, "#/hoy/hazanas/draco"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.tramo");
+  ok((await p.textContent(".ses.tramo .anillo-tx .lb")).includes("30 s y descansás"), "no dice cuánto se trabaja en el minuto");
+  for (let i = 0; i < 20 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
+  await p.click("#s-terminar"); await p.waitForSelector(".res");
+  const x = await p.evaluate(() => K.diario.sesiones.at(-1));
+  ok(x.duracion >= 12 * 60 && x.hazana.completa, "el EMOM no dura sus minutos: " + x.duracion);
+  ok(await p.textContent(".res-tit") === "Draco, hecha.", "el resumen: " + await p.textContent(".res-tit"));
+  /* Casiopea, un flujo de posturas */
+  await ir(p, "#/hoy/hazanas/casiopea"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.tramo");
+  for (let i = 0; i < 30 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
+  ok(await fase(p) === "cierre", "el flujo no termina solo");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("hazana-amrap", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy/hazanas/perseo"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
+  await tick(p, 5000);
+  for (let i = 0; i < 4; i++){ await tick(p, 30000); await p.click("#s-vuelta"); }
+  await p.click("#s-vuelta-menos");
+  ok(await p.evaluate(() => K.sesion.estado().vueltas === 3), "−1 no resta una vuelta");
+  for (let i = 0; i < 20 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
+  ok(await fase(p) === "cierre", "el tiempo límite no cerró la hazaña");
+  ok(await p.inputValue("#s-valor") === "3", "no propone las vueltas hechas");
+  await p.click("#s-terminar"); await p.waitForSelector(".res");
+  ok(await p.evaluate(() => K.diario.sesiones.at(-1).hazana.valor === 3), "no anotó las vueltas");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("tus-dias", async () => {
+  /* el 20 de octubre de 2026 es martes: con lunes, miércoles y viernes, hoy descansás */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await ir(p, "#/vos/dias");
+  for (const d of [0, 2, 4]) await p.click(`[data-dia="${d}"]`);
+  await p.waitForFunction(() => JSON.stringify(K.diario.perfil.dias) === "[0,2,4]");
+  await ir(p, "#/vos");
+  ok((await p.textContent('[data-ir="#/vos/dias"]')).includes("Lun, mié y vie"), "Vos no resume tus días: " + await p.textContent('[data-ir="#/vos/dias"]'));
+  await ir(p, "#/hoy");
+  ok((await p.textContent(".hoy-descanso")).includes("Hoy descansás."), "no avisa que hoy descansás");
+  ok((await p.textContent(".hoy-descanso")).includes("mañana"), "no dice cuándo sigue");
+  await p.click("#hoy-igual"); await p.waitForSelector("#s-empezar");
+  ok(!(await p.$(".hoy-descanso")), "Entrenar igual no muestra la sesión");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("rutinas-horizontal", async () => {
+  const {ctx, p} = await pagina({width: 844, height: 390});
+  await ir(p, "#/hoy/rutinas");
+  ok(await p.evaluate(() => { const a = document.querySelector(".split>.lado").getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect(); return b.left >= a.right - 1 && b.width > 200; }), "rutinas en horizontal no va en dos columnas");
+  ok(await p.$(".split>.abierto #rut-seguir"), "a la derecha no está la rutina abierta");
+  await p.click('[data-ir="#/hoy/rutinas/z2"]'); await p.waitForFunction(() => document.querySelector(".split>.abierto .enc-tit h1")?.textContent === "Base aeróbica", null, {timeout: 3000}).catch(() => { throw new Error("no abre la elegida a la derecha"); });
+  ok(await p.evaluate(() => history.length) === 2, "en horizontal, abrir una rutina no suma pasos al botón atrás");
+  await ir(p, "#/hoy/hazanas");
+  ok(await p.$(".split>.abierto #hz-empezar"), "a la derecha no está la hazaña abierta");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("rutina-dejar-y-deshacer", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/hoy/rutinas/z2"); await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
+  await menuHoy(p, "dejar");
+  await p.waitForFunction(() => !K.diario.perfil.rutina);
+  ok((await p.textContent(".utoast .utx")).includes("Dejaste Base aeróbica"), "el aviso no dice qué dejaste");
+  await p.click(".utoast .utu");
+  await p.waitForFunction(() => K.diario.perfil.rutina?.id === "z2", null, {timeout: 3000}).catch(() => { throw new Error("deshacer no vuelve a la rutina"); });
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
 

@@ -33,7 +33,11 @@ K.I = {
   bajar:'<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
   subir:'<path d="M12 15V4M7 9l5-5 5 5M5 20h14"/>',
   bici:'<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8 8.5 5H7M12 16l3-8"/>',
-  soga:'<path d="M5 3v6M19 3v6M5 9c0 9 14 9 14 0"/>'
+  soga:'<path d="M5 3v6M19 3v6M5 9c0 9 14 9 14 0"/>',
+  mancuernas:'<path d="M3 10v4M6 8v8M18 8v8M21 10v4M6 12h12"/>',
+  kettlebell:'<path d="M9 8a3 3 0 0 1 6 0"/><path d="M8.5 8h7l2 4a6 6 0 1 1-11 0z"/>',
+  ruta:'<circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6h7a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h7"/>',
+  hazana:'<path d="M12 3l7 3v5c0 4.6-2.9 7.9-7 10-4.1-2.1-7-5.4-7-10V6z"/><path d="M9.5 12l2 2 3.5-4"/>'
 };
 K.ic = (k, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${K.I[k] || ""}</svg>`;
 

@@ -1,0 +1,656 @@
+{
+ "id": "kb1515",
+ "nombre": "Kettlebell 15:15",
+ "familia": "mo",
+ "texto": "Arranques con kettlebell: 15 segundos de trabajo y 15 de pausa, alternando el brazo.",
+ "semanas": 4,
+ "dias": 3,
+ "minutos": 25,
+ "equipo": [
+  "kettlebell"
+ ],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "Falatic y otros (2015)",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "32 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 31,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "32 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 31,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "32 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 31,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "40 × 15 s de arranque, 15 s de pausa. Brazo alterno.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "repetir": 39,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 15,
+         "ejercicio": [
+          "arranque-kettlebell",
+          "swing-kettlebell"
+         ],
+         "nota": "Brazo alterno"
+        },
+        {
+         "clase": "pausa",
+         "seg": 15
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 15,
+       "ejercicio": [
+        "arranque-kettlebell",
+        "swing-kettlebell"
+       ],
+       "nota": "Brazo alterno"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

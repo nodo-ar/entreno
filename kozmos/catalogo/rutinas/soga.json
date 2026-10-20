@@ -1,0 +1,433 @@
+{
+ "id": "soga",
+ "nombre": "Soga: 1000 saltos",
+ "familia": "mo",
+ "texto": "Series de soga cada vez más largas, hasta 1000 saltos seguidos.",
+ "semanas": 4,
+ "dias": 3,
+ "minutos": 20,
+ "equipo": [
+  "soga"
+ ],
+ "alimenta": [
+  "soga.100",
+  "soga.400",
+  "soga.1000"
+ ],
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "10 × 30 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 30
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 30
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "10 × 30 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 30
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 30
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "10 × 30 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 30
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 30
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "12 × 40 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 40
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 40
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "12 × 40 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 40
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 40
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "12 × 40 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 40
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 40
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "10 × 60 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "10 × 60 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "10 × 60 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "8 × 90 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 90
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "6 × 120 s saltando, 30 s parado.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 120
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 120
+      },
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "El desafío: unos 1000 saltos en 10 minutos.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 90
+      }
+     ]
+    },
+    {
+     "ejercicio": "soga",
+     "tipo": "repeticiones",
+     "series": 1,
+     "objetivo": 1000,
+     "descanso": 0
+    },
+    {
+     "tramos": [
+      {
+       "clase": "vuelta",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

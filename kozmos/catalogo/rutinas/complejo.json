@@ -1,0 +1,1658 @@
+{
+ "id": "complejo",
+ "nombre": "Complejo con mancuernas",
+ "familia": "mo",
+ "texto": "Cinco ejercicios seguidos sin soltar las mancuernas. Fuerza y aire a la vez.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 18,
+ "equipo": [
+  "mancuernas"
+ ],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "los complejos de Istvan Javorek",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "3 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "3 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "3 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "3 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "3 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "3 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "4 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "4 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "5 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "5 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "5 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "5 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "5 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "5 vueltas de 5 × 6 reps sin soltar las mancuernas. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-al-menton",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "press-hombros",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "sentadilla-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "remo-dos-mancuernas",
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 25,
+         "ejercicio": "peso-muerto-rumano",
+         "reps": 6
+        },
+        {
+         "clase": "pausa",
+         "seg": 90
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-al-menton",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "press-hombros",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "sentadilla-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "remo-dos-mancuernas",
+       "reps": 6
+      },
+      {
+       "clase": "trabajo",
+       "seg": 25,
+       "ejercicio": "peso-muerto-rumano",
+       "reps": 6
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

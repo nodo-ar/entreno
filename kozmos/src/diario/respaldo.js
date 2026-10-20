@@ -15,15 +15,22 @@ K.respaldo = (() => {
   const fecha = f => typeof f === "string" && /^\d{4}-\d{2}-\d{2}$/.test(f) && (() => { const [a, m, d] = f.split("-").map(Number), x = new Date(Date.UTC(a, m - 1, d)); return x.getUTCMonth() === m - 1 && x.getUTCDate() === d; })();
   const num = (v, max) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= max;
   const tipo = t => t === undefined || Object.prototype.hasOwnProperty.call(K.cielo.TIPOS, t);
+  /* lo que anotan los tramos y las hazañas no enciende estrellas, pero es parte de la sesión */
+  const tipoSerie = t => tipo(t) || t === "tramos" || t === "hazana";
   const medicion = m => obj(m) && txt(m.id, 80) && txt(m.estrella) && fecha(m.fecha) && num(m.valor, 1e6) && tipo(m.tipo)
     && (m.ejercicio === undefined || txt(m.ejercicio)) && (m.origen === undefined || txt(m.origen, 20));
-  const serie = x => obj(x) && txt(x.ejercicio) && tipo(x.tipo) && x.tipo !== undefined && num(x.valor, 1e6);
+  const serie = x => obj(x) && (txt(x.ejercicio) || (x.tipo === "tramos" && x.ejercicio == null)) && tipoSerie(x.tipo) && x.tipo !== undefined && num(x.valor, 1e6);
+  const entero = (v, max) => Number.isInteger(v) && v >= 0 && v <= max;
   const sesion = x => obj(x) && txt(x.id, 80) && fecha(x.fecha) && num(x.duracion, 864000) && Array.isArray(x.bloques)
-    && x.bloques.every(b => obj(b) && txt(b.constelacion) && Array.isArray(b.series) && b.series.every(serie));
+    && x.bloques.every(b => obj(b) && (b.constelacion === undefined || txt(b.constelacion)) && Array.isArray(b.series) && b.series.every(serie))
+    && (x.rutina === undefined || obj(x.rutina) && txt(x.rutina.id) && entero(x.rutina.sesion, 1000))
+    && (x.hazana === undefined || obj(x.hazana) && txt(x.hazana.id) && entero(x.hazana.nivel, 2) && num(x.hazana.valor, 1e6));
   const PERFIL = {
     peso: v => num(v, 400) && v >= 20,
     rumbo: v => Array.isArray(v) && v.length <= 3 && v.every(x => txt(x)),
-    equipo: v => Array.isArray(v) && v.every(x => txt(x, 40))
+    equipo: v => Array.isArray(v) && v.every(x => txt(x, 40)),
+    rutina: v => obj(v) && txt(v.id) && fecha(v.desde),
+    dias: v => Array.isArray(v) && v.length <= 7 && v.every(d => entero(d, 6)) && new Set(v).size === v.length
   };
 
   /* leer(texto) → {mediciones, sesiones, perfil, descartadas} o {error} con el motivo dicho para la persona */

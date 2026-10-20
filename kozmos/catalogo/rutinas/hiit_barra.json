@@ -1,0 +1,4648 @@
+{
+ "id": "hiit_barra",
+ "nombre": "Circuito de barra",
+ "familia": "mo",
+ "texto": "Un circuito de seis estaciones con barra y paralelas, 40 segundos cada una.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 25,
+ "equipo": [
+  "barra",
+  "paralelas"
+ ],
+ "alimenta": [
+  "muscle-up.explosiva-3",
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "las pautas del entrenamiento en circuito de alta intensidad de Klika y Jordan (2013)",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "2 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 3
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "3 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "3 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "3 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "3 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "3 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "3 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "4 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "4 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada-supina",
+        "dominada",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-arriba",
+        "saltos-tijera"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "pies-a-la-barra",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "burpee-flexion",
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 vueltas de 6 × 40 s, 20 s de pausa. 90 s entre vueltas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 90
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "dominada",
+        "dominada-supina",
+        "remo-invertido",
+        "flexion"
+       ],
+       "reps": 4
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "fondo",
+        "fondo-banco",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "rodillas-paralelas",
+        "rodillas-colgado",
+        "crunch-inverso"
+       ],
+       "reps": 5
+      },
+      {
+       "clase": "pausa",
+       "seg": 20
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

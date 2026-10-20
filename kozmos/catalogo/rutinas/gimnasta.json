@@ -1,0 +1,2633 @@
+{
+ "id": "gimnasta",
+ "nombre": "Tronco de gimnasta",
+ "familia": "fu",
+ "texto": "Cuerpo entero con el tronco primero: hollow, L-sit y dragon flag, cada vez más largos.",
+ "semanas": 8,
+ "dias": 3,
+ "minutos": 45,
+ "equipo": [
+  "barra",
+  "paralelas"
+ ],
+ "alimenta": [
+  "draco.lsit-10s",
+  "draco.lsit-20s",
+  "draco.dragon-bolita-3",
+  "draco.dragon-3"
+ ],
+ "fuente": "la tríada de tronco de la rutina de r/bodyweightfitness y la preparación de gimnasia",
+ "sesiones": [
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa",
+      "remo-invertido"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "fondo",
+      "fondo-banco",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": "hollow",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 20,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "l-sit",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      30
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "dragon-flag-negativa",
+      "hollow-rock"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Sentadillas sin peso · 12, bien abajo"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de cadera · 8 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 10,
+       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Zancadas caminando · 8 por pierna"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Estiramiento del mundo · 5 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Puente de glúteo · 12, apretando arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "sentadilla-bulgara",
+      "sentadilla"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "remo-invertido",
+      "remo-mancuerna"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "plancha-lateral-pierna",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 15,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "plancha-dos-apoyos",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      20
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "superman",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 20,
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "flexion-declinada",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "pies-a-la-barra",
+      "piernas-colgado",
+      "rodillas-colgado"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "hollow-rock",
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      15,
+      25
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "paseo-maleta",
+      "paseo-maleta-kettlebell",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      30,
+      45
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa",
+      "remo-invertido"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "fondo",
+      "fondo-banco",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": "hollow",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 20,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "l-sit",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      30
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "dragon-flag-negativa",
+      "hollow-rock"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Sentadillas sin peso · 12, bien abajo"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de cadera · 8 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 10,
+       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Zancadas caminando · 8 por pierna"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Estiramiento del mundo · 5 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Puente de glúteo · 12, apretando arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "sentadilla-bulgara",
+      "sentadilla"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "remo-invertido",
+      "remo-mancuerna"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "plancha-lateral-pierna",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 15,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "plancha-dos-apoyos",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      20
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "superman",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 20,
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "flexion-declinada",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "pies-a-la-barra",
+      "piernas-colgado",
+      "rodillas-colgado"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "hollow-rock",
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      15,
+      25
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "paseo-maleta",
+      "paseo-maleta-kettlebell",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      30,
+      45
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa",
+      "remo-invertido"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "fondo",
+      "fondo-banco",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": "hollow",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "l-sit",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      30
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "dragon-flag-negativa",
+      "hollow-rock"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Sentadillas sin peso · 12, bien abajo"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de cadera · 8 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 10,
+       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Zancadas caminando · 8 por pierna"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Estiramiento del mundo · 5 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Puente de glúteo · 12, apretando arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "sentadilla-bulgara",
+      "sentadilla"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "remo-invertido",
+      "remo-mancuerna"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "plancha-lateral-pierna",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 20,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "plancha-dos-apoyos",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      20
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "superman",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "flexion-declinada",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "pies-a-la-barra",
+      "piernas-colgado",
+      "rodillas-colgado"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "hollow-rock",
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      15,
+      25
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "paseo-maleta",
+      "paseo-maleta-kettlebell",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      30,
+      45
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa",
+      "remo-invertido"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "fondo",
+      "fondo-banco",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": "hollow",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "l-sit",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      30
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "dragon-flag-negativa",
+      "hollow-rock"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Sentadillas sin peso · 12, bien abajo"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de cadera · 8 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 10,
+       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Zancadas caminando · 8 por pierna"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Estiramiento del mundo · 5 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Puente de glúteo · 12, apretando arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "sentadilla-bulgara",
+      "sentadilla"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "remo-invertido",
+      "remo-mancuerna"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "plancha-lateral-pierna",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 20,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "plancha-dos-apoyos",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      20
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "superman",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "flexion-declinada",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "pies-a-la-barra",
+      "piernas-colgado",
+      "rodillas-colgado"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "hollow-rock",
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      15,
+      25
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "paseo-maleta",
+      "paseo-maleta-kettlebell",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      30,
+      45
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa",
+      "remo-invertido"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "fondo",
+      "fondo-banco",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": "hollow",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "l-sit",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      30
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "dragon-flag-negativa",
+      "hollow-rock"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Sentadillas sin peso · 12, bien abajo"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de cadera · 8 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 10,
+       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Zancadas caminando · 8 por pierna"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Estiramiento del mundo · 5 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Puente de glúteo · 12, apretando arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "sentadilla-bulgara",
+      "sentadilla"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "remo-invertido",
+      "remo-mancuerna"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "plancha-lateral-pierna",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 20,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "plancha-dos-apoyos",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      20
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "superman",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "flexion-declinada",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "pies-a-la-barra",
+      "piernas-colgado",
+      "rodillas-colgado"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "hollow-rock",
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      15,
+      25
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "paseo-maleta",
+      "paseo-maleta-kettlebell",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      30,
+      45
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa",
+      "remo-invertido"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "fondo",
+      "fondo-banco",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": "hollow",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "l-sit",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      30
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "dragon-flag-negativa",
+      "hollow-rock"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Sentadillas sin peso · 12, bien abajo"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de cadera · 8 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 10,
+       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Zancadas caminando · 8 por pierna"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Estiramiento del mundo · 5 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Puente de glúteo · 12, apretando arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "sentadilla-bulgara",
+      "sentadilla"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "remo-invertido",
+      "remo-mancuerna"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "plancha-lateral-pierna",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 20,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "plancha-dos-apoyos",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      20
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "superman",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "flexion-declinada",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "pies-a-la-barra",
+      "piernas-colgado",
+      "rodillas-colgado"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "hollow-rock",
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      15,
+      25
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "paseo-maleta",
+      "paseo-maleta-kettlebell",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      30,
+      45
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa",
+      "remo-invertido"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "fondo",
+      "fondo-banco",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": "hollow",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 45,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "l-sit",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      30
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "dragon-flag-negativa",
+      "hollow-rock"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Sentadillas sin peso · 12, bien abajo"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de cadera · 8 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 10,
+       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Zancadas caminando · 8 por pierna"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Estiramiento del mundo · 5 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Puente de glúteo · 12, apretando arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "sentadilla-bulgara",
+      "sentadilla"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "remo-invertido",
+      "remo-mancuerna"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "plancha-lateral-pierna",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "plancha-dos-apoyos",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      20
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "superman",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 40,
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "flexion-declinada",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "pies-a-la-barra",
+      "piernas-colgado",
+      "rodillas-colgado"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "hollow-rock",
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      15,
+      25
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "paseo-maleta",
+      "paseo-maleta-kettlebell",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      30,
+      45
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "nota": "Última semana: anotá tu mejor sostén de hollow y de L-sit.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada",
+      "dominada-negativa",
+      "remo-invertido"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "fondo",
+      "fondo-banco",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": "hollow",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 45,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "l-sit",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      30
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "dragon-flag-negativa",
+      "hollow-rock"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "nota": "Última semana: anotá tu mejor sostén de hollow y de L-sit.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Sentadillas sin peso · 12, bien abajo"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de cadera · 8 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 10,
+       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Zancadas caminando · 8 por pierna"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Estiramiento del mundo · 5 por lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Puente de glúteo · 12, apretando arriba"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "sentadilla-bulgara",
+      "sentadilla"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "remo-invertido",
+      "remo-mancuerna"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "plancha-lateral-pierna",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 30,
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "plancha-dos-apoyos",
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      10,
+      20
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "superman",
+     "tipo": "segundos",
+     "series": 3,
+     "objetivo": 40,
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "nota": "Última semana: anotá tu mejor sostén de hollow y de L-sit.",
+   "bloques": [
+    {
+     "nombre": "Entrada en calor",
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Círculos de brazos · 30 s cada lado"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Gato y vaca · 8, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 60,
+       "nota": "Bicho muerto · 6 por lado, lento"
+      },
+      {
+       "clase": "entrada",
+       "seg": 20,
+       "nota": "Colgarse · 20 s, hombros sueltos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Encogerse colgado · 8, codos rectos"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Flexiones apoyado · 10, en la mesa"
+      },
+      {
+       "clase": "entrada",
+       "seg": 45,
+       "nota": "Primer ejercicio suave · 5, sin cargar"
+      }
+     ]
+    },
+    {
+     "ejercicio": [
+      "dominada-supina",
+      "dominada",
+      "dominada-negativa"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      5,
+      8
+     ],
+     "descanso": 0,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "flexion-declinada",
+      "flexion"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 150,
+     "grupo": "A"
+    },
+    {
+     "ejercicio": [
+      "pies-a-la-barra",
+      "piernas-colgado",
+      "rodillas-colgado"
+     ],
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      6,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": "hollow-rock",
+     "tipo": "repeticiones",
+     "series": 3,
+     "rango": [
+      15,
+      25
+     ],
+     "descanso": 0,
+     "grupo": "B"
+    },
+    {
+     "ejercicio": [
+      "paseo-maleta",
+      "paseo-maleta-kettlebell",
+      "plancha-lateral"
+     ],
+     "tipo": "segundos",
+     "series": 3,
+     "rango": [
+      30,
+      45
+     ],
+     "descanso": 90,
+     "grupo": "B"
+    }
+   ]
+  }
+ ]
+}

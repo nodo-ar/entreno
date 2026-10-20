@@ -1,0 +1,796 @@
+{
+ "version": 1,
+ "hazanas": [
+  {
+   "id": "hercules",
+   "nombre": "Hércules",
+   "familia": "fu",
+   "texto": "Fuerza total, por tiempo.",
+   "formato": "tiempo",
+   "niveles": [
+    {
+     "rondas": 3,
+     "items": [
+      {
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ],
+       "reps": 8
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 15
+      },
+      {
+       "ejercicio": [
+        "remo-invertido",
+        "remo-mancuerna",
+        "remo-poste"
+       ],
+       "reps": 6
+      },
+      {
+       "ejercicio": "plancha",
+       "seg": 30
+      }
+     ]
+    },
+    {
+     "rondas": 5,
+     "items": [
+      {
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ],
+       "reps": 10
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 20
+      },
+      {
+       "ejercicio": [
+        "remo-invertido",
+        "remo-mancuerna",
+        "remo-poste"
+       ],
+       "reps": 8
+      },
+      {
+       "ejercicio": "plancha",
+       "seg": 40
+      }
+     ]
+    },
+    {
+     "rondas": 7,
+     "items": [
+      {
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ],
+       "reps": 12
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 25
+      },
+      {
+       "ejercicio": [
+        "remo-invertido",
+        "remo-mancuerna",
+        "remo-poste"
+       ],
+       "reps": 10
+      },
+      {
+       "ejercicio": "plancha",
+       "seg": 60
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pegaso",
+   "nombre": "Pegaso",
+   "familia": "mo",
+   "texto": "Velocidad en intervalos cortos.",
+   "formato": "intervalos",
+   "niveles": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 6,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 70
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ]
+    },
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 8,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 30
+        },
+        {
+         "clase": "suave",
+         "seg": 60
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ]
+    },
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 10,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 40
+        },
+        {
+         "clase": "suave",
+         "seg": 50
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sagitario",
+   "nombre": "Sagitario",
+   "familia": "fu",
+   "texto": "Piernas explosivas, cada minuto.",
+   "formato": "emom",
+   "niveles": [
+    {
+     "minutos": 12,
+     "items": [
+      {
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ],
+       "reps": 6
+      },
+      {
+       "ejercicio": [
+        "estocada-salto",
+        "sentadilla"
+       ],
+       "reps": 6
+      }
+     ]
+    },
+    {
+     "minutos": 16,
+     "items": [
+      {
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ],
+       "reps": 8
+      },
+      {
+       "ejercicio": [
+        "estocada-salto",
+        "sentadilla"
+       ],
+       "reps": 8
+      }
+     ]
+    },
+    {
+     "minutos": 20,
+     "items": [
+      {
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ],
+       "reps": 10
+      },
+      {
+       "ejercicio": [
+        "estocada-salto",
+        "sentadilla"
+       ],
+       "reps": 10
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "orion",
+   "nombre": "Orión",
+   "familia": "mo",
+   "texto": "Un viaje largo: salís, tirás, empujás y volvés.",
+   "formato": "chipper",
+   "niveles": [
+    {
+     "items": [
+      {
+       "ejercicio": [
+        "trote",
+        "bici"
+       ],
+       "min": 8
+      },
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 20
+      },
+      {
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ],
+       "reps": 40
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 60
+      },
+      {
+       "ejercicio": [
+        "trote",
+        "bici"
+       ],
+       "min": 8
+      }
+     ]
+    },
+    {
+     "items": [
+      {
+       "ejercicio": [
+        "trote",
+        "bici"
+       ],
+       "min": 12
+      },
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 35
+      },
+      {
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ],
+       "reps": 70
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 100
+      },
+      {
+       "ejercicio": [
+        "trote",
+        "bici"
+       ],
+       "min": 12
+      }
+     ]
+    },
+    {
+     "items": [
+      {
+       "ejercicio": [
+        "trote",
+        "bici"
+       ],
+       "min": 16
+      },
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 50
+      },
+      {
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ],
+       "reps": 100
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 150
+      },
+      {
+       "ejercicio": [
+        "trote",
+        "bici"
+       ],
+       "min": 16
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "andromeda",
+   "nombre": "Andrómeda",
+   "familia": "fu",
+   "texto": "Tracción y abdomen: todas las rondas que puedas.",
+   "formato": "amrap",
+   "niveles": [
+    {
+     "minutos": 10,
+     "items": [
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 3
+      },
+      {
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 6
+      },
+      {
+       "ejercicio": "hollow",
+       "seg": 15
+      }
+     ]
+    },
+    {
+     "minutos": 12,
+     "items": [
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 5
+      },
+      {
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 8
+      },
+      {
+       "ejercicio": "hollow",
+       "seg": 20
+      }
+     ]
+    },
+    {
+     "minutos": 15,
+     "items": [
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 7
+      },
+      {
+       "ejercicio": [
+        "rodillas-colgado",
+        "rodillas-paralelas",
+        "crunch-inverso"
+       ],
+       "reps": 10
+      },
+      {
+       "ejercicio": "hollow",
+       "seg": 30
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "draco",
+   "nombre": "Draco",
+   "familia": "fu",
+   "texto": "Tronco firme, cada minuto.",
+   "formato": "emom",
+   "niveles": [
+    {
+     "minutos": 12,
+     "items": [
+      {
+       "ejercicio": "plancha",
+       "seg": 30
+      },
+      {
+       "ejercicio": "plancha-lateral",
+       "seg": 15
+      },
+      {
+       "ejercicio": "hollow",
+       "seg": 20
+      },
+      {
+       "ejercicio": "escaladores",
+       "seg": 20
+      }
+     ]
+    },
+    {
+     "minutos": 16,
+     "items": [
+      {
+       "ejercicio": "plancha",
+       "seg": 40
+      },
+      {
+       "ejercicio": "plancha-lateral",
+       "seg": 20
+      },
+      {
+       "ejercicio": "hollow",
+       "seg": 30
+      },
+      {
+       "ejercicio": "escaladores",
+       "seg": 30
+      }
+     ]
+    },
+    {
+     "minutos": 20,
+     "items": [
+      {
+       "ejercicio": "plancha",
+       "seg": 50
+      },
+      {
+       "ejercicio": "plancha-lateral",
+       "seg": 25
+      },
+      {
+       "ejercicio": "hollow",
+       "seg": 40
+      },
+      {
+       "ejercicio": "escaladores",
+       "seg": 40
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "perseo",
+   "nombre": "Perseo",
+   "familia": "fu",
+   "texto": "Barra y paralelas: todas las rondas que puedas.",
+   "formato": "amrap",
+   "niveles": [
+    {
+     "minutos": 12,
+     "items": [
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 3
+      },
+      {
+       "ejercicio": [
+        "fondo",
+        "flexion"
+       ],
+       "reps": 6
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 9
+      }
+     ]
+    },
+    {
+     "minutos": 16,
+     "items": [
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 5
+      },
+      {
+       "ejercicio": [
+        "fondo",
+        "flexion"
+       ],
+       "reps": 10
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 15
+      }
+     ]
+    },
+    {
+     "minutos": 20,
+     "items": [
+      {
+       "ejercicio": [
+        "dominada",
+        "dominada-negativa",
+        "remo-invertido",
+        "remo-mancuerna"
+       ],
+       "reps": 5
+      },
+      {
+       "ejercicio": [
+        "fondo",
+        "flexion"
+       ],
+       "reps": 10
+      },
+      {
+       "ejercicio": "sentadilla",
+       "reps": 15
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "casiopea",
+   "nombre": "Casiopea",
+   "familia": "ra",
+   "texto": "Un flujo de posturas para estirar todo.",
+   "formato": "flujo",
+   "niveles": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "sentadilla-profunda"
+      }
+     ]
+    },
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "postura-nino"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

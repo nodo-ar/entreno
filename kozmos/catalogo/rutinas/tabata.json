@@ -1,0 +1,746 @@
+{
+ "id": "tabata",
+ "nombre": "20 y 10 en bici",
+ "familia": "mo",
+ "texto": "20 segundos a fondo y 10 de pausa, una y otra vez: pocos minutos que cuentan.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 20,
+ "equipo": [
+  "bici"
+ ],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "el protocolo Tabata (1996), en 3 días",
+ "sesiones": [
+  {
+   "nombre": "Tabata",
+   "nota": "7 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 6,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave + 4",
+   "nota": "30 min firme pero cómodo y al final 4 × 20 s fuertes con 10 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "7 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 6,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "7 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 6,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave + 4",
+   "nota": "30 min firme pero cómodo y al final 4 × 20 s fuertes con 10 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "7 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 6,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave + 4",
+   "nota": "30 min firme pero cómodo y al final 4 × 20 s fuertes con 10 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave + 4",
+   "nota": "30 min firme pero cómodo y al final 4 × 20 s fuertes con 10 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave + 4",
+   "nota": "30 min firme pero cómodo y al final 4 × 20 s fuertes con 10 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave + 4",
+   "nota": "30 min firme pero cómodo y al final 4 × 20 s fuertes con 10 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,632 @@
+{
+ "id": "rehit",
+ "nombre": "REHIT en bici",
+ "familia": "mo",
+ "texto": "Dos sprints cortos a fondo en 10 minutos. Lo mínimo que te da más aire.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 10,
+ "equipo": [
+  "bici"
+ ],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "Metcalfe y otros (2012), del grupo de Niels Vollaard",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "2 × 10 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 10
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 10
+      },
+      {
+       "clase": "vuelta",
+       "seg": 220
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 × 10 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 10
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 10
+      },
+      {
+       "clase": "vuelta",
+       "seg": 220
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 × 10 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 10
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 10
+      },
+      {
+       "clase": "vuelta",
+       "seg": 220
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 × 15 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "vuelta",
+       "seg": 210
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 × 15 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "vuelta",
+       "seg": 210
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 × 15 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "vuelta",
+       "seg": 210
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 × 15 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "vuelta",
+       "seg": 210
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 × 15 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "vuelta",
+       "seg": 210
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 × 15 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 15
+      },
+      {
+       "clase": "vuelta",
+       "seg": 210
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 × 20 s a fondo, 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "suave",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 200
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

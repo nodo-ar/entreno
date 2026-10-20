@@ -1,0 +1,722 @@
+{
+ "id": "gibala",
+ "nombre": "Diez pasadas en bici",
+ "familia": "mo",
+ "texto": "De 8 a 12 minutos fuertes, uno por vez, con pedaleo suave entre medio. Unos 25 minutos.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 25,
+ "equipo": [
+  "bici"
+ ],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "Little y Gibala (2010)",
+ "sesiones": [
+  {
+   "nombre": "8×1",
+   "nota": "8 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "8×1",
+   "nota": "8 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "8×1",
+   "nota": "8 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "8×1",
+   "nota": "8 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "8×1",
+   "nota": "8 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "8×1",
+   "nota": "8 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "10×1",
+   "nota": "10 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "10×1",
+   "nota": "10 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "10×1",
+   "nota": "10 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "10×1",
+   "nota": "10 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "10×1",
+   "nota": "10 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "10×1",
+   "nota": "10 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "12×1",
+   "nota": "12 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "12×1",
+   "nota": "12 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "12×1",
+   "nota": "12 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "12×1",
+   "nota": "12 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "12×1",
+   "nota": "12 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "12×1",
+   "nota": "12 × 1′ fuerte (unos 90 % de tu máximo) con 1′15″ suave entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60
+        },
+        {
+         "clase": "suave",
+         "seg": 75
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

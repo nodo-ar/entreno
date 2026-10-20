@@ -1,0 +1,1257 @@
+{
+ "id": "startstr",
+ "nombre": "Estirar todo el cuerpo",
+ "familia": "ra",
+ "texto": "Nueve estiramientos de un minuto para todo el cuerpo.",
+ "semanas": 4,
+ "dias": 4,
+ "minutos": 20,
+ "equipo": [],
+ "alimenta": [
+  "espagat.sentadilla-30s",
+  "puente.dedos-piso"
+ ],
+ "fuente": "Starting Stretching (r/bodyweightfitness)",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "tocar-los-pies"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "puente-gluteo-sostenido"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "rodilla-cruzada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

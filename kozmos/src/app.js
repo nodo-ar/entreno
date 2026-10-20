@@ -1,18 +1,21 @@
 /* ===== App: rutas, transiciones y arranque ===== */
-/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/sesion · #/hoy/resumen/<sesión> · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>]
-   · #/progreso · #/progreso/<sesión> · #/vos · #/vos/equipo · #/vos/peso · #/vos/respaldo · #/vos/acerca
+/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/sesion · #/hoy/resumen/<sesión> · #/hoy/rutinas[/<rutina>] · #/hoy/hazanas[/<hazaña>] · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>]
+   · #/progreso · #/progreso/<sesión> · #/vos · #/vos/equipo · #/vos/dias · #/vos/peso · #/vos/respaldo · #/vos/acerca
    Lo que no existe cae en el lugar más cercano que sí. */
 K.ruta = () => {
   const [tab = "hoy", a = "", b = "", n = ""] = location.hash.replace(/^#\/?/, "").split("/");
   if (!K.PESTANAS.some(p => p[0] === tab)) return {tab: "hoy", sub: "", hondo: 0};
   if (tab === "hoy"){
     if (a === "rumbo") return {tab, sub: a, hondo: 1};
+    /* rutinas y hazañas: la lista, y la abierta un paso más adentro */
+    if (a === "rutinas") return K.RUTINAS.some(x => x.id === b) ? {tab, sub: a, sub2: b, hondo: 2} : {tab, sub: a, hondo: 1};
+    if (a === "hazanas") return K.HAZANAS.hazanas.some(x => x.id === b) ? {tab, sub: a, sub2: b, hondo: 2} : {tab, sub: a, hondo: 1};
     /* la sesión existe solo mientras corre; el resumen, si la sesión está guardada */
     if (a === "sesion" && K.sesion.activa()) return {tab, sub: a, hondo: 1};
     if (a === "resumen" && K.diario.sesiones.some(s => s.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
     return {tab, sub: "", hondo: 0};
   }
-  if (tab === "vos") return ["acerca", "equipo", "peso", "respaldo"].includes(a) ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
+  if (tab === "vos") return ["acerca", "equipo", "dias", "peso", "respaldo"].includes(a) ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
   if (tab === "progreso") return K.diario.sesiones.some(s => s.id === a) ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
   if (tab === "cielo"){
     const c = K.CATALOGO.constelaciones.find(x => x.id === a);
@@ -66,23 +69,27 @@ document.addEventListener("click", e => {
   if (a){ K._quieto = !!a.dataset.quieto && K.horizontal(); K.ir(a.dataset.ir, K._quieto); return; }
   /* en una prueba de estrella, un toque en cualquier lado de la pantalla es «Listo»: las manos vienen de la barra */
   if (e.target.closest(".ses.prueba.serie") && !e.target.closest("button, a, input")){ K.ses.listo(); return; }
-  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, [data-probar], [data-equipo], [data-ppaso]");
+  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-nivel, #hz-empezar, [data-probar], [data-equipo], [data-ppaso], [data-dia]");
   if (m){
     if (m.dataset.probar) K.ses.probar(m.dataset.probar);
     else if (m.dataset.equipo) K.equipoTocar(m.dataset.equipo);
     else if (m.dataset.ppaso) K.pesoPaso(Number(m.dataset.ppaso));
+    else if (m.dataset.dia) K.diaTocar(Number(m.dataset.dia));
     else ({"tema-menu": () => K.menuTema(m), "avisos-menu": () => K.menuAvisos(m), "res-mas": () => K.resumenMenu(m),
-      "rs-guardar": () => K.resp.guardar(), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo()})[m.id]();
+      "rs-guardar": () => K.resp.guardar(), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo(),
+      "hoy-igual": () => { K._igual = K.hoy(); K.refrescar(); }, "rut-seguir": () => K.rutinaSeguir(m.dataset.rutina), "rut-mas": () => K.rutinaMenu(m),
+      "hz-nivel": () => K.hazanaNivelMenu(m), "hz-empezar": () => K.ses.hazana(m.dataset.hazana, K._nivel[m.dataset.hazana] ?? 0)})[m.id]();
     return;
   }
-  const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio]");
+  const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #s-pausa, #s-vuelta, #s-vuelta-menos, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio]");
   if (s){
     if (s.dataset.spaso) K.ses.paso(s.dataset.campo, Number(s.dataset.spaso));
     else if (s.dataset.rumbo) K.rumboTocar(s.dataset.rumbo);
     else if (s.dataset.desc) K.ses.ajustar(Number(s.dataset.desc));
     else if (s.dataset.salio) K.ses.salio(Number(s.dataset.salio));
     else ({"s-empezar": () => K.ses.empezar(), "s-listo": () => K.ses.listo(), "s-seguir": () => K.ses.seguir(),
-      "s-terminar": () => K.ses.terminar(), "s-cortar": () => K.ses.cortar(), "s-mas": () => K.ses.menu(s), "hoy-mas": () => K.hoyMenu(s)})[s.id]();
+      "s-terminar": () => K.ses.terminar(), "s-cortar": () => K.ses.cortar(), "s-mas": () => K.ses.menu(s),
+      "s-pausa": () => K.ses.pausa(), "s-vuelta": () => K.ses.vuelta(1), "s-vuelta-menos": () => K.ses.vuelta(-1), "hoy-mas": () => K.hoyMenu(s)})[s.id]();
     return;
   }
   const t = e.target.closest("#f-estrella, #f-fecha, #f-guardar, [data-paso], [data-borrar]");

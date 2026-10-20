@@ -10,11 +10,11 @@ El modelo, la arquitectura y las seis etapas están en el documento «Kozmos · 
 | --- | --- |
 | `src/base/` | Letra, tokens de la dirección B «Luz de día», íconos, preferencias y tema |
 | `src/piezas/` | Lo rescatado de Entreno: barra flotante, encabezado que se achica, menús, deshacer, isla, ajustes y horizontal |
-| `src/pantallas/` | Hoy, Cielo (con Constelación y Anotar), Progreso y Vos |
+| `src/pantallas/` | Hoy, Cielo (con Constelación y Anotar), Progreso, Vos, y Rutinas y Hazañas |
 | `src/cielo/` | Las reglas del cielo (funciones puras) y su dibujo |
 | `src/diario/` | Lo que hacés, guardado en IndexedDB, y el respaldo (armar y leer el archivo) |
-| `src/sesion/` | El plan del día y las calorías (funciones puras) y el motor de la sesión |
-| `catalogo/` | Constelaciones y estrellas, y los ids retirados |
+| `src/sesion/` | El plan del día, las rutinas, hazañas y tus días, y las calorías (funciones puras), y el motor de la sesión |
+| `catalogo/` | Constelaciones y estrellas, ejercicios, rutinas (una por archivo, formato en `docs/kozmos-rutinas.md`), hazañas y los ids retirados |
 | `src/app.js` | Rutas, transiciones y arranque |
 | `src/sw.js` | Service worker: abre sin conexión desde la segunda vez |
 | `fuentes/` | Mona Sans y Geist Mono (latín, woff2) con su licencia SIL OFL |
