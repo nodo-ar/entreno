@@ -1,5 +1,6 @@
 /* ===== App: rutas, transiciones y arranque ===== */
-/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/sesion · #/hoy/resumen/<sesión> · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>] · #/progreso · #/vos · #/vos/acerca
+/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/sesion · #/hoy/resumen/<sesión> · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>]
+   · #/progreso · #/progreso/<sesión> · #/vos · #/vos/equipo · #/vos/peso · #/vos/respaldo · #/vos/acerca
    Lo que no existe cae en el lugar más cercano que sí. */
 K.ruta = () => {
   const [tab = "hoy", a = "", b = "", n = ""] = location.hash.replace(/^#\/?/, "").split("/");
@@ -11,7 +12,8 @@ K.ruta = () => {
     if (a === "resumen" && K.diario.sesiones.some(s => s.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
     return {tab, sub: "", hondo: 0};
   }
-  if (tab === "vos") return a === "acerca" ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
+  if (tab === "vos") return ["acerca", "equipo", "peso", "respaldo"].includes(a) ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
+  if (tab === "progreso") return K.diario.sesiones.some(s => s.id === a) ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
   if (tab === "cielo"){
     const c = K.CATALOGO.constelaciones.find(x => x.id === a);
     if (!c) return {tab, sub: "", hondo: 0};
@@ -62,8 +64,17 @@ document.addEventListener("click", e => {
   const a = e.target.closest("[data-ir]");
   /* en horizontal, abrir un ajuste no suma pasos al botón atrás: la lista y lo abierto son una sola pantalla */
   if (a){ K._quieto = !!a.dataset.quieto && K.horizontal(); K.ir(a.dataset.ir, K._quieto); return; }
-  const m = e.target.closest("#tema-menu");
-  if (m){ K.menuTema(m); return; }
+  /* en una prueba de estrella, un toque en cualquier lado de la pantalla es «Listo»: las manos vienen de la barra */
+  if (e.target.closest(".ses.prueba.serie") && !e.target.closest("button, a, input")){ K.ses.listo(); return; }
+  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, [data-probar], [data-equipo], [data-ppaso]");
+  if (m){
+    if (m.dataset.probar) K.ses.probar(m.dataset.probar);
+    else if (m.dataset.equipo) K.equipoTocar(m.dataset.equipo);
+    else if (m.dataset.ppaso) K.pesoPaso(Number(m.dataset.ppaso));
+    else ({"tema-menu": () => K.menuTema(m), "avisos-menu": () => K.menuAvisos(m), "res-mas": () => K.resumenMenu(m),
+      "rs-guardar": () => K.resp.guardar(), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo()})[m.id]();
+    return;
+  }
   const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio]");
   if (s){
     if (s.dataset.spaso) K.ses.paso(s.dataset.campo, Number(s.dataset.spaso));
@@ -82,7 +93,9 @@ document.addEventListener("click", e => {
   else if (t.dataset.paso) K.anotar.paso(t.dataset.campo, Number(t.dataset.paso));
   else K.anotar.borrar(t.dataset.borrar);
 });
+document.addEventListener("change", e => { if (e.target.id === "rs-archivo"){ const f = e.target.files[0]; e.target.value = ""; K.resp.traer(f); } });
 document.addEventListener("input", e => {
+  if (e.target.id === "v-peso"){ K._peso = e.target.value; return; }
   const c = e.target.closest?.(".pmv"); if (!c) return;
   if (c.classList.contains("spv")) K.ses.escribir(c.dataset.campo, c.value); else K.anotar.escribir(c.dataset.campo, c.value);
 });
@@ -90,6 +103,7 @@ document.addEventListener("input", e => {
 document.addEventListener("keydown", e => {
   if ((e.key === "Enter" || e.key === " ") && e.target.matches?.('[role="link"][data-ir]')){ e.preventDefault(); e.target.dispatchEvent(new MouseEvent("click", {bubbles: true})); }
   if (e.key === "Enter" && e.target.matches?.(".pmv.spv")){ e.preventDefault(); e.target.blur(); return; }
+  if (e.key === "Enter" && e.target.id === "v-peso"){ e.preventDefault(); K.pesoListo(); return; }
   if (e.key === "Enter" && e.target.matches?.(".pmv")){ e.preventDefault(); K.anotar.guardar(); }
 });
 

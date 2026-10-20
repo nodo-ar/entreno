@@ -22,7 +22,18 @@ K.I = {
   cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
   play:'<path d="M8 5v14l11-7z" fill="currentColor"/>',
   pause:'<path d="M8 5v14M16 5v14"/>',
-  skip:'<path d="M6 5v14l9-7z" fill="currentColor"/><path d="M18 5v14"/>'
+  skip:'<path d="M6 5v14l9-7z" fill="currentColor"/><path d="M18 5v14"/>',
+  barra:'<path d="M3 6h18M7 6v13M17 6v13"/>',
+  paralelas:'<path d="M3 9h7M14 9h7M5 9v10M8 9v10M16 9v10M19 9v10"/>',
+  pared:'<path d="M4 5h16v14H4zM4 10h16M4 15h16M10 5v5M15 10v5M9 15v4"/>',
+  poste:'<path d="M12 3v18M8 21h8M12 7h6"/>',
+  peso:'<path d="M6 8h12l2 12H4z"/><circle cx="12" cy="5" r="2"/>',
+  vibra:'<rect x="8" y="3" width="8" height="18" rx="2"/><path d="M4 9v6M20 9v6"/>',
+  caja:'<path d="M4 8h16v11H4zM3 4h18v4H3zM10 12h4"/>',
+  bajar:'<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+  subir:'<path d="M12 15V4M7 9l5-5 5 5M5 20h14"/>',
+  bici:'<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8 8.5 5H7M12 16l3-8"/>',
+  soga:'<path d="M5 3v6M19 3v6M5 9c0 9 14 9 14 0"/>'
 };
 K.ic = (k, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${K.I[k] || ""}</svg>`;
 

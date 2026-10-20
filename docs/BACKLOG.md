@@ -29,14 +29,17 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Pruebas que faltan** (Casandra): cambio de versión con la app abierta y red lenta.
 - **Dominio propio para Kozmos** (decidido por Fer): conseguirlo y configurarlo antes de publicar, en la etapa 6. Ahí se baja la bandera roja de Casandra.
 - **Dejar escrita la letra de Kozmos** (Mona Sans y Geist Mono en lugar de la tipografía Nodo): viene de la dirección de arte B.
-- **Exportar e importar el diario de Kozmos** (el soberano): condición antes de que haya datos reales. Etapa 4.
 - **Aviso y deshacer a la vez** (Casandra): un aviso de error cierra el deshacer que estaba pendiente.
 - **La fecha de Anotar pasada la medianoche** (Casandra): con la app abierta, «Hoy» queda en ayer.
 - **Qué es cada estrella** (la persona): «Bolita», «Tuck» o «Draco» no se entienden solos. Una línea de explicación en el menú de Estrella cuando llegue el catálogo de ejercicios (etapa 5).
 - **Tu peso como dato fijo en Lastre** (la persona): hoy se ve como otro selector, aunque queda guardado.
-- **Estrellas según tu equipo**: hoy se muestran todas; con el perfil de equipo (etapa 4), las que no podés hacer se esconden salvo en la constelación abierta.
-- **Calorías por sesión** (decidido por Fer: solo por sesión, aproximadas): piden peso y esfuerzo por ejercicio. Etapa 4.
-- **Probar la sesión en un Android real** (la ingeniera de campo): vibración, campana con pantalla bloqueada, wake lock.
+- **Probar la sesión en un Android real** (la ingeniera de campo, el soberano): vibración, campana con pantalla bloqueada, wake lock, y guardar y traer el respaldo desde la app instalada.
+- **Respaldo más estricto** (Casandra): validar `familia` y `encendio` de cada registro. Traducir ids a nombres para quien lo lea (el soberano).
+- **El deshacer dura lo que dura el aviso** (Casandra).
+- **Atajos entre pestañas** (la cartógrafa): Tu equipo abierto desde Hoy o el cielo vuelve a Vos, no a donde estabas.
+- **Progreso en horizontal** (la cartógrafa): al borrar la sesión abierta se muestra la siguiente sin avisar; «Tus sesiones» queda abajo en la columna izquierda; el ⋯ no deja claro a qué lado pertenece.
+- **`AVISOS` definido en dos lugares** (la tijera).
+- **Tus días** (calendario de sesiones): etapa 5.
 - **Wake lock con video** para navegadores sin la API (la ingeniera de campo).
 - **Audio después de recuperar una sesión**: queda mudo hasta el primer toque.
 - **Biblioteca en la barra**: los bocetos de miniaturas la mostraban; el prototipo tiene Progreso y Vos. Definir con Fer cuando haya ejercicios.

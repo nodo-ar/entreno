@@ -12,7 +12,9 @@ const RET = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "retirados.js
 const ctx = {K: {}}; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "cielo", "cielo.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "plan.js"), "utf8"), ctx);
-const {cielo, plan} = ctx.K;
+vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "calorias.js"), "utf8"), ctx);
+vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "diario", "respaldo.js"), "utf8"), ctx);
+const {cielo, plan, calorias, respaldo} = ctx.K;
 const EJ = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "ejercicios.json"), "utf8"));
 
 const PRUEBAS = [];
@@ -281,6 +283,80 @@ prueba("plan-vez-pasada", () => {
   const ss = [ses("a", "2026-10-10", [sx("e", "fl-tuck", "segundos", 7), sx("e", "fl-tuck", "segundos", 9)]), ses("b", "2026-10-12", [sx("e", "colgado-activo", "segundos", 30)])];
   ok(plan.vezPasada(ss, "fl-tuck", "segundos") === 9, "la vez pasada es la mejor serie de la última sesión con ese ejercicio");
   ok(plan.vezPasada(ss, "pistol", "repeticiones") === null, "sin antes, nada");
+});
+
+/* ===== Etapa 4: equipo, ventana de prueba, calorías y respaldo ===== */
+prueba("cielo-equipo", () => {
+  const c = cielo.calcular(CAT, [], HOY, [], ["barra"]), por = id => c.constelaciones.find(x => x.id === id);
+  ok(por("soga").total === 0 && !por("soga").proxima && por("soga").pide.join() === "soga" && !por("soga").completa, "sin soga, Soga no tiene próxima y pide soga");
+  ok(por("motor").pide.join() === "bici", "sin bici, Motor pide bici: " + por("motor").pide);
+  ok(por("front-lever").total === 8 && por("front-lever").proxima.id === "front-lever.colgado-60s", "con barra, front lever entero");
+  ok(por("diez-km").proxima && por("diez-km").pide.length === 0, "trotar no pide nada");
+  const piden = CAT.constelaciones.flatMap(k => k.estrellas).filter(e => (e.equipo || []).some(x => x !== "barra")).length;
+  ok(cielo.calcular(CAT, [], HOY).total === c.total + piden && c.constelaciones.every(k => k.estrellas.length === CAT.constelaciones.find(x => x.id === k.id).estrellas.length), "sin elegir equipo se ve todo; elegido, el total baja y las estrellas siguen ahí");
+  /* lo que ya encendiste cuenta aunque hoy no tengas el equipo */
+  const ms = [{id: "s", estrella: "soga.saltos-100", ejercicio: "soga", tipo: "repeticiones", valor: 120, fecha: HOY}];
+  const sg = cielo.calcular(CAT, ms, HOY, [], ["barra"]).constelaciones.find(x => x.id === "soga");
+  ok(sg.encendidas === 1 && sg.total === 1, "una estrella encendida sin el equipo sigue contando: " + sg.encendidas + " de " + sg.total);
+});
+prueba("cielo-equipo-inalcanzable", () => {
+  /* una estrella que solo se alcanza pasando por otra que pide equipo no cuenta en el total */
+  const M = {familias: [{id: "fu"}], constelaciones: [{id: "k", nombre: "K", familia: "fu", meta: "", estrellas: [
+    {id: "k.a", nombre: "A", magnitud: 5, orden: 1, prueba: {ejercicio: "a", tipo: "segundos", umbral: 10}, requiere: []},
+    {id: "k.b", nombre: "B", magnitud: 4, orden: 2, prueba: {ejercicio: "b", tipo: "segundos", umbral: 10}, requiere: ["k.a"], equipo: ["barra"]},
+    {id: "k.c", nombre: "C", magnitud: 3, orden: 3, prueba: {ejercicio: "c", tipo: "segundos", umbral: 10}, requiere: ["k.b"]}]}]};
+  const c = cielo.calcular(M, [{id: "1", estrella: "k.a", valor: 12, fecha: HOY}], HOY, [], []).constelaciones[0];
+  ok(c.total === 1 && c.encendidas === 1 && !c.completa && !c.proxima && c.pide.join() === "barra", "sin barra: 1 de 1, no completa, pide barra: " + JSON.stringify([c.total, c.encendidas, c.completa, c.pide]));
+});
+prueba("plan-equipo", () => {
+  const p = plan.armar(cielo.calcular(CAT, [], HOY, [], ["barra"]), ["front-lever", "soga"], [], HOY);
+  ok(!p.bloques.some(b => b.constelacion === "soga" || b.constelacion === "motor"), "sin soga ni bici no aparecen: " + p.bloques.map(b => b.constelacion));
+  ok(p.bloques.some(b => b.familia === "mo"), "el motor de regalo busca otro que puedas hacer: " + p.bloques.map(b => b.constelacion));
+});
+prueba("plan-ventana", () => {
+  /* colgado 50 s de 60 s: 83 %, se abre la ventana y la sesión empieza probándola */
+  const ms = [{id: "x", estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 50, fecha: "2026-10-18"}];
+  const p = plan.armar(cieloReal(ms), ["front-lever"], [], HOY), b = p.bloques[0];
+  ok(b.prueba && b.series === 1 && b.objetivo === 60 && b.estrella === "front-lever.colgado-60s", "primero, la prueba: " + JSON.stringify(b));
+  ok(p.ventana.join() === "front-lever" && p.bloques[1].constelacion === "front-lever" && !p.bloques[1].prueba, "después, el entrenamiento de siempre");
+  const flojo = plan.armar(cieloReal([{...ms[0], valor: 40}]), ["front-lever"], [], HOY);
+  ok(!flojo.bloques.some(x => x.prueba) && !flojo.ventana.length, "al 67 % no hay prueba");
+  const vieja = {id: "a", fecha: "2026-09-20", bloques: []};
+  ok(!plan.armar(cieloReal([{...ms[0], fecha: "2026-09-20"}], [vieja]), ["front-lever"], [vieja], HOY).ventana.length, "al volver de 3 semanas, primero se recupera");
+  /* bici 17 de 20 min: la prueba es la salida del día, no se suma otra */
+  const bi = plan.armar(cieloReal([{id: "b", estrella: "motor.bici-20", ejercicio: "bici", tipo: "minutos", valor: 17, fecha: "2026-10-18"}]), ["motor"], [], HOY);
+  ok(bi.bloques.filter(x => x.constelacion === "motor").length === 1 && bi.bloques[0].prueba, "bici: una sola salida, la de la prueba: " + bi.bloques.map(x => x.constelacion + (x.prueba ? "*" : "")));
+  ok(!plan.sePrueba({proxima: {prueba: {tipo: "menos-minutos", umbral: 50}, mejor: 52}}), "los 10 km no se prueban a manos libres: un toque antes de tiempo encendería la estrella");
+  const c = cieloReal().constelaciones.find(x => x.id === "motor");
+  ok(plan.sePrueba(cieloReal().constelaciones.find(x => x.id === "front-lever")) && plan.sePrueba(c), "bici 20 min se prueba");
+});
+prueba("calorias", () => {
+  /* 40 min: 20 de bici (7 MET) y 20 de fuerza (3,8 MET), 70 kg → 163 + 89 = 252 → 250 */
+  const x = {duracion: 2400, bloques: [{familia: "fu", series: [{ejercicio: "fl-tuck", tipo: "segundos", valor: 10}, {ejercicio: "fl-tuck", tipo: "segundos", valor: 12}]},
+    {familia: "mo", series: [{ejercicio: "bici", tipo: "minutos", valor: 20}]}]};
+  ok(calorias.deSesion(x, 70) === 250, "40 min con 20 de bici, 70 kg: " + calorias.deSesion(x, 70));
+  ok(calorias.deSesion(x, undefined) === null && calorias.deSesion(x, 5) === null, "sin peso (o con uno imposible) no hay cuenta");
+  ok(calorias.deSesion({duracion: 600, bloques: [{familia: "mo", series: [{ejercicio: "bici", tipo: "minutos", valor: 60}]}]}, 70) === 80, "lo anotado nunca pasa lo que duró la sesión: 10 min de bici");
+  ok(calorias.deSesion({duracion: 60, bloques: [{familia: "ra", series: [{ejercicio: "cosaca", tipo: "segundos", valor: 15}]}]}, 70) === null, "menos de 30 no se muestra");
+  ok(calorias.deSesion({...x, pesoKg: 70}, 100) === 250, "manda el peso que tenías ese día, no el de hoy");
+});
+prueba("respaldo-ida-y-vuelta", () => {
+  const d = {mediciones: [{id: "m1", estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 40, fecha: "2026-10-01", origen: "anotado", creada: "2026-10-01T10:00:00.000Z"}],
+    sesiones: [ses("s1", "2026-10-02", [sx("front-lever.colgado-60s", "colgado-activo", "segundos", 45)])].map(x => ({...x, duracion: 1800})), perfil: {peso: 72, rumbo: ["front-lever"], equipo: ["barra"]}};
+  const txt = JSON.stringify(respaldo.armar(d, "k-prueba", 1, new Date("2026-10-20T12:00:00Z")));
+  const r = respaldo.leer(txt);
+  ok(!r.error && r.descartadas === 0, "el respaldo propio tiene que leerse entero: " + (r.error || r.descartadas));
+  const vacio = {mediciones: [], sesiones: [], perfil: {}}, s = respaldo.sumar(vacio, r);
+  ok(JSON.stringify(s.cambios.poner.mediciones) === JSON.stringify(d.mediciones) && JSON.stringify(s.cambios.poner.sesiones) === JSON.stringify(d.sesiones) && JSON.stringify(s.cambios.perfil) === JSON.stringify(d.perfil), "a un teléfono nuevo entra todo, tal cual");
+  const otra = respaldo.sumar(d, r).cuenta;
+  ok(!otra.mediciones && !otra.sesiones && !otra.perfil, "traer lo que ya está no suma nada");
+  ok(respaldo.sumar({...vacio, perfil: {peso: 80}}, r).cambios.perfil.peso === undefined, "del perfil, lo del teléfono manda");
+  ok(respaldo.leer("{no es json").error && respaldo.leer(JSON.stringify({app: "barra-y-bici", sess: []})).error, "otro archivo: se rechaza entero");
+  ok(/más nueva/.test(respaldo.leer(JSON.stringify({app: "kozmos", formato: 9, mediciones: [], sesiones: []})).error), "de una versión más nueva: se rechaza y lo dice");
+  const roto = JSON.parse(txt); roto.mediciones.push({id: "m2", estrella: "x", valor: -3, fecha: "2026-02-30"}, d.mediciones[0]); roto.sesiones.push({id: "s2", fecha: "2026-10-03", duracion: 60, bloques: [{constelacion: "x", series: [{ejercicio: "e", tipo: "inventado", valor: 1}]}]});
+  roto.perfil.peso = 9000;
+  const rr = respaldo.leer(JSON.stringify(roto));
+  ok(rr.descartadas === 2 && rr.mediciones.length === 1 && rr.sesiones.length === 1 && rr.perfil.peso === undefined, "lo roto se descarta y se cuenta; lo repetido entra una vez: " + JSON.stringify([rr.descartadas, rr.mediciones.length, rr.sesiones.length, rr.perfil]));
 });
 
 let fallas = 0;

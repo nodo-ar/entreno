@@ -533,6 +533,9 @@ prueba("sesion-vencida-se-guarda", async () => {
   ok((await p.textContent(".utoast .utx")) === "La sesión que quedó abierta se guardó como cortada.", "no avisa que la guardó");
   ok(await p.evaluate(() => !K.sesion.activa() && K.diario.sesiones.length === 1 && K.diario.sesiones[0].cortada && K.diario.sesiones[0].bloques[0].series[0].valor === 22), "la sesión vencida se perdió");
   ok(await p.evaluate(() => localStorage.getItem("kozmos.vivo.v1") === null), "la sesión vencida quedó colgada");
+  /* termina en su último paso (el fin del descanso), no 13 horas después */
+  const dur = await p.evaluate(() => K.diario.sesiones[0].duracion);
+  ok(dur > 100 && dur < 300, "la sesión olvidada infla los minutos: " + dur + " s");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -657,6 +660,185 @@ prueba("sesion-sin-lugar", async () => {
   ok((await p.textContent(".utoast .utx")).startsWith("No se pudo guardar"), "no dice que no pudo guardar");
   ok(await p.$(".ses.descanso"), "la sesión tiene que seguir abierta");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+/* ===== Etapa 4: prueba de estrella, tu equipo, tu peso, Progreso y respaldo ===== */
+/* el diario entero, con las claves del perfil en orden: así dos teléfonos se pueden comparar */
+const diarioDe = p => p.evaluate(() => JSON.stringify([K.diario.mediciones, K.diario.sesiones, Object.fromEntries(Object.entries(K.diario.perfil).sort())]));
+const anotarMarca = (p, m) => p.evaluate(m => K.diario.anotar({ejercicio: "colgado-activo", tipo: "segundos", estrella: "front-lever.colgado-60s", fecha: K.hoy(), ...m}).then(() => K.refrescar()), m);
+
+prueba("prueba-de-estrella", async () => {
+  /* desde la constelación: Preparate, el reloj corre solo, vibra al llegar y un toque en cualquier lado la termina */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/cielo/front-lever");
+  await p.click('[data-probar="front-lever"]'); await p.waitForSelector(".ses.prueba");
+  ok((await p.textContent(".ses-tit h1")) === "Colgado activo 60 s", "la prueba no dice qué estrella: " + await p.textContent(".ses-tit h1"));
+  await tick(p, 2000);
+  ok(await reloj(p, "fase") === "3" && await reloj(p, "fase-lb") === "Preparate", "falta la cuenta para prepararse");
+  await p.click(".ses.prueba .ses-luego"); await tick(p, 100);
+  ok(await fase(p) === "serie", "un toque mientras te preparás cortó la prueba");
+  await tick(p, 64000);
+  ok(await reloj(p, "fase") === "61" && await reloj(p, "fase-lb") === "de 60 s", "el reloj de la prueba: " + await reloj(p, "fase"));
+  ok(await p.$(".prueba-anillo.listo"), "el anillo no se llena al llegar");
+  ok((await p.evaluate(() => window.__V)).includes("[10,40,10]"), "no vibró al llegar a los 60 s");
+  await p.click(".ses.prueba .ses-ind"); await p.waitForSelector(".res");
+  ok((await p.textContent(".res-tit")) === "Colgado activo 60 s, encendida.", "la prueba no encendió la estrella: " + await p.textContent(".res-tit"));
+  ok(await p.evaluate(() => K.diario.sesiones[0].bloques[0].prueba === true && K.diario.sesiones[0].bloques[0].series[0].valor === 61), "lo que corrió el reloj no quedó anotado");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("prueba-que-no-llega", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/cielo/front-lever"); await p.click('[data-probar="front-lever"]'); await p.waitForSelector(".ses.prueba");
+  await tick(p, 47000); await p.click("#s-listo"); await p.waitForSelector(".res");
+  ok((await p.textContent(".res-tit")) === "Todavía no.", "una prueba que no llega: " + await p.textContent(".res-tit"));
+  ok((await p.textContent(".res-txt p")).startsWith("42 s de 60 s"), "no dice cuánto faltó: " + await p.textContent(".res-txt p"));
+  const datos = await p.$$eval(".res-dato", xs => xs.map(x => [...x.children].map(c => c.textContent).join(" ")));
+  ok(datos.join("|") === "42 s esta vez", "una prueba muestra lo de esta vez, sin minutos ni series: " + datos.join("|"));
+  /* la ✕ vuelve a la constelación de donde salió */
+  await p.click('.ses-acc [data-volver]'); await esperarTitulo(p, "Front lever");
+  await ctx.close();
+});
+
+prueba("ventana-de-prueba", async () => {
+  /* con tu mejor marca al 80 %, Hoy abre la ventana y la sesión empieza por la prueba */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await anotarMarca(p, {valor: 50, fecha: "2026-10-18"});
+  ok((await p.textContent(".hoy-ventana")).includes("probá Colgado activo 60 s"), "Hoy no avisa la ventana");
+  ok((await p.textContent(".toca.es-prueba")).includes("60 s"), "la prueba no va primera en lo que toca");
+  await p.click("#s-empezar"); await p.waitForSelector(".ses.prueba");
+  await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+  ok(await p.inputValue("#s-valor") === "25", "después de la prueba se anota lo que corrió: " + await p.inputValue("#s-valor"));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("tu-equipo", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/vos");
+  ok((await p.textContent('[data-ir="#/vos/equipo"] em')) === "Todo", "sin elegir, cuenta todo");
+  await p.click('[data-ir="#/vos/equipo"]'); await esperarTitulo(p, "Tu equipo");
+  await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
+  ok((await p.textContent(".utoast .utx")) === "Sacaste soga", "no ofrece deshacer");
+  await ir(p, "#/cielo");
+  ok(!(await p.$('.cielo-svg [data-ir="#/cielo/soga"]')), "sin soga, Soga sigue en el cielo");
+  await ir(p, "#/cielo/soga");
+  ok((await p.textContent(".cons-estado .t1")) === "Pide soga.", "la constelación no dice qué pide");
+  ok(await p.$$eval(".est-fila.sin-equipo", xs => xs.length) === 6 && await p.$$eval(".cons-svg .es.sin", xs => xs.length) === 6, "abierta, se ven todas, tenues");
+  ok(!(await p.$("[data-probar]")) && await p.$('.dos-btn [data-ir="#/vos/equipo"]'), "sin soga, en vez de probar ofrece ir a tu equipo");
+  /* deshacer devuelve todo */
+  await ir(p, "#/vos/equipo"); await p.click('[data-equipo="soga"]'); await p.waitForSelector(".utoast"); await p.click(".utu");
+  await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("peso-y-calorias", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/vos/peso");
+  await p.fill("#v-peso", "1000"); await p.click("#v-peso-listo"); await p.waitForSelector(".utoast.solo");
+  ok(await titulo(p) === "Tu peso", "un peso imposible no se guarda");
+  await p.fill("#v-peso", "70"); await p.click('[data-ppaso="1"]'); await p.click("#v-peso-listo"); await esperarTitulo(p, "Vos");
+  ok((await p.textContent('[data-ir="#/vos/peso"] em')) === "70,5 kg", "no guardó el peso: " + await p.textContent('[data-ir="#/vos/peso"] em'));
+  /* una sesión de bici: el resumen dice las calorías, aproximadas */
+  await ir(p, "#/hoy"); await rumbo(p, ["motor"]);
+  await p.click("#s-empezar"); await p.waitForSelector(".ses.serie");
+  await tick(p, 20 * 60000); await p.click("#s-listo");
+  for (let i = 0; i < 20 && await fase(p) !== "cierre"; i++){
+    if (await fase(p) === "serie"){ await tick(p, await p.evaluate(() => K.sesion.bloque().tipo === "minutos") ? 20 * 60000 : 36000); await p.click("#s-listo"); }
+    else { await tick(p, 150000); await p.click("#s-seguir"); }
+  }
+  await p.click("#s-terminar"); await p.waitForSelector(".res");
+  const k = await p.textContent(".res-kcal .num");
+  ok(/^\d+ kcal$/.test(k) && parseInt(k) >= 150 && parseInt(k) <= 400, "las calorías: " + k);
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("progreso", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await p.click("#s-empezar"); await tick(p, 40000); await p.click("#s-listo"); await p.click("#s-cortar"); await p.waitForSelector(".res");
+  await anotarMarca(p, {valor: 61});
+  await ir(p, "#/progreso");
+  ok(await p.$(".semanas"), "no están las semanas");
+  ok((await p.textContent(".prog-sem .ln.small .num")).startsWith("1 min"), "esta semana: " + await p.textContent(".prog-sem .ln.small .num"));
+  ok((await p.textContent(".prog-est b")) === "Colgado activo 60 s", "no lista la estrella encendida este mes");
+  await p.click('.ajr[data-ir^="#/progreso/"]'); await p.waitForSelector(".res");
+  ok(await titulo(p) === "Hoy", "la sesión abierta no dice su día: " + await titulo(p));
+  /* borrar la sesión: sin preguntar, con deshacer */
+  await p.click("#res-mas"); await p.click('.pmi[data-id="borrar"]'); await esperarTitulo(p, "Progreso");
+  ok((await p.textContent(".utoast .utx")) === "Borraste la sesión de hoy", "no ofrece deshacer el borrado");
+  ok(await p.evaluate(() => K.diario.sesiones.length) === 0, "no la borró");
+  await p.click(".utu"); await p.waitForFunction(() => K.diario.sesiones.length === 1);
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("progreso-horizontal", async () => {
+  const {ctx, p} = await conReloj({width: 844, height: 390});
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await p.click("#s-empezar"); await tick(p, 40000); await p.click("#s-listo"); await p.click("#s-cortar"); await p.waitForSelector(".res");
+  await ir(p, "#/progreso");
+  ok(await p.$(".split>.lado .semanas") && await p.$(".split>.abierto .res"), "en horizontal, la lista a la izquierda y la sesión a la derecha");
+  const w = await p.evaluate(() => document.documentElement.scrollWidth);
+  ok(w <= 844, "se desborda: " + w);
+  await ctx.close();
+});
+
+prueba("respaldo-de-ida-y-vuelta", async () => {
+  /* se guarda el archivo, se trae en un teléfono limpio y queda todo igual; traerlo dos veces no duplica */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await p.click("#s-empezar"); await tick(p, 40000); await p.click("#s-listo"); await p.click("#s-cortar"); await p.waitForSelector(".res");
+  await anotarMarca(p, {valor: 20, fecha: "2026-10-15"});
+  await p.evaluate(() => K.diario.perfilPoner("peso", 72));
+  await ir(p, "#/vos/respaldo");
+  const [d] = await Promise.all([p.waitForEvent("download"), p.click("#rs-guardar")]);
+  ok(d.suggestedFilename() === "kozmos-respaldo_2026-10-20.json", "nombre del archivo: " + d.suggestedFilename());
+  const f = await d.path();
+  await ir(p, "#/vos"); ok((await p.textContent('[data-ir="#/vos/respaldo"] em')) === "Hoy", "no recuerda cuándo se guardó");
+  const antes = await diarioDe(p);
+  const {ctx: c2, p: p2} = await pagina();
+  await ir(p2, "#/vos/respaldo");
+  await p2.setInputFiles("#rs-archivo", f); await p2.waitForSelector(".utoast");
+  ok((await p2.textContent(".utoast .utx")) === "Trajiste 1 sesión y 1 marca", "el aviso: " + await p2.textContent(".utoast .utx"));
+  const despues = await diarioDe(p2);
+  ok(antes === despues, "el respaldo no vuelve igual: " + antes.length + " / " + despues.length);
+  await p2.reload(); await p2.waitForSelector("main.view");
+  ok(await diarioDe(p2) === antes, "después de cerrar y abrir, no quedó guardado");
+  await p2.setInputFiles("#rs-archivo", f); await p2.waitForSelector(".utoast.solo");
+  ok((await p2.textContent(".utoast .utx")) === "Ya tenías todo.", "traerlo dos veces: " + await p2.textContent(".utoast .utx"));
+  /* un archivo cualquiera no toca nada */
+  await p2.setInputFiles("#rs-archivo", {name: "x.json", mimeType: "application/json", buffer: Buffer.from('{"app":"barra-y-bici","sess":[]}')});
+  await p2.waitForFunction(() => document.querySelector(".utoast .utx")?.textContent === "Ese archivo no es un respaldo de Kozmos.");
+  ok(p2._errores.length === 0 && p._errores.length === 0, "errores: " + [...p._errores, ...p2._errores].join(" | "));
+  await c2.close(); await ctx.close();
+});
+
+prueba("respaldo-deshacer", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/vos/respaldo");
+  const o = {app: "kozmos", formato: 1, mediciones: [{id: "m1", estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 61, fecha: "2026-10-01"}], sesiones: [], perfil: {equipo: ["barra"]}};
+  await p.setInputFiles("#rs-archivo", {name: "r.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(o))});
+  await p.waitForSelector(".utoast .utu");
+  ok(await p.evaluate(() => K.diario.mediciones.length === 1 && K.diario.perfil.equipo.join() === "barra"), "no entró");
+  await p.click(".utu"); await p.waitForFunction(() => K.diario.mediciones.length === 0 && !K.diario.perfil.equipo);
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("avisos", async () => {
+  /* solo sonido: no vibra */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/vos"); await p.click("#avisos-menu"); await p.click('.pmi[data-id="suena"]');
+  ok((await p.textContent("#avisos-menu em")) === "Solo sonido", "no cambió");
+  await ir(p, "#/cielo/front-lever"); await p.click('[data-probar="front-lever"]'); await p.waitForSelector(".ses.prueba");
+  await tick(p, 66000);
+  ok((await p.evaluate(() => window.__V)).length === 0, "vibró con «Solo sonido»");
   await ctx.close();
 });
 

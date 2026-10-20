@@ -1,6 +1,6 @@
 /* ===== Cielo y Constelación (etapa 2): el catálogo, tu cielo calculado y las marcas anotadas a mano ===== */
 K.hoy = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
-K.cieloActual = () => K.cielo.calcular(K.CATALOGO, K.diario.mediciones, K.hoy(), K.diario.sesiones);
+K.cieloActual = () => K.cielo.calcular(K.CATALOGO, K.diario.mediciones, K.hoy(), K.diario.sesiones, K.diario.perfil.equipo || null);
 K.familia = id => K.CATALOGO.familias.find(f => f.id === id);
 /* la que se abre sola en horizontal: la última que practicaste, o la primera */
 K.destacada = cielo => (cielo.constelaciones.filter(c => c.ultima).sort((a, b) => b.ultima.localeCompare(a.ultima))[0] || cielo.constelaciones[0]).id;
@@ -38,11 +38,20 @@ K.P.constelacion = c => {
   else if (p) estado = `<section class="cd cons-estado"><span class="lb">Próxima estrella · m${p.magnitud}</span><b class="t1">${K.esc(p.nombre)}</b>
       <div class="bar" style="--c:var(--${c.familia})" role="progressbar" aria-label="Avance hacia ${K.esc(p.nombre)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(c.avance * 100)}"><i style="width:${(c.avance * 100).toFixed(1)}%"></i></div>
       <span class="ln mute"><span>Tu mejor marca</span>${p.mejor === null ? "<span>Todavía ninguna</span>" : `<span class="num">${K.esc(K.cielo.corto(p.prueba, p.mejor))}</span>`}</span></section>`;
+  else if (c.pide.length) estado = `<section class="cd cons-estado"><span class="lb">Lo que sigue</span><b class="t1">Pide ${K.esc(K.pide(c.pide))}.</b><p class="mute">Si lo tenés, marcalo en tu equipo.</p></section>`;
   const tenue = c.volverAProbar ? `<p class="aviso-tenue">Hace más de 16 semanas sin práctica. Probala de nuevo cuando quieras.</p>`
     : c.atenuada ? `<p class="aviso-tenue">${K.esc(c.nombre)} se está apagando: hace más de 8 semanas sin práctica.</p>` : "";
+  /* lo que pide equipo que no marcaste se ve igual acá, tenue y diciendo qué pide */
+  const ESTADO = {encendida: "encendida", proxima: "próxima", "por-delante": "por delante", "sin-equipo": "pide equipo que no marcaste"};
   const filas = c.estrellas.map(e => `<button type="button" class="est-fila ${e.estado}" data-ir="#/cielo/${c.id}/anotar/${e.orden}" style="--c:var(--${c.familia})">
-      <span class="st" aria-hidden="true"></span><span class="nom">${K.esc(e.nombre)}<span class="vh">, ${e.estado === "encendida" ? "encendida" : e.estado === "proxima" ? "próxima" : "por delante"}</span></span>
-      <span class="num mg">${e.mejor !== null && e.estado !== "encendida" ? K.esc(K.cielo.corto(e.prueba, e.mejor)) : "m" + e.magnitud}</span></button>`).join("");
+      <span class="st" aria-hidden="true"></span><span class="nom">${K.esc(e.nombre)}<span class="vh">, ${ESTADO[e.estado]}</span></span>
+      <span class="num mg">${e.estado === "sin-equipo" ? K.esc("Pide " + K.pide(e.falta))
+        : e.mejor !== null && e.estado !== "encendida" ? K.esc(K.cielo.corto(e.prueba, e.mejor)) : "m" + e.magnitud}</span></button>`).join("");
+  /* probar la próxima es lo principal; anotar algo hecho por tu cuenta queda al lado */
+  const probar = p && K.plan.sePrueba(c);
+  const botones = c.pide.length ? `<div class="dos-btn"><button type="button" class="btn sec" data-ir="#/cielo/${c.id}/anotar">Anotar</button><button type="button" class="btn" data-ir="#/vos/equipo">Tu equipo</button></div>`
+    : probar ? `<div class="dos-btn"><button type="button" class="btn sec" data-ir="#/cielo/${c.id}/anotar">Anotar</button><button type="button" class="btn" data-probar="${c.id}">${K.ic("play")}Probar</button></div>`
+    : `<button type="button" class="btn" data-ir="#/cielo/${c.id}/anotar">Anotar una marca</button>`;
   const marcas = [...c.marcas].reverse().slice(0, 12).map(m => {
     const e = c.estrellas.find(x => x.id === m.estrella) || c.estrellas.find(x => x.prueba.ejercicio === m.ejercicio && x.prueba.tipo === m.tipo) || c.estrellas[0];
     /* lo anotado a mano se borra acá; lo de una sesión es parte de la sesión */
@@ -53,7 +62,7 @@ K.P.constelacion = c => {
   return K.enc({titulo: c.nombre, sub: fam.nombre, volver: "#/cielo", raiz: true, det: true}) +
     `<p class="cons-meta mute">${K.esc(c.meta)}</p>
     <section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>${tenue}${estado}
-    <button type="button" class="btn" data-ir="#/cielo/${c.id}/anotar">Anotar una marca</button>
+    ${botones}
     <section class="cd est-lista" aria-label="Estrellas de ${K.esc(c.nombre)}">${filas}</section>
     ${marcas ? `<span class="lb pie">Tus marcas</span><section class="cd marcas">${marcas}</section>` : ""}`;
 };

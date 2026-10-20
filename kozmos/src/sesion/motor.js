@@ -30,17 +30,20 @@ K.sesion = (() => {
 
   /* ---------- avisos: vibración y sonido ---------- */
   const HAP = {ok: 14, umbral: [10, 40, 10], fin: [180, 90, 180], logro: [18, 40, 18, 40, 30]};
-  s.vibrar = k => { try { navigator.vibrate?.(HAP[k]); } catch (e) {} };
+  /* lo que elegiste en Vos, Avisos: vibración y sonido, uno solo o nada */
+  const AVISOS = {todo: [1, 1], vibra: [1, 0], suena: [0, 1], nada: [0, 0]};
+  const quiere = i => (AVISOS[K.prefs.get("avisos", "todo")] || AVISOS.todo)[i];
+  s.vibrar = k => { if (!quiere(0)) return; try { navigator.vibrate?.(HAP[k]); } catch (e) {} };
   let AC = null;
   const audio = () => { try { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; if (!AC || AC.state === "closed") AC = new C(); if (AC.state === "suspended") AC.resume().catch(() => {}); return AC; } catch (e) { return null; } };
   /* el navegador deja sonar solo después de un toque: el primero de la sesión destraba el audio */
   addEventListener("pointerdown", () => { if (S) audio(); }, {capture: true, passive: true});
-  s.beep = (n = 1, f = 880) => { try { const ctx = audio(); if (!ctx) return;
+  s.beep = (n = 1, f = 880) => { if (!quiere(1)) return; try { const ctx = audio(); if (!ctx) return;
     for (let i = 0; i < n; i++){ const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "sine"; o.frequency.value = f; g.gain.value = .001; o.connect(g); g.connect(ctx.destination);
       const t0 = ctx.currentTime + .02 + i * .22; o.start(t0); g.gain.exponentialRampToValueAtTime(.3, t0 + .02); g.gain.exponentialRampToValueAtTime(.001, t0 + .18); o.stop(t0 + .2); } } catch (e) {} };
   /* campana de fin de descanso: dos toques con parciales de campana y cola larga. Con «en», queda programada en el
      reloj del audio: suena a tiempo aunque el teléfono frene los relojes de la página con la pantalla apagada. */
-  s.campana = (en = 0) => { try { const ctx = audio(); if (!ctx) return null; const out = ctx.createGain(); out.gain.value = .8; out.connect(ctx.destination);
+  s.campana = (en = 0) => { if (!quiere(1)) return null; try { const ctx = audio(); if (!ctx) return null; const out = ctx.createGain(); out.gain.value = .8; out.connect(ctx.destination);
     [0, .42].forEach((dt, k) => { const t = ctx.currentTime + Math.max(0, en) + .03 + dt, f0 = k ? 660 : 784; [[1, 1], [2.76, .42], [5.4, .2], [8.93, .08]].forEach(([r, a]) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "sine"; o.frequency.value = f0 * r; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.45 * a, t + .008); g.gain.exponentialRampToValueAtTime(.0001, t + (r > 2 ? .7 : 1.7)); o.connect(g); g.connect(out); o.start(t); o.stop(t + 1.8); }); }); return out; } catch (e) { return null; } };
   let programada = null;
   const desprogramar = () => { try { programada?.disconnect(); } catch (e) {} programada = null; };
@@ -162,8 +165,8 @@ K.sesion = (() => {
   s.registro = (cortada) => {
     const fin = Math.max(S.inicio, S.pausa ?? ahora()); /* si el reloj del teléfono volvió atrás, el fin no queda antes del inicio */
     return {id: S.id, fecha: S.fecha, inicio: new Date(S.inicio).toISOString(), fin: new Date(fin).toISOString(),
-      duracion: Math.round(s.total()), cortada: !!cortada, catalogo: K.CATALOGO.version,
-      bloques: S.plan.bloques.map((b, i) => ({orden: i, constelacion: b.constelacion, familia: b.familia, estrella: b.estrella, objetivo: b.objetivo,
+      duracion: Math.round(s.total()), cortada: !!cortada, catalogo: K.CATALOGO.version, ...(K.diario.perfil.peso ? {pesoKg: K.diario.perfil.peso} : {}),
+      bloques: S.plan.bloques.map((b, i) => ({orden: i, constelacion: b.constelacion, familia: b.familia, estrella: b.estrella, objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}),
         series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: b.ejercicio, tipo: b.tipo, estrella: b.estrella, objetivo: b.objetivo, valor: h.valor,
           ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, pesoKg: h.pesoKg} : {})}))})).filter(b => b.series.length)};
   };
@@ -199,6 +202,8 @@ K.sesion = (() => {
     }
     if (x.plan && Array.isArray(x.hechos)){
       S = x;
+      /* la que quedó olvidada termina en su último paso, no al abrir: si no, 11 horas de «fuerza» inflan minutos y calorías */
+      if (S.pausa === null) S.pausa = Math.min(ahora(), Math.max(S.desde || S.inicio, S.hasta || 0));
       try { if (S.fase !== "serie" && S.plan.bloques[S.b]) asentar(); } catch (e) {}
       const r = s.registro(true);
       r.bloques = r.bloques.filter(b => K.CATALOGO.constelaciones.some(c => c.id === b.constelacion) || b.series.length);

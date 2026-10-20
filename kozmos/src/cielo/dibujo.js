@@ -23,12 +23,16 @@ K.dibujo = (() => {
   const f1 = n => n.toFixed(1);
   const radio = (m, esc) => (2 + (5 - m) * .6) * esc;
   /* las estrellas de una constelación ya calculada (K.cielo.calcular), en puntos ya ubicados */
-  const estrellas = (c, pts, esc, recien = []) => {
-    let g = `<path d="${pts.map((q, i) => (i ? "L" : "M") + f1(q[0]) + " " + f1(q[1])).join("")}" fill="none" stroke="var(--ink)" stroke-opacity=".2" stroke-width="${esc > 1 ? 1.2 : 1}"/>`;
+  /* lo que pide equipo que no marcaste: en el cielo entero no aparece; en la constelación abierta, punteado */
+  const estrellas = (c, pts, esc, recien = [], ocultar = false) => {
+    const ve = c.estrellas.map(e => !(ocultar && e.estado === "sin-equipo"));
+    let g = `<path d="${pts.filter((q, i) => ve[i]).map((q, i) => (i ? "L" : "M") + f1(q[0]) + " " + f1(q[1])).join("")}" fill="none" stroke="var(--ink)" stroke-opacity=".2" stroke-width="${esc > 1 ? 1.2 : 1}"/>`;
     c.estrellas.forEach((e, i) => {
+      if (!ve[i]) return;
       const [x, y] = pts[i], r = radio(e.magnitud, esc) + (e.estado === "encendida" ? .8 * esc : 0);
       if (e.estado === "encendida") g += `<circle class="es on${c.atenuada ? " tenue" : ""}${recien.includes(e.id) ? " nace" : ""}" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" fill="var(--ink)" style="--fam:var(--${c.familia})"/>`;
       else if (e.estado === "proxima") g += `<circle class="es nx" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r + 3.6 * esc)}" fill="none" stroke="var(--${c.familia})" stroke-width="${f1(1.8 * esc)}"/><circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(1.9 * esc)}" fill="var(--${c.familia})"/>`;
+      else if (e.estado === "sin-equipo") g += `<circle class="es sin" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" fill="none" stroke="var(--off)" stroke-width="${f1(1.1 * esc)}" stroke-dasharray="${f1(1.6 * esc)} ${f1(1.8 * esc)}"/>`;
       else g += `<circle class="es off" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" fill="none" stroke="var(--off)" stroke-width="${f1(1.3 * esc)}"/>`;
     });
     return g;
@@ -41,21 +45,21 @@ K.dibujo = (() => {
   const etiqueta = c => `${c.nombre}, ${c.encendidas} de ${c.total} estrellas`;
   /* el cielo entero: dos columnas en zigzag, cada constelación se toca para abrirla */
   const grande = cielo => {
-    const W = 360, CH = 96, cs = cielo.constelaciones, H = Math.ceil(cs.length / 2) * CH + 24;
+    const W = 360, CH = 96, cs = cielo.constelaciones.filter(c => c.total > 0), H = Math.ceil(cs.length / 2) * CH + 24;
     let g = fondo(7, W, H);
     cs.forEach((c, i) => {
       const fila = Math.floor(i / 2), col = i % 2, r = azar(semilla(c.id + "#"));
       const x = col * 180 + r() * 6, y = 10 + fila * CH + r() * 6;
-      const pts = caber(forma(c.id, c.total), x + 18, y + 30, 140, 44);
+      const pts = caber(forma(c.id, c.estrellas.length), x + 18, y + 30, 140, 44);
       g += `<g class="cons" data-ir="#/cielo/${c.id}" data-quieto="1" role="link" tabindex="0" aria-label="${K.esc(etiqueta(c))}">
         <rect x="${f1(x + 2)}" y="${f1(y)}" width="172" height="${CH - 8}" rx="14" fill="transparent"/>
-        <text x="${f1(x + 14)}" y="${f1(y + 15)}" class="cons-nom">${K.esc(c.nombre.toUpperCase())}</text>${estrellas(c, pts, 1)}</g>`;
+        <text x="${f1(x + 14)}" y="${f1(y + 15)}" class="cons-nom">${K.esc(c.nombre.toUpperCase())}</text>${estrellas(c, pts, 1, [], true)}</g>`;
     });
     return `<svg class="cielo-svg" viewBox="0 0 ${W} ${H}" role="group" aria-label="Tu cielo">${g}</svg>`;
   };
   /* una sola constelación, grande */
   const una = (c, recien) => {
-    const W = 340, H = 150, pts = caber(forma(c.id, c.total), 28, 22, W - 56, H - 44);
+    const W = 340, H = 150, pts = caber(forma(c.id, c.estrellas.length), 28, 22, W - 56, H - 44);
     return `<svg class="cons-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${K.esc(etiqueta(c))}">${fondo(semilla(c.id) % 997, W, H, 700)}${estrellas(c, pts, 1.6, recien)}</svg>`;
   };
   /* anillo de avance: cuánto de la constelación está encendido */

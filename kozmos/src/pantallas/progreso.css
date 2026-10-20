@@ -1,0 +1,34 @@
+/* ===== Progreso, Vos y lo que sumó la etapa 4 ===== */
+.semanas{display:block; width:100%; height:96px}
+.prog-sem,.prog-lista{gap:10px}
+.prog-lista .ln{font-weight:600}
+.prog-lista .ln .num{font-size:var(--t-sm)}
+.fila-ir{width:100%; border:0; background:transparent; color:inherit; padding:0; text-align:left; cursor:pointer; font:inherit}
+.ajr small{font-weight:600}
+.fuentes{gap:6px} .fuentes p{margin:0}
+/* dos botones en una fila: el principal a la derecha, al alcance del pulgar */
+.dos-btn{display:grid; grid-template-columns:1fr 1.6fr; gap:8px}
+.hoy-ventana{margin:0; padding:8px 10px; border-radius:var(--r-sm); background:var(--s2)}
+.toca.es-prueba{font-weight:700}
+/* estrellas que piden equipo que no marcaste: tenues en su constelación */
+.est-fila.sin-equipo{color:var(--ink-3)}
+.est-fila.sin-equipo .mg{font-family:inherit; font-size:var(--t-xs); font-weight:700}
+.est-fila.sin-equipo .st{border-style:dashed}
+.res-kcal{margin:0; padding:0 2px}
+/* la prueba: el anillo se llena hasta la estrella */
+.ses.prueba{cursor:pointer}
+.ses.prueba .ses-a{justify-content:flex-start}
+.prueba-anillo{margin:auto}
+.prueba-anillo.listo .arco{stroke:var(--c)}
+.anillo-desc.vacio .arco{opacity:0}
+@media (orientation:landscape) and (max-height:520px){
+  .split .res{display:flex}
+  .split .res .cons-svg{max-height:150px}
+}
+.semanas-eje{margin-top:-6px; color:var(--ink-3)}
+.prog-est{display:grid; grid-template-columns:10px 1fr; column-gap:10px; align-items:center}
+.prog-est .dot{grid-row:span 2}
+.prog-est .small{grid-column:2}
+.ses-fila{display:grid}
+.ses-fila small{font-size:var(--t-s); font-weight:700}
+.ses.prueba.prep #s-listo{visibility:hidden}
