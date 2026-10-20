@@ -85,6 +85,22 @@ K.diario = (() => {
     await tx("sesiones", "readwrite", s => s.delete(sid));
     d.sesiones = d.sesiones.filter(x => x.id !== sid);
   };
+  /* varios cambios en una sola escritura: entra todo o no entra nada (lo usa el respaldo).
+     {poner: {mediciones: [], sesiones: []}, sacar: {mediciones: [ids], sesiones: [ids]}, perfil: {clave: valor, o undefined para sacarla}} */
+  d.lote = async ({poner = {}, sacar = {}, perfil = {}}) => {
+    if (!db) throw new Error(d.motivo || "sin lugar para guardar");
+    await new Promise((ok, mal) => {
+      const t = db.transaction(["mediciones", "sesiones", "perfil"], "readwrite");
+      for (const st of ["mediciones", "sesiones"]){
+        for (const x of poner[st] || []) t.objectStore(st).put(x);
+        for (const i of sacar[st] || []) t.objectStore(st).delete(i);
+      }
+      for (const [k, v] of Object.entries(perfil)) v === undefined ? t.objectStore("perfil").delete(k) : t.objectStore("perfil").put(v, k);
+      t.oncomplete = ok; t.onerror = t.onabort = () => mal(t.error || new Error("no se pudo guardar"));
+    });
+    persistir();
+    await d.releer();
+  };
   d.perfilPoner = async (k, v) => {
     if (!db) throw new Error("sin lugar para guardar");
     await tx("perfil", "readwrite", s => s.put(v, k));

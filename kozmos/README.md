@@ -12,15 +12,15 @@ El modelo, la arquitectura y las seis etapas están en el documento «Kozmos · 
 | `src/piezas/` | Lo rescatado de Entreno: barra flotante, encabezado que se achica, menús, deshacer, isla, ajustes y horizontal |
 | `src/pantallas/` | Hoy, Cielo (con Constelación y Anotar), Progreso y Vos |
 | `src/cielo/` | Las reglas del cielo (funciones puras) y su dibujo |
-| `src/diario/` | Lo que hacés, guardado en IndexedDB |
-| `src/sesion/` | El plan del día (funciones puras) y el motor de la sesión |
+| `src/diario/` | Lo que hacés, guardado en IndexedDB, y el respaldo (armar y leer el archivo) |
+| `src/sesion/` | El plan del día y las calorías (funciones puras) y el motor de la sesión |
 | `catalogo/` | Constelaciones y estrellas, y los ids retirados |
 | `src/app.js` | Rutas, transiciones y arranque |
 | `src/sw.js` | Service worker: abre sin conexión desde la segunda vez |
 | `fuentes/` | Mona Sans y Geist Mono (latín, woff2) con su licencia SIL OFL |
 | `iconos/` | Logo y los íconos de la app (los dibuja `tools/iconos.mjs`) |
 | `tools/armar.mjs` | Junta todo en un solo `index.html` dentro de `app/` (no va a git) |
-| `pruebas/puras.mjs` | Pruebas sin pantalla: catálogo, cielo y plan |
+| `pruebas/puras.mjs` | Pruebas sin pantalla: catálogo, cielo, plan, calorías y respaldo |
 | `pruebas/suite.mjs` | Corre las puras y después las de punta a punta con Playwright |
 
 Cada módulo es un archivo chico que suma lo suyo al objeto `K`. El orden de armado está en `tools/armar.mjs`.
@@ -38,7 +38,9 @@ Para mirarla en el navegador: `cd kozmos/app && python3 -m http.server`, y abrir
 
 ## Datos
 
-Las preferencias van en `localStorage` con la clave `kozmos.prefs.v1`. Lo que hacés va en el diario: IndexedDB, base `kozmos`, versión 2, con `mediciones` (cada marca: estrella, valor, día y origen), `perfil` (tu peso para Lastre y tu rumbo) y `sesiones` (cada sesión con sus bloques y series). La sesión en curso vive en `localStorage` con la clave `kozmos.vivo.v1` hasta que termina. El cielo no se guarda: se calcula cada vez del catálogo más las mediciones. Kozmos no lee ni toca `barrabici.v4`, los datos de Entreno.
+Las preferencias van en `localStorage` con la clave `kozmos.prefs.v1`. Lo que hacés va en el diario: IndexedDB, base `kozmos`, versión 2, con `mediciones` (cada marca: estrella, valor, día y origen), `perfil` (tu peso, tu rumbo y tu equipo) y `sesiones` (cada sesión con sus bloques y series). La sesión en curso vive en `localStorage` con la clave `kozmos.vivo.v1` hasta que termina. El cielo no se guarda: se calcula cada vez del catálogo más las mediciones. Kozmos no lee ni toca `barrabici.v4`, los datos de Entreno. Los avisos (todo, vibra, suena, nada) y la fecha del último respaldo van en las preferencias.
+
+El respaldo es un archivo `kozmos-respaldo_AAAA-MM-DD.json` con las mediciones, las sesiones y el perfil. Su formato está en `docs/kozmos-respaldo.md`; cambiarlo pide subir `formato` y que `leer` siga entendiendo los anteriores.
 
 Reglas que cuidan los datos de la gente:
 - Un id de estrella o de constelación no se cambia ni se reusa nunca. Si una se retira, su id va a `catalogo/retirados.json` y la prueba del catálogo impide volver a usarlo.

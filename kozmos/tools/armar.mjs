@@ -12,9 +12,9 @@ const D = path.resolve(process.argv[2] || path.join(RAIZ, "app"));
 
 /* el orden importa: primero la base, después las piezas, las pantallas y el arranque */
 const CSS = ["base/letra.css", "base/tokens.css", "base/base.css", "piezas/nav.css", "piezas/encabezado.css", "piezas/menu.css",
-  "piezas/deshacer.css", "piezas/isla.css", "piezas/ajustes.css", "piezas/horizontal.css", "pantallas/pantallas.css", "pantallas/cielo.css", "pantallas/hoy.css"];
+  "piezas/deshacer.css", "piezas/isla.css", "piezas/ajustes.css", "piezas/horizontal.css", "pantallas/pantallas.css", "pantallas/cielo.css", "pantallas/hoy.css", "pantallas/progreso.css"];
 const JS = ["base/base.js", "piezas/nav.js", "piezas/encabezado.js", "piezas/menu.js", "piezas/deshacer.js", "piezas/isla.js",
-  "cielo/cielo.js", "cielo/dibujo.js", "diario/diario.js", "sesion/plan.js", "sesion/motor.js",
+  "cielo/cielo.js", "cielo/dibujo.js", "diario/diario.js", "diario/respaldo.js", "sesion/plan.js", "sesion/calorias.js", "sesion/motor.js",
   "pantallas/pantallas.js", "pantallas/cielo.js", "pantallas/hoy.js", "app.js"];
 
 /* versión: «k-abc1234» por commit (o «k-abc1234+cambios»); KOZMOS_V la fuerza a mano */

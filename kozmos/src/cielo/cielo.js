@@ -43,8 +43,10 @@ K.cielo = (() => {
     return r;
   }
 
-  function calcular(cat, mediciones, hoy, sesiones = []){
+  /* equipo: lo que marcaste que tenés; null es «todavía no dijiste», y entonces se muestra todo */
+  function calcular(cat, mediciones, hoy, sesiones = [], equipo = null){
     const h = dia(hoy);
+    const tiene = e => !equipo || (e.equipo || []).every(x => equipo.includes(x));
     mediciones = [...mediciones, ...deSesiones(sesiones)];
     /* qué ejercicio mide cada estrella, para juntar las marcas por ejercicio y tipo */
     const deEstrella = {};
@@ -72,18 +74,25 @@ K.cielo = (() => {
         const ms2 = efectivas(e.prueba, porEj[e.prueba.ejercicio + "|" + e.prueba.tipo] || []);
         const mejor = mejorDe(e.prueba, ms2.map(m => m.valor));
         const enc = ms2.filter(m => llega(e.prueba, m.valor)).map(m => m.fecha).sort()[0] || null;
-        return {...e, mejor, encendida: !!enc, desde: enc};
+        return {...e, mejor, encendida: !!enc, desde: enc, sinEquipo: !tiene(e), falta: equipo ? (e.equipo || []).filter(x => !equipo.includes(x)) : []};
       });
       const lit = new Set(estrellas.filter(e => e.encendida).map(e => e.id));
       let proxima = null;
       for (const e of estrellas){
-        e.estado = e.encendida ? "encendida" : "por-delante";
-        if (!proxima && !e.encendida && e.requiere.every(r => lit.has(r))){ e.estado = "proxima"; proxima = e; }
+        e.estado = e.encendida ? "encendida" : e.sinEquipo ? "sin-equipo" : "por-delante";
+        if (!proxima && !e.encendida && !e.sinEquipo && e.requiere.every(r => lit.has(r))){ e.estado = "proxima"; proxima = e; }
       }
-      const encendidas = lit.size;
-      encendidasTotal += encendidas; total += estrellas.length;
-      return {id: c.id, nombre: c.nombre, familia: c.familia, meta: c.meta, estrellas, encendidas, total: estrellas.length,
-        proxima, avance: proxima ? avance(proxima.prueba, proxima.mejor) : 1, completa: encendidas === estrellas.length,
+      /* lo que pide equipo que no tenés no cuenta en el total, ni lo que solo se alcanza pasando por ahí,
+         salvo que ya la hayas encendido en otro lado */
+      const fuera = new Set(estrellas.filter(e => !e.encendida && e.sinEquipo).map(e => e.id));
+      for (let cambio = true; cambio;){ cambio = false; for (const e of estrellas) if (!e.encendida && !fuera.has(e.id) && e.requiere.some(r => fuera.has(r))){ fuera.add(e.id); cambio = true; } }
+      const encendidas = lit.size, cuenta = estrellas.filter(e => !fuera.has(e.id)).length;
+      encendidasTotal += encendidas; total += cuenta;
+      /* sin próxima y sin completar: lo que sigue pide equipo que no marcaste */
+      const completa = encendidas === estrellas.length;
+      const pide = proxima || completa ? [] : [...new Set(estrellas.flatMap(e => e.encendida ? [] : e.falta))];
+      return {id: c.id, nombre: c.nombre, familia: c.familia, meta: c.meta, estrellas, encendidas, total: cuenta,
+        proxima, avance: proxima ? avance(proxima.prueba, proxima.mejor) : 1, completa, pide,
         ultima, brillo, atenuada, volverAProbar, marcas: ms};
     });
     return {constelaciones, encendidas: encendidasTotal, total};

@@ -35,7 +35,17 @@ K.plan = (() => {
     return {constelacion: c.id, familia: c.familia, estrella: p.id, ejercicio: pr.ejercicio, tipo: pr.tipo, umbral: pr.umbral, objetivo: o, series, descanso: DESCANSO[pr.tipo], extra: !!extra};
   }
 
-  /* armar(cielo, rumbo, sesiones, hoy) → {bloques, minutos} */
+  /* la prueba de una estrella: una sola serie que apunta al umbral, con manos libres si se mide con reloj */
+  /* lo que se cuenta de a una sesión no se prueba de un intento; los 10 km tampoco: la app no mide distancia,
+     y un toque antes de tiempo anotaría menos minutos y encendería la estrella sin haber corrido */
+  const SIN_PRUEBA = ["sesiones", "menos-minutos"];
+  const sePrueba = c => !!c.proxima && !SIN_PRUEBA.includes(c.proxima.prueba.tipo);
+  function prueba(c){
+    const p = c.proxima, pr = p.prueba;
+    return {constelacion: c.id, familia: c.familia, estrella: p.id, ejercicio: pr.ejercicio, tipo: pr.tipo, umbral: pr.umbral, objetivo: pr.umbral, series: 1, descanso: 0, extra: false, prueba: true};
+  }
+
+  /* armar(cielo, rumbo, sesiones, hoy) → {bloques, minutos, volviste, ventana} */
   function armar(cielo, rumbo, sesiones, hoy){
     const cs = cielo.constelaciones, por = id => cs.find(c => c.id === id);
     const elegidas = (rumbo || []).map(por).filter(c => c && c.proxima);
@@ -51,15 +61,24 @@ K.plan = (() => {
     /* la de esa familia que practicaste último, o la de siempre */
     const sumar = (fam, def) => {
       if (usadas.some(c => c.familia === fam)) return;
-      const c = cs.filter(x => x.familia === fam && x.proxima && x.ultima).sort((a, b) => b.ultima.localeCompare(a.ultima))[0] || por(def);
+      /* si la de siempre pide equipo que no tenés, la primera de esa familia que sí puedas hacer */
+      const c = cs.filter(x => x.familia === fam && x.proxima && x.ultima).sort((a, b) => b.ultima.localeCompare(a.ultima))[0]
+        || (por(def)?.proxima ? por(def) : cs.find(x => x.familia === fam && x.proxima));
       if (c && c.proxima) bloques.push(bloque(c, true, volviste));
     };
     sumar("ra", RANGO); sumar("mo", MOTOR);
     /* orden: fuerza primero, después rango, el motor al final */
     const pos = {fu: 0, ra: 1, mo: 2};
     bloques.sort((a, b) => pos[a.familia] - pos[b.familia]);
+    /* ventana de prueba: con tu mejor marca al 80 % de la próxima estrella, la sesión empieza probándola, descansado.
+       Al volver de 3 semanas o más no se abre: primero se recupera. */
+    const ventana = volviste ? [] : usadas.filter(c => sePrueba(c) && c.proxima.mejor !== null && c.avance >= .8);
+    /* lo que se hace en una sola serie (una salida de bici, un trote) no se repite: la prueba ya es el entrenamiento del día */
+    const solas = new Set(ventana.filter(c => SERIES[c.proxima.prueba.tipo] === 1).map(c => c.id));
+    for (let i = bloques.length - 1; i >= 0; i--) if (solas.has(bloques[i].constelacion)) bloques.splice(i, 1);
+    bloques.unshift(...ventana.map(prueba));
     const seg = bloques.reduce((t, b) => t + duracion(b), 0) + Math.max(0, bloques.length - 1) * ENTRE_BLOQUES;
-    return {bloques, minutos: Math.max(5, Math.round(seg / 300) * 5), volviste};
+    return {bloques, minutos: Math.max(5, Math.round(seg / 300) * 5), volviste, ventana: ventana.map(c => c.id)};
   }
   /* la vez pasada: tu mejor serie de ese ejercicio en la última sesión que lo tuvo */
   function vezPasada(sesiones, ejercicio, tipo){
@@ -69,5 +88,5 @@ K.plan = (() => {
     }
     return null;
   }
-  return {armar, objetivo, vezPasada, ENTRE_BLOQUES};
+  return {armar, objetivo, vezPasada, prueba, sePrueba, ENTRE_BLOQUES};
 })();
