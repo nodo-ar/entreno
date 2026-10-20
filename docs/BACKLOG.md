@@ -41,8 +41,9 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **`AVISOS` definido en dos lugares** (la tijera).
 - ~~Tus días~~: hecho en la etapa 5. Aclaración: son los días de la semana que entrenás, no un calendario (el acta 009 decía «calendario»).
 - **El maniquí y los dibujos de los ejercicios**: PR propio, después de la etapa 5.
-- **[decisión de Fer] «Entrena para»** (Casandra, vuelta 10): 15 rutinas nombran estrellas que no encienden solas; corregir `alimenta` o sumar mediciones.
-- **[decisión de Fer] Nombres de personas en títulos de rutinas** (la abogada): «Programa Armstrong», «10×1 de Gibala», «Tabata en bici». Revisar «Tabata» como marca antes del APK.
+- ~~«Entrena para»~~: Fer decidió dejarlo así (2026-10-20).
+- ~~Nombres de personas en títulos~~: renombradas (2026-10-20).
+- **Logo de Kozmos en animaciones y transiciones; íconos y dibujos propios de la app** (Fer, 2026-10-20): nada genérico, como el escudo de las hazañas. Propuesta con tablero antes de construir.
 - **Pitidos de tramo con la pantalla apagada** (la ingeniera de campo): programar la campana de cada cambio de tramo y desprogramarla al pausar, saltear o cortar (Casandra).
 - **Achicar el catálogo de rutinas** (la ingeniera de campo): 408 kB de JSON; sesiones repetidas por referencia.
 - **«−1» pegado a «Vuelta» y «Seguir esta rutina» abajo del pliegue** (la ingeniera de campo).

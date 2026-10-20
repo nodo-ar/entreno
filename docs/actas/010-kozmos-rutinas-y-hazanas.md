@@ -49,3 +49,5 @@ Quinta etapa de Kozmos: las 26 rutinas y las 8 hazañas en el catálogo nuevo, y
 1. OK al tablero de la etapa 5.
 2. «Entrena para»: ¿corrijo la lista de cada rutina para que solo nombre lo que enciende sola, o queda así?
 3. Nombres de personas en títulos («Programa Armstrong», «10×1 de Gibala», «Tabata en bici»): ¿los cambio por nombres propios de Kozmos?
+
+**Respuesta de Fer (2026-10-20)**: «Perfecto. Sí a todas tus propuestas.» Tablero aprobado; «Entrena para» queda como está; las rutinas con nombres de personas pasan a nombres propios con la fuente al pie: «Cinco días de dominadas», «Diez pasadas en bici» y «20 y 10 en bici». Pidió además usar el logo de Kozmos en animaciones y transiciones, y que los íconos y dibujos tengan relación con la app (no un escudo genérico): va como propuesta aparte.

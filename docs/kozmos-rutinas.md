@@ -15,7 +15,7 @@ Cada ejercicio: `id` (texto estable, en castellano y con guiones; nunca se reusa
 ```json
 {
   "id": "armstrong",
-  "nombre": "Programa Armstrong",
+  "nombre": "Cinco días de dominadas",
   "familia": "fu",
   "texto": "Cinco días por semana para sumar dominadas seguidas.",
   "semanas": 6, "dias": 5, "minutos": 25,
