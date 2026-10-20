@@ -12,6 +12,9 @@ K.sesion = (() => {
   s.activa = () => !!S;
   s.estado = () => S;
   s.bloque = () => S.plan.bloques[S.b];
+  /* la serie que va: los bloques de rutina llevan una lista de pasos (con superseries, de ejercicios distintos) */
+  const pasoDe = (b, k) => b.pasos ? b.pasos[k] : {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, descanso: b.descanso};
+  s.paso = () => pasoDe(s.bloque(), S.s);
   s.ultima = () => S.b === S.plan.bloques.length - 1 && S.s === s.bloque().series - 1;
   /* lo que corre en la fase y en toda la sesión, sin contar las pausas */
   s.enFase = () => Math.max(0, ((S.pausa ?? ahora()) - S.desde) / 1000);
@@ -23,10 +26,11 @@ K.sesion = (() => {
   /* lo que viene después del descanso, dicho en corto */
   s.proxima = () => {
     const b = s.bloque();
-    if (S.s < b.series - 1) return `${K.ej(b.ejercicio).nombre}, ${b.tipo === "logrado" ? "intento" : "serie"} ${S.s + 2} de ${b.series}`;
+    if (!b.clase && S.s < b.series - 1){ const p = pasoDe(b, S.s + 1); return `${K.ej(p.ejercicio).nombre}, ${p.tipo === "logrado" ? "intento" : "serie"} ${S.s + 2} de ${b.series}`; }
     const nx = S.plan.bloques[S.b + 1];
-    return nx ? K.ej(nx.ejercicio).nombre : "";
+    return nx ? s.nombreBloque(nx) : "";
   };
+  s.nombreBloque = b => b.clase ? b.nombre || "" : K.ej(pasoDe(b, 0).ejercicio).nombre;
 
   /* ---------- avisos: vibración y sonido ---------- */
   const HAP = {ok: 14, umbral: [10, 40, 10], fin: [180, 90, 180], logro: [18, 40, 18, 40, 30]};
@@ -61,17 +65,74 @@ K.sesion = (() => {
     if (!S) return;
     const b = s.bloque(), av = S.avisos;
     if (!S.pausa){
-      if (S.fase === "serie" && b.tipo === "segundos" && !av.ya && s.prep() <= 0){ av.ya = true; s.vibrar("ok"); s.beep(1, 1320); }
-      if (S.fase === "serie" && (b.tipo === "segundos" || b.tipo === "minutos") && !av.obj && s.prep() <= 0 && s.enFase() >= b.objetivo * (b.tipo === "minutos" ? 60 : 1)){
+      const p = s.paso() || {};
+      if (S.fase === "serie" && p.tipo === "segundos" && !av.ya && s.prep() <= 0){ av.ya = true; s.vibrar("ok"); s.beep(1, 1320); }
+      if (S.fase === "serie" && (p.tipo === "segundos" || p.tipo === "minutos") && Number.isFinite(p.objetivo) && !av.obj && s.prep() <= 0 && s.enFase() >= p.objetivo * (p.tipo === "minutos" ? 60 : 1)){
         av.obj = true; s.vibrar("umbral"); s.beep(2); guardarVivo();
       }
-      if (S.fase === "descanso" && !av.fin && s.queda() <= 0){ av.fin = true; s.vibrar("fin"); if (!programada) s.campana(); programada = null; guardarVivo(); }
+      /* los tramos pasan solos, también los que vencieron con la pantalla apagada */
+      if (S.fase === "tramo"){
+        let paso = false;
+        while (S && S.fase === "tramo" && S.pausa === null && s.queda() <= 0){ avanzarTramo(); paso = true; }
+        if (paso){ s.vibrar(S && S.fase === "tramo" ? "ok" : "fin"); s.beep(S && S.fase === "tramo" ? 1 : 2, 1320); guardarVivo(); s.alTramo?.(); }
+        else if (!av.cuenta && s.queda() <= 3 && b.tramos[S.s + 1]){ av.cuenta = true; s.beep(1, 660); }
+      }
+      if (S && S.fase === "circuito" && s.prep() <= 0 && !av.ya){ av.ya = true; s.vibrar("ok"); s.beep(1, 1320); }
+      if (S && S.fase === "circuito" && b.formato === "amrap" && s.prep() <= 0 && s.queda() <= 0){ finCircuito(); s.vibrar("fin"); s.campana(); guardarVivo(); s.alTramo?.(); }
+      if (S && S.fase === "descanso" && !av.fin && s.queda() <= 0){ av.fin = true; s.vibrar("fin"); if (!programada) s.campana(); programada = null; guardarVivo(); }
     }
     s.alLatir?.();
   }
 
   /* ---------- lo que hacés ---------- */
-  const arrancarSerie = () => { S.fase = "serie"; S.desde = ahora() + (s.bloque().tipo === "segundos" ? PREP * 1000 : 0); S.hasta = 0; S.avisos = {}; };
+  const arrancarSerie = () => {
+    const b = s.bloque(), t = ahora(); S.avisos = {};
+    if (b.clase === "tramos"){ S.fase = "tramo"; S.th = []; S.desde = t; S.hasta = t + b.tramos[S.s].seg * 1000; return; }
+    /* una hazaña arranca con 5 s para acomodarse; con tiempo límite, el reloj baja */
+    if (b.clase === "circuito"){ S.fase = "circuito"; S.vueltas = 0; S.desde = t + PREP * 1000; S.hasta = b.formato === "amrap" ? S.desde + b.minutos * 60e3 : 0; return; }
+    S.fase = "serie"; S.desde = t + (s.paso().tipo === "segundos" ? PREP * 1000 : 0); S.hasta = 0;
+  };
+  /* ---------- tramos: cada uno dura lo suyo y pasa solo al siguiente ---------- */
+  /* lo que se hizo de un bloque de tramos queda como una serie: lo que mide la rutina, o los segundos hechos */
+  const cerrarTramos = () => {
+    const b = s.bloque(), hechos = b.tramos.map((x, k) => S.th[k] ?? 0), total = hechos.reduce((a, x) => a + x, 0);
+    const v = b.mide ? K.rutina.medir(b, hechos) : null, ej = b.tramos.find(x => x.ejercicio)?.ejercicio || null;
+    const completa = total >= b.tramos.reduce((a, x) => a + x.seg, 0) * .8;
+    if (b.mide && v > 0) S.hechos.push({b: S.b, s: 0, ejercicio: b.mide.ejercicio, tipo: b.mide.tipo, valor: v, seg: total});
+    else if (total > 0) S.hechos.push({b: S.b, s: 0, ejercicio: b.hazana || ej, tipo: b.hazana ? "hazana" : "tramos", valor: b.hazana ? (completa ? 1 : 0) : total, seg: total, completa});
+  };
+  const avanzarTramo = (hecho = s.bloque().tramos[S.s].seg) => {
+    const b = s.bloque();
+    S.th[S.s] = hecho; S.avisos = {};
+    if (S.s < b.tramos.length - 1){ S.s++; S.desde = S.hasta; S.hasta = S.desde + b.tramos[S.s].seg * 1000; return; }
+    /* el último tramo: el bloque queda hecho y sigue el descanso entre bloques, o el cierre */
+    const fin = S.hasta; cerrarTramos(); S.s = 0;
+    if (S.b === S.plan.bloques.length - 1){ S.fase = "cierre"; S.borrador = null; S.desde = fin; return; }
+    S.fase = "descanso"; S.borrador = null; S.desde = fin; S.hasta = fin + K.plan.ENTRE_BLOQUES * 1000; S.total = K.plan.ENTRE_BLOQUES;
+  };
+  /* saltear un tramo: lo que corrió cuenta, y arranca el que sigue */
+  s.saltearTramo = () => {
+    if (!S || S.fase !== "tramo") return;
+    if (S.pausa !== null) s.pausar();
+    const b = s.bloque(), t = ahora(), hecho = Math.min(b.tramos[S.s].seg, Math.max(0, (t - S.desde) / 1000));
+    S.hasta = t; avanzarTramo(hecho);
+    s.vibrar("ok"); guardarVivo(); programar();
+  };
+  /* ---------- circuito: vueltas contra el reloj, o todas las que entren ---------- */
+  const finCircuito = () => {
+    const b = s.bloque();
+    S.borrador = b.formato === "amrap" ? S.vueltas : Math.round(s.enFase());
+    S.fase = "cierre"; S.pausa = null; S.desde = b.formato === "amrap" ? S.hasta : ahora(); S.avisos = {};
+  };
+  s.vuelta = d => {
+    if (!S || S.fase !== "circuito" || s.prep() > 0) return;
+    if (S.pausa !== null) s.pausar();
+    const b = s.bloque();
+    S.vueltas = Math.max(0, S.vueltas + (d || 1));
+    if (d !== -1 && b.formato === "tiempo" && S.vueltas >= b.rondas){ finCircuito(); s.vibrar("logro"); s.campana(); }
+    else s.vibrar("ok");
+    guardarVivo();
+  };
   s.empezar = plan => {
     const t = ahora();
     S = {id: K.diario.nuevoId(), fecha: K.hoy(), inicio: t, pausado: 0, pausa: null, plan, b: 0, s: 0, fase: "serie", desde: t, hasta: 0, total: 0, hechos: [], borrador: null, avisos: {}};
@@ -80,6 +141,7 @@ K.sesion = (() => {
   /* lo que se propone anotar al terminar una serie: lo que corrió el reloj, o el objetivo */
   const propuesta = b => {
     const t = s.enFase();
+    if (b.objetivo === "max") return b.tipo === "segundos" ? Math.max(1, Math.floor(t)) : K.plan.vezPasada(K.diario.sesiones, b.ejercicio, b.tipo) ?? "";
     if (b.tipo === "segundos") return Math.max(1, Math.floor(t));
     if (b.tipo === "minutos" || b.tipo === "menos-minutos") return Math.max(1, Math.round(t / 60));
     if (b.tipo === "logrado") return 0;
@@ -93,12 +155,12 @@ K.sesion = (() => {
   s.listo = () => {
     if (!S || S.fase !== "serie") return;
     if (S.pausa) s.pausar();
-    const b = s.bloque(), t = ahora();
-    S.borrador = propuesta(b);
+    const b = s.bloque(), p = s.paso(), t = ahora();
+    S.borrador = propuesta(p);
     S.avisos = {};
     if (s.ultima()){ S.fase = "cierre"; }
     else {
-      const desc = S.s < b.series - 1 ? b.descanso : Math.max(b.descanso, K.plan.ENTRE_BLOQUES);
+      const desc = S.s < b.series - 1 ? p.descanso : Math.max(p.descanso, K.plan.ENTRE_BLOQUES);
       S.fase = "descanso"; S.desde = t; S.hasta = t + desc * 1000; S.total = desc;
     }
     s.vibrar("ok"); guardarVivo(); programar();
@@ -112,22 +174,32 @@ K.sesion = (() => {
   const numero = s.numero = x => { const v = Number(String(x).replace(",", ".").trim()); return Number.isFinite(v) ? v : NaN; };
   /* lo anotado pasa a ser una serie hecha; vacío o en cero no cuenta, salvo un intento que no salió */
   const asentar = () => {
-    const b = s.bloque(), v = S.borrador; S.borrador = null;
+    if (S.fase === "tramo"){ S.th[S.s] = Math.min(s.bloque().tramos[S.s].seg, s.enFase()); cerrarTramos(); return; } /* cortado a mitad de un tramo: vale lo que corrió */
+    const b0 = s.bloque();
+    if (b0.clase === "circuito"){
+      /* una hazaña: completa si llegó al final; cortada a la mitad, queda lo hecho sin contar como marca */
+      const completa = S.fase === "cierre", v = numero(completa ? S.borrador : b0.formato === "amrap" ? S.vueltas : Math.round(s.enFase())); S.borrador = null;
+      if (v > 0) S.hechos.push({b: S.b, s: 0, ejercicio: b0.hazana, tipo: "hazana", valor: v, completa});
+      return;
+    }
+    if (b0.clase) return; /* tramos ya cerrados */
+    const b = s.paso(), v = S.borrador; S.borrador = null;
+    const marca = {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo};
     if (v === null || v === undefined) return;
     if (b.tipo === "porcentaje"){
-      const l = numero(v.lastre), p = numero(v.peso);
-      if (!(l > 0 && p >= 20 && p <= 400)) return;
-      S.hechos.push({b: S.b, s: S.s, valor: Math.round(l / p * 100), lastreKg: l, pesoKg: p});
-      if (p !== K.diario.perfil.peso) K.diario.perfilPoner("peso", p).catch(() => {});
+      const l = numero(v.lastre), pk = numero(v.peso);
+      if (!(l > 0 && pk >= 20 && pk <= 400)) return;
+      S.hechos.push({b: S.b, s: S.s, ...marca, valor: Math.round(l / pk * 100), lastreKg: l, pesoKg: pk});
+      if (pk !== K.diario.perfil.peso) K.diario.perfilPoner("peso", pk).catch(() => {});
       return;
     }
     const n = numero(v);
-    if (b.tipo === "logrado"){ S.hechos.push({b: S.b, s: S.s, valor: n > 0 ? 1 : 0}); return; }
-    if (n > 0 && n <= 100000) S.hechos.push({b: S.b, s: S.s, valor: n});
+    if (b.tipo === "logrado"){ S.hechos.push({b: S.b, s: S.s, ...marca, valor: n > 0 ? 1 : 0}); return; }
+    if (n > 0 && n <= 100000) S.hechos.push({b: S.b, s: S.s, ...marca, valor: n});
   };
   const siguiente = () => {
     const b = s.bloque();
-    if (S.s < b.series - 1) S.s++; else { S.b++; S.s = 0; }
+    if (!b.clase && S.s < b.series - 1) S.s++; else { S.b++; S.s = 0; }
     arrancarSerie();
   };
   s.seguir = () => {
@@ -164,11 +236,15 @@ K.sesion = (() => {
   /* lo que queda guardado de la sesión: solo lo que hiciste, con lo que midió cada serie */
   s.registro = (cortada) => {
     const fin = Math.max(S.inicio, S.pausa ?? ahora()); /* si el reloj del teléfono volvió atrás, el fin no queda antes del inicio */
+    const pl = S.plan, hz = pl.hazana && S.hechos.find(h => h.tipo === "hazana");
     return {id: S.id, fecha: S.fecha, inicio: new Date(S.inicio).toISOString(), fin: new Date(fin).toISOString(),
       duracion: Math.round(s.total()), cortada: !!cortada, catalogo: K.CATALOGO.version, ...(K.diario.perfil.peso ? {pesoKg: K.diario.perfil.peso} : {}),
-      bloques: S.plan.bloques.map((b, i) => ({orden: i, constelacion: b.constelacion, familia: b.familia, estrella: b.estrella, objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}),
-        series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: b.ejercicio, tipo: b.tipo, estrella: b.estrella, objetivo: b.objetivo, valor: h.valor,
-          ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, pesoKg: h.pesoKg} : {})}))})).filter(b => b.series.length)};
+      ...(pl.rutina ? {rutina: {...pl.rutina}} : {}),
+      ...(pl.hazana ? {hazana: {...pl.hazana, valor: hz ? hz.valor : 0, completa: !!(hz && hz.completa)}} : {}),
+      bloques: pl.bloques.map((b, i) => ({orden: i, ...(b.constelacion ? {constelacion: b.constelacion} : {}), familia: b.familia, ...(b.estrella ? {estrella: b.estrella} : {}),
+        objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}), ...(b.clase ? {clase: b.clase, nombre: b.nombre} : {}),
+        series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: h.ejercicio ?? b.ejercicio, tipo: h.tipo ?? b.tipo, ...(b.estrella ? {estrella: b.estrella} : {}), objetivo: h.objetivo ?? b.objetivo, valor: h.valor,
+          ...(h.seg !== undefined ? {seg: Math.round(h.seg)} : {}), ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, pesoKg: h.pesoKg} : {})}))})).filter(b => b.series.length)};
   };
   /* terminar: asienta lo último, guarda y suelta todo. Devuelve {registro, antes} o null si no había nada hecho. */
   s.terminar = async (cortada = false) => {
@@ -191,7 +267,7 @@ K.sesion = (() => {
   /* al abrir la app: una sesión en curso de menos de 12 horas sigue donde estaba. Una vencida, o que nombra una
      constelación que el catálogo ya no tiene, no se tira: lo hecho se guarda como sesión cortada. */
   const sana = x => x && x.plan && Array.isArray(x.plan.bloques) && Array.isArray(x.hechos) && x.plan.bloques[x.b]
-    && x.plan.bloques.every(b => K.CATALOGO.constelaciones.some(c => c.id === b.constelacion));
+    && x.plan.bloques.every(b => !b.constelacion || K.CATALOGO.constelaciones.some(c => c.id === b.constelacion));
   s.restaurar = async () => {
     let x = null;
     try { x = JSON.parse(localStorage.getItem(VIVO)); } catch (e) {}
@@ -206,7 +282,7 @@ K.sesion = (() => {
       if (S.pausa === null) S.pausa = Math.min(ahora(), Math.max(S.desde || S.inicio, S.hasta || 0));
       try { if (S.fase !== "serie" && S.plan.bloques[S.b]) asentar(); } catch (e) {}
       const r = s.registro(true);
-      r.bloques = r.bloques.filter(b => K.CATALOGO.constelaciones.some(c => c.id === b.constelacion) || b.series.length);
+      r.bloques = r.bloques.filter(b => b.series.length);
       S = null;
       if (r.bloques.length){
         try { await K.diario.guardarSesion(r); } catch (e) { return "no-se-pudo"; } /* queda en «vivo» para la próxima apertura */

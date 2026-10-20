@@ -1,0 +1,2088 @@
+{
+ "id": "hiit_pc",
+ "nombre": "HIIT sin equipo",
+ "familia": "mo",
+ "texto": "Bloques de 4 minutos, 20 segundos a fondo y 10 de pausa, con tu peso. Sin equipo.",
+ "semanas": 4,
+ "dias": 3,
+ "minutos": 20,
+ "equipo": [],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "Menz y otros (2019) y McRae y otros (2012)",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "2 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "estocada-salto",
+          "zancada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "3 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "flexion",
+          "flexion-inclinada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "3 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "estocada-salto",
+          "zancada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "3 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "estocada-salto",
+          "zancada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "3 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "flexion",
+          "flexion-inclinada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "3 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "estocada-salto",
+          "zancada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "3 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "estocada-salto",
+          "zancada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "flexion",
+          "flexion-inclinada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "estocada-salto",
+          "zancada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "4 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "estocada-salto",
+          "zancada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "flexion",
+          "flexion-inclinada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 bloques de 8 × 20 s a fondo, 10 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "burpee",
+          "escaladores"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "burpee",
+        "escaladores"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "estocada-salto",
+          "zancada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": "rodillas-arriba"
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "estocada-salto",
+        "zancada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": "rodillas-arriba"
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "escaladores",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "sentadilla-salto",
+        "sentadilla"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "escaladores",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "flexion",
+          "flexion-inclinada"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        },
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "saltos-tijera",
+          "rodillas-arriba"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "flexion",
+        "flexion-inclinada"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 10
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "saltos-tijera",
+        "rodillas-arriba"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

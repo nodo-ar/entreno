@@ -1,0 +1,1832 @@
+{
+ "id": "espagat",
+ "nombre": "Camino al espagat",
+ "familia": "ra",
+ "texto": "Estiramientos de cadera y piernas, cada vez más largos, rumbo al espagat lateral y frontal.",
+ "semanas": 8,
+ "dias": 4,
+ "minutos": 20,
+ "equipo": [],
+ "alimenta": [
+  "espagat.sentadilla-30s",
+  "espagat.lateral-90-10s",
+  "espagat.lateral",
+  "espagat.frontal"
+ ],
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "sentadilla-profunda"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "sentadilla-profunda"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "sentadilla-profunda"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "sentadilla-profunda"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "piernas-abiertas"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "piernas-abiertas"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-sentado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "sentadilla-profunda"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-90-90",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-sentado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "cuadriceps-pie-elevado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cadera-arrodillado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

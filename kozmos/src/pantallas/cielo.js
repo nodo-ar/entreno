@@ -64,7 +64,13 @@ K.P.constelacion = c => {
     <section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>${tenue}${estado}
     ${botones}
     <section class="cd est-lista" aria-label="Estrellas de ${K.esc(c.nombre)}">${filas}</section>
-    ${marcas ? `<span class="lb pie">Tus marcas</span><section class="cd marcas">${marcas}</section>` : ""}`;
+    ${marcas ? `<span class="lb pie">Tus marcas</span><section class="cd marcas">${marcas}</section>` : ""}${rutinasDe(c)}`;
+};
+/* las rutinas que llevan a alguna estrella de esta constelación */
+const rutinasDe = c => {
+  const ids = new Set(c.estrellas.map(e => e.id)), rs = K.RUTINAS.filter(r => r.alimenta.some(id => ids.has(id)));
+  return rs.length ? `<span class="lb pie">Rutinas que llevan acá</span><section class="aj">${rs.map(r => `<button type="button" class="ajr" data-ir="#/hoy/rutinas/${r.id}"><span class="tile">${K.ic("ruta")}</span>
+    <span>${K.esc(r.nombre)}</span><em class="num">${r.semanas} sem</em>${K.ic("chev", "chev")}</button>`).join("")}</section>` : "";
 };
 
 /* ===== Anotar una marca a mano: estrella, valor y día. Se guarda y se ofrece deshacer. ===== */

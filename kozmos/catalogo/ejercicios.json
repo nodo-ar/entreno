@@ -59,7 +59,11 @@
   {
    "id": "colgado-activo",
    "nombre": "Colgado activo",
-   "indicacion": "Brazos rectos, hombros lejos de las orejas."
+   "indicacion": "Brazos rectos, hombros lejos de las orejas.",
+   "equipo": [
+    "barra"
+   ],
+   "mide": "segundos"
   },
   {
    "id": "fl-bolita",
@@ -124,7 +128,8 @@
   {
    "id": "flexion-arquera",
    "nombre": "Flexión arquera",
-   "indicacion": "Un brazo hace la fuerza, el otro estirado al costado."
+   "indicacion": "Un brazo hace la fuerza, el otro estirado al costado.",
+   "lado": true
   },
   {
    "id": "dominada-arquera",
@@ -164,7 +169,8 @@
   {
    "id": "l-sit",
    "nombre": "L-sit",
-   "indicacion": "Brazos rectos, piernas estiradas al frente, a la altura de la cadera."
+   "indicacion": "Brazos rectos, piernas estiradas al frente, a la altura de la cadera.",
+   "mide": "segundos"
   },
   {
    "id": "dragon-flag-bolita",
@@ -199,7 +205,8 @@
   {
    "id": "shrimp",
    "nombre": "Shrimp",
-   "indicacion": "Agarrá el pie de atrás y bajá hasta apoyar la rodilla."
+   "indicacion": "Agarrá el pie de atrás y bajá hasta apoyar la rodilla.",
+   "lado": true
   },
   {
    "id": "pistol",
@@ -219,17 +226,26 @@
   {
    "id": "dominada-lastre",
    "nombre": "Dominada con lastre",
-   "indicacion": "El lastre colgado, mentón arriba de la barra."
+   "indicacion": "El lastre colgado, mentón arriba de la barra.",
+   "equipo": [
+    "barra",
+    "lastre"
+   ]
   },
   {
    "id": "fondo-lastre",
    "nombre": "Fondo con lastre",
-   "indicacion": "El lastre colgado, bajá hasta 90° y empujá."
+   "indicacion": "El lastre colgado, bajá hasta 90° y empujá.",
+   "equipo": [
+    "paralelas",
+    "lastre"
+   ]
   },
   {
    "id": "sentadilla-profunda",
    "nombre": "Sentadilla profunda",
-   "indicacion": "Talones en el piso, pecho alto, abajo del todo."
+   "indicacion": "Talones en el piso, pecho alto, abajo del todo.",
+   "mide": "segundos"
   },
   {
    "id": "cosaca",
@@ -294,7 +310,10 @@
   {
    "id": "bici",
    "nombre": "Bici en zona 2",
-   "indicacion": "Un ritmo en el que puedas hablar en frases cortas."
+   "indicacion": "Un ritmo en el que puedas hablar en frases cortas.",
+   "equipo": [
+    "bici"
+   ]
   },
   {
    "id": "intervalos",
@@ -304,7 +323,10 @@
   {
    "id": "soga",
    "nombre": "Soga",
-   "indicacion": "Saltos bajos, muñecas sueltas, en la punta de los pies."
+   "indicacion": "Saltos bajos, muñecas sueltas, en la punta de los pies.",
+   "equipo": [
+    "soga"
+   ]
   },
   {
    "id": "double-under",
@@ -315,6 +337,626 @@
    "id": "criss-cross",
    "nombre": "Criss-cross",
    "indicacion": "Cruzá los brazos en el aire y descruzá al salto siguiente."
+  },
+  {
+   "id": "dominada-negativa",
+   "nombre": "Dominada negativa",
+   "indicacion": "Subí con un salto o una silla y bajá en 4 a 5 segundos, sin soltarte.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "remo-invertido",
+   "nombre": "Remo invertido",
+   "indicacion": "Cuerpo recto. Pies arriba para que cueste más.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "sentadilla",
+   "nombre": "Sentadilla",
+   "indicacion": "Pies al ancho de hombros, bajá con la espalda larga hasta pasar la línea de la rodilla."
+  },
+  {
+   "id": "fondo-banco",
+   "nombre": "Fondo en banco",
+   "indicacion": "Manos en el borde, codos atrás. Pies más lejos, más difícil."
+  },
+  {
+   "id": "flexion-cerrada",
+   "nombre": "Flexión cerrada",
+   "indicacion": "Manos juntas bajo el pecho, codos pegados al cuerpo."
+  },
+  {
+   "id": "puente-gluteo",
+   "nombre": "Puente de glúteo",
+   "indicacion": "Talones cerca de la cola, subí la cadera y apretá arriba."
+  },
+  {
+   "id": "remo-mancuerna",
+   "nombre": "Remo unilateral con mancuerna",
+   "indicacion": "Apoyado en una silla. El codo va a la cadera.",
+   "equipo": [
+    "mancuernas"
+   ],
+   "lado": true
+  },
+  {
+   "id": "remo-poste",
+   "nombre": "Remo agarrado de un poste",
+   "indicacion": "Agarrate de un poste o marco firme, inclinate atrás y tirá el pecho hacia él."
+  },
+  {
+   "id": "flexion-inclinada",
+   "nombre": "Flexión inclinada abierta",
+   "indicacion": "Manos abiertas en un banco o mesa, bajá el pecho entre ellas."
+  },
+  {
+   "id": "flexion",
+   "nombre": "Flexión",
+   "indicacion": "Cuerpo en línea, codos a 45° del torso, el pecho casi toca el piso."
+  },
+  {
+   "id": "plancha",
+   "nombre": "Plancha",
+   "indicacion": "Codos bajo los hombros, glúteo apretado, cuerpo en línea. Contá segundos.",
+   "mide": "segundos"
+  },
+  {
+   "id": "hollow",
+   "nombre": "Hollow hold",
+   "indicacion": "Lumbar pegada al piso, brazos y piernas estirados, apenas separados del suelo.",
+   "mide": "segundos"
+  },
+  {
+   "id": "plancha-lateral",
+   "nombre": "Plancha lateral",
+   "indicacion": "Codo bajo el hombro, cadera arriba, cuerpo en línea.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "escaladores",
+   "nombre": "Escaladores",
+   "indicacion": "Manos bajo los hombros, cadera baja. Rodillas al pecho rápido.",
+   "mide": "segundos"
+  },
+  {
+   "id": "dominada",
+   "nombre": "Dominada",
+   "indicacion": "Pecho a la barra, sin hamacarte.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "sentadilla-bulgara",
+   "nombre": "Sentadilla búlgara",
+   "indicacion": "Pie de atrás en la silla.",
+   "equipo": [
+    "mancuernas"
+   ],
+   "lado": true
+  },
+  {
+   "id": "fondo",
+   "nombre": "Fondo en paralelas",
+   "indicacion": "Inclinate un poco hacia adelante. Bajá hasta que el hombro pase el codo.",
+   "equipo": [
+    "paralelas"
+   ]
+  },
+  {
+   "id": "peso-muerto-una-pierna",
+   "nombre": "Peso muerto rumano unilateral",
+   "indicacion": "Mancuerna en la mano contraria a la pierna de apoyo.",
+   "equipo": [
+    "mancuernas"
+   ],
+   "lado": true
+  },
+  {
+   "id": "flexion-declinada",
+   "nombre": "Flexión declinada",
+   "indicacion": "Pies en la silla. Si te sobran, bajá en 3 segundos."
+  },
+  {
+   "id": "retraccion-escapular",
+   "nombre": "Retracción escapular colgado",
+   "indicacion": "Colgado con brazos rectos, subí solo con los omóplatos.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "dominada-supina",
+   "nombre": "Dominada supina",
+   "indicacion": "Manos al ancho de hombros. Más brazo.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "dominada-ancha",
+   "nombre": "Dominada con agarre ancho",
+   "indicacion": "Manos bien más anchas que los hombros, palmas hacia adelante. Pecho a la barra.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "remo-fl-tuck",
+   "nombre": "Remo en front lever tuck",
+   "indicacion": "Desde el tuck front lever, tirá la barra al ombligo sin perder la línea.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "curl-femoral-deslizante",
+   "nombre": "Curl femoral deslizante",
+   "indicacion": "Boca arriba, talones sobre trapos. Levantá la cola y traé los talones."
+  },
+  {
+   "id": "rodillas-colgado",
+   "nombre": "Elevación de rodillas colgado",
+   "indicacion": "Desde la barra. Pelvis adelante para que trabaje el abdomen.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "crunch-inverso",
+   "nombre": "Crunch inverso",
+   "indicacion": "Acostado, llevá las rodillas al pecho despegando la cola del piso."
+  },
+  {
+   "id": "dragon-flag-negativa",
+   "nombre": "Dragon flag negativa",
+   "indicacion": "Agarrado atrás de la cabeza, cuerpo recto como tabla, bajá en 5 segundos."
+  },
+  {
+   "id": "hollow-rock",
+   "nombre": "Hollow rocks",
+   "indicacion": "En posición de hollow, hamacate de la espalda alta a la cola sin perder la forma."
+  },
+  {
+   "id": "plancha-lateral-pierna",
+   "nombre": "Plancha lateral con pierna arriba",
+   "indicacion": "En plancha lateral, levantá la pierna de arriba y sostené sin que baje la cadera.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "plancha-dos-apoyos",
+   "nombre": "Plancha a dos apoyos",
+   "indicacion": "Desde plancha alta, levantá un brazo y la pierna contraria y sostené con la cadera quieta.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "superman",
+   "nombre": "Superman",
+   "indicacion": "Boca abajo, brazos y piernas estirados y despegados del piso.",
+   "mide": "segundos"
+  },
+  {
+   "id": "pies-a-la-barra",
+   "nombre": "Toes to bar",
+   "indicacion": "Si no llegás, subí hasta donde puedas con las piernas rectas.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "piernas-colgado",
+   "nombre": "Elevación de piernas colgado",
+   "indicacion": "Hasta la cadera. Si se hamaca, menos rango.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "paseo-maleta",
+   "nombre": "Paseo de la maleta",
+   "indicacion": "Una mancuerna pesada de un solo lado. Caminá derecho sin inclinarte.",
+   "equipo": [
+    "mancuernas"
+   ],
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "paseo-maleta-kettlebell",
+   "nombre": "Paseo de la maleta con kettlebell",
+   "indicacion": "La kettlebell de un solo lado. Caminá derecho sin inclinarte.",
+   "equipo": [
+    "kettlebell"
+   ],
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "gato-camello",
+   "nombre": "Gato y camello",
+   "indicacion": "En cuatro patas, redondeá y arqueá la espalda despacio, sin forzar los extremos.",
+   "mide": "segundos"
+  },
+  {
+   "id": "curl-up",
+   "nombre": "Curl-up",
+   "indicacion": "Manos bajo la lumbar, una pierna doblada. Despegá apenas la cabeza y los hombros.",
+   "mide": "segundos"
+  },
+  {
+   "id": "plancha-lateral-rodillas",
+   "nombre": "Plancha lateral de rodillas",
+   "indicacion": "Codo bajo el hombro, rodillas dobladas, cadera arriba en línea con el tronco.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "perro-de-caza-sostenido",
+   "nombre": "Perro de caza sostenido",
+   "indicacion": "En cuatro patas, estirá un brazo y la pierna contraria y sostené sin que la cadera gire.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "respiracion-90-90",
+   "nombre": "Respiración 90/90",
+   "indicacion": "Pies en la pared, rodillas y cadera a 90°. Exhalá largo hasta que bajen las costillas.",
+   "mide": "segundos"
+  },
+  {
+   "id": "bicho-muerto-sostenido",
+   "nombre": "Bicho muerto sostenido",
+   "indicacion": "Lumbar apoyada, estirá un brazo y la pierna contraria cerca del piso y sostené.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "mariposa-acostado",
+   "nombre": "Mariposa acostado",
+   "indicacion": "Plantas de los pies juntas, rodillas caen a los costados.",
+   "mide": "segundos"
+  },
+  {
+   "id": "gluteo-tobillo-rodilla",
+   "nombre": "Glúteo con tobillo sobre la rodilla",
+   "indicacion": "Acostado, cruzá el tobillo sobre la rodilla y traé la pierna al pecho.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "isquios-sentado",
+   "nombre": "Isquios sentado",
+   "indicacion": "Piernas juntas, espalda larga, bajá desde la cadera. No fuerces con la espalda.",
+   "mide": "segundos"
+  },
+  {
+   "id": "aductores-acostado",
+   "nombre": "Aductores acostado",
+   "indicacion": "Acostado, plantas juntas y rodillas caídas a los costados.",
+   "mide": "segundos"
+  },
+  {
+   "id": "rodilla-cruzada",
+   "nombre": "Rodilla cruzada acostado",
+   "indicacion": "Acostado, llevá la rodilla hacia el hombro contrario.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "estiramiento-corredor",
+   "nombre": "Estiramiento del corredor",
+   "indicacion": "Pierna adelante estirada, bajá el pecho hacia ella con la espalda larga.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "rodilla-al-pecho",
+   "nombre": "Rodilla al pecho",
+   "indicacion": "Acostado, abrazá una rodilla contra el pecho con la otra pierna estirada.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "gluteo-banda-it",
+   "nombre": "Glúteo y banda IT",
+   "indicacion": "Acostado, cruzá la pierna y tirala hacia el hombro contrario.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "piernas-abiertas",
+   "nombre": "Piernas abiertas al frente",
+   "indicacion": "Sentado, piernas bien abiertas, pecho hacia el piso. Base del pancake.",
+   "mide": "segundos"
+  },
+  {
+   "id": "isquios-90-90",
+   "nombre": "Isquios 90-90",
+   "indicacion": "Acostado, muslo vertical sostenido con las manos, estirá la rodilla de a poco.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "groiners",
+   "nombre": "Groiners",
+   "indicacion": "Desde plancha, llevá un pie al lado de la mano y alterná sin apuro.",
+   "mide": "segundos"
+  },
+  {
+   "id": "flexor-cadera-arrodillado",
+   "nombre": "Flexor de cadera arrodillado",
+   "indicacion": "Rodilla en el piso, glúteo apretado, cadera adelante. Clave después de la bici.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "cuadriceps-costado",
+   "nombre": "Cuádriceps de costado",
+   "indicacion": "Acostado de lado, talón al glúteo, cadera hacia adelante.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "flexor-cadera-de-pie",
+   "nombre": "Flexores de cadera de pie",
+   "indicacion": "Estocada corta, apretá el glúteo de atrás y llevá la cadera adelante.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "codos-atras",
+   "nombre": "Codos atrás",
+   "indicacion": "Manos en la cintura, juntá los codos atrás. Desarma el hombro cerrado.",
+   "mide": "segundos"
+  },
+  {
+   "id": "dorsal-arriba",
+   "nombre": "Dorsal arriba",
+   "indicacion": "Un brazo arriba, agarrado, inclinate al lado contrario.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "pecho-pared",
+   "nombre": "Pecho contra la pared",
+   "indicacion": "Antebrazo en la pared, girá el cuerpo hacia afuera.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "munecas-cuatro-patas",
+   "nombre": "Muñecas en cuatro patas",
+   "indicacion": "Dedos hacia las rodillas, palmas en el piso, sentate atrás de a poco.",
+   "mide": "segundos"
+  },
+  {
+   "id": "postura-nino",
+   "nombre": "Postura del niño",
+   "indicacion": "Cola a los talones, brazos largos adelante.",
+   "mide": "segundos"
+  },
+  {
+   "id": "manos-atras-sentado",
+   "nombre": "Manos atrás sentado",
+   "indicacion": "Manos apoyadas atrás, dedos hacia atrás, caminá la cola hacia adelante.",
+   "mide": "segundos"
+  },
+  {
+   "id": "triceps-sobre-cabeza",
+   "nombre": "Extensión de tríceps sobre la cabeza",
+   "indicacion": "Codo al techo, mano a la espalda, empujá el codo con la otra mano.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "circulos-muneca",
+   "nombre": "Círculos de muñeca",
+   "indicacion": "Lento, grande, para los dos lados. Antes de parada de manos o planche.",
+   "mide": "segundos"
+  },
+  {
+   "id": "hombro-cruzado",
+   "nombre": "Hombro cruzado",
+   "indicacion": "Cruzá un brazo por delante del pecho y apretalo con el otro.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "dorsal-de-costado",
+   "nombre": "Dorsal acostado de lado",
+   "indicacion": "De lado, brazo de arriba estirado por encima de la cabeza.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "biceps-pared",
+   "nombre": "Bíceps en la pared",
+   "indicacion": "Palma en la pared a la altura del hombro, girá el cuerpo hacia afuera.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "muneca-costado",
+   "nombre": "Muñeca de costado",
+   "indicacion": "Agarrá la muñeca y tirá de costado hasta sentir el antebrazo.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "pecho-manos-nuca",
+   "nombre": "Pecho con manos atrás de la cabeza",
+   "indicacion": "Codos bien atrás, pecho abierto. Ayuda que alguien empuje suave.",
+   "mide": "segundos"
+  },
+  {
+   "id": "brazos-al-techo",
+   "nombre": "Brazos al techo",
+   "indicacion": "Dedos cruzados, palmas al techo, hombros lejos de las orejas.",
+   "mide": "segundos"
+  },
+  {
+   "id": "pecho-marco-puerta",
+   "nombre": "Pecho en el marco de la puerta",
+   "indicacion": "Antebrazo en el marco, avanzá un paso hasta sentir el pecho.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "isquios-pierna-arriba",
+   "nombre": "Isquios acostado con la pierna arriba",
+   "indicacion": "Acostado, una pierna al techo, agarrada con las manos o una toalla.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "flexor-cuadriceps-estocada",
+   "nombre": "Flexor y cuádriceps en estocada",
+   "indicacion": "Rodilla atrás en el piso, agarrá ese pie y llevá la cadera adelante.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "cuadriceps-pie-elevado",
+   "nombre": "Cuádriceps con pie elevado",
+   "indicacion": "Empeine sobre una silla detrás, bajá la rodilla y llevá la cadera adelante.",
+   "lado": true,
+   "mide": "segundos"
+  },
+  {
+   "id": "hombros-silla",
+   "nombre": "Hombros en silla",
+   "indicacion": "Manos en el respaldo, alejate y bajá el pecho con los brazos estirados.",
+   "mide": "segundos"
+  },
+  {
+   "id": "tocar-los-pies",
+   "nombre": "Tocar los pies de pie",
+   "indicacion": "Rodillas apenas flojas, dejá colgar la cabeza.",
+   "mide": "segundos"
+  },
+  {
+   "id": "puente-gluteo-sostenido",
+   "nombre": "Puente de glúteo sostenido",
+   "indicacion": "Subí la cadera despacio, vértebra por vértebra. Antes del puente completo.",
+   "mide": "segundos"
+  },
+  {
+   "id": "swing-kettlebell",
+   "nombre": "Swing con kettlebell",
+   "indicacion": "La cadera empuja, los brazos acompañan.",
+   "equipo": [
+    "kettlebell"
+   ]
+  },
+  {
+   "id": "swing-mancuerna",
+   "nombre": "Swing con mancuerna",
+   "indicacion": "Mancuerna entre las piernas, empujá con la cadera hasta arriba de la cabeza.",
+   "equipo": [
+    "mancuernas"
+   ]
+  },
+  {
+   "id": "arranque-kettlebell",
+   "nombre": "Arranque con kettlebell",
+   "indicacion": "Swing a una mano que termina arriba con el brazo recto. La kettlebell rota, no golpea.",
+   "equipo": [
+    "kettlebell"
+   ],
+   "lado": true
+  },
+  {
+   "id": "saltos-tijera",
+   "nombre": "Saltos de tijera",
+   "indicacion": "Saltá abriendo piernas y brazos a la vez y cerrá. Aterrizá suave.",
+   "mide": "segundos"
+  },
+  {
+   "id": "sentadilla-salto",
+   "nombre": "Sentadilla con salto",
+   "indicacion": "Bajá, saltá explosivo y caé suave, ya bajando."
+  },
+  {
+   "id": "burpee",
+   "nombre": "Burpee",
+   "indicacion": "Manos al piso, pies atrás a la plancha, pies adelante y saltá."
+  },
+  {
+   "id": "zancada",
+   "nombre": "Zancada sin peso",
+   "indicacion": "Paso largo, rodilla de atrás casi al piso, torso derecho. Alterná piernas.",
+   "lado": true
+  },
+  {
+   "id": "rodillas-arriba",
+   "nombre": "Rodillas arriba en el lugar",
+   "indicacion": "Trote en el lugar subiendo las rodillas a la altura de la cadera.",
+   "mide": "segundos"
+  },
+  {
+   "id": "rodillas-paralelas",
+   "nombre": "Elevación de rodillas en paralelas",
+   "indicacion": "Sin hamacarte. Frená un segundo arriba.",
+   "equipo": [
+    "paralelas"
+   ]
+  },
+  {
+   "id": "estocada-salto",
+   "nombre": "Estocada con salto",
+   "indicacion": "Desde estocada saltá y cambiá de pierna en el aire."
+  },
+  {
+   "id": "burpee-flexion",
+   "nombre": "Burpee con flexión",
+   "indicacion": "Como el burpee, con el pecho al piso en la plancha."
+  },
+  {
+   "id": "remo-al-menton",
+   "nombre": "Remo al mentón con mancuernas",
+   "indicacion": "Mancuernas pegadas al cuerpo, subí los codos hasta la altura del pecho.",
+   "equipo": [
+    "mancuernas"
+   ]
+  },
+  {
+   "id": "press-hombros",
+   "nombre": "Press de hombros",
+   "indicacion": "De pie, panza dura, sin arquear.",
+   "equipo": [
+    "mancuernas"
+   ]
+  },
+  {
+   "id": "sentadilla-mancuernas",
+   "nombre": "Sentadilla con mancuernas",
+   "indicacion": "Mancuernas a los costados, espalda larga, bajá hasta pasar la línea de la rodilla.",
+   "equipo": [
+    "mancuernas"
+   ]
+  },
+  {
+   "id": "remo-dos-mancuernas",
+   "nombre": "Remo con dos mancuernas",
+   "indicacion": "Torso inclinado, espalda larga. Llevá los codos hacia la cadera.",
+   "equipo": [
+    "mancuernas"
+   ]
+  },
+  {
+   "id": "peso-muerto-rumano",
+   "nombre": "Peso muerto rumano con mancuernas",
+   "indicacion": "Cola atrás, espalda recta.",
+   "equipo": [
+    "mancuernas"
+   ]
   }
  ]
 }

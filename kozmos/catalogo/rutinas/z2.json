@@ -1,0 +1,505 @@
+{
+ "id": "z2",
+ "nombre": "Base aeróbica",
+ "familia": "mo",
+ "texto": "Bici suave, a ritmo de charla. Cada semana, un poco más larga.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 45,
+ "equipo": [
+  "bici"
+ ],
+ "alimenta": [
+  "motor.bici-20",
+  "motor.bici-40",
+  "motor.bici-60"
+ ],
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "30 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "30 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "40 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "35 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2100
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "35 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2100
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "45 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2700
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "40 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "40 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "50 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3000
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "45 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2700
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2700
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "55 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3300
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "50 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3000
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "50 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3000
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "60 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3600
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "55 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3300
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "55 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3300
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "65 min en zona 2: podés hablar en frases completas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 3900
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  }
+ ]
+}

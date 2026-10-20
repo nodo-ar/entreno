@@ -12,6 +12,7 @@ K.calorias = (() => {
   const sabido = b => {
     const ss = b.series || [];
     const t = ss[0]?.tipo, e = ss[0]?.ejercicio;
+    if (ss.some(x => Number.isFinite(x.seg))) return ss.reduce((s, x) => s + (x.seg || 0), 0); /* tramos: los segundos hechos */
     if (t === "minutos" || t === "menos-minutos") return ss.reduce((a, x) => a + x.valor * 60, 0);
     if (t === "sesiones") return ss.filter(x => x.valor > 0).length * INTERVALOS_MIN * 60;
     if (t === "repeticiones" && EJERCICIO[e] === 11.8) return ss.reduce((a, x) => a + x.valor / SALTOS_POR_MIN * 60, 0);

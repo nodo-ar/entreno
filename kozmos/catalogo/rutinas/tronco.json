@@ -1,0 +1,1332 @@
+{
+ "id": "tronco",
+ "nombre": "Tronco estable",
+ "familia": "ra",
+ "texto": "Tres ejercicios cortos para un tronco firme. Cada semana sumás repeticiones, no segundos.",
+ "semanas": 4,
+ "dias": 5,
+ "minutos": 8,
+ "equipo": [],
+ "alimenta": [
+  "draco.lsit-10s"
+ ],
+ "fuente": "el Big 3 de Stuart McGill",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 5",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 5",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral-rodillas",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 5",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "bicho-muerto-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 5",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "gato-camello"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "curl-up"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "plancha-lateral",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "Un lado"
+        },
+        {
+         "clase": "postura",
+         "seg": 10,
+         "ejercicio": "perro-de-caza-sostenido",
+         "nota": "El otro lado"
+        }
+       ]
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "respiracion-90-90"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

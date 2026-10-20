@@ -1,0 +1,787 @@
+{
+ "id": "hombros",
+ "nombre": "Hombros sanos",
+ "familia": "ra",
+ "texto": "Movilidad de hombros para colgarte de la barra y hacer fondos sin molestias.",
+ "semanas": 4,
+ "dias": 4,
+ "minutos": 12,
+ "equipo": [],
+ "alimenta": [
+  "puente.manos-atras",
+  "puente.pared-20s",
+  "parada-de-manos.munecas-15s"
+ ],
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "codos-atras"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "pecho-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "pecho-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "munecas-cuatro-patas"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "postura-nino"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "circulos-muneca"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "hombro-cruzado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "hombro-cruzado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "dorsal-de-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "dorsal-de-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "biceps-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "biceps-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "muneca-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "muneca-costado",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "codos-atras"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "pecho-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "pecho-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 30,
+       "ejercicio": "munecas-cuatro-patas"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "pecho-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "pecho-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "munecas-cuatro-patas"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "pecho-manos-nuca"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "circulos-muneca"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "brazos-al-techo"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "dorsal-de-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "dorsal-de-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "biceps-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "biceps-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "muneca-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "muneca-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "pecho-marco-puerta",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "pecho-marco-puerta",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "pecho-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "pecho-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "munecas-cuatro-patas"
+      },
+      {
+       "clase": "postura",
+       "seg": 40,
+       "ejercicio": "pecho-manos-nuca"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "munecas-cuatro-patas"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-manos-nuca"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "codos-atras"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "circulos-muneca"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "brazos-al-techo"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "postura-nino"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "biceps-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "biceps-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "muneca-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "muneca-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-marco-puerta",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-marco-puerta",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "hombro-cruzado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "hombro-cruzado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-de-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-de-costado",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-pared",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "munecas-cuatro-patas"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-manos-nuca"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "codos-atras"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "munecas-cuatro-patas"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "pecho-manos-nuca"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "codos-atras"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "pecho-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "pecho-pared",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "circulos-muneca"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "brazos-al-techo"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "postura-nino"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "manos-atras-sentado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "muneca-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "muneca-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "pecho-marco-puerta",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "pecho-marco-puerta",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "hombro-cruzado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "hombro-cruzado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "dorsal-de-costado",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "dorsal-de-costado",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "biceps-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "biceps-pared",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "munecas-cuatro-patas"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "pecho-manos-nuca"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "codos-atras"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "dorsal-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "dorsal-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "pecho-pared",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 50,
+       "ejercicio": "pecho-pared",
+       "nota": "El otro lado"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

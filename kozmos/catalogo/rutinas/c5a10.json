@@ -1,0 +1,1054 @@
+{
+ "id": "c5a10",
+ "nombre": "De 5 a 10 km",
+ "familia": "mo",
+ "texto": "De 5 a 10 km con tres salidas por semana y una larga que crece.",
+ "semanas": 8,
+ "dias": 5,
+ "minutos": 40,
+ "equipo": [],
+ "alimenta": [
+  "diez-km.45min",
+  "diez-km.60min"
+ ],
+ "fuente": "el Novice 10K de Hal Higdon",
+ "sesiones": [
+  {
+   "nombre": "Carrera",
+   "nota": "4,0 km a ritmo de charla (unos 28′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1680,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "30 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 1500,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera corta",
+   "nota": "3,2 km a ritmo de charla (unos 22′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1320,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "40 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 2100,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "4,8 km a ritmo de charla (unos 34′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2040,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera",
+   "nota": "4,0 km a ritmo de charla (unos 28′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1680,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "30 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 1500,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera corta",
+   "nota": "3,2 km a ritmo de charla (unos 22′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1320,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "40 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 2100,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "5,6 km a ritmo de charla (unos 39′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2340,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera",
+   "nota": "4,0 km a ritmo de charla (unos 28′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1680,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "35 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 1800,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera corta",
+   "nota": "3,2 km a ritmo de charla (unos 22′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1320,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "50 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 2700,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "6,4 km a ritmo de charla (unos 45′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2700,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera",
+   "nota": "4,8 km a ritmo de charla (unos 34′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2040,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "35 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 1800,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera corta",
+   "nota": "3,2 km a ritmo de charla (unos 22′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1320,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "50 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 2700,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "6,4 km a ritmo de charla (unos 45′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2700,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera",
+   "nota": "4,8 km a ritmo de charla (unos 34′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2040,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "40 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 2100,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera corta",
+   "nota": "3,2 km a ritmo de charla (unos 22′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1320,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "60 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 3300,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "7,2 km a ritmo de charla (unos 50′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 3000,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera",
+   "nota": "4,8 km a ritmo de charla (unos 34′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2040,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "40 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 2100,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera corta",
+   "nota": "3,2 km a ritmo de charla (unos 22′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1320,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "60 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 3300,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "8,0 km a ritmo de charla (unos 56′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 3360,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera",
+   "nota": "4,8 km a ritmo de charla (unos 34′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2040,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "45 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 2400,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera corta",
+   "nota": "3,2 km a ritmo de charla (unos 22′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1320,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "60 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 3300,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Larga",
+   "nota": "8,8 km a ritmo de charla (unos 62′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 3720,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera",
+   "nota": "4,8 km a ritmo de charla (unos 34′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 2040,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Cruzado",
+   "nota": "30 min de otra cosa, suave: bici, elíptico o caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "suave",
+       "seg": 1500,
+       "nota": "Bici, elíptico o caminata, suave"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Carrera corta",
+   "nota": "3,2 km a ritmo de charla (unos 22′). Caminar un rato también vale.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1320,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Soltura",
+   "nota": "15 min muy suaves: mañana son los 10 km.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "fuerte",
+       "seg": 900,
+       "nota": "A ritmo de charla"
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Los 10 km",
+   "nota": "10 km a tu ritmo. Salí tranquilo y apretá, si querés, en el último.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180
+      },
+      {
+       "clase": "fuerte",
+       "seg": 4200,
+       "nota": "A ritmo de charla"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  }
+ ]
+}

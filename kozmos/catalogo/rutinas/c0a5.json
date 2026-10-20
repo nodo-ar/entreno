@@ -1,0 +1,1098 @@
+{
+ "id": "c0a5",
+ "nombre": "De 0 a 5 km",
+ "familia": "mo",
+ "texto": "Alternás trote y caminata hasta correr 30 minutos seguidos.",
+ "semanas": 9,
+ "dias": 3,
+ "minutos": 30,
+ "equipo": [],
+ "alimenta": [
+  "diez-km.10min",
+  "diez-km.30min"
+ ],
+ "fuente": "el Couch to 5K del NHS",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "Trotás 8 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60,
+         "nota": "Trotá"
+        },
+        {
+         "clase": "suave",
+         "seg": 90,
+         "nota": "Caminá"
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "Trotás 8 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60,
+         "nota": "Trotá"
+        },
+        {
+         "clase": "suave",
+         "seg": 90,
+         "nota": "Caminá"
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "Trotás 8 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 60,
+         "nota": "Trotá"
+        },
+        {
+         "clase": "suave",
+         "seg": 90,
+         "nota": "Caminá"
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 60,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "Trotás 9 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 90,
+         "nota": "Trotá"
+        },
+        {
+         "clase": "suave",
+         "seg": 120,
+         "nota": "Caminá"
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "Trotás 9 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 90,
+         "nota": "Trotá"
+        },
+        {
+         "clase": "suave",
+         "seg": 120,
+         "nota": "Caminá"
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "Trotás 9 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 90,
+         "nota": "Trotá"
+        },
+        {
+         "clase": "suave",
+         "seg": 120,
+         "nota": "Caminá"
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "Trotás 9 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 180,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "Trotás 9 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 180,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "Trotás 9 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 180,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 90,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "Trotás 16 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 150,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "Trotás 16 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 150,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "Trotás 16 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 150,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 180,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 90,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "Trotás 15 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 300,
+         "nota": "Trotá"
+        },
+        {
+         "clase": "suave",
+         "seg": 180,
+         "nota": "Caminá"
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "Trotás 16 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 300,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "20 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1200,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "Trotás 18 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 180,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 480,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 180,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 300,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "Trotás 20 min en total, alternando con caminata.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 600,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "suave",
+       "seg": 180,
+       "nota": "Caminá"
+      },
+      {
+       "clase": "fuerte",
+       "seg": 600,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "25 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1500,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "25 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1500,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "25 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1500,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "25 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1500,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "28 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1680,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "28 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1680,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "28 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1680,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "30 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1800,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "30 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1800,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "30 minutos trotando sin parar.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "fuerte",
+       "seg": 1800,
+       "nota": "Trotá"
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "trote",
+      "tipo": "minutos",
+      "de": "fuerte-seguido"
+     }
+    }
+   ]
+  }
+ ]
+}

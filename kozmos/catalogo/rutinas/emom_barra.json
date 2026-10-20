@@ -1,0 +1,1048 @@
+{
+ "id": "emom_barra",
+ "nombre": "Cada minuto en la barra",
+ "familia": "mo",
+ "texto": "Al inicio de cada minuto, dominadas, fondos o piernas. Cada semana, más minutos.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 22,
+ "equipo": [
+  "barra",
+  "paralelas"
+ ],
+ "alimenta": [
+  "muscle-up.explosiva-3",
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12"
+ ],
+ "fuente": "el EMOM «Chelsea» de CrossFit y el entrenamiento por densidad de Charles Staley",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "12 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ],
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "12 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "burpee",
+          "sentadilla"
+         ],
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "12 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": "zancada",
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "12 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ],
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "12 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "burpee",
+          "sentadilla"
+         ],
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "12 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 4,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": "zancada",
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "15 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ],
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "15 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "burpee",
+          "sentadilla"
+         ],
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "15 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 5,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": "zancada",
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "18 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 6,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ],
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "18 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 6,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "burpee",
+          "sentadilla"
+         ],
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "18 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 6,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 3
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 5
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": "zancada",
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "21 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 4
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ],
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "21 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 4
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "burpee",
+          "sentadilla"
+         ],
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "21 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 4
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": "zancada",
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "24 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 8,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 4
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "sentadilla-salto",
+          "sentadilla"
+         ],
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "24 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 8,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 4
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "burpee",
+          "sentadilla"
+         ],
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "24 min, reps al inicio de cada minuto. Dominadas, fondos y piernas.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": "saltos-tijera"
+      },
+      {
+       "repetir": 8,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "dominada",
+          "dominada-supina",
+          "remo-invertido",
+          "flexion"
+         ],
+         "reps": 4
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": [
+          "fondo",
+          "fondo-banco",
+          "flexion"
+         ],
+         "reps": 6
+        },
+        {
+         "clase": "trabajo",
+         "seg": 60,
+         "ejercicio": "zancada",
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

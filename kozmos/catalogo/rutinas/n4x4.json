@@ -1,0 +1,861 @@
+{
+ "id": "n4x4",
+ "nombre": "Noruego 4×4",
+ "familia": "mo",
+ "texto": "Bloques de 4 minutos fuerte con 3 suaves entre medio, y un día largo y tranquilo. Para subir tu techo de aire.",
+ "semanas": 8,
+ "dias": 3,
+ "minutos": 40,
+ "equipo": [
+  "bici"
+ ],
+ "alimenta": [
+  "motor.intervalos-1",
+  "motor.intervalos-8",
+  "motor.intervalos-12",
+  "motor.bici-40"
+ ],
+ "fuente": "el protocolo 4×4 de la Universidad Noruega (NTNU)",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "3 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min suaves en zona 2.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "3 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "3 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min suaves en zona 2.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "3 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 2,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min suaves en zona 2.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min suaves en zona 2.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min suaves en zona 2.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min suaves en zona 2.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min suaves en zona 2.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "45 min suaves en zona 2.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 2400
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "bici",
+      "tipo": "minutos",
+      "de": "total"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "4 bloques de 4 min fuerte (85–95 % de tu máximo), 3 min suaves entre medio.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 240
+        },
+        {
+         "clase": "suave",
+         "seg": 180
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 240
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

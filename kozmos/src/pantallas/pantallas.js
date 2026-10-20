@@ -4,8 +4,8 @@ K.P = {};
 /* Vacío: la misma pieza en todas las pantallas sin datos (dibujo chico, título y una frase, alineados a la izquierda) */
 K.vacio = (dibujo, titulo, texto, cls = "") => `<section class="cd vacio ${cls}"><div class="ilus" aria-hidden="true">${dibujo}</div><b>${titulo}</b><p>${texto}</p></section>`;
 
-/* el equipo que pide alguna estrella del catálogo */
-K.EQUIPOS = [["barra", "Barra"], ["paralelas", "Paralelas"], ["pared", "Pared libre"], ["poste", "Poste"], ["lastre", "Lastre"], ["bici", "Bici"], ["soga", "Soga"]];
+/* el equipo que pide alguna estrella o rutina del catálogo */
+K.EQUIPOS = [["barra", "Barra"], ["paralelas", "Paralelas"], ["pared", "Pared libre"], ["poste", "Poste"], ["lastre", "Lastre"], ["mancuernas", "Mancuernas"], ["kettlebell", "Kettlebell"], ["bici", "Bici"], ["soga", "Soga"]];
 K.equipoNombre = id => (K.EQUIPOS.find(x => x[0] === id) || [id, id])[1];
 /* sin elegir todavía, cuenta como que tenés todo: nada se esconde hasta que lo digas */
 K.equipo = () => K.diario.perfil.equipo || K.EQUIPOS.map(x => x[0]);
@@ -49,8 +49,9 @@ K.P.progreso = r => {
   const sel = r.sub || (hz && lista[0] ? lista[0].id : "");
   const filas = lista.length ? `<span class="lb pie">Tus sesiones</span><section class="aj">${lista.map(s => {
     const est = (s.encendio || []).length, pr = s.bloques.length === 1 && s.bloques[0].prueba && K.estrella(s.bloques[0].estrella);
-    const que = pr ? `Prueba · ${pr.nombre}` : s.cortada ? "Cortada" : "";
-    return `<button type="button" class="ajr" data-ir="#/progreso/${K.esc(s.id)}" data-quieto="1"${s.id === sel ? " data-sel" : ""}><span class="tile">${K.ic(pr ? "cielo" : "play")}</span>
+    const ru = s.rutina && K.rutinaDe(s.rutina.id), hz = s.hazana && K.HAZANAS.hazanas.find(h => h.id === s.hazana.id);
+    const que = [pr ? `Prueba · ${pr.nombre}` : hz ? `${hz.nombre} · ${K.rutina.NIVELES[s.hazana.nivel]}` : ru ? ru.nombre : "", s.cortada ? "Cortada" : ""].filter(Boolean).join(" · ");
+    return `<button type="button" class="ajr" data-ir="#/progreso/${K.esc(s.id)}" data-quieto="1"${s.id === sel ? " data-sel" : ""}><span class="tile">${K.ic(pr ? "cielo" : hz ? "hazana" : ru ? "ruta" : "play")}</span>
       <span class="ses-fila">${K.esc(K.fechaCorta(s.fecha))}${que ? `<small class="mute">${K.esc(que)}</small>` : ""}</span><em class="num">${est ? `${est} ${est === 1 ? "estrella" : "estrellas"} · ` : ""}${Math.max(1, Math.round(s.duracion / 60))} min</em>${K.ic("chev", "chev")}</button>`;
   }).join("")}</section>` : "";
   const abierto = sel && ses.some(s => s.id === sel) ? K.P.resumen(sel, "progreso") : "";
@@ -73,20 +74,28 @@ K.ultimoRespaldo = () => {
   const d = K.cielo.dia(K.hoy()) - K.cielo.dia(f);
   return d <= 0 ? "Hoy" : d === 1 ? "Ayer" : `Hace ${d} días`;
 };
+/* tus días: «Lun, mié y vie», o «Todos» si no elegiste */
+const CORTOS = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"];
+K.resumenDias = () => {
+  const d = K.diario.perfil.dias;
+  if (!d || !d.length || d.length === 7) return "Todos";
+  const xs = [...d].sort().map(i => CORTOS[i]), txt = xs.length > 1 ? xs.slice(0, -1).join(", ") + " y " + xs[xs.length - 1] : xs[0];
+  return txt[0].toUpperCase() + txt.slice(1);
+};
 K.P.vos = r => {
-  const sub = ["acerca", "equipo", "peso", "respaldo"].includes(r.sub) ? r.sub : "", hz = K.horizontal();
+  const sub = ["acerca", "equipo", "peso", "respaldo", "dias"].includes(r.sub) ? r.sub : "", hz = K.horizontal();
   if (sub !== "peso") K._peso = null; /* lo que escribiste y no guardaste no queda esperándote */
   const abre = sub || (hz ? "equipo" : "");
   const fila = (id, ic, nom, val) => `<button type="button" class="ajr" data-ir="#/vos/${id}" data-quieto="1"${abre === id ? " data-sel" : ""}><span class="tile">${K.ic(ic)}</span><span>${nom}</span><em>${K.esc(val)}</em>${K.ic("chev", "chev")}</button>`;
   const peso = K.diario.perfil.peso;
   return `<div class="split${sub ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Vos", sub: "Ajustes"})}
-    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
+    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("dias", "cal", "Tus días", K.resumenDias())}${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
       <button type="button" class="ajr" id="avisos-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("vibra")}</span><span>Avisos</span><em>${K.esc(K.avisosNombre())}</em>${K.ic("chevd", "chev")}</button></div>
     <div class="aj">
       <button type="button" class="ajr" id="tema-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("auto")}</span><span>Tema</span><em>${K.esc(K.tema.nombre())}</em>${K.ic("chevd", "chev")}</button>
       ${fila("respaldo", "caja", "Respaldo", K.ultimoRespaldo())}${fila("acerca", "info", "Acerca de Kozmos", "")}
     </div></div>
-    <div class="abierto">${({acerca: K.P.acerca, equipo: K.P.equipo, peso: K.P.peso, respaldo: K.P.respaldo})[abre]?.() || ""}</div></div>`;
+    <div class="abierto">${({acerca: K.P.acerca, equipo: K.P.equipo, dias: K.P.dias, peso: K.P.peso, respaldo: K.P.respaldo})[abre]?.() || ""}</div></div>`;
 };
 K.P.acerca = () => K.enc({titulo: "Acerca de Kozmos", sub: "Ajustes", volver: "#/vos", raiz: true, det: true}) +
   `<section class="cd acerca">${K.logo(64)}<h2>Kozmos</h2>
@@ -109,6 +118,20 @@ K.equipoTocar = async id => {
   const poner = async v => { try { await K.diario.lote({perfil: {equipo: v}}); return true; } catch (e) { K.aviso("No se pudo guardar en este teléfono."); return false; } finally { K.refrescar(); } };
   if (!await poner(n)) return;
   K.deshacer(`${n.length > q.length ? "Sumaste" : "Sacaste"} ${K.equipoNombre(id).toLowerCase()}`, () => poner(antes));
+};
+
+/* tus días: los que entrenás. Los demás, Hoy te deja descansar. Sin elegir, todos. */
+K.P.dias = () => {
+  const d = K.diario.perfil.dias || [];
+  return K.enc({titulo: "Tus días", sub: "Ajustes", volver: "#/vos", raiz: true, det: true}) +
+    `<p class="ayuda">Marcá los días que entrenás. Los otros, Hoy te deja descansar. Una rutina sigue donde quedó, sin perder nada.</p>
+    <section class="aj">${K.DIAS.map((n, i) => `<button type="button" class="ajr rumbo-fila" data-dia="${i}" aria-pressed="${d.includes(i)}"><span class="tile num">${CORTOS[i][0].toUpperCase()}</span><span>${n[0].toUpperCase() + n.slice(1)}</span><em></em>${d.includes(i) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</section>`;
+};
+K.diaTocar = async i => {
+  const antes = K.diario.perfil.dias, d = antes || [], n = (d.includes(i) ? d.filter(x => x !== i) : [...d, i]).sort();
+  const poner = async v => { try { await K.diario.lote({perfil: {dias: v && v.length ? v : undefined}}); return true; } catch (e) { K.aviso("No se pudo guardar en este teléfono."); return false; } finally { K.refrescar(); } };
+  if (!await poner(n)) return;
+  K.deshacer(`${n.length > d.length ? "Sumaste" : "Sacaste"} el ${K.DIAS[i]}`, () => poner(antes));
 };
 
 /* tu peso: para las calorías y para Lastre. Se guarda al tocar Listo; vacío lo saca. */
