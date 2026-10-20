@@ -11,7 +11,9 @@ const CAT = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "constelacion
 const RET = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "retirados.json"), "utf8"));
 const ctx = {K: {}}; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "cielo", "cielo.js"), "utf8"), ctx);
-const {cielo} = ctx.K;
+vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "plan.js"), "utf8"), ctx);
+const {cielo, plan} = ctx.K;
+const EJ = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "ejercicios.json"), "utf8"));
 
 const PRUEBAS = [];
 const prueba = (n, fn) => PRUEBAS.push([n, fn]);
@@ -199,6 +201,86 @@ prueba("cielo-catalogo-real", () => {
   const r = cielo.calcular(CAT, [], HOY);
   ok(r.constelaciones.length === 14, "no son 14 constelaciones");
   ok(r.constelaciones.every(c => c.proxima && c.proxima.orden === 1), "en un cielo vacío, la próxima de cada una es la primera");
+});
+
+/* ===== Los ejercicios del catálogo ===== */
+prueba("catalogo-ejercicios", () => {
+  const ids = new Set();
+  for (const e of EJ.ejercicios){
+    ok(!ids.has(e.id), `ejercicio repetido: ${e.id}`); ids.add(e.id);
+    ok(e.nombre && e.indicacion && e.indicacion.length <= 90, `${e.id}: falta el nombre o la indicación es larga`);
+  }
+  for (const c of CAT.constelaciones) for (const e of c.estrellas) ok(ids.has(e.prueba.ejercicio), `${e.id} pide un ejercicio que no está: ${e.prueba.ejercicio}`);
+});
+
+/* ===== Las series de una sesión cuentan como marcas ===== */
+const ses = (id, fecha, series) => ({id, fecha, bloques: [{constelacion: "fl", series}]});
+const sx = (estrella, ejercicio, tipo, valor) => ({estrella, ejercicio, tipo, valor});
+prueba("sesion-enciende", () => {
+  /* decisión de Fer: una serie que llega al umbral enciende la estrella */
+  const s = ses("a", HOY, [sx("fl.colgado", "colgado", "segundos", 40), sx("fl.colgado", "colgado", "segundos", 61)]);
+  const c = cielo.calcular(MINI, [], HOY, [s]).constelaciones[0];
+  ok(c.estrellas[0].encendida && c.estrellas[0].mejor === 61, "la mejor serie no encendió: " + estados(c));
+  ok(c.marcas.length === 1 && c.marcas[0].origen === "serie", "cada sesión deja una sola marca por ejercicio, la mejor");
+  const n = cielo.nuevas(MINI, [], [], HOY, [], [s]);
+  ok(n.length === 1 && n[0].estrella.id === "fl.colgado", "nuevas no la ve");
+});
+prueba("sesion-series-rotas", () => {
+  const s = ses("a", HOY, [sx("fl.colgado", "colgado", "segundos", NaN), null, sx("x", "colgado", "inventado", 99), sx("fl.retirada", "colgado", "segundos", 60)]);
+  const c = cielo.calcular(MINI, [], HOY, [s, {id: "b", fecha: HOY}]).constelaciones[0];
+  /* una estrella retirada no borra lo que hiciste: cuenta por el ejercicio que midió */
+  ok(c.estrellas[0].encendida, "la serie de una estrella retirada no contó por su ejercicio");
+});
+prueba("sesion-cuenta-sesiones", () => {
+  const M = {familias: MINI.familias, constelaciones: [{id: "mo", nombre: "Motor", familia: "fu", meta: "", estrellas: [
+    {id: "mo.i3", nombre: "3 sesiones", magnitud: 3, orden: 1, prueba: {ejercicio: "intervalos", tipo: "sesiones", umbral: 3}, requiere: []}]}]};
+  const una = (id, f) => ({id, fecha: f, bloques: [{series: [sx("mo.i3", "intervalos", "sesiones", 1)]}]});
+  const c2 = cielo.calcular(M, [], HOY, [una("a", "2026-10-01"), una("b", "2026-10-05")]).constelaciones[0];
+  ok(c2.estrellas[0].mejor === 2 && !c2.estrellas[0].encendida, "dos sesiones tienen que contar 2: " + c2.estrellas[0].mejor);
+  /* lo anotado a mano es un total; lo hecho después suma */
+  const c3 = cielo.calcular(M, [{id: "x", estrella: "mo.i3", valor: 2, fecha: "2026-10-02"}], HOY, [una("a", "2026-10-01"), una("b", "2026-10-05")]).constelaciones[0];
+  ok(c3.estrellas[0].mejor === 3 && c3.estrellas[0].desde === "2026-10-05", "2 anotadas más una después tienen que ser 3: " + c3.estrellas[0].mejor);
+});
+
+/* ===== El plan del día ===== */
+const cieloReal = (ms = [], ss = []) => cielo.calcular(CAT, ms, HOY, ss);
+prueba("plan-objetivo", () => {
+  const P = t => ({tipo: t, umbral: 10});
+  ok(plan.objetivo(P("segundos"), null) === 5, "sin marcas, la mitad del umbral");
+  ok(plan.objetivo(P("segundos"), 5) === 6, "con 5 s, apunta a 6");
+  ok(plan.objetivo(P("segundos"), 8) === 10, "al 80 %, el umbral: se abre la ventana de prueba");
+  ok(plan.objetivo({tipo: "repeticiones", umbral: 100}, 40) === 50, "soga: suma de a 10 %");
+  ok(plan.objetivo({tipo: "minutos", umbral: 40}, null) === 40 && plan.objetivo({tipo: "minutos", umbral: 40}, 20) === 25, "minutos: de a 5");
+  ok(plan.objetivo({tipo: "logrado", umbral: 1}, null) === 1, "logrado: un intento");
+});
+prueba("plan-rumbo", () => {
+  const p = plan.armar(cieloReal(), ["front-lever"], [], HOY);
+  ok(p.bloques.map(b => b.constelacion).join() === "front-lever,espagat,motor", "fuerza, después rango y motor de regalo: " + p.bloques.map(b => b.constelacion));
+  ok(p.bloques[0].ejercicio === "colgado-activo" && p.bloques[0].series === 4 && p.bloques[0].objetivo === 30, "front lever arranca con colgado 4 × 30 s");
+  ok(p.bloques[1].extra && p.bloques[1].series === 2 && p.bloques[2].extra && p.bloques[2].objetivo === 15, "los de regalo son cortos");
+  ok(p.minutos >= 15 && p.minutos % 5 === 0, "minutos redondos: " + p.minutos);
+  const t = plan.armar(cieloReal(), ["front-lever", "diez-km", "puente"], [], HOY);
+  ok(t.bloques.length === 3 && t.bloques.every(b => !b.extra), "con motor y rango en el rumbo, no suma de regalo");
+  ok(plan.armar(cieloReal(), [], [], HOY).bloques.every(b => b.extra), "sin rumbo, solo lo de siempre");
+  ok(plan.armar(cieloReal(), ["no-existe"], [], HOY).bloques.length === 2, "un id viejo en el rumbo no rompe");
+});
+prueba("plan-no-repite-ayer", () => {
+  const ayer = {id: "a", fecha: "2026-10-19", bloques: [{constelacion: "front-lever", series: []}]};
+  const p = plan.armar(cieloReal([], [ayer]), ["front-lever", "planche"], [ayer], HOY);
+  ok(!p.bloques.some(b => b.constelacion === "front-lever") && p.bloques.some(b => b.constelacion === "planche"), "repitió front lever: " + p.bloques.map(b => b.constelacion));
+  const solo = plan.armar(cieloReal([], [ayer]), ["front-lever"], [ayer], HOY);
+  ok(solo.bloques[0].constelacion === "front-lever", "si es la única, va igual");
+});
+prueba("plan-volviste", () => {
+  const vieja = {id: "a", fecha: "2026-09-20", bloques: []};
+  const ms = [{id: "x", estrella: "front-lever.colgado-60s", valor: 40, fecha: "2026-09-20"}];
+  const p = plan.armar(cieloReal(ms, [vieja]), ["front-lever"], [vieja], HOY);
+  ok(p.volviste && p.bloques[0].objetivo === Math.round(46 * .7), "después de 3 semanas, al 70 %: " + p.bloques[0].objetivo);
+});
+prueba("plan-vez-pasada", () => {
+  const ss = [ses("a", "2026-10-10", [sx("e", "fl-tuck", "segundos", 7), sx("e", "fl-tuck", "segundos", 9)]), ses("b", "2026-10-12", [sx("e", "colgado-activo", "segundos", 30)])];
+  ok(plan.vezPasada(ss, "fl-tuck", "segundos") === 9, "la vez pasada es la mejor serie de la última sesión con ese ejercicio");
+  ok(plan.vezPasada(ss, "pistol", "repeticiones") === null, "sin antes, nada");
 });
 
 let fallas = 0;

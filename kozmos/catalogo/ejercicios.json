@@ -1,0 +1,320 @@
+{
+ "version": 1,
+ "ejercicios": [
+  {
+   "id": "munecas-dorso",
+   "nombre": "Muñecas en el dorso",
+   "indicacion": "Manos apoyadas al revés, dedos hacia vos. Llevá el peso de a poco."
+  },
+  {
+   "id": "cuervo",
+   "nombre": "Cuervo",
+   "indicacion": "Rodillas sobre los codos, mirada adelante. Inclinate hasta despegar los pies."
+  },
+  {
+   "id": "vertical-pared",
+   "nombre": "Vertical contra la pared",
+   "indicacion": "Panza a la pared, brazos rectos, hombros empujando hacia arriba."
+  },
+  {
+   "id": "pike-elevado",
+   "nombre": "Pike con pies elevados",
+   "indicacion": "Pies en un banco, cadera arriba. Bajá la cabeza entre las manos."
+  },
+  {
+   "id": "vertical-libre",
+   "nombre": "Vertical libre",
+   "indicacion": "Brazos rectos, cuerpo en línea. Corregí con los dedos."
+  },
+  {
+   "id": "flexion-vertical-pared",
+   "nombre": "Flexión en vertical",
+   "indicacion": "Contra la pared, bajá la cabeza al piso y empujá hasta bloquear."
+  },
+  {
+   "id": "fondo-ruso",
+   "nombre": "Fondo ruso",
+   "indicacion": "En paralelas, bajá hasta apoyar los antebrazos y volvé a subir."
+  },
+  {
+   "id": "dominada-explosiva",
+   "nombre": "Dominada explosiva",
+   "indicacion": "Tirá fuerte hasta llevar el pecho a la barra."
+  },
+  {
+   "id": "muscle-up-negativa",
+   "nombre": "Negativa de muscle-up",
+   "indicacion": "Arrancá arriba de la barra y bajá lento pasando la transición."
+  },
+  {
+   "id": "muscle-up-impulso",
+   "nombre": "Muscle-up con impulso",
+   "indicacion": "Balanceo corto, tirón a la cadera y pasá el pecho arriba."
+  },
+  {
+   "id": "muscle-up",
+   "nombre": "Muscle-up",
+   "indicacion": "Sin balanceo: tirón al pecho, transición y fondo arriba."
+  },
+  {
+   "id": "colgado-activo",
+   "nombre": "Colgado activo",
+   "indicacion": "Brazos rectos, hombros lejos de las orejas."
+  },
+  {
+   "id": "fl-bolita",
+   "nombre": "Front lever en bolita",
+   "indicacion": "Rodillas al pecho, espalda redonda, brazos rectos."
+  },
+  {
+   "id": "fl-tuck",
+   "nombre": "Tuck front lever",
+   "indicacion": "Rodillas al pecho, espalda plana, brazos rectos."
+  },
+  {
+   "id": "fl-tuck-avanzado",
+   "nombre": "Tuck avanzado",
+   "indicacion": "Cadera abierta a 90°, espalda plana, brazos rectos."
+  },
+  {
+   "id": "fl-una-pierna",
+   "nombre": "Front lever a una pierna",
+   "indicacion": "Una pierna estirada y la otra en tuck. Cadera alineada."
+  },
+  {
+   "id": "fl-straddle",
+   "nombre": "Front lever straddle",
+   "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal."
+  },
+  {
+   "id": "front-lever",
+   "nombre": "Front lever",
+   "indicacion": "Cuerpo entero horizontal, piernas juntas, brazos rectos."
+  },
+  {
+   "id": "planche-lean",
+   "nombre": "Planche lean",
+   "indicacion": "En plancha, llevá los hombros por delante de las manos."
+  },
+  {
+   "id": "flexion-pseudo-planche",
+   "nombre": "Flexión pseudo planche",
+   "indicacion": "Manos a la altura de la cadera, dedos hacia afuera."
+  },
+  {
+   "id": "planche-tuck",
+   "nombre": "Tuck planche",
+   "indicacion": "Rodillas al pecho, pies en el aire, brazos rectos."
+  },
+  {
+   "id": "planche-tuck-avanzado",
+   "nombre": "Tuck planche avanzado",
+   "indicacion": "Espalda plana, cadera a la altura de los hombros."
+  },
+  {
+   "id": "planche-straddle",
+   "nombre": "Planche straddle",
+   "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal."
+  },
+  {
+   "id": "colgado-un-brazo",
+   "nombre": "Colgado a un brazo",
+   "indicacion": "Hombro activo, el otro brazo suelto al costado."
+  },
+  {
+   "id": "flexion-arquera",
+   "nombre": "Flexión arquera",
+   "indicacion": "Un brazo hace la fuerza, el otro estirado al costado."
+  },
+  {
+   "id": "dominada-arquera",
+   "nombre": "Dominada arquera",
+   "indicacion": "Tirá hacia una mano, el otro brazo estirado sobre la barra."
+  },
+  {
+   "id": "dominada-un-brazo-negativa",
+   "nombre": "Negativa a un brazo",
+   "indicacion": "Arrancá arriba y bajá lo más lento que puedas."
+  },
+  {
+   "id": "flexion-un-brazo",
+   "nombre": "Flexión a un brazo",
+   "indicacion": "Piernas abiertas, cadera cuadrada, pecho al piso."
+  },
+  {
+   "id": "dominada-un-brazo",
+   "nombre": "Dominada a un brazo",
+   "indicacion": "Desde colgado, tirá hasta pasar el mentón."
+  },
+  {
+   "id": "bandera-rodillas",
+   "nombre": "Bandera con rodillas",
+   "indicacion": "Brazo de abajo empuja, el de arriba tira. Rodillas al pecho."
+  },
+  {
+   "id": "bandera-abierta",
+   "nombre": "Bandera abierta",
+   "indicacion": "Piernas abiertas, cuerpo de costado en el aire."
+  },
+  {
+   "id": "bandera",
+   "nombre": "Bandera humana",
+   "indicacion": "Cuerpo recto y horizontal, piernas juntas."
+  },
+  {
+   "id": "l-sit",
+   "nombre": "L-sit",
+   "indicacion": "Brazos rectos, piernas estiradas al frente, a la altura de la cadera."
+  },
+  {
+   "id": "dragon-flag-bolita",
+   "nombre": "Dragon flag en bolita",
+   "indicacion": "Apoyado en los hombros, bajá con las rodillas al pecho."
+  },
+  {
+   "id": "l-sit-alto",
+   "nombre": "L-sit con pies arriba",
+   "indicacion": "Como el L-sit, con los pies por encima de la cadera."
+  },
+  {
+   "id": "dragon-flag-una-pierna",
+   "nombre": "Dragon flag a una pierna",
+   "indicacion": "Una pierna estirada, cuerpo recto de hombros a pie."
+  },
+  {
+   "id": "v-sit",
+   "nombre": "V-sit",
+   "indicacion": "Piernas arriba, cerca de la cara, brazos empujando atrás."
+  },
+  {
+   "id": "dragon-flag",
+   "nombre": "Dragon flag",
+   "indicacion": "Cuerpo recto de hombros a pies, bajá lento."
+  },
+  {
+   "id": "pistol-silla",
+   "nombre": "Pistol a una silla",
+   "indicacion": "Bajá en una pierna hasta tocar la silla y subí sin impulso."
+  },
+  {
+   "id": "shrimp",
+   "nombre": "Shrimp",
+   "indicacion": "Agarrá el pie de atrás y bajá hasta apoyar la rodilla."
+  },
+  {
+   "id": "pistol",
+   "nombre": "Pistol",
+   "indicacion": "Una pierna al frente, bajá hasta abajo y subí."
+  },
+  {
+   "id": "nordico-negativa",
+   "nombre": "Nórdico, negativa lenta",
+   "indicacion": "Pies trabados, cadera estirada, bajá lo más lento posible."
+  },
+  {
+   "id": "nordico",
+   "nombre": "Nórdico",
+   "indicacion": "Pies trabados, bajá y volvé a subir con los isquios."
+  },
+  {
+   "id": "dominada-lastre",
+   "nombre": "Dominada con lastre",
+   "indicacion": "El lastre colgado, mentón arriba de la barra."
+  },
+  {
+   "id": "fondo-lastre",
+   "nombre": "Fondo con lastre",
+   "indicacion": "El lastre colgado, bajá hasta 90° y empujá."
+  },
+  {
+   "id": "sentadilla-profunda",
+   "nombre": "Sentadilla profunda",
+   "indicacion": "Talones en el piso, pecho alto, abajo del todo."
+  },
+  {
+   "id": "cosaca",
+   "nombre": "Cosaca",
+   "indicacion": "Una pierna estirada al costado, bajá sobre la otra."
+  },
+  {
+   "id": "espagat-lateral-90",
+   "nombre": "Espagat lateral a 90°",
+   "indicacion": "Piernas abiertas a 90°, cadera adelante, espalda recta."
+  },
+  {
+   "id": "espagat-lateral",
+   "nombre": "Espagat lateral",
+   "indicacion": "Piernas abiertas al costado hasta el piso."
+  },
+  {
+   "id": "espagat-frontal",
+   "nombre": "Espagat frontal",
+   "indicacion": "Una pierna adelante y otra atrás, cadera cuadrada."
+  },
+  {
+   "id": "manos-atras",
+   "nombre": "Manos juntas atrás",
+   "indicacion": "Una mano por arriba y otra por abajo, se juntan en la espalda."
+  },
+  {
+   "id": "dedos-al-piso",
+   "nombre": "Dedos al piso",
+   "indicacion": "Piernas estiradas, bajá desde la cadera."
+  },
+  {
+   "id": "hombros-pared",
+   "nombre": "Brazos a la pared",
+   "indicacion": "Espalda contra la pared, brazos arriba sin despegarla."
+  },
+  {
+   "id": "pike-pecho",
+   "nombre": "Pike",
+   "indicacion": "Sentado con piernas juntas, pecho a las rodillas."
+  },
+  {
+   "id": "puente",
+   "nombre": "Puente",
+   "indicacion": "Manos y pies en el piso, brazos rectos, cadera arriba."
+  },
+  {
+   "id": "pancake",
+   "nombre": "Pancake",
+   "indicacion": "Piernas abiertas, pecho hacia el piso desde la cadera."
+  },
+  {
+   "id": "trote",
+   "nombre": "Trote",
+   "indicacion": "A un ritmo en el que puedas hablar."
+  },
+  {
+   "id": "10km",
+   "nombre": "10 km",
+   "indicacion": "Un ritmo parejo. Anotá el tiempo total."
+  },
+  {
+   "id": "bici",
+   "nombre": "Bici en zona 2",
+   "indicacion": "Un ritmo en el que puedas hablar en frases cortas."
+  },
+  {
+   "id": "intervalos",
+   "nombre": "Intervalos 4×4",
+   "indicacion": "Cuatro de 4 minutos fuerte con 3 suaves entre medio."
+  },
+  {
+   "id": "soga",
+   "nombre": "Soga",
+   "indicacion": "Saltos bajos, muñecas sueltas, en la punta de los pies."
+  },
+  {
+   "id": "double-under",
+   "nombre": "Double under",
+   "indicacion": "Dos vueltas de soga por salto."
+  },
+  {
+   "id": "criss-cross",
+   "nombre": "Criss-cross",
+   "indicacion": "Cruzá los brazos en el aire y descruzá al salto siguiente."
+  }
+ ]
+}
