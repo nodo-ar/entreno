@@ -36,3 +36,5 @@ Cuarta etapa de Kozmos: la prueba de estrella con manos libres, Progreso, Vos, c
 1. OK al tablero de la etapa 4 (https://claude.ai/artifact/Y4MwrWUdHqWQDjqZCSXxT7).
 2. Tu peso en Vos (se usa para calorías además de Lastre).
 3. Tus días para la etapa 5.
+
+**Respuesta de Fer (2026-10-20)**: «Perfecto todo, seguí». Tablero aprobado; Tu peso queda en Vos (calorías y Lastre); Tus días pasa a la etapa 5. Sigue la etapa 5, rutinas y hazañas.
