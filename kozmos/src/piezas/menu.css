@@ -1,0 +1,13 @@
+/* ===== Menú flotante (de Entreno): nace del botón que lo abre, en vidrio; se cierra tocando afuera ===== */
+.popscrim{position:fixed; inset:0; z-index:70; background:transparent}
+.pop{position:fixed; z-index:71; min-width:220px; max-width:calc(100vw - 24px); padding:6px; border-radius:20px; background:color-mix(in srgb,var(--s1) 88%,transparent); backdrop-filter:blur(26px) saturate(1.8); -webkit-backdrop-filter:blur(26px) saturate(1.8); border:1px solid var(--line); box-shadow:var(--shadow); display:grid; animation:popin .26s var(--ease) both}
+@keyframes popin{from{opacity:0; transform:scale(.6)}}
+.pop.out{animation:popout .16s cubic-bezier(.4,0,1,1) forwards}
+@keyframes popout{to{opacity:0; transform:scale(.75)}}
+.pop .pt{padding:8px 12px 4px}
+.pmi{display:grid; grid-template-columns:22px 1fr 20px; align-items:center; gap:10px; width:100%; min-height:44px; padding:8px 12px; border:0; border-radius:14px; background:transparent; color:var(--ink); text-align:left; font-weight:600; cursor:pointer}
+.pmi:hover,.pmi:focus-visible{background:var(--s2); outline:none}
+.pmi[aria-checked="true"]{font-weight:700}
+.pmi .ck{color:var(--ink); visibility:hidden} .pmi[aria-checked="true"] .ck{visibility:visible}
+.psep{height:1px; background:var(--line); margin:4px 8px}
+@media (prefers-reduced-motion:reduce){ .pop,.pop.out{animation:none} }

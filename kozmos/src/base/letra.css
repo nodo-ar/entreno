@@ -1,0 +1,3 @@
+/* ===== Letra: Mona Sans (texto y títulos anchos) y Geist Mono (datos y relojes), las dos con licencia SIL OFL y guardadas en la app para que anden sin conexión ===== */
+@font-face{font-family:"Mona Sans"; src:url(fuentes/MonaSans.woff2) format("woff2"); font-weight:200 900; font-stretch:75% 125%; font-style:normal; font-display:swap}
+@font-face{font-family:"Geist Mono"; src:url(fuentes/GeistMono.woff2) format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}

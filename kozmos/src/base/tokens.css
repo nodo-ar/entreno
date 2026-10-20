@@ -1,0 +1,41 @@
+/* ===== Tokens · dirección B «Luz de día»: claro primero, tinta negra; el color es la familia (naranja fuerza, aqua motor, lima rango) ===== */
+:root{
+  --bg:#f7f6f2; --s1:#ffffff; --s2:#ecebe6; --line:#e4e2dc;
+  --ink:#111111; --ink-2:#6b6a66; --ink-3:#a5a39c; --off:#d4d2cb;
+  --solid:#111111; --on-solid:#f7f6f2;
+  --fu:#c2410c; --mo:#0b7f7a; --ra:#4d7c0f;
+  --fu-soft:#fbe6dc; --mo-soft:#d9f0ee; --ra-soft:#e6f0d6;
+  --glass:rgba(255,255,255,.80); --scrim:rgba(17,17,17,.18);
+  --shadow:0 18px 40px -16px rgba(17,17,17,.28);
+  --isla:#000000; --on-isla:#ffffff;
+  --f-ui:"Mona Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,monospace;
+  /* escala única */
+  --t-2xs:10px; --t-xs:11px; --t-s:12px; --t-sm:13px; --t-md:15px; --t-lg:17px; --t-xl:20px; --t-2xl:24px; --t-3xl:30px; --t-4xl:34px;
+  --r-sm:12px; --r-md:16px; --r-lg:22px;
+  /* una sola curva: llega y se queda, nada rebota (de Entreno) */
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#111110; --s1:#1b1b19; --s2:#292926; --line:#2e2e2b;
+  --ink:#f4f3ef; --ink-2:#a3a198; --ink-3:#6f6d66; --off:#3c3c38;
+  --solid:#f4f3ef; --on-solid:#111111;
+  --fu:#ff6b3d; --mo:#2ee2cf; --ra:#b8f062;
+  --fu-soft:#3a1d12; --mo-soft:#0f2e2c; --ra-soft:#25300f;
+  --glass:rgba(27,27,25,.80); --scrim:rgba(0,0,0,.45);
+  --shadow:0 18px 40px -14px rgba(0,0,0,.6);
+  --isla:#000000; --on-isla:#ffffff;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#111110; --s1:#1b1b19; --s2:#292926; --line:#2e2e2b;
+  --ink:#f4f3ef; --ink-2:#a3a198; --ink-3:#6f6d66; --off:#3c3c38;
+  --solid:#f4f3ef; --on-solid:#111111;
+  --fu:#ff6b3d; --mo:#2ee2cf; --ra:#b8f062;
+  --fu-soft:#3a1d12; --mo-soft:#0f2e2c; --ra-soft:#25300f;
+  --glass:rgba(27,27,25,.80); --scrim:rgba(0,0,0,.45);
+  --shadow:0 18px 40px -14px rgba(0,0,0,.6);
+  --isla:#000000; --on-isla:#ffffff;
+  color-scheme:dark;
+}
