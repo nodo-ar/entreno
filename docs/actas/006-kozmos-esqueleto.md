@@ -24,7 +24,7 @@ Publicar Kozmos en el mismo origen que Entreno (`nodo-ar.github.io`) comparte el
 ## Lo que no hay todavía
 Sesión en curso, serie con descanso y resumen no existen en la etapa 1: el tablero muestra lo que sí hay. La isla no tiene disparador real.
 
-## Decisiones para Fer
+## Decisiones de Fer (2026-10-20, «impecable … SIGAMOS»)
 1. OK al tablero de la etapa 1.
-2. Barra de navegación: píldora con la etiqueta solo en la elegida, o la barra del prototipo con todas las etiquetas.
-3. La bandera roja del mismo dominio, para cuando se publique (etapa 6).
+2. Barra de navegación: píldora con la etiqueta solo en la elegida, como en Entreno.
+3. Bandera roja del mismo dominio: Kozmos va a tener **dominio propio**. La bandera se baja cuando ese dominio exista (etapa 6).
