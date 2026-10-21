@@ -122,3 +122,34 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 @media (orientation:landscape) and (max-height:520px){
   .como{display:grid; grid-template-columns:1fr 1fr}
 }
+
+/* ===== Escaleras: el escalón de cada una, cómo te quedó la serie y lo que cambió ===== */
+/* sobró, justo o no llegué: un toque opcional, al lado de lo que anotás. En tinta lo que elegiste; con borde, lo que dicen las repeticiones */
+.sens{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
+.sens .btn{height:44px; padding:0 8px; font-size:var(--t-md)}
+.sens .btn.inf{border-color:var(--ink-3); border-style:dashed}
+.sens .btn[aria-pressed="true"]{background:var(--solid); color:var(--on-solid); border-color:var(--solid); font-weight:700}
+.ses-marca{color:var(--c, var(--ink)); font-weight:700}
+/* por dónde vas en cada escalera: un segmento por escalón, lo hecho en tinta y el de ahora en su color */
+.esc-filas{display:grid; gap:10px; margin:0; padding:0; list-style:none}
+/* una línea por escalera: nombre, el ejercicio de ahora, los escalones y el número */
+.esc-filas li{display:grid; grid-template-columns:68px minmax(0,1fr) 76px 30px; grid-template-areas:"nom ej seg n"; column-gap:10px; align-items:center; min-height:24px}
+.esc-nom{grid-area:nom; font-weight:600}
+.esc-ej{grid-area:ej; font-size:var(--t-sm); font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.esc-seg{grid-area:seg; display:flex; gap:2px}
+.esc-seg i{flex:1; height:6px; border-radius:3px; background:var(--s2)}
+.esc-seg i.d{background:var(--ink-3)}
+.esc-seg i.n{background:var(--c)}
+.esc-n{grid-area:n; text-align:right; font-size:var(--t-sm); font-weight:700; color:var(--ink-2)}
+/* el resumen: ▲ subiste, = seguís, ▼ bajás */
+.res-esc{gap:10px}
+.res-esc ul{display:grid; gap:10px; margin:0; padding:0; list-style:none}
+.res-esc li{display:grid; grid-template-columns:28px minmax(0,1fr) auto; gap:10px; align-items:center}
+.res-esc .ses-fila small{font-weight:700}
+.res-signo{display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--s2); color:var(--ink-3); font-size:var(--t-s); font-weight:700}
+.res-esc li.sube .res-signo{background:var(--ra-soft); color:var(--ra)}
+.res-esc li.baja .res-signo{background:var(--fu-soft); color:var(--fu)}
+.res-esc em{font-style:normal; font-size:var(--t-sm); font-weight:700}
+@media (orientation:landscape) and (max-height:520px){
+  .sens .btn{height:40px}
+}

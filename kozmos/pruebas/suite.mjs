@@ -916,6 +916,134 @@ prueba("rutina-superserie", async () => {
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
+/* ===== Escaleras: el escalón de cada ejercicio sale del diario ===== */
+/* dos sesiones de la base: la negativa en el tope dos veces (▲), sentadillas en el medio (=) y fondos en el banco sin el mínimo (▼) */
+const sEsc = (id, fecha, i, grupos) => ({id, fecha, inicio: `${fecha}T18:00:00.000Z`, fin: `${fecha}T18:45:00.000Z`, duracion: 2700, cortada: false, catalogo: 1, rutina: {id: "base_cali", sesion: i},
+  bloques: grupos.map(([esc, ej, vs, rango, o], k) => ({orden: k + 1, familia: "fu", objetivo: o, series: vs.map(v => ({ejercicio: ej, tipo: "repeticiones", objetivo: o, valor: v, ...(esc ? {escalera: esc, rango, n: vs.length} : {})}))}))});
+const HIST_ESC = [
+  sEsc("e1", "2026-10-14", 0, [["tirar", "dominada-negativa", [5, 5, 5], [3, 5], 5], ["piernas", "sentadilla", [9, 9, 9], [8, 12], 9], ["fondos", "fondo-banco", [4, 4, 3], [6, 10], 6]]),
+  sEsc("e2", "2026-10-16", 1, [["tirar", "dominada-negativa", [5, 5, 5], [3, 5], 5], ["piernas", "sentadilla", [10, 10, 9], [8, 12], 10], ["fondos", "fondo-banco", [5, 4, 4], [6, 10], 6]])];
+const sembrarEsc = (p, ss = HIST_ESC) => p.evaluate(async ss => {
+  await K.diario.perfilPoner("rumbo", ["front-lever"]); await K.diario.perfilPoner("equipo", ["barra"]);
+  for (const s of ss) await K.diario.guardarSesion(s);
+  await K.diario.perfilPoner("rutina", {id: "base_cali", desde: "2026-10-01"}); K.refrescar();
+}, ss);
+/* de la entrada en calor a la primera serie de fuerza */
+const aLaSerie = async p => { await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo"); await p.click("#s-mas"); await p.click('.pmi[data-id="saltear"]'); await p.waitForSelector(".ses.serie"); };
+
+prueba("escalera-sensacion", async () => {
+  /* cómo te quedó la serie: tres botones opcionales en el descanso, que se guardan en la serie; sin tocar, valen las repeticiones */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarEsc(p, []); await p.waitForSelector("#s-empezar");
+  await aLaSerie(p);
+  ok((await p.textContent(".ses-donde")).includes("Tirar"), "la sesión no dice la escalera: " + await p.textContent(".ses-donde"));
+  await tick(p, 20000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+  ok(await p.$$eval(".ses-b .sens [data-sens]", bs => bs.map(b => b.textContent).join()) === "Sobró,Justo,No llegué", "faltan los tres botones");
+  ok(await p.$$eval(".sens [aria-pressed=true]", x => x.length) === 0, "arranca con algo elegido");
+  ok(await p.getAttribute('[data-sens="justo"]', "class").then(c => c.includes("inf")), "no marca lo que dicen las repeticiones (el objetivo justo)");
+  /* subís las repeticiones: lo que dirían cambia sin volver a dibujar */
+  await p.click('[data-spaso="1"][data-campo="valor"]'); await p.click('[data-spaso="1"][data-campo="valor"]');
+  ok(await p.getAttribute('[data-sens="sobro"]', "class").then(c => c.includes("inf")), "con dos de más no dice que sobró");
+  await p.click('[data-sens="sobro"]'); ok(await p.getAttribute('[data-sens="sobro"]', "aria-pressed") === "true", "el toque no queda marcado");
+  await p.click('[data-sens="sobro"]'); ok(await p.$$eval(".sens [aria-pressed=true]", x => x.length) === 0, "tocar de nuevo no lo saca");
+  await p.click('[data-sens="no-llego"]');
+  /* el botón está al alcance del pulgar: en la mitad de abajo */
+  ok(await p.evaluate(() => document.querySelector(".sens").getBoundingClientRect().top > innerHeight / 2), "los botones no quedan abajo");
+  await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
+  await tick(p, 20000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso"); await p.click("#s-seguir");
+  const h = await p.evaluate(() => K.sesion.estado().hechos.filter(x => x.tipo === "repeticiones"));
+  ok(h[0].sensacion === "no-llego" && h[0].escalera === "tirar" && h[0].rango.join() === "3,5" && h[0].n === 3 && h[0].valor === 5, "la serie no guarda escalera, rango y sensación: " + JSON.stringify(h[0]));
+  ok(h[1].escalera === "piernas" && !("sensacion" in h[1]), "sin tocar, la serie no lleva sensación: " + JSON.stringify(h[1]));
+  /* y llega al diario y al respaldo */
+  await p.click("#s-cortar"); await p.waitForSelector(".res");
+  const r = await p.evaluate(() => { const x = K.diario.sesiones.at(-1).bloques.flatMap(b => b.series).find(y => y.escalera === "tirar"), b = K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, K.CATALOGO.version))); return {x, d: b.descartadas, err: b.error}; });
+  ok(r.x.sensacion === "no-llego" && r.x.rango.join() === "3,5" && !r.err && r.d === 0, "el diario o el respaldo pierden la serie: " + JSON.stringify(r));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("escalera-isla", async () => {
+  /* subiste de escalón: la serie lo dice y la isla también */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector("#s-empezar");
+  await aLaSerie(p);
+  ok(await p.evaluate(() => K.sesion.paso().ejercicio) === "dominada", "no subió a la dominada: " + await p.evaluate(() => K.sesion.paso().ejercicio));
+  ok((await p.textContent(".ses-tit .lb")).includes("▲ nuevo"), "la serie no dice que es nuevo: " + await p.textContent(".ses-tit .lb"));
+  ok((await p.textContent(".ses-reloj")).includes("repeticiones"), "falta lo que toca");
+  await tick(p, 4000);
+  await p.click("#s-mas"); await p.click('.pmi[data-id="cielo"]'); await esperarTitulo(p, "Cielo"); await tick(p, 500);
+  ok((await p.textContent("#isla")).trim().startsWith("Dominada · ▲ nuevo "), "la isla: " + await p.textContent("#isla"));
+  /* en la serie que sigue (sentadilla, mismo escalón) no hay marca */
+  await p.click("#isla"); await p.waitForSelector(".ses.serie"); await p.click("#s-listo"); await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
+  ok(!(await p.textContent(".ses-tit .lb")).includes("▲"), "la sentadilla dice que es nueva");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("escalera-resumen", async () => {
+  /* el resumen de una sesión: ▲ subiste, = seguís (con lo que toca la próxima), ▼ bajás */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarEsc(p);
+  await ir(p, "#/progreso/e2"); await p.waitForSelector(".res-esc");
+  const fs = await p.$$eval(".res-esc li", ls => ls.map(l => [l.className, l.querySelector(".res-signo").textContent, l.querySelector(".ses-fila").textContent.trim()]));
+  const de = n => fs.find(f => f[2].startsWith(n)) || [];
+  ok(de("Tirar")[0] === "sube" && de("Tirar")[1] === "▲" && de("Tirar")[2].includes("Dominada negativa → Dominada"), "tirar: " + JSON.stringify(de("Tirar")));
+  ok(de("Piernas")[0] === "igual" && de("Piernas")[1] === "=" && de("Piernas")[2].includes("11 · 11 · 10"), "piernas: " + JSON.stringify(de("Piernas")));
+  ok(de("Fondos")[0] === "baja" && de("Fondos")[1] === "▼" && de("Fondos")[2].includes("Flexión cerrada"), "fondos: " + JSON.stringify(de("Fondos")));
+  /* la primera sesión: todavía nada cambia */
+  await ir(p, "#/progreso/e1"); await p.waitForSelector(".res-esc");
+  ok(await p.$$eval(".res-esc li.sube, .res-esc li.baja", x => x.length) === 0, "en la primera sesión ya cambió algo");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("escalera-hoy", async () => {
+  /* Tu avance: el escalón de cada escalera, igual en Hoy y en Planes */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-rut .esc-filas");
+  const filas = async sel => p.$$eval(sel + " .esc-filas li", ls => ls.map(l => [l.querySelector(".esc-nom").textContent, l.querySelector(".esc-n").textContent, l.querySelector(".esc-ej").textContent, l.querySelectorAll(".esc-seg i").length]));
+  const h = await filas(".hoy-rut");
+  ok(h.map(f => f[0]).join() === "Tirar,Piernas,Fondos,Isquios,Remo,Empujar,L-sit", "las escaleras de Hoy: " + h.map(f => f[0]));
+  ok(JSON.stringify(h[0]) === '["Tirar","4/7","Dominada",7]', "tirar en Hoy: " + JSON.stringify(h[0]));
+  ok(h[2][1] === "1/2" && h[2][2] === "Flexión cerrada", "fondos en Hoy (sin paralelas): " + JSON.stringify(h[2]));
+  ok(!(await p.textContent(".hoy-rut")).includes("de 24"), "Hoy sigue mostrando las semanas en vez de los escalones");
+  await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-esc");
+  ok(JSON.stringify(await filas(".rut-esc")) === JSON.stringify(h), "Planes no muestra lo mismo que Hoy");
+  ok((await p.textContent(".rut")).includes("Tus escalones"), "Planes no dice que son tus escalones");
+  /* el escalón es tuyo, no de la rutina: otra rutina con la misma escalera arranca donde estás */
+  await ir(p, "#/planes/rutinas/prim_dom"); await p.waitForSelector(".rut-esc");
+  ok((await p.textContent(".rut")).includes("Sus escaleras") && JSON.stringify((await filas(".rut-esc"))[0]) === JSON.stringify(h[0]), "otra rutina no arranca en tu escalón: " + JSON.stringify((await filas(".rut-esc"))[0]));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("escalera-diario-viejo", async () => {
+  /* las sesiones guardadas antes de las escaleras (sin escalera, rango ni sensación) cargan, cuentan y ubican el escalón */
+  const {ctx, p} = await conReloj();
+  const viejas = [sEsc("v1", "2026-10-12", 0, [[null, "dominada-negativa", [5, 5, 5], null, 5], [null, "sentadilla", [10, 10, 10], null, 10]]),
+    sEsc("v2", "2026-10-14", 1, [[null, "dominada-negativa", [5, 5, 4], null, 5], [null, "sentadilla", [10, 10, 10], null, 10]])];
+  await ir(p, "#/hoy"); await sembrarEsc(p, viejas); await p.reload(); await p.waitForSelector(".hoy-rut .esc-filas");
+  const r = await p.evaluate(() => ({i: K.rutinaActual().cur.i, n: K.diario.sesiones.length, es: K.rutina.escalerasDe(K.rutinaActual().r, K.ctxRutina()).map(x => x.id + ":" + x.paso.ejercicio).join()}));
+  ok(r.n === 2 && r.i === 2, "las sesiones viejas no cuentan: " + JSON.stringify(r));
+  ok(r.es.startsWith("tirar:dominada-negativa,piernas:sentadilla"), "el escalón no sale de las sesiones viejas: " + r.es);
+  /* el resumen viejo se abre igual, y el respaldo las devuelve enteras */
+  await ir(p, "#/progreso/v2"); await p.waitForSelector(".res");
+  const b = await p.evaluate(() => { const x = K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, K.CATALOGO.version))); return {d: x.descartadas, n: x.sesiones.length, err: x.error}; });
+  ok(!b.err && b.d === 0 && b.n === 2, "el respaldo pierde sesiones viejas: " + JSON.stringify(b));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("escalera-horizontal", async () => {
+  /* en horizontal los tres botones entran en la columna de la derecha, con Seguir a la vista; el resumen y Hoy también */
+  const {ctx, p} = await conReloj({width: 844, height: 390});
+  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-rut .esc-filas");
+  const cols = sel => p.evaluate(([a, b]) => { const x = document.querySelector(a).getBoundingClientRect(), y = document.querySelector(b).getBoundingClientRect(); return y.left >= x.right - 1 && document.documentElement.scrollWidth <= innerWidth; }, sel);
+  ok(await cols([".hoy-a", ".hoy-b"]), "Hoy en horizontal no va en dos columnas");
+  await aLaSerie(p); await tick(p, 20000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+  const r = await p.evaluate(() => { const a = document.querySelector(".ses-a").getBoundingClientRect(), b = document.querySelector(".ses-b").getBoundingClientRect(), s = document.querySelector(".sens").getBoundingClientRect(), btn = document.querySelector("#s-seguir").getBoundingClientRect();
+    return {lado: b.left >= a.right - 1 && s.left >= a.right - 1, ve: btn.bottom <= innerHeight && s.top >= 0, ancho: document.documentElement.scrollWidth <= innerWidth}; });
+  ok(r.lado && r.ve && r.ancho, "descanso: " + JSON.stringify(r));
+  await ir(p, "#/hoy/resumen/e2"); await p.waitForSelector(".res-esc");
+  ok(await cols([".res-a", ".res-b"]) && await p.evaluate(() => document.querySelector(".res-esc").getBoundingClientRect().left >= document.querySelector(".res-a").getBoundingClientRect().right - 1), "el resumen en horizontal: los escalones no van a la derecha");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
 prueba("hazana-por-tiempo", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);

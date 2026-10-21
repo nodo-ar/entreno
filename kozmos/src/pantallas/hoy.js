@@ -33,7 +33,25 @@ K.rutinaActual = () => {
   const x = K.diario.perfil.rutina, r = x && K.rutinaDe(x.id);
   return r ? {r, cur: K.rutina.enCurso(r, x.desde, K.diario.sesiones)} : null;
 };
-const ctxRutina = () => ({ej: K.EJ, equipo: K.diario.perfil.equipo || null, sesiones: K.diario.sesiones});
+const ctxRutina = K.ctxRutina = () => ({ej: K.EJ, equipo: K.diario.perfil.equipo || null, sesiones: K.diario.sesiones, marcas: K.diario.mediciones});
+/* ===== Escalones: por dónde vas en cada escalera, igual en Hoy y en Planes ===== */
+const MARCA = {sube: "▲ nuevo", baja: "▼ más fácil", carga: "▲ más peso"};
+K.marcaPaso = b => b.descarga ? "más liviana" : MARCA[b.nuevo] || "";
+K.filasEscalera = (es, fam) => `<ul class="esc-filas">${es.map(x => `<li style="--c:var(--${x.familia || fam})">
+    <span class="esc-nom">${K.esc(x.nombre)}</span><span class="esc-seg" role="img" aria-label="Escalón ${x.i + 1} de ${x.total}">${x.pasos.map((_, k) => `<i class="${k < x.i ? "d" : k === x.i ? "n" : ""}"></i>`).join("")}</span>
+    <span class="num esc-n">${x.i + 1}/${x.total}</span><small class="mute esc-ej">${K.esc(K.ej(x.paso.ejercicio).nombre)}${x.descarga ? " · más liviana" : ""}</small></li>`).join("")}</ul>`;
+/* lo que cambió en cada escalera con una sesión, para el resumen: ▲ subiste, = seguís, ▼ bajás */
+const SIGNO = {sube: "▲", carga: "▲", baja: "▼"};
+const cambioTx = x => {
+  const n = id => K.ej(id).nombre, kg = v => String(v).replace(".", ",");
+  if (x.evento === "sube") return `${n(x.de.ejercicio)} → ${n(x.a.ejercicio)}`;
+  if (x.evento === "baja") return `Volvés a ${n(x.a.ejercicio)}`;
+  if (x.evento === "carga") return `+${kg(x.carga)} kg · ahora ${kg(x.kg)} kg`;
+  if (x.evento === "trabado") return "La próxima, más liviana";
+  if (x.evento === "descarga") return "La próxima, volvés a probar";
+  if (x.evento === "cima") return "Arriba de todo";
+  return x.proxima?.length ? `La próxima: ${x.proxima.map(v => v === "max" ? "máx" : v).join(" · ")}` : "Seguís acá";
+};
 /* lo que toca hoy: la sesión de tu rutina, o lo que arma tu rumbo. La ventana de prueba va primero en los dos casos. */
 K.hoyPlan = () => {
   const base = K.plan.armar(K.cieloActual(), K.rumbo(), K.diario.sesiones, K.hoy()), ru = K.rutinaActual();
@@ -117,8 +135,11 @@ K.hoyRutina = ({r, cur}, sin) => {
   const plan = K.hoyPlan(), cielo = K.cieloActual();
   const est = r.alimenta.map(id => cielo.constelaciones.flatMap(c => c.estrellas).find(e => e.id === id)).filter(Boolean), sig = est.find(e => !e.encendida) || est[est.length - 1];
   const s = r.sesiones[cur.i];
-  /* el nombre y la semana van en la fila de origen, arriba; acá, el avance */
-  const top = `<section class="cd hoy-rut"><span class="lb">Tu avance</span>
+  /* el nombre y la semana van en la fila de origen, arriba; acá, el avance: en una rutina con escaleras, el escalón de cada una */
+  const es = K.rutina.escalerasDe(r, ctxRutina());
+  const top = es.length ? `<section class="cd hoy-rut"><span class="lb">Tu avance</span>${K.filasEscalera(es, r.familia)}
+      ${sig ? `<span class="ln mute small"><span>Entrena para</span><span>${K.esc(sig.nombre)}</span></span>` : ""}</section>`
+    : `<section class="cd hoy-rut"><span class="lb">Tu avance</span>
       <div class="bar" style="--c:var(--${r.familia})" role="progressbar" aria-label="Avance de la rutina" aria-valuemin="0" aria-valuemax="${cur.total}" aria-valuenow="${cur.i}"><i style="width:${(cur.i / cur.total * 100).toFixed(1)}%"></i></div>
       <span class="ln mute"><span>Día ${cur.dia} de ${r.dias}</span><span class="num">${cur.i} de ${cur.total}</span></span>
       ${sig ? `<span class="ln mute small"><span>Entrena para</span><span>${K.esc(sig.nombre)}</span></span>` : ""}</section>`;
@@ -193,13 +214,17 @@ const grandeSerie = b => {
   if (b.tipo === "segundos") return pr > 0 ? [String(Math.ceil(pr)), "Preparate"] : [K.reloj(K.sesion.enFase()), b.objetivo === "max" ? "al máximo" : `de ${b.objetivo} s`];
   return [K.reloj(K.sesion.enFase()), b.tipo === "minutos" ? `de ${b.objetivo} min` : b.tipo === "sesiones" ? "unos 28 min" : "10 km"];
 };
+/* cómo te quedó la serie, de un toque y sin obligación: si no tocás nada, valen las repeticiones (y se ve cuál dirían) */
+const SENS_TX = {sobro: "Sobró", justo: "Justo", "no-llego": "No llegué"};
+const sensBotones = S => { const inf = K.sesion.sensInferida();
+  return `<div class="sens" role="group" aria-label="¿Cómo te quedó?">${K.rutina.SENS.map(k => `<button type="button" class="btn sec${!S.sens && inf === k ? " inf" : ""}" data-sens="${k}" aria-pressed="${S.sens === k}">${SENS_TX[k]}</button>`).join("")}</div>`; };
 K.P.sesion = () => {
   const S = K.sesion.estado(), B = K.sesion.bloque(), nb = S.plan.bloques.length;
   /* los bloques de rutina pueden cambiar de ejercicio en cada serie (superseries): manda la serie que va */
   const b = B.clase ? B : {...B, ...K.sesion.paso()}, e = K.ej(b.ejercicio);
   const c = b.constelacion ? K.cons(b.constelacion) : null;
   const enSerie = S.fase === "serie";
-  const nombreB = c ? c.nombre : B.clase ? B.nombre : "";
+  const nombreB = c ? c.nombre : B.clase ? B.nombre : b.escalera ? K.rutina.escalera(b.escalera)?.nombre || "" : "";
   const donde = B.hazana ? `Hazaña · ${K.rutina.NIVELES[B.nivel]}` : S.fase === "descanso" ? "Descanso" : S.fase === "cierre" ? (B.clase ? "Fin" : "Última serie") : b.prueba ? "Prueba de estrella" : `Bloque ${S.b + 1} de ${nb}${nombreB ? ` · ${nombreB}` : ""}`;
   const acc = `<div class="enc-acc ses-acc"><button type="button" class="ib" id="s-cortar" aria-label="Terminar la sesión">${K.ic("x")}</button>
     <span class="lb ses-donde">${K.esc(donde)}</span>${K.mas("s-mas", "Opciones de la sesión")}</div>`;
@@ -207,14 +232,15 @@ K.P.sesion = () => {
   if (S.fase === "circuito") return acc + K.P.circuito(S, B);
   if (B.clase && S.fase === "cierre") return acc + K.P.cierreBloque(S, B);
   const pasos = `<div class="stp" style="--c:var(--${b.familia})" aria-hidden="true">${Array.from({length: b.series}, (_, i) => `<i class="${i < S.s || (i === S.s && !enSerie) ? "d" : i === S.s ? "n" : ""}"></i>`).join("")}</div>`;
-  const nom = `<span class="lb">${b.tipo === "logrado" ? "Intento" : "Serie"} ${S.s + 1} de ${b.series}${b.extra ? " · para sostener" : ""}</span>`;
+  const mp = K.marcaPaso(b);
+  const nom = `<span class="lb">${b.tipo === "logrado" ? "Intento" : "Serie"} ${S.s + 1} de ${b.series}${b.extra ? " · para sostener" : ""}${mp ? ` · <b class="ses-marca">${mp}</b>` : ""}</span>`;
   const pausa = S.pausa !== null ? `<p class="ses-pausa lb">En pausa</p>` : "";
   if (enSerie && b.prueba) return acc + K.P.prueba(S, b, e, pausa);
   if (enSerie){
     const o = b.objetivo, corre = CORRE.includes(b.tipo);
     const [gn, gl] = corre ? grandeSerie(b) : [];
     const grande = corre ? `<span class="reloj big num" data-r="fase">${gn}</span><span class="lb" data-r="fase-lb">${gl}</span>`
-      : b.tipo === "repeticiones" ? (o === "max" ? `<span class="reloj big num">Máx</span><span class="lb">todas las que salgan</span>` : `<span class="reloj big num">${o}</span><span class="lb">repeticiones</span>`)
+      : b.tipo === "repeticiones" ? (o === "max" ? `<span class="reloj big num">Máx</span><span class="lb">todas las que salgan</span>` : `<span class="reloj big num">${o}</span><span class="lb">repeticiones${b.carga && b.kg ? ` · con ${String(b.kg).replace(".", ",")} kg` : b.antes !== undefined ? ` · la vez pasada ${b.antes}` : ""}</span>`)
       : b.tipo === "porcentaje" ? `<span class="reloj big num">+${o} %</span><span class="lb">de tu peso${K.diario.perfil.peso ? ` · ${Math.round(o * K.diario.perfil.peso / 100 * 2) / 2} kg` : ""}</span>`
       : `<span class="lb">De punta a punta, sin ayuda</span>`;
     const sig = K.sesion.ultima() ? "Es la última" : b.series > S.s + 1 ? (b.descanso ? `Después: descanso de ${K.reloj(b.descanso)}` : `Después: ${K.sesion.proxima()}`) : `Después: ${K.sesion.nombreBloque(S.plan.bloques[S.b + 1])}`;
@@ -229,11 +255,12 @@ K.P.sesion = () => {
   let campo;
   /* sí o no, de un toque: dos botones grandes, el elegido en tinta */
   if (b.tipo === "logrado" || b.tipo === "sesiones") campo = `<div class="si-no" role="group" aria-label="${PREGUNTA[b.tipo]}"><button type="button" class="btn sec" data-salio="0" aria-pressed="${!(Number(v) > 0)}">Todavía no</button><button type="button" class="btn sec" data-salio="1" aria-pressed="${Number(v) > 0}">${K.ic("check")}Sí, salió</button></div>`;
+  else if (b.carga) campo = `<div class="dos-pasos">${paso("valor", PREGUNTA.repeticiones, v?.valor, "repeticiones")}${paso("lastre", "Lastre en kilos", v?.lastre, "kg de lastre")}</div>${K.diario.perfil.peso ? "" : paso("peso", "Tu peso en kilos", v?.peso, "kg tu peso")}`;
   else if (b.tipo === "porcentaje") campo = `<div class="dos-pasos">${paso("lastre", "Lastre en kilos", v?.lastre, "kg de lastre")}${K.diario.perfil.peso ? "" : paso("peso", "Tu peso en kilos", v?.peso, "kg tu peso")}</div>`;
   else campo = paso("valor", PREGUNTA[b.tipo], v, UNI[b.tipo]);
-  const antes = K.plan.vezPasada(K.diario.sesiones, b.ejercicio, b.tipo);
-  const pie = b.tipo === "logrado" || b.tipo === "sesiones" ? "" : antes !== null ? `<span class="ln mute"><span>La vez pasada</span><span class="num">${K.esc(K.cielo.corto(b, antes))}</span></span>`
-    : b.umbral ? `<span class="ln mute"><span>Para la próxima estrella</span><span class="num">${K.esc(K.cielo.corto(b, b.umbral))}</span></span>` : "";
+  const antes = b.antes !== undefined ? b.antes : K.plan.vezPasada(K.diario.sesiones, b.ejercicio, b.tipo);
+  const pie = (b.rango && !b.descarga ? sensBotones(S) : "") + (b.tipo === "logrado" || b.tipo === "sesiones" ? "" : antes !== null ? `<span class="ln mute"><span>La vez pasada</span><span class="num">${K.esc(K.cielo.corto(b, antes))}</span></span>`
+    : b.umbral ? `<span class="ln mute"><span>Para la próxima estrella</span><span class="num">${K.esc(K.cielo.corto(b, b.umbral))}</span></span>` : "");
   const tarjeta = B.clase ? hechoBloque(S, B) : `<section class="cd ses-anota"><span class="lb">${PREGUNTA[b.tipo]} · ${K.esc(e.nombre)}</span>${campo}${pie}</section>`;
   if (S.fase === "cierre") return acc + `<div class="ses cierre"><div class="ses-a">${pasos}<div class="enc-tit ses-tit">${nom}<h1>${K.esc(e.nombre)}</h1></div>${pausa}
       <div class="ses-reloj"><span class="reloj big num" data-r="total">${K.reloj(K.sesion.total())}</span><span class="lb">toda la sesión</span></div></div>
@@ -371,7 +398,7 @@ K.sesion.alLatir = () => {
   else if (S.fase === "tramo"){ const x = b.tramos[S.s], q = K.sesion.queda(); texto = `${tramoTx(x)} ${K.reloj(Math.max(0, Math.ceil(q)))}`; p = Math.max(0, q) / x.seg; }
   else if (K.sesion.prep() > 0) texto = `Preparate ${Math.ceil(K.sesion.prep())}`;
   else if (S.fase === "circuito"){ const [n] = circGrande(S, b); texto = `${b.nombre} ${n}`; p = b.formato === "amrap" ? Math.max(0, K.sesion.queda()) / (b.minutos * 60) : S.vueltas / b.rondas; }
-  else { texto = `${K.ej(K.sesion.paso().ejercicio).nombre} ${K.reloj(K.sesion.enFase())}`; p = (S.s + 1) / b.series; }
+  else { const pa = K.sesion.paso(), mp = K.marcaPaso(pa); texto = `${K.ej(pa.ejercicio).nombre}${mp ? ` · ${mp}` : ""} ${K.reloj(K.sesion.enFase())}`; p = (S.s + 1) / b.series; }
   K.isla.mostrar({texto, p, familia: b.familia, ir: "#/hoy/sesion"});
 };
 
@@ -403,13 +430,20 @@ K.ses = {
   seguir(){ K.sesion.seguir(); K.refrescar(); },
   ajustar(d){ K.sesion.ajustar(d); K.sesion.alLatir(); },
   paso(campo, s){
-    const S = K.sesion.estado(), inc = campo === "valor" ? 1 : .5;
-    const v = K.sesion.numero((campo === "valor" ? S.borrador : S.borrador?.[campo]) ?? "");
+    const S = K.sesion.estado(), inc = campo === "valor" ? 1 : .5, obj = S.borrador !== null && typeof S.borrador === "object";
+    const v = K.sesion.numero((obj ? S.borrador[campo] : campo === "valor" ? S.borrador : undefined) ?? "");
     const n = Math.max(0, Math.round(((Number.isFinite(v) ? v : 0) + s * inc) * 2) / 2);
     K.sesion.anotar(campo, n); const el = K.$("#s-" + campo); if (el) el.value = n;
+    K.ses.pintarSens();
   },
-  escribir(campo, txt){ K.sesion.anotar(campo, txt); },
+  escribir(campo, txt){ K.sesion.anotar(campo, txt); K.ses.pintarSens(); },
   salio(v){ K.sesion.anotar("valor", v); K.refrescar(); },
+  sentir(v){ K.sesion.sentir(v); K.ses.pintarSens(); },
+  /* sin volver a dibujar la pantalla (no se pierde lo que estás escribiendo): el elegido en tinta, el que dirían las repeticiones marcado suave */
+  pintarSens(){
+    const S = K.sesion.estado(); if (!S) return; const inf = K.sesion.sensInferida();
+    for (const el of K.$$("[data-sens]")){ el.setAttribute("aria-pressed", String(S.sens === el.dataset.sens)); el.classList.toggle("inf", !S.sens && inf === el.dataset.sens); }
+  },
   menu(btn){
     const S = K.sesion.estado(), b = K.sesion.bloque();
     /* una hazaña no se saltea: se termina o se corta */
@@ -502,6 +536,10 @@ K.P.resumen = (id, desde = "hoy") => {
     : rutFin && !prim ? `<section class="cd res-orbita">${K.mov.orbita(170)}<p class="lb">Rutina completa</p></section>`
     : c ? `<section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>` : "";
   const kcal = K.calorias.deSesion(x, K.diario.perfil.peso);
+  /* lo que pasó en cada escalera: ▲ subiste, = seguís (y lo que toca la próxima), ▼ bajás */
+  const cs = x.rutina ? K.rutina.cambios(x, ses, {...ctxRutina(), rutina: ruR}) : [];
+  const escalones = cs.length ? `<section class="cd res-esc"><span class="lb">Tus escalones</span><ul>${cs.map(y => { const g = SIGNO[y.evento] || "=";
+    return `<li class="${g === "▲" ? "sube" : g === "▼" ? "baja" : "igual"}"><b class="res-signo" role="img" aria-label="${g === "▲" ? "Subiste" : g === "▼" ? "Bajás" : "Seguís"}">${g}</b><span class="ses-fila">${K.esc(y.nombre || K.ej(y.a.ejercicio).nombre)}<small class="mute">${K.esc(cambioTx(y))}</small></span>${y.total > 1 ? `<em class="num mute">${y.i + 1}/${y.total}</em>` : "<em></em>"}</li>`; }).join("")}</ul></section>` : "";
   const dato = (n, t) => `<div class="cd res-dato"><span class="num">${K.esc(n)}</span><span class="lb">${t}</span></div>`;
   /* un día sin estrella no muestra un cero: muestra tu mejor serie */
   /* una prueba que no llegó: lo de esta vez al lado de tu marca, sin minutos ni series que confundan */
@@ -517,6 +555,7 @@ K.P.resumen = (id, desde = "hoy") => {
       <div class="res-datos">${hz ? (K.rutina.mejorEs(hz.h) === "hecha" ? dato(K.reloj(x.duracion), "tiempo") : dato(K.hazanaValor(hz.h, x.hazana.valor, true), hz.h.formato === "amrap" ? "vueltas" : "tiempo")) + dato(K.rutina.NIVELES[x.hazana.nivel], "nivel") + dato(Math.max(1, Math.round(x.duracion / 60)), "min")
         : sp && sp.tipo !== "logrado" ? dato(K.cielo.corto(sp, sp.valor), "esta vez") + (marcaAntes !== null ? dato(K.cielo.corto(sp, marcaAntes), "tu marca") : "")
         : dato(Math.max(1, Math.round(x.duracion / 60)), "min") + dato(nSeries, nSeries === 1 ? "serie" : "series") + tercero}</div>
+      ${escalones}
       ${kcal ? `<p class="ln mute small res-kcal"><span>Calorías, aproximadas</span><span class="num">${kcal} kcal</span></p>` : ""}
       ${c ? `<button type="button" class="btn" data-ir="#/cielo/${c.id}">Ver en el cielo</button>` : ""}</div></div>`;
 };
