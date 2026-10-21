@@ -6,6 +6,28 @@
    "nombre": "Hércules",
    "familia": "fu",
    "texto": "Fuerza total, por tiempo.",
+   "figura": {
+    "estrellas": [
+     [30, 34],
+     [62, 32],
+     [66, 58],
+     [34, 60],
+     [14, 14],
+     [82, 10],
+     [18, 90],
+     [86, 88]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [3, 0],
+     [0, 4],
+     [1, 5],
+     [3, 6],
+     [2, 7]
+    ]
+   },
    "formato": "tiempo",
    "niveles": [
     {
@@ -99,6 +121,26 @@
    "nombre": "Pegaso",
    "familia": "mo",
    "texto": "Velocidad en intervalos cortos.",
+   "figura": {
+    "estrellas": [
+     [22, 34],
+     [62, 34],
+     [62, 70],
+     [22, 70],
+     [80, 22],
+     [94, 34],
+     [8, 20]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [3, 0],
+     [1, 4],
+     [4, 5],
+     [0, 6]
+    ]
+   },
    "formato": "intervalos",
    "niveles": [
     {
@@ -183,6 +225,31 @@
    "nombre": "Sagitario",
    "familia": "fu",
    "texto": "Piernas explosivas, cada minuto.",
+   "figura": {
+    "estrellas": [
+     [36, 30],
+     [48, 14],
+     [58, 40],
+     [80, 30],
+     [84, 58],
+     [56, 66],
+     [30, 64],
+     [12, 46]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 0],
+     [2, 3],
+     [3, 4],
+     [4, 5],
+     [5, 2],
+     [5, 6],
+     [6, 0],
+     [6, 7],
+     [7, 0]
+    ]
+   },
    "formato": "emom",
    "niveles": [
     {
@@ -249,6 +316,29 @@
    "nombre": "Orión",
    "familia": "mo",
    "texto": "Un viaje largo: salís, tirás, empujás y volvés.",
+   "figura": {
+    "estrellas": [
+     [28, 14],
+     [70, 18],
+     [42, 50],
+     [50, 52],
+     [58, 54],
+     [26, 88],
+     [74, 84],
+     [48, 4]
+    ],
+    "lineas": [
+     [0, 1],
+     [0, 2],
+     [1, 4],
+     [2, 3],
+     [3, 4],
+     [2, 5],
+     [4, 6],
+     [7, 0],
+     [7, 1]
+    ]
+   },
    "formato": "chipper",
    "niveles": [
     {
@@ -372,6 +462,21 @@
    "nombre": "Andrómeda",
    "familia": "fu",
    "texto": "Tracción y abdomen: todas las rondas que puedas.",
+   "figura": {
+    "estrellas": [
+     [10, 80],
+     [32, 62],
+     [54, 44],
+     [86, 16],
+     [64, 72]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [2, 4]
+    ]
+   },
    "formato": "amrap",
    "niveles": [
     {
@@ -459,6 +564,30 @@
    "nombre": "Draco",
    "familia": "fu",
    "texto": "Tronco firme, cada minuto.",
+   "figura": {
+    "estrellas": [
+     [14, 14],
+     [28, 8],
+     [34, 22],
+     [20, 26],
+     [38, 44],
+     [60, 40],
+     [74, 58],
+     [62, 78],
+     [86, 90]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [3, 0],
+     [2, 4],
+     [4, 5],
+     [5, 6],
+     [6, 7],
+     [7, 8]
+    ]
+   },
    "formato": "emom",
    "niveles": [
     {
@@ -531,6 +660,25 @@
    "nombre": "Perseo",
    "familia": "fu",
    "texto": "Barra y paralelas: todas las rondas que puedas.",
+   "figura": {
+    "estrellas": [
+     [54, 8],
+     [50, 30],
+     [42, 50],
+     [26, 74],
+     [70, 40],
+     [84, 62],
+     [58, 66]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [1, 4],
+     [4, 5],
+     [2, 6]
+    ]
+   },
    "formato": "amrap",
    "niveles": [
     {
@@ -615,6 +763,21 @@
    "nombre": "Casiopea",
    "familia": "ra",
    "texto": "Un flujo de posturas para estirar todo.",
+   "figura": {
+    "estrellas": [
+     [8, 30],
+     [30, 66],
+     [50, 38],
+     [70, 72],
+     [92, 24]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [3, 4]
+    ]
+   },
    "formato": "flujo",
    "niveles": [
     {

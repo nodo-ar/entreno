@@ -43,7 +43,11 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **El maniquí y los dibujos de los ejercicios**: PR propio, después de la etapa 5.
 - ~~«Entrena para»~~: Fer decidió dejarlo así (2026-10-20).
 - ~~Nombres de personas en títulos~~: renombradas (2026-10-20).
-- **Logo de Kozmos en animaciones y transiciones; íconos y dibujos propios de la app** (Fer, 2026-10-20): nada genérico, como el escudo de las hazañas. Propuesta con tablero antes de construir.
+- ~~Logo de Kozmos en animaciones y transiciones; íconos propios~~: hecho en el PR del logo en movimiento (acta 011). Los dibujos de ejercicios siguen con el maniquí.
+- **Dos íconos para lo mismo** (la tijera, la abuela): la fecha usa `cal` en Cielo y Tus días usa `dias`; el ícono de Cielo en la barra es el mismo de «Cambiar el rumbo» en el menú de Hoy.
+- **La órbita de rutina terminada se anima en cada redibujo de Hoy** (Casandra): que se anime solo la primera vez.
+- **Medir el giro de pestañas en un Android de gama media** (el animador, la persona): si pierde cuadros, girar solo lo visible.
+- **Un ayudante para empezar la sesión** (la tijera): `K.mov.iris(btn); K.sesion.empezar(...)` se repite tres veces en `hoy.js`.
 - **Pitidos de tramo con la pantalla apagada** (la ingeniera de campo): programar la campana de cada cambio de tramo y desprogramarla al pausar, saltear o cortar (Casandra).
 - **Achicar el catálogo de rutinas** (la ingeniera de campo): 408 kB de JSON; sesiones repetidas por referencia.
 - **«−1» pegado a «Vuelta» y «Seguir esta rutina» abajo del pliegue** (la ingeniera de campo).

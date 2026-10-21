@@ -24,6 +24,8 @@ K.nav = {
     if (animar){ poner(viejo.dataset.tab); n.offsetWidth; }
     n.classList.remove("medir"); n.offsetWidth;
     poner(tab); K.nav.mover(fin, !animar);
+    /* la estrella de la pestaña llega orbitando */
+    if (animar) K.mov.llegar(b, tab);
   },
   mover(f, sinAnim){
     const n = K.$("nav.barra"), i = K.$(".ind", n), vertical = getComputedStyle(n).flexDirection === "column";

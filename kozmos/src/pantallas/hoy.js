@@ -111,7 +111,7 @@ const hechoHoy = () => {
 /* Hoy con una rutina: por dónde vas, hacia qué estrella lleva y la sesión que toca */
 K.hoyRutina = ({r, cur}, sin) => {
   const hecho = hechoHoy();
-  if (cur.terminada) return hecho + `<section class="cd"><span class="lb">Tu rutina, completa</span><b class="t1">Terminaste ${K.esc(r.nombre)}.</b><p class="mute">${cur.total} sesiones. ¿Seguís con otra?</p></section>
+  if (cur.terminada) return hecho + `<section class="cd res-orbita">${K.mov.orbita(150)}</section><section class="cd"><span class="lb">Tu rutina, completa</span><b class="t1">Terminaste ${K.esc(r.nombre)}.</b><p class="mute">${cur.total} sesiones. ¿Seguís con otra?</p></section>
     <button type="button" class="btn" data-ir="#/hoy/rutinas">Elegir otra rutina</button>`;
   const plan = K.hoyPlan(), cielo = K.cieloActual();
   const est = r.alimenta.map(id => cielo.constelaciones.flatMap(c => c.estrellas).find(e => e.id === id)).filter(Boolean), sig = est.find(e => !e.encendida) || est[est.length - 1];
@@ -350,10 +350,10 @@ K.sesion.alTramo = () => { if (K.ruta().tab === "hoy" && K.ruta().sub === "sesio
 
 /* ---------- lo que se toca en la sesión ---------- */
 K.ses = {
-  empezar(){
+  empezar(btn){
     const plan = K.hoyPlan();
     if (!plan.bloques.length) return;
-    K.sesion.empezar(plan); K.ir("#/hoy/sesion");
+    K.mov.iris(btn); K.sesion.empezar(plan); K.ir("#/hoy/sesion");
   },
   listo(){
     if (K.sesion.bloque().prueba && K.sesion.prep() > 0) return; /* un toque mientras te preparás no corta la prueba */
@@ -364,11 +364,11 @@ K.ses = {
     K.refrescar(); K.$("#s-seguir, #s-terminar")?.focus({preventScroll: true});
   },
   /* probar la próxima estrella de una constelación, desde su pantalla */
-  probar(cid){
+  probar(cid, btn){
     if (K.sesion.activa()){ K.ir("#/hoy/sesion"); K.aviso("Tenés una sesión abierta. Terminala para probar."); return; }
     const c = K.cieloActual().constelaciones.find(x => x.id === cid);
     if (!c || !K.plan.sePrueba(c)) return;
-    K.sesion.empezar({bloques: [K.plan.prueba(c)], minutos: 5, volviste: false, ventana: [c.id], desde: `#/cielo/${c.id}`}); K.ir("#/hoy/sesion");
+    K.mov.iris(btn); K.sesion.empezar({bloques: [K.plan.prueba(c)], minutos: 5, volviste: false, ventana: [c.id], desde: `#/cielo/${c.id}`}); K.ir("#/hoy/sesion");
   },
   seguir(){ K.sesion.seguir(); K.refrescar(); },
   ajustar(d){ K.sesion.ajustar(d); K.sesion.alLatir(); },
@@ -398,11 +398,11 @@ K.ses = {
   pausa(){ K.sesion.pausar(); K.refrescar(); },
   vuelta(d){ K.sesion.vuelta(d); K.refrescar(); },
   /* una hazaña en un nivel, desde su pantalla */
-  hazana(id, nivel){
+  hazana(id, nivel, btn){
     if (K.sesion.activa()){ K.ir("#/hoy/sesion"); K.aviso("Tenés una sesión abierta. Terminala para empezar otra."); return; }
     const h = K.HAZANAS.hazanas.find(x => x.id === id); if (!h) return;
     const plan = K.rutina.deHazana(h, nivel, ctxRutina());
-    K.sesion.empezar({...plan, ventana: [], volviste: false, desde: `#/hoy/hazanas/${h.id}`}); K.ir("#/hoy/sesion");
+    K.mov.iris(btn); K.sesion.empezar({...plan, ventana: [], volviste: false, desde: `#/hoy/hazanas/${h.id}`}); K.ir("#/hoy/sesion");
   },
   terminar(){ return K.ses._fin(false); },
   /* la ✕ corta sin preguntar: lo hecho se guarda y se puede deshacer */
@@ -417,7 +417,7 @@ K.ses = {
         K.sesion.volver(r.foto); K.ir("#/hoy/sesion", true);
       };
       const desde = r.foto.plan.desde || "#/hoy";
-      if (r.registro){ (K._origen = K._origen || {})[r.registro.id] = desde; K.ir(`#/hoy/resumen/${r.registro.id}`, true); } else K.volver(desde);
+      if (r.registro){ (K._origen = K._origen || {})[r.registro.id] = desde; K._estrella = true; K.ir(`#/hoy/resumen/${r.registro.id}`, true); } else K.volver(desde);
       if (cortada) K.deshacer(r.registro ? "Sesión cortada. Lo hecho cuenta." : "Saliste de la sesión", volver);
     } finally { K.ses._ocupado = false; }
   }
@@ -466,6 +466,11 @@ K.P.resumen = (id, desde = "hoy") => {
     tx = `<span class="lb">${ru ? `${K.esc(ru.nombre)} · semana ${Math.floor(x.rutina.sesion / ru.dias) + 1}, día ${x.rutina.sesion % ru.dias + 1}` : x.cortada ? "Sesión cortada" : "Sesión hecha"}</span><h1 class="t1 res-tit">${x.cortada ? "Lo hecho cuenta." : "Hecho."}</h1>
       ${sig ? `<p class="mute">${K.esc(sig)}</p>` : p ? `<p class="mute">Un paso más hacia ${K.esc(p.nombre)}.</p>` : ""}`;
   }
+  /* arriba va lo que la sesión dibujó: la figura de la hazaña, la vuelta entera de una rutina terminada o la constelación */
+  const hzOk = hz && x.hazana.completa !== false && !x.cortada && x.hazana.valor > 0, rutFin = ruR && !x.cortada && !ruR.sesiones[x.rutina.sesion + 1];
+  const arte = hz ? `<section class="cd res-fig${hzOk ? " logro" : ""}">${K.dibujo.figura(hz.h, 190, hzOk)}</section>`
+    : rutFin && !prim ? `<section class="cd res-orbita">${K.mov.orbita(170)}<p class="lb">Rutina completa</p></section>`
+    : c ? `<section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>` : "";
   const kcal = K.calorias.deSesion(x, K.diario.perfil.peso);
   const dato = (n, t) => `<div class="cd res-dato"><span class="num">${K.esc(n)}</span><span class="lb">${t}</span></div>`;
   /* un día sin estrella no muestra un cero: muestra tu mejor serie */
@@ -477,7 +482,7 @@ K.P.resumen = (id, desde = "hoy") => {
   const arriba = desde === "hoy" ? `<div class="enc-acc ses-acc"><button type="button" class="ib" data-volver="${K.esc(K._origen?.[id] || "#/hoy")}" aria-label="Cerrar">${K.ic("x")}</button><span class="lb ses-donde">Resumen</span>${K.mas("res-mas", "Opciones de la sesión")}</div>`
     : K.enc({titulo: K.fechaCorta(x.fecha), sub: "Progreso", volver: "#/progreso", raiz: true, det: true, acciones: K.mas("res-mas", "Opciones de la sesión")});
   return arriba + `
-    <div class="res" data-sesion="${K.esc(x.id)}"><div class="res-a">${c ? `<section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>` : ""}</div>
+    <div class="res" data-sesion="${K.esc(x.id)}"><div class="res-a">${arte}</div>
     <div class="res-b"><div class="enc-tit res-txt">${tx}</div>
       <div class="res-datos">${hz ? (K.rutina.mejorEs(hz.h) === "hecha" ? dato(K.reloj(x.duracion), "tiempo") : dato(K.hazanaValor(hz.h, x.hazana.valor, true), hz.h.formato === "amrap" ? "vueltas" : "tiempo")) + dato(K.rutina.NIVELES[x.hazana.nivel], "nivel") + dato(Math.max(1, Math.round(x.duracion / 60)), "min")
         : sp && sp.tipo !== "logrado" ? dato(K.cielo.corto(sp, sp.valor), "esta vez") + (marcaAntes !== null ? dato(K.cielo.corto(sp, marcaAntes), "tu marca") : "")

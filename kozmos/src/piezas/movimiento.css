@@ -1,0 +1,55 @@
+/* ===== Movimiento: el logo que se mueve (ver movimiento.js). Salvo el arranque, nada toma toques. ===== */
+.mov{position:fixed; pointer-events:none; z-index:90}
+.mov-arranque{inset:0; display:grid; place-items:center; background:var(--bg); pointer-events:auto} /* mientras tapa, un toque apurado no cae en un botón que no se ve */
+.mov-iris{inset:0; overflow:hidden}
+.mov-iris i{position:absolute; border-radius:50%}
+.mov-iris .d{background:var(--s2)} /* no la tinta: en grafito sería un destello blanco */
+.mov-iris .h{background:var(--bg)}
+.mov-estrella{width:12px; height:12px; border-radius:50%; background:var(--ink)}
+
+/* guardando: la estrella da vueltas alrededor del disco */
+.logo-mov .orb{transform-box:view-box; transform-origin:42px 42px}
+.logo-mov.gira .orb{animation:orbita 1.2s linear infinite}
+@keyframes orbita{to{transform:rotate(360deg)}}
+
+/* rutina terminada: una vuelta entera y la estrella queda llena */
+.logo-mov.orbita{display:block; margin:6px auto; max-width:100%; height:auto}
+.logo-mov.orbita .orb{transform-origin:80px 80px; animation:orbita 1.1s cubic-bezier(.45,0,.2,1) .2s both}
+.logo-mov.orbita .traza{stroke-dasharray:1 0; animation:traza 1.1s cubic-bezier(.45,0,.2,1) .2s both}
+.logo-mov.orbita .est{animation:llena .25s 1.3s both}
+@keyframes traza{from{stroke-dasharray:0 1}}
+@keyframes llena{to{fill:var(--ink)}}
+.res-orbita{padding:18px}
+.res-orbita .lb{text-align:center}
+
+/* hazañas: la figura de su constelación */
+.tile.fig{background:transparent}
+.hz-fig{display:grid; place-items:center; padding:8px 0 0}
+.hz-fig .figura{width:min(150px,40vw); height:auto}
+.res-fig{display:grid; place-items:center; padding:20px}
+.res-fig .figura{width:min(190px,50vw); height:auto}
+.res-fig.logro .figura circle{animation:prende .5s var(--ease) both}
+.res-fig.logro .figura circle:nth-of-type(2){animation-delay:.08s} .res-fig.logro .figura circle:nth-of-type(3){animation-delay:.16s}
+.res-fig.logro .figura circle:nth-of-type(4){animation-delay:.24s} .res-fig.logro .figura circle:nth-of-type(5){animation-delay:.32s}
+.res-fig.logro .figura circle:nth-of-type(n+6){animation-delay:.4s}
+@keyframes prende{from{transform:scale(0); opacity:0}}
+.res-fig .figura circle{transform-box:fill-box; transform-origin:center}
+
+/* la barra: cada pestaña tiene su estrella, que existe solo en la elegida; apagado, el ícono está entero */
+.ic .orb{opacity:0; transition:opacity .18s}
+.ic .orb circle{stroke:var(--halo,var(--bg)); stroke-width:1.6; paint-order:stroke}
+.ic .ph{transition:opacity .2s .42s}
+.ic .base{transition:transform .42s var(--ease)}
+.ic .v1,.ic .v2,.ic .v3{transition:fill .3s .1s}
+nav.barra button[data-tab="vos"] .base{transform:translateY(-3.5px)}
+nav.barra button[aria-current="page"]{--halo:var(--s2)}
+nav.barra button[aria-current="page"] .orb{opacity:1; transition:none}
+nav.barra button[aria-current="page"] .ph{opacity:0}
+nav.barra button[aria-current="page"] .base{transform:none}
+nav.barra button[aria-current="page"] .v1{fill:var(--fu)} nav.barra button[aria-current="page"] .v2{fill:var(--mo)} nav.barra button[aria-current="page"] .v3{fill:var(--ra)}
+
+@media (prefers-reduced-motion:reduce){
+  .logo-mov .orb,.logo-mov.orbita .traza,.logo-mov.orbita .est,.res-fig.logro .figura circle{animation:none!important}
+  .ic .orb,.ic .ph,.ic .base,.ic .v1,.ic .v2,.ic .v3{transition:none}
+  .logo-mov.orbita .est{fill:var(--ink)}
+}

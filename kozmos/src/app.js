@@ -32,19 +32,27 @@ K.horizontal = () => matchMedia("(orientation: landscape) and (max-height: 520px
 K.mostrar = (anim = "") => {
   const r = K.ruta(), {tab, sub, hondo} = r, app = K.$("#app");
   K.menu.cerrar(true);
+  /* al salir de la sesión con el descanso corriendo, la isla nace de su anillo */
+  const an = !(tab === "hoy" && sub === "sesion") && K.$('[data-r="anillo"]', app);
+  if (an){ const r = an.getBoundingClientRect(); if (r.width) K._anillo = {r, t: Date.now()}; }
+  /* al cambiar de pestaña, la pantalla que se va gira hacia afuera (a la sesión se entra con el disco del logo, no girando) */
+  const viejo = anim === "tab" && sub !== "sesion" && sub !== "resumen" && !K.reduce() && K._ultima && app.firstElementChild, rv = viejo && viejo.getBoundingClientRect();
   const v = document.createElement("main");
   v.dataset.tab = tab;
   v.innerHTML = K.P[tab](r);
   /* en horizontal, dentro de la misma pestaña se mueve solo el panel abierto: la lista queda quieta */
   const panel = anim && anim !== "tab" && K.horizontal() && K.$(".split>.abierto", v);
-  v.className = "view" + (anim && !K.reduce() && !panel ? " vt-" + anim : "");
+  v.className = "view" + (anim && anim !== "tab" && !K.reduce() && !panel ? " vt-" + anim : "");
   if (panel && !K.reduce()) panel.classList.add("vt-" + anim);
   app.replaceChildren(v);
+  if (viejo){ const i = t => K.PESTANAS.findIndex(x => x[0] === t); K.mov.girar(viejo, rv, v, i(tab) >= i(K._ultima.tab) ? 1 : -1); }
   /* en la sesión y su resumen no hay barra: la pantalla es toda tuya */
   document.body.classList.toggle("en-sesion", tab === "hoy" && (sub === "sesion" || sub === "resumen"));
   K.sesion.alLatir();
   K.nav.marcar(tab);
   K.encabezado.observar(v);
+  /* recién terminada la sesión, la estrella nueva vuela a su lugar */
+  if (K._estrella && sub === "resumen"){ K._estrella = false; K.mov.estrella(v); }
   const h1 = K.$$(".enc-tit h1", v).find(x => x.offsetParent !== null);
   document.title = tab === "hoy" || !h1 ? "Kozmos" : `${h1.textContent} · Kozmos`;
   K._ultima = {tab, sub, hondo};
@@ -71,14 +79,14 @@ document.addEventListener("click", e => {
   if (e.target.closest(".ses.prueba.serie") && !e.target.closest("button, a, input")){ K.ses.listo(); return; }
   const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-nivel, #hz-empezar, [data-probar], [data-equipo], [data-ppaso], [data-dia]");
   if (m){
-    if (m.dataset.probar) K.ses.probar(m.dataset.probar);
+    if (m.dataset.probar) K.ses.probar(m.dataset.probar, m);
     else if (m.dataset.equipo) K.equipoTocar(m.dataset.equipo);
     else if (m.dataset.ppaso) K.pesoPaso(Number(m.dataset.ppaso));
     else if (m.dataset.dia) K.diaTocar(Number(m.dataset.dia));
     else ({"tema-menu": () => K.menuTema(m), "avisos-menu": () => K.menuAvisos(m), "res-mas": () => K.resumenMenu(m),
-      "rs-guardar": () => K.resp.guardar(), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo(),
+      "rs-guardar": () => K.mov.girando(m, K.resp.guardar), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo(),
       "hoy-igual": () => { K._igual = K.hoy(); K.refrescar(); }, "rut-seguir": () => K.rutinaSeguir(m.dataset.rutina), "rut-mas": () => K.rutinaMenu(m),
-      "hz-nivel": () => K.hazanaNivelMenu(m), "hz-empezar": () => K.ses.hazana(m.dataset.hazana, K._nivel[m.dataset.hazana] ?? 0)})[m.id]();
+      "hz-nivel": () => K.hazanaNivelMenu(m), "hz-empezar": () => K.ses.hazana(m.dataset.hazana, K._nivel[m.dataset.hazana] ?? 0, m)})[m.id]();
     return;
   }
   const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #s-pausa, #s-vuelta, #s-vuelta-menos, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio]");
@@ -87,7 +95,7 @@ document.addEventListener("click", e => {
     else if (s.dataset.rumbo) K.rumboTocar(s.dataset.rumbo);
     else if (s.dataset.desc) K.ses.ajustar(Number(s.dataset.desc));
     else if (s.dataset.salio) K.ses.salio(Number(s.dataset.salio));
-    else ({"s-empezar": () => K.ses.empezar(), "s-listo": () => K.ses.listo(), "s-seguir": () => K.ses.seguir(),
+    else ({"s-empezar": () => K.ses.empezar(s), "s-listo": () => K.ses.listo(), "s-seguir": () => K.ses.seguir(),
       "s-terminar": () => K.ses.terminar(), "s-cortar": () => K.ses.cortar(), "s-mas": () => K.ses.menu(s),
       "s-pausa": () => K.ses.pausa(), "s-vuelta": () => K.ses.vuelta(1), "s-vuelta-menos": () => K.ses.vuelta(-1), "hoy-mas": () => K.hoyMenu(s)})[s.id]();
     return;
@@ -100,7 +108,7 @@ document.addEventListener("click", e => {
   else if (t.dataset.paso) K.anotar.paso(t.dataset.campo, Number(t.dataset.paso));
   else K.anotar.borrar(t.dataset.borrar);
 });
-document.addEventListener("change", e => { if (e.target.id === "rs-archivo"){ const f = e.target.files[0]; e.target.value = ""; K.resp.traer(f); } });
+document.addEventListener("change", e => { if (e.target.id === "rs-archivo"){ const f = e.target.files[0]; e.target.value = ""; K.mov.girando(K.$("#rs-traer"), () => K.resp.traer(f)); } });
 document.addEventListener("input", e => {
   if (e.target.id === "v-peso"){ K._peso = e.target.value; return; }
   const c = e.target.closest?.(".pmv"); if (!c) return;
@@ -151,7 +159,7 @@ K.nav.armar();
 K.sesion.alCambiar = () => K.refrescar(); /* otra pestaña tocó la sesión */
 K.diario.abrir().then(async () => {
   const r = await K.sesion.restaurar();
-  K.mostrar();
+  K.mostrar(); K.mov.arranque();
   if (r === "guardada") K.aviso("La sesión que quedó abierta se guardó como cortada.");
 });
 

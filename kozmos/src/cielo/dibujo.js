@@ -67,5 +67,11 @@ K.dibujo = (() => {
     const C = 2 * Math.PI * 13, p = c.total ? c.encendidas / c.total : 0;
     return `<svg width="${px}" height="${px}" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="var(--line)" stroke-width="4"/>${p ? `<circle cx="16" cy="16" r="13" fill="none" stroke="var(--${c.familia})" stroke-width="4" stroke-linecap="round" stroke-dasharray="${f1(p * C)} ${f1(C)}" transform="rotate(-90 16 16)"/>` : ""}</svg>`;
   };
-  return {forma, grande, una, anillo};
+  /* una hazaña con la figura de su constelación real: la primera estrella, en el color de la familia; logro: todas encendidas */
+  const figura = (h, px = 32, logro = false) => {
+    const f = h.figura; if (!f) return K.ic("hazana");
+    const e = f.estrellas, grueso = px >= 48 ? 2.4 : 4;
+    return `<svg class="figura" width="${px}" height="${px}" viewBox="-8 -8 116 116" aria-hidden="true">${f.lineas.map(([a, b]) => `<line x1="${e[a][0]}" y1="${e[a][1]}" x2="${e[b][0]}" y2="${e[b][1]}" stroke="var(--ink)" stroke-opacity="${logro ? .5 : .28}" stroke-width="${grueso}" stroke-linecap="round"/>`).join("")}${e.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${(i ? 5 : 7) * (px >= 48 ? 1 : 1.5)}" fill="${i === 0 ? `var(--${h.familia})` : "var(--ink)"}"/>`).join("")}</svg>`;
+  };
+  return {forma, grande, una, anillo, figura};
 })();

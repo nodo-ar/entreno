@@ -11,8 +11,9 @@ K.deshacer = (texto, volver) => {
   K.$(".utu", t).addEventListener("click", () => { K.deshacer.cerrar(); volver(); });
   /* el tiempo se frena mientras lo tenés en foco o el dedo encima, y sigue al salir */
   let queda = K.DESHACER_MS, desde = 0;
-  const correr = () => { desde = Date.now(); clearTimeout(K.deshacer._t); K.deshacer._t = setTimeout(() => K.deshacer.cerrar(), queda); t.classList.remove("quieto"); };
-  const frenar = () => { clearTimeout(K.deshacer._t); queda = Math.max(800, queda - (Date.now() - desde)); t.classList.add("quieto"); };
+  /* un aviso que ya se está yendo no toca el tiempo del que vino después */
+  const correr = () => { if (K.deshacer._el && K.deshacer._el !== t) return; desde = Date.now(); clearTimeout(K.deshacer._t); K.deshacer._t = setTimeout(() => K.deshacer.cerrar(), queda); t.classList.remove("quieto"); };
+  const frenar = () => { if (K.deshacer._el !== t) return; clearTimeout(K.deshacer._t); queda = Math.max(800, queda - (Date.now() - desde)); t.classList.add("quieto"); };
   t.addEventListener("focusin", frenar); t.addEventListener("focusout", correr);
   t.addEventListener("pointerenter", frenar); t.addEventListener("pointerleave", correr);
   correr();
