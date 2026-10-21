@@ -1,5 +1,5 @@
 /* ===== Barra flotante ===== */
-K.PESTANAS = [["hoy", "Hoy"], ["cielo", "Cielo"], ["progreso", "Progreso"], ["vos", "Vos"]];
+K.PESTANAS = [["hoy", "Hoy"], ["planes", "Planes"], ["cielo", "Cielo"], ["progreso", "Progreso"], ["vos", "Vos"]];
 K.nav = {
   armar(){
     const n = document.createElement("nav");

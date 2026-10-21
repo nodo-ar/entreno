@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-21 · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-21 (Planes) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -22,6 +22,9 @@
   - **Publicada** (2026-10-21): Fer probó la APK de prueba («funciona diez puntos»), cargó `KOZMOS_FIRMA` y la copia en la nube queda apagada. PR #20 y #21 (arreglo de la lectura de la huella) fusionados. Versión **kozmos-19** (k-99f4a0e) en https://github.com/nodo-ar/entreno/releases/tag/kozmos-19; enlace fijo https://github.com/nodo-ar/entreno/releases/latest/download/kozmos.apk. Registro: `docs/versiones/kozmos-19.md`.
   - **Próximo**: lo que Fer pida después de usarla; la web y el dominio quedan para cuando haya landing.
   - Sin probar en un teléfono real: compartir y traer el respaldo, pantalla encendida, vibración, áreas seguras, el ícono y el arranque a la vista.
+- **Planes** (2026-10-21): Fer eligió la opción C del boceto de Hoy (https://claude.ai/artifact/XL1YmmX9t8Fsd1VeayNL8t), con la pestaña «Planes», hazañas arriba y rutinas abajo. Vuelta 16 (acta `docs/actas/016-kozmos-planes.md`), en la rama `claude/project-thread-985fzq`, sin PR: pestaña Planes (Hoy, Planes, Cielo, Progreso, Vos) con rutas `#/planes…` (las viejas `#/hoy/rutinas…` y `#/hoy/hazanas…` redirigen), fila «Sale de tu rumbo / de tu rutina» en Hoy, el primer día en tres pasos, íconos nuevos de Planes, rutina y rumbo, y atrás de la APK recorriendo Planes. Catálogo y progresión sin tocar. Pruebas: 48 sin pantalla y 60 de pantallas.
+  - **Esperando a Fer**: el OK al tablero (capturas antes y después en claro y grafito).
+  - **Próximo**: la investigación y el rediseño de Planes, rutinas y hazañas con progresión real.
 
 ## Dónde quedó
 

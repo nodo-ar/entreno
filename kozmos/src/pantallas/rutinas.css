@@ -44,3 +44,20 @@
   .circ-items>.ln{padding:6px 0}
 }
 .lado .ajr>em.num{white-space:nowrap}
+
+/* ===== Planes: hazañas arriba, rutinas abajo ===== */
+.pl-tit{display:flex; flex-direction:column; gap:3px; padding:14px 4px 2px}
+.pl-tit h2{font-size:var(--t-xl)}
+.pl-tit .mute{font-size:var(--t-sm); font-weight:700}
+/* las hazañas en grilla, cada una con la figura de su constelación */
+.hz-grilla{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.hz-t{display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0; min-height:44px; padding:12px 4px 10px; border:1px solid var(--line); border-radius:var(--r-md); background:var(--s1); color:var(--ink); font:inherit; font-size:var(--t-xs); font-weight:700; cursor:pointer}
+.hz-t span{max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.hz-t[data-sel]{background:var(--s2)}
+.hz-t:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+/* en horizontal la columna es angosta: dos por fila, la figura al lado del nombre, para que entre «Andrómeda» */
+@media (orientation:landscape) and (max-height:520px){
+  .hz-grilla{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hz-t{flex-direction:row; justify-content:flex-start; gap:8px; padding:8px 10px; font-size:var(--t-sm)}
+  .hz-t .figura{width:30px; height:30px; flex:none}
+}

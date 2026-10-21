@@ -52,7 +52,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - ~~«Entrena para»~~: Fer decidió dejarlo así (2026-10-20).
 - ~~Nombres de personas en títulos~~: renombradas (2026-10-20).
 - ~~Logo de Kozmos en animaciones y transiciones; íconos propios~~: hecho en el PR del logo en movimiento (acta 011). Los dibujos de ejercicios siguen con el maniquí.
-- **Dos íconos para lo mismo** (la tijera, la abuela): la fecha usa `cal` en Cielo y Tus días usa `dias`; el ícono de Cielo en la barra es el mismo de «Cambiar el rumbo» en el menú de Hoy.
+- **Dos íconos para lo mismo** (la tijera, la abuela): la fecha usa `cal` en Cielo y Tus días usa `dias`. ~~El ícono de Cielo en la barra es el mismo de «Cambiar el rumbo»~~: el rumbo tiene la estrella polar desde la vuelta 16.
 - **La órbita de rutina terminada se anima en cada redibujo de Hoy** (Casandra): que se anime solo la primera vez.
 - **Medir el giro de pestañas en un Android de gama media** (el animador, la persona): si pierde cuadros, girar solo lo visible.
 - **Un ayudante para empezar la sesión** (la tijera): `K.mov.iris(btn); K.sesion.empezar(...)` se repite tres veces en `hoy.js`.
@@ -66,6 +66,10 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Wake lock con video** para navegadores sin la API (la ingeniera de campo).
 - **Audio después de recuperar una sesión**: queda mudo hasta el primer toque.
 - **Biblioteca en la barra**: los bocetos de miniaturas la mostraban; el prototipo tiene Progreso y Vos. Definir con Fer cuando haya ejercicios.
+- **Rediseño de Planes, rutinas y hazañas con progresión real, después de la investigación** (vuelta 16). Planes quedó limpia y simple a propósito; el catálogo y las reglas de progresión no se tocaron.
+- **Color de la estrella de Planes** (vuelta 16): va en tinta, como Vos, porque naranja, aqua y lima ya son de Hoy, Cielo y Progreso. Preguntar a Fer si quiere otro.
+- **Ícono de rutina y de Vos** (la abuela, vuelta 16): las tres lunas de la rutina y los tres puntos de Vos se parecen un poco a 20 px; mirarlo en el teléfono.
+- **Planes vive en `rutinas.js`** (la tijera): renombrar a `planes.js` cuando llegue el rediseño.
 
 ## Ideas (necesitan brief y OK)
 

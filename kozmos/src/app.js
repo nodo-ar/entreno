@@ -1,15 +1,21 @@
 /* ===== App: rutas, transiciones y arranque ===== */
-/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/sesion · #/hoy/resumen/<sesión> · #/hoy/rutinas[/<rutina>] · #/hoy/hazanas[/<hazaña>] · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>]
-   · #/progreso · #/progreso/<sesión> · #/vos · #/vos/equipo · #/vos/dias · #/vos/peso · #/vos/respaldo · #/vos/acerca
+/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/sesion · #/hoy/resumen/<sesión> · #/planes · #/planes/rutinas/<rutina> · #/planes/hazanas/<hazaña>
+   · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>] · #/progreso · #/progreso/<sesión>
+   · #/vos · #/vos/equipo · #/vos/dias · #/vos/peso · #/vos/respaldo · #/vos/acerca
    Lo que no existe cae en el lugar más cercano que sí. */
+/* las rutas de antes: rutinas y hazañas vivían adentro de Hoy (enlaces guardados, una sesión que quedó abierta) */
+K.rutaNueva = h => { const m = /^#\/hoy\/(rutinas|hazanas)(?:\/([^/]+))?/.exec(h || ""); return m ? (m[2] ? `#/planes/${m[1]}/${m[2]}` : "#/planes") : null; };
 K.ruta = () => {
-  const [tab = "hoy", a = "", b = "", n = ""] = location.hash.replace(/^#\/?/, "").split("/");
+  const [tab = "hoy", a = "", b = "", n = ""] = (K.rutaNueva(location.hash) || location.hash).replace(/^#\/?/, "").split("/");
   if (!K.PESTANAS.some(p => p[0] === tab)) return {tab: "hoy", sub: "", hondo: 0};
+  /* Planes: la lista (hazañas arriba, rutinas abajo) y la abierta un paso más adentro */
+  if (tab === "planes"){
+    if (a === "rutinas" && K.RUTINAS.some(x => x.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
+    if (a === "hazanas" && K.HAZANAS.hazanas.some(x => x.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
+    return {tab, sub: "", hondo: 0};
+  }
   if (tab === "hoy"){
     if (a === "rumbo") return {tab, sub: a, hondo: 1};
-    /* rutinas y hazañas: la lista, y la abierta un paso más adentro */
-    if (a === "rutinas") return K.RUTINAS.some(x => x.id === b) ? {tab, sub: a, sub2: b, hondo: 2} : {tab, sub: a, hondo: 1};
-    if (a === "hazanas") return K.HAZANAS.hazanas.some(x => x.id === b) ? {tab, sub: a, sub2: b, hondo: 2} : {tab, sub: a, hondo: 1};
     /* la sesión existe solo mientras corre; el resumen, si la sesión está guardada */
     if (a === "sesion" && K.sesion.activa()) return {tab, sub: a, hondo: 1};
     if (a === "resumen" && K.diario.sesiones.some(s => s.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
@@ -65,6 +71,9 @@ K.refrescar = () => {
   if (f) document.getElementById(f)?.focus({preventScroll: true});
 };
 
+/* una ruta vieja se reemplaza por la nueva sin sumar pasos al botón atrás */
+K.rutaVieja = () => { const n = K.rutaNueva(location.hash); if (n) history.replaceState(history.state, "", n); };
+K.rutaVieja();
 /* la pila de lo recorrido en esta apertura: volver usa el botón atrás cuando la pantalla anterior es la de destino */
 K._pila = [location.hash || "#/hoy"];
 K.volver = h => { if (K._pila.length > 1 && K._pila[K._pila.length - 2] === h) history.back(); else K.ir(h, true); };
@@ -126,6 +135,7 @@ document.addEventListener("keydown", e => {
 });
 
 addEventListener("hashchange", () => {
+  K.rutaVieja();
   const antes = K._ultima || {}, {tab, hondo} = K.ruta(), h = location.hash, P = K._pila;
   if (P.length > 1 && P[P.length - 2] === h) P.pop(); else if (K._reemplazo) P[P.length - 1] = h; else P.push(h);
   K._reemplazo = false;

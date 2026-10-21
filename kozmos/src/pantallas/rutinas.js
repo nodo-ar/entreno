@@ -1,30 +1,36 @@
-/* ===== Rutinas y hazañas: la lista a la izquierda y la abierta a la derecha en horizontal; en vertical, una por pantalla. =====
-   Rutas: #/hoy/rutinas · #/hoy/rutinas/<id> · #/hoy/hazanas · #/hoy/hazanas/<id> */
-const FAM = id => K.CATALOGO.familias.find(f => f.id === id);
+/* ===== Planes: las hazañas (un desafío, un día) arriba y las rutinas (un plan de semanas) abajo.
+   En horizontal, la lista a la izquierda y lo abierto a la derecha; en vertical, uno por pantalla.
+   Rutas: #/planes · #/planes/rutinas/<id> · #/planes/hazanas/<id> ===== */
 const pideTx = falta => `Pide ${K.pide(falta)}`;
 
-K.P.rutinas = r => {
-  const sel = K.RUTINAS.some(x => x.id === r.sub2) ? r.sub2 : "", hz = K.horizontal(), ru = K.diario.perfil.rutina;
-  const abre = sel || (hz ? (ru && K.rutinaDe(ru.id) ? ru.id : K.RUTINAS[0]?.id) : "");
-  const equipo = K.diario.perfil.equipo || null;
+K.P.planes = r => {
+  const hz = K.horizontal(), ru = K.rutinaActual(), hs = K.HAZANAS.hazanas, equipo = K.diario.perfil.equipo || null;
+  /* en horizontal algo queda abierto: la rutina que seguís o, si no, la primera hazaña */
+  const selR = r.sub === "rutinas" ? r.sub2 : "", selH = r.sub === "hazanas" ? r.sub2 : "";
+  const abreR = selR || (!selH && hz && ru ? ru.r.id : ""), abreH = selH || (!abreR && hz ? hs[0]?.id : "");
+  const abierto = abreR ? K.P.rutina(abreR) : abreH ? K.P.hazana(abreH) : "";
+  /* las hazañas, con la figura de su constelación: se reconocen de un vistazo */
+  const grilla = hs.map(h => `<button type="button" class="hz-t" data-ir="#/planes/hazanas/${h.id}" data-quieto="1"${abreH === h.id ? " data-sel" : ""}>${K.dibujo.figura(h, 44, !!mejorTx(h))}<span>${K.esc(h.nombre)}</span></button>`).join("");
+  const fila = x => { const falta = K.rutina.falta(x, K.EJ, equipo), sigo = ru && ru.r.id === x.id;
+    return `<button type="button" class="ajr" data-ir="#/planes/rutinas/${x.id}" data-quieto="1"${abreR === x.id ? " data-sel" : ""}><span class="tile">${K.ic("ruta")}</span>
+      <span class="ses-fila">${K.esc(x.nombre)}${falta.length ? `<small class="mute">${K.esc(pideTx(falta))}</small>` : ""}</span><em class="num">${sigo ? "La seguís" : `${x.semanas} sem · ${x.dias} días`}</em>${K.ic("chev", "chev")}</button>`; };
   const lista = K.CATALOGO.familias.map(f => {
     const rs = K.RUTINAS.filter(x => x.familia === f.id); if (!rs.length) return "";
-    return `<section class="fam"><span class="lb tg"><i class="dot" style="--c:var(--${f.id})"></i>${K.esc(f.nombre)}</span><div class="aj">${rs.map(x => {
-      const falta = K.rutina.falta(x, K.EJ, equipo), sigo = ru && ru.id === x.id;
-      return `<button type="button" class="ajr" data-ir="#/hoy/rutinas/${x.id}" data-quieto="1"${abre === x.id ? " data-sel" : ""}><span class="tile">${K.ic("ruta")}</span>
-        <span class="ses-fila">${K.esc(x.nombre)}${falta.length ? `<small class="mute">${K.esc(pideTx(falta))}</small>` : ""}</span><em class="num">${sigo ? "La seguís" : `${x.semanas} sem · ${x.dias} días`}</em>${K.ic("chev", "chev")}</button>`;
-    }).join("")}</div></section>`;
+    return `<section class="fam"><span class="lb tg"><i class="dot" style="--c:var(--${f.id})"></i>${K.esc(f.nombre)}</span><div class="aj">${rs.map(fila).join("")}</div></section>`;
   }).join("");
-  return `<div class="split${sel ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Rutinas", sub: "Hoy", volver: "#/hoy", raiz: true})}
-    <p class="ayuda">Caminos fijos de semanas. Si seguís una, Hoy te da su sesión y sigue donde quedaste.</p>${lista}</div>
-    <div class="abierto">${abre ? K.P.rutina(abre) : ""}</div></div>`;
+  /* el primer día, Planes es el paso 2 si venís a elegir una rutina */
+  const paso = K.primerDia() && !ru && !K.rumbo().length ? K.pasos(2) : "";
+  return `<div class="split${r.sub2 ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Planes", sub: "Rutinas y hazañas"})}${paso}
+    <div class="pl-tit" id="pl-hazanas"><h2>Hazañas</h2><span class="mute">Un desafío, un día</span></div><section class="hz-grilla">${grilla}</section>
+    <div class="pl-tit" id="pl-rutinas"><h2>Rutinas</h2><span class="mute">Un plan de semanas. Hoy te da cada sesión.</span></div>${lista}</div>
+    <div class="abierto">${abierto}</div></div>`;
 };
 
 /* una rutina: qué es, hacia qué estrellas lleva, cómo es una semana y la fuente al pie */
 K.P.rutina = id => {
   const r = K.rutinaDe(id), ru = K.rutinaActual(), sigo = ru && ru.r.id === id;
   const cielo = K.cieloActual(), falta = K.rutina.falta(r, K.EJ, K.diario.perfil.equipo || null);
-  const enc = K.enc({titulo: r.nombre, sub: "Rutinas", volver: "#/hoy/rutinas", raiz: true, det: true, acciones: sigo ? K.mas("rut-mas", "Opciones de la rutina") : ""});
+  const enc = K.enc({titulo: r.nombre, sub: "Planes", volver: "#/planes", raiz: true, det: true, acciones: sigo ? K.mas("rut-mas", "Opciones de la rutina") : ""});
   const dato = (n, t) => `<div class="cd res-dato"><span class="num">${K.esc(n)}</span><span class="lb">${t}</span></div>`;
   const est = r.alimenta.map(eid => { const c = cielo.constelaciones.find(k => k.estrellas.some(y => y.id === eid)); return c && {c, e: c.estrellas.find(y => y.id === eid)}; }).filter(Boolean);
   const lleva = `<span class="lb pie">Entrena para</span><section class="aj">${est.map(({c, e}) => `<button type="button" class="ajr" data-ir="#/cielo/${c.id}">${K.POSES[e.prueba.ejercicio] ? `<span class="tile fig-tile">${K.fig.chica(e.prueba.ejercicio, c.familia)}</span>` : `<span class="tile"><i class="dot" style="--c:var(--${c.familia})"></i></span>`}
@@ -72,15 +78,6 @@ const mejorTx = h => {
   for (let n = 2; n >= 0; n--){ const m = K.rutina.mejorHazana(h, n, K.diario.sesiones); if (m !== null) return `${K.rutina.NIVELES[n]} · ${K.hazanaValor(h, m)}`; }
   return "";
 };
-K.P.hazanas = r => {
-  const hs = K.HAZANAS.hazanas, sel = hs.some(x => x.id === r.sub2) ? r.sub2 : "", hz = K.horizontal(), abre = sel || (hz ? hs[0]?.id : "");
-  const filas = hs.map(h => { const m = mejorTx(h);
-    return `<button type="button" class="ajr" data-ir="#/hoy/hazanas/${h.id}" data-quieto="1"${abre === h.id ? " data-sel" : ""}><span class="tile fig">${K.dibujo.figura(h, 26)}</span>
-      <span class="ses-fila">${K.esc(h.nombre)}<small class="mute">${K.esc(h.texto)}</small></span><em class="num">${K.esc(m || "")}</em>${K.ic("chev", "chev")}</button>`; }).join("");
-  return `<div class="split${sel ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Hazañas", sub: "Hoy", volver: "#/hoy", raiz: true})}
-    <p class="ayuda">Pruebas de cierre con tres niveles. Volvé cada tanto y medí cuánto avanzaste.</p><section class="aj">${filas}</section></div>
-    <div class="abierto">${abre ? K.P.hazana(abre) : ""}</div></div>`;
-};
 const itemTx = x => `${x.reps ? `×${x.reps}` : x.seg ? `${x.seg} s` : x.min ? `${x.min} min` : ""}${x.ejercicio && K.ej(x.ejercicio).lado ? " por lado" : ""}`;
 K.P.hazana = id => {
   const h = K.HAZANAS.hazanas.find(x => x.id === id), nv = nivelDe(h), n = h.niveles[nv];
@@ -90,7 +87,7 @@ K.P.hazana = id => {
   const filas = items.map(x => `<div class="ln"><span>${K.esc(x.ejercicio ? K.ej(x.ejercicio).nombre : x.nombre || "")}</span><span class="num">${K.esc(itemTx(x))}</span></div>`).join("")
     || b.tramos.filter(x => x.clase === "fuerte").slice(0, 1).map(x => `<div class="ln"><span>Fuerte</span><span class="num">${x.seg} s</span></div>`).join("");
   const mejor = K.rutina.mejorHazana(h, nv, K.diario.sesiones);
-  return K.enc({titulo: h.nombre, sub: "Hazañas", volver: "#/hoy/hazanas", raiz: true, det: true}) +
+  return K.enc({titulo: h.nombre, sub: "Planes", volver: "#/planes", raiz: true, det: true}) +
     `<div class="hzn"><div class="hz-fig">${K.dibujo.figura(h, 120, mejor !== null)}</div><p class="ayuda">${K.esc(h.texto)}</p>
     <section class="aj"><button type="button" class="ajr" id="hz-nivel" data-hazana="${h.id}" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("hazana")}</span><span>Nivel</span><em>${K.rutina.NIVELES[nv]}</em>${K.ic("chevd", "chev")}</button></section>
     <section class="cd hz-items"><span class="lb">${K.esc(formatoTx(h, n))}</span>${filas}

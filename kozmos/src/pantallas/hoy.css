@@ -96,3 +96,29 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   .anillo-tx .reloj{font-size:52px}
   .res-a .cons-svg{max-height:220px}
 }
+
+/* ===== De dónde sale lo de hoy: una fila, a un toque de cambiarlo ===== */
+.hoy-origen .ses-fila small.lb{display:block; margin:0 0 3px}
+.hoy-origen .ajr{min-height:60px}
+
+/* ===== El primer día: tres pasos ===== */
+.pasos{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; margin:0; padding:0; list-style:none}
+.pasos li{display:flex; align-items:center; gap:6px; min-width:0; padding:8px 0 0; border-top:3px solid var(--s2); color:var(--ink-3); font-size:var(--t-sm); font-weight:700}
+.pasos li span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pasos li i{display:grid; place-items:center; flex:none; width:20px; height:20px; border-radius:50%; background:var(--s2); font-style:normal; font-size:var(--t-2xs)}
+.pasos li i .ic{width:12px; height:12px; stroke-width:3}
+.pasos li.ahora{border-color:var(--ink); color:var(--ink)}
+.pasos li.ahora i{background:var(--ink); color:var(--bg)}
+.pasos li.hecho{border-color:var(--ink-3); color:var(--ink-2)}
+.como{display:flex; flex-direction:column; gap:10px}
+.como-op{position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:4px; padding:0 44px 16px 16px; overflow:hidden; text-align:left; color:var(--ink); font:inherit; cursor:pointer}
+.como-dib{display:flex; align-items:center; height:104px; width:calc(100% + 60px); margin:0 -44px 8px -16px; border-bottom:1px solid var(--line); overflow:hidden}
+.como-dib .cons-svg{display:block; width:100%; height:auto; max-height:104px}
+.como-dib .dib-sem{display:block; width:150px; height:auto; margin:0 16px}
+.como-op small{font-size:var(--t-sm); font-weight:700; color:var(--ink-2)}
+.como-op .como-ir{position:absolute; right:16px; bottom:18px; width:16px; height:16px; color:var(--ink-3)}
+.como-cielo{display:flex; gap:8px; align-items:center; padding:2px 4px}
+.como-cielo .ic{width:18px; height:18px}
+@media (orientation:landscape) and (max-height:520px){
+  .como{display:grid; grid-template-columns:1fr 1fr}
+}

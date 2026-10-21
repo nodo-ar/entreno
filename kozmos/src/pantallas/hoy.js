@@ -25,7 +25,7 @@ K.queToca = b => {
 const PREGUNTA = {segundos: "¿Cuántos segundos?", repeticiones: "¿Cuántas salieron?", minutos: "¿Cuántos minutos?", "menos-minutos": "¿En cuántos minutos?", porcentaje: "¿Cuánto lastre?", logrado: "¿Salió?", sesiones: "¿La hiciste?"};
 const UNI = {segundos: "segundos", repeticiones: "repeticiones", minutos: "minutos", "menos-minutos": "minutos"};
 
-K.P.hoy = r => r.sub === "rumbo" ? K.P.rumbo() : r.sub === "rutinas" ? K.P.rutinas(r) : r.sub === "hazanas" ? K.P.hazanas(r) : r.sub === "sesion" ? K.P.sesion() : r.sub === "resumen" ? K.P.resumen(r.sub2) : K.P.hoyInicio();
+K.P.hoy = r => r.sub === "rumbo" ? K.P.rumbo() : r.sub === "sesion" ? K.P.sesion() : r.sub === "resumen" ? K.P.resumen(r.sub2) : K.P.hoyInicio();
 
 /* la rutina que seguís, si sigue en el catálogo, y por dónde vas */
 K.rutinaDe = id => K.RUTINAS.find(r => r.id === id);
@@ -73,6 +73,7 @@ K.P.hoyInicio = () => {
       <button type="button" class="btn sec" id="hoy-igual">Entrenar igual</button>`;
   }
   if (ru) return enc + K.hoyRutina(ru, sin);
+  if (!rumbo.length && K.primerDia()) return enc + K.hoyComo() + sin;
   if (!rumbo.length) return enc + `<section class="cd rumbo-vacio">${K.dibujo.una(K.cieloActual().constelaciones.find(c => c.id === "front-lever"), [])}
     <span class="lb">Tu rumbo</span><b class="t1">Elegí tu rumbo.</b><p class="mute">De 1 a 3 constelaciones. Kozmos arma cada día lo que toca para llegar.</p></section>${sin}
     <button type="button" class="btn" data-ir="#/hoy/rumbo">Elegir</button>`;
@@ -98,7 +99,7 @@ K.P.hoyInicio = () => {
   const ventana = plan.ventana.length ? `<p class="hoy-ventana small"><b>Ventana abierta:</b> probá ${plan.ventana.map(id => K.esc(cielo.constelaciones.find(c => c.id === id).proxima.nombre)).join(" y ")}.</p>` : "";
   const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${plan.bloques.length} ${plan.bloques.length === 1 ? "bloque" : "bloques"}</span></div>${ventana}${filas}
     ${plan.volviste ? `<p class="mute small">Tu cielo te esperó. Hoy arrancás más suave.</p>` : ""}</section>`;
-  return enc + `<div class="hoy"><div class="hoy-a">${hecho}${proxima}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
+  return enc + `<div class="hoy"><div class="hoy-a">${hecho}${pasoEmpeza()}${K.hoyOrigen()}${proxima}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
 };
 const ctaHoy = () => K.sesion.activa() ? `<button type="button" class="btn" data-ir="#/hoy/sesion">Volver a la sesión</button>`
   : `<button type="button" class="btn" id="s-empezar">${K.ic("play")}Empezar</button>`;
@@ -112,25 +113,52 @@ const hechoHoy = () => {
 K.hoyRutina = ({r, cur}, sin) => {
   const hecho = hechoHoy();
   if (cur.terminada) return hecho + `<section class="cd res-orbita">${K.mov.orbita(150)}</section><section class="cd"><span class="lb">Tu rutina, completa</span><b class="t1">Terminaste ${K.esc(r.nombre)}.</b><p class="mute">${cur.total} sesiones. ¿Seguís con otra?</p></section>
-    <button type="button" class="btn" data-ir="#/hoy/rutinas">Elegir otra rutina</button>`;
+    <button type="button" class="btn" data-ir="#/planes">Elegir otra rutina</button>`;
   const plan = K.hoyPlan(), cielo = K.cieloActual();
   const est = r.alimenta.map(id => cielo.constelaciones.flatMap(c => c.estrellas).find(e => e.id === id)).filter(Boolean), sig = est.find(e => !e.encendida) || est[est.length - 1];
   const s = r.sesiones[cur.i];
-  const top = `<section class="cd hoy-rut"><span class="lb">Tu rutina · semana ${cur.semana} de ${r.semanas}</span><b class="t1">${K.esc(r.nombre)}</b>
+  /* el nombre y la semana van en la fila de origen, arriba; acá, el avance */
+  const top = `<section class="cd hoy-rut"><span class="lb">Tu avance</span>
       <div class="bar" style="--c:var(--${r.familia})" role="progressbar" aria-label="Avance de la rutina" aria-valuemin="0" aria-valuemax="${cur.total}" aria-valuenow="${cur.i}"><i style="width:${(cur.i / cur.total * 100).toFixed(1)}%"></i></div>
       <span class="ln mute"><span>Día ${cur.dia} de ${r.dias}</span><span class="num">${cur.i} de ${cur.total}</span></span>
       ${sig ? `<span class="ln mute small"><span>Entrena para</span><span>${K.esc(sig.nombre)}</span></span>` : ""}</section>`;
   const ventana = plan.ventana.length ? `<p class="hoy-ventana small"><b>Ventana abierta:</b> probá ${plan.ventana.map(id => K.esc(cielo.constelaciones.find(c => c.id === id).proxima.nombre)).join(" y ")}.</p>` : "";
   const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${K.esc(s.nombre)}</span></div>${ventana}${filasToca(plan.bloques)}
     ${s.nota ? `<p class="mute small">${K.esc(s.nota)}</p>` : ""}</section>`;
-  return `<div class="hoy"><div class="hoy-a">${hecho}${top}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
+  return `<div class="hoy"><div class="hoy-a">${hecho}${pasoEmpeza()}${K.hoyOrigen()}${top}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
 };
 
+/* el ⋯ de Hoy: lo de hoy. Rutinas y hazañas tienen su pestaña, Planes. */
 K.hoyMenu = btn => {
   const ru = K.rutinaActual();
-  const items = [{id: "rumbo", texto: "Cambiar el rumbo", ic: "cielo"}, {id: "rutinas", texto: ru ? "Cambiar de rutina" : "Seguir una rutina", ic: "ruta"},
-    {id: "hazanas", texto: "Hacer una hazaña", ic: "hazana"}, ...(ru ? [{id: "dejar", texto: "Dejar la rutina", ic: "x"}] : []), {id: "anotar", texto: "Anotar algo hecho", ic: "cal"}];
-  K.menu.abrir(btn, {titulo: "Hoy", items, elegir: id => id === "dejar" ? K.rutinaDejar() : K.ir({rumbo: "#/hoy/rumbo", rutinas: "#/hoy/rutinas", hazanas: "#/hoy/hazanas", anotar: "#/cielo"}[id])});
+  const items = [{id: "rumbo", texto: "Cambiar el rumbo", ic: "rumbo"}, ...(ru ? [{id: "dejar", texto: "Dejar la rutina", ic: "x"}] : []), {id: "anotar", texto: "Anotar algo hecho", ic: "cal"}];
+  K.menu.abrir(btn, {titulo: "Hoy", items, elegir: id => id === "dejar" ? K.rutinaDejar() : K.ir({rumbo: "#/hoy/rumbo", anotar: "#/cielo"}[id])});
+};
+
+/* ===== De dónde sale lo de hoy: tu rutina o tu rumbo, siempre a la vista y a un toque de cambiarlo ===== */
+K.hoyOrigen = () => {
+  const ru = K.rutinaActual(), fila = (ir, ic, lb, tx, em = "") => `<section class="aj hoy-origen"><button type="button" class="ajr" data-ir="${ir}"><span class="tile">${K.ic(ic)}</span>
+    <span class="ses-fila"><small class="lb">${lb}</small>${tx}</span><em class="num">${em}</em>${K.ic("chev", "chev")}</button></section>`;
+  if (ru && !ru.cur.terminada) return fila(`#/planes/rutinas/${ru.r.id}`, "ruta", "Sale de tu rutina", K.esc(ru.r.nombre), `sem ${ru.cur.semana} de ${ru.r.semanas}`);
+  const cs = K.rumbo().map(K.cons).filter(Boolean);
+  return cs.length ? fila("#/hoy/rumbo", "rumbo", "Sale de tu rumbo", cs.map(c => K.esc(c.nombre)).join(" · ")) : "";
+};
+
+/* ===== El primer día: Hoy guía en tres pasos (elegí cómo, elegí qué, empezá). Se va solo con la primera sesión o la primera marca. ===== */
+K.primerDia = () => !K.diario.sesiones.length && !K.diario.mediciones.length;
+K.pasos = n => `<ol class="pasos" aria-label="Paso ${n} de 3">${["Elegí cómo", "Elegí qué", "Empezá"].map((t, i) =>
+  `<li class="${i + 1 < n ? "hecho" : i + 1 === n ? "ahora" : ""}"${i + 1 === n ? ' aria-current="step"' : ""}><i class="num">${i + 1 < n ? K.ic("check") : i + 1}</i><span>${t}</span></li>`).join("")}</ol>`;
+const pasoEmpeza = () => K.primerDia() && !K.sesion.activa() ? K.pasos(3) : "";
+/* las semanas de una rutina, en puntos: lo hecho lleno */
+const dibSemanas = (hechas, col) => `<svg class="dib-sem" viewBox="0 0 86 34" aria-hidden="true">${Array.from({length: 21}, (_, i) =>
+  `<circle cx="${5 + i % 7 * 12.6}" cy="${5 + Math.floor(i / 7) * 12}" r="4" fill="${i < hechas ? `var(--${col})` : "var(--s2)"}"/>`).join("")}</svg>`;
+K.hoyComo = () => {
+  const fl = K.cieloActual().constelaciones.find(c => c.id === "front-lever"), hz = K.HAZANAS.hazanas[0];
+  const op = (ir, dib, t, tx) => `<button type="button" class="cd como-op" data-ir="${ir}"><span class="como-dib">${dib}</span><b class="t1">${t}</b><small>${tx}</small>${K.ic("chev", "como-ir")}</button>`;
+  return `${K.pasos(1)}<div class="como">${op("#/hoy/rumbo", fl ? K.dibujo.una(fl, []) : "", "Que Kozmos arme tu día", "Elegí de 1 a 3 constelaciones. Cada día te da lo que toca.")}
+    ${op("#/planes", dibSemanas(5, "fu"), "Seguí una rutina", "Un plan fijo de semanas. Hoy te da cada sesión.")}</div>
+    ${hz ? `<section class="aj"><button type="button" class="ajr" data-ir="#/planes/hazanas/${hz.id}"><span class="tile fig">${K.dibujo.figura(hz, 26)}</span><span class="ses-fila">¿Solo por hoy?<small class="mute">Probá una hazaña: un desafío, un día</small></span><em></em>${K.ic("chev", "chev")}</button></section>` : ""}
+    <p class="como-cielo small mute">${K.ic("cielo")}<span>Lo que hagas enciende estrellas en tu cielo.</span></p>`;
 };
 
 /* ===== Tu rumbo: de 1 a 3 constelaciones. Cada toque queda guardado; no hay que confirmar. ===== */
@@ -140,7 +168,7 @@ K.P.rumbo = () => {
     <div class="aj">${cielo.constelaciones.filter(c => c.familia === f.id).map(c => `<button type="button" class="ajr rumbo-fila" data-rumbo="${c.id}" aria-pressed="${r.includes(c.id)}">
       <span class="tile anillo">${K.dibujo.anillo(c)}</span><span>${K.esc(c.nombre)}</span><em class="num">${c.encendidas} de ${c.total}</em>${r.includes(c.id) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</div></section>`).join("");
   return K.enc({titulo: "Tu rumbo", sub: "Hoy", volver: "#/hoy", det: true}) +
-    `<p class="ayuda">Elegí de 1 a 3 constelaciones. Lo podés cambiar cuando quieras.</p>${lista}
+    (K.primerDia() ? K.pasos(2) : "") + `<p class="ayuda">Elegí de 1 a 3 constelaciones. Lo podés cambiar cuando quieras.</p>${lista}
     <button type="button" class="btn rumbo-listo" data-volver="#/hoy">Listo</button>`;
 };
 K.rumboTocar = async id => {
@@ -404,7 +432,7 @@ K.ses = {
     if (K.sesion.activa()){ K.ir("#/hoy/sesion"); K.aviso("Tenés una sesión abierta. Terminala para empezar otra."); return; }
     const h = K.HAZANAS.hazanas.find(x => x.id === id); if (!h) return;
     const plan = K.rutina.deHazana(h, nivel, ctxRutina());
-    K.mov.iris(btn); K.sesion.empezar({...plan, ventana: [], volviste: false, desde: `#/hoy/hazanas/${h.id}`}); K.ir("#/hoy/sesion");
+    K.mov.iris(btn); K.sesion.empezar({...plan, ventana: [], volviste: false, desde: `#/planes/hazanas/${h.id}`}); K.ir("#/hoy/sesion");
   },
   terminar(){ return K.ses._fin(false); },
   /* la ✕ corta sin preguntar: lo hecho se guarda y se puede deshacer */
