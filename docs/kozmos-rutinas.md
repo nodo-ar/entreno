@@ -92,24 +92,47 @@ Las reglas, en `src/sesion/rutina.js`:
   - `{"ejercicio": "bici", "tipo": "minutos", "de": "total"}`: los minutos del bloque entero.
   - `{"ejercicio": "intervalos", "tipo": "sesiones"}`: una sesión de intervalos.
 
-## Hazañas (`catalogo/hazanas.json`)
+## Hazañas: pruebas con escala (`catalogo/hazanas.json`, versión 2)
+
+Desde el Modelo B, cada hazaña es una **prueba estandarizada**: mide un ejercicio, tiene una escala de cinco magnitudes y sabe qué estrellas puede encender. El nombre (Perseo, Hércules…) es nombre propio; `prueba` es lo que mide, en corto.
 
 ```json
-{"version": 1, "hazanas": [{
-  "id": "hercules", "nombre": "Hércules", "familia": "fu", "texto": "Fuerza total, por tiempo.",
-  "formato": "tiempo",
-  "niveles": [{"rondas": 3, "items": [{"ejercicio": ["flexion", "flexion-inclinada"], "reps": 8}, {"ejercicio": "plancha", "seg": 30}]}, …]
+{"version": 2, "hazanas": [{
+  "id": "perseo", "nombre": "Perseo", "prueba": "Tirón", "familia": "fu",
+  "texto": "Dominadas estrictas, todas las que salgan.", "como": "Colgado con los brazos rectos…",
+  "figura": {…}, "formato": "maximo",
+  "mide": {"ejercicio": "dominada", "tipo": "repeticiones"},
+  "escala": [1, 5, 10, 15, 20],
+  "estrellas": ["muscle-up.dominadas-10", "un-brazo.dominadas-15"],
+  "cada": 42,
+  "antes": {"formato": "amrap"}
 }]}
 ```
 
-- Siempre tres niveles: Inicial, Intermedio y Completo.
-- `formato` y qué lleva cada nivel:
-  - `tiempo`: `rondas` e `items`. Se anota el tiempo total; mejor, menos.
-  - `chipper`: `items` en orden, una sola vuelta. Un ítem puede ser `{"ejercicio": "trote", "min": 8}`. Se anota el tiempo total.
-  - `amrap`: `minutos` e `items`. Se anotan las rondas; mejor, más.
-  - `emom`: `minutos` e `items`. Cada minuto, el ítem que sigue. Se anota si se completó.
-  - `intervalos` y `flujo`: `tramos`, como en las rutinas. Se anota si se completó.
+- `formato`:
+  - `maximo`: una serie, todas las que salgan (o el sostén más largo, o lo que anotás: puntos, centímetros).
+  - `reloj`: un tiempo fijo (`minutos`) y al final anotás lo que hiciste (Motor 12: los km).
+  - `escalera`: cada minuto una más; con «No llegué» cuenta el último minuto completo.
+  - `tiempo`: lo que dicen los `items`, lo más rápido posible (Mil saltos).
+- `escala`: cinco umbrales, de la magnitud 5 a la 1. Con `{"propia": [0, 5, 10, 15, 20]}` es por persona: el % de mejora contra tu primera vez.
+- `estrellas`: las que puede encender. Puede ser más de una constelación a la vez.
+- `cada`: cada cuántos días toca repetirla (42 si falta).
+- `entrena` (opcional): qué se entrena entre pruebas para una estrella que solo se mide con la prueba (por ejemplo, la sentadilla profunda para Del piso).
+- `fuente` (opcional): va al pie, nunca en el texto.
+- `antes`: el formato que tenía en la versión 1, para leer las sesiones guardadas entonces.
+
+## Semana de prueba (`bloque` en cada rutina)
+
+Cada rutina trae `"bloque": {"carga": 3, "prueba": 1}`: tantas semanas de carga y una de prueba (bloques de 4 a 6 semanas). La semana sale de las sesiones hechas de la rutina (sesión `i` → semana `i / días`), no del calendario. En la semana de prueba:
+
+- Toca la misma sesión, con la mitad de las series (descarga).
+- La primera sesión de esa semana lleva las pruebas adelante, descansado: las próximas estrellas de las constelaciones a las que lleva la rutina (hasta 3) y una o dos hazañas (la que toca antes; la segunda, solo si también toca). Las de motor van al final.
+- Las demás sesiones de esa semana son solo la descarga.
+- Lo que sacás en una prueba fija dónde arranca el bloque siguiente en cada escalera: se trabaja al 75 % de tu máximo; si eso ya llega al tope del rango, el escalón de arriba; si no llega al mínimo, el de abajo.
+- Si volvés después de 3 semanas sin entrenar, la prueba espera.
+
+Sin rutina, con tu rumbo, cuenta semanas de calendario con alguna sesión: después de 4, la semana de prueba. La ventana de prueba del 80 % sigue como prueba suelta entre bloques.
 
 ## Lo que guarda el diario
 
-Una sesión de rutina guarda `rutina: {id, sesion}`. Cada serie de una escalera guarda además `escalera`, `rango`, `n` (cuántas series pedía), `descarga` si era una descarga y, si la tocaste, `sensacion` (`sobro`, `justo` o `no-llego`). Una serie con lastre guarda `lastreKg` y `pesoKg`. Las sesiones viejas, sin esos campos, siguen contando: sus series entran en la escalera del ejercicio que hicieron. Una de hazaña guarda `hazana: {id, nivel, valor}`, con `valor` en segundos (tiempo, chipper), rondas (amrap) o 1 (completada). El perfil guarda `rutina: {id, desde}` mientras la seguís y `dias`: los días de la semana que entrenás (0 = lunes).
+Una sesión de rutina guarda `rutina: {id, sesion}`. Cada serie de una escalera guarda además `escalera`, `rango`, `n` (cuántas series pedía), `descarga` si era una descarga y, si la tocaste, `sensacion` (`sobro`, `justo` o `no-llego`). Una serie con lastre guarda `lastreKg` y `pesoKg`. Las sesiones viejas, sin esos campos, siguen contando: sus series entran en la escalera del ejercicio que hicieron. Una prueba (hazaña) guarda `hazana: {id, v: 2, valor, completa, ejercicio, tipo}` y su serie lleva `hazana` con el id; esa serie cuenta como marca en el Cielo. Una sesión de la semana de prueba guarda `semanaPrueba: {bloque, rutina, semana, pruebas}`. Las hazañas de antes (versión 1) guardaban `hazana: {id, nivel, valor}`, con `valor` en segundos (tiempo, chipper), rondas (amrap) o 1 (completada): se siguen viendo en tu historia y en la prueba, como «versión anterior», y no cuentan como marcas. El perfil guarda `rutina: {id, desde}` mientras la seguís y `dias`: los días de la semana que entrenás (0 = lunes).
