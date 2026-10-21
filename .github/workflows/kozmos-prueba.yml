@@ -1,0 +1,79 @@
+# Arma la APK de prueba de Kozmos («Kozmos prueba», ar.kozmos.prueba) y la deja como artifact de la corrida.
+# Se instala al lado de la de verdad, con sus propios datos, firmada con la clave de depuración. No publica nada.
+name: Kozmos · APK de prueba
+on:
+  push:
+    branches-ignore: [main]
+    paths: ['kozmos/**', '.github/workflows/kozmos-prueba.yml']
+  pull_request:
+    paths: ['kozmos/**', '.github/workflows/kozmos-prueba.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: kozmos-prueba-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  apk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # el número de versión sale de la cantidad de commits
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: kozmos/apk/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      # la clave de depuración se guarda entre corridas: así cada APK de prueba se instala encima de la anterior
+      - uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: kozmos-depuracion-v1
+      - name: Pruebas sin pantalla
+        run: node kozmos/pruebas/puras.mjs
+      - name: Número de versión
+        run: |
+          echo "KOZMOS_VERSION_CODE=$(git rev-list --count HEAD)" >> "$GITHUB_ENV"
+          echo "KOZMOS_VERSION_NAME=k-$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+          echo "KOZMOS_V=k-$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+      - name: Capacitor y la página
+        working-directory: kozmos/apk
+        run: |
+          npm ci
+          node ../tools/armar.mjs www --apk
+          npx cap sync android
+          test -f android/app/src/main/assets/public/index.html
+          test ! -e android/app/src/main/assets/public/sw.js || { echo "::error::la APK no tiene que llevar service worker"; exit 1; }
+      - name: Armar la APK de prueba
+        working-directory: kozmos/apk/android
+        run: ./gradlew --no-daemon assemblePrueba
+      - name: Revisar la APK
+        run: |
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          APK=kozmos/apk/android/app/build/outputs/apk/prueba/app-prueba.apk
+          mkdir -p salida && cp "$APK" "salida/kozmos-prueba-$KOZMOS_VERSION_CODE.apk"
+          {
+            echo "### Kozmos prueba · $KOZMOS_VERSION_NAME (versionCode $KOZMOS_VERSION_CODE)"
+            echo '```'
+            "$BT/aapt2" dump badging "$APK" | grep -E "^(package|application-label|sdkVersion|targetSdkVersion|uses-permission)"
+            echo "--- firma"
+            "$BT/apksigner" verify --print-certs "$APK" | grep -E "Signer #1 certificate (DN|SHA-256)"
+            echo "--- tamaño: $(du -k "$APK" | cut -f1) kB"
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          "$BT/apksigner" verify "$APK"
+          "$BT/aapt2" dump badging "$APK" | grep -q "package: name='ar.kozmos.prueba'"
+          unzip -l "$APK" | grep -q "assets/public/index.html"
+          ! unzip -l "$APK" | grep -q "assets/public/sw.js"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kozmos-prueba-${{ env.KOZMOS_VERSION_CODE }}
+          path: salida/*.apk
+          retention-days: 30
+          if-no-files-found: error

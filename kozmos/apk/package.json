@@ -1,0 +1,19 @@
+{
+  "name": "kozmos-apk",
+  "private": true,
+  "description": "Kozmos para Android: la app web armada, empaquetada adentro de una APK con Capacitor.",
+  "scripts": {
+    "armar": "node ../tools/armar.mjs www --apk",
+    "sync": "npm run armar && cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.3",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/filesystem": "8.1.5",
+    "@capacitor/share": "8.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.3"
+  }
+}

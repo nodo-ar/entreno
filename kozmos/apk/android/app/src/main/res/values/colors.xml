@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Colores de Kozmos (tokens de kozmos/src/base/tokens.css): --bg y --solid del tema claro. -->
+<resources>
+    <color name="kozmos_fondo">#F7F6F2</color>
+    <color name="kozmos_tinta">#111111</color>
+    <!-- el ícono es siempre el de papel, como el de la web -->
+    <color name="icono_fondo">#F7F6F2</color>
+    <color name="icono_tinta">#111111</color>
+</resources>

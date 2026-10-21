@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- El logo de Kozmos: el disco con el hueco y la estrella (mismas proporciones que kozmos/iconos/kozmos.svg). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillType="evenOdd" android:fillColor="@color/icono_tinta" android:pathData="M26.00,54.00a28.00,28.00 0 1,0 56.00,0a28.00,28.00 0 1,0 -56.00,0zM46.59,54.00a7.41,7.41 0 1,0 14.82,0a7.41,7.41 0 1,0 -14.82,0zM65.53,39.18a3.29,3.29 0 1,0 6.59,0a3.29,3.29 0 1,0 -6.59,0z"/>
+</vector>

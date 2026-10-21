@@ -168,6 +168,8 @@ K.diario.abrir().then(async () => {
   if (r === "guardada") K.aviso("La sesión que quedó abierta se guardó como cortada.");
 });
 
-/* sin conexión desde la segunda apertura */
-if ("serviceWorker" in navigator && location.protocol !== "file:")
+/* sin conexión desde la segunda apertura. En la APK no: la página viaja adentro y un service worker
+   guardaría la versión vieja después de instalar una nueva; si quedó alguno registrado, se va. */
+if (K.apk) navigator.serviceWorker?.getRegistrations?.().then(rs => rs.forEach(r => r.unregister())).catch(() => {});
+else if ("serviceWorker" in navigator && location.protocol !== "file:")
   addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));

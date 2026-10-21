@@ -171,6 +171,11 @@ K.resp = {
     const o = K.respaldo.armar(K.diario, K.VERSION, K.CATALOGO.version), txt = JSON.stringify(o), nombre = K.respaldo.nombre(K.hoy());
     const listo = () => { K.prefs.set("respaldo", K.hoy()); K.refrescar(); const n = o.sesiones.length;
       K.aviso(`Respaldo guardado: ${n} ${n === 1 ? "sesión" : "sesiones"} y ${o.mediciones.length} ${o.mediciones.length === 1 ? "marca" : "marcas"}.`); };
+    /* en la APK, el archivo se comparte con el menú de Android (el WebView no descarga ni comparte archivos) */
+    if (K.apk){
+      let llego; try { llego = await K.apk.compartir(nombre, txt); } catch (e) { K.aviso("No se pudo guardar el archivo."); return; }
+      if (llego) listo(); return;
+    }
     /* en el teléfono se comparte (Drive, correo, WhatsApp): así sabemos que llegó a algún lado */
     try {
       const f = new File([txt], nombre, {type: "application/json"});

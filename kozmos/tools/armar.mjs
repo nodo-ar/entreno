@@ -1,6 +1,8 @@
 // Arma Kozmos en una carpeta lista para publicar: junta los módulos de src/ en un solo index.html,
 // copia el service worker con su versión, el manifiesto, la letra y los íconos.
-// Uso: node kozmos/tools/armar.mjs [carpeta]   (por defecto kozmos/app)
+// Uso: node kozmos/tools/armar.mjs [carpeta] [--apk]   (por defecto kozmos/app)
+// Con --apk arma la versión que va adentro de la APK de Android (kozmos/apk): sin service worker ni manifiesto
+// (la APK ya trae todo y se actualiza instalando otra encima) y con el puente de Capacitor dentro de la página.
 import fs from "node:fs";
 import path from "node:path";
 import {execSync} from "node:child_process";
@@ -8,14 +10,15 @@ import {fileURLToPath} from "node:url";
 
 const RAIZ = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SRC = path.join(RAIZ, "src");
-const D = path.resolve(process.argv[2] || path.join(RAIZ, "app"));
+const ARGS = process.argv.slice(2), APK = ARGS.includes("--apk");
+const D = path.resolve(ARGS.find(a => !a.startsWith("--")) || path.join(RAIZ, "app"));
 
 /* el orden importa: primero la base, después las piezas, las pantallas y el arranque */
 const CSS = ["base/letra.css", "base/tokens.css", "base/base.css", "piezas/nav.css", "piezas/encabezado.css", "piezas/menu.css",
   "piezas/deshacer.css", "piezas/isla.css", "piezas/movimiento.css", "piezas/figura.css", "piezas/ajustes.css", "piezas/horizontal.css", "pantallas/pantallas.css", "pantallas/cielo.css", "pantallas/hoy.css", "pantallas/progreso.css", "pantallas/rutinas.css"];
 const JS = ["base/base.js", "piezas/nav.js", "piezas/encabezado.js", "piezas/menu.js", "piezas/deshacer.js", "piezas/isla.js", "piezas/movimiento.js", "piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/vistas.js",
   "cielo/cielo.js", "cielo/dibujo.js", "diario/diario.js", "diario/respaldo.js", "sesion/plan.js", "sesion/rutina.js", "sesion/calorias.js", "sesion/motor.js",
-  "pantallas/pantallas.js", "pantallas/cielo.js", "pantallas/hoy.js", "pantallas/rutinas.js", "app.js"];
+  "pantallas/pantallas.js", "pantallas/cielo.js", "pantallas/hoy.js", "pantallas/rutinas.js", "base/android.js", "app.js"];
 
 /* versión: «k-abc1234» por commit (o «k-abc1234+cambios»); KOZMOS_V la fuerza a mano */
 function version(){
@@ -39,14 +42,24 @@ const ORDEN = {fu: 0, ra: 1, mo: 2};
 rutinas.sort((a, b) => (ORDEN[a.familia] ?? 9) - (ORDEN[b.familia] ?? 9) || a.nombre.localeCompare(b.nombre, "es"));
 const hz = fs.existsSync(path.join(RAIZ, "catalogo", "hazanas.json")) ? cat("hazanas.json") : '{"version":1,"hazanas":[]}';
 const js2 = js.replace('K.VERSION = ', () => `K.CATALOGO = ${cat("constelaciones.json")};\nK.EJERCICIOS = ${cat("ejercicios.json")};\nK.RUTINAS = ${JSON.stringify(rutinas).replace(/</g, "\\u003c")};\nK.HAZANAS = ${hz};\nK.VERSION = `);
-const html = leer("plantilla.html").replace("/*CSS*/", () => css).replace("/*JS*/", () => js2);
+let html = leer("plantilla.html").replace("/*CSS*/", () => css).replace("/*JS*/", () => js2);
+/* en la APK: el puente de Capacitor va antes que la app y se sacan el manifiesto y los íconos de la web */
+if (APK){
+  const CAP = path.join(RAIZ, "apk", "node_modules", "@capacitor", "core", "dist", "capacitor.js");
+  if (!fs.existsSync(CAP)) throw new Error("falta Capacitor: corré «npm ci» en kozmos/apk");
+  const sinLinks = html.replace(/\n<link rel="(manifest|icon|apple-touch-icon)"[^>]*>/g, "");
+  if (sinLinks.includes('rel="manifest"')) throw new Error("no pude sacar el manifiesto de la plantilla");
+  html = sinLinks.replace("<script>\n", () => `<script>\n${fs.readFileSync(CAP, "utf8").replace(/<\/script/gi, "<\\/script")}\n</script>\n<script>\n`);
+}
 
 fs.rmSync(D, {recursive: true, force: true});
 fs.mkdirSync(D, {recursive: true});
 fs.writeFileSync(path.join(D, "index.html"), html);
-const sw = leer("sw.js");
-if (!/const VERSION = "[^"]*"/.test(sw)) throw new Error("no encuentro VERSION en sw.js");
-fs.writeFileSync(path.join(D, "sw.js"), sw.replace(/const VERSION = "[^"]*"/, `const VERSION = ${JSON.stringify(V.replace(/[^\w.+-]+/g, "-"))}`));
-fs.copyFileSync(path.join(SRC, "manifest.webmanifest"), path.join(D, "manifest.webmanifest"));
-for (const d of ["fuentes", "iconos"]) fs.cpSync(path.join(RAIZ, d), path.join(D, d), {recursive: true});
-console.log(`armado ${path.relative(process.cwd(), D) || "."} · versión ${V} · ${(Buffer.byteLength(html) / 1024).toFixed(1)} kB`);
+if (!APK){
+  const sw = leer("sw.js");
+  if (!/const VERSION = "[^"]*"/.test(sw)) throw new Error("no encuentro VERSION en sw.js");
+  fs.writeFileSync(path.join(D, "sw.js"), sw.replace(/const VERSION = "[^"]*"/, `const VERSION = ${JSON.stringify(V.replace(/[^\w.+-]+/g, "-"))}`));
+  fs.copyFileSync(path.join(SRC, "manifest.webmanifest"), path.join(D, "manifest.webmanifest"));
+}
+for (const d of APK ? ["fuentes"] : ["fuentes", "iconos"]) fs.cpSync(path.join(RAIZ, d), path.join(D, d), {recursive: true});
+console.log(`armado ${path.relative(process.cwd(), D) || "."}${APK ? " para la APK" : ""} · versión ${V} · ${(Buffer.byteLength(html) / 1024).toFixed(1)} kB`);
