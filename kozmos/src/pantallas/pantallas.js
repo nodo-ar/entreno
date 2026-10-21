@@ -91,6 +91,8 @@ K.P.vos = r => {
   return `<div class="split${sub ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Vos", sub: "Ajustes"})}
     <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("dias", "dias", "Tus días", K.resumenDias())}${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
       <button type="button" class="ajr" id="avisos-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("vibra")}</span><span>Avisos</span><em>${K.esc(K.avisosNombre())}</em>${K.ic("chevd", "chev")}</button></div>
+    <span class="lb pie">La persona de los dibujos</span>
+    <div class="aj">${K.personaFilas()}</div>
     <div class="aj">
       <button type="button" class="ajr" id="tema-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("auto")}</span><span>Tema</span><em>${K.esc(K.tema.nombre())}</em>${K.ic("chevd", "chev")}</button>
       ${fila("respaldo", "caja", "Respaldo", K.ultimoRespaldo())}${fila("acerca", "info", "Acerca de Kozmos", "")}
@@ -196,6 +198,32 @@ K.resp = {
   }
 };
 
+/* la persona de los dibujos: cada rasgo sale al azar en cada ejercicio, salvo el que elijas acá */
+const RASGOS = {
+  sexo: {nombre: "Mujer u hombre", ic: "persona", ops: [["mujer", "Mujer"], ["hombre", "Hombre"]]},
+  piel: {nombre: "Piel", ops: ["Muy clara", "Clara", "Trigueña clara", "Trigueña", "Morena clara", "Morena", "Oscura", "Muy oscura"].map((n, i) => [K.fig.TONOS[i], n]), color: true},
+  pelo: {nombre: "Pelo", ic: "pelo", ops: [["colita", "Colita"], ["rodete", "Rodete"], ["largo", "Largo"], ["melena", "Melena"], ["afro", "Afro"], ["corto", "Corto"], ["rapado", "Rapado"], ["rulos", "Rulos"], ["pelado", "Pelado"]]},
+  colorPelo: {nombre: "Color de pelo", ops: ["Negro", "Castaño oscuro", "Castaño", "Castaño claro", "Rubio oscuro", "Rubio", "Colorado", "Canoso"].map((n, i) => [K.fig.PELOS[i], n]), color: true}
+};
+const persona = () => K.prefs.get("persona", {}) || {};
+/* el pelo depende de si es mujer u hombre: con uno elegido, se ofrecen sus peinados */
+const opsDe = k => k !== "pelo" || !persona().sexo ? RASGOS[k].ops : RASGOS.pelo.ops.filter(([v]) => K.fig.ESTILOS[persona().sexo].includes(v));
+const valor = k => (RASGOS[k].ops.find(([v]) => v === persona()[k]) || [, "Al azar"])[1];
+K.personaFilas = () => Object.entries(RASGOS).map(([k, r]) => { const v = persona()[k];
+  /* el color elegido, o una rueda con todos si sale al azar */
+  const tile = !r.color ? K.ic(r.ic) : `<i class="dot sw" style="${v ? `--c:${v}` : `background:conic-gradient(${r.ops.map(o => o[0]).join(",")})`}"></i>`;
+  return `<button type="button" class="ajr" id="rasgo-${k}" data-rasgo="${k}" aria-haspopup="menu" aria-expanded="false"><span class="tile">${tile}</span><span>${r.nombre}</span><em>${K.esc(valor(k))}</em>${K.ic("chevd", "chev")}</button>`; }).join("");
+K.personaPoner = p => { K.prefs.set("persona", p); K.fig.fijar(p); };
+K.menuRasgo = btn => { const k = btn.dataset.rasgo, r = RASGOS[k];
+  K.menu.abrir(btn, {titulo: r.nombre, items: [{id: "azar", texto: "Al azar", ic: "azar", elegido: !persona()[k]}, "-",
+      ...opsDe(k).map(([v, n]) => ({id: v, texto: n, ...(r.color ? {color: v} : {}), elegido: persona()[k] === v}))],
+    elegir: id => { const antes = persona(), nuevo = {...antes};
+      if (id === "azar") delete nuevo[k]; else nuevo[k] = id;
+      /* si cambiás a mujer u hombre, un peinado que no le va vuelve al azar */
+      if (k === "sexo" && nuevo.pelo && nuevo.sexo && !K.fig.ESTILOS[nuevo.sexo].includes(nuevo.pelo)) delete nuevo.pelo;
+      if (JSON.stringify(nuevo) === JSON.stringify(antes)) return;
+      K.personaPoner(nuevo); K.refrescar();
+      K.deshacer(`${r.nombre}: ${id === "azar" ? "al azar" : valor(k).toLowerCase()}`, () => { K.personaPoner(antes); K.refrescar(); }); }}); };
 K.menuTema = btn => K.menu.abrir(btn, {titulo: "Tema",
   items: K.TEMAS.map(([v, n, ic]) => ({id: v, texto: n, ic, elegido: K.tema.actual() === v})),
   elegir: id => K.cambiarTema(id)});

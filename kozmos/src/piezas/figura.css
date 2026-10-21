@@ -1,12 +1,10 @@
 /* ===== Figura: la persona que muestra cada ejercicio (ver figura.js) ===== */
 .fig{display:block; width:100%; height:auto; overflow:hidden;
-  /* el tono, su sombra y el pelo llegan sorteados en el estilo de cada figura */
-  --piel:var(--tono,#d8a47f); --piel-s:var(--tono-s,#b4815f); --piel-ss:var(--tono-ss,#98694c);
-  --short:#2c2f35; --short-f:#1d1f23; --short-l:#454952; --zapa:#3d4048; --zapa-f:#2a2c31; --suela:#f4f3ef; --media:#f4f3ef;
   /* todo lo que se usa (barra, banco, pesas) va en un solo tono neutro, que no le gane a la persona */
   --ap:var(--ink-2)}
-.fig-piso{stroke:var(--ink-3); stroke-width:1.5}
-.fig-disco{fill:var(--cs)}
+/* el disco es el color de la familia; la franja de la miniatura, el mismo disco más hondo */
+.fig-disco{fill:var(--cd)}
+.fig-banda{fill:var(--isla); opacity:.22}
 .fig-el .poste{stroke:var(--ap); stroke-width:2.5; stroke-linecap:round; opacity:.5}
 .fig-el .barra{stroke:var(--ap); stroke-width:5; stroke-linecap:round}
 .fig-el .par,.fig-el .silla{stroke:var(--ap); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
@@ -16,13 +14,11 @@
 .fig-el .asa{stroke:var(--ap); stroke-width:3; fill:none}
 .fig-el .manc{stroke:var(--ap); stroke-width:6; stroke-linecap:round}
 .fig-el .soga{stroke:var(--ap); stroke-width:1.6; fill:none}
-.fig-el .sg2{opacity:.45; stroke-dasharray:4 3}
 .fig-el .cadena{stroke:var(--ap); stroke-width:1.5}
 .fig-el .toalla{fill:var(--ap); opacity:.6}
 .fig-el .rueda{fill:none; stroke:var(--ap); stroke-width:3}
 .fig-el .cuadro{fill:none; stroke:var(--ap); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round}
 /* en la miniatura el trazo engorda, para que a 44 px se siga viendo */
-.fig.chica .fig-piso{stroke-width:4}
 .fig.chica .barra{stroke-width:9}
 .fig.chica .par,.fig.chica .silla,.fig.chica .soga,.fig.chica .cuadro,.fig.chica .rueda{stroke-width:6}
 /* en la serie: el centro de la pantalla, entre la indicación y el número */
@@ -33,7 +29,7 @@
 .ses-fig.con-anillo + .anillo-desc{width:min(150px,40vw)}
 .ses-fig.con-anillo + .anillo-desc .anillo-tx .reloj{font-size:var(--t-4xl)}
 /* chica: en un círculo, como todo lo que es de Kozmos */
-.fig-chica{display:block; border-radius:50%; background:var(--cs, var(--s2)); overflow:hidden; aspect-ratio:1}
+.fig-chica{display:block; border-radius:50%; background:var(--cd, var(--s2)); overflow:hidden; aspect-ratio:1}
 .fig-chica .fig{width:100%; height:100%}
 .ajr .tile.fig-tile{width:44px; height:44px; border-radius:50%; background:transparent; display:block; flex:none}
 .tile.fig-tile .fig-chica{width:100%; height:100%}

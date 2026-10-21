@@ -40,7 +40,8 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Progreso en horizontal** (la cartógrafa): al borrar la sesión abierta se muestra la siguiente sin avisar; «Tus sesiones» queda abajo en la columna izquierda; el ⋯ no deja claro a qué lado pertenece.
 - **`AVISOS` definido en dos lugares** (la tijera).
 - ~~Tus días~~: hecho en la etapa 5. Aclaración: son los días de la semana que entrenás, no un calendario (el acta 009 decía «calendario»).
-- ~~El maniquí y los dibujos de los ejercicios~~: hecho en el PR del maniquí (acta 012).
+- ~~El maniquí y los dibujos de los ejercicios~~: hecho en el PR del maniquí (actas 012 y 013).
+- Maniquí, lo que sigue (acta 013): vista de frente y de tres cuartos para lo lateral; mano con orientación; tronco que se curva; escorzo; bici más grande con el pedaleo rehecho; ritmo por tramo en los ciclos; miniaturas en «Hoy toca».
 - **Vista de frente para lo lateral** (la persona, la tijera): espagat lateral, pancake, mariposa, plancha lateral, bandera, cosaca, saltos de tijera, hombro cruzado, dorsal arriba y dorsal de costado hoy son una aproximación de perfil.
 - **Tronco en dos piezas y rotación de hombro** (la tijera): para el gato-camello, el dragon flag y el antebrazo contra la pared.
 - **Miniaturas en «Hoy toca» y en la Constelación** (coherencia): hoy la persona aparece en la sesión, el circuito y «Entrena para», pero no en esas dos listas.

@@ -516,11 +516,20 @@ prueba("poses-de-cada-ejercicio", () => {
   /* la revisión del motor: articulaciones dentro de lo posible y nada atravesando el piso, en todo el recorrido */
   const mal = Object.keys(POSES).map(id => [id, fig.revisar(id)]).filter(([, m]) => m.length);
   ok(!mal.length, mal.map(([id, m]) => `${id}: ${m.join(" · ")}`).join(" | "));
-  /* se dibuja: grande y chica son SVG con la persona sorteada (tono y pelo) */
-  for (const id of ids){ const g = fig.grande(id, "fu"), c = fig.chica(id, "fu");
-    ok(g.startsWith("<svg") && /--tono:#[0-9a-f]{6}/.test(g) && !/NaN|undefined/.test(g + c), id + ": no se dibuja bien"); }
-  /* el sorteo de la piel da para todos: entre los 155 aparecen al menos seis tonos */
-  ok(new Set([...ids].map(id => fig.persona(id).match(/--tono:(#\w+)/)[1])).size >= 6, "pocos tonos de piel");
+  /* se dibuja: grande y chica son SVG con el disco de la familia y la persona sorteada */
+  for (const id of ids){ const g = fig.grande(id, "fu"), c = fig.chica(id, "fu"), pe = fig.persona(id, "fu");
+    ok(g.startsWith("<svg") && g.includes("var(--fu-disco)") && g.includes(pe.piel) && !/NaN|undefined/.test(g + c), id + ": no se dibuja bien"); }
+  /* el sorteo da para todos: entre los 155 aparecen al menos seis tonos de piel, mujeres y hombres, y cinco peinados */
+  const gente = [...ids].map(id => fig.persona(id, "fu"));
+  ok(new Set(gente.map(p => p.piel)).size >= 6, "pocos tonos de piel");
+  ok(new Set(gente.map(p => p.sexo)).size === 2, "salen todas mujeres o todos hombres");
+  ok(new Set(gente.map(p => p.pelo)).size >= 5, "pocos peinados");
+  /* lo que se elige en Vos manda en todos los ejercicios; lo que no, sigue al azar */
+  fig.fijar({sexo: "mujer", piel: fig.TONOS[2], pelo: "afro"});
+  ok(gente.every((_, i) => { const p = fig.persona([...ids][i], "fu"); return p.sexo === "mujer" && p.piel === fig.TONOS[2] && p.pelo === "afro"; }), "lo elegido en Vos no manda");
+  fig.fijar({sexo: "hombre", pelo: "afro"});
+  ok(fig.persona("dominada", "fu").pelo !== "afro", "un peinado que no le va a un hombre se aplicó igual");
+  fig.fijar({});
 });
 
 let fallas = 0;

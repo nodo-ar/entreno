@@ -516,7 +516,10 @@ prueba("sesion-sobrevive", async () => {
   await tick(p, 12000); await p.click("#s-listo"); await p.fill("#s-valor", "14");
   await tick(p, 20000);
   await p.reload(); await p.waitForSelector(".ses.descanso");
-  ok(await reloj(p, "queda") === "1:10", "el descanso no siguió con el tiempo real: " + await reloj(p, "queda"));
+  /* el reloj falso de la prueba sigue andando con el tiempo real que tarda la recarga (más si la serie tuvo figura en movimiento):
+     se admiten hasta 3 s de corrimiento; lo que importa es que no vuelva a arrancar ni se quede en lo que marcaba */
+  const queda = await reloj(p, "queda"), sq = queda.split(":").reduce((m, x) => m * 60 + +x, 0);
+  ok(sq <= 70 && sq >= 67, "el descanso no siguió con el tiempo real: " + queda);
   ok(await p.inputValue("#s-valor") === "14", "se perdió lo anotado");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
@@ -1036,6 +1039,34 @@ prueba("logo-en-movimiento", async () => {
   await ir(r.p, "#/hoy");
   ok(!(await r.p.$(".mov-arranque")), "con movimiento reducido igual hubo arranque");
   await r.ctx.close();
+});
+
+prueba("persona-de-los-dibujos", async () => {
+  /* en Vos se elige la persona de los dibujos: todo al azar de entrada, lo elegido manda en todos los ejercicios y se puede deshacer */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/vos");
+  ok((await p.$$eval("[data-rasgo] em", x => x.map(e => e.textContent))).every(t => t === "Al azar"), "de entrada no está todo al azar");
+  await p.click("#rasgo-sexo"); await p.click('.pmi[data-id="hombre"]');
+  ok((await p.textContent("#rasgo-sexo em")) === "Hombre", "la fila no muestra lo elegido");
+  ok(await p.evaluate(() => document.activeElement.id) === "rasgo-sexo", "después de elegir, el foco se pierde");
+  ok(await p.evaluate(() => Object.keys(K.POSES).every(id => K.fig.persona(id, "fu").sexo === "hombre")), "lo elegido no manda en los dibujos");
+  /* con hombre elegido, el pelo ofrece solo sus peinados */
+  await p.click("#rasgo-pelo");
+  const pelos = await p.$$eval(".pmi", x => x.map(e => e.dataset.id));
+  ok(pelos.includes("rulos") && !pelos.includes("colita"), "el pelo ofrece peinados que no van: " + pelos.join(","));
+  await p.click('.pmi[data-id="rulos"]');
+  await p.click("#rasgo-piel"); await p.click(".pmi:nth-of-type(3)");
+  ok(await p.evaluate(() => K.prefs.get("persona", {}).pelo === "rulos" && !!K.prefs.get("persona", {}).piel), "no se guardó lo elegido");
+  /* pasar a mujer devuelve al azar un peinado que no le va */
+  await p.click("#rasgo-sexo"); await p.click('.pmi[data-id="mujer"]');
+  ok(await p.evaluate(() => !K.prefs.get("persona", {}).pelo), "quedó un peinado de hombre para una mujer");
+  await p.waitForSelector(".utoast"); await p.click(".utoast .utu");
+  ok(await p.evaluate(() => K.prefs.get("persona", {}).sexo === "hombre" && K.prefs.get("persona", {}).pelo === "rulos"), "deshacer no volvió a lo de antes");
+  /* sobrevive a cerrar y abrir */
+  await p.reload(); await p.waitForSelector("main.view");
+  ok(await p.evaluate(() => K.fig.persona("dominada", "fu").pelo === "rulos"), "al abrir de nuevo se perdió la persona elegida");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
 });
 
 prueba("maniqui", async () => {

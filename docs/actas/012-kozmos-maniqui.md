@@ -30,4 +30,4 @@ Fer quería una persona que muestre cada ejercicio en lugar de fotos. Dos boceto
 - Medir batería en el teléfono de Fer durante una sesión.
 
 ## Respuesta de Fer
-Pendiente. Tablero https://claude.ai/artifact/QyYfQqpQ8epkRxXsAx8Q7d.
+No lo aprobó (2026-10-21): el pelo no estaba bien, quería más variedad (también de sexo), todo al azar y elegible en Vos, y mejor calidad de dibujo y de movimiento, comparando con Bend. Sigue en el acta 013.
