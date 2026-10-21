@@ -1003,9 +1003,8 @@ prueba("rutina-dejar-y-deshacer", async () => {
 prueba("logo-en-movimiento", async () => {
   const {ctx, p} = await pagina();
   await ir(p, "#/hoy");
-  /* el arranque no toma toques y se va solo; en la misma apertura no vuelve */
-  ok(await p.$eval(".mov-arranque", x => getComputedStyle(x).pointerEvents) === "none", "el arranque tapa los toques");
-  await p.waitForSelector(".mov-arranque", {state: "detached", timeout: 3000}).catch(() => { throw new Error("el arranque no se fue"); });
+  /* el arranque se va solo, en menos de un segundo; en la misma apertura no vuelve */
+  await p.waitForSelector(".mov-arranque", {state: "detached", timeout: 1200}).catch(() => { throw new Error("el arranque no se fue"); });
   await p.reload(); await p.waitForSelector("main.view");
   ok(!(await p.$(".mov-arranque")), "el arranque volvió a aparecer en la misma apertura");
   /* la estrella existe solo en la pestaña elegida */
@@ -1019,6 +1018,19 @@ prueba("logo-en-movimiento", async () => {
   ok(await p.$eval('nav.barra [data-tab="vos"] .v1', x => getComputedStyle(x).fill) !== await p.$eval('nav.barra [data-tab="hoy"] circle', x => getComputedStyle(x).fill), "Vos no se prendió con sus colores");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
+  /* si el navegador no deja leer el almacenamiento de la sesión, la app arranca igual, sin errores */
+  const t = await pagina();
+  await t.p.addInitScript(() => Object.defineProperty(window, "sessionStorage", {get(){ throw new DOMException("bloqueado", "SecurityError"); }}));
+  await ir(t.p, "#/hoy"); await t.p.waitForTimeout(300);
+  ok(t.p._errores.length === 0, "sin sessionStorage hubo errores: " + t.p._errores.join(" | "));
+  await t.ctx.close();
+  /* abrir sobre una sesión en curso: nada tapa la pantalla y el primer toque llega */
+  const q = await pagina();
+  await ir(q.p, "#/hoy"); await q.p.waitForSelector(".mov-arranque", {state: "detached"}); await rumbo(q.p, ["front-lever"]);
+  await q.p.click("#s-empezar"); await q.p.waitForSelector("#s-listo");
+  const q2 = await q.ctx.newPage(); await q2.goto(URL0 + "#/hoy/sesion"); await q2.waitForSelector("#s-listo"); await q2.waitForTimeout(150);
+  ok(!(await q2.$(".mov-arranque")), "el arranque tapó una sesión en curso");
+  await q.ctx.close();
   /* con movimiento reducido no hay arranque */
   const r = await pagina(undefined, {reducedMotion: "reduce"});
   await ir(r.p, "#/hoy");
