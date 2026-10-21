@@ -19,6 +19,7 @@ K.isla = {
     if (nace && a && Date.now() - a.t < 1500 && !K.reduce()) K.isla.nacer(b, a.r);
   },
   nacer(b, r){
+    b.style.animation = "none"; /* sin su entrada de siempre, que la mediría achicada */
     const d = document.createElement("div"), ir = b.querySelector(".ir").getBoundingClientRect(), E = "cubic-bezier(.5,0,.2,1)";
     d.className = "isla-nace"; d.setAttribute("aria-hidden", "true"); d.style.setProperty("--c", b.style.getPropertyValue("--c"));
     Object.assign(d.style, {left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px"});
@@ -27,7 +28,6 @@ K.isla = {
     d.animate([{transform: "none"}, {transform: `translate(${dx}px,${dy}px) scale(${s})`}], {duration: 360, easing: E, fill: "forwards"}).onfinish = () => d.remove();
     setTimeout(() => d.remove(), 500);
     /* oculta mientras el anillo viaja; después se estira desde el aro (su entrada de siempre vuelve para la próxima) */
-    b.style.animation = "none";
     b.animate([{clipPath: "inset(0 calc(100% - 40px) 0 0 round 20px)", opacity: 0}, {clipPath: "inset(0 calc(100% - 40px) 0 0 round 20px)", opacity: 1, offset: .5}, {clipPath: "inset(0 0 0 0 round 20px)", opacity: 1}],
       {duration: 600, easing: "cubic-bezier(.2,.7,.2,1)"}).onfinish = () => { b.style.animation = ""; };
   },
