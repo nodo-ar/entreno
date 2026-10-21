@@ -219,19 +219,20 @@ K.fig = (() => {
     const e = x => x < .5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2;
     return t < a ? e(t / a) : t < a + b ? 1 : t < a + b + c ? 1 - e((t - a - b) / c) : 0;
   };
-  /* un solo reloj para todas las figuras que se mueven, a 30 cuadros. Corre solo mientras la sesión corre:
-     en pausa (o si el sistema pasa a pedir menos movimiento) la figura queda donde está. Se apaga cuando no queda ninguna */
+  /* un solo reloj para todas las figuras que se mueven, a 30 cuadros: se despierta solo cuando dibuja.
+     Corre solo mientras la sesión corre: en pausa (o si el sistema pasa a pedir menos movimiento) la figura queda donde está.
+     Se apaga cuando no queda ninguna */
   let corriendo = false, t = 0, antes = 0;
-  const frena = () => K.reduce() || !!K.sesion?.enPausa?.();
-  function cuadro(ts){
-    const vivas = document.querySelectorAll("svg.fig[data-fig]");
+  const frena = () => K.reduce() || !!K.sesion?.enPausa?.() || document.hidden;
+  function cuadro(){
+    const vivas = document.querySelectorAll("svg.fig[data-fig]"), ahora = performance.now();
     if (!vivas.length){ corriendo = false; return; }
-    if (!frena()){ t += Math.min(ts - antes, 100) / 1000;
+    if (!frena()){ t += Math.min(ahora - antes, 100) / 1000;
       vivas.forEach(el => { const f = K.POSES[el.dataset.fig]; el.lastChild.innerHTML = frente(f, en(f, fase(f, t))); }); }
-    antes = ts;
-    setTimeout(() => requestAnimationFrame(cuadro), 28);
+    antes = ahora;
+    setTimeout(cuadro, 33);
   }
-  const animar = () => { if (corriendo || K.reduce() || !document.querySelector("svg.fig[data-fig]")) return; corriendo = true; antes = performance.now(); requestAnimationFrame(cuadro); };
+  const animar = () => { if (corriendo || K.reduce() || !document.querySelector("svg.fig[data-fig]")) return; corriendo = true; antes = performance.now(); setTimeout(cuadro, 33); };
 
   /* ===== la revisión de cada pose: lo que la prueba mira antes de dejarla entrar ===== */
   const VOL = {hip: 8, sh: 7, hd: 10, eN: 4, eF: 4, hN: 3, hF: 3, kN: 5, kF: 5, fN: 3, fF: 3};

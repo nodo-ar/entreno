@@ -47,7 +47,7 @@
   /* en horizontal la figura va al lado del número, no arriba: así entra todo sin desplazar */
   .ses-a:has(>.ses-fig){display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:16px; align-content:start}
   .ses-a:has(>.ses-fig)>*{grid-column:1/-1}
-  .ses .ses-a>.ses-fig{grid-column:1; width:auto; height:min(200px,51vh); margin:0}
+  .ses .ses-a>.ses-fig{grid-column:1; width:auto; height:min(184px,47vh); margin:0 0 6px}
   .ses .ses-a>.ses-fig .fig{height:100%; width:auto}
   .ses .ses-a>.ses-fig + .ses-reloj,.ses .ses-a>.ses-fig + .anillo-desc{grid-column:2; margin:auto 0}
 }
