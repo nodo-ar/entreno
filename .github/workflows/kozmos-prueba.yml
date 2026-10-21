@@ -127,7 +127,9 @@ jobs:
           adb shell dumpsys package $A | grep -E "versionName|versionCode|permission" | tee permisos.txt
           adb shell am start -W -n $A/ar.kozmos.MainActivity
           cap 1-hoy-claro 10
-          ui > ui-hoy.xml; grep -o 'text="Hoy"' ui-hoy.xml | head -1 | tee -a resultado.txt
+          # uiautomator a veces lee la pantalla antes de que termine de dibujarse: se reintenta
+          for i in 1 2 3 4 5; do ui > ui-hoy.xml || true; grep -q 'text="Hoy"' ui-hoy.xml && break; sleep 3; done
+          grep -o 'text="Hoy"' ui-hoy.xml | head -1 | tee -a resultado.txt
           adb shell settings put system accelerometer_rotation 0; adb shell settings put system user_rotation 1
           cap 2-horizontal
           adb shell settings put system user_rotation 0
