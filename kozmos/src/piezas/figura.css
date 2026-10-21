@@ -1,20 +1,32 @@
-/* ===== Figura: el maniquí (ver figura.js) ===== */
+/* ===== Figura: la persona que muestra cada ejercicio (ver figura.js) ===== */
 .fig{display:block; width:100%; height:auto; overflow:hidden;
-  --fig-lejos:color-mix(in srgb,var(--ink) 38%,var(--bg)); --fig-lejos-c:color-mix(in srgb,var(--c) 50%,var(--bg))}
-/* el cuerpo humano: un tono de piel y la ropa; lo lejano, un poco más oscuro */
-.fig{--piel:var(--tono,#d8a47f); --piel-s:color-mix(in srgb,var(--piel) 76%,#3b1d0e); --piel-ss:color-mix(in srgb,var(--piel) 60%,#3b1d0e); --piel-l:color-mix(in srgb,var(--piel) 62%,#fff);
-  --pelo:#2b211b; --short:#2c2f35; --short-f:#1d1f23; --zapa:#3d4048; --zapa-f:#2a2c31; --suela:#f4f3ef;
-  --ropa-f:color-mix(in srgb,var(--c) 72%,#000); --ropa-s:color-mix(in srgb,var(--c) 70%,#000)}
+  /* el tono y el pelo llegan sorteados en el estilo de cada figura; la sombra sale del tono */
+  --piel:var(--tono,#d8a47f); --piel-s:color-mix(in srgb,var(--piel) 76%,#3b1d0e); --piel-ss:color-mix(in srgb,var(--piel) 60%,#3b1d0e);
+  --short:#2c2f35; --short-f:#1d1f23; --short-l:#454952; --zapa:#3d4048; --zapa-f:#2a2c31; --suela:#f4f3ef; --media:#f4f3ef;
+  --ropa-s:color-mix(in srgb,var(--c) 70%,#000); --ribete:color-mix(in srgb,var(--c) 55%,#fff)}
 .fig-piso{stroke:var(--ink); stroke-width:1.5; opacity:.8}
 .fig-disco{fill:var(--cs)}
-.fig-est{fill:var(--ink-3)}
 .fig-el .poste{stroke:var(--ink-3); stroke-width:2.5; stroke-linecap:round}
 .fig-el .barra{stroke:var(--ink); stroke-width:5; stroke-linecap:round}
-.fig-el.par{stroke:var(--ink); stroke-width:4; fill:none; stroke-linecap:round}
-.fig-el.banco{fill:var(--s2)}
+.fig-el .par,.fig-el .silla{stroke:var(--ink); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.fig-el .banco{fill:var(--off)}
+.fig-el .pared{fill:var(--off)}
+.fig-el .palo{stroke:var(--ink-2); stroke-width:6; stroke-linecap:round}
+.fig-el .hierro{fill:var(--ink-2)}
+.fig-el .asa{stroke:var(--ink-2); stroke-width:3; fill:none}
+.fig-el .manc{stroke:var(--ink-2); stroke-width:6; stroke-linecap:round}
+.fig-el .soga{stroke:var(--ink-2); stroke-width:1.6; fill:none}
+.fig-el .cadena{stroke:var(--ink-3); stroke-width:1.5}
+.fig-el .toalla{fill:var(--ink-3)}
+.fig-el .rueda{fill:none; stroke:var(--ink-2); stroke-width:3}
+.fig-el .cuadro{fill:none; stroke:var(--ink); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round}
 /* en la serie: el centro de la pantalla, entre la indicación y el número */
 .ses-fig{width:min(260px,64vw); margin:auto auto 0}
 .ses-fig + .ses-reloj{margin-top:0; padding-top:4px}
+/* con un anillo (tramos, pruebas de estrella) la figura va arriba y el anillo se achica para que entren los dos */
+.ses-fig.con-anillo{width:min(220px,56vw); margin:4px auto 0}
+.ses-fig.con-anillo + .anillo-desc{width:min(150px,40vw)}
+.ses-fig.con-anillo + .anillo-desc .anillo-tx .reloj{font-size:var(--t-4xl)}
 /* chica: en un círculo, como todo lo que es de Kozmos */
 .fig-chica{display:block; border-radius:50%; background:var(--cs, var(--s2)); overflow:hidden; aspect-ratio:1}
 .fig-chica .fig{width:100%; height:100%}
@@ -24,9 +36,9 @@
 .ses-luego .fig-chica{width:44px; flex:none}
 @media (orientation:landscape) and (max-height:520px){
   /* en horizontal la figura va al lado del número, no arriba: así entra todo sin desplazar */
-  .ses.serie .ses-a{display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:16px; align-content:start}
-  .ses.serie .ses-a>*{grid-column:1/-1}
-  .ses.serie .ses-a>.ses-fig{grid-column:1; width:auto; height:min(170px,42vh); margin:0}
-  .ses.serie .ses-a>.ses-fig .fig{height:100%; width:auto}
-  .ses.serie .ses-a>.ses-fig + .ses-reloj{grid-column:2; margin:auto 0}
+  .ses-a:has(>.ses-fig){display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:16px; align-content:start}
+  .ses-a:has(>.ses-fig)>*{grid-column:1/-1}
+  .ses .ses-a>.ses-fig{grid-column:1; width:auto; height:min(170px,42vh); margin:0}
+  .ses .ses-a>.ses-fig .fig{height:100%; width:auto}
+  .ses .ses-a>.ses-fig + .ses-reloj,.ses .ses-a>.ses-fig + .anillo-desc{grid-column:2; margin:auto 0}
 }
