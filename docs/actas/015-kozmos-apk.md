@@ -27,3 +27,6 @@ Fer decidió (2026-10-21) que Kozmos sale por ahora **solo como APK de Android p
 - Cargar el secreto `KOZMOS_FIRMA` (pasos en `kozmos/apk/README.md`).
 - Probar la APK de prueba en su teléfono.
 - Decidir la copia en la nube (hoy apagada).
+
+## Respuesta de Fer
+Probó «Kozmos prueba» en su teléfono (2026-10-21): «impecable, funciona diez puntos». La copia en la nube de Google queda apagada. Cargó el secreto `KOZMOS_FIRMA`. OK para fusionar y sacar la primera versión firmada.
