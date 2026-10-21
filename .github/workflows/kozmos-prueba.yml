@@ -33,8 +33,14 @@ jobs:
       # la clave de depuración se guarda entre corridas: así cada APK de prueba se instala encima de la anterior
       - uses: actions/cache@v4
         with:
-          path: ~/.android/debug.keystore
+          path: ~/kozmos-depuracion.keystore
           key: kozmos-depuracion-v1
+      - name: Clave de depuración
+        run: |
+          K=~/kozmos-depuracion.keystore
+          [ -f "$K" ] || keytool -genkeypair -keystore "$K" -storetype PKCS12 -storepass android -keypass android \
+            -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Kozmos prueba, O=Nodo, C=AR"
+          echo "KOZMOS_DEPURACION=$K" >> "$GITHUB_ENV"
       - name: Pruebas sin pantalla
         run: node kozmos/pruebas/puras.mjs
       - name: Número de versión
@@ -61,9 +67,9 @@ jobs:
           {
             echo "### Kozmos prueba · $KOZMOS_VERSION_NAME (versionCode $KOZMOS_VERSION_CODE)"
             echo '```'
-            "$BT/aapt2" dump badging "$APK" | grep -E "^(package|application-label|sdkVersion|targetSdkVersion|uses-permission)"
+            "$BT/aapt2" dump badging "$APK" | grep -E "^(package|application-label:|sdkVersion|targetSdkVersion|uses-permission)"
             echo "--- firma"
-            "$BT/apksigner" verify --print-certs "$APK" | grep -E "Signer #1 certificate (DN|SHA-256)"
+            "$BT/apksigner" verify -v --print-certs "$APK" 2>&1 | grep -vi "^warning" | head -20
             echo "--- tamaño: $(du -k "$APK" | cut -f1) kB"
             echo '```'
           } | tee -a "$GITHUB_STEP_SUMMARY"
@@ -88,13 +94,14 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: kozmos-prueba-*
+          pattern: kozmos-prueba-[0-9]*
           path: apk
           merge-multiple: true
       - name: Emulador
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"; export PATH="$ANDROID_HOME/platform-tools:$PATH"
           IMG="system-images;android-35;google_apis;x86_64"
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install emulator platform-tools "$IMG" > /dev/null
           echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n kozmos -k "$IMG" --force
