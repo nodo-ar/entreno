@@ -38,6 +38,9 @@ K.I = {
   kettlebell:'<path d="M9 8a3 3 0 0 1 6 0"/><path d="M8.5 8h7l2 4a6 6 0 1 1-11 0z"/>',
   ruta:'<ellipse cx="12" cy="12" rx="9.5" ry="5" transform="rotate(-20 12 12)"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="20.4" cy="9" r="2.4" fill="currentColor" stroke="none"/>',
   dias:'<path d="M3.5 16a9 9 0 0 1 17 0" stroke-opacity=".35"/><circle cx="3.5" cy="16.0" r="1.9" fill="currentColor" stroke="none"/><circle cx="4.6" cy="12.2" r="1" fill="currentColor" stroke="none"/><circle cx="7.7" cy="9.4" r="1.9" fill="currentColor" stroke="none"/><circle cx="12.0" cy="8.3" r="1" fill="currentColor" stroke="none"/><circle cx="16.2" cy="9.4" r="1.9" fill="currentColor" stroke="none"/><circle cx="19.4" cy="12.2" r="1" fill="currentColor" stroke="none"/><circle cx="20.5" cy="16.0" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="16" r="1.6" fill="currentColor" stroke="none"/>',
+  persona:'<circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/>',
+  pelo:'<circle cx="12" cy="13.5" r="5.5"/><path d="M5.5 13C5.5 7.5 8.4 4.5 12 4.5s6.5 3 6.5 8.5M7 9.6c3.4.2 7-1 9.4-3.6"/>',
+  azar:'<path d="M4 7h3c5 0 5 10 10 10h3M4 17h3c1.6 0 2.7-.9 3.6-2.2M13.4 9.2C14.3 7.9 15.4 7 17 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/>',
   hazana:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><path d="M18 2.5l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z" fill="currentColor" stroke="none"/>'
 };
 K.ic = (k, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${K.I[k] || ""}</svg>`;

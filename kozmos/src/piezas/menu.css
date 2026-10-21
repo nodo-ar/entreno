@@ -7,3 +7,6 @@
 .pmi[aria-checked="true"]{font-weight:700}
 .pmi .ck{color:var(--ink); visibility:hidden} .pmi[aria-checked="true"] .ck{visibility:visible}
 .psep{height:1px; background:var(--line); margin:4px 8px}
+/* una muestra de color en lugar del ícono (la piel, el pelo) */
+.pmi .sw{width:16px; height:16px; justify-self:center}
+.ajr .tile .sw{width:16px; height:16px}

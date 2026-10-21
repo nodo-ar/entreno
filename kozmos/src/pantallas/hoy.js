@@ -157,6 +157,8 @@ K.rumboTocar = async id => {
 const ANILLO = 2 * Math.PI * 88;
 const arco = (q, tot) => `${(Math.max(0, q) / tot * ANILLO).toFixed(1)} ${ANILLO.toFixed(1)}`;
 const quedaTx = (q, tot) => !tot ? "Sin descanso" : q <= 0 ? "Ya podés seguir" : `de ${K.reloj(tot)}`;
+/* la persona que muestra el ejercicio; «chica» cuando comparte el centro con un anillo */
+const figura = (id, fam, chica) => id && K.POSES[id] ? `<div class="ses-fig${chica ? " con-anillo" : ""}">${K.fig.grande(id, fam)}</div>` : "";
 /* el número grande de una serie: la cuenta para prepararse, el reloj que corre o lo que toca */
 const grandeSerie = b => {
   const pr = K.sesion.prep();
@@ -189,7 +191,7 @@ K.P.sesion = () => {
       : `<span class="lb">De punta a punta, sin ayuda</span>`;
     const sig = K.sesion.ultima() ? "Es la última" : b.series > S.s + 1 ? (b.descanso ? `Después: descanso de ${K.reloj(b.descanso)}` : `Después: ${K.sesion.proxima()}`) : `Después: ${K.sesion.nombreBloque(S.plan.bloques[S.b + 1])}`;
     return acc + `<div class="ses serie"><div class="ses-a">${pasos}<div class="enc-tit ses-tit">${nom}<h1>${K.esc(e.nombre)}</h1></div>
-        <p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}<div class="ses-reloj">${grande}</div></div>
+        <p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}${figura(e.id, b.familia)}<div class="ses-reloj">${grande}</div></div>
       <div class="ses-b"><p class="ln ses-sig"><span class="mute">${K.esc(sig)}</span><span class="reloj num" data-r="total">${K.reloj(K.sesion.total())}</span></p>
         <button type="button" class="btn" id="s-listo">${K.ic("check")}Listo</button></div></div>`;
   }
@@ -214,7 +216,7 @@ K.P.sesion = () => {
       <div class="anillo-desc${q <= 0 ? " listo" : ""}" data-r="anillo">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" class="pista"/><circle cx="100" cy="100" r="88" class="arco" data-r="arco" stroke-dasharray="${arco(q, tot)}" transform="rotate(-90 100 100)"/></svg>
         <div class="anillo-tx"><span class="reloj num" data-r="queda" role="timer" aria-live="off">${K.reloj(Math.max(0, Math.ceil(q)))}</span><span class="lb" data-r="queda-lb">${quedaTx(q, S.total)}</span></div></div>
-      <p class="ses-luego mute">Sigue: ${K.esc(K.sesion.proxima())}</p></div>
+      ${(() => { const px = K.sesion.proximoEj(); return px && K.POSES[px.id] ? `<p class="ses-luego mute con-fig">${K.fig.chica(px.id, px.fam)}<span>Sigue: ${K.esc(K.sesion.proxima())}</span></p>` : `<p class="ses-luego mute">Sigue: ${K.esc(K.sesion.proxima())}</p>`; })()}</div>
     <div class="ses-b">${tarjeta}<div class="tres-btn"><button type="button" class="btn sec" data-desc="-15" aria-label="15 segundos menos de descanso">−15 s</button><button type="button" class="btn sec" data-desc="15" aria-label="15 segundos más de descanso">+15 s</button><button type="button" class="btn" id="s-seguir">Seguir</button></div></div></div>`;
 };
 
@@ -230,7 +232,7 @@ K.P.tramo = (S, b) => {
       <div class="bar tramo-bar" style="--c:var(--${b.familia})" aria-hidden="true"><i data-r="tbar" style="width:${(avanceBloque(S, b) * 100).toFixed(1)}%"></i></div>
       <div class="enc-tit ses-tit"><span class="lb">${K.esc(x.ejercicio ? CLASE[x.clase] : b.nombre || "")} · ${S.s + 1} de ${b.tramos.length}</span><h1>${K.esc(tramoTx(x))}</h1></div>
       ${x.nota || (x.ejercicio && K.ej(x.ejercicio).indicacion) ? `<p class="mute ses-ind">${K.esc(x.nota || K.ej(x.ejercicio).indicacion)}</p>` : ""}${pausa}
-      <div class="anillo-desc" data-r="anillo">
+      ${figura(x.ejercicio, b.familia, true)}<div class="anillo-desc" data-r="anillo">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" class="pista"/><circle cx="100" cy="100" r="88" class="arco" data-r="arco" stroke-dasharray="${arco(q, x.seg)}" transform="rotate(-90 100 100)"/></svg>
         <div class="anillo-tx"><span class="reloj num" data-r="queda" role="timer" aria-live="off">${K.reloj(Math.max(0, Math.ceil(q)))}</span><span class="lb">${K.esc(tramoLb(x))}</span></div></div>
       <p class="ses-luego mute">${sig ? `Sigue: ${K.esc(tramoTx(sig))} · ${K.reloj(sig.seg)}` : S.b < S.plan.bloques.length - 1 ? `Después: ${K.esc(K.sesion.nombreBloque(S.plan.bloques[S.b + 1]))}` : "Es el último"}</p></div>
@@ -248,7 +250,7 @@ const circGrande = (S, b) => {
 };
 K.P.circuito = (S, b) => {
   const [n, l] = circGrande(S, b), pausa = S.pausa !== null ? `<p class="ses-pausa lb">En pausa</p>` : "", prep = K.sesion.prep() > 0;
-  const items = `<section class="cd circ-items">${b.items.map(x => `<div class="ln"><span>${K.esc(x.ejercicio ? K.ej(x.ejercicio).nombre : x.nombre || "")}</span><span class="num">${K.esc(circItem(x))}</span></div>`).join("")}</section>`;
+  const items = `<section class="cd circ-items">${b.items.map(x => `<div class="ln">${x.ejercicio && K.POSES[x.ejercicio] ? K.fig.chica(x.ejercicio, b.familia) : ""}<span>${K.esc(x.ejercicio ? K.ej(x.ejercicio).nombre : x.nombre || "")}</span><span class="num">${K.esc(circItem(x))}</span></div>`).join("")}</section>`;
   const listo = b.formato === "amrap" ? `<div class="dos-btn"><button type="button" class="btn sec" id="s-vuelta-menos" aria-label="Una vuelta menos">−1</button><button type="button" class="btn" id="s-vuelta">${K.ic("check")}Vuelta</button></div>`
     : `<button type="button" class="btn" id="s-vuelta">${K.ic("check")}${b.rondas > 1 ? "Terminé la vuelta" : "Terminé"}</button>`;
   return `<div class="ses circuito${prep ? " prep" : ""}" style="--c:var(--${b.familia})" data-r="ses"><div class="ses-a">
@@ -286,12 +288,12 @@ K.P.prueba = (S, b, e, pausa) => {
   if (!mide){
     const grande = b.tipo === "repeticiones" ? `<span class="reloj big num">${b.umbral}</span><span class="lb">repeticiones</span>`
       : b.tipo === "porcentaje" ? `<span class="reloj big num">+${b.umbral} %</span><span class="lb">de tu peso</span>` : `<span class="lb">De punta a punta, sin ayuda</span>`;
-    return `<div class="ses serie"><div class="ses-a">${tit}<p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}<div class="ses-reloj">${grande}</div></div>
+    return `<div class="ses serie"><div class="ses-a">${tit}<p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}${figura(e.id, b.familia)}<div class="ses-reloj">${grande}</div></div>
       <div class="ses-b"><button type="button" class="btn" id="s-listo">${K.ic("check")}Listo</button></div></div>`;
   }
   const [n, l] = pruebaGrande(b), p = Math.min(1, K.sesion.prep() > 0 ? 0 : K.sesion.enFase() / umbralSeg(b));
   return `<div class="ses serie prueba${K.sesion.prep() > 0 ? " prep" : ""}" style="--c:var(--${b.familia})" data-r="ses"><div class="ses-a">${tit}<p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}
-      <div class="anillo-desc prueba-anillo${p >= 1 ? " listo" : ""}${p <= 0 ? " vacio" : ""}" data-r="anillo">
+      ${figura(e.id, b.familia, true)}<div class="anillo-desc prueba-anillo${p >= 1 ? " listo" : ""}${p <= 0 ? " vacio" : ""}" data-r="anillo">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" class="pista"/><circle cx="100" cy="100" r="88" class="arco" data-r="arco" stroke-dasharray="${(p * ANILLO).toFixed(1)} ${ANILLO.toFixed(1)}" transform="rotate(-90 100 100)"/></svg>
         <div class="anillo-tx"><span class="reloj num" data-r="fase" role="timer" aria-live="off">${n}</span><span class="lb" data-r="fase-lb">${l}</span></div></div>
       <p class="ses-luego mute">Te aviso con una vibración al llegar. Al soltar, tocá en cualquier lado.</p></div>

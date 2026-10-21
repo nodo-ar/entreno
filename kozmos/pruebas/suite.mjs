@@ -516,7 +516,10 @@ prueba("sesion-sobrevive", async () => {
   await tick(p, 12000); await p.click("#s-listo"); await p.fill("#s-valor", "14");
   await tick(p, 20000);
   await p.reload(); await p.waitForSelector(".ses.descanso");
-  ok(await reloj(p, "queda") === "1:10", "el descanso no siguió con el tiempo real: " + await reloj(p, "queda"));
+  /* el reloj falso de la prueba sigue andando con el tiempo real que tarda la recarga (más si la serie tuvo figura en movimiento):
+     se admiten hasta 3 s de corrimiento; lo que importa es que no vuelva a arrancar ni se quede en lo que marcaba */
+  const queda = await reloj(p, "queda"), sq = queda.split(":").reduce((m, x) => m * 60 + +x, 0);
+  ok(sq <= 70 && sq >= 67, "el descanso no siguió con el tiempo real: " + queda);
   ok(await p.inputValue("#s-valor") === "14", "se perdió lo anotado");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
@@ -1036,6 +1039,87 @@ prueba("logo-en-movimiento", async () => {
   await ir(r.p, "#/hoy");
   ok(!(await r.p.$(".mov-arranque")), "con movimiento reducido igual hubo arranque");
   await r.ctx.close();
+});
+
+prueba("persona-de-los-dibujos", async () => {
+  /* en Vos se elige la persona de los dibujos: todo al azar de entrada, lo elegido manda en todos los ejercicios y se puede deshacer */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/vos");
+  ok((await p.$$eval("[data-rasgo] em", x => x.map(e => e.textContent))).every(t => t === "Al azar"), "de entrada no está todo al azar");
+  await p.click("#rasgo-sexo"); await p.click('.pmi[data-id="hombre"]');
+  ok((await p.textContent("#rasgo-sexo em")) === "Hombre", "la fila no muestra lo elegido");
+  ok(await p.evaluate(() => document.activeElement.id) === "rasgo-sexo", "después de elegir, el foco se pierde");
+  ok(await p.evaluate(() => Object.keys(K.POSES).every(id => K.fig.persona(id, "fu").sexo === "hombre")), "lo elegido no manda en los dibujos");
+  /* con hombre elegido, el pelo ofrece solo sus peinados */
+  await p.click("#rasgo-pelo");
+  const pelos = await p.$$eval(".pmi", x => x.map(e => e.dataset.id));
+  ok(pelos.includes("rulos") && !pelos.includes("colita"), "el pelo ofrece peinados que no van: " + pelos.join(","));
+  await p.click('.pmi[data-id="rulos"]');
+  await p.click("#rasgo-piel"); await p.click(".pmi:nth-of-type(3)");
+  ok(await p.evaluate(() => K.prefs.get("persona", {}).pelo === "rulos" && !!K.prefs.get("persona", {}).piel), "no se guardó lo elegido");
+  /* pasar a mujer devuelve al azar un peinado que no le va */
+  await p.click("#rasgo-sexo"); await p.click('.pmi[data-id="mujer"]');
+  ok(await p.evaluate(() => !K.prefs.get("persona", {}).pelo), "quedó un peinado de hombre para una mujer");
+  await p.waitForSelector(".utoast"); await p.click(".utoast .utu");
+  ok(await p.evaluate(() => K.prefs.get("persona", {}).sexo === "hombre" && K.prefs.get("persona", {}).pelo === "rulos"), "deshacer no volvió a lo de antes");
+  /* sobrevive a cerrar y abrir */
+  await p.reload(); await p.waitForSelector("main.view");
+  ok(await p.evaluate(() => K.fig.persona("dominada", "fu").pelo === "rulos"), "al abrir de nuevo se perdió la persona elegida");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("maniqui", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await p.evaluate(() => K.diario.perfilPoner("equipo", ["barra"]));
+  /* en la rutina, cada estrella de «Entrena para» muestra a su persona en un círculo */
+  await ir(p, "#/hoy/rutinas/base_cali");
+  const filas = await p.$$eval(".ajr[data-ir^='#/cielo/']", fs => fs.map(f => !!f.querySelector(".fig-chica svg.fig")));
+  ok(filas.length && filas.every(Boolean), "una estrella de la rutina sin dibujo: " + filas);
+  await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
+  await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo");
+  await p.click("#s-mas"); await p.click('.pmi[data-id="saltear"]'); await p.waitForSelector(".ses.serie");
+  /* en la serie hay una sola figura y se mueve: el dibujo cambia con el tiempo */
+  ok(await p.$$eval("svg.fig[data-fig]", x => x.length) === 1, "en la serie no hay una figura que se mueva");
+  const antes = await p.$eval("svg.fig[data-fig]", x => x.innerHTML);
+  await tick(p, 1200);
+  ok(await p.$eval("svg.fig[data-fig]", x => x.innerHTML) !== antes, "la figura de la serie quedó quieta");
+  /* en pausa la figura se queda donde está; al seguir, vuelve a moverse */
+  await p.click("#s-mas"); await p.click('.pmi[data-id="pausa"]'); await p.waitForSelector(".ses-pausa");
+  const quieta = await p.$eval("svg.fig[data-fig]", x => x.lastChild.innerHTML);
+  await tick(p, 1500);
+  ok(await p.$eval("svg.fig[data-fig]", x => x.lastChild.innerHTML) === quieta, "en pausa la figura sigue moviéndose");
+  await p.click("#s-mas"); await p.click('.pmi[data-id="pausa"]'); await p.waitForFunction(() => !document.querySelector(".ses-pausa"));
+  await tick(p, 1200);
+  ok(await p.$eval("svg.fig[data-fig]", x => x.lastChild.innerHTML) !== quieta, "después de la pausa la figura no vuelve a moverse");
+  /* la figura no tapa el número ni el botón */
+  const caja = s => p.$eval(s, x => { const r = x.getBoundingClientRect(); return {t: r.top, b: r.bottom}; });
+  const fig = await caja(".ses-fig"), num = await caja(".ses-reloj"), btn = await caja("#s-listo");
+  ok(fig.b <= num.t + 1 && num.b <= btn.t, "la figura se encima con el número o el botón");
+  /* en el descanso aparece el que sigue, en chico */
+  await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+  ok(await p.$(".ses-luego .fig-chica svg.fig"), "el descanso no muestra el ejercicio que sigue");
+  /* al irse de la sesión no queda ninguna figura moviéndose (el reloj se apaga solo) */
+  await p.click("#s-cortar"); await p.waitForSelector(".res"); await tick(p, 200);
+  ok(!(await p.$("svg.fig[data-fig]")), "quedó una figura animada fuera de la sesión");
+  /* en un circuito, cada ejercicio de la lista lleva su persona chiquita */
+  await ir(p, "#/hoy/hazanas/hercules"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
+  const conFig = await p.$$eval(".circ-items .ln", ls => ls.filter(l => l.querySelector(".fig-chica svg.fig")).length);
+  ok(conFig > 0, "el circuito no muestra a nadie en la lista");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+  /* con movimiento reducido la figura está, pero quieta */
+  const r = await pagina(undefined, {reducedMotion: "reduce"});
+  await ir(r.p, "#/hoy"); await rumbo(r.p, ["front-lever"]); await r.p.click("#s-empezar"); await r.p.waitForSelector("#s-listo");
+  ok(await r.p.$(".ses-fig svg.fig") && !(await r.p.$("svg.fig[data-fig]")), "con movimiento reducido la figura no queda quieta");
+  await r.ctx.close();
+  /* en horizontal entran la figura, el número y el botón, sin desplazar */
+  const h = await pagina({width: 844, height: 390});
+  await ir(h.p, "#/hoy"); await rumbo(h.p, ["front-lever"]); await h.p.click("#s-empezar"); await h.p.waitForSelector("#s-listo"); await h.p.waitForTimeout(1200); /* que termine de abrirse el disco */
+  const fuera = await h.p.evaluate(() => [".ses-fig", ".ses-reloj", "#s-listo"].filter(s => { const r = document.querySelector(s).getBoundingClientRect(); return r.bottom > innerHeight + 1 || r.right > innerWidth + 1 || !r.height; }));
+  ok(!fuera.length, "en horizontal no entra: " + fuera);
+  await h.ctx.close();
 });
 
 const elegidas = process.argv.slice(2);

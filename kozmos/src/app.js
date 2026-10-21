@@ -49,6 +49,7 @@ K.mostrar = (anim = "") => {
   /* en la sesión y su resumen no hay barra: la pantalla es toda tuya */
   document.body.classList.toggle("en-sesion", tab === "hoy" && (sub === "sesion" || sub === "resumen"));
   K.sesion.alLatir();
+  K.fig.animar();
   K.nav.marcar(tab);
   K.encabezado.observar(v);
   /* recién terminada la sesión, la estrella nueva vuela a su lugar */
@@ -77,6 +78,8 @@ document.addEventListener("click", e => {
   if (a){ K._quieto = !!a.dataset.quieto && K.horizontal(); K.ir(a.dataset.ir, K._quieto); return; }
   /* en una prueba de estrella, un toque en cualquier lado de la pantalla es «Listo»: las manos vienen de la barra */
   if (e.target.closest(".ses.prueba.serie") && !e.target.closest("button, a, input")){ K.ses.listo(); return; }
+  const ra = e.target.closest("[data-rasgo]");
+  if (ra){ K.menuRasgo(ra); return; }
   const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-nivel, #hz-empezar, [data-probar], [data-equipo], [data-ppaso], [data-dia]");
   if (m){
     if (m.dataset.probar) K.ses.probar(m.dataset.probar, m);
@@ -155,6 +158,8 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) K.di
 /* arranque: primero se lee el diario, después se dibuja */
 K.encabezado.armar();
 K.nav.armar();
+/* la persona de los dibujos: lo que elegiste en Vos; lo demás, al azar */
+K.fig.fijar(K.prefs.get("persona", {}));
 /* una sesión que quedó en curso (la app se cerró o el teléfono la mató) sigue donde estaba */
 K.sesion.alCambiar = () => K.refrescar(); /* otra pestaña tocó la sesión */
 K.diario.abrir().then(async () => {

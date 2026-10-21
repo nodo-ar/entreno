@@ -504,6 +504,34 @@ prueba("hazanas-figura", () => {
   }
 });
 
+/* ===== El maniquí: cada ejercicio tiene su persona, y cada pose es posible ===== */
+prueba("poses-de-cada-ejercicio", () => {
+  const fx = {K: {reduce: () => true}, document: {}}; vm.createContext(fx);
+  vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "piezas", "figura.js"), "utf8"), fx);
+  for (const f of fs.readdirSync(path.join(RAIZ, "src", "poses")).sort()) vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "poses", f), "utf8"), fx);
+  const {POSES, fig} = fx.K, ids = new Set(EJ.ejercicios.map(e => e.id));
+  const faltan = [...ids].filter(id => !POSES[id]), sobran = Object.keys(POSES).filter(id => !ids.has(id));
+  ok(!faltan.length, "sin pose: " + faltan.join(", "));
+  ok(!sobran.length, "pose de un ejercicio que no está: " + sobran.join(", "));
+  /* la revisión del motor: articulaciones dentro de lo posible y nada atravesando el piso, en todo el recorrido */
+  const mal = Object.keys(POSES).map(id => [id, fig.revisar(id)]).filter(([, m]) => m.length);
+  ok(!mal.length, mal.map(([id, m]) => `${id}: ${m.join(" · ")}`).join(" | "));
+  /* se dibuja: grande y chica son SVG con el disco de la familia y la persona sorteada */
+  for (const id of ids){ const g = fig.grande(id, "fu"), c = fig.chica(id, "fu"), pe = fig.persona(id, "fu");
+    ok(g.startsWith("<svg") && g.includes("var(--fu-disco)") && g.includes(pe.piel) && !/NaN|undefined/.test(g + c), id + ": no se dibuja bien"); }
+  /* el sorteo da para todos: entre los 155 aparecen al menos seis tonos de piel, mujeres y hombres, y cinco peinados */
+  const gente = [...ids].map(id => fig.persona(id, "fu"));
+  ok(new Set(gente.map(p => p.piel)).size >= 6, "pocos tonos de piel");
+  ok(new Set(gente.map(p => p.sexo)).size === 2, "salen todas mujeres o todos hombres");
+  ok(new Set(gente.map(p => p.pelo)).size >= 5, "pocos peinados");
+  /* lo que se elige en Vos manda en todos los ejercicios; lo que no, sigue al azar */
+  fig.fijar({sexo: "mujer", piel: fig.TONOS[2], pelo: "afro"});
+  ok(gente.every((_, i) => { const p = fig.persona([...ids][i], "fu"); return p.sexo === "mujer" && p.piel === fig.TONOS[2] && p.pelo === "afro"; }), "lo elegido en Vos no manda");
+  fig.fijar({sexo: "hombre", pelo: "afro"});
+  ok(fig.persona("dominada", "fu").pelo !== "afro", "un peinado que no le va a un hombre se aplicó igual");
+  fig.fijar({});
+});
+
 let fallas = 0;
 for (const [n, fn] of PRUEBAS){
   try { fn(); console.log("ok    ", n); } catch (e) { fallas++; console.log("FALLA ", n, "·", e.message); }

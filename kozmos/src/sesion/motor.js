@@ -11,6 +11,7 @@ K.sesion = (() => {
 
   s.activa = () => !!S;
   s.estado = () => S;
+  s.enPausa = () => !!S && S.pausa !== null;
   s.bloque = () => S.plan.bloques[S.b];
   /* la serie que va: los bloques de rutina llevan una lista de pasos (con superseries, de ejercicios distintos) */
   const pasoDe = (b, k) => b.pasos ? b.pasos[k] : {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, descanso: b.descanso};
@@ -29,6 +30,13 @@ K.sesion = (() => {
     if (!b.clase && S.s < b.series - 1){ const p = pasoDe(b, S.s + 1); return `${K.ej(p.ejercicio).nombre}, ${p.tipo === "logrado" ? "intento" : "serie"} ${S.s + 2} de ${b.series}`; }
     const nx = S.plan.bloques[S.b + 1];
     return nx ? s.nombreBloque(nx) : "";
+  };
+  /* el ejercicio que viene, para dibujarlo mientras descansás */
+  s.proximoEj = () => {
+    const b = s.bloque();
+    if (!b.clase && S.s < b.series - 1) return {id: pasoDe(b, S.s + 1).ejercicio, fam: b.familia};
+    const nx = S.plan.bloques[S.b + 1];
+    return nx && !nx.clase ? {id: pasoDe(nx, 0).ejercicio, fam: nx.familia} : null;
   };
   s.nombreBloque = b => b.clase ? b.nombre || "" : K.ej(pasoDe(b, 0).ejercicio).nombre;
 

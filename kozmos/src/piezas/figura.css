@@ -1,0 +1,49 @@
+/* ===== Figura: la persona que muestra cada ejercicio (ver figura.js) ===== */
+.fig{display:block; width:100%; height:auto; overflow:hidden;
+  /* todo lo que se usa (barra, banco, pesas) va en un solo tono neutro, que no le gane a la persona */
+  --ap:var(--ink-2)}
+/* el disco es el color de la familia; la franja de la miniatura, el mismo disco más hondo */
+.fig-disco{fill:var(--cd)}
+.fig-banda{fill:var(--isla); opacity:.22}
+.fig-el .poste{stroke:var(--ap); stroke-width:2.5; stroke-linecap:round; opacity:.5}
+.fig-el .barra{stroke:var(--ap); stroke-width:5; stroke-linecap:round}
+.fig-el .par,.fig-el .silla{stroke:var(--ap); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.fig-el .banco,.fig-el .pared{fill:var(--off)}
+.fig-el .palo{stroke:var(--ap); stroke-width:6; stroke-linecap:round}
+.fig-el .hierro{fill:var(--ap)}
+.fig-el .asa{stroke:var(--ap); stroke-width:3; fill:none}
+.fig-el .manc{stroke:var(--ap); stroke-width:6; stroke-linecap:round}
+.fig-el .soga{stroke:var(--ap); stroke-width:1.6; fill:none}
+.fig-el .cadena{stroke:var(--ap); stroke-width:1.5}
+.fig-el .toalla{fill:var(--ap); opacity:.6}
+.fig-el .rueda{fill:none; stroke:var(--ap); stroke-width:3}
+.fig-el .cuadro{fill:none; stroke:var(--ap); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round}
+/* en la miniatura el trazo engorda, para que a 44 px se siga viendo */
+.fig.chica .barra{stroke-width:9}
+.fig.chica .par,.fig.chica .silla,.fig.chica .soga,.fig.chica .cuadro,.fig.chica .rueda{stroke-width:6}
+/* en la serie: el centro de la pantalla, entre la indicación y el número */
+.ses-fig{width:min(260px,64vw); margin:auto auto 0}
+.ses-fig + .ses-reloj{margin-top:0; padding-top:4px}
+/* con un anillo (tramos, pruebas de estrella) la figura va arriba y el anillo se achica para que entren los dos */
+.ses-fig.con-anillo{width:min(220px,56vw); margin:4px auto 0}
+.ses-fig.con-anillo + .anillo-desc{width:min(150px,40vw)}
+.ses-fig.con-anillo + .anillo-desc .anillo-tx .reloj{font-size:var(--t-4xl)}
+/* chica: en un círculo, como todo lo que es de Kozmos */
+.fig-chica{display:block; border-radius:50%; background:var(--cd, var(--s2)); overflow:hidden; aspect-ratio:1}
+.fig-chica .fig{width:100%; height:100%}
+.ajr .tile.fig-tile{width:44px; height:44px; border-radius:50%; background:transparent; display:block; flex:none}
+.tile.fig-tile .fig-chica{width:100%; height:100%}
+.ses-luego.con-fig{display:flex; align-items:center; justify-content:center; gap:10px}
+.ses-luego .fig-chica{width:44px; flex:none}
+/* en la lista de un circuito, cada ejercicio con su persona chiquita */
+.circ-items .ln:has(.fig-chica){justify-content:flex-start; gap:12px}
+.circ-items .ln .fig-chica{width:36px; flex:none}
+.circ-items .ln .fig-chica + span{flex:1}
+@media (orientation:landscape) and (max-height:520px){
+  /* en horizontal la figura va al lado del número, no arriba: así entra todo sin desplazar */
+  .ses-a:has(>.ses-fig){display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:16px; align-content:start}
+  .ses-a:has(>.ses-fig)>*{grid-column:1/-1}
+  .ses .ses-a>.ses-fig{grid-column:1; width:auto; height:min(184px,47vh); margin:0 0 6px}
+  .ses .ses-a>.ses-fig .fig{height:100%; width:auto}
+  .ses .ses-a>.ses-fig + .ses-reloj,.ses .ses-a>.ses-fig + .anillo-desc{grid-column:2; margin:auto 0}
+}

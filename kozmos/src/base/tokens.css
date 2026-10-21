@@ -5,6 +5,8 @@
   --solid:#111111; --on-solid:#f7f6f2;
   --fu:#c2410c; --mo:#0b7f7a; --ra:#4d7c0f;
   --fu-soft:#fbe6dc; --mo-soft:#d9f0ee; --ra-soft:#e6f0d6;
+  /* el disco detrás de la persona de cada ejercicio: el color de la familia, hondo, como un afiche */
+  --fu-disco:#c9542a; --mo-disco:#1e7a73; --ra-disco:#5a8a22;
   --glass:rgba(255,255,255,.80); --scrim:rgba(17,17,17,.18);
   --shadow:0 18px 40px -16px rgba(17,17,17,.28);
   --isla:#000000; --on-isla:#ffffff;
@@ -23,6 +25,7 @@
   --solid:#f4f3ef; --on-solid:#111111;
   --fu:#ff6b3d; --mo:#2ee2cf; --ra:#b8f062;
   --fu-soft:#3a1d12; --mo-soft:#0f2e2c; --ra-soft:#25300f;
+  --fu-disco:#b4471f; --mo-disco:#16716a; --ra-disco:#4f7d1c;
   --glass:rgba(27,27,25,.80); --scrim:rgba(0,0,0,.45);
   --shadow:0 18px 40px -14px rgba(0,0,0,.6);
   --isla:#000000; --on-isla:#ffffff;
@@ -34,6 +37,7 @@
   --solid:#f4f3ef; --on-solid:#111111;
   --fu:#ff6b3d; --mo:#2ee2cf; --ra:#b8f062;
   --fu-soft:#3a1d12; --mo-soft:#0f2e2c; --ra-soft:#25300f;
+  --fu-disco:#b4471f; --mo-disco:#16716a; --ra-disco:#4f7d1c;
   --glass:rgba(27,27,25,.80); --scrim:rgba(0,0,0,.45);
   --shadow:0 18px 40px -14px rgba(0,0,0,.6);
   --isla:#000000; --on-isla:#ffffff;
