@@ -134,9 +134,10 @@ const lateral = (base, toca, dy = 0) => {
   /* abierta: las piernas rectas en V, cada una unos 30° afuera */
   const A = {...P, abd: {...P.abd, legN: 30, legF: 30}};
   POSES["bandera-abierta"] = {...B, k: [A, vive(A)]};
-  /* con rodillas: los muslos vienen al pecho y las canillas cuelgan */
+  /* con rodillas: los muslos vienen al pecho y las canillas cuelgan. De frente el pliegue va hacia la cámara y se pierde:
+     va en tres cuartos (62°) con la cámara algo alzada (40°), así se ven doblados cadera y rodilla y el poste sigue a la vista */
   const Rd = {...P, legN: [112, 10], legF: [114, 12], pies: [-50, -50], abd: {...P.abd, legN: 4, legF: 4}};
-  POSES["bandera-rodillas"] = {...B, k: [Rd, vive(Rd)]};
+  POSES["bandera-rodillas"] = {...B, vista: 62, alzada: 40, k: [Rd, vive(Rd)]};
 }
 
 /* cosaca: pies anchos y quietos; la cadera baja en arco sobre una pierna mientras la otra queda estirada con la punta arriba, y pasa al otro lado */

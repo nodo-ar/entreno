@@ -465,10 +465,11 @@ K.fig = (() => {
     return disco + `<clipPath id="${id}">${disco.replace(' class="fig-disco"', "")}</clipPath>${e.arriba ? "" : mat}<g clip-path="url(#${id})">${e.arriba ? mat : ""}${elemento(f, chica, e.disco)}</g>`;
   }
   /* lo que se mueve: el cuerpo y lo que tiene en las manos */
-  /* colgado de la barra o del poste no hay colchoneta, aunque los pies queden cerca del piso */
+  /* colgado de la barra no hay colchoneta, aunque los pies queden cerca del piso; tampoco en la bandera (el poste con la cámara girada).
+     De perfil el poste también sirve de apoyo parado (remo, marco de la puerta) y ahí la colchoneta sigue */
   const frente = (f, P, pe, sw = 0, u) => { const J = ubicar(f, P, pe), sa = f.con === "soga" && !J.plano ? soga(f, J, u) : null;
     return lastre(f, J) + (sa && sa[1] ? `<g class="fig-el">${sa[0]}</g>` : "") + cuerpo(J, pe, sw) + enMano(f, J, u); };
-  const piso = (f, poses, pe) => f.con === "barra" || f.poste !== undefined ? "" : colchoneta(poses.map(P => ubicar(f, P, pe)), pe.mat);
+  const piso = (f, poses, pe) => f.con === "barra" || f.poste !== undefined && (f.vista || f.alzada) ? "" : colchoneta(poses.map(P => ubicar(f, P, pe)), pe.mat);
   /* el lastre cuelga del cinturón por detrás de las piernas, siempre hacia abajo */
   const lastre = (f, J) => !f.lastre ? "" : `<g class="fig-el"><line x1="${n1(J.hip[0] - 3)}" y1="${n1(J.hip[1] + 2)}" x2="${n1(J.hip[0] - 3)}" y2="${n1(J.hip[1] + 20)}" class="cadena"/><circle cx="${n1(J.hip[0] - 3)}" cy="${n1(J.hip[1] + 29)}" r="10" class="hierro"/></g>`;
   const apoya = (f, P) => { const J = ubicar(f, P); return f.con !== "barra" && !J.alz && ["fN", "fF", "tN", "tF", "hN", "hF", "kN", "kF", "hip", "sh", "hd"].some(k => alto(J, k) > PISO - 14); };
