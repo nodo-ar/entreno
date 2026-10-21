@@ -42,7 +42,9 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - ~~Tus días~~: hecho en la etapa 5. Aclaración: son los días de la semana que entrenás, no un calendario (el acta 009 decía «calendario»).
 - ~~El maniquí y los dibujos de los ejercicios~~: hecho en el PR del maniquí (actas 012 y 013).
 - Maniquí, lo que sigue (acta 013): vista de frente y de tres cuartos para lo lateral; mano con orientación; tronco que se curva; escorzo; bici más grande con el pedaleo rehecho; ritmo por tramo en los ciclos; miniaturas en «Hoy toca».
-- **Vista de frente para lo lateral** (la persona, la tijera): espagat lateral, pancake, mariposa, plancha lateral, bandera, cosaca, saltos de tijera, hombro cruzado, dorsal arriba y dorsal de costado hoy son una aproximación de perfil.
+- ~~**Vista de frente para lo lateral**~~: hecho en `claude/project-thread-985fzq` (motor 3D, `tools/vistas.mjs`). 24 ejercicios cambian de vista; espera el OK de Fer al tablero.
+- **Vistas que faltan** (la tijera): flexión arquera, front lever y planche straddle, paseo con maleta, pecho y bíceps en la pared se siguen viendo de perfil. Escribirlos en `tools/vistas.mjs` cuando se estudie cada movimiento.
+- **Apoyos que se deslizan en las poses de perfil** (Casandra): la revisión de apoyos quietos corre solo en las poses 3D. En perfil se deslizan unos px las manos o los pies de flexión, flexión cerrada, inclinada, pseudo planche y arquera, sentadilla y sentadilla profunda, cuervo, remo invertido, peso muerto a una pierna y plancha en dos apoyos. En el muscle-up y el curl femoral deslizante el desliz es parte del movimiento. Arreglarlos cambia dibujos que hoy están aprobados: vuelta propia con tablero.
 - **Tronco en dos piezas y rotación de hombro** (la tijera): para el gato-camello, el dragon flag y el antebrazo contra la pared.
 - **Miniaturas en «Hoy toca» y en la Constelación** (coherencia): hoy la persona aparece en la sesión, el circuito y «Entrena para», pero no en esas dos listas.
 - **Medir la figura en el teléfono de Fer** (la ingeniera de campo): ms por cuadro y batería en 10 minutos de serie, con y sin movimiento reducido.

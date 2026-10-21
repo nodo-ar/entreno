@@ -21,12 +21,6 @@
   const mas = (P, d) => ({...P, ...Object.fromEntries(Object.entries(d).map(([k, x]) => [k, Array.isArray(x) ? P[k].map((a, i) => a + (x[i] || 0)) : P[k] + x]))});
   const respira = (P, d) => [P, mas(P, d)];
   Object.assign(K.POSES, {
-    /* el lateral se ve de frente; de perfil va sentado con las piernas adelante: cadera adelante, espalda recta y apenas inclinada, manos al piso entre las piernas */
-    "espagat-lateral-90": {fijo: "hip", en: [150, S], rango: "avanzado", ritmo: RESP,
-      k: respira(sentado(158, 164, [2, 12], [0, 10]), {torso: 1.5, head: 2, armN: [1.5, 2], armF: [1.5, 2]})},
-    /* abierto del todo: brazos en cruz para que se lea el lateral */
-    "espagat-lateral": {fijo: "hip", en: [150, S], rango: "avanzado", ritmo: RESP,
-      k: respira(sentado(180, 180, [92, 96], [288, 284]), {torso: -1, head: -1.5, armN: [-2, -2], armF: [2, 2]})},
     "espagat-frontal": {fijo: "hip", en: [150, 258], rango: "avanzado", ritmo: RESP,
       k: respira({torso: 180, head: 181, armN: [196, 196], armF: [198, 199], legN: [87, 87], legF: [273, 271], pies: [0, -88]}, {torso: 1.5, head: 1.5, armN: [2, 2], armF: [2, 2]})},
     /* una mano por arriba de la cabeza y la otra por abajo, detrás de la espalda */
@@ -40,8 +34,6 @@
       k: respira(sentado(104, 92, [55, 120], [56, 120]), {torso: 1, head: 1.5, armN: [-1, -1], armF: [-1, -1]})},
     "puente": {fijo: "hN", en: [110, 264], rango: "avanzado", ritmo: RESP,
       k: respira({torso: 305, head: 333, armN: [322, 323], armF: [320, 321], legN: [35, 355], legF: [37, 357], pies: [5, 3]}, {torso: .7, head: 2})},
-    "pancake": {fijo: "hip", en: [150, S], rango: "avanzado", ritmo: RESP,
-      k: respira({...sentado(106, 101, [69, 70], [71, 71]), legN: [90, 90], legF: [90, 90]}, {torso: 1, head: 2, armN: [-1, -1], armF: [-1, -1]})},
     /* sin columna que se curve: gato = cabeza hacia las rodillas y el cuerpo apenas atrás; camello = el pecho va un poco adelante
        sobre las manos y la mirada sube sin quebrar el cuello. Manos y rodillas no se mueven. Despacio, 3 s por lado */
     "gato-camello": {fijo: "kN", en: [130, R], k: [{...cuatro, torso: 102.3, head: 58, armN: [2, 2], armF: [3, 3], legN: [.9, 270], legF: [2.5, 270]},
@@ -49,9 +41,6 @@
     /* las manos quedan bajo la lumbar mientras se despegan apenas la cabeza y los hombros, con el cuello neutro; 8 s arriba */
     "curl-up": {fijo: "hip", en: [150, S], k: [{...boca, armN: [88, 93], armF: [87, 92], legN: [135, 35], pies: [-35, 0]},
       {...boca, torso: 263, head: 260, armN: [80, 86], armF: [79, 85], legN: [135, 35], pies: [-35, 0]}], ritmo: [1, 8, 1, 2]},
-    /* como la plancha lateral: antebrazo bajo el hombro y la mano de arriba al techo; acá las rodillas dobladas en el piso y la cadera en línea */
-    "plancha-lateral-rodillas": {fijo: "eN", en: [180, 263], rango: "avanzado", ritmo: RESP,
-      k: respira({torso: 106, head: 104, armN: [0, 90], armF: [211, 213], legN: [286, 236], legF: [285, 232], pies: [-80, -80]}, {torso: .8, head: 1.5, armF: [1, 1]})},
     /* brazo cercano adelante y pierna lejana atrás, los dos a la altura del tronco; la cabeza mira al piso para que el brazo pase por arriba */
     "perro-de-caza-sostenido": {fijo: "kN", en: [130, R], ritmo: RESP,
       k: respira({...cuatro, head: 92, armN: [106, 108], legF: [274, 274], pies: [-90, -5]}, {head: 1.5, armN: [1, 1], legF: [-1, -1]})},
@@ -62,32 +51,14 @@
     /* el brazo que se estira por arriba de la cabeza es el lejano (pasa detrás de la cabeza) y la pierna contraria, la cercana, baja cerca del piso */
     "bicho-muerto-sostenido": {fijo: "hip", en: [160, S], ritmo: RESP,
       k: respira({...boca, armN: [181, 181], armF: [263, 264], legN: [97, 97], legF: [181, 91]}, {torso: -.8, head: -1.5, armN: [-1, -1], armF: [-1, -1]})},
-    /* las rodillas caen hacia los costados: de perfil se ven dobladas con los pies juntos cerca de la cadera */
-    "mariposa-acostado": {fijo: "hip", en: [150, S], ritmo: RESP,
-      k: respira({...boca, armN: [96, 98], armF: [94, 96], legN: [150, 359], legF: [147, 2], pies: [6, 3]}, {torso: -.8, head: -1.5, armN: [1, 1], armF: [1, 1]})},
-    /* igual que la mariposa pero con la mano lejana detrás de la cabeza (el codo asoma arriba); la cercana suelta al costado */
-    "aductores-acostado": {fijo: "hip", en: [150, S], ritmo: RESP,
-      k: respira({...boca, armN: [93, 95], armF: [222, 12], legN: [150, 359], legF: [146, 3], pies: [6, 2]}, {torso: -.8, head: -1.5, armN: [1, 1], armF: [-1, -1]})},
-    /* figura 4: la pierna lejana viene al pecho (cadera 100°, rodilla 90°) y las manos la toman detrás del muslo;
-       el tobillo cercano cruza apoyado sobre ese muslo, cerca de la rodilla (de perfil la rodilla abierta queda hacia el pecho) */
-    "gluteo-tobillo-rodilla": {fijo: "hip", en: [150, S], rango: "avanzado", ritmo: RESP,
-      k: respira({...boca, armN: [108, 130], armF: [106, 128], legN: [224, 116], legF: [190, 100]}, {torso: -.8, head: -1.5, legF: [1.5, 1.5], legN: [1.5, 1.5], armN: [1, 1], armF: [1, 1]})},
     "isquios-sentado": {fijo: "hip", en: [150, S], rango: "avanzado", ritmo: RESP,
       k: respira(sentado(132, 128, [52, 62], [50, 60]), {torso: 1.5, head: 2, armN: [-1, -1], armF: [-1, -1]})},
-    /* la rodilla doblada a 90° va hacia el hombro contrario: la mano lejana la guía y la cercana queda suelta en el piso */
-    "rodilla-cruzada": {fijo: "hip", en: [150, S], ritmo: RESP,
-      k: respira({...boca, armN: [92, 94], armF: [120, 141], legN: [200, 110], legF: [91, 91]}, {torso: -.8, head: -1.5, legN: [1.5, 1.5], armF: [1, 1]})},
     /* medio espagat: la cadera atrás sobre la rodilla de apoyo, la pierna de adelante estirada con la punta arriba y el pecho largo hacia ella, manos al piso */
     "estiramiento-corredor": {fijo: "kF", en: [130, R], rango: "avanzado", ritmo: RESP,
       k: respira({torso: 103, head: 99, armN: [2, 4], armF: [0, 2], legN: [59, 59], legF: [4, 270], pies: [0, -90]}, {torso: 1, head: 2, armN: [-1, -1], armF: [-1, -1]})},
     /* la rodilla bien doblada contra el pecho, abrazada con las dos manos sobre la canilla; la otra pierna estirada */
     "rodilla-al-pecho": {fijo: "hip", en: [150, S], ritmo: RESP,
       k: respira({...boca, armN: [110, 152], armF: [111, 151], legN: [215, 85], legF: [91, 91]}, {torso: -.8, head: -1.5, legN: [1.5, 1.5], armN: [1, 1], armF: [1, 1]})},
-    /* la pierna cercana estirada y cruzada, tirada por la mano lejana hacia el otro hombro; el otro brazo suelto en el piso */
-    "gluteo-banda-it": {fijo: "hip", en: [150, S], ritmo: RESP,
-      k: respira({...boca, armN: [92, 94], armF: [103, 142], legN: [200, 198], legF: [91, 91]}, {torso: -.8, head: -1.5, legN: [1.5, 1.5], armF: [1, 1]})},
-    "piernas-abiertas": {fijo: "hip", en: [150, S], rango: "avanzado", ritmo: RESP,
-      k: respira(sentado(115, 111, [20, 90], [22, 91]), {torso: 1, head: 2, armN: [-3, 0], armF: [-3, 0]})},
     /* el muslo queda quieto (cadera 105°, las manos detrás) y la rodilla se estira de a poco y vuelve */
     "isquios-90-90": {fijo: "hip", en: [150, S], k: [{...boca, armN: [108, 130], armF: [107, 129], legN: [195, 105], legF: [91, 91]},
       {...boca, armN: [108, 130], armF: [107, 129], legN: [195, 182], legF: [91, 91]}], ritmo: [3, 2, 2, 1]},

@@ -32,8 +32,6 @@
   const entre = (A, B, t) => Object.fromEntries(Object.entries(A).map(([k, x]) => [k, Array.isArray(x) ? x.map((a, i) => a + (B[k][i] - a) * t) : x + (B[k] - x) * t]));
   /* en bolita: rodillas al pecho (cadera y rodilla a unos 100), los pies en punta */
   const bolita = P => ({...P, legN: [P.torso + 280, P.torso + 172], legF: [P.torso + 278, P.torso + 170], pies: [-40, -40]});
-  /* plancha lateral: de perfil se lee como plancha sobre el antebrazo con la mano de arriba hacia el techo (hombro «avanzado») */
-  const lateral = {torso: 98, head: 96, armN: [0, 90], armF: [204, 204], legN: [278, 278], legF: [279, 279]};
   /* plancha alta en las manos */
   const plancha = {torso: 108, head: 104, armN: [0, 0], armF: [2, 2], legN: [288, 288], legF: [289, 289]};
   Object.assign(K.POSES, {
@@ -49,11 +47,6 @@
       plano({torso: 152, head: 160, armN: [98, 102], armF: [94, 98], legN: [100, 316], legF: [90, 88]})], ritmo: [2, .3, 1.6, .4]},
     "sentadilla-profunda": {fijo: "fN", en: [150, T], k: [{...parado, armN: [26, 130], armF: [22, 126], pies: [0, 0]},
       plano({torso: 157, head: 166, armN: [12, 112], armF: [8, 108], legN: [105, 332], legF: [103, 330]})], ritmo: [1.8, 1, 1.2, .4]},
-    /* cosaca: el pie de la pierna estirada no se mueve; la cadera baja en arco sobre la pierna que se dobla */
-    "cosaca": {fijo: "fN", en: [150, T], k: [{torso: 176, head: 178, armN: [70, 104], armF: [66, 100], legN: [343, 336], legF: [24, 17], pies: [24, -17]},
-      {torso: 167, head: 171, armN: [74, 108], armF: [70, 104], legN: [28, 316], legF: [40, 33], pies: [44, -13]},
-      {torso: 158, head: 164, armN: [78, 110], armF: [74, 106], legN: [60, 316], legF: [56, 49], pies: [44, 1]},
-      {torso: 150, head: 158, armN: [82, 112], armF: [78, 108], legN: [90, 324], legF: [70, 63], pies: [36, 17]}], ritmo: [1.8, .5, 1.5, .4]},
     "puente-gluteo": {fijo: "sh", en: [104, 257], k: [plano({...espalda, legN: [143, 11], legF: [141, 11]}),
       plano({...espalda, torso: 282, head: 268, legN: [123, 359], legF: [121, 359]}),
       plano({...espalda, torso: 294, head: 271, legN: [106, 357], legF: [105, 358]})], ritmo: [1, 1.5, 1.5, .4]},
@@ -84,10 +77,6 @@
       plano({torso: 168, head: 172, armN: [80, 86], armF: [76, 82], legN: [30, 350], legF: [28, 348]}),
       plano({torso: 148, head: 158, armN: [326, 334], armF: [322, 330], legN: [74, 340], legF: [72, 338]}),
       {torso: 178, head: 180, armN: [140, 148], armF: [136, 144], legN: [4, 2], legF: [6, 4], alto: 8, pies: [-48, -48]}], ritmo: [1.8], muestra: 0},
-    /* saltos de tijera: de perfil la apertura de piernas casi no se ve; se lee por los brazos que suben y bajan y el saltito en punta */
-    "saltos-tijera": {fijo: "hip", en: [150, 180], ciclo: true, k: [{...parado, armN: [166, 170], armF: [162, 166], legN: [10, 4], legF: [354, 350], pies: [-4, 10]},
-      {...parado, armN: [92, 96], armF: [88, 92], legN: [6, 4], legF: [356, 354], alto: 14, pies: [-46, -46]}, {...parado, armN: [4, 8], armF: [0, 4], legN: [2, 0], legF: [0, 358], pies: [0, 2]},
-      {...parado, armN: [92, 96], armF: [88, 92], legN: [6, 4], legF: [356, 354], alto: 14, pies: [-46, -46]}], ritmo: [1.2], muestra: 0},
     "rodillas-arriba": {fijo: "hip", en: [150, 179], ciclo: true, k: [rodillaN,
       {...rodillaN, armN: [2, 88], armF: [358, 84], legN: [22, 352], legF: [6, 354], pies: [-6, 4]}, rodillaF,
       {...rodillaN, armN: [2, 88], armF: [358, 84], legN: [6, 354], legF: [22, 352], pies: [4, -6]}], ritmo: [1], muestra: 0},
@@ -105,8 +94,6 @@
     /* negativa: baja recto en 5 s y vuelve arriba encogiendo las rodillas (más fácil) */
     "dragon-flag-negativa": {fijo: "sh", en: [85, 220], banco: [70, 234], ciclo: true, k: [dfArriba, entre(dfArriba, dfAbajo, .25), entre(dfArriba, dfAbajo, .5), entre(dfArriba, dfAbajo, .75), dfAbajo,
       bolita(entre(dfArriba, dfAbajo, .5))], ritmo: [7.5], muestra: 2},
-    "plancha-lateral": {rango: "avanzado", fijo: "eN", en: [150, T], k: [lateral, {...lateral, torso: 99, head: 98, armF: [205, 205]}], ritmo: [2, .4, 2, .4]},
-    "plancha-lateral-pierna": {rango: "avanzado", fijo: "eN", en: [150, T], k: [lateral, {...lateral, legF: [256, 256]}], ritmo: [.8, 2.5, .8, .6]},
     "plancha-dos-apoyos": {fijo: "hN", en: [190, 264], k: [plancha, {...plancha, armF: [102, 102], legN: [275, 275]}], ritmo: [.8, 3, .8, .6]},
     "superman": {fijo: "hip", en: [150, 259], k: [{torso: 92, head: 92, armN: [92, 92], armF: [90, 90], legN: [270, 270], legF: [271, 271], pies: [-90, -90]},
       {torso: 100, head: 103, armN: [104, 104], armF: [102, 102], legN: [262, 262], legF: [263, 263], pies: [-90, -90]}], ritmo: [1, 2, 1, .6]}
