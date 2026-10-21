@@ -1,5 +1,6 @@
 /* ===== Poses · cardio: correr, bici, soga y pesas (ver piezas/figura.js) ===== */
 (() => {
+  const T = K.fig.TOBILLO;
   /* arranque a una mano: pasa por el pecho y termina arriba; la mano lejana queda libre */
   const snatchMedio = {torso: 182, head: 182, armN: [100, 112], armF: [4, 10], legN: [2, 0], legF: [3, 1]};
   /* parado con las mancuernas colgando adelante de los muslos; subiendo fuerza el giro del antebrazo */
@@ -68,12 +69,12 @@
     ];
   const cruce = [
       {torso: 178, head: 180, armN: [20, 90], armF: [336, 16], legN: [14, 349], legF: [9, 351]},
-      {torso: 178, head: 180, armN: [32, 72], armF: [38, 72], legN: [19, 344], legF: [15, 344]},
-      {torso: 178, head: 180, armN: [32, 72], armF: [38, 72], legN: [31, 332], legF: [28, 331]},
+      {torso: 178, head: 180, armN: [50, 145], armF: [88, 92], legN: [19, 344], legF: [15, 344]},
+      {torso: 178, head: 180, armN: [50, 145], armF: [88, 92], legN: [31, 332], legF: [28, 331]},
       {torso: 178, head: 180, armN: [20, 98], armF: [336, 24], legN: [19, 344], legF: [15, 344]}
     ];
   /* pesas */
-  const parado = {torso: 180, head: 180, armN: [4, 6], armF: [2, 4], legN: [0, 0], legF: [2, 1]};
+  const parado = {...K.fig.PARADO, armF: [2, 4], legF: [2, 1]};
   /* swing: abajo bisagra con la pesa entre las piernas, arriba los brazos rectos */
   const swAbajo = {torso: 120, head: 108, armN: [354, 356], armF: [356, 358], legN: [28, 352], legF: [30, 354]};
   const swArriba = {torso: 182, head: 182, armN: [96, 96], armF: [98, 98], legN: [2, 0], legF: [3, 1]};
@@ -98,22 +99,22 @@
     "trote": {fijo: "hip", en: [150, 182], ciclo: true, k: trote, ritmo: [.8]},
     "10km": {fijo: "hip", en: [150, 182], ciclo: true, k: largo, ritmo: [.74]},
     "intervalos": {fijo: "hip", en: [150, 182], ciclo: true, k: fuerte, ritmo: [.58], muestra: 0},
-    "bici": {con: "bici", fijo: "hip", en: [140, 160], ciclo: true, k: bici, ritmo: [1.1], estela: "fN"},
+    "bici": {con: "bici", fijo: "hip", en: [140, 160], ciclo: true, k: bici, ritmo: [1.1]},
     /* soga: la soga pasa por abajo en el apoyo */
     "soga": {con: "soga", fijo: "hip", en: [150, 181], ciclo: true, k: soga, ritmo: [.5]},
-    "double-under": {con: "soga", fijo: "hip", en: [150, 181], ciclo: true, k: doble, ritmo: [.7]},
+    "double-under": {con: "soga", soga: "doble", fijo: "hip", en: [150, 181], ciclo: true, k: doble, ritmo: [.7]},
     "criss-cross": {con: "soga", fijo: "hip", en: [150, 181], ciclo: true, k: cruce, ritmo: [1.1], muestra: 1},
     /* pesas */
-    "swing-kettlebell": {con: "pesa", fijo: "fN", en: [150, 263], estela: "hN", k: [swAbajo, swArriba], ritmo: [.5, .2, .6, .2]},
-    "swing-mancuerna": {con: "mancuerna", fijo: "fN", en: [150, 263], estela: "hN", k: [swAbajo, swCabeza], ritmo: [.6, .2, .7, .2]},
-    "arranque-kettlebell": {con: "pesa", unaMano: true, fijo: "fN", en: [150, 263], estela: "hN", k: [snatchAbajo, snatchMedio, snatch], ritmo: [.7, .4, .8, .2]},
-    "remo-al-menton": {con: "mancuernas", fijo: "fN", en: [150, 263], estela: "eN", k: [colgando, subiendo, menton], ritmo: [1, .3, 1.4, .4]},
-    "press-hombros": {con: "mancuernas", fijo: "fN", en: [150, 263], estela: "hN", k: [pressAbajo, pressArriba], ritmo: [1, .3, 1.4, .4]},
-    "sentadilla-mancuernas": {con: "mancuernas", fijo: "fN", en: [150, 263], estela: "hip", k: [parado, sentado], ritmo: [1.5, .3, 1.2, .5]},
-    "remo-dos-mancuernas": {con: "mancuernas", fijo: "fN", en: [150, 263], estela: "eN", k: [inclinado, tirando], ritmo: [.9, .4, 1.3, .4]},
-    "peso-muerto-rumano": {con: "mancuernas", fijo: "fN", en: [150, 263], estela: "hip", k: [parado, rumano], ritmo: [1.8, .3, 1.3, .5]},
-    "remo-mancuerna": {con: "mancuerna", banco: [192, 227], fijo: "hip", en: [150, 190], estela: "eN", k: [rmBase, rmArriba], ritmo: [.9, .4, 1.3, .4]},
-    "remo-poste": {poste: 166, fijo: "fN", en: [150, 263], estela: "sh", k: [posteAtras, postePegado], ritmo: [1, .4, 1.4, .4]},
+    "swing-kettlebell": {con: "pesa", fijo: "fN", en: [150, T], k: [swAbajo, swArriba], ritmo: [.5, .2, .6, .2]},
+    "swing-mancuerna": {con: "mancuerna", fijo: "fN", en: [150, T], k: [swAbajo, swCabeza], ritmo: [.6, .2, .7, .2]},
+    "arranque-kettlebell": {con: "pesa", unaMano: true, fijo: "fN", en: [150, T], k: [snatchAbajo, snatchMedio, snatch], ritmo: [.7, .4, .8, .2]},
+    "remo-al-menton": {con: "mancuernas", fijo: "fN", en: [150, T], k: [colgando, subiendo, menton], ritmo: [1, .3, 1.4, .4]},
+    "press-hombros": {con: "mancuernas", fijo: "fN", en: [150, T], k: [pressAbajo, pressArriba], ritmo: [1, .3, 1.4, .4]},
+    "sentadilla-mancuernas": {con: "mancuernas", fijo: "fN", en: [150, T], k: [parado, sentado], ritmo: [1.5, .3, 1.2, .5]},
+    "remo-dos-mancuernas": {con: "mancuernas", fijo: "fN", en: [150, T], k: [inclinado, tirando], ritmo: [.9, .4, 1.3, .4]},
+    "peso-muerto-rumano": {con: "mancuernas", fijo: "fN", en: [150, T], k: [parado, rumano], ritmo: [1.8, .3, 1.3, .5]},
+    "remo-mancuerna": {con: "mancuerna", banco: [192, 227], fijo: "hip", en: [150, 190], k: [rmBase, rmArriba], ritmo: [.9, .4, 1.3, .4]},
+    "remo-poste": {poste: 166, fijo: "fN", en: [150, T], k: [posteAtras, postePegado], ritmo: [1, .4, 1.4, .4]},
     /* caminar con peso de un lado */
     "paseo-maleta": {con: "mancuerna", fijo: "hip", en: [150, 180], ciclo: true, k: marchaM, ritmo: [1.2]},
     "paseo-maleta-kettlebell": {con: "pesa", unaMano: true, fijo: "hip", en: [150, 180], ciclo: true, k: marchaK, ritmo: [1.2]}

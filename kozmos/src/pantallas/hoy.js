@@ -250,7 +250,7 @@ const circGrande = (S, b) => {
 };
 K.P.circuito = (S, b) => {
   const [n, l] = circGrande(S, b), pausa = S.pausa !== null ? `<p class="ses-pausa lb">En pausa</p>` : "", prep = K.sesion.prep() > 0;
-  const items = `<section class="cd circ-items">${b.items.map(x => `<div class="ln"><span>${K.esc(x.ejercicio ? K.ej(x.ejercicio).nombre : x.nombre || "")}</span><span class="num">${K.esc(circItem(x))}</span></div>`).join("")}</section>`;
+  const items = `<section class="cd circ-items">${b.items.map(x => `<div class="ln">${x.ejercicio && K.POSES[x.ejercicio] ? K.fig.chica(x.ejercicio, b.familia) : ""}<span>${K.esc(x.ejercicio ? K.ej(x.ejercicio).nombre : x.nombre || "")}</span><span class="num">${K.esc(circItem(x))}</span></div>`).join("")}</section>`;
   const listo = b.formato === "amrap" ? `<div class="dos-btn"><button type="button" class="btn sec" id="s-vuelta-menos" aria-label="Una vuelta menos">−1</button><button type="button" class="btn" id="s-vuelta">${K.ic("check")}Vuelta</button></div>`
     : `<button type="button" class="btn" id="s-vuelta">${K.ic("check")}${b.rondas > 1 ? "Terminé la vuelta" : "Terminé"}</button>`;
   return `<div class="ses circuito${prep ? " prep" : ""}" style="--c:var(--${b.familia})" data-r="ses"><div class="ses-a">

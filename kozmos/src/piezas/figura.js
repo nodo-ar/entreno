@@ -1,6 +1,6 @@
 /* ===== Figura: la persona que muestra cada ejercicio. Un cuerpo de perfil, sus poses y el ritmo entre ellas.
    Ángulos absolutos por segmento: 0 abajo, 90 adelante, 180 arriba, 270 atrás. Lo cercano adelante; lo lejano, en sombra.
-   Las poses viven en src/poses/: K.POSES[id] = {fijo, en, con, k: [inicio, final], ritmo, estela, muestra, ciclo}. ===== */
+   Las poses viven en src/poses/: K.POSES[id] = {fijo, en, con, k: [inicio, final], ritmo, muestra, ciclo}. ===== */
 K.POSES = {};
 K.fig = (() => {
   const L = {torso: 56, neck: 9, head: 12, up: 30, fo: 27, th: 43, sh: 41, foot: 14}, PISO = 268;
@@ -30,7 +30,7 @@ K.fig = (() => {
   /* «alto» levanta todo el cuerpo (un salto): el punto fijo deja de tocar mientras está en el aire */
   const ubicar = (f, P) => { const J = joints(P), p = J[f.fijo]; return joints(P, [f.en[0] - p[0], f.en[1] - p[1] - (P.alto || 0)]); };
   const lerpA = (a, b, t) => a + nrm(b - a) * t;
-    /* lo opcional de una pose: el giro de los pies y la altura del salto */
+  /* lo opcional de una pose: el giro de los pies y la altura del salto */
   const NADA = {pies: [0, 0], alto: 0};
   const mezclar = (A, B, t) => Object.fromEntries([...new Set([...Object.keys(A), ...Object.keys(B)])].map(k => { const a = A[k] ?? NADA[k] ?? B[k], b = B[k] ?? NADA[k] ?? a;
     return [k, Array.isArray(a) ? a.map((x, i) => lerpA(x, b[i], t)) : lerpA(a, b, t)]; }));
@@ -58,10 +58,10 @@ K.fig = (() => {
   /* la sombra: la mitad de atrás de cada miembro, un tono más oscura */
   const atras = prof => prof.map(([t, rp]) => [t, rp, -rp * .1]);
   /* una línea de músculo: de t0 a t1 sobre el miembro, corrida «off» px hacia atrás (+) o adelante (−), con panza «pz» */
-  function linea(a, b, t0, t1, off, pz, c, w = 1.1){
+  function linea(a, b, t0, t1, off, pz, c, w = 1.1, op = .45){
     const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, nx = -dy / d, ny = dx / d;
     const pt = (t, o) => [a[0] + dx * t + nx * o, a[1] + dy * t + ny * o], p0 = pt(t0, off), p1 = pt(t1, off), m = pt((t0 + t1) / 2, off + pz);
-    return `<path d="M${n1(p0[0])} ${n1(p0[1])}Q${n1(m[0])} ${n1(m[1])} ${n1(p1[0])} ${n1(p1[1])}" stroke="${c}" stroke-width="${w}" fill="none" stroke-linecap="round" opacity=".45"/>`;
+    return `<path d="M${n1(p0[0])} ${n1(p0[1])}Q${n1(m[0])} ${n1(m[1])} ${n1(p1[0])} ${n1(p1[1])}" stroke="${c}" stroke-width="${w}" fill="none" stroke-linecap="round" opacity="${op}"/>`;
   }
   /* un pedazo del tronco, en coordenadas del tronco (t a lo largo, w de costado: + es el pecho) */
   function trozo(J, pts, c, op){
@@ -83,14 +83,14 @@ K.fig = (() => {
     return `<path d="${suave([pt(-3, -2.4), pt(-6, 2), pt(-5, 5), pt(4, 5.2), pt(14, 5), pt(15, 3), pt(9, -.4), pt(3, -3)])}" fill="${c}"/>`
       + ln([-5, 5.2], [14.5, 4.8], "var(--suela)", 2.2, s === "F" ? .55 : 0) + ln([1, 1.4], [8, 2.6], "var(--c)", 1.6, s === "F" ? .55 : 0)
       + ln([-3.6, -2.6], [3, -3.2], "var(--media)", 2.4, s === "F" ? .55 : 0); }
-  function mano(h, fo, c){ const u = v(fo, 1), cx = h[0] + u[0] * 3.6, cy = h[1] + u[1] * 3.6;
-    return `<ellipse cx="${n1(cx)}" cy="${n1(cy)}" rx="3.9" ry="5.6" transform="rotate(${n1(-fo)} ${n1(cx)} ${n1(cy)})" fill="${c}"/>`; }
+  function mano(h, fo, c){ if (h[1] > PISO - 8) fo = 90; const u = v(fo, 1), cx = h[0] + u[0] * 3.6, cy = h[1] > PISO - 8 ? PISO - 3 : h[1] + u[1] * 3.6;
+    return `<ellipse cx="${n1(cx)}" cy="${n1(cy)}" rx="${h[1] > PISO - 8 ? 2.8 : 3.9}" ry="5.6" transform="rotate(${n1(-fo)} ${n1(cx)} ${n1(cy)})" fill="${c}"/>`; }
   /* la cabeza: cuello, cara, pelo corto que cubre atrás y arriba, oreja */
   function cabeza(J){
     const hd = J.hd, a = -J.P.head + 180, f = v(J.P.head - 90, 1), u = v(J.P.head, 1), R = L.head;
     const el = (dx, dy, rx, ry, c) => { const x = hd[0] + f[0] * dx + u[0] * dy, y = hd[1] + f[1] * dx + u[1] * dy; return `<ellipse cx="${n1(x)}" cy="${n1(y)}" rx="${n1(rx)}" ry="${n1(ry)}" transform="rotate(${n1(a)} ${n1(x)} ${n1(y)})" fill="${c}"/>`; };
     return miembro(J.sh, J.nk, [[0, 5, 4.6], [1, 4.6, 4.4]], "var(--piel)") + miembro(J.sh, J.nk, [[0, 5, -1], [1, 4.6, -1]], "var(--piel-s)")
-      + el(0, 0, R * .86, R, "var(--piel)") + el(-1.6, 1.8, R * .8, R * .86, "var(--pelo)") + el(1.4, -1.6, R * .7, R * .74, "var(--piel)")
+      + el(0, 0, R * .86, R, "var(--piel)") + el(-2.2, .9, R * .78, R * .84, "var(--pelo)") + el(1.6, -1.9, R * .72, R * .78, "var(--piel)")
       + el(-1.2, -.6, 2.2, 3.2, "var(--piel-s)")
       + `<circle cx="${n1(hd[0] + f[0] * R * .82 - u[0] * 1.5)}" cy="${n1(hd[1] + f[1] * R * .82 - u[1] * 1.5)}" r="2.4" fill="var(--piel)"/>`;
   }
@@ -103,7 +103,7 @@ K.fig = (() => {
       o += linea(J.hip, k, .62, .96, -4, -2.5, c.sombra) + linea(k, fp, .1, .5, 3, 2.5, c.sombra);
       /* el short tapa la mitad de arriba del muslo, con una franja del color de la familia al costado y el ruedo marcado */
       o += miembro(J.hip, borde, [[0, 11.6, 10.6], [.6, 11.2, 9.8], [1, 10, 9]], c.short);
-      o += linea(J.hip, borde, .1, .96, .6, 0, "var(--c)", 1.8).replace('opacity=".45"', `opacity="${s === "F" ? .5 : .9}"`);
+      o += linea(J.hip, borde, .1, .96, .6, 0, "var(--c)", 1.8, s === "F" ? .5 : .9);
       o += zapatilla(fp, sh + (P.pies?.[s === "N" ? 0 : 1] || 0), c.zapa, s);
       return o; };
     const brazo = s => { const c = C[s], e = J["e" + s], h = J["h" + s];
@@ -113,35 +113,40 @@ K.fig = (() => {
     g.push(pierna("F"), brazo("F"));
     /* el torso: piel de base (se ven los hombros), la musculosa encima con su sombra y su ribete, el short en la cintura */
     g.push(trozo(J, TORSO, "var(--piel)"), trozo(J, [[.7, -9], [.96, -10.6], [1.07, -5], [1.04, 1], [.9, -4]], "var(--piel-s)"));
-    g.push(trozo(J, MUSC, "var(--c)"), trozo(J, [[.14, -13.2], [.4, -9.6], [.62, -9.2], [.9, -10.2], [.98, -6], [.6, -5.2], [.3, -8]], "var(--ropa-s)", .55));
-    g.push(trazo(J, [[.86, 11.2], [.97, 7], [1.02, 2.6], [.99, -2.2]], "var(--ribete)", 1.3), trazo(J, [[.7, -10.2], [.84, -10.6], [.93, -8.4]], "var(--ribete)", 1.1, .8));
+    g.push(trozo(J, MUSC, "var(--c)"), trozo(J, [[.14, -13.2], [.4, -9.6], [.62, -9.2], [.9, -10.2], [.98, -6], [.6, -5.2], [.3, -8]], "#000", .17));
+    g.push(trazo(J, [[.86, 11.2], [.97, 7], [1.02, 2.6], [.99, -2.2]], "#fff", 1.3, .45), trazo(J, [[.7, -10.2], [.84, -10.6], [.93, -8.4]], "#fff", 1.1, .36));
     g.push(trozo(J, SHORT, "var(--short)"), trazo(J, [[.2, 10.2], [.2, -13.6]], "var(--short-l)", 2.2), trazo(J, [[.19, -13.4], [-.06, -10.4]], "var(--c)", 1.8, .9));
     g.push(cabeza(J), pierna("N"), brazo("N"));
     return g.join("");
   }
 
   /* ===== lo que se usa ===== */
-  function elemento(f, J, atrasDe){
-    const c = f.con, x = f.en[0], y = f.en[1], o = [];
-    const ln = (x1, y1, x2, y2, cls) => `<line x1="${n1(x1)}" y1="${n1(y1)}" x2="${n1(x2)}" y2="${n1(y2)}" class="${cls}"/>`;
-    if (atrasDe){
-      if (c === "barra") o.push(ln(x - 72, y, x - 72, PISO, "poste"), ln(x + 72, y, x + 72, PISO, "poste"));
-      if (c === "barra-baja") o.push(ln(x - 60, y, x - 60, PISO, "poste"), ln(x + 60, y, x + 60, PISO, "poste"));
-      if ((c === "barra" || c === "barra-baja") && f.barraAtras) o.push(ln(x - 80, y, x + 80, y, "barra"));
-      if (f.pared !== undefined) o.push(`<rect x="${f.pared}" y="${PISO - 230}" width="40" height="230" class="pared"/>`);
-      if (f.poste !== undefined) o.push(ln(f.poste, PISO - 200, f.poste, PISO, "palo"));
-      if (f.banco) o.push(`<rect x="${n1(f.banco[0] - 30)}" y="${n1(f.banco[1])}" width="60" height="${n1(PISO - f.banco[1])}" rx="4" class="banco"/>`);
-      if (c === "paralelas") o.push(`<path class="par" d="M${x - 26} ${PISO}V${y}H${x + 26}V${PISO}"/>`);
-      if (c === "bici") o.push(bici(f));
-      return `<g class="fig-el">${o.join("")}</g>`;
-    }
+  const ln = (x1, y1, x2, y2, cls) => `<line x1="${n1(x1)}" y1="${n1(y1)}" x2="${n1(x2)}" y2="${n1(y2)}" class="${cls}"/>`;
+  /* lo que está detrás del cuerpo y no se mueve; en la miniatura, sin los postes */
+  function elemento(f, chica){
+    const c = f.con, [x, y] = f.en, o = [];
+    if (!chica && c === "barra") o.push(ln(x - 72, y, x - 72, PISO, "poste"), ln(x + 72, y, x + 72, PISO, "poste"));
+    if (!chica && c === "barra-baja") o.push(ln(x - 60, y, x - 60, PISO, "poste"), ln(x + 60, y, x + 60, PISO, "poste"));
+    if ((c === "barra" || c === "barra-baja") && f.barraAtras) o.push(ln(x - 80, y, x + 80, y, "barra"));
+    if (f.pared !== undefined) o.push(`<rect x="${f.pared}" y="${PISO - 230}" width="40" height="230" class="pared"/>`);
+    if (f.poste !== undefined) o.push(ln(f.poste, PISO - 200, f.poste, PISO, "palo"));
+    if (f.banco) o.push(`<rect x="${n1(f.banco[0] - 30)}" y="${n1(f.banco[1])}" width="60" height="${n1(PISO - f.banco[1])}" rx="4" class="banco"/>`);
+    if (c === "paralelas") o.push(`<path class="par" d="M${x - 26} ${PISO}V${y}H${x + 26}V${PISO}"/>`);
+    if (c === "bici") o.push(bici(f));
+    return o.length ? `<g class="fig-el">${o.join("")}</g>` : "";
+  }
+  /* lo que va delante del cuerpo: la barra que se agarra y lo que se tiene en las manos */
+  function enMano(f, J){
+    const c = f.con, [x, y] = f.en, o = [];
     if ((c === "barra" || c === "barra-baja") && !f.barraAtras) o.push(ln(x - 80, y, x + 80, y, "barra"));
     if (c === "pesa"){ const h = f.unaMano ? J.hN : lerp(J.hN, J.hF, .5); o.push(`<circle cx="${n1(h[0])}" cy="${n1(h[1] + 12)}" r="9.5" class="hierro"/><path d="M${n1(h[0] - 6)} ${n1(h[1] + 6)}Q${n1(h[0])} ${n1(h[1] - 6)} ${n1(h[0] + 6)} ${n1(h[1] + 6)}" class="asa"/>`); }
     if (c === "mancuernas" || c === "mancuerna") for (const s of c === "mancuerna" ? ["N"] : ["F", "N"]){ const h = J["h" + s], u = v(J.P["arm" + s][1], 4);
       const p = [h[0] + u[0], h[1] + u[1]], w = v(J.P["arm" + s][1] + 90, 9);
       o.push(`<line x1="${n1(p[0] - w[0])}" y1="${n1(p[1] - w[1])}" x2="${n1(p[0] + w[0])}" y2="${n1(p[1] + w[1])}" class="manc"${s === "F" ? ' opacity=".6"' : ""}/>`); }
-    if (c === "soga"){ const a = J.hN, b = J.hF, abajo = f.soga === "arriba" ? Math.min(J.hd[1], a[1]) - 60 : PISO + 2; const m = [(a[0] + b[0]) / 2 + 6, abajo];
-      o.push(`<path d="M${n1(a[0])} ${n1(a[1])}Q${n1(m[0])} ${n1(m[1] * 2 - (a[1] + b[1]) / 2)} ${n1(b[0])} ${n1(b[1])}" class="soga"/>`); }
+    /* la soga: un lazo de mano a mano; en la doble, la segunda vuelta se ve por arriba */
+    if (c === "soga"){ const a = J.hN, b = J.hF, lazo = (abajo, cls) => { const m = [(a[0] + b[0]) / 2 + 6, abajo];
+        return `<path d="M${n1(a[0])} ${n1(a[1])}Q${n1(m[0])} ${n1(m[1] * 2 - (a[1] + b[1]) / 2)} ${n1(b[0])} ${n1(b[1])}" class="${cls}"/>`; };
+      o.push(lazo(PISO + 2, "soga")); if (f.soga === "doble") o.push(lazo(Math.min(J.hd[1], a[1]) - 34, "soga sg2")); }
     if (f.lastre) o.push(`<circle cx="${n1(J.hip[0] + 4)}" cy="${n1(J.hip[1] + 22)}" r="10" class="hierro"/><line x1="${n1(J.hip[0])}" y1="${n1(J.hip[1])}" x2="${n1(J.hip[0] + 4)}" y2="${n1(J.hip[1] + 12)}" class="cadena"/>`);
     if (f.toalla) o.push(`<rect x="${n1(J.fN[0] - 9)}" y="${PISO - 3}" width="26" height="4" rx="2" class="toalla"/>`);
     if (f.silla){ const [sx, sy, lado] = f.silla, rx = lado === "der" ? sx + 18 : sx - 18;
@@ -155,45 +160,57 @@ K.fig = (() => {
 
   /* ===== cada persona tiene su tono de piel y su pelo, sorteados por ejercicio: siempre la misma para el mismo ejercicio ===== */
   const TONOS = ["#f1cba8", "#e2b58f", "#d8a47f", "#c48e66", "#a8714c", "#8d5a3b", "#6b4430", "#4f3224"];
-  const PELOS = ["#2b211b", "#1c1714", "#3b2a1e", "#5a3d26", "#7a5a3c", "#2b211b"];
+  const PELOS = ["#2b211b", "#1c1714", "#3b2a1e", "#5a3d26", "#7a5a3c", "#9a7650"];
   const sorteo = (id, sal) => [...(id + sal)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
-  const persona = id => `--tono:${TONOS[sorteo(id, "piel") % TONOS.length]};--pelo:${PELOS[sorteo(id, "pelo") % PELOS.length]}`;
+  /* la sombra de la piel sale del tono, mezclada acá y no en el CSS: así anda igual en un WebView viejo */
+  const mezcla = (a, b, t) => "#" + [1, 3, 5].map(i => Math.round(parseInt(a.substr(i, 2), 16) * t + parseInt(b.substr(i, 2), 16) * (1 - t)).toString(16).padStart(2, "0")).join("");
+  const persona = id => { const t = TONOS[sorteo(id, "piel") % TONOS.length];
+    return `--tono:${t};--tono-s:${mezcla(t, "#3b1d0e", .76)};--tono-ss:${mezcla(t, "#3b1d0e", .6)};--pelo:${PELOS[sorteo(id, "pelo") % PELOS.length]}`; };
 
-  /* el dibujo de una pose */
-  function pose(f, P, o = {}){
-    const J = ubicar(f, P), [x0, y0, w, h] = o.vb;
-    let g = o.fondo === false ? "" : `<circle cx="${n1(x0 + w / 2)}" cy="${n1(y0 + h / 2)}" r="${n1(Math.min(w, h) * .47)}" class="fig-disco"/>`;
-    g += elemento(f, J, true) + `<line x1="${n1(x0 - 40)}" y1="${PISO + 1}" x2="${n1(x0 + w + 40)}" y2="${PISO + 1}" class="fig-piso"/>`;
-    if (f.estela && o.estela !== false) for (let i = 0; i <= 10; i++){ const p = ubicar(f, en(f, i / 10))[f.estela]; g += `<circle cx="${n1(p[0])}" cy="${n1(p[1])}" r="${i % 5 ? 1.3 : 2.2}" fill="var(--c)" opacity="${i % 5 ? .45 : .85}"/>`; }
-    return g + cuerpo(J) + elemento(f, J, false);
+  /* el fondo no cambia en todo el movimiento: el disco detrás del cuerpo, lo que está atrás y el piso */
+  function fondo(f, e, chica){
+    const [x0, , w] = e.vb, [cx, cy, r] = e.disco || [];
+    let g = "";
+    /* el disco va centrado en el cuerpo; si cruza el piso, el piso lo corta */
+    if (e.disco) g += cy + r <= PISO ? `<circle cx="${n1(cx)}" cy="${n1(cy)}" r="${n1(r)}" class="fig-disco"/>`
+      : `<path d="M${n1(cx - Math.sqrt(r * r - (PISO - cy) ** 2))} ${PISO}A${n1(r)} ${n1(r)} 0 ${cy < PISO ? 1 : 0} 1 ${n1(cx + Math.sqrt(r * r - (PISO - cy) ** 2))} ${PISO}Z" class="fig-disco"/>`;
+    return g + elemento(f, chica) + `<line x1="${n1(x0 - 40)}" y1="${PISO + 1}" x2="${n1(x0 + w + 40)}" y2="${PISO + 1}" class="fig-piso"/>`;
   }
+  /* lo que se mueve: el cuerpo y lo que tiene en las manos */
+  const frente = (f, P) => { const J = ubicar(f, P); return cuerpo(J) + enMano(f, J); };
 
-  /* el marco: lo que ocupa el cuerpo en todo el movimiento, más el piso o la barra; así la figura se ve grande y no salta */
+  /* el encuadre: lo que ocupa el cuerpo en todo el movimiento, más el disco y el aparato; así la figura se ve grande y no salta */
   const puntos = J => ["hip", "sh", "hd", "eN", "hN", "eF", "hF", "kN", "fN", "tN", "kF", "fF", "tF"].map(k => J[k]);
-  function marco(f, poses, cuadrado){
-    const p = poses.flatMap(P => puntos(ubicar(f, P)));
-    const m = cuadrado ? 8 : 16;
-    let x0 = Math.min(...p.map(q => q[0])) - m, x1 = Math.max(...p.map(q => q[0])) + m, y0 = Math.min(...p.map(q => q[1])) - m, y1 = PISO + 6;
-    if (!cuadrado && (f.con === "barra" || f.con === "paralelas")) y0 = Math.min(y0, f.en[1] - 14);
-    if (!cuadrado && f.con === "bici"){ x0 = Math.min(x0, f.en[0] - 70); x1 = Math.max(x1, f.en[0] + 106); }
-    /* la silla y el banco entran enteros en el encuadre grande */
-    if (!cuadrado && f.silla){ x0 = Math.min(x0, f.silla[0] - 28); x1 = Math.max(x1, f.silla[0] + 28); y0 = Math.min(y0, f.silla[1] - 56); }
-    if (!cuadrado && f.banco){ x0 = Math.min(x0, f.banco[0] - 34); x1 = Math.max(x1, f.banco[0] + 34); }
-    let w = x1 - x0, h = y1 - y0;
-    const ar = cuadrado ? 1 : .86;
-    if (w < h * ar){ x0 -= (h * ar - w) / 2; w = h * ar; }
-    if (cuadrado){ if (h < w){ y0 -= (w - h) * .6; h = w; } else { const z = h * .92; x0 += (w - z) / 2; y0 += h - z - 4; w = h = z; } }
-    return [x0, y0, w, h];
+  function encuadre(f, poses, chica){
+    const p = poses.flatMap(P => puntos(ubicar(f, P))), xs = p.map(q => q[0]), ys = p.map(q => q[1]);
+    const bx0 = Math.min(...xs) - 10, bx1 = Math.max(...xs) + 10, by0 = Math.min(...ys) - 12, by1 = Math.max(...ys) + 8;
+    const cx = (bx0 + bx1) / 2, cy = (by0 + by1) / 2;
+    /* la miniatura: el cuerpo llena el círculo, sin el resto de la escena */
+    if (chica){ const bw = bx1 - bx0, bh = by1 - by0, z = Math.max(Math.hypot(bw, bh) * .92, Math.max(bw, bh) * 1.04); return {vb: [cx - z / 2, cy - z / 2, z, z]}; }
+    const r = Math.max(bx1 - bx0, by1 - by0) / 2 + 12;
+    /* si el cuerpo no llega al piso (colgado de la barra) el piso queda fuera del cuadro y la figura se ve más grande */
+    const suelo = by1 > PISO - 40 || f.con === "bici" || f.banco || f.silla || f.pared !== undefined || f.poste !== undefined;
+    let x0 = Math.min(bx0, cx - r) - 6, x1 = Math.max(bx1, cx + r) + 6, y0 = Math.min(by0, cy - r) - 6, y1 = suelo ? PISO + 6 : Math.min(PISO + 6, Math.max(by1, cy + r) + 6);
+    if (f.con === "barra" || f.con === "paralelas") y0 = Math.min(y0, f.en[1] - 14);
+    if (f.con === "bici"){ x0 = Math.min(x0, f.en[0] - 70); x1 = Math.max(x1, f.en[0] + 106); }
+    /* la silla y el banco entran enteros */
+    if (f.silla){ x0 = Math.min(x0, f.silla[0] - 28); x1 = Math.max(x1, f.silla[0] + 28); y0 = Math.min(y0, f.silla[1] - 56); }
+    if (f.banco){ x0 = Math.min(x0, f.banco[0] - 34); x1 = Math.max(x1, f.banco[0] + 34); }
+    let w = x1 - x0; const h = y1 - y0;
+    if (w < h * .86){ x0 -= (h * .86 - w) / 2; w = h * .86; }
+    return {vb: [x0, y0, w, h], disco: [cx, cy, r]};
   }
   const caja = (cls, id, fam, vb, cuerpo, attr = "") => `<svg class="fig ${cls}" viewBox="${vb.map(n1).join(" ")}" style="--c:var(--${fam});--cs:var(--${fam}-soft);${persona(id)}" aria-hidden="true"${attr}>${cuerpo}</svg>`;
-  const pMuestra = f => f.ciclo ? f.k[f.muestra ?? 0] : f.k[f.muestra ?? f.k.length - 1];
-  /* grande: en la serie, se mueve a su ritmo (o queda quieta si el sistema pide menos movimiento) */
-  const grande = (id, fam) => { const f = K.POSES[id]; if (!f) return "";
-    const quieta = !f.ritmo || K.reduce(), vb = marco(f, muestras(f).map(u => en(f, u)));
-    return caja("grande", id, fam, vb, `<g>${pose(f, quieta ? pMuestra(f) : en(f, 0), {vb})}</g>`, quieta ? "" : ` data-fig="${id}" data-vb="${vb.map(n1).join(" ")}"`); };
-  /* chica: una sola pose, la que más dice, recortada en un círculo */
-  const chica = (id, fam) => { const f = K.POSES[id]; if (!f) return ""; const P = pMuestra(f), vb = marco(f, [P], true);
-    return `<span class="fig-chica" style="--cs:var(--${fam}-soft)">${caja("chica", id, fam, vb, pose(f, P, {estela: false, vb, fondo: false}))}</span>`; };
+  /* la pose que más dice: «muestra» es una de las poses, o un momento del movimiento si no es entero */
+  const pMuestra = f => Number.isInteger(f.muestra ?? 0) ? (f.ciclo ? f.k[f.muestra ?? 0] : f.k[f.muestra ?? f.k.length - 1]) : en(f, f.muestra);
+  /* grande: en la serie se mueve a su ritmo (o queda quieta si el sistema pide menos movimiento); con «u», un momento quieto del movimiento */
+  const grande = (id, fam, u) => { const f = K.POSES[id]; if (!f) return "";
+    const vive = !!f.ritmo && u === undefined && !K.reduce(), e = encuadre(f, muestras(f).map(x => en(f, x)));
+    const P = u !== undefined ? en(f, u) : vive ? en(f, fase(f, t)) : pMuestra(f);
+    return caja("grande", id, fam, e.vb, `<g>${fondo(f, e)}</g><g>${frente(f, P)}</g>`, vive ? ` data-fig="${id}"` : ""); };
+  /* chica: una sola pose, la que más dice, recortada al cuerpo en un círculo */
+  const chica = (id, fam) => { const f = K.POSES[id]; if (!f) return ""; const P = pMuestra(f), e = encuadre(f, [P], true);
+    return `<span class="fig-chica" style="--cs:var(--${fam}-soft)">${caja("chica", id, fam, e.vb, fondo(f, e, true) + frente(f, P))}</span>`; };
 
   /* el ritmo: [ida, quieto, vuelta, quieto] en segundos; en un ciclo, [segundos por vuelta] */
   const fase = (f, t) => {
@@ -202,17 +219,19 @@ K.fig = (() => {
     const e = x => x < .5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2;
     return t < a ? e(t / a) : t < a + b ? 1 : t < a + b + c ? 1 - e((t - a - b) / c) : 0;
   };
-  /* un solo reloj para todas las figuras que se mueven: dibuja a 30 cuadros y se apaga solo cuando no queda ninguna */
-  let corriendo = false, t0 = 0, ult = 0;
+  /* un solo reloj para todas las figuras que se mueven, a 30 cuadros. Corre solo mientras la sesión corre:
+     en pausa (o si el sistema pasa a pedir menos movimiento) la figura queda donde está. Se apaga cuando no queda ninguna */
+  let corriendo = false, t = 0, antes = 0;
+  const frena = () => K.reduce() || !!K.sesion?.enPausa?.();
   function cuadro(ts){
     const vivas = document.querySelectorAll("svg.fig[data-fig]");
     if (!vivas.length){ corriendo = false; return; }
-    if (ts - ult > 32){ ult = ts;
-      vivas.forEach(el => { const f = K.POSES[el.dataset.fig];
-        el.firstChild.innerHTML = pose(f, en(f, fase(f, (ts - t0) / 1000)), {vb: el.dataset.vb.split(" ").map(Number)}); }); }
-    requestAnimationFrame(cuadro);
+    if (!frena()){ t += Math.min(ts - antes, 100) / 1000;
+      vivas.forEach(el => { const f = K.POSES[el.dataset.fig]; el.lastChild.innerHTML = frente(f, en(f, fase(f, t))); }); }
+    antes = ts;
+    setTimeout(() => requestAnimationFrame(cuadro), 28);
   }
-  const animar = () => { if (corriendo || K.reduce() || !document.querySelector("svg.fig[data-fig]")) return; corriendo = true; t0 = performance.now(); requestAnimationFrame(cuadro); };
+  const animar = () => { if (corriendo || K.reduce() || !document.querySelector("svg.fig[data-fig]")) return; corriendo = true; antes = performance.now(); requestAnimationFrame(cuadro); };
 
   /* ===== la revisión de cada pose: lo que la prueba mira antes de dejarla entrar ===== */
   const VOL = {hip: 8, sh: 7, hd: 10, eN: 4, eF: 4, hN: 3, hF: 3, kN: 5, kF: 5, fN: 3, fF: 3};
@@ -228,5 +247,9 @@ K.fig = (() => {
     if (f.ritmo && !(f.ciclo ? f.ritmo.length === 1 : f.ritmo.length === 4)) mal.push("ritmo mal armado");
     return [...new Set(mal)];
   }
-  return {grande, chica, animar, revisar, ubicar, en, rels, lim, joints, PISO, TOBILLO: PISO - 5, persona};
+  /* lo que comparten los archivos de poses: el sostenido, el parado y el cuatro patas */
+  const quieto = p => [p, p];
+  const PARADO = {torso: 180, head: 180, armN: [4, 6], armF: [358, 2], legN: [0, 0], legF: [2, 2]};
+  const CUATRO = {torso: 102, head: 100, armN: [0, 0], armF: [2, 2], legN: [0, 270], legF: [2, 270], pies: [-90, -90]};
+  return {grande, chica, animar, revisar, persona, quieto, PARADO, CUATRO, PISO, TOBILLO: PISO - 5};
 })();

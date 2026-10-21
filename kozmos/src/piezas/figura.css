@@ -1,25 +1,30 @@
 /* ===== Figura: la persona que muestra cada ejercicio (ver figura.js) ===== */
 .fig{display:block; width:100%; height:auto; overflow:hidden;
-  /* el tono y el pelo llegan sorteados en el estilo de cada figura; la sombra sale del tono */
-  --piel:var(--tono,#d8a47f); --piel-s:color-mix(in srgb,var(--piel) 76%,#3b1d0e); --piel-ss:color-mix(in srgb,var(--piel) 60%,#3b1d0e);
+  /* el tono, su sombra y el pelo llegan sorteados en el estilo de cada figura */
+  --piel:var(--tono,#d8a47f); --piel-s:var(--tono-s,#b4815f); --piel-ss:var(--tono-ss,#98694c);
   --short:#2c2f35; --short-f:#1d1f23; --short-l:#454952; --zapa:#3d4048; --zapa-f:#2a2c31; --suela:#f4f3ef; --media:#f4f3ef;
-  --ropa-s:color-mix(in srgb,var(--c) 70%,#000); --ribete:color-mix(in srgb,var(--c) 55%,#fff)}
-.fig-piso{stroke:var(--ink); stroke-width:1.5; opacity:.8}
+  /* todo lo que se usa (barra, banco, pesas) va en un solo tono neutro, que no le gane a la persona */
+  --ap:var(--ink-2)}
+.fig-piso{stroke:var(--ink-3); stroke-width:1.5}
 .fig-disco{fill:var(--cs)}
-.fig-el .poste{stroke:var(--ink-3); stroke-width:2.5; stroke-linecap:round}
-.fig-el .barra{stroke:var(--ink); stroke-width:5; stroke-linecap:round}
-.fig-el .par,.fig-el .silla{stroke:var(--ink); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
-.fig-el .banco{fill:var(--off)}
-.fig-el .pared{fill:var(--off)}
-.fig-el .palo{stroke:var(--ink-2); stroke-width:6; stroke-linecap:round}
-.fig-el .hierro{fill:var(--ink-2)}
-.fig-el .asa{stroke:var(--ink-2); stroke-width:3; fill:none}
-.fig-el .manc{stroke:var(--ink-2); stroke-width:6; stroke-linecap:round}
-.fig-el .soga{stroke:var(--ink-2); stroke-width:1.6; fill:none}
-.fig-el .cadena{stroke:var(--ink-3); stroke-width:1.5}
-.fig-el .toalla{fill:var(--ink-3)}
-.fig-el .rueda{fill:none; stroke:var(--ink-2); stroke-width:3}
-.fig-el .cuadro{fill:none; stroke:var(--ink); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round}
+.fig-el .poste{stroke:var(--ap); stroke-width:2.5; stroke-linecap:round; opacity:.5}
+.fig-el .barra{stroke:var(--ap); stroke-width:5; stroke-linecap:round}
+.fig-el .par,.fig-el .silla{stroke:var(--ap); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.fig-el .banco,.fig-el .pared{fill:var(--off)}
+.fig-el .palo{stroke:var(--ap); stroke-width:6; stroke-linecap:round}
+.fig-el .hierro{fill:var(--ap)}
+.fig-el .asa{stroke:var(--ap); stroke-width:3; fill:none}
+.fig-el .manc{stroke:var(--ap); stroke-width:6; stroke-linecap:round}
+.fig-el .soga{stroke:var(--ap); stroke-width:1.6; fill:none}
+.fig-el .sg2{opacity:.45; stroke-dasharray:4 3}
+.fig-el .cadena{stroke:var(--ap); stroke-width:1.5}
+.fig-el .toalla{fill:var(--ap); opacity:.6}
+.fig-el .rueda{fill:none; stroke:var(--ap); stroke-width:3}
+.fig-el .cuadro{fill:none; stroke:var(--ap); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round}
+/* en la miniatura el trazo engorda, para que a 44 px se siga viendo */
+.fig.chica .fig-piso{stroke-width:4}
+.fig.chica .barra{stroke-width:9}
+.fig.chica .par,.fig.chica .silla,.fig.chica .soga,.fig.chica .cuadro,.fig.chica .rueda{stroke-width:6}
 /* en la serie: el centro de la pantalla, entre la indicación y el número */
 .ses-fig{width:min(260px,64vw); margin:auto auto 0}
 .ses-fig + .ses-reloj{margin-top:0; padding-top:4px}
@@ -34,11 +39,15 @@
 .tile.fig-tile .fig-chica{width:100%; height:100%}
 .ses-luego.con-fig{display:flex; align-items:center; justify-content:center; gap:10px}
 .ses-luego .fig-chica{width:44px; flex:none}
+/* en la lista de un circuito, cada ejercicio con su persona chiquita */
+.circ-items .ln:has(.fig-chica){justify-content:flex-start; gap:12px}
+.circ-items .ln .fig-chica{width:36px; flex:none}
+.circ-items .ln .fig-chica + span{flex:1}
 @media (orientation:landscape) and (max-height:520px){
   /* en horizontal la figura va al lado del número, no arriba: así entra todo sin desplazar */
   .ses-a:has(>.ses-fig){display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:16px; align-content:start}
   .ses-a:has(>.ses-fig)>*{grid-column:1/-1}
-  .ses .ses-a>.ses-fig{grid-column:1; width:auto; height:min(170px,42vh); margin:0}
+  .ses .ses-a>.ses-fig{grid-column:1; width:auto; height:min(200px,51vh); margin:0}
   .ses .ses-a>.ses-fig .fig{height:100%; width:auto}
   .ses .ses-a>.ses-fig + .ses-reloj,.ses .ses-a>.ses-fig + .anillo-desc{grid-column:2; margin:auto 0}
 }

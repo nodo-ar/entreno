@@ -11,6 +11,7 @@ K.sesion = (() => {
 
   s.activa = () => !!S;
   s.estado = () => S;
+  s.enPausa = () => !!S && S.pausa !== null;
   s.bloque = () => S.plan.bloques[S.b];
   /* la serie que va: los bloques de rutina llevan una lista de pasos (con superseries, de ejercicios distintos) */
   const pasoDe = (b, k) => b.pasos ? b.pasos[k] : {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, descanso: b.descanso};

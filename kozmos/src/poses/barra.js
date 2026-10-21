@@ -1,12 +1,12 @@
 /* ===== Poses · barra: colgarse, dominadas, front lever, muscle-up, bandera y elevaciones (ver piezas/figura.js) ===== */
 (() => {
   const B = {con: "barra", fijo: "hN", en: [150, 50]};
-  /* colgado: brazos rectos, piernas juntas apenas adelante */
-  const colgado = {torso: 180, head: 180, armN: [180, 180], armF: [176, 178], legN: [4, 352], legF: [8, 356]};
+  /* colgado: brazos rectos, rodillas apenas dobladas atrás, para que se lea en el aire y no parado */
+  const colgado = {torso: 180, head: 180, armN: [180, 180], armF: [176, 178], legN: [6, 326], legF: [10, 330]};
   /* colgado pasivo: todo suelto, la cabeza cae entre los hombros */
-  const pasivo = {...colgado, torso: 178, head: 170, armN: [180, 180], armF: [177, 179], legN: [6, 354], legF: [10, 358]};
+  const pasivo = {...colgado, torso: 178, head: 170, armN: [180, 180], armF: [177, 179], legN: [8, 330], legF: [12, 334]};
   /* colgado activo: hombros abajo, pecho afuera, la cabeza atrás y las piernas apenas atrás */
-  const activo = {torso: 192, head: 198, armN: [178, 178], armF: [175, 177], legN: [0, 350], legF: [4, 354]};
+  const activo = {torso: 192, head: 198, armN: [178, 178], armF: [175, 177], legN: [2, 324], legF: [6, 328]};
   /* arriba de la dominada: pecho a la barra, mentón por encima */
   const arriba = {torso: 178, head: 176, armN: [40, 175], armF: [37, 173], legN: [12, 350], legF: [16, 354]};
   const pecho = {torso: 168, head: 172, armN: [28, 176], armF: [26, 174], legN: [18, 346], legF: [22, 350]};
@@ -44,23 +44,23 @@
 
   Object.assign(K.POSES, {
     /* dominadas */
-    "dominada-negativa": {...B, estela: "hd", k: [arriba, colgado], ritmo: [.6, .4, 4.5, .8], muestra: 0},
-    "dominada": {...B, estela: "hd", k: [colgado, arriba], ritmo: [1, .4, 1.4, .5]},
-    "dominada-explosiva": {...B, estela: "hd", k: [colgado, pecho], ritmo: [.5, .3, 1.4, .6]},
-    "dominada-arquera": {...B, estela: "hd", k: [colgado, {...arriba, armF: [94, 94]}], ritmo: [1.2, .4, 1.6, .5]},
-    "dominada-lastre": {...B, lastre: true, estela: "hd", k: [colgado, arriba], ritmo: [1.2, .5, 1.6, .6]},
-    "dominada-supina": {...B, estela: "hd", k: [colgado, supina], ritmo: [1, .4, 1.4, .5]},
-    "dominada-ancha": {...B, estela: "hd", k: [{...colgado, torso: 184}, ancha], ritmo: [1.1, .4, 1.5, .5]},
-    "dominada-un-brazo-negativa": {...B, estela: "hd", k: [unoArr, unoCol], ritmo: [.6, .4, 5, .8], muestra: 0},
-    "dominada-un-brazo": {...B, estela: "hd", k: [unoCol, unoArr], ritmo: [1.4, .5, 1.8, .6]},
+    "dominada-negativa": {...B, k: [arriba, colgado], ritmo: [.6, .4, 4.5, .8], muestra: 0},
+    "dominada": {...B, k: [colgado, arriba], ritmo: [1, .4, 1.4, .5]},
+    "dominada-explosiva": {...B, k: [colgado, pecho], ritmo: [.5, .3, 1.4, .6]},
+    "dominada-arquera": {...B, k: [colgado, {...arriba, armF: [94, 94]}], ritmo: [1.2, .4, 1.6, .5]},
+    "dominada-lastre": {...B, lastre: true, k: [colgado, arriba], ritmo: [1.2, .5, 1.6, .6]},
+    "dominada-supina": {...B, k: [colgado, supina], ritmo: [1, .4, 1.4, .5]},
+    "dominada-ancha": {...B, k: [{...colgado, torso: 184}, ancha], ritmo: [1.1, .4, 1.5, .5]},
+    "dominada-un-brazo-negativa": {...B, k: [unoArr, unoCol], ritmo: [.6, .4, 5, .8], muestra: 0},
+    "dominada-un-brazo": {...B, k: [unoCol, unoArr], ritmo: [1.4, .5, 1.8, .6]},
     /* colgarse */
     "colgado-activo": {...B, k: [activo, activo]},
     "colgado-un-brazo": {...B, k: [unoCol, unoCol]},
-    "retraccion-escapular": {...B, estela: "hd", k: [pasivo, activo], ritmo: [1.5, 1.2, 1.5, .8]},
+    "retraccion-escapular": {...B, k: [pasivo, activo], ritmo: [1.5, 1.2, 1.5, .8]},
     /* muscle-up */
-    "muscle-up-negativa": {...B, estela: "sh", k: [apoyo, vuelta, pecho], ritmo: [.6, .5, 4, .8], muestra: 0},
-    "muscle-up-impulso": {...B, estela: "sh", k: [hamaca, pechoKip, vuelta, apoyo], ritmo: [1.2, .6, 1.8, .6]},
-    "muscle-up": {...B, estela: "sh", k: [colgado, pecho, vuelta, apoyo], ritmo: [1.6, .6, 2, .6]},
+    "muscle-up-negativa": {...B, k: [apoyo, vuelta, pecho], ritmo: [.6, .5, 4, .8], muestra: 0},
+    "muscle-up-impulso": {...B, k: [hamaca, pechoKip, vuelta, apoyo], ritmo: [1.2, .6, 1.8, .6]},
+    "muscle-up": {...B, k: [colgado, pecho, vuelta, apoyo], ritmo: [1.6, .6, 2, .6]},
     /* front lever y sus pasos: sostenidos */
     "fl-bolita": {...B, k: [bolita, bolita]},
     "fl-tuck": {...B, k: [tuck, tuck]},
@@ -68,16 +68,16 @@
     "fl-una-pierna": {...B, k: [{...lever, legF: [220, 76]}, {...lever, legF: [220, 76]}]},
     "fl-straddle": {...B, k: [{...lever, legN: [100, 100], legF: [80, 80]}, {...lever, legN: [100, 100], legF: [80, 80]}]},
     "front-lever": {...B, k: [lever, lever]},
-    "remo-fl-tuck": {...B, barraAtras: true, estela: "sh", k: [tuck, tuckRemo], ritmo: [1, .5, 1.4, .5]},
+    "remo-fl-tuck": {...B, barraAtras: true, k: [tuck, tuckRemo], ritmo: [1, .5, 1.4, .5]},
     /* bandera humana en el poste */
     "bandera-rodillas": {...P, k: [{...bandera, legN: [200, 90], legF: [202, 92]}, {...bandera, legN: [200, 90], legF: [202, 92]}]},
     "bandera-abierta": {...P, k: [{...bandera, legN: [104, 104], legF: [76, 76]}, {...bandera, legN: [104, 104], legF: [76, 76]}]},
     "bandera": {...P, k: [bandera, bandera]},
     /* remo invertido en la barra baja */
-    "remo-invertido": {con: "barra-baja", fijo: "hN", en: [170, 175], barraAtras: true, estela: "sh", k: [remoAbajo, remoArriba], ritmo: [1, .5, 1.4, .5]},
+    "remo-invertido": {con: "barra-baja", fijo: "hN", en: [170, 175], barraAtras: true, k: [remoAbajo, remoArriba], ritmo: [1, .5, 1.4, .5]},
     /* elevaciones colgado */
-    "rodillas-colgado": {...B, estela: "kN", k: [colgado, rodillas], ritmo: [1, .4, 1.4, .5]},
-    "piernas-colgado": {...B, estela: "fN", k: [colgado, piernas], ritmo: [1.2, .4, 1.6, .5]},
-    "pies-a-la-barra": {...B, rango: "avanzado", estela: "fN", k: [{...colgado, legN: [6, 6], legF: [9, 9]}, pies], ritmo: [1.2, .3, 1.6, .5]}
+    "rodillas-colgado": {...B, k: [colgado, rodillas], ritmo: [1, .4, 1.4, .5]},
+    "piernas-colgado": {...B, k: [colgado, piernas], ritmo: [1.2, .4, 1.6, .5]},
+    "pies-a-la-barra": {...B, rango: "avanzado", k: [{...colgado, legN: [6, 6], legF: [9, 9]}, pies], ritmo: [1.2, .3, 1.6, .5]}
   });
 })();

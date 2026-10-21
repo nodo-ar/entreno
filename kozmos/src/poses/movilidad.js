@@ -6,9 +6,9 @@
   /* acostado boca arriba con la cabeza a la izquierda */
   const boca = {torso: 270, head: 265, armN: [90, 90], armF: [88, 88], legN: [92, 92], legF: [90, 90]};
   /* en cuatro patas: rodillas bajo la cadera, manos bajo los hombros, empeines planos en el piso */
-  const cuatro = {torso: 102, head: 104, armN: [0, 0], armF: [2, 2], legN: [0, 270], legF: [2, 270], pies: [-90, -90]};
-  const parado = {torso: 180, head: 180, armN: [2, 2], armF: [358, 358], legN: [0, 0], legF: [2, 2]};
-  const quieta = P => [P, P], plancha = {torso: 94, head: 96, armN: [0, 0], armF: [2, 2]};
+  const cuatro = K.fig.CUATRO;
+  const parado = {...K.fig.PARADO, armN: [2, 2], armF: [358, 358]};
+  const quieta = K.fig.quieto, plancha = {torso: 94, head: 96, armN: [0, 0], armF: [2, 2]};
   Object.assign(K.POSES, {
     /* el lateral se ve de frente; de perfil va sentado, piernas abiertas, apoyado atrás con la cadera adelante */
     "espagat-lateral-90": {fijo: "hip", en: [150, S], rango: "avanzado", k: quieta(sentado(196, 186, [350, 350], [347, 347]))},
@@ -23,10 +23,10 @@
     "puente": {fijo: "hN", en: [110, 264], rango: "avanzado", k: quieta({torso: 305, head: 335, armN: [322, 322], armF: [320, 320], legN: [40, 350], legF: [40, 350]})},
     "pancake": {fijo: "hip", en: [150, S], rango: "avanzado", k: quieta(sentado(105, 98, [70, 70], [72, 72]))},
     /* sin columna que se curve: la cabeza y la cadera cuentan el gato y el camello */
-    "gato-camello": {fijo: "kN", en: [130, R], estela: "hd", k: [{...cuatro, head: 58}, {...cuatro, head: 135}], ritmo: [3, 1, 3, 1]},
-    "curl-up": {fijo: "hip", en: [150, S], estela: "hd", k: [{...boca, armN: [88, 92], armF: [86, 90], legN: [135, 35]},
+    "gato-camello": {fijo: "kN", en: [130, R], k: [{...cuatro, head: 58}, {...cuatro, head: 135}], ritmo: [3, 1, 3, 1]},
+    "curl-up": {fijo: "hip", en: [150, S], k: [{...boca, armN: [88, 92], armF: [86, 90], legN: [135, 35]},
       {...boca, torso: 262, head: 258, armN: [86, 90], armF: [84, 88], legN: [135, 35]}], ritmo: [1, 8, 1, 2]},
-    "plancha-lateral-rodillas": {fijo: "eN", en: [180, 263], k: quieta({torso: 107, head: 110, armN: [0, 90], armF: [287, 287], legN: [287, 270], legF: [285, 270], pies: [-90, -90]})},
+    "plancha-lateral-rodillas": {fijo: "eN", en: [180, T], k: quieta({torso: 107, head: 110, armN: [0, 90], armF: [287, 287], legN: [287, 270], legF: [285, 270], pies: [-90, -90]})},
     "perro-de-caza-sostenido": {fijo: "kN", en: [130, R], k: quieta({...cuatro, armN: [95, 95], legF: [272, 272]})},
     "respiracion-90-90": {fijo: "hip", en: [120, S], pared: 164, k: quieta({...boca, head: 266, legN: [180, 90], legF: [182, 92]})},
     "bicho-muerto-sostenido": {fijo: "hip", en: [160, S], k: quieta({...boca, armN: [262, 262], armF: [180, 180], legN: [180, 90], legF: [96, 96]})},
@@ -41,10 +41,10 @@
     "rodilla-al-pecho": {fijo: "hip", en: [150, S], k: quieta({...boca, armN: [82, 182], armF: [81, 180], legN: [215, 85]})},
     "gluteo-banda-it": {fijo: "hip", en: [150, S], k: quieta({...boca, armN: [100, 170], armF: [262, 262], legN: [190, 160]})},
     "piernas-abiertas": {fijo: "hip", en: [150, S], rango: "avanzado", k: quieta(sentado(125, 120, [51, 51], [52, 52]))},
-    "isquios-90-90": {fijo: "hip", en: [150, S], estela: "fN", k: [{...boca, torso: 262, head: 258, armN: [80, 172], armF: [79, 170], legN: [190, 100]},
+    "isquios-90-90": {fijo: "hip", en: [150, S], k: [{...boca, torso: 262, head: 258, armN: [80, 172], armF: [79, 170], legN: [190, 100]},
       {...boca, torso: 262, head: 258, armN: [80, 172], armF: [79, 170], legN: [190, 170]}], ritmo: [3, 2, 2, 1]},
     /* alternado: un pie al lado de la mano, cambio con las dos rodillas bajo la cadera, y el otro */
-    "groiners": {fijo: "hN", en: [190, 264], rango: "avanzado", ciclo: true, estela: "kN", k: [
+    "groiners": {fijo: "hN", en: [190, 264], rango: "avanzado", ciclo: true, k: [
       {...plancha, legN: [76, 355], legF: [306, 306], pies: [0, 22]}, {...plancha, legN: [10, 240], legF: [12, 242]},
       {...plancha, legN: [306, 306], legF: [76, 355], pies: [22, 0]}, {...plancha, legN: [12, 242], legF: [10, 240]}], ritmo: [4]},
     "flexor-cadera-arrodillado": {fijo: "fN", en: [180, T], k: quieta({torso: 184, head: 182, armN: [350, 60], armF: [186, 186], legN: [90, 0], legF: [340, 270], pies: [0, -90]})}

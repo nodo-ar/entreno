@@ -1054,6 +1054,14 @@ prueba("maniqui", async () => {
   const antes = await p.$eval("svg.fig[data-fig]", x => x.innerHTML);
   await tick(p, 1200);
   ok(await p.$eval("svg.fig[data-fig]", x => x.innerHTML) !== antes, "la figura de la serie quedó quieta");
+  /* en pausa la figura se queda donde está; al seguir, vuelve a moverse */
+  await p.click("#s-mas"); await p.click('.pmi[data-id="pausa"]'); await p.waitForSelector(".ses-pausa");
+  const quieta = await p.$eval("svg.fig[data-fig]", x => x.lastChild.innerHTML);
+  await tick(p, 1500);
+  ok(await p.$eval("svg.fig[data-fig]", x => x.lastChild.innerHTML) === quieta, "en pausa la figura sigue moviéndose");
+  await p.click("#s-mas"); await p.click('.pmi[data-id="pausa"]'); await p.waitForFunction(() => !document.querySelector(".ses-pausa"));
+  await tick(p, 1200);
+  ok(await p.$eval("svg.fig[data-fig]", x => x.lastChild.innerHTML) !== quieta, "después de la pausa la figura no vuelve a moverse");
   /* la figura no tapa el número ni el botón */
   const caja = s => p.$eval(s, x => { const r = x.getBoundingClientRect(); return {t: r.top, b: r.bottom}; });
   const fig = await caja(".ses-fig"), num = await caja(".ses-reloj"), btn = await caja("#s-listo");
@@ -1064,6 +1072,10 @@ prueba("maniqui", async () => {
   /* al irse de la sesión no queda ninguna figura moviéndose (el reloj se apaga solo) */
   await p.click("#s-cortar"); await p.waitForSelector(".res"); await tick(p, 200);
   ok(!(await p.$("svg.fig[data-fig]")), "quedó una figura animada fuera de la sesión");
+  /* en un circuito, cada ejercicio de la lista lleva su persona chiquita */
+  await ir(p, "#/hoy/hazanas/hercules"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
+  const conFig = await p.$$eval(".circ-items .ln", ls => ls.filter(l => l.querySelector(".fig-chica svg.fig")).length);
+  ok(conFig > 0, "el circuito no muestra a nadie en la lista");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
   /* con movimiento reducido la figura está, pero quieta */
