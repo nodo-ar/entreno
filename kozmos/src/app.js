@@ -32,14 +32,20 @@ K.horizontal = () => matchMedia("(orientation: landscape) and (max-height: 520px
 K.mostrar = (anim = "") => {
   const r = K.ruta(), {tab, sub, hondo} = r, app = K.$("#app");
   K.menu.cerrar(true);
+  /* al salir de la sesión con el descanso corriendo, la isla nace de su anillo */
+  const an = !(tab === "hoy" && sub === "sesion") && K.$('[data-r="anillo"]', app);
+  if (an){ const r = an.getBoundingClientRect(); if (r.width) K._anillo = {r, t: Date.now()}; }
+  /* al cambiar de pestaña, la pantalla que se va gira hacia afuera (a la sesión se entra con el disco del logo, no girando) */
+  const viejo = anim === "tab" && sub !== "sesion" && sub !== "resumen" && !K.reduce() && K._ultima && app.firstElementChild, rv = viejo && viejo.getBoundingClientRect();
   const v = document.createElement("main");
   v.dataset.tab = tab;
   v.innerHTML = K.P[tab](r);
   /* en horizontal, dentro de la misma pestaña se mueve solo el panel abierto: la lista queda quieta */
   const panel = anim && anim !== "tab" && K.horizontal() && K.$(".split>.abierto", v);
-  v.className = "view" + (anim && !K.reduce() && !panel ? " vt-" + anim : "");
+  v.className = "view" + (anim && anim !== "tab" && !K.reduce() && !panel ? " vt-" + anim : "");
   if (panel && !K.reduce()) panel.classList.add("vt-" + anim);
   app.replaceChildren(v);
+  if (viejo){ const i = t => K.PESTANAS.findIndex(x => x[0] === t); K.mov.girar(viejo, rv, v, i(tab) >= i(K._ultima.tab) ? 1 : -1); }
   /* en la sesión y su resumen no hay barra: la pantalla es toda tuya */
   document.body.classList.toggle("en-sesion", tab === "hoy" && (sub === "sesion" || sub === "resumen"));
   K.sesion.alLatir();

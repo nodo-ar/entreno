@@ -4,10 +4,10 @@ K.VERSION = "dev"; /* la pone tools/armar.mjs al armar */
 
 /* íconos de trazo, 24 × 24 (los mismos del prototipo aprobado) */
 K.I = {
-  hoy:'<circle cx="11" cy="13" r="7"/><circle cx="11" cy="13" r="2" fill="currentColor" stroke="none"/><circle class="g-est" cx="19" cy="5" r="2" fill="currentColor" stroke="none"/>',
-  cielo:'<path class="g-lin" pathLength="1" d="M7.4 7.8 10.8 12M13.4 12.2 15.8 6.2M13.2 14.2 17.8 17"/><circle cx="6" cy="7" r="1.6" fill="currentColor" stroke="none"/><circle cx="17" cy="5" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="18" r="1.6" fill="currentColor" stroke="none"/>',
-  progreso:'<path d="M4 20A16 16 0 0 1 20 4" stroke-dasharray="1 3.2"/><circle class="g-sube" cx="16.2" cy="6.2" r="3" fill="currentColor" stroke="none"/><circle cx="4" cy="20" r="1.4" fill="currentColor" stroke="none"/>',
-  vos:'<circle cx="12" cy="8" r="4"/><circle cx="12" cy="8" r="1.2" fill="currentColor" stroke="none"/><g class="g-gira"><path d="M4 20.5a8 8 0 0 1 16 0"/><circle cx="17.7" cy="15.3" r="1.8" fill="currentColor" stroke="none"/></g>',
+  hoy:'<circle cx="12" cy="12.5" r="5.6"/><circle cx="12" cy="12.5" r="2" fill="currentColor" stroke="none"/><g class="orb"><circle cx="18.6" cy="5.9" r="2.4" fill="var(--fu)"/></g>',
+  cielo:'<path d="M7.4 7.8 10.8 12M13.4 12.2 15.8 6.6M13.2 14.2 17.8 17"/><circle cx="6" cy="7" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="18" r="1.6" fill="currentColor" stroke="none"/><circle class="ph" cx="16.6" cy="5.2" r="1.6" fill="currentColor" stroke="none"/><g class="orb"><circle cx="16.6" cy="5.2" r="2.6" fill="var(--mo)"/></g>',
+  progreso:'<path d="M4 20A16 16 0 0 1 20 4" stroke-dasharray="1 3.2"/><circle cx="4" cy="20" r="1.6" fill="currentColor" stroke="none"/><circle class="ph" cx="20" cy="4" r="1.4" fill="currentColor" stroke="none"/><g class="orb"><circle cx="20" cy="4" r="2.7" fill="var(--ra)"/></g>',
+  vos:'<g class="base"><circle class="v1" cx="5.8" cy="19" r="2.5" fill="currentColor" stroke="none"/><circle class="v3" cx="18.2" cy="19" r="2.5" fill="currentColor" stroke="none"/><circle class="v2" cx="12" cy="11.6" r="2.5" fill="currentColor" stroke="none"/></g><g class="orb"><circle cx="12" cy="4.2" r="2.5" fill="currentColor"/></g>',
   dots:'<circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/>',
   back:'<path d="M15 5l-7 7 7 7"/>',
   check:'<path d="M5 12l5 5 9-10"/>',

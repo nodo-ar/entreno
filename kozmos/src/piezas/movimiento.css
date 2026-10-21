@@ -35,18 +35,21 @@
 @keyframes prende{from{transform:scale(0); opacity:0}}
 .res-fig .figura circle{transform-box:fill-box; transform-origin:center}
 
-/* los gestos de los íconos de la barra, una vez, al elegirlos */
-nav.barra button .ic [class^="g-"]{transform-box:view-box}
-nav.barra button.gesto .g-est{transform-origin:19px 5px; animation:g-est .52s var(--ease)}
-nav.barra button.gesto .g-lin{stroke-dasharray:1 0; animation:g-lin .52s var(--ease)}
-nav.barra button.gesto .g-sube{transform-origin:4px 20px; animation:g-sube .56s var(--ease)}
-nav.barra button.gesto .g-gira{transform-origin:12px 12px; animation:g-gira .62s var(--ease)}
-@keyframes g-est{0%{transform:scale(0)} 55%{transform:scale(1.7)}}
-@keyframes g-lin{from{stroke-dasharray:0 1}}
-@keyframes g-sube{from{transform:rotate(-80deg)}}
-@keyframes g-gira{from{transform:rotate(-180deg)}}
+/* la barra: cada pestaña tiene su estrella, que existe solo en la elegida; apagado, el ícono está entero */
+.ic .orb{opacity:0; transition:opacity .18s}
+.ic .orb circle{stroke:var(--halo,var(--bg)); stroke-width:1.6; paint-order:stroke}
+.ic .ph{transition:opacity .2s .42s}
+.ic .base{transition:transform .42s var(--ease)}
+.ic .v1,.ic .v2,.ic .v3{transition:fill .3s .1s}
+nav.barra button[data-tab="vos"] .base{transform:translateY(-3.5px)}
+nav.barra button[aria-current="page"]{--halo:var(--s2)}
+nav.barra button[aria-current="page"] .orb{opacity:1; transition:none}
+nav.barra button[aria-current="page"] .ph{opacity:0}
+nav.barra button[aria-current="page"] .base{transform:none}
+nav.barra button[aria-current="page"] .v1{fill:var(--fu)} nav.barra button[aria-current="page"] .v2{fill:var(--mo)} nav.barra button[aria-current="page"] .v3{fill:var(--ra)}
 
 @media (prefers-reduced-motion:reduce){
-  .logo-mov .orb,.logo-mov.orbita .traza,.logo-mov.orbita .est,.res-fig.logro .figura circle,nav.barra button.gesto *{animation:none!important}
+  .logo-mov .orb,.logo-mov.orbita .traza,.logo-mov.orbita .est,.res-fig.logro .figura circle{animation:none!important}
+  .ic .orb,.ic .ph,.ic .base,.ic .v1,.ic .v2,.ic .v3{transition:none}
   .logo-mov.orbita .est{fill:var(--ink)}
 }

@@ -494,6 +494,15 @@ prueba("respaldo-rutinas", () => {
   const mal = respaldo.leer(JSON.stringify({...respaldo.armar({...d, perfil: {dias: [9]}}, "k", 1, new Date()), sesiones: [{...s, rutina: {id: 3}}]}));
   ok(mal.sesiones.length === 0 && mal.perfil.dias === undefined, "lo roto no entra");
 });
+prueba("hazanas-figura", () => {
+  /* cada hazaña se dibuja con su constelación: estrellas dentro de la caja y líneas entre estrellas que existen */
+  for (const h of HAZANAS.hazanas){
+    const f = h.figura;
+    ok(f && Array.isArray(f.estrellas) && f.estrellas.length >= 2, h.id + ": sin figura");
+    ok(f.estrellas.every(e => e.length === 2 && e.every(v => Number.isFinite(v) && v >= 0 && v <= 100)), h.id + ": una estrella fuera de la caja");
+    ok(Array.isArray(f.lineas) && f.lineas.every(([a, b]) => a !== b && f.estrellas[a] && f.estrellas[b]), h.id + ": una línea a una estrella que no está");
+  }
+});
 
 let fallas = 0;
 for (const [n, fn] of PRUEBAS){

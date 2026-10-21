@@ -17,10 +17,8 @@ p{margin:0}
 /* las transiciones entran de costado: que nunca aparezca desplazamiento horizontal mientras tanto */
 html,body{overflow-x:clip}
 .view{display:flex; flex-direction:column; gap:12px}
-.vt-tab{animation:vin-t .3s var(--ease) backwards}
 .vt-fwd{animation:vin-r .34s var(--ease) backwards}
 .vt-back{animation:vin-l .34s var(--ease) backwards}
-@keyframes vin-t{from{transform:translateY(6px); opacity:.6}}
 @keyframes vin-r{from{transform:translateX(34px)}}
 @keyframes vin-l{from{transform:translateX(-34px)}}
 @media (prefers-reduced-motion:reduce){ [class*="vt-"]{animation:none} }

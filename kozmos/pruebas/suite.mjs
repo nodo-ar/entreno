@@ -130,7 +130,7 @@ prueba("menu-y-deshacer", async () => {
   /* el aviso se va solo, salvo mientras lo tenés en foco */
   await p.evaluate(() => { K.DESHACER_MS = 400; });
   await p.click("#tema-menu"); await p.click('.pmi[data-id="light"]');
-  await p.waitForSelector(".utoast"); await p.focus(".utoast .utu"); await p.waitForTimeout(700);
+  await p.waitForSelector(".utoast:not(.out)"); await p.focus(".utoast:not(.out) .utu"); await p.waitForTimeout(700);
   ok(await p.$(".utoast:not(.out)"), "el deshacer se fue mientras estaba en foco");
   await p.focus("#tema-menu");
   await p.waitForFunction(() => !document.querySelector(".utoast"), null, {timeout: 2000});
@@ -997,6 +997,33 @@ prueba("rutina-dejar-y-deshacer", async () => {
   await p.waitForFunction(() => K.diario.perfil.rutina?.id === "z2", null, {timeout: 3000}).catch(() => { throw new Error("deshacer no vuelve a la rutina"); });
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
+});
+
+/* ===== Logo en movimiento y la barra con estrellas ===== */
+prueba("logo-en-movimiento", async () => {
+  const {ctx, p} = await pagina();
+  await ir(p, "#/hoy");
+  /* el arranque no toma toques y se va solo; en la misma apertura no vuelve */
+  ok(await p.$eval(".mov-arranque", x => getComputedStyle(x).pointerEvents) === "none", "el arranque tapa los toques");
+  await p.waitForSelector(".mov-arranque", {state: "detached", timeout: 3000}).catch(() => { throw new Error("el arranque no se fue"); });
+  await p.reload(); await p.waitForSelector("main.view");
+  ok(!(await p.$(".mov-arranque")), "el arranque volvió a aparecer en la misma apertura");
+  /* la estrella existe solo en la pestaña elegida */
+  const estrellas = () => p.$$eval("nav.barra button", bs => bs.map(b => getComputedStyle(b.querySelector(".orb")).opacity));
+  ok(JSON.stringify(await estrellas()) === '["1","0","0","0"]', "la estrella no está solo en Hoy: " + await estrellas());
+  await p.click('nav.barra [data-tab="cielo"]'); await p.waitForSelector('nav.barra [data-tab="cielo"][aria-current]'); await p.waitForTimeout(300);
+  ok(JSON.stringify(await estrellas()) === '["0","1","0","0"]', "la estrella no pasó a Cielo: " + await estrellas());
+  /* la pantalla que se va gira y desaparece: no queda nada encima */
+  await p.waitForFunction(() => document.querySelectorAll("main").length === 1, null, {timeout: 2000}).catch(() => { throw new Error("la pantalla vieja quedó en la página"); });
+  await p.click('nav.barra [data-tab="vos"]'); await p.waitForSelector('nav.barra [data-tab="vos"][aria-current]'); await p.waitForTimeout(500);
+  ok(await p.$eval('nav.barra [data-tab="vos"] .v1', x => getComputedStyle(x).fill) !== await p.$eval('nav.barra [data-tab="hoy"] circle', x => getComputedStyle(x).fill), "Vos no se prendió con sus colores");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+  /* con movimiento reducido no hay arranque */
+  const r = await pagina(undefined, {reducedMotion: "reduce"});
+  await ir(r.p, "#/hoy");
+  ok(!(await r.p.$(".mov-arranque")), "con movimiento reducido igual hubo arranque");
+  await r.ctx.close();
 });
 
 const elegidas = process.argv.slice(2);

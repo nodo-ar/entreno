@@ -18,7 +18,10 @@ K.menu = {
     x = Math.max(12, Math.min(x, vw - W - 12));
     if (y + H > vh - 12) y = Math.max(12, r.top - H - 8);
     m.style.left = x + "px"; m.style.top = y + "px";
-    m.style.transformOrigin = `${der ? "100%" : "0"} ${y > r.top ? "0" : "100%"}`;
+    /* nace como un círculo desde el centro del botón */
+    const ox = r.left + r.width / 2 - x, oy = r.top + r.height / 2 - y, R = Math.hypot(Math.max(ox, W - ox), Math.max(oy, H - oy));
+    m._circ = [`circle(0px at ${ox}px ${oy}px)`, `circle(${R}px at ${ox}px ${oy}px)`];
+    if (!K.reduce()) m.animate([{clipPath: m._circ[0], opacity: .4}, {clipPath: m._circ[1], opacity: 1}], {duration: 340, easing: "cubic-bezier(.2,.7,.2,1)"});
     btn.setAttribute("aria-expanded", "true");
     const its = K.$$(".pmi", m);
     (its.find(b => b.getAttribute("aria-checked") === "true") || its[0])?.focus();
@@ -39,7 +42,8 @@ K.menu = {
     a.btn.setAttribute("aria-expanded", "false");
     a.sc.remove();
     if (ya || K.reduce()){ a.m.remove(); return; }
-    a.m.classList.add("out"); a.m.addEventListener("animationend", () => a.m.remove(), {once: true});
+    a.m.classList.add("out"); a.m.inert = true; a.m.style.pointerEvents = "none";
+    a.m.animate([{clipPath: a.m._circ[1], opacity: 1}, {clipPath: a.m._circ[0], opacity: .3}], {duration: 200, easing: "cubic-bezier(.4,0,1,1)", fill: "forwards"}).onfinish = () => a.m.remove();
     setTimeout(() => a.m.remove(), 300);
   }
 };

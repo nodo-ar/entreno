@@ -57,5 +57,29 @@ K.mov = (() => {
     <circle cx="80" cy="80" r="32" fill="var(--ink)"/><circle cx="80" cy="80" r="9" fill="var(--bg)"/>
     <g class="orb"><circle class="est" cx="123.8" cy="36.2" r="7" fill="var(--bg)" stroke="var(--ink)" stroke-width="2.6"/></g></svg>`;
 
-  return {arranque, iris, estrella, girando, logo, orbita};
+  /* la estrella de la pestaña elegida llega orbitando y se posa; en Progreso sube por el arco */
+  const CENTRO = {hoy: [12, 12.5, -300], cielo: [12, 12, -300], progreso: [20, 20, -90], vos: [12, 12, -300]};
+  function llegar(btn, tab){
+    const g = !K.reduce() && btn?.querySelector(".orb"), o = CENTRO[tab]; if (!g || !o) return;
+    const c = g.firstElementChild, ms = tab === "progreso" ? 560 : 680;
+    Object.assign(g.style, {transformBox: "view-box", transformOrigin: `${o[0]}px ${o[1]}px`});
+    Object.assign(c.style, {transformBox: "fill-box", transformOrigin: "center"});
+    g.animate([{transform: `rotate(${o[2]}deg)`}, {transform: "rotate(0)"}], {duration: ms, easing: "cubic-bezier(.3,.65,.2,1)"});
+    c.animate([{transform: "scale(.2)"}, {transform: "scale(1.25)", offset: .8}, {transform: "scale(1)"}], {duration: ms, easing: "ease-out"});
+  }
+
+  /* cambiar de pestaña: las pantallas giran sobre un centro lejano, debajo del teléfono, hacia el lado de la pestaña */
+  function girar(viejo, r, nuevo, dir){
+    const piv = innerHeight * 2.3, ang = 16 * dir, d = 460;
+    viejo.classList.add("vt-sale"); viejo.setAttribute("aria-hidden", "true"); viejo.inert = true;
+    Object.assign(viejo.style, {position: "fixed", top: r.top + "px", left: r.left + "px", width: r.width + "px", margin: "0", pointerEvents: "none", transformOrigin: `50% ${piv - r.top}px`});
+    document.body.appendChild(viejo);
+    const fin = () => viejo.remove();
+    viejo.animate([{transform: "none", opacity: 1}, {transform: `rotate(${-ang}deg)`, opacity: 0}], {duration: d, easing: E, fill: "forwards"}).onfinish = fin;
+    setTimeout(fin, d + 80);
+    nuevo.style.transformOrigin = `50% ${piv - (nuevo.getBoundingClientRect().top + scrollY)}px`;
+    nuevo.animate([{transform: `rotate(${ang}deg)`, opacity: 0}, {transform: "none", opacity: 1}], {duration: d, easing: E});
+  }
+
+  return {arranque, iris, estrella, girando, logo, orbita, llegar, girar};
 })();
