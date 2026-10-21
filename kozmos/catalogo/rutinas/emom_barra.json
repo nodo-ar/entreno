@@ -6,14 +6,16 @@
  "semanas": 6,
  "dias": 3,
  "minutos": 22,
+ "bloque": {
+  "carga": 5,
+  "prueba": 1
+ },
  "equipo": [
   "barra",
   "paralelas"
  ],
  "alimenta": [
-  "motor.intervalos-1",
-  "motor.intervalos-8",
-  "motor.intervalos-12"
+  "motor.intervalos-1"
  ],
  "fuente": "el EMOM «Chelsea» de CrossFit y el entrenamiento por densidad de Charles Staley",
  "sesiones": [

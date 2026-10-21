@@ -6,12 +6,16 @@
  "semanas": 9,
  "dias": 4,
  "minutos": 50,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
  "equipo": [
   "bici"
  ],
  "alimenta": [
   "motor.intervalos-1",
-  "motor.intervalos-8",
+  "motor.m12-10",
   "motor.bici-40",
   "motor.bici-60"
  ],

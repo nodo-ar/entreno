@@ -6,6 +6,10 @@
  "semanas": 4,
  "dias": 5,
  "minutos": 8,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
  "equipo": [],
  "alimenta": [
   "draco.lsit-10s"

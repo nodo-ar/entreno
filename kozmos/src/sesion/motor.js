@@ -14,7 +14,8 @@ K.sesion = (() => {
   s.enPausa = () => !!S && S.pausa !== null;
   s.bloque = () => S.plan.bloques[S.b];
   /* la serie que va: los bloques de rutina llevan una lista de pasos (con superseries, de ejercicios distintos) */
-  const pasoDe = (b, k) => b.pasos ? b.pasos[k] : {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, descanso: b.descanso};
+  const pasoDe = (b, k) => b.pasos ? b.pasos[k] : {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, descanso: b.descanso,
+    ...(b.hazana ? {hazana: b.hazana} : {}), ...(b.reloj ? {reloj: b.reloj} : {}), ...(b.descarga ? {descarga: true} : {})};
   s.paso = () => pasoDe(s.bloque(), S.s);
   s.ultima = () => S.b === S.plan.bloques.length - 1 && S.s === s.bloque().series - 1;
   /* lo que corre en la fase y en toda la sesión, sin contar las pausas */
@@ -79,6 +80,8 @@ K.sesion = (() => {
       if (S.fase === "serie" && (p.tipo === "segundos" || p.tipo === "minutos") && Number.isFinite(p.objetivo) && !av.obj && s.prep() <= 0 && s.enFase() >= p.objetivo * (p.tipo === "minutos" ? 60 : 1)){
         av.obj = true; s.vibrar("umbral"); s.beep(2); guardarVivo();
       }
+      /* una prueba con reloj fijo (Motor 12): al llegar al tiempo, campana y a anotar */
+      if (S.fase === "serie" && p.reloj && !av.obj && s.enFase() >= p.reloj){ av.obj = true; s.vibrar("fin"); s.campana(); guardarVivo(); }
       /* los tramos pasan solos, también los que vencieron con la pantalla apagada */
       if (S.fase === "tramo"){
         let paso = false;
@@ -88,6 +91,8 @@ K.sesion = (() => {
       }
       if (S && S.fase === "circuito" && s.prep() <= 0 && !av.ya){ av.ya = true; s.vibrar("ok"); s.beep(1, 1320); }
       if (S && S.fase === "circuito" && b.formato === "amrap" && s.prep() <= 0 && s.queda() <= 0){ finCircuito(); s.vibrar("fin"); s.campana(); guardarVivo(); s.alTramo?.(); }
+      /* la escalera de minutos: cada minuto nuevo, un pitido y una más */
+      if (S && S.fase === "circuito" && b.formato === "escalera" && s.prep() <= 0){ const m = Math.floor(s.enFase() / 60); if (m > (av.min ?? 0)){ av.min = m; s.vibrar("ok"); s.beep(2, 1320); s.alTramo?.(); } }
       if (S && S.fase === "descanso" && !av.fin && s.queda() <= 0){ av.fin = true; s.vibrar("fin"); if (!programada) s.campana(); programada = null; guardarVivo(); }
     }
     s.alLatir?.();
@@ -130,13 +135,15 @@ K.sesion = (() => {
   /* ---------- circuito: vueltas contra el reloj, o todas las que entren ---------- */
   const finCircuito = () => {
     const b = s.bloque();
-    S.borrador = b.formato === "amrap" ? S.vueltas : Math.round(s.enFase());
+    /* la escalera de minutos cuenta el último minuto completo: es lo que hiciste en ese minuto */
+    S.borrador = b.formato === "amrap" ? S.vueltas : b.formato === "escalera" ? Math.floor(s.enFase() / 60) : Math.round(s.enFase());
     S.fase = "cierre"; S.pausa = null; S.desde = b.formato === "amrap" ? S.hasta : ahora(); S.avisos = {};
   };
   s.vuelta = d => {
     if (!S || S.fase !== "circuito" || s.prep() > 0) return;
     if (S.pausa !== null) s.pausar();
     const b = s.bloque();
+    if (b.formato === "escalera"){ finCircuito(); s.vibrar("fin"); guardarVivo(); return; } /* «No llegué»: se termina */
     S.vueltas = Math.max(0, S.vueltas + (d || 1));
     if (d !== -1 && b.formato === "tiempo" && S.vueltas >= b.rondas){ finCircuito(); s.vibrar("logro"); s.campana(); }
     else s.vibrar("ok");
@@ -205,14 +212,16 @@ K.sesion = (() => {
     const b0 = s.bloque();
     if (b0.clase === "circuito"){
       /* una hazaña: completa si llegó al final; cortada a la mitad, queda lo hecho sin contar como marca */
-      const completa = S.fase === "cierre", v = numero(completa ? S.borrador : b0.formato === "amrap" ? S.vueltas : Math.round(s.enFase())); S.borrador = null;
+      const completa = S.fase === "cierre", v = numero(completa ? S.borrador : b0.formato === "amrap" ? S.vueltas : b0.formato === "escalera" ? Math.floor(s.enFase() / 60) : Math.round(s.enFase())); S.borrador = null;
+      /* una prueba (Modelo B) anota lo que mide: la escalera de minutos vale aunque se corte; el tiempo, solo si llegaste */
+      if (b0.mide){ if (v > 0) S.hechos.push({b: S.b, s: 0, ejercicio: b0.mide.ejercicio, tipo: b0.mide.tipo, valor: v, hazana: b0.hazana, completa: completa || b0.formato === "escalera"}); return; }
       if (v > 0) S.hechos.push({b: S.b, s: 0, ejercicio: b0.hazana, tipo: "hazana", valor: v, completa});
       return;
     }
     if (b0.clase) return; /* tramos ya cerrados */
     const b = s.paso(), v = S.borrador, sens = S.sens; S.borrador = null; S.sens = null;
     /* con escalera, la serie guarda en qué escalera iba, el rango y cuántas pedía: con eso se calcula el escalón que sigue */
-    const marca = {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, ...(b.escalera ? {escalera: b.escalera} : {}),
+    const marca = {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, ...(b.escalera ? {escalera: b.escalera} : {}), ...(b.hazana ? {hazana: b.hazana} : {}),
       ...(b.rango ? {rango: b.rango, n: b.n} : {}), ...(b.descarga ? {descarga: true} : {}), ...(sens ? {sensacion: sens} : {})};
     if (v === null || v === undefined) return;
     if (b.carga){
@@ -232,6 +241,9 @@ K.sesion = (() => {
     }
     const n = numero(v);
     if (b.tipo === "logrado"){ S.hechos.push({b: S.b, s: S.s, ...marca, valor: n > 0 ? 1 : 0}); return; }
+    /* lo de las pruebas: los puntos van de 0 a 10; los centímetros pueden ser cero o negativos (no llegaste a los pies) */
+    if (b.tipo === "puntos"){ if (Number.isFinite(n) && String(v).trim() !== "" && n >= 0 && n <= 10) S.hechos.push({b: S.b, s: S.s, ...marca, valor: n}); return; }
+    if (b.tipo === "cm"){ if (Number.isFinite(n) && String(v).trim() !== "" && n >= -50 && n <= 100) S.hechos.push({b: S.b, s: S.s, ...marca, valor: n}); return; }
     if (n > 0 && n <= 100000) S.hechos.push({b: S.b, s: S.s, ...marca, valor: n});
   };
   const siguiente = () => {
@@ -273,17 +285,19 @@ K.sesion = (() => {
   /* lo que queda guardado de la sesión: solo lo que hiciste, con lo que midió cada serie */
   s.registro = (cortada) => {
     const fin = Math.max(S.inicio, S.pausa ?? ahora()); /* si el reloj del teléfono volvió atrás, el fin no queda antes del inicio */
-    const pl = S.plan, hz = pl.hazana && S.hechos.find(h => h.tipo === "hazana");
+    const pl = S.plan, hz = pl.hazana && S.hechos.find(h => h.tipo === "hazana" || h.hazana === pl.hazana.id);
     return {id: S.id, fecha: S.fecha, inicio: new Date(S.inicio).toISOString(), fin: new Date(fin).toISOString(),
       duracion: Math.round(s.total()), cortada: !!cortada, catalogo: K.CATALOGO.version, ...(K.diario.perfil.peso ? {pesoKg: K.diario.perfil.peso} : {}),
       /* cortada, una sesión de rutina cuenta para avanzar solo si hiciste al menos la mitad: el que corta por falta de tiempo no queda trabado */
       ...(pl.rutina ? {rutina: {...pl.rutina, ...(cortada ? {mitad: S.hechos.length * 2 >= pl.bloques.reduce((t, b) => t + (b.series || 1), 0)} : {})}} : {}),
-      ...(pl.hazana ? {hazana: {...pl.hazana, valor: hz ? hz.valor : 0, completa: !!(hz && hz.completa)}} : {}),
+      ...(pl.hazana ? {hazana: {...pl.hazana, valor: hz ? hz.valor : 0, completa: !!(hz && hz.completa !== false), ...(pl.hazana.v === 2 && hz ? {ejercicio: hz.ejercicio, tipo: hz.tipo} : {})}} : {}),
+      ...(pl.semanaPrueba ? {semanaPrueba: {...pl.semanaPrueba, pruebas: S.hechos.filter(h => h.hazana || pl.bloques[h.b]?.prueba).length}} : {}),
       bloques: pl.bloques.map((b, i) => ({orden: i, ...(b.constelacion ? {constelacion: b.constelacion} : {}), familia: b.familia, ...(b.estrella ? {estrella: b.estrella} : {}),
-        objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}), ...(b.clase ? {clase: b.clase, nombre: b.nombre} : {}),
+        objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}), ...(b.clase ? {clase: b.clase, nombre: b.nombre} : {}), ...(b.hazana ? {hazana: b.hazana} : {}),
         series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: "ejercicio" in h ? h.ejercicio : b.ejercicio, tipo: h.tipo ?? b.tipo, ...(b.estrella ? {estrella: b.estrella} : {}), objetivo: h.objetivo ?? b.objetivo, valor: h.valor,
           ...(h.seg !== undefined ? {seg: Math.round(h.seg)} : {}), ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, ...(h.pesoKg !== undefined ? {pesoKg: h.pesoKg} : {})} : {}),
-          ...(h.escalera ? {escalera: h.escalera} : {}), ...(h.rango ? {rango: h.rango, n: h.n} : {}), ...(h.descarga ? {descarga: true} : {}), ...(h.sensacion ? {sensacion: h.sensacion} : {})}))})).filter(b => b.series.length)};
+          ...(h.escalera ? {escalera: h.escalera} : {}), ...(h.rango ? {rango: h.rango, n: h.n} : {}), ...(h.descarga ? {descarga: true} : {}), ...(h.sensacion ? {sensacion: h.sensacion} : {}),
+          ...(h.hazana ? {hazana: h.hazana, ...(h.completa === false ? {completa: false} : {})} : {})}))})).filter(b => b.series.length)};
   };
   /* terminar: asienta lo último, guarda y suelta todo. Devuelve {registro, antes} o null si no había nada hecho. */
   s.terminar = async (cortada = false) => {

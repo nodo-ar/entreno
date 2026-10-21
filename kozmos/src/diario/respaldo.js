@@ -1,10 +1,12 @@
 /* ===== Respaldo: todo tu diario en un archivo, y de vuelta. Funciones puras; la pantalla está en Vos. =====
-   El archivo es JSON: {app: "kozmos", formato: 1, version, exportado, catalogo, mediciones, sesiones, perfil}.
+   El archivo es JSON: {app: "kozmos", formato: 2, version, exportado, catalogo, mediciones, sesiones, perfil}.
+   Formato 2 (Modelo B): las hazañas son pruebas (hazana.v = 2, sin nivel), las series de una prueba dicen de qué hazaña son,
+   lo que se mide en cm puede ser negativo y la sesión de una semana de prueba lo dice (semanaPrueba). Lee también el 1.
    Traer un respaldo suma lo que falta y no borra nada: lo que ya está (mismo id) no se toca, así que traer el mismo
    archivo dos veces no duplica. Del perfil entra solo lo que este teléfono todavía no tiene.
    Primero se revisa el archivo entero y recién después se guarda todo junto. Detalle en docs/kozmos-respaldo.md. */
 K.respaldo = (() => {
-  const APP = "kozmos", FORMATO = 1;
+  const APP = "kozmos", FORMATO = 2;
   const armar = (diario, version, catalogo, ahora = new Date()) => ({app: APP, formato: FORMATO, version, exportado: ahora.toISOString(), catalogo,
     mediciones: diario.mediciones, sesiones: diario.sesiones, perfil: diario.perfil});
   const nombre = hoy => `kozmos-respaldo_${hoy}.json`;
@@ -19,12 +21,18 @@ K.respaldo = (() => {
   const tipoSerie = t => tipo(t) || t === "tramos" || t === "hazana";
   const medicion = m => obj(m) && txt(m.id, 80) && txt(m.estrella) && fecha(m.fecha) && num(m.valor, 1e6) && tipo(m.tipo)
     && (m.ejercicio === undefined || txt(m.ejercicio)) && (m.origen === undefined || txt(m.origen, 20));
-  const serie = x => obj(x) && (txt(x.ejercicio) || (x.tipo === "tramos" && x.ejercicio == null)) && tipoSerie(x.tipo) && x.tipo !== undefined && num(x.valor, 1e6);
+  /* los centímetros de una prueba pueden ser negativos: no llegaste a la punta de los pies */
+  const valor = (v, t) => t === "cm" ? typeof v === "number" && Number.isFinite(v) && v >= -100 && v <= 300 : num(v, 1e6);
+  const serie = x => obj(x) && (txt(x.ejercicio) || (x.tipo === "tramos" && x.ejercicio == null)) && tipoSerie(x.tipo) && x.tipo !== undefined && valor(x.valor, x.tipo)
+    && (x.hazana === undefined || txt(x.hazana));
+  /* una hazaña de antes (con su nivel) o una prueba (v 2), con lo que midió */
+  const hazana = h => obj(h) && txt(h.id) && (h.v === 2 ? (h.ejercicio === undefined || txt(h.ejercicio)) && tipo(h.tipo) && valor(h.valor, h.tipo) : entero(h.nivel, 2) && num(h.valor, 1e6));
   const entero = (v, max) => Number.isInteger(v) && v >= 0 && v <= max;
   const sesion = x => obj(x) && txt(x.id, 80) && fecha(x.fecha) && num(x.duracion, 864000) && Array.isArray(x.bloques)
     && x.bloques.every(b => obj(b) && (b.constelacion === undefined || txt(b.constelacion)) && Array.isArray(b.series) && b.series.every(serie))
     && (x.rutina === undefined || obj(x.rutina) && txt(x.rutina.id) && entero(x.rutina.sesion, 1000))
-    && (x.hazana === undefined || obj(x.hazana) && txt(x.hazana.id) && entero(x.hazana.nivel, 2) && num(x.hazana.valor, 1e6));
+    && (x.hazana === undefined || hazana(x.hazana))
+    && (x.semanaPrueba === undefined || obj(x.semanaPrueba) && entero(x.semanaPrueba.bloque, 1000));
   const PERFIL = {
     peso: v => num(v, 400) && v >= 20,
     rumbo: v => Array.isArray(v) && v.length <= 3 && v.every(x => txt(x)),
