@@ -31,4 +31,4 @@ Fer pidió usar el logo de Kozmos en animaciones y transiciones, e íconos que t
 - Ayudante para empezar la sesión en `hoy.js`.
 
 ## Respuesta de Fer
-(pendiente)
+2026-10-21: «Me encantó todo, y seguimos tus recomendaciones». Aprobado el tablero; el nombre queda solo en la pestaña elegida y el logo sale cada vez que abrís la app, así de corto.
