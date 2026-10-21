@@ -45,7 +45,7 @@ K.sesion = (() => {
   /* lo que elegiste en Vos, Avisos: vibración y sonido, uno solo o nada */
   const AVISOS = {todo: [1, 1], vibra: [1, 0], suena: [0, 1], nada: [0, 0]};
   const quiere = i => (AVISOS[K.prefs.get("avisos", "todo")] || AVISOS.todo)[i];
-  s.vibrar = k => { if (!quiere(0)) return; try { navigator.vibrate?.(HAP[k]); } catch (e) {} };
+  s.vibrar = k => { if (!quiere(0)) return; try { if (!K.apk?.vibrar(HAP[k])) navigator.vibrate?.(HAP[k]); } catch (e) {} };
   let AC = null;
   const audio = () => { try { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; if (!AC || AC.state === "closed") AC = new C(); if (AC.state === "suspended") AC.resume().catch(() => {}); return AC; } catch (e) { return null; } };
   /* el navegador deja sonar solo después de un toque: el primero de la sesión destraba el audio */
@@ -63,8 +63,9 @@ K.sesion = (() => {
 
   /* ---------- pantalla encendida mientras entrenás ---------- */
   let luz = null;
-  const prender = async () => { if (!S || luz || !navigator.wakeLock || document.hidden) return; try { luz = await navigator.wakeLock.request("screen"); luz.addEventListener("release", () => { luz = null; }); } catch (e) {} };
-  const apagar = () => { try { luz?.release(); } catch (e) {} luz = null; };
+  /* en la APK, la ventana misma queda encendida (no depende de que el WebView tenga wake lock) */
+  const prender = async () => { if (S && K.apk){ K.apk.luz(true); return; } if (!S || luz || !navigator.wakeLock || document.hidden) return; try { luz = await navigator.wakeLock.request("screen"); luz.addEventListener("release", () => { luz = null; }); } catch (e) {} };
+  const apagar = () => { K.apk?.luz(false); try { luz?.release(); } catch (e) {} luz = null; };
   document.addEventListener("visibilitychange", () => { if (!document.hidden) prender(); });
 
   /* ---------- el reloj: cada cuarto de segundo se pinta y se revisan los avisos ---------- */

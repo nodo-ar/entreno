@@ -19,7 +19,9 @@ El modelo, la arquitectura y las seis etapas están en el documento «Kozmos · 
 | `src/sw.js` | Service worker: abre sin conexión desde la segunda vez |
 | `fuentes/` | Mona Sans y Geist Mono (latín, woff2) con su licencia SIL OFL |
 | `iconos/` | Logo y los íconos de la app (los dibuja `tools/iconos.mjs`) |
-| `tools/armar.mjs` | Junta todo en un solo `index.html` dentro de `app/` (no va a git) |
+| `src/base/android.js` | Lo que cambia adentro de la APK de Android (en la web no hace nada) |
+| `apk/` | La APK de Android con Capacitor: cómo se arma, se firma y se publica en `apk/README.md` |
+| `tools/armar.mjs` | Junta todo en un solo `index.html` dentro de `app/` (no va a git); con `--apk`, la versión para la APK |
 | `pruebas/puras.mjs` | Pruebas sin pantalla: catálogo, cielo, plan, calorías y respaldo |
 | `pruebas/suite.mjs` | Corre las puras y después las de punta a punta con Playwright |
 
@@ -29,6 +31,7 @@ Cada módulo es un archivo chico que suma lo suyo al objeto `K`. El orden de arm
 
 ```sh
 node kozmos/tools/armar.mjs          # arma kozmos/app
+node kozmos/tools/armar.mjs kozmos/apk/www --apk   # la versión para la APK (antes, «npm ci» en kozmos/apk)
 node kozmos/pruebas/suite.mjs        # arma y corre todas las pruebas (alrededor de un minuto)
 node kozmos/pruebas/suite.mjs isla   # solo algunas
 node kozmos/tools/iconos.mjs         # vuelve a dibujar los íconos si cambia el logo

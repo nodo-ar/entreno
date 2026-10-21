@@ -1,0 +1,83 @@
+# Publica una versión de Kozmos para Android en GitHub Releases, firmada con la firma de Kozmos.
+# Corre cuando entra a main algo que toca kozmos/, o a mano desde Actions. El enlace de siempre:
+#   https://github.com/nodo-ar/entreno/releases/latest/download/kozmos.apk
+# Necesita el secreto KOZMOS_FIRMA (una frase; pasos en kozmos/apk/README.md). Sin él, frena con un mensaje claro.
+name: Kozmos · versión
+on:
+  push:
+    branches: [main]
+    paths: ['kozmos/**', '.github/workflows/kozmos-version.yml']
+  workflow_dispatch:
+permissions:
+  contents: write # crear el release (y, la primera vez, el borrador que guarda la firma cifrada)
+concurrency:
+  group: kozmos-version
+  cancel-in-progress: false
+jobs:
+  version:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # el número de versión y las notas salen de los commits y las etiquetas
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: kozmos/apk/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: La firma
+        env:
+          KOZMOS_FIRMA: ${{ secrets.KOZMOS_FIRMA }}
+          GH_TOKEN: ${{ github.token }}
+        run: bash kozmos/apk/tools/firma.sh "$RUNNER_TEMP/firma"
+      - name: Número de versión
+        run: |
+          N=$(git rev-list --count HEAD)
+          if git rev-parse -q --verify "refs/tags/kozmos-$N" >/dev/null; then echo "::error::La versión $N ya está publicada."; exit 1; fi
+          echo "KOZMOS_VERSION_CODE=$N" >> "$GITHUB_ENV"
+          echo "KOZMOS_VERSION_NAME=k-$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+          echo "KOZMOS_V=k-$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+      - name: Pruebas sin pantalla
+        run: node kozmos/pruebas/puras.mjs
+      - name: Capacitor y la página
+        working-directory: kozmos/apk
+        run: |
+          npm ci
+          node ../tools/armar.mjs www --apk
+          npx cap sync android
+          test ! -e android/app/src/main/assets/public/sw.js || { echo "::error::la APK no tiene que llevar service worker"; exit 1; }
+      - name: Armar la APK
+        working-directory: kozmos/apk/android
+        run: ./gradlew --no-daemon assembleRelease
+      - name: Revisar la APK
+        run: |
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          APK=kozmos/apk/android/app/build/outputs/apk/release/app-release.apk
+          mkdir -p salida && cp "$APK" salida/kozmos.apk
+          "$BT/apksigner" verify salida/kozmos.apk
+          firma=$("$BT/apksigner" verify --print-certs salida/kozmos.apk 2>&1 | grep -iE "certificate SHA-256 digest:" | head -1 | awk -F': ' '{ print toupper($2) }' | sed 's/../&:/g; s/:$//')
+          [ "$firma" = "$KOZMOS_HUELLA" ] || { echo "::error::La APK no quedó firmada con la firma de Kozmos ($firma)."; exit 1; }
+          "$BT/aapt2" dump badging salida/kozmos.apk | grep -q "package: name='ar.kozmos' versionCode='$KOZMOS_VERSION_CODE'"
+          {
+            echo "### Kozmos · versión $KOZMOS_VERSION_CODE ($KOZMOS_VERSION_NAME)"
+            echo '```'
+            "$BT/aapt2" dump badging salida/kozmos.apk | grep -E "^(package|application-label:|sdkVersion|targetSdkVersion|uses-permission)"
+            echo "firma SHA-256: $firma"
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          bash kozmos/apk/tools/notas.sh "$KOZMOS_VERSION_CODE" "$KOZMOS_HUELLA" > notas.md
+          gh release create "kozmos-$KOZMOS_VERSION_CODE" salida/kozmos.apk --target "$GITHUB_SHA" \
+            --title "Kozmos · versión $KOZMOS_VERSION_CODE" --notes-file notas.md --latest
+          echo "Publicada: https://github.com/$GITHUB_REPOSITORY/releases/tag/kozmos-$KOZMOS_VERSION_CODE" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Borrar la firma descifrada
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/firma"

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- La APK de prueba se instala al lado de la de verdad, con otro nombre y sus propios datos. -->
+<resources>
+    <string name="app_name">Kozmos prueba</string>
+    <string name="title_activity_main">Kozmos prueba</string>
+</resources>

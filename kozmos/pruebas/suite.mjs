@@ -15,6 +15,11 @@ const APP = path.join(RAIZ, "app");
 execFileSync(process.execPath, [path.join(RAIZ, "pruebas", "puras.mjs")], {stdio: ["ignore", "ignore", "inherit"]}); /* si falla, corta acá */
 console.log("ok     sin pantalla (catálogo y cielo)");
 execFileSync(process.execPath, [path.join(RAIZ, "tools", "armar.mjs"), APP], {stdio: "inherit"});
+/* la versión de la APK (necesita «npm ci» en kozmos/apk); se sirve en /apk/ */
+const APK = path.join(RAIZ, "apk", "www");
+let sinApk = "";
+try { execFileSync(process.execPath, [path.join(RAIZ, "tools", "armar.mjs"), APK, "--apk"], {stdio: ["ignore", "inherit", "pipe"]}); }
+catch (e) { sinApk = "no se pudo armar la APK (¿falta «npm ci» en kozmos/apk?)"; }
 
 /* servidor mínimo: el service worker necesita http */
 const TIPOS = {".html": "text/html; charset=utf-8", ".js": "text/javascript", ".webmanifest": "application/manifest+json", ".woff2": "font/woff2", ".png": "image/png", ".svg": "image/svg+xml", ".png": "image/png"};
@@ -27,8 +32,8 @@ const srv = http.createServer((q, r) => {
     if (MODO === "caido"){ r.writeHead(503); r.end("caído"); return; }
   }
   let f = decodeURIComponent(new URL(q.url, "http://x").pathname); if (f.endsWith("/")) f += "index.html";
-  const p = path.join(APP, f);
-  if (!p.startsWith(APP) || !fs.existsSync(p)){ r.writeHead(404); r.end(); return; }
+  const base = f.startsWith("/apk/") ? APK : APP, p = path.join(base, base === APK ? f.slice(4) : f);
+  if (!p.startsWith(base) || !fs.existsSync(p)){ r.writeHead(404); r.end(); return; }
   r.writeHead(200, {"content-type": TIPOS[path.extname(p)] || "application/octet-stream", "cache-control": "no-cache"}); fs.createReadStream(p).pipe(r);
 });
 await new Promise(ok => srv.listen(0, "127.0.0.1", ok));
@@ -1120,6 +1125,136 @@ prueba("maniqui", async () => {
   const fuera = await h.p.evaluate(() => [".ses-fig", ".ses-reloj", "#s-listo"].filter(s => { const r = document.querySelector(s).getBoundingClientRect(); return r.bottom > innerHeight + 1 || r.right > innerWidth + 1 || !r.height; }));
   ok(!fuera.length, "en horizontal no entra: " + fuera);
   await h.ctx.close();
+});
+
+/* ===== La APK de Android: la página de kozmos/apk/www con un Capacitor de mentira (el simulacro) =====
+   El simulacro hace de puente nativo: anota cada llamada a un plugin en window.__nat y contesta como Android. */
+async function enApk(vp, {cancelar = false} = {}){
+  if (sinApk) throw new Error(sinApk);
+  const r = await pagina(vp);
+  await r.ctx.addInitScript(({cancelar}) => {
+    window.__nat = []; window.__oyentes = {};
+    const m = (...ns) => ns.map(name => ({name, rtype: "promise"}));
+    const oir = [{name: "addListener", rtype: "callback"}, {name: "removeListener", rtype: "promise"}];
+    window.androidBridge = {postMessage(){}};
+    window.Capacitor = {Plugins: {}, PluginHeaders: [
+      {name: "App", methods: [...m("exitApp", "minimizeApp", "getInfo"), ...oir]},
+      {name: "Filesystem", methods: m("writeFile", "readFile")},
+      {name: "Share", methods: m("share", "canShare")},
+      {name: "SystemBars", methods: m("setStyle", "show", "hide")},
+      {name: "Pantalla", methods: m("encender", "apagar", "vibrar")}],
+      nativeCallback(plugin, metodo, op, cb){ window.__nat.push([plugin, metodo, op]); if (metodo === "addListener") window.__oyentes[plugin + "." + op.eventName] = cb; return "cb" + window.__nat.length; },
+      nativePromise(plugin, metodo, op){
+        window.__nat.push([plugin, metodo, op]);
+        if (plugin === "Filesystem" && metodo === "writeFile"){ window.__archivo = op; return Promise.resolve({uri: "file:///data/user/0/ar.kozmos/cache/" + op.path}); }
+        if (plugin === "Share" && metodo === "share") return cancelar ? Promise.reject(new Error("Share canceled")) : Promise.resolve({activityType: "com.google.android.gm"});
+        return Promise.resolve({});
+      }};
+  }, {cancelar});
+  return r;
+}
+const irApk = async (p, h = "") => { await p.goto(URL0 + "apk/" + h); await p.waitForSelector("main.view"); await p.waitForTimeout(80); };
+const nat = (p, plugin, metodo) => p.evaluate(([a, b]) => window.__nat.filter(x => x[0] === a && (!b || x[1] === b)), [plugin, metodo]);
+const atras = p => p.evaluate(() => window.__oyentes["App.backButton"]({canGoBack: true}));
+
+prueba("apk-sin-service-worker", async () => {
+  /* adentro de la APK no se registra el service worker y no hay manifiesto: la APK nueva trae la página nueva */
+  const {ctx, p} = await enApk();
+  await irApk(p);
+  ok(await p.evaluate(() => !!K.apk && document.documentElement.classList.contains("apk")), "no se dio cuenta de que está en la APK");
+  await p.waitForTimeout(400);
+  ok(await p.evaluate(() => navigator.serviceWorker.getRegistrations().then(r => r.length)) === 0, "registró el service worker");
+  ok(!(await p.$('link[rel="manifest"]')), "quedó el manifiesto de la web");
+  ok(!fs.existsSync(path.join(APK, "sw.js")) && !fs.existsSync(path.join(APK, "manifest.webmanifest")), "el armado de la APK trae sw.js o el manifiesto");
+  ok(await p.textContent(".enc-tit h1") === "Hoy", "no arranca en Hoy");
+  ok(await p.evaluate(() => document.fonts.ready.then(() => document.fonts.check('800 16px "Mona Sans"'))), "la letra no cargó");
+  /* barras del sistema: iconos oscuros en claro y claros en oscuro, siguiendo el tema elegido */
+  ok((await nat(p, "SystemBars", "setStyle")).at(-1)?.[2].style === "LIGHT", "las barras no siguen el tema claro");
+  await p.evaluate(() => K.tema.poner("dark"));
+  ok((await nat(p, "SystemBars", "setStyle")).at(-1)[2].style === "DARK", "las barras no siguen el tema oscuro");
+  /* la web sigue igual: ahí no hay K.apk y el service worker se registra */
+  const w = await pagina(); await ir(w.p, "");
+  ok(await w.p.evaluate(() => K.apk === null && navigator.serviceWorker.ready.then(() => true)), "en la web cambió algo");
+  ok(p._errores.length === 0 && w.p._errores.length === 0, "errores: " + [...p._errores, ...w.p._errores].join(" | "));
+  await w.ctx.close(); await ctx.close();
+});
+
+prueba("apk-respaldo", async () => {
+  /* guardar: el archivo va a la caché por Filesystem y se comparte por Share; traer: el selector de archivos de siempre */
+  const {ctx, p} = await enApk();
+  await irApk(p);
+  await p.evaluate(async () => { await K.diario.perfilPoner("peso", 72); await K.diario.lote({poner: {mediciones: [{id: "m1", estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 61, fecha: "2026-10-01"}], sesiones: []}}); });
+  await irApk(p, "#/vos/respaldo");
+  let bajo = false; p.on("download", () => { bajo = true; });
+  await p.click("#rs-guardar"); await p.waitForSelector(".utoast");
+  ok((await p.textContent(".utoast .utx")).startsWith("Respaldo guardado: 0 sesiones y 1 marca"), "el aviso: " + await p.textContent(".utoast .utx"));
+  const a = await p.evaluate(() => window.__archivo);
+  ok(a.directory === "CACHE" && a.encoding === "utf8" && /^kozmos-respaldo_\d{4}-\d{2}-\d{2}\.json$/.test(a.path), "el archivo: " + JSON.stringify({...a, data: undefined}));
+  const sh = (await nat(p, "Share", "share"))[0][2];
+  ok(sh.files.length === 1 && sh.files[0].endsWith("/cache/" + a.path), "no compartió el archivo: " + JSON.stringify(sh));
+  ok(!bajo, "intentó descargar con <a download>");
+  /* lo que se compartió vuelve entero en un teléfono limpio */
+  const o = JSON.parse(a.data);
+  ok(o.app === "kozmos" && o.mediciones.length === 1 && o.perfil.peso === 72, "el respaldo no tiene lo anotado");
+  const l = await enApk(); await irApk(l.p, "#/vos/respaldo");
+  await l.p.setInputFiles("#rs-archivo", {name: a.path, mimeType: "application/json", buffer: Buffer.from(a.data)});
+  await l.p.waitForSelector(".utoast .utu");
+  ok((await l.p.textContent(".utoast .utx")) === "Trajiste 1 marca", "al traerlo: " + await l.p.textContent(".utoast .utx"));
+  ok(await l.p.evaluate(() => K.diario.mediciones.length === 1 && K.diario.perfil.peso === 72), "no entró");
+  /* si la persona cierra el menú de compartir sin elegir, no se da por guardado */
+  const c = await enApk(undefined, {cancelar: true}); await irApk(c.p, "#/vos/respaldo");
+  await c.p.click("#rs-guardar"); await c.p.waitForTimeout(500);
+  ok(!(await c.p.$(".utoast")) && (await c.p.evaluate(() => K.prefs.get("respaldo", null))) === null, "lo dio por guardado sin compartir");
+  ok([p, l.p, c.p].every(x => x._errores.length === 0), "errores: " + [...p._errores, ...l.p._errores, ...c.p._errores].join(" | "));
+  await c.ctx.close(); await l.ctx.close(); await ctx.close();
+});
+
+prueba("apk-atras", async () => {
+  /* el botón atrás de Android: menú abierto → se cierra; adentro → vuelve; otra pestaña → Hoy; Hoy → sale */
+  const {ctx, p} = await enApk();
+  await irApk(p);
+  ok((await nat(p, "App", "addListener")).some(x => x[2].eventName === "backButton"), "no escucha el botón atrás");
+  await p.click('nav.barra button[data-tab="cielo"]'); await p.waitForSelector('main.view[data-tab="cielo"]');
+  await p.click(".cst[data-ir], [data-ir^='#/cielo/']"); await p.waitForFunction(() => K.ruta().hondo === 1);
+  ok(await atras(p) === "atras", "adentro de una constelación no vuelve");
+  await p.waitForFunction(() => location.hash === "#/cielo");
+  ok(await atras(p) === "atras", "no vuelve a Hoy por lo recorrido");
+  await p.waitForFunction(() => K.ruta().tab === "hoy");
+  ok(await atras(p) === "salir", "en Hoy no sale");
+  ok((await nat(p, "App", "exitApp")).length === 1, "no llamó a salir");
+  /* entrando directo a algo hondo, sin recorrido: sube a la raíz y después a Hoy */
+  const d = await enApk(); await irApk(d.p, "#/vos/acerca");
+  ok(await atras(d.p) === "arriba", "desde Acerca no sube"); await d.p.waitForFunction(() => location.hash === "#/vos");
+  ok(await atras(d.p) === "hoy", "desde Vos no va a Hoy"); await d.p.waitForFunction(() => location.hash === "#/hoy");
+  /* un menú abierto se cierra primero */
+  await irApk(d.p, "#/vos"); await d.p.click("#tema-menu"); await d.p.waitForSelector('[role="menu"]');
+  ok(await atras(d.p) === "menu", "no cerró el menú");
+  ok(await d.p.evaluate(() => !K.menu._abierto && location.hash === "#/vos"), "con el menú abierto se movió de pantalla");
+  ok(p._errores.length === 0 && d.p._errores.length === 0, "errores: " + [...p._errores, ...d.p._errores].join(" | "));
+  await d.ctx.close(); await ctx.close();
+});
+
+prueba("apk-sesion", async () => {
+  /* con una sesión en curso, atrás nunca la pierde: vuelve a Hoy con la isla y, en Hoy, deja la app en segundo plano */
+  const {ctx, p} = await enApk();
+  await p.clock.install({time: new Date("2026-10-20T10:00:00")});
+  await irApk(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await p.click("#s-empezar"); await tick(p, 3000); await p.waitForSelector("#s-listo");
+  ok((await nat(p, "Pantalla", "encender")).length >= 1, "no dejó la pantalla encendida");
+  await p.evaluate(() => K.sesion.vibrar("ok"));
+  ok(JSON.stringify((await nat(p, "Pantalla", "vibrar")).at(-1)?.[2]) === '{"patron":[14]}', "no vibra por el plugin");
+  await atras(p); await p.waitForFunction(() => location.hash === "#/hoy");
+  ok(await p.evaluate(() => K.sesion.activa()), "atrás cortó la sesión");
+  ok(await p.evaluate(() => !document.querySelector("#isla").hidden), "no quedó la isla");
+  ok(await atras(p) === "segundo-plano", "con la sesión en curso, atrás no la deja en segundo plano");
+  ok((await nat(p, "App", "minimizeApp")).length === 1 && (await nat(p, "App", "exitApp")).length === 0, "cerró la app con la sesión en curso");
+  ok(await p.evaluate(() => K.sesion.activa()), "la sesión se perdió");
+  /* al cortarla, la pantalla se puede apagar de nuevo */
+  await p.click("#isla"); await tick(p, 1000); await p.waitForSelector("#s-cortar"); await p.click("#s-cortar"); await tick(p, 1000);
+  ok(await p.evaluate(() => !K.sesion.activa()), "no terminó la sesión");
+  ok((await nat(p, "Pantalla", "apagar")).length >= 1, "la pantalla quedó encendida después de la sesión");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
 });
 
 const elegidas = process.argv.slice(2);

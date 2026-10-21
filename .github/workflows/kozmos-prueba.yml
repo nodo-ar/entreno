@@ -1,0 +1,158 @@
+# Arma la APK de prueba de Kozmos («Kozmos prueba», ar.kozmos.prueba) y la deja como artifact de la corrida.
+# Se instala al lado de la de verdad, con sus propios datos, firmada con la clave de depuración. No publica nada.
+name: Kozmos · APK de prueba
+on:
+  push:
+    branches-ignore: [main]
+    paths: ['kozmos/**', '.github/workflows/kozmos-prueba.yml']
+  pull_request:
+    paths: ['kozmos/**', '.github/workflows/kozmos-prueba.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: kozmos-prueba-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  apk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # el número de versión sale de la cantidad de commits
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: kozmos/apk/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      # la clave de depuración se guarda entre corridas: así cada APK de prueba se instala encima de la anterior
+      - uses: actions/cache@v4
+        with:
+          path: ~/kozmos-depuracion.keystore
+          key: kozmos-depuracion-v1
+      - name: Clave de depuración
+        run: |
+          K=~/kozmos-depuracion.keystore
+          [ -f "$K" ] || keytool -genkeypair -keystore "$K" -storetype PKCS12 -storepass android -keypass android \
+            -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Kozmos prueba, O=Nodo, C=AR"
+          echo "KOZMOS_DEPURACION=$K" >> "$GITHUB_ENV"
+      - name: Pruebas sin pantalla
+        run: node kozmos/pruebas/puras.mjs
+      - name: Número de versión
+        run: |
+          echo "KOZMOS_VERSION_CODE=$(git rev-list --count HEAD)" >> "$GITHUB_ENV"
+          echo "KOZMOS_VERSION_NAME=k-$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+          echo "KOZMOS_V=k-$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+      - name: Capacitor y la página
+        working-directory: kozmos/apk
+        run: |
+          npm ci
+          node ../tools/armar.mjs www --apk
+          npx cap sync android
+          test -f android/app/src/main/assets/public/index.html
+          test ! -e android/app/src/main/assets/public/sw.js || { echo "::error::la APK no tiene que llevar service worker"; exit 1; }
+      - name: Armar la APK de prueba
+        working-directory: kozmos/apk/android
+        run: ./gradlew --no-daemon assemblePrueba
+      - name: Revisar la APK
+        run: |
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          APK=kozmos/apk/android/app/build/outputs/apk/prueba/app-prueba.apk
+          mkdir -p salida && cp "$APK" "salida/kozmos-prueba-$KOZMOS_VERSION_CODE.apk"
+          {
+            echo "### Kozmos prueba · $KOZMOS_VERSION_NAME (versionCode $KOZMOS_VERSION_CODE)"
+            echo '```'
+            "$BT/aapt2" dump badging "$APK" | grep -E "^(package|application-label:|sdkVersion|targetSdkVersion|uses-permission)"
+            echo "--- firma"
+            "$BT/apksigner" verify -v --print-certs "$APK" 2>&1 | grep -vi "^warning" | head -20
+            echo "--- tamaño: $(du -k "$APK" | cut -f1) kB"
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          "$BT/apksigner" verify "$APK"
+          "$BT/aapt2" dump badging "$APK" | grep -q "package: name='ar.kozmos.prueba'"
+          unzip -l "$APK" | grep -q "assets/public/index.html"
+          ! unzip -l "$APK" | grep -q "assets/public/sw.js"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kozmos-prueba-${{ env.KOZMOS_VERSION_CODE }}
+          path: salida/*.apk
+          retention-days: 30
+          if-no-files-found: error
+
+  # Humo: la APK de prueba en un emulador de Android, sin red desde la primera apertura. Saca capturas
+  # (vertical, horizontal, claro y oscuro) y prueba el botón atrás en Hoy. Si el emulador falla, la APK igual queda.
+  humo:
+    needs: apk
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    continue-on-error: true
+    env:
+      ANDROID_AVD_HOME: /home/runner/.android/avd
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: kozmos-prueba-[0-9]*
+          path: apk
+          merge-multiple: true
+      - name: Emulador
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"; export PATH="$ANDROID_HOME/platform-tools:$PATH"
+          IMG="system-images;android-35;google_apis;x86_64"; mkdir -p "$ANDROID_AVD_HOME"
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install emulator platform-tools "$IMG" > /dev/null
+          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n kozmos -k "$IMG" --force -p "$ANDROID_AVD_HOME/kozmos.avd"
+          ls -l /dev/kvm; "$ANDROID_HOME/emulator/emulator" -accel-check || true
+          nohup "$ANDROID_HOME/emulator/emulator" -avd kozmos -no-window -no-audio -no-boot-anim -no-snapshot -no-metrics -gpu swiftshader_indirect > emulador.log 2>&1 &
+          timeout 180 adb wait-for-device || { echo "::error::el emulador no arrancó"; tail -60 emulador.log; exit 1; }
+          listo=0
+          for i in $(seq 1 100); do [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = 1 ] && { listo=1; break; }; sleep 3; done
+          [ $listo = 1 ] || { echo "::error::el emulador no terminó de arrancar"; tail -60 emulador.log; exit 1; }
+          adb shell settings put global window_animation_scale 0
+          adb shell settings put global transition_animation_scale 0
+      - name: Abrir sin red, girar, tema oscuro y atrás
+        run: |
+          set -x
+          A=ar.kozmos.prueba; mkdir -p capturas
+          cap(){ sleep "${2:-6}"; adb exec-out screencap -p > "capturas/$1.png"; }
+          ui(){ adb shell uiautomator dump /sdcard/ui.xml > /dev/null && adb exec-out cat /sdcard/ui.xml; }
+          adb shell cmd connectivity airplane-mode enable || true
+          adb shell svc wifi disable || true; adb shell svc data disable || true
+          adb install apk/*.apk
+          adb shell dumpsys package $A | grep -E "versionName|versionCode|permission" | tee permisos.txt
+          adb shell am start -W -n $A/ar.kozmos.MainActivity
+          cap 1-hoy-claro 10
+          ui > ui-hoy.xml; grep -o 'text="Hoy"' ui-hoy.xml | head -1 | tee -a resultado.txt
+          adb shell settings put system accelerometer_rotation 0; adb shell settings put system user_rotation 1
+          cap 2-horizontal
+          adb shell settings put system user_rotation 0
+          adb shell cmd uimode night yes
+          cap 3-hoy-oscuro
+          # atrás en Hoy: sale de la app (sin sesión en curso)
+          adb shell input keyevent KEYCODE_BACK; sleep 3
+          adb shell dumpsys window | grep -E "mCurrentFocus|mFocusedApp" | tee foco.txt
+          grep -q "$A" foco.txt && echo "atrás en Hoy: NO salió" | tee -a resultado.txt || echo "atrás en Hoy: salió" | tee -a resultado.txt
+          # se instala encima de sí misma (misma firma) y vuelve a abrir
+          adb install -r apk/*.apk && adb shell am start -W -n $A/ar.kozmos.MainActivity && cap 4-reabierta 8
+          adb logcat -d | grep -iE "chromium|capacitor|kozmos|AndroidRuntime" | tail -80 > logcat.txt || true
+          {
+            echo "### Humo en el emulador (Android 15, sin red)"
+            echo '```'; cat resultado.txt; cat permisos.txt; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          grep -q 'text="Hoy"' ui-hoy.xml
+          grep -q "^atrás en Hoy: salió" resultado.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kozmos-prueba-humo
+          path: |
+            capturas/
+            *.txt
+            *.xml
+            emulador.log
+          retention-days: 30

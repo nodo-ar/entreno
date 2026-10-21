@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Los datos quedan en el teléfono: la copia en la nube de Google no se los lleva.
+     El pase directo de un teléfono a otro (con cable o wifi, al estrenar teléfono) sí los copia.
+     Y siempre está el respaldo de Kozmos (Vos → Respaldo). -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="root" path="." />
+        <exclude domain="file" path="." />
+        <exclude domain="database" path="." />
+        <exclude domain="sharedpref" path="." />
+        <exclude domain="external" path="." />
+    </cloud-backup>
+</data-extraction-rules>
