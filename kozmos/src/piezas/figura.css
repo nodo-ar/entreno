@@ -1,6 +1,10 @@
 /* ===== Figura: el maniquí (ver figura.js) ===== */
 .fig{display:block; width:100%; height:auto; overflow:hidden;
   --fig-lejos:color-mix(in srgb,var(--ink) 38%,var(--bg)); --fig-lejos-c:color-mix(in srgb,var(--c) 50%,var(--bg))}
+/* el cuerpo humano: un tono de piel y la ropa; lo lejano, un poco más oscuro */
+.fig{--piel:var(--tono,#d8a47f); --piel-s:color-mix(in srgb,var(--piel) 76%,#3b1d0e); --piel-ss:color-mix(in srgb,var(--piel) 60%,#3b1d0e); --piel-l:color-mix(in srgb,var(--piel) 62%,#fff);
+  --pelo:#2b211b; --short:#2c2f35; --short-f:#1d1f23; --zapa:#3d4048; --zapa-f:#2a2c31; --suela:#f4f3ef;
+  --ropa-f:color-mix(in srgb,var(--c) 72%,#000); --ropa-s:color-mix(in srgb,var(--c) 70%,#000)}
 .fig-piso{stroke:var(--ink); stroke-width:1.5; opacity:.8}
 .fig-disco{fill:var(--cs)}
 .fig-est{fill:var(--ink-3)}

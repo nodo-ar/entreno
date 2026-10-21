@@ -36,9 +36,9 @@ K.fig = (() => {
     for (let i = 0; i < p.length; i++){ const a = p[i], b = p[(i + 1) % p.length]; s += `Q${n1(a[0])} ${n1(a[1])} ${n1((a[0] + b[0]) / 2)} ${n1((a[1] + b[1]) / 2)}`; } return s + "Z"; }
   function miembro(a, b, prof, c){
     const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, nx = -dy / d, ny = dx / d, ux = dx / d, uy = dy / d, r0 = prof[0], r1 = prof[prof.length - 1];
-    const P = [[a[0] - ux * r0[1] * .9, a[1] - uy * r0[1] * .9]];
+    const e0 = Math.abs(r0[1]) * .9, e1 = Math.abs(r1[1]) * .9, P = [[a[0] - ux * e0, a[1] - uy * e0]];
     prof.forEach(([t, rp]) => P.push([a[0] + dx * t + nx * rp, a[1] + dy * t + ny * rp]));
-    P.push([b[0] + ux * r1[1] * .9, b[1] + uy * r1[1] * .9]);
+    P.push([b[0] + ux * e1, b[1] + uy * e1]);
     [...prof].reverse().forEach(([t, , rn]) => P.push([a[0] + dx * t - nx * rn, a[1] + dy * t - ny * rn]));
     return `<path d="${suave(P)}" fill="${c}"/>`;
   }
@@ -59,6 +59,72 @@ K.fig = (() => {
     return {piernas: miembro(J.hip, J["k" + s], MUSLO, cL) + miembro(J["k" + s], J["f" + s], PIERNA, cL) + pie(J["f" + s], P["leg" + s][1], cL),
       brazos: miembro(J.sh, J["e" + s], BRAZO, cA) + miembro(J["e" + s], J["h" + s], ANTEBRAZO, cA) + mano(J["h" + s], P["arm" + s][1], cA)}; }
 
+
+  /* ===== el cuerpo humano: piel, musculosa, short y zapatillas. nivel 1 sobrio, 2 ilustrado (sombra y músculos), 3 realista (luces y más anatomía) ===== */
+  const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+  /* franjas dentro de un miembro: la de atrás (+n) es sombra, la de adelante (−n) es luz */
+  const atras = (prof, k) => prof.map(([t, rp]) => [t, rp, -rp * k]);
+  const frente = (prof, k0, k1) => prof.map(([t, , rn]) => [t, -rn * k0, rn * k1]);
+  /* una línea de músculo: de t0 a t1 sobre el miembro, corrida «off» px hacia +n (atrás) o −n (adelante), con panza «pz» */
+  function linea(a, b, t0, t1, off, pz, c, w = 1.1){
+    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, nx = -dy / d, ny = dx / d;
+    const pt = (t, o) => [a[0] + dx * t + nx * o, a[1] + dy * t + ny * o], p0 = pt(t0, off), p1 = pt(t1, off), m = pt((t0 + t1) / 2, off + pz);
+    return `<path d="M${n1(p0[0])} ${n1(p0[1])}Q${n1(m[0])} ${n1(m[1])} ${n1(p1[0])} ${n1(p1[1])}" stroke="${c}" stroke-width="${w}" fill="none" stroke-linecap="round" opacity=".45"/>`;
+  }
+  function humano(J, f, nivel){
+    const P = J.P, tr = f.trabaja || [], g = [];
+    const C = {N: {piel: "var(--piel)", sombra: "var(--piel-s)", luz: "var(--piel-l)", ropa: "var(--c)", short: "var(--short)", zapa: "var(--zapa)"},
+      F: {piel: "var(--piel-s)", sombra: "var(--piel-ss)", luz: "var(--piel)", ropa: "var(--ropa-f)", short: "var(--short-f)", zapa: "var(--zapa-f)"}};
+    const tinte = () => "";
+    const volumen = (a, b, prof, c) => (nivel > 1 ? miembro(a, b, atras(prof, .1), c.sombra) : "") + (nivel > 2 ? miembro(a, b, frente(prof, .35, .8), c.luz).replace("/>", ' opacity=".8"/>') : "");
+    const pierna = s => { const c = C[s], k = J["k" + s], fp = J["f" + s], sh = P["leg" + s][1];
+      let o = miembro(J.hip, k, MUSLO, c.piel) + volumen(J.hip, k, MUSLO, c) + (tr.includes("piernas") ? tinte(J.hip, k, MUSLO, s) : "");
+      o += miembro(k, fp, PIERNA, c.piel) + volumen(k, fp, PIERNA, c) + (tr.includes("piernas") ? tinte(k, fp, PIERNA, s) : "");
+      if (nivel > 1){ o += linea(J.hip, k, .62, .96, -4, -2.5, c.sombra) + linea(k, fp, .1, .5, 3, 2.5, c.sombra); }
+      if (nivel > 2){ o += linea(J.hip, k, .78, .97, -1, -3, c.sombra, .9) + linea(k, fp, .2, .85, -3.4, 0, c.sombra, .8); }
+      /* el short tapa la mitad de arriba del muslo; la zapatilla, el pie */
+      o += miembro(J.hip, lerp(J.hip, k, .52), [[0, 11.6, 10.6], [.6, 11.2, 9.8], [1, 10, 9]], c.short);
+      o += pie(fp, sh, c.zapa) + suela(fp, sh, s);
+      return o; };
+    const brazo = s => { const c = C[s], e = J["e" + s], h = J["h" + s];
+      let o = miembro(J.sh, e, BRAZO, c.piel) + volumen(J.sh, e, BRAZO, c) + (tr.includes("brazos") ? tinte(J.sh, e, BRAZO, s) : "");
+      o += miembro(e, h, ANTEBRAZO, c.piel) + volumen(e, h, ANTEBRAZO, c) + (tr.includes("brazos") ? tinte(e, h, ANTEBRAZO, s) : "");
+      if (nivel > 1){ o += linea(J.sh, e, .02, .46, -2, 3.2, c.sombra) + linea(J.sh, e, .38, .86, -3.2, -1.8, c.sombra) + linea(J.sh, e, .25, .75, 3, 1.6, c.sombra); }
+      if (nivel > 2){ o += linea(e, h, .08, .6, -2, -1.6, c.sombra, .9); }
+      o += mano(h, P["arm" + s][1], c.piel);
+      return o; };
+    g.push(pierna("F"), brazo("F"));
+    /* la musculosa: el tronco del color de la familia, con sisa; el short le tapa la cintura */
+    g.push(tronco(J, "var(--c)"));
+    if (nivel > 1) g.push(trozo(J, [[.15, -13], [.4, -9.6], [.62, -9.2], [.9, -10.5], [1.04, -6], [.95, -4], [.6, -5], [.3, -8]], "var(--ropa-s)", .5));
+    if (nivel > 2) g.push(trozo(J, [[.3, 2], [.42, 8.6], [.5, 8.2], [.4, 1.4]], "#000", .1));
+    g.push(trozo(J, [[-.08, 8.4], [.2, 10.4], [.26, 10.2], [.24, -13.6], [.12, -13.8], [-.1, -10.4]], "var(--short)"));
+    g.push(cabezaH(J, nivel), pierna("N"), brazo("N"));
+    return g.join("");
+  }
+  /* un pedazo del tronco, en coordenadas del tronco (t a lo largo, w de costado: + es el pecho) */
+  function trozo(J, pts, c, op = 1){
+    const H = J.hip, S = J.sh, dx = S[0] - H[0], dy = S[1] - H[1], d = Math.hypot(dx, dy), fx = -dy / d, fy = dx / d;
+    return `<path d="${suave(pts.map(([t, w]) => [H[0] + dx * t + fx * w, H[1] + dy * t + fy * w]))}" fill="${c}"${op < 1 ? ` opacity="${op}"` : ""}/>`;
+  }
+  function suela(f, sh, s){ const w = v(sh + 90, 1), d = v(sh, 1), pt = (a, b) => [f[0] + w[0] * a + d[0] * b, f[1] + w[1] * a + d[1] * b], a = pt(-5, 5.2), b = pt(14.5, 4.8);
+    return `<path d="M${n1(a[0])} ${n1(a[1])}L${n1(b[0])} ${n1(b[1])}" stroke="var(--suela)" stroke-width="2.2" stroke-linecap="round"${s === "F" ? ' opacity=".6"' : ""}/>`; }
+  /* la cabeza: cuello, cara, pelo corto que cubre atrás y arriba, oreja; en realista, el ojo */
+  function cabezaH(J, nivel){
+    const hd = J.hd, a = -J.P.head + 180, f = v(J.P.head - 90, 1), u = v(J.P.head, 1), R = L.head;
+    const el = (dx, dy, rx, ry, c, extra = "") => { const x = hd[0] + f[0] * dx + u[0] * dy, y = hd[1] + f[1] * dx + u[1] * dy; return `<ellipse cx="${n1(x)}" cy="${n1(y)}" rx="${n1(rx)}" ry="${n1(ry)}" transform="rotate(${n1(a)} ${n1(x)} ${n1(y)})" fill="${c}"${extra}/>`; };
+    let o = miembro(J.sh, J.nk, [[0, 5, 4.6], [1, 4.6, 4.4]], "var(--piel)");
+    if (nivel > 1) o += miembro(J.sh, J.nk, [[0, 5, -1], [1, 4.6, -1]], "var(--piel-s)");
+    o += el(0, 0, R * .86, R, "var(--piel)");
+    o += el(-1.6, 1.8, R * .8, R * .86, "var(--pelo)");
+    o += el(1.4, -1.6, R * .7, R * .74, "var(--piel)");
+    if (nivel > 1) o += el(-1.2, -.6, 2.2, 3.2, "var(--piel-s)");
+    const nx = hd[0] + f[0] * R * .82 - u[0] * 1.5, ny = hd[1] + f[1] * R * .82 - u[1] * 1.5;
+    o += `<circle cx="${n1(nx)}" cy="${n1(ny)}" r="2.4" fill="var(--piel)"/>`;
+    if (nivel > 2){ const ex = hd[0] + f[0] * R * .5 + u[0] * 1.6, ey = hd[1] + f[1] * R * .5 + u[1] * 1.6; o += `<circle cx="${n1(ex)}" cy="${n1(ey)}" r="1.1" fill="var(--pelo)"/>`; }
+    return o;
+  }
+
   /* lo que se usa: barra, paralelas, banco, pared, pesa */
   function elemento(f){
     const [x, y] = f.en;
@@ -78,6 +144,8 @@ K.fig = (() => {
     g += elemento(f);
     g += `<line x1="${n1(x0 - 40)}" y1="${PISO + 1}" x2="${n1(x0 + w + 40)}" y2="${PISO + 1}" class="fig-piso"/>`;
     if (f.estela && o.estela !== false) for (let i = 0; i <= 10; i++){ const p = ubicar(f, mezclar(f.k[0], f.k[1], i / 10))[f.estela]; g += `<circle cx="${n1(p[0])}" cy="${n1(p[1])}" r="${i % 5 ? 1.3 : 2.2}" fill="${F}" opacity="${i % 5 ? .45 : .85}"/>`; }
+    const nivel = {sobrio: 1, ilustrado: 2, realista: 3}[o.estilo ?? K.figEstilo];
+    if (nivel) return g + humano(J, f, nivel);
     const bF = lado(J, "F", brazoC ? lejosF : lejos, piernaC ? lejosF : lejos), bN = lado(J, "N", brazoC ? F : ink, piernaC ? F : ink);
     g += bF.piernas + bF.brazos + cabeza(J, ink) + tronco(J, tr.includes("tronco") ? F : ink) + bN.piernas + bN.brazos;
     return g;
@@ -113,10 +181,10 @@ K.fig = (() => {
   /* grande: en la serie, se mueve a su ritmo (o queda quieta si el sistema pide menos movimiento) */
   const grande = (id, fam, o = {}) => { const f = K.POSES[id]; if (!f) return "";
     const x = {id, ...f, fam}, quieta = !f.ritmo || K.reduce(), vb = marco(x, [0, .25, .5, .75, 1].map(t => mezclar(f.k[0], f.k[1], t)));
-    return caja("grande", x, vb, `<g>${pose(x, quieta ? f.k[f.muestra ?? 1] : f.k[0], {...o, vb})}</g>`, quieta ? "" : ` data-fig="${id}" data-fam="${fam}" data-fondo="${o.fondo || ""}" data-vb="${vb.map(n1).join(" ")}"`); };
+    return caja("grande", x, vb, `<g>${pose(x, quieta ? f.k[f.muestra ?? 1] : f.k[0], {...o, vb})}</g>`, quieta ? "" : ` data-fig="${id}" data-fam="${fam}" data-fondo="${o.fondo || ""}" data-estilo="${o.estilo || ""}" data-vb="${vb.map(n1).join(" ")}"`); };
   /* chica: una sola pose, la que más dice, recortada en un círculo */
-  const chica = (id, fam) => { const f = K.POSES[id]; if (!f) return ""; const x = {id, ...f, fam}, P = f.k[f.muestra ?? 1], vb = marco(x, [P], true);
-    return `<span class="fig-chica" style="--cs:var(--${fam}-soft)">${caja("chica", x, vb, pose(x, P, {estela: false, vb}))}</span>`; };
+  const chica = (id, fam, estilo) => { const f = K.POSES[id]; if (!f) return ""; const x = {id, ...f, fam}, P = f.k[f.muestra ?? 1], vb = marco(x, [P], true);
+    return `<span class="fig-chica" style="--cs:var(--${fam}-soft)">${caja("chica", x, vb, pose(x, P, {estela: false, vb, estilo}))}</span>`; };
 
   /* un solo reloj para todas las figuras que se mueven: dibuja a 30 cuadros y se apaga solo cuando no queda ninguna */
   let corriendo = false, t0 = 0, ult = 0;
@@ -125,7 +193,7 @@ K.fig = (() => {
     if (!vivas.length){ corriendo = false; return; }
     if (ts - ult > 32){ ult = ts;
       vivas.forEach(el => { const f = K.POSES[el.dataset.fig];
-        el.firstChild.innerHTML = pose({id: el.dataset.fig, ...f, fam: el.dataset.fam}, mezclar(f.k[0], f.k[1], fase(f, (ts - t0) / 1000)), {fondo: el.dataset.fondo, vb: el.dataset.vb.split(" ").map(Number)}); }); }
+        el.firstChild.innerHTML = pose({id: el.dataset.fig, ...f, fam: el.dataset.fam}, mezclar(f.k[0], f.k[1], fase(f, (ts - t0) / 1000)), {fondo: el.dataset.fondo, estilo: el.dataset.estilo || undefined, vb: el.dataset.vb.split(" ").map(Number)}); }); }
     requestAnimationFrame(cuadro);
   }
   const animar = () => { if (corriendo || K.reduce() || !document.querySelector("svg.fig[data-fig]")) return; corriendo = true; t0 = performance.now(); requestAnimationFrame(cuadro); };
