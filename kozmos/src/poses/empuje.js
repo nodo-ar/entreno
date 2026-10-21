@@ -77,6 +77,8 @@
       {torso: 117, head: 113, armN: [254, 26], armF: [258, 35], legN: [298, 296], legF: [296, 294], pies: [12, 10]}], ritmo: [1.4, .2, 1, .4]},
     /* codos atrás a 45°, el pecho casi toca el piso */
     "flexion": {fijo: "hN", en: [150, 264], muestra: .65, k: [arriba, abajo], ritmo: [1.4, .2, 1, .4]},
+    /* la misma flexión, con dos segundos quieta abajo */
+    "flexion-pausa": {fijo: "hN", en: [150, 264], muestra: .65, k: [arriba, abajo], ritmo: [1.4, 2, 1, .4]},
     /* en antebrazos: codo bajo el hombro, cuerpo en línea */
     "plancha": {fijo: "eN", en: [150, T], k: respira({torso: 99, head: 95, armN: [0, 90], armF: [358, 88], legN: [280, 278], legF: [278, 276], pies: [30, 30]}, -1, 0), ritmo: RESPIRA},
     /* ciclo: rodilla cercana al pecho, cruzan en el aire con la cadera apenas arriba, rodilla lejana */

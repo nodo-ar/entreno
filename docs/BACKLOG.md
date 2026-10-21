@@ -66,7 +66,12 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Wake lock con video** para navegadores sin la API (la ingeniera de campo).
 - **Audio después de recuperar una sesión**: queda mudo hasta el primer toque.
 - **Biblioteca en la barra**: los bocetos de miniaturas la mostraban; el prototipo tiene Progreso y Vos. Definir con Fer cuando haya ejercicios.
-- **Rediseño de Planes, rutinas y hazañas con progresión real, después de la investigación** (vuelta 16). Planes quedó limpia y simple a propósito; el catálogo y las reglas de progresión no se tocaron.
+- ~~**Rediseño de Planes, rutinas y hazañas con progresión real**~~: Modelo A (escaleras), pasos 0 a 2, hecho en la vuelta 17 (acta 017).
+- **Modelo B de progresión: ciclos con semana de prueba** (vuelta 17): las hazañas como pruebas que encienden el Cielo. Va después del A.
+- **Íconos nuevos** (vuelta 17): Fer aprobó asterismo en grande y pictograma del maniquí en chico. Van después del Modelo B.
+- **Hoy con muchas escaleras** (Casandra, vuelta 17): las escaleritas entran hasta siete en una fila; con más, pasan a dos. Si Fer prefiere filas con el ejercicio, mostrar solo las de la sesión de hoy para no tapar «Empezar».
+- **El escalón es de la persona, no de la rutina** (Casandra, vuelta 17): al cambiar de rutina arrancás donde estás en cada escalera. Mirar si hace falta decirlo en Planes.
+- **Pirámides viejas sin evaluar** (el historiador, vuelta 17): las sesiones guardadas antes de las escaleras con objetivos distintos por serie ubican el escalón pero no suben ni bajan.
 - **Color de la estrella de Planes** (vuelta 16): va en tinta, como Vos, porque naranja, aqua y lima ya son de Hoy, Cielo y Progreso. Preguntar a Fer si quiere otro.
 - **Ícono de rutina y de Vos** (la abuela, vuelta 16): las tres lunas de la rutina y los tres puntos de Vos se parecen un poco a 20 px; mirarlo en el teléfono.
 - **Planes vive en `rutinas.js`** (la tijera): renombrar a `planes.js` cuando llegue el rediseño.

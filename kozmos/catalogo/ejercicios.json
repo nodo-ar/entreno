@@ -39,22 +39,34 @@
   {
    "id": "dominada-explosiva",
    "nombre": "Dominada explosiva",
-   "indicacion": "Tirá fuerte hasta llevar el pecho a la barra."
+   "indicacion": "Tirá fuerte hasta llevar el pecho a la barra.",
+   "equipo": [
+    "barra"
+   ]
   },
   {
    "id": "muscle-up-negativa",
    "nombre": "Negativa de muscle-up",
-   "indicacion": "Arrancá arriba de la barra y bajá lento pasando la transición."
+   "indicacion": "Arrancá arriba de la barra y bajá lento pasando la transición.",
+   "equipo": [
+    "barra"
+   ]
   },
   {
    "id": "muscle-up-impulso",
    "nombre": "Muscle-up con impulso",
-   "indicacion": "Balanceo corto, tirón a la cadera y pasá el pecho arriba."
+   "indicacion": "Balanceo corto, tirón a la cadera y pasá el pecho arriba.",
+   "equipo": [
+    "barra"
+   ]
   },
   {
    "id": "muscle-up",
    "nombre": "Muscle-up",
-   "indicacion": "Sin balanceo: tirón al pecho, transición y fondo arriba."
+   "indicacion": "Sin balanceo: tirón al pecho, transición y fondo arriba.",
+   "equipo": [
+    "barra"
+   ]
   },
   {
    "id": "colgado-activo",
@@ -134,12 +146,18 @@
   {
    "id": "dominada-arquera",
    "nombre": "Dominada arquera",
-   "indicacion": "Tirá hacia una mano, el otro brazo estirado sobre la barra."
+   "indicacion": "Tirá hacia una mano, el otro brazo estirado sobre la barra.",
+   "equipo": [
+    "barra"
+   ]
   },
   {
    "id": "dominada-un-brazo-negativa",
    "nombre": "Negativa a un brazo",
-   "indicacion": "Arrancá arriba y bajá lo más lento que puedas."
+   "indicacion": "Arrancá arriba y bajá lo más lento que puedas.",
+   "equipo": [
+    "barra"
+   ]
   },
   {
    "id": "flexion-un-brazo",
@@ -149,7 +167,10 @@
   {
    "id": "dominada-un-brazo",
    "nombre": "Dominada a un brazo",
-   "indicacion": "Desde colgado, tirá hasta pasar el mentón."
+   "indicacion": "Desde colgado, tirá hasta pasar el mentón.",
+   "equipo": [
+    "barra"
+   ]
   },
   {
    "id": "bandera-rodillas",
@@ -399,6 +420,11 @@
    "indicacion": "Cuerpo en línea, codos a 45° del torso, el pecho casi toca el piso."
   },
   {
+   "id": "flexion-pausa",
+   "nombre": "Flexión con pausa",
+   "indicacion": "Bajá, quedate dos segundos con el pecho a un puño del piso y subí."
+  },
+  {
    "id": "plancha",
    "nombre": "Plancha",
    "indicacion": "Codos bajo los hombros, glúteo apretado, cuerpo en línea. Contá segundos.",
@@ -427,6 +453,14 @@
    "id": "dominada",
    "nombre": "Dominada",
    "indicacion": "Pecho a la barra, sin hamacarte.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
+   "id": "dominada-asistida",
+   "nombre": "Dominada asistida",
+   "indicacion": "Un pie en una silla atrás: empujá con la pierna lo justo para subir.",
    "equipo": [
     "barra"
    ]

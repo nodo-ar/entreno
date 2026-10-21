@@ -101,12 +101,13 @@ document.addEventListener("click", e => {
       "hz-nivel": () => K.hazanaNivelMenu(m), "hz-empezar": () => K.ses.hazana(m.dataset.hazana, K._nivel[m.dataset.hazana] ?? 0, m)})[m.id]();
     return;
   }
-  const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #s-pausa, #s-vuelta, #s-vuelta-menos, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio]");
+  const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #s-pausa, #s-vuelta, #s-vuelta-menos, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio], [data-sens]");
   if (s){
     if (s.dataset.spaso) K.ses.paso(s.dataset.campo, Number(s.dataset.spaso));
     else if (s.dataset.rumbo) K.rumboTocar(s.dataset.rumbo);
     else if (s.dataset.desc) K.ses.ajustar(Number(s.dataset.desc));
     else if (s.dataset.salio) K.ses.salio(Number(s.dataset.salio));
+    else if (s.dataset.sens) K.ses.sentir(s.dataset.sens);
     else ({"s-empezar": () => K.ses.empezar(s), "s-listo": () => K.ses.listo(), "s-seguir": () => K.ses.seguir(),
       "s-terminar": () => K.ses.terminar(), "s-cortar": () => K.ses.cortar(), "s-mas": () => K.ses.menu(s),
       "s-pausa": () => K.ses.pausa(), "s-vuelta": () => K.ses.vuelta(1), "s-vuelta-menos": () => K.ses.vuelta(-1), "hoy-mas": () => K.hoyMenu(s)})[s.id]();

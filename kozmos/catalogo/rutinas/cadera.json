@@ -2,7 +2,7 @@
  "id": "cadera",
  "nombre": "Cadera libre",
  "familia": "ra",
- "texto": "Posturas para soltar la cadera, cada semana un poco más largas.",
+ "texto": "Posturas para soltar la cadera, cada semana un poco más largas. Tres días, fuerza al final del recorrido.",
  "semanas": 4,
  "dias": 5,
  "minutos": 10,
@@ -45,6 +45,12 @@
        "ejercicio": "isquios-sentado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -138,6 +144,12 @@
        "ejercicio": "groiners"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -224,6 +236,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -267,6 +285,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -367,6 +391,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -467,6 +497,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -515,6 +551,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -632,6 +674,12 @@
        "ejercicio": "piernas-abiertas"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -742,6 +790,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -790,6 +844,12 @@
        "ejercicio": "sentadilla-profunda"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -907,6 +967,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -1017,6 +1083,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   }

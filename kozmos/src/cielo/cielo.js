@@ -27,6 +27,11 @@ K.cielo = (() => {
         const k = x.ejercicio + "|" + x.tipo, a = mejor[k];
         const gana = !a || (TIPOS[x.tipo].mejor === "menos" ? x.valor < a.valor : x.valor > a.valor);
         if (gana) mejor[k] = {id: s.id + ":" + k, estrella: x.estrella, ejercicio: x.ejercicio, tipo: x.tipo, valor: x.valor, fecha: s.fecha, origen: "serie", sesion: s.id};
+        /* con lastre, la serie también mide cuánto de tu peso sumaste */
+        if (x.tipo === "repeticiones" && x.valor > 0 && x.lastreKg > 0 && x.pesoKg > 0){
+          const v = Math.round(x.lastreKg / x.pesoKg * 1000) / 10, kp = x.ejercicio + "|porcentaje", ap = mejor[kp];
+          if (!ap || v > ap.valor) mejor[kp] = {id: s.id + ":" + kp, ejercicio: x.ejercicio, tipo: "porcentaje", valor: v, fecha: s.fecha, origen: "serie", sesion: s.id};
+        }
       }
       r.push(...Object.values(mejor));
     }

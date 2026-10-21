@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-21 (Planes) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-21 (escaleras) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -25,6 +25,14 @@
 - **Planes** (2026-10-21): Fer eligió la opción C del boceto de Hoy (https://claude.ai/artifact/XL1YmmX9t8Fsd1VeayNL8t), con la pestaña «Planes», hazañas arriba y rutinas abajo. Vuelta 16 (acta `docs/actas/016-kozmos-planes.md`), en la rama `claude/project-thread-985fzq`, sin PR: pestaña Planes (Hoy, Planes, Cielo, Progreso, Vos) con rutas `#/planes…` (las viejas `#/hoy/rutinas…` y `#/hoy/hazanas…` redirigen), fila «Sale de tu rumbo / de tu rutina» en Hoy, el primer día en tres pasos, íconos nuevos de Planes, rutina y rumbo, y atrás de la APK recorriendo Planes. Catálogo y progresión sin tocar. Pruebas: 48 sin pantalla y 60 de pantallas.
   - **Esperando a Fer**: el OK al tablero (capturas antes y después en claro y grafito).
   - **Próximo**: la investigación y el rediseño de Planes, rutinas y hazañas con progresión real.
+- **Escaleras de progresión, Modelo A pasos 0 a 2** (2026-10-21): Fer eligió el Modelo A de la investigación de progresión. Vuelta 17 (acta `docs/actas/017-kozmos-escaleras.md`), en la rama `claude/project-thread-985fzq`, sin PR:
+  - Paso 0: textos honestos en Lastre, Base y Primera dominada; Perseo Intermedio 4 · 8 · 12; ninguna estrella de «Entrena para» queda sin medir; siete ejercicios de barra ahora dicen que piden barra.
+  - Paso 1: `catalogo/escaleras.json` con 10 escaleras y el motor en `src/sesion/rutina.js` (subir, sumar por serie, bajar, descarga al trabarse, sostenes de 60 s, lastre de a 2,5 kg). El escalón sale del diario, sin estado guardado. Dos ejercicios nuevos con dibujo: dominada asistida y flexión con pausa.
+  - Paso 2: «Sobró · Justo · No llegué» opcional en el descanso, «▲ nuevo» en la serie y la isla, «Tus escalones» con ▲ = ▼ en el resumen, y cada escalera como una escalerita en «Tu avance» de Hoy y en la rutina de Planes.
+  - Las sesiones viejas cargan y cuentan; la serie suma campos opcionales (`escalera`, `rango`, `n`, `descarga`, `sensacion`) y el respaldo los lleva. Formato en `docs/kozmos-rutinas.md`.
+  - Pruebas: 59 sin pantalla y 66 de pantallas, en verde.
+  - **Esperando a Fer**: el OK al tablero; si «trabado» = tres sesiones sin mejorar le cierra; si la escalerita de «Tu avance» le gusta o prefiere filas con el ejercicio.
+  - **Próximo**: Modelo B (ciclos con semana de prueba). Después, los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
 
 ## Dónde quedó
 

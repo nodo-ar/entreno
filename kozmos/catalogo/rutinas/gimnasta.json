@@ -62,67 +62,47 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "fondo"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "objetivo": 20,
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "l-sit"
     },
     {
-     "ejercicio": "l-sit",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      10,
-      30
-     ],
-     "descanso": 0,
-     "grupo": "B"
-    },
-    {
-     "ejercicio": [
-      "dragon-flag-negativa",
-      "hollow-rock"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "dragon",
      "series": 3,
      "rango": [
       3,
       6
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "dragon-flag-negativa"
     }
    ]
   },
@@ -170,32 +150,26 @@
      ]
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla-bulgara"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 120,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "remo-invertido"
     },
     {
      "ejercicio": [
@@ -288,18 +262,15 @@
      "grupo": "A"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "flexion-declinada"
     },
     {
      "ejercicio": [
@@ -388,67 +359,47 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "fondo"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "objetivo": 20,
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "l-sit"
     },
     {
-     "ejercicio": "l-sit",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      10,
-      30
-     ],
-     "descanso": 0,
-     "grupo": "B"
-    },
-    {
-     "ejercicio": [
-      "dragon-flag-negativa",
-      "hollow-rock"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "dragon",
      "series": 3,
      "rango": [
       3,
       6
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "dragon-flag-negativa"
     }
    ]
   },
@@ -496,32 +447,26 @@
      ]
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla-bulgara"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 120,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "remo-invertido"
     },
     {
      "ejercicio": [
@@ -614,18 +559,15 @@
      "grupo": "A"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "flexion-declinada"
     },
     {
      "ejercicio": [
@@ -714,67 +656,47 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "fondo"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "objetivo": 30,
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "l-sit"
     },
     {
-     "ejercicio": "l-sit",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      10,
-      30
-     ],
-     "descanso": 0,
-     "grupo": "B"
-    },
-    {
-     "ejercicio": [
-      "dragon-flag-negativa",
-      "hollow-rock"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "dragon",
      "series": 3,
      "rango": [
       3,
       6
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "dragon-flag-negativa"
     }
    ]
   },
@@ -822,32 +744,26 @@
      ]
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla-bulgara"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 120,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "remo-invertido"
     },
     {
      "ejercicio": [
@@ -940,18 +856,15 @@
      "grupo": "A"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "flexion-declinada"
     },
     {
      "ejercicio": [
@@ -1040,67 +953,47 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "fondo"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "objetivo": 30,
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "l-sit"
     },
     {
-     "ejercicio": "l-sit",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      10,
-      30
-     ],
-     "descanso": 0,
-     "grupo": "B"
-    },
-    {
-     "ejercicio": [
-      "dragon-flag-negativa",
-      "hollow-rock"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "dragon",
      "series": 3,
      "rango": [
       3,
       6
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "dragon-flag-negativa"
     }
    ]
   },
@@ -1148,32 +1041,26 @@
      ]
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla-bulgara"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 120,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "remo-invertido"
     },
     {
      "ejercicio": [
@@ -1266,18 +1153,15 @@
      "grupo": "A"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "flexion-declinada"
     },
     {
      "ejercicio": [
@@ -1366,67 +1250,47 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "fondo"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "objetivo": 30,
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "l-sit"
     },
     {
-     "ejercicio": "l-sit",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      10,
-      30
-     ],
-     "descanso": 0,
-     "grupo": "B"
-    },
-    {
-     "ejercicio": [
-      "dragon-flag-negativa",
-      "hollow-rock"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "dragon",
      "series": 3,
      "rango": [
       3,
       6
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "dragon-flag-negativa"
     }
    ]
   },
@@ -1474,32 +1338,26 @@
      ]
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla-bulgara"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 120,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "remo-invertido"
     },
     {
      "ejercicio": [
@@ -1592,18 +1450,15 @@
      "grupo": "A"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "flexion-declinada"
     },
     {
      "ejercicio": [
@@ -1692,67 +1547,47 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "fondo"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "objetivo": 30,
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "l-sit"
     },
     {
-     "ejercicio": "l-sit",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      10,
-      30
-     ],
-     "descanso": 0,
-     "grupo": "B"
-    },
-    {
-     "ejercicio": [
-      "dragon-flag-negativa",
-      "hollow-rock"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "dragon",
      "series": 3,
      "rango": [
       3,
       6
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "dragon-flag-negativa"
     }
    ]
   },
@@ -1800,32 +1635,26 @@
      ]
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla-bulgara"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 120,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "remo-invertido"
     },
     {
      "ejercicio": [
@@ -1918,18 +1747,15 @@
      "grupo": "A"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "flexion-declinada"
     },
     {
      "ejercicio": [
@@ -2018,67 +1844,47 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "fondo"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "objetivo": 45,
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "l-sit"
     },
     {
-     "ejercicio": "l-sit",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      10,
-      30
-     ],
-     "descanso": 0,
-     "grupo": "B"
-    },
-    {
-     "ejercicio": [
-      "dragon-flag-negativa",
-      "hollow-rock"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "dragon",
      "series": 3,
      "rango": [
       3,
       6
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "dragon-flag-negativa"
     }
    ]
   },
@@ -2126,32 +1932,26 @@
      ]
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla-bulgara"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 120,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "remo-invertido"
     },
     {
      "ejercicio": [
@@ -2244,18 +2044,15 @@
      "grupo": "A"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "flexion-declinada"
     },
     {
      "ejercicio": [
@@ -2345,67 +2142,47 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "fondo"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "objetivo": 45,
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "l-sit"
     },
     {
-     "ejercicio": "l-sit",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      10,
-      30
-     ],
-     "descanso": 0,
-     "grupo": "B"
-    },
-    {
-     "ejercicio": [
-      "dragon-flag-negativa",
-      "hollow-rock"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "dragon",
      "series": 3,
      "rango": [
       3,
       6
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "dragon-flag-negativa"
     }
    ]
   },
@@ -2454,32 +2231,26 @@
      ]
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla-bulgara"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 120,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "remo-invertido"
     },
     {
      "ejercicio": [
@@ -2573,18 +2344,15 @@
      "grupo": "A"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "flexion-declinada"
     },
     {
      "ejercicio": [

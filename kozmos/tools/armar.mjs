@@ -41,7 +41,8 @@ const rutinas = (fs.existsSync(RUT) ? fs.readdirSync(RUT).filter(f => f.endsWith
 const ORDEN = {fu: 0, ra: 1, mo: 2};
 rutinas.sort((a, b) => (ORDEN[a.familia] ?? 9) - (ORDEN[b.familia] ?? 9) || a.nombre.localeCompare(b.nombre, "es"));
 const hz = fs.existsSync(path.join(RAIZ, "catalogo", "hazanas.json")) ? cat("hazanas.json") : '{"version":1,"hazanas":[]}';
-const js2 = js.replace('K.VERSION = ', () => `K.CATALOGO = ${cat("constelaciones.json")};\nK.EJERCICIOS = ${cat("ejercicios.json")};\nK.RUTINAS = ${JSON.stringify(rutinas).replace(/</g, "\\u003c")};\nK.HAZANAS = ${hz};\nK.VERSION = `);
+const esc = fs.existsSync(path.join(RAIZ, "catalogo", "escaleras.json")) ? cat("escaleras.json") : '{"version":1,"escaleras":[]}';
+const js2 = js.replace('K.VERSION = ', () => `K.CATALOGO = ${cat("constelaciones.json")};\nK.EJERCICIOS = ${cat("ejercicios.json")};\nK.RUTINAS = ${JSON.stringify(rutinas).replace(/</g, "\\u003c")};\nK.HAZANAS = ${hz};\nK.ESCALERAS = ${esc};\nK.VERSION = `);
 let html = leer("plantilla.html").replace("/*CSS*/", () => css).replace("/*JS*/", () => js2);
 /* en la APK: el puente de Capacitor va antes que la app y se sacan el manifiesto y los íconos de la web */
 if (APK){

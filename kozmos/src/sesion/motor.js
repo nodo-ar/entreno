@@ -155,6 +155,11 @@ K.sesion = (() => {
     if (b.tipo === "minutos" || b.tipo === "menos-minutos") return Math.max(1, Math.round(t / 60));
     if (b.tipo === "logrado") return 0;
     if (b.tipo === "sesiones") return 1;
+    /* con lastre (escalón de carga): las repeticiones y los kilos, que arrancan en los de la serie anterior */
+    if (b.carga){
+      const antes = [...S.hechos].reverse().find(h => h.b === S.b && h.lastreKg !== undefined);
+      return {valor: b.objetivo, lastre: antes ? antes.lastreKg : b.kg ?? "", peso: K.diario.perfil.peso || ""};
+    }
     if (b.tipo === "porcentaje"){
       const antes = [...S.hechos].reverse().find(h => h.b === S.b), peso = K.diario.perfil.peso || "";
       return {lastre: antes ? antes.lastreKg : peso ? Math.round(b.objetivo * peso / 100 * 2) / 2 : "", peso};
@@ -165,7 +170,7 @@ K.sesion = (() => {
     if (!S || S.fase !== "serie") return;
     if (S.pausa) s.pausar();
     const b = s.bloque(), p = s.paso(), t = ahora();
-    S.borrador = propuesta(p);
+    S.borrador = propuesta(p); S.sens = null;
     S.avisos = {};
     if (s.ultima()){ S.fase = "cierre"; }
     else {
@@ -178,8 +183,20 @@ K.sesion = (() => {
   /* el valor que estás corrigiendo durante el descanso; queda guardado en cada cambio */
   s.anotar = (campo, v) => {
     if (!S) return;
-    if (campo === "valor") S.borrador = v; else S.borrador = {...S.borrador, [campo]: v};
+    /* con lastre el borrador lleva repeticiones y kilos juntos: cambiar uno no borra el otro */
+    if (campo === "valor" && !(S.borrador !== null && typeof S.borrador === "object")) S.borrador = v; else S.borrador = {...S.borrador, [campo]: v};
     guardarVivo();
+  };
+  /* cómo te quedó la serie: sobró, justo o no llegué. Tocar la elegida la saca y vuelve a valer lo que dicen las repeticiones */
+  s.sentir = v => {
+    if (!S || !K.rutina.SENS.includes(v)) return;
+    S.sens = S.sens === v ? null : v; guardarVivo();
+  };
+  /* lo que dirían las repeticiones si no tocás nada */
+  s.sensInferida = () => {
+    if (!S || S.fase === "serie" || !S.plan.bloques[S.b] || s.bloque().clase) return null;
+    const b = s.paso(), v = numero(b.carga ? S.borrador?.valor : S.borrador);
+    return Number.isFinite(v) && v > 0 && Number.isFinite(b.objetivo) ? K.rutina.inferir(v, b.objetivo, b.tipo) : null;
   };
   const numero = s.numero = x => { const v = Number(String(x).replace(",", ".").trim()); return Number.isFinite(v) ? v : NaN; };
   /* lo anotado pasa a ser una serie hecha; vacío o en cero no cuenta, salvo un intento que no salió */
@@ -193,9 +210,19 @@ K.sesion = (() => {
       return;
     }
     if (b0.clase) return; /* tramos ya cerrados */
-    const b = s.paso(), v = S.borrador; S.borrador = null;
-    const marca = {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo};
+    const b = s.paso(), v = S.borrador, sens = S.sens; S.borrador = null; S.sens = null;
+    /* con escalera, la serie guarda en qué escalera iba, el rango y cuántas pedía: con eso se calcula el escalón que sigue */
+    const marca = {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, ...(b.escalera ? {escalera: b.escalera} : {}),
+      ...(b.rango ? {rango: b.rango, n: b.n} : {}), ...(b.descarga ? {descarga: true} : {}), ...(sens ? {sensacion: sens} : {})};
     if (v === null || v === undefined) return;
+    if (b.carga){
+      const n = numero(v.valor), l = numero(v.lastre), pk = numero(v.peso);
+      if (!(n > 0 && n <= 100000)) return;
+      const kg = l >= 0 && l <= 400 ? {lastreKg: l, ...(pk >= 20 && pk <= 400 ? {pesoKg: pk} : {})} : {};
+      S.hechos.push({b: S.b, s: S.s, ...marca, valor: n, ...kg});
+      if (pk >= 20 && pk <= 400 && pk !== K.diario.perfil.peso) K.diario.perfilPoner("peso", pk).catch(() => {});
+      return;
+    }
     if (b.tipo === "porcentaje"){
       const l = numero(v.lastre), pk = numero(v.peso);
       if (!(l > 0 && pk >= 20 && pk <= 400)) return;
@@ -255,7 +282,8 @@ K.sesion = (() => {
       bloques: pl.bloques.map((b, i) => ({orden: i, ...(b.constelacion ? {constelacion: b.constelacion} : {}), familia: b.familia, ...(b.estrella ? {estrella: b.estrella} : {}),
         objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}), ...(b.clase ? {clase: b.clase, nombre: b.nombre} : {}),
         series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: "ejercicio" in h ? h.ejercicio : b.ejercicio, tipo: h.tipo ?? b.tipo, ...(b.estrella ? {estrella: b.estrella} : {}), objetivo: h.objetivo ?? b.objetivo, valor: h.valor,
-          ...(h.seg !== undefined ? {seg: Math.round(h.seg)} : {}), ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, pesoKg: h.pesoKg} : {})}))})).filter(b => b.series.length)};
+          ...(h.seg !== undefined ? {seg: Math.round(h.seg)} : {}), ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, ...(h.pesoKg !== undefined ? {pesoKg: h.pesoKg} : {})} : {}),
+          ...(h.escalera ? {escalera: h.escalera} : {}), ...(h.rango ? {rango: h.rango, n: h.n} : {}), ...(h.descarga ? {descarga: true} : {}), ...(h.sensacion ? {sensacion: h.sensacion} : {})}))})).filter(b => b.series.length)};
   };
   /* terminar: asienta lo último, guarda y suelta todo. Devuelve {registro, antes} o null si no había nada hecho. */
   s.terminar = async (cortada = false) => {

@@ -38,17 +38,20 @@ K.P.rutina = id => {
   /* una semana: la que vas, o la primera */
   const sem = sigo && !ru.cur.terminada ? ru.cur.semana - 1 : 0, desde = sem * r.dias;
   const semana = r.sesiones.slice(desde, desde + r.dias).map((s, k) => {
-    const plan = K.rutina.deRutina(r, desde + k, {ej: K.EJ, equipo: K.diario.perfil.equipo || null, sesiones: K.diario.sesiones});
+    const plan = K.rutina.deRutina(r, desde + k, K.ctxRutina());
     const actual = sigo && !ru.cur.terminada && desde + k === ru.cur.i;
     return `<div class="ln rut-dia${actual ? " hoy" : ""}"><span>Día ${k + 1} · ${K.esc(s.nombre)}</span><span class="num mute">${plan.minutos} min</span></div>`;
   }).join("");
+  /* sus escaleras: por dónde vas en cada una (sin haberla empezado, por dónde arrancarías), igual que en Hoy */
+  const es = K.rutina.escalerasDe(r, K.ctxRutina());
+  const escaleras = es.length ? `<span class="lb pie">${sigo ? "Tus escalones" : "Sus escaleras"}</span><section class="cd rut-esc">${K.escalerasMini(es, r.familia)}</section>` : "";
   const estado = sigo ? `<p class="ln small rut-sigo"><span>${ru.cur.terminada ? "La terminaste" : `La seguís · semana ${ru.cur.semana} de ${r.semanas}`}</span><span class="num">${ru.cur.i} de ${ru.cur.total}</span></p>` : "";
   const boton = sigo ? `<button type="button" class="btn" data-ir="#/hoy">${ru.cur.terminada ? "Volver a Hoy" : "Ir a Hoy"}</button>`
     : `<button type="button" class="btn" id="rut-seguir" data-rutina="${r.id}">Seguir esta rutina</button>`;
   return enc + `<div class="rut"><p class="ayuda">${K.esc(r.texto)}</p>
     <div class="res-datos">${dato(r.semanas, "semanas")}${dato(r.dias, "días por semana")}${dato(r.minutos, "min")}</div>
     ${falta.length ? `<p class="aviso-tenue">${K.esc(pideTx(falta))}. Si lo tenés, marcalo en tu equipo.</p>` : ""}${estado}
-    ${lleva}<span class="lb pie">${sigo && !ru.cur.terminada ? `Tu semana ${sem + 1}` : "La primera semana"}</span><section class="cd rut-semana">${semana}</section>
+    ${escaleras}${lleva}<span class="lb pie">${sigo && !ru.cur.terminada ? `Tu semana ${sem + 1}` : "La primera semana"}</span><section class="cd rut-semana">${semana}</section>
     ${boton}${r.fuente ? `<p class="pie small mute">Fuente: ${K.esc(r.fuente)}.</p>` : ""}</div>`;
 };
 /* seguir una rutina o dejarla: se hace y se ofrece deshacer */

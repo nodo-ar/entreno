@@ -122,3 +122,32 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 @media (orientation:landscape) and (max-height:520px){
   .como{display:grid; grid-template-columns:1fr 1fr}
 }
+
+/* ===== Escaleras: el escalón de cada una, cómo te quedó la serie y lo que cambió ===== */
+/* sobró, justo o no llegué: un toque opcional, al lado de lo que anotás. En tinta lo que elegiste; con borde, lo que dicen las repeticiones */
+.sens{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
+.sens .btn{height:44px; padding:0 8px; font-size:var(--t-md)}
+.sens .btn.inf{border-color:var(--ink-3); border-style:dashed}
+.sens .btn[aria-pressed="true"]{background:var(--solid); color:var(--on-solid); border-color:var(--solid); font-weight:700}
+.ses-marca{color:var(--c, var(--ink)); font-weight:700}
+/* por dónde vas en cada escalera (Hoy y Planes): una escalerita por escalera, lo subido en tinta y el escalón de ahora en su color */
+.esc-mini{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px 6px; margin:0; padding:0; list-style:none}
+.esc-mini li{display:grid; justify-items:center; gap:3px; min-width:36px}
+.esc-sub{display:flex; align-items:flex-end; gap:2px; justify-self:stretch; height:32px; margin-bottom:3px}
+.esc-sub i{flex:1; border-radius:2px 2px 0 0; background:var(--s2)}
+.esc-sub i.d{background:var(--ink-3)}
+.esc-sub i.n{background:var(--c)}
+.em-nom{font-size:var(--t-xs); font-weight:700; white-space:nowrap}
+.em-n{font-size:var(--t-xs); font-weight:700; color:var(--ink-2)}
+/* el resumen: ▲ subiste, = seguís, ▼ bajás */
+.res-esc{gap:10px}
+.res-esc ul{display:grid; gap:10px; margin:0; padding:0; list-style:none}
+.res-esc li{display:grid; grid-template-columns:28px minmax(0,1fr) auto; gap:10px; align-items:center}
+.res-esc .ses-fila small{font-weight:700}
+.res-signo{display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--s2); color:var(--ink-3); font-size:var(--t-s); font-weight:700}
+.res-esc li.sube .res-signo{background:var(--ra-soft); color:var(--ra)}
+.res-esc li.baja .res-signo{background:var(--fu-soft); color:var(--fu)}
+.res-esc em{font-style:normal; font-size:var(--t-sm); font-weight:700}
+@media (orientation:landscape) and (max-height:520px){
+  .sens .btn{height:40px}
+}
