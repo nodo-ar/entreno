@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Colores de Kozmos (tokens de kozmos/src/base/tokens.css): --bg y --solid del tema claro. -->
+<!-- Colores de Kozmos (tokens de kozmos/src/base/tokens.css): el fondo (bg) y la tinta (solid) del tema claro. -->
 <resources>
     <color name="kozmos_fondo">#F7F6F2</color>
     <color name="kozmos_tinta">#111111</color>

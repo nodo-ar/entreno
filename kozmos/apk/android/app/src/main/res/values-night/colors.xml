@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Tema oscuro del teléfono: --bg y --solid del tema oscuro de Kozmos. -->
+<!-- Tema oscuro del teléfono: el fondo (bg) y la tinta (solid) del tema oscuro de Kozmos. -->
 <resources>
     <color name="kozmos_fondo">#111110</color>
     <color name="kozmos_tinta">#F4F3EF</color>

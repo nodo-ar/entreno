@@ -77,3 +77,70 @@ jobs:
           path: salida/*.apk
           retention-days: 30
           if-no-files-found: error
+
+  # Humo: la APK de prueba en un emulador de Android, sin red desde la primera apertura. Saca capturas
+  # (vertical, horizontal, claro y oscuro) y prueba el botón atrás en Hoy. Si el emulador falla, la APK igual queda.
+  humo:
+    needs: apk
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    continue-on-error: true
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: kozmos-prueba-*
+          path: apk
+          merge-multiple: true
+      - name: Emulador
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+          IMG="system-images;android-35;google_apis;x86_64"
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install emulator platform-tools "$IMG" > /dev/null
+          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n kozmos -k "$IMG" --force
+          nohup "$ANDROID_HOME/emulator/emulator" -avd kozmos -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect > emulador.log 2>&1 &
+          adb wait-for-device
+          for i in $(seq 1 120); do [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1 ] && break; sleep 3; done
+          adb shell settings put global window_animation_scale 0
+          adb shell settings put global transition_animation_scale 0
+      - name: Abrir sin red, girar, tema oscuro y atrás
+        run: |
+          set -x
+          A=ar.kozmos.prueba; mkdir -p capturas
+          cap(){ sleep "${2:-6}"; adb exec-out screencap -p > "capturas/$1.png"; }
+          ui(){ adb shell uiautomator dump /sdcard/ui.xml > /dev/null && adb exec-out cat /sdcard/ui.xml; }
+          adb shell cmd connectivity airplane-mode enable || true
+          adb shell svc wifi disable || true; adb shell svc data disable || true
+          adb install apk/*.apk
+          adb shell dumpsys package $A | grep -E "versionName|versionCode|permission" | tee permisos.txt
+          adb shell am start -W -n $A/ar.kozmos.MainActivity
+          cap 1-hoy-claro 10
+          ui > ui-hoy.xml; grep -o 'text="Hoy"' ui-hoy.xml | head -1 | tee -a resultado.txt
+          adb shell settings put system accelerometer_rotation 0; adb shell settings put system user_rotation 1
+          cap 2-horizontal
+          adb shell settings put system user_rotation 0
+          adb shell cmd uimode night yes
+          cap 3-hoy-oscuro
+          # atrás en Hoy: sale de la app (sin sesión en curso)
+          adb shell input keyevent KEYCODE_BACK; sleep 3
+          adb shell dumpsys window | grep -E "mCurrentFocus|mFocusedApp" | tee foco.txt
+          grep -q "$A" foco.txt && echo "atrás en Hoy: NO salió" | tee -a resultado.txt || echo "atrás en Hoy: salió" | tee -a resultado.txt
+          # se instala encima de sí misma (misma firma) y vuelve a abrir
+          adb install -r apk/*.apk && adb shell am start -W -n $A/ar.kozmos.MainActivity && cap 4-reabierta 8
+          adb logcat -d | grep -iE "chromium|capacitor|kozmos|AndroidRuntime" | tail -80 > logcat.txt || true
+          {
+            echo "### Humo en el emulador (Android 15, sin red)"
+            echo '```'; cat resultado.txt; cat permisos.txt; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          grep -q 'text="Hoy"' ui-hoy.xml
+          grep -q "^atrás en Hoy: salió" resultado.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kozmos-prueba-humo
+          path: |
+            capturas/
+            *.txt
+            *.xml
+            emulador.log
+          retention-days: 30
