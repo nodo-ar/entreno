@@ -30,6 +30,13 @@ K.sesion = (() => {
     const nx = S.plan.bloques[S.b + 1];
     return nx ? s.nombreBloque(nx) : "";
   };
+  /* el ejercicio que viene, para dibujarlo mientras descansás */
+  s.proximoEj = () => {
+    const b = s.bloque();
+    if (!b.clase && S.s < b.series - 1) return {id: pasoDe(b, S.s + 1).ejercicio, fam: b.familia};
+    const nx = S.plan.bloques[S.b + 1];
+    return nx && !nx.clase ? {id: pasoDe(nx, 0).ejercicio, fam: nx.familia} : null;
+  };
   s.nombreBloque = b => b.clase ? b.nombre || "" : K.ej(pasoDe(b, 0).ejercicio).nombre;
 
   /* ---------- avisos: vibración y sonido ---------- */

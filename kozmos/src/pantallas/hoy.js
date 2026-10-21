@@ -189,7 +189,7 @@ K.P.sesion = () => {
       : `<span class="lb">De punta a punta, sin ayuda</span>`;
     const sig = K.sesion.ultima() ? "Es la última" : b.series > S.s + 1 ? (b.descanso ? `Después: descanso de ${K.reloj(b.descanso)}` : `Después: ${K.sesion.proxima()}`) : `Después: ${K.sesion.nombreBloque(S.plan.bloques[S.b + 1])}`;
     return acc + `<div class="ses serie"><div class="ses-a">${pasos}<div class="enc-tit ses-tit">${nom}<h1>${K.esc(e.nombre)}</h1></div>
-        <p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}<div class="ses-reloj">${grande}</div></div>
+        <p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}${K.POSES[e.id] ? `<div class="ses-fig">${K.fig.grande(e.id, b.familia, {fondo: K._figFondo ?? "disco"})}</div>` : ""}<div class="ses-reloj">${grande}</div></div>
       <div class="ses-b"><p class="ln ses-sig"><span class="mute">${K.esc(sig)}</span><span class="reloj num" data-r="total">${K.reloj(K.sesion.total())}</span></p>
         <button type="button" class="btn" id="s-listo">${K.ic("check")}Listo</button></div></div>`;
   }
@@ -214,7 +214,7 @@ K.P.sesion = () => {
       <div class="anillo-desc${q <= 0 ? " listo" : ""}" data-r="anillo">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" class="pista"/><circle cx="100" cy="100" r="88" class="arco" data-r="arco" stroke-dasharray="${arco(q, tot)}" transform="rotate(-90 100 100)"/></svg>
         <div class="anillo-tx"><span class="reloj num" data-r="queda" role="timer" aria-live="off">${K.reloj(Math.max(0, Math.ceil(q)))}</span><span class="lb" data-r="queda-lb">${quedaTx(q, S.total)}</span></div></div>
-      <p class="ses-luego mute">Sigue: ${K.esc(K.sesion.proxima())}</p></div>
+      ${(() => { const px = K.sesion.proximoEj(); return px && K.POSES[px.id] ? `<p class="ses-luego mute con-fig">${K.fig.chica(px.id, px.fam)}<span>Sigue: ${K.esc(K.sesion.proxima())}</span></p>` : `<p class="ses-luego mute">Sigue: ${K.esc(K.sesion.proxima())}</p>`; })()}</div>
     <div class="ses-b">${tarjeta}<div class="tres-btn"><button type="button" class="btn sec" data-desc="-15" aria-label="15 segundos menos de descanso">−15 s</button><button type="button" class="btn sec" data-desc="15" aria-label="15 segundos más de descanso">+15 s</button><button type="button" class="btn" id="s-seguir">Seguir</button></div></div></div>`;
 };
 

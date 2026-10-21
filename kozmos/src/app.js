@@ -49,6 +49,7 @@ K.mostrar = (anim = "") => {
   /* en la sesión y su resumen no hay barra: la pantalla es toda tuya */
   document.body.classList.toggle("en-sesion", tab === "hoy" && (sub === "sesion" || sub === "resumen"));
   K.sesion.alLatir();
+  K.fig.animar();
   K.nav.marcar(tab);
   K.encabezado.observar(v);
   /* recién terminada la sesión, la estrella nueva vuela a su lugar */
