@@ -32,4 +32,4 @@ Rama `claude/project-thread-985fzq`, PR nuevo.
 - Control de apoyos en las poses de perfil: marcaría 15 que se corren unos px; arreglarlo cambia dibujos aprobados, va en otra vuelta.
 
 ## Respuesta de Fer
-Pendiente: tablero de la vuelta 14.
+Aprobado (2026-10-21): «Perfecto, seguimos». Tablero https://claude.ai/artifact/S7oNDqGTqJeRDz1YNatcFm. Pancake y piernas abiertas quedan de frente desde lo alto. Próximo: etapa 6 (publicar con dominio propio).
