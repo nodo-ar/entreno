@@ -60,7 +60,7 @@ jobs:
           APK=kozmos/apk/android/app/build/outputs/apk/release/app-release.apk
           mkdir -p salida && cp "$APK" salida/kozmos.apk
           "$BT/apksigner" verify salida/kozmos.apk
-          firma=$("$BT/apksigner" verify --print-certs salida/kozmos.apk 2>&1 | grep -iE "certificate SHA-256 digest:" | head -1 | awk -F': ' '{ print toupper($2) }' | sed 's/../&:/g; s/:$//')
+          firma=$("$BT/apksigner" verify --print-certs salida/kozmos.apk 2>&1 | grep -iE "certificate SHA-256 digest:" | head -1 | awk -F': ' '{ print toupper($NF) }' | sed 's/../&:/g; s/:$//')
           [ "$firma" = "$KOZMOS_HUELLA" ] || { echo "::error::La APK no quedó firmada con la firma de Kozmos ($firma)."; exit 1; }
           "$BT/aapt2" dump badging salida/kozmos.apk | grep -q "package: name='ar.kozmos' versionCode='$KOZMOS_VERSION_CODE'"
           {
