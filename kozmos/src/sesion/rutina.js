@@ -168,7 +168,9 @@ K.rutina = (() => {
   function cambios(x, sesiones, {ej = {}, equipo = null, marcas = [], rutina = null} = {}){
     const k = sesiones.findIndex(s => s.id === x.id), hasta = k < 0 ? [...sesiones, x] : sesiones.slice(0, k + 1);
     const xs = (x.bloques || []).flatMap(b => b.series || []), r = [];
-    const ids = [...new Set(xs.filter(y => y.escalera).map(y => y.escalera))];
+    /* las escaleras que nombran sus series y, en una prueba, las que tienen ese ejercicio en algún escalón */
+    const ids = [...new Set([...xs.filter(y => y.escalera).map(y => y.escalera),
+      ...xs.filter(y => y.hazana && y.completa !== false).flatMap(y => escaleras().filter(e => e.pasos.some(p => p.ejercicio === y.ejercicio && (p.tipo || "repeticiones") === y.tipo)).map(e => e.id))])];
     /* lo suelto con carga (el lastre) también cuenta: sumar kilos es subir */
     const cargas = [];
     for (const s of rutina?.sesiones || []) for (const b of s.bloques || []) if (b.carga && !b.escalera) for (const e of [].concat(b.ejercicio)) if (!cargas.some(c => c[0] === e) && xs.some(y => y.ejercicio === e && !y.escalera)) cargas.push([e, b]);
@@ -176,7 +178,7 @@ K.rutina = (() => {
     for (const def of defs){
       const st = escalon(def, hasta, {marcas}); if (!st || st.sesion !== x.id) continue;
       const ys = xs.filter(y => pertenece(def, x, y)), b = {series: ys[0]?.n || ys.length, rango: ys[0]?.rango};
-      r.push({id: def.id, nombre: def.real ? def.nombre : null, evento: st.evento, de: st.de, a: st.paso, kg: st.kg, carga: st.paso.carga, proxima: metas(def, st, b).objetivos, i: st.i, total: st.total});
+      r.push({id: def.id, nombre: def.real ? def.nombre : null, evento: st.evento, nuevo: st.nuevo, de: st.de, a: st.paso, kg: st.kg, carga: st.paso.carga, proxima: metas(def, st, b).objetivos, i: st.i, total: st.total});
     }
     return r;
   }

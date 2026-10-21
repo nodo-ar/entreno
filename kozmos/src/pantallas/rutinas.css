@@ -45,19 +45,88 @@
 }
 .lado .ajr>em.num{white-space:nowrap}
 
-/* ===== Planes: hazañas arriba, rutinas abajo ===== */
+/* ===== Planes: la próxima prueba arriba, las pruebas y tu rutina abajo ===== */
 .pl-tit{display:flex; flex-direction:column; gap:3px; padding:14px 4px 2px}
 .pl-tit h2{font-size:var(--t-xl)}
 .pl-tit .mute{font-size:var(--t-sm); font-weight:700}
-/* las hazañas en grilla, cada una con la figura de su constelación */
-.hz-grilla{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
-.hz-t{display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0; min-height:44px; padding:12px 4px 10px; border:1px solid var(--line); border-radius:var(--r-md); background:var(--s1); color:var(--ink); font:inherit; font-size:var(--t-xs); font-weight:700; cursor:pointer}
-.hz-t span{max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.hz-t[data-sel]{background:var(--s2)}
-.hz-t:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
-/* en horizontal la columna es angosta: dos por fila, la figura al lado del nombre, para que entre «Andrómeda» */
+.pl-fila{flex-direction:row; align-items:center; justify-content:space-between}
+.pl-nada{padding:4px}
+/* el menú de familia: un botón chico con su flecha, al lado del título (nada de chips) */
+.pl-fam{display:inline-flex; align-items:center; gap:4px; min-height:44px; padding:0 12px; border:1px solid var(--line); border-radius:22px; background:var(--s1); color:var(--ink); font:inherit; font-size:var(--t-sm); font-weight:700; cursor:pointer}
+.pl-fam .ic{width:14px; height:14px}
+/* una tarjeta que se abre entera con un toque: un botón invisible la cubre, lo de adentro queda arriba solo si se toca aparte */
+.pl-prox,.pl-rut{position:relative}
+.pl-ir{position:absolute; inset:0; z-index:0; border:0; border-radius:inherit; background:transparent; cursor:pointer}
+.pl-ir:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+.pl-prox>:not(.pl-ir),.pl-rut>:not(.pl-ir){position:relative; z-index:1; pointer-events:none}
+.pl-prox>.btn{pointer-events:auto}
+.pl-prox[data-sel],.pl-rut[data-sel]{background:var(--s2)}
+.pl-prox{gap:12px}
+.pl-prox-cab{display:flex; align-items:center; gap:14px}
+.pl-prox-fig{flex:none; width:64px; height:64px; display:grid; place-items:center}
+.pl-prox-tx{display:flex; flex-direction:column; gap:3px; min-width:0; flex:1}
+.pl-prox-tx .lb{color:var(--c)}
+.pl-rut{gap:8px}
+.pl-rut .ln b{font-size:var(--t-md)}
+.pl-rut .chev{width:14px; height:14px; color:var(--ink-3)}
+.pl-rut-prueba{color:var(--ink)}
+.ajr em.toca{color:var(--ink)}
+.ajr .tile.fig .figura{width:26px; height:26px}
+.rut-bloque{color:var(--ink-2); padding:0 2px}
+.rut-bloque .num{color:var(--ink); white-space:nowrap}
+.rut-escalon{text-align:center; padding:0 12px; margin-top:-4px}
+
+/* la escala de una prueba: cinco magnitudes, lo tuyo lleno hasta tu marca y la vez anterior como anillo */
+.escala{display:grid; gap:6px; padding:6px 0 2px}
+.esc-pista{position:relative; height:8px; border-radius:4px; background:var(--s2)}
+.esc-lleno{position:absolute; left:0; top:0; bottom:0; border-radius:4px; background:var(--c)}
+.esc-tick{position:absolute; top:50%; width:2px; height:14px; margin:-7px 0 0 -1px; border-radius:1px; background:var(--off)}
+.esc-tick.si{background:var(--ink)}
+.esc-yo,.esc-antes{position:absolute; top:50%; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%}
+.esc-yo{background:var(--c); border:3px solid var(--s1); box-shadow:0 0 0 1px var(--c)}
+.esc-antes{border:2px dashed var(--ink-2); background:transparent}
+.esc-pie{position:relative; height:30px}
+.esc-pie span{position:absolute; top:0; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:1px; white-space:nowrap}
+.esc-pie b{font-size:var(--t-sm); font-weight:700}
+.esc-pie small{font:700 var(--t-2xs)/1 var(--f-mono); color:var(--ink-3)}
+.escala-sin{padding:4px 0}
+.hz-linea{flex:none}
+.hz-linea polyline{fill:none; stroke:var(--c); stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.hz-linea circle{fill:var(--c)}
+
+/* una prueba abierta */
+.hz-cab{display:flex; align-items:center; gap:14px}
+.hz-cab .hz-fig{flex:none; width:88px; height:88px; display:grid; place-items:center}
+.hz-cab .hz-fig .figura{width:88px; height:88px}
+.hz-cab .ayuda{margin:0}
+.hz-escala{gap:6px}
+.hz-escala>.ln:last-child{font-size:var(--t-sm)}
+.hz-ult{font-weight:700}
+.hz-sube{color:var(--ink)}
+.num.toca{color:var(--ink)}
+.hz-como p{font-size:var(--t-md); line-height:1.45}
+.hz-veces{gap:0; padding:4px 16px}
+.hz-veces>.ln{padding:10px 0; font-size:var(--t-sm); font-weight:600}
+.hz-veces>.ln+.ln{border-top:1px solid var(--line)}
+
+/* la prueba en la sesión: la escala chica debajo del número, con tu vez anterior */
+.ses-escala{display:grid; gap:2px; width:100%; max-width:360px; margin:0 auto}
+.ses-escala .escala{padding-top:0}
+/* el resumen de una prueba: varias constelaciones a la vez, tu escala y las estrellas nuevas */
+.res-varias{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:8px}
+.res-una{display:grid; gap:4px; justify-items:center; min-width:0}
+.res-una-dib{width:100%; border-radius:var(--r-md); overflow:hidden; background:var(--s2)}
+.res-una-dib .cons-svg{display:block; width:100%; height:auto}
+.res-una .lb{max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.res-pruebas{gap:12px}
+.res-prueba{display:grid; gap:4px}
+.res-prueba+.res-prueba{border-top:1px solid var(--line); padding-top:12px}
+.res-prueba>.ln b{font-size:var(--t-md)}
+.res-prueba>.ln .num{font-weight:700}
+.res-nuevas{gap:2px}
+.res-nuevas .ln{min-height:44px; font-size:var(--t-sm); font-weight:600}
+.hoy-sp b{color:var(--ink)}
 @media (orientation:landscape) and (max-height:520px){
-  .hz-grilla{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .hz-t{flex-direction:row; justify-content:flex-start; gap:8px; padding:8px 10px; font-size:var(--t-sm)}
-  .hz-t .figura{width:30px; height:30px; flex:none}
+  .res-varias{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ses-escala{max-width:300px}
 }

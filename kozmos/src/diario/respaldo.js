@@ -19,14 +19,14 @@ K.respaldo = (() => {
   const tipo = t => t === undefined || Object.prototype.hasOwnProperty.call(K.cielo.TIPOS, t);
   /* lo que anotan los tramos y las hazañas no enciende estrellas, pero es parte de la sesión */
   const tipoSerie = t => tipo(t) || t === "tramos" || t === "hazana";
-  const medicion = m => obj(m) && txt(m.id, 80) && txt(m.estrella) && fecha(m.fecha) && num(m.valor, 1e6) && tipo(m.tipo)
+  const medicion = m => obj(m) && txt(m.id, 80) && txt(m.estrella) && fecha(m.fecha) && valor(m.valor, m.tipo) && tipo(m.tipo)
     && (m.ejercicio === undefined || txt(m.ejercicio)) && (m.origen === undefined || txt(m.origen, 20));
   /* los centímetros de una prueba pueden ser negativos: no llegaste a la punta de los pies */
   const valor = (v, t) => t === "cm" ? typeof v === "number" && Number.isFinite(v) && v >= -100 && v <= 300 : num(v, 1e6);
   const serie = x => obj(x) && (txt(x.ejercicio) || (x.tipo === "tramos" && x.ejercicio == null)) && tipoSerie(x.tipo) && x.tipo !== undefined && valor(x.valor, x.tipo)
     && (x.hazana === undefined || txt(x.hazana));
   /* una hazaña de antes (con su nivel) o una prueba (v 2), con lo que midió */
-  const hazana = h => obj(h) && txt(h.id) && (h.v === 2 ? (h.ejercicio === undefined || txt(h.ejercicio)) && tipo(h.tipo) && valor(h.valor, h.tipo) : entero(h.nivel, 2) && num(h.valor, 1e6));
+  const hazana = h => obj(h) && txt(h.id) && (h.v === 2 ? (h.ejercicio === undefined || txt(h.ejercicio)) && (h.tipo === undefined || tipo(h.tipo)) && valor(h.valor, h.tipo) : entero(h.nivel, 2) && num(h.valor, 1e6));
   const entero = (v, max) => Number.isInteger(v) && v >= 0 && v <= max;
   const sesion = x => obj(x) && txt(x.id, 80) && fecha(x.fecha) && num(x.duracion, 864000) && Array.isArray(x.bloques)
     && x.bloques.every(b => obj(b) && (b.constelacion === undefined || txt(b.constelacion)) && Array.isArray(b.series) && b.series.every(serie))

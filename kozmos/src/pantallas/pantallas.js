@@ -50,7 +50,7 @@ K.P.progreso = r => {
   const filas = lista.length ? `<span class="lb pie">Tus sesiones</span><section class="aj">${lista.map(s => {
     const est = (s.encendio || []).length, pr = s.bloques.length === 1 && s.bloques[0].prueba && K.estrella(s.bloques[0].estrella);
     const ru = s.rutina && K.rutinaDe(s.rutina.id), hz = s.hazana && K.HAZANAS.hazanas.find(h => h.id === s.hazana.id);
-    const que = [pr ? `Prueba · ${pr.nombre}` : hz ? `${hz.nombre} · ${K.rutina.NIVELES[s.hazana.nivel]}` : ru ? ru.nombre : "", s.cortada ? "Cortada" : ""].filter(Boolean).join(" · ");
+    const que = [pr ? `Prueba · ${pr.nombre}` : hz ? `${hz.nombre} · ${s.hazana.v === 2 ? hz.prueba : K.rutina.NIVELES[s.hazana.nivel] || ""}` : s.semanaPrueba ? `Semana de prueba${ru ? ` · ${ru.nombre}` : ""}` : ru ? ru.nombre : "", s.cortada ? "Cortada" : ""].filter(Boolean).join(" · ");
     return `<button type="button" class="ajr" data-ir="#/progreso/${K.esc(s.id)}" data-quieto="1"${s.id === sel ? " data-sel" : ""}><span class="tile${hz ? " fig" : ""}">${hz ? K.dibujo.figura(hz, 26) : K.ic(pr ? "cielo" : ru ? "ruta" : "play")}</span>
       <span class="ses-fila">${K.esc(K.fechaCorta(s.fecha))}${que ? `<small class="mute">${K.esc(que)}</small>` : ""}</span><em class="num">${est ? `${est} ${est === 1 ? "estrella" : "estrellas"} · ` : ""}${Math.max(1, Math.round(s.duracion / 60))} min</em>${K.ic("chev", "chev")}</button>`;
   }).join("")}</section>` : "";

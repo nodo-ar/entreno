@@ -313,12 +313,12 @@ prueba("anotar-enciende-y-queda", async () => {
   /* guardar vuelve con el botón atrás: no quedan pasos de más */
   ok(await p.evaluate(() => location.hash) === "#/cielo/front-lever", "no volvió a la constelación");
   await p.goBack(); await esperarTitulo(p, "Cielo");
-  ok(await p.textContent(".enc-tit small") === "1 de 86 estrellas", "Cielo no cuenta la estrella: " + await p.textContent(".enc-tit small"));
+  ok(await p.textContent(".enc-tit small") === "1 de 95 estrellas", "Cielo no cuenta la estrella: " + await p.textContent(".enc-tit small"));
   ok(await p.textContent('.cons-fila[data-ir="#/cielo/front-lever"] em') === "1 de 8", "la fila no cuenta la estrella");
   ok(await p.evaluate(() => { const m = K.diario.mediciones[0]; return m.ejercicio === "colgado-activo" && m.tipo === "segundos" && m.catalogo === K.CATALOGO.version; }), "la marca no guarda qué midió");
   /* queda guardada en el teléfono */
   await p.reload(); await p.waitForSelector("main.view");
-  ok(await p.textContent(".enc-tit small") === "1 de 86 estrellas", "al volver a abrir se perdió la marca");
+  ok(await p.textContent(".enc-tit small") === "1 de 95 estrellas", "al volver a abrir se perdió la marca");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -374,10 +374,10 @@ prueba("anotar-tipos", async () => {
   await p.fill("#f-valor", "10"); await p.click('[data-paso="1"]'); await p.click('[data-paso="1"]'); await p.click('[data-paso="-1"]');
   ok(await p.inputValue("#f-valor") === "11", "− y + no suman de a uno");
   /* lo logrado: un solo botón */
-  await ir(p, "#/cielo/espagat/anotar/4");
+  await ir(p, "#/cielo/espagat/anotar/5");
   ok(await p.textContent("#f-guardar") === "Lo logré" && !(await p.$("#f-valor")), "lo logrado pide un número");
   await p.click("#f-guardar"); await esperarTitulo(p, "Espagat");
-  ok(await p.$eval(".est-fila:nth-child(4)", f => f.classList.contains("encendida")), "«Lateral completo» no se encendió");
+  ok(await p.$eval(".est-fila:nth-child(5)", f => f.classList.contains("encendida")), "«Lateral completo» no se encendió");
   /* lastre: kilos y tu peso, y el peso queda para la próxima */
   await ir(p, "#/cielo/lastre/anotar/1");
   await p.fill("#f-peso", "80"); await p.fill("#f-lastre", "8");
@@ -741,7 +741,7 @@ prueba("tu-equipo", async () => {
   ok(!(await p.$('.cielo-svg [data-ir="#/cielo/soga"]')), "sin soga, Soga sigue en el cielo");
   await ir(p, "#/cielo/soga");
   ok((await p.textContent(".cons-estado .t1")) === "Pide soga.", "la constelación no dice qué pide");
-  ok(await p.$$eval(".est-fila.sin-equipo", xs => xs.length) === 6 && await p.$$eval(".cons-svg .es.sin", xs => xs.length) === 6, "abierta, se ven todas, tenues");
+  ok(await p.$$eval(".est-fila.sin-equipo", xs => xs.length) === 7 && await p.$$eval(".cons-svg .es.sin", xs => xs.length) === 7, "abierta, se ven todas, tenues");
   ok(!(await p.$("[data-probar]")) && await p.$('.dos-btn [data-ir="#/vos/equipo"]'), "sin soga, en vez de probar ofrece ir a tu equipo");
   /* deshacer devuelve todo */
   await ir(p, "#/vos/equipo"); await p.click('[data-equipo="soga"]'); await p.waitForSelector(".utoast"); await p.click(".utu");
@@ -863,7 +863,7 @@ prueba("rutina-cardio-entera", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["motor"]);
   await aPlanes(p);
-  ok(await p.$$eval(".lado .ajr", x => x.length) === 26, "no están las 26 rutinas");
+  ok(await p.$$eval('.lado .ajr[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "no están las 26 rutinas");
   await p.click('[data-ir="#/planes/rutinas/c0a5"]'); await esperarTitulo(p, "De 0 a 5 km");
   ok(await p.$$eval(".rut-dia", x => x.length) === 3, "la semana no tiene 3 días");
   await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
@@ -1046,60 +1046,195 @@ prueba("escalera-horizontal", async () => {
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
-prueba("hazana-por-tiempo", async () => {
+/* ===== Pruebas (Modelo B): las hazañas miden algo, tienen escala y encienden estrellas en el Cielo ===== */
+const hzSes = (id, fecha, hz, ej, tipo, v) => ({id, fecha, inicio: `${fecha}T19:00:00.000Z`, fin: `${fecha}T19:05:00.000Z`, duracion: 300, cortada: false, catalogo: 1, encendio: [],
+  hazana: {id: hz, v: 2, valor: v, completa: true, ejercicio: ej, tipo},
+  bloques: [{orden: 0, familia: "fu", objetivo: "max", hazana: hz, series: [{ejercicio: ej, tipo, objetivo: "max", valor: v, hazana: hz}]}]});
+const sembrarSes = (p, ss, perfil = {}) => p.evaluate(async ([ss, perfil]) => { for (const [k, v] of Object.entries(perfil)) await K.diario.perfilPoner(k, v); for (const s of ss) await K.diario.guardarSesion(s); K.refrescar(); }, [ss, perfil]);
+const escribir = async (p, v) => { await p.fill("#s-valor", String(v)); await p.evaluate(v => K.ses.escribir("valor", String(v)), v); };
+prueba("hazana-prueba-maximo", async () => {
+  /* Perseo (Tirón): dominadas al máximo; ×15 enciende en dos constelaciones a la vez y el resumen muestra la escala */
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
   await aPlanes(p);
-  ok(await p.$$eval(".lado .hz-t", x => x.length) === 8, "no están las 8 hazañas");
-  await p.click('[data-ir="#/planes/hazanas/hercules"]'); await esperarTitulo(p, "Hércules");
-  await p.click("#hz-nivel"); await p.click('.pmi[data-id="1"]');
-  ok((await p.textContent("#hz-nivel")).includes("Intermedio"), "el nivel no cambió");
-  const rondas = await p.evaluate(() => K.HAZANAS.hazanas.find(h => h.id === "hercules").niveles[1].rondas);
-  await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
-  ok(await reloj(p, "fase-lb") === "Preparate", "no hay tiempo para prepararse");
-  await tick(p, 5000);
-  for (let i = 0; i < rondas; i++){ await tick(p, 60000); await p.click("#s-vuelta"); }
-  await p.waitForSelector(".ses.cierre");
-  await p.click("#s-terminar"); await p.waitForSelector(".res");
-  const reg = await p.evaluate(() => K.diario.sesiones[K.diario.sesiones.length - 1]);
-  ok(reg.hazana?.id === "hercules" && reg.hazana.nivel === 1 && Math.abs(reg.hazana.valor - rondas * 60) <= 2, "la hazaña no anotó el tiempo: " + JSON.stringify(reg.hazana));
-  await ir(p, "#/planes/hazanas/hercules");
-  await p.click("#hz-nivel"); await p.click('.pmi[data-id="1"]');
-  ok(!(await p.textContent(".hz-items")).includes("Todavía nada"), "no muestra tu mejor");
+  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 8, "no están las 8 pruebas");
+  await ir(p, "#/planes/hazanas/perseo"); await esperarTitulo(p, "Perseo");
+  ok(!(await p.$("#hz-nivel")), "quedó el menú de niveles");
+  ok((await p.textContent(".hz-escala")).includes("Todavía no la hiciste") && await p.$$eval(".hz-escala .esc-pie span", x => x.length) === 5, "la escala no tiene sus cinco magnitudes");
+  await p.click("#hz-empezar"); await p.waitForSelector(".ses.serie");
+  ok(await p.$(".ses-escala .escala") && (await p.textContent(".ses-tit .lb")).includes("Tirón"), "la sesión no dice qué prueba es ni muestra la escala");
+  await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.cierre");
+  await escribir(p, 15); await p.click("#s-terminar"); await p.waitForSelector(".res");
+  const reg = await p.evaluate(() => K.diario.sesiones.at(-1));
+  ok(reg.hazana?.id === "perseo" && reg.hazana.v === 2 && reg.hazana.valor === 15 && reg.hazana.ejercicio === "dominada" && reg.bloques[0].series[0].hazana === "perseo", "la prueba no quedó guardada: " + JSON.stringify(reg.hazana));
+  ok(reg.encendio.includes("muscle-up.dominadas-10") && reg.encendio.includes("un-brazo.dominadas-15"), "no encendió en las dos constelaciones: " + reg.encendio);
+  ok(await p.$$eval(".res-varias .res-una", x => x.length) === 2, "el resumen no muestra las dos constelaciones");
+  ok(await p.$(".res-pruebas .escala .esc-yo") && (await p.textContent(".res-tit")).includes("×15") && (await p.textContent(".res-tit")).includes("m2"), "el resumen no muestra la marca en su escala: " + await p.textContent(".res-tit"));
+  ok((await p.textContent(".res-nuevas")).includes("Dominadas ×10"), "no lista las estrellas nuevas");
+  /* la prueba abierta: tu marca, cuándo toca y tus veces */
+  await ir(p, "#/planes/hazanas/perseo");
+  ok((await p.textContent(".hz-ult")).includes("×15") && (await p.textContent(".hz-escala")).includes("En 6 semanas") && (await p.textContent(".hz-veces")).includes("m2"), "la prueba no muestra tu marca: " + await p.textContent(".hz-escala"));
+  ok(await p.evaluate(() => K.cieloActual().constelaciones.find(c => c.id === "muscle-up").estrellas[0].encendida), "el Cielo no la leyó");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
-prueba("hazanas-por-minuto-y-tramos", async () => {
+prueba("hazana-escalera-y-reloj", async () => {
+  /* Andrómeda: cada minuto una dominada más; «No llegué» cuenta el último minuto completo */
   const {ctx, p} = await conReloj();
-  await ir(p, "#/planes/hazanas/pegaso");
-  ok(/^[1-9]\d* pasadas fuertes/.test(await p.textContent(".hz-items .lb")), "Pegaso no cuenta sus pasadas: " + await p.textContent(".hz-items .lb"));
-  /* Draco, cada minuto: 12 min de verdad, aunque la plancha dure 30 s */
-  await ir(p, "#/planes/hazanas/draco"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.tramo");
-  ok((await p.textContent(".ses.tramo .anillo-tx .lb")).includes("30 s y descansás"), "no dice cuánto se trabaja en el minuto");
-  for (let i = 0; i < 20 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
+  await ir(p, "#/planes/hazanas/andromeda"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
+  await tick(p, 5000); ok(await reloj(p, "fase") === "×1", "el primer minuto no pide una: " + await reloj(p, "fase"));
+  await tick(p, 4 * 60000 + 2000); ok(await reloj(p, "fase") === "×5", "el quinto minuto no pide cinco: " + await reloj(p, "fase"));
+  await p.click("#s-vuelta"); await p.waitForSelector(".ses.cierre");
+  ok(await p.inputValue("#s-valor") === "4", "no propone el último minuto completo: " + await p.inputValue("#s-valor"));
   await p.click("#s-terminar"); await p.waitForSelector(".res");
+  let x = await p.evaluate(() => K.diario.sesiones.at(-1).bloques[0].series[0]);
+  ok(x.ejercicio === "dominada" && x.valor === 4 && x.hazana === "andromeda", "la escalera no anotó las dominadas: " + JSON.stringify(x));
+  /* Pegaso (Motor 12): el reloj corre doce minutos y después se anotan los km; la segunda vez mide la mejora */
+  for (const [km, n] of [[6.2, 1], [6.9, 2]]){
+    await ir(p, "#/planes/hazanas/pegaso"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.serie");
+    ok((await reloj(p, "fase")).startsWith("12:") || (await reloj(p, "fase")).startsWith("11:"), "Motor 12 no cuenta doce minutos: " + await reloj(p, "fase"));
+    await tick(p, 12 * 60000 + 1000); ok((await reloj(p, "fase-lb")).includes("anotá"), "al llegar no pide anotar");
+    await p.click("#s-listo"); await p.waitForSelector(".ses.cierre");
+    ok((await p.textContent(".ses-anota .lb")).includes("km"), "no pregunta los km");
+    await escribir(p, km); await p.click("#s-terminar"); await p.waitForSelector(".res");
+    if (n === 1) await p.clock.runFor(86400000);
+  }
+  const mj = await p.evaluate(() => K.cielo.deSesiones(K.diario.sesiones).filter(m => m.tipo === "mejora").map(m => m.valor));
+  ok(mj.length === 2 && mj[0] === 0 && Math.abs(mj[1] - 11.3) < .05, "la mejora contra tu primera vez no se calcula: " + mj);
+  /* Sagitario (Del piso): de medio punto, de 0 a 10; Casiopea (Compresión): los centímetros bajan de cero */
+  await ir(p, "#/planes/hazanas/sagitario"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.serie"); await p.click("#s-listo"); await p.waitForSelector(".ses.cierre");
+  await escribir(p, 9.5); await p.click('[data-spaso="1"]'); await p.click('[data-spaso="1"]');
+  ok(await p.inputValue("#s-valor") === "10", "los puntos pasan de 10: " + await p.inputValue("#s-valor"));
+  await p.click('[data-spaso="-1"]'); ok(await p.inputValue("#s-valor") === "9.5", "los puntos no van de medio en medio");
+  await p.click("#s-cortar"); await p.waitForSelector(".res");
+  await ir(p, "#/planes/hazanas/casiopea"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.serie"); await p.click("#s-listo"); await p.waitForSelector(".ses.cierre");
+  await escribir(p, 0); await p.click('[data-spaso="-1"]'); await p.click('[data-spaso="-1"]');
+  ok(await p.inputValue("#s-valor") === "-2", "los centímetros no bajan de cero");
+  await p.click("#s-terminar"); await p.waitForSelector(".res");
+  x = await p.evaluate(() => K.diario.sesiones.at(-1).bloques[0].series[0]);
+  ok(x.tipo === "cm" && x.valor === -2, "no guardó los centímetros negativos: " + JSON.stringify(x));
+  const b = await p.evaluate(() => { const r = K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, K.CATALOGO.version))); return {d: r.descartadas, n: r.sesiones.length, err: r.error}; });
+  ok(!b.err && b.d === 0 && b.n === 5, "el respaldo pierde pruebas: " + JSON.stringify(b));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("hazana-datos-viejos", async () => {
+  /* las hazañas de antes (por niveles) cargan, se ven en tu historia y en la prueba, y no cuentan como marcas */
+  const {ctx, p} = await conReloj();
+  const viejas = [{id: "hv1", fecha: "2026-07-12", inicio: "2026-07-12T19:00:00.000Z", fin: "2026-07-12T19:20:00.000Z", duracion: 1200, cortada: false, catalogo: 1, encendio: [], hazana: {id: "hercules", nivel: 1, valor: 845, completa: true},
+      bloques: [{orden: 0, familia: "fu", clase: "circuito", nombre: "Hércules", series: [{ejercicio: "hercules", tipo: "hazana", valor: 845}]}]},
+    {id: "hv2", fecha: "2026-07-20", inicio: "2026-07-20T19:00:00.000Z", fin: "2026-07-20T19:20:00.000Z", duracion: 1200, cortada: false, catalogo: 1, encendio: [], hazana: {id: "perseo", nivel: 2, valor: 7, completa: true},
+      bloques: [{orden: 0, familia: "fu", clase: "circuito", nombre: "Perseo", series: [{ejercicio: "perseo", tipo: "hazana", valor: 7}]}]}];
+  await ir(p, "#/hoy"); await sembrarSes(p, viejas); await p.reload(); await p.waitForSelector("main.view");
+  await ir(p, "#/progreso/hv1"); await p.waitForSelector(".res");
+  ok((await p.textContent(".res-txt")).includes("versión anterior") && (await p.textContent(".res-datos")).includes("14:05"), "el resumen viejo: " + await p.textContent(".res-txt"));
+  await ir(p, "#/progreso"); ok((await p.textContent(".lado")).includes("Hércules · Intermedio"), "Progreso no muestra la hazaña vieja");
+  await ir(p, "#/planes/hazanas/perseo");
+  ok((await p.textContent(".hz-veces")).includes("versión anterior") && (await p.textContent(".hz-escala")).includes("Todavía no la hiciste"), "la prueba no separa la versión anterior");
+  ok(await p.evaluate(() => K.cielo.deSesiones(K.diario.sesiones).length === 0), "las hazañas viejas cuentan como marcas");
+  const b = await p.evaluate(() => { const r = K.respaldo.leer(JSON.stringify({...K.respaldo.armar(K.diario, K.VERSION, K.CATALOGO.version), formato: 1})); return {d: r.descartadas, n: r.sesiones.length, err: r.error}; });
+  ok(!b.err && b.d === 0 && b.n === 2, "un respaldo de formato 1 no se lee: " + JSON.stringify(b));
+  ok(!(await p.evaluate(() => document.body.innerText)).includes("undefined"), "aparece «undefined»");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("planes-proxima-prueba", async () => {
+  /* arriba de Planes, la próxima prueba: la que toca antes, con su escala, tus veces y «Probar ahora» */
+  const {ctx, p} = await conReloj();
+  const otras = [["hercules", "flexion", "repeticiones", 22], ["sagitario", "del-piso", "puntos", 7], ["andromeda", "dominada", "repeticiones", 5], ["casiopea", "pike-alcance", "cm", 2],
+    ["pegaso", "bici-12", "km", 6], ["orion", "mil-saltos", "tiempo", 700], ["draco", "l-sit", "segundos", 12]].map(([h, e, t, v], k) => hzSes("o" + k, "2026-10-10", h, e, t, v));
+  await ir(p, "#/hoy"); await sembrarSes(p, [hzSes("t1", "2026-08-12", "perseo", "dominada", "repeticiones", 9), hzSes("t2", "2026-09-01", "perseo", "dominada", "repeticiones", 12), ...otras]);
+  await ir(p, "#/planes"); await p.waitForSelector(".pl-prox");
+  const t = await p.textContent(".pl-prox");
+  ok(t.includes("Perseo") && t.includes("toca ya") && t.includes("×12") && t.includes("m3"), "la próxima prueba no es Perseo con tu última: " + t);
+  ok(await p.$(".pl-prox .figura") && await p.$(".pl-prox .escala .esc-yo") && await p.$(".pl-prox .escala .esc-antes") && await p.$(".pl-prox .hz-linea"), "a la tarjeta le falta la figura, la escala o tus veces");
+  ok(!(await p.$('.lado .ajr[data-ir="#/planes/hazanas/perseo"]')), "la próxima se repite en la lista");
+  ok((await p.textContent('.ajr[data-ir="#/planes/hazanas/hercules"]')).includes("hace 10 días"), "la lista no dice cuándo la hiciste");
+  await ir(p, "#/planes/hazanas/perseo");
+  ok((await p.textContent(".hz-escala")).includes("+3 desde agosto"), "no se compara con la vez anterior: " + await p.textContent(".hz-escala"));
+  await ir(p, "#/planes"); await p.click("#pl-probar"); await p.waitForSelector(".ses.serie");
+  ok(await p.evaluate(() => K.sesion.bloque().hazana === "perseo"), "«Probar ahora» no arranca la próxima prueba");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("planes-familia", async () => {
+  /* las pruebas y las rutinas se filtran por familia con un menú desplegable, no con chips; la elección queda */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/planes");
+  ok(!(await p.$(".chip, .chips")), "hay chips en Planes");
+  await p.click("#pl-fam-pruebas"); await p.waitForSelector(".pop");
+  ok(await p.$$eval('.pop .pmi[role="menuitemradio"]', x => x.length) === 4, "el menú no tiene Todas y las tres familias");
+  await p.click('.pmi[data-id="mo"]'); await p.waitForFunction(() => document.querySelector("#pl-fam-pruebas").textContent.includes("Motor"));
+  const fams = await p.$$eval('.lado .aj .ajr[data-ir^="#/planes/hazanas/"]', xs => xs.map(x => x.dataset.ir.split("/").pop()));
+  ok(fams.length && fams.every(id => ["pegaso", "orion"].includes(id)), "el filtro de pruebas: " + fams);
+  await p.click("#pl-fam-rutinas"); await p.click('.pmi[data-id="ra"]'); await p.waitForFunction(() => document.querySelector("#pl-fam-rutinas").textContent.includes("Rango"));
+  const rs = await p.evaluate(() => [...document.querySelectorAll('.lado .ajr[data-ir^="#/planes/rutinas/"]')].map(x => K.rutinaDe(x.dataset.ir.split("/").pop()).familia));
+  ok(rs.length && rs.every(f => f === "ra"), "el filtro de rutinas: " + rs);
+  await p.reload(); await p.waitForSelector("#pl-fam-pruebas");
+  ok((await p.textContent("#pl-fam-pruebas")).includes("Motor") && (await p.textContent("#pl-fam-rutinas")).includes("Rango"), "la familia elegida no queda");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("rutina-linea-escalon", async () => {
+  /* debajo de «Seguir esta rutina», una línea: el escalón es tuyo; siguiéndola, la rutina dice cuándo es la prueba */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/planes/rutinas/prim_dom"); await p.waitForSelector("#rut-seguir");
+  ok(await p.evaluate(() => { const b = document.querySelector("#rut-seguir"), l = document.querySelector(".rut-escalon"); return l && l.textContent.includes("El escalón es tuyo") && b.compareDocumentPosition(l) & Node.DOCUMENT_POSITION_FOLLOWING; }), "falta la línea del escalón debajo de «Seguir esta rutina»");
+  ok((await p.textContent(".rut-bloque")).includes("de carga y 1 de prueba"), "la rutina no dice cómo son sus bloques");
+  await ir(p, "#/planes/rutinas/z2"); ok(!(await p.$(".rut-escalon")), "una rutina sin escaleras habla de escalones");
+  await ir(p, "#/planes/rutinas/prim_dom"); await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
+  await ir(p, "#/planes/rutinas/prim_dom");
+  ok(!(await p.$(".rut-escalon")) && /Prueba en la semana \d/.test(await p.textContent(".rut-bloque")), "siguiéndola no dice cuándo es la prueba: " + await p.textContent(".rut-bloque"));
+  await ir(p, "#/planes");
+  ok(/Prueba en la semana \d/.test(await p.textContent(".pl-rut")) && await p.$(".pl-rut .esc-mini"), "Tu rutina en Planes no muestra escalones y prueba");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+/* nueve sesiones de la Base: tres semanas de carga, y hoy toca la semana de prueba */
+const DIAS_B = ["2026-09-21", "2026-09-23", "2026-09-25", "2026-09-28", "2026-09-30", "2026-10-02", "2026-10-12", "2026-10-14", "2026-10-16"];
+prueba("semana-de-prueba-hoy", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy");
+  await sembrarEsc(p, DIAS_B.map((f, i) => sEsc("b" + i, f, i, [["tirar", "dominada-negativa", [5, 5, 5], [3, 5], 5], ["empujar", "flexion", [8, 8, 7], [6, 10], 8]])));
+  await p.evaluate(() => K.diario.perfilPoner("rutina", {id: "base_cali", desde: "2026-09-21"}).then(() => K.refrescar()));
+  await p.waitForSelector(".hoy-sp");
+  const tx = await p.textContent(".hoy-sp");
+  ok(/^Semana de prueba · \d+ pruebas · encienden hasta \d+ estrellas$/.test(tx.trim()), "Hoy no avisa la semana de prueba: " + tx);
+  ok(await p.$$eval(".hoy-toca .toca.es-prueba", x => x.length) >= 2, "las pruebas no van en lo que toca");
+  /* la sesión: pruebas primero; se anota la de Empuje y el resto se saltea */
+  await p.click("#s-empezar"); await tick(p, 1000);
+  for (let k = 0; k < 20 && !(await p.evaluate(() => K.sesion.bloque().hazana === "hercules")); k++){ await p.click("#s-mas"); await p.click('.pmi[data-id="saltear"]'); await tick(p, 300); }
+  ok(await p.evaluate(() => K.sesion.bloque().hazana === "hercules"), "la sesión de prueba no trae Empuje");
+  await p.click("#s-listo"); await p.waitForSelector("#s-valor"); await escribir(p, 25);
+  if (await p.$("#s-seguir")) await p.click("#s-seguir");
+  for (let k = 0; k < 20 && await p.evaluate(() => K.sesion.activa()); k++){
+    if (await p.$("#s-terminar")){ await p.click("#s-terminar"); break; }
+    await p.click("#s-mas"); await p.click('.pmi[data-id="saltear"]'); await tick(p, 300);
+  }
+  await p.waitForSelector(".res");
   const x = await p.evaluate(() => K.diario.sesiones.at(-1));
-  ok(x.duracion >= 12 * 60 && x.hazana.completa, "el EMOM no dura sus minutos: " + x.duracion);
-  ok(await p.textContent(".res-tit") === "Draco, hecha.", "el resumen: " + await p.textContent(".res-tit"));
-  /* Casiopea, un flujo de posturas */
-  await ir(p, "#/planes/hazanas/casiopea"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.tramo");
-  for (let i = 0; i < 30 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
-  ok(await fase(p) === "cierre", "el flujo no termina solo");
+  ok(x.semanaPrueba?.bloque === 1 && x.semanaPrueba.rutina === "base_cali" && x.semanaPrueba.semana === 4 && x.semanaPrueba.pruebas >= 1, "la sesión no dice que fue de prueba: " + JSON.stringify(x.semanaPrueba));
+  ok((await p.textContent(".res-txt")).includes("Semana de prueba") && await p.$(".res-pruebas .escala"), "el resumen no muestra la prueba");
+  /* el resto de la semana es liviana, sin pruebas */
+  await ir(p, "#/hoy"); await p.waitForSelector(".hoy-sp");
+  ok((await p.textContent(".hoy-sp")).includes("más liviana") && !(await p.$(".hoy-toca .es-prueba")), "después de las pruebas, la semana sigue con pruebas");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
-prueba("hazana-amrap", async () => {
-  const {ctx, p} = await conReloj();
-  await ir(p, "#/planes/hazanas/perseo"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
-  await tick(p, 5000);
-  for (let i = 0; i < 4; i++){ await tick(p, 30000); await p.click("#s-vuelta"); }
-  await p.click("#s-vuelta-menos");
-  ok(await p.evaluate(() => K.sesion.estado().vueltas === 3), "−1 no resta una vuelta");
-  for (let i = 0; i < 20 && await fase(p) !== "cierre"; i++) await tick(p, 60000);
-  ok(await fase(p) === "cierre", "el tiempo límite no cerró la hazaña");
-  ok(await p.inputValue("#s-valor") === "3", "no propone las vueltas hechas");
-  await p.click("#s-terminar"); await p.waitForSelector(".res");
-  ok(await p.evaluate(() => K.diario.sesiones.at(-1).hazana.valor === 3), "no anotó las vueltas");
+prueba("pruebas-horizontal", async () => {
+  /* en horizontal, Planes es como Ajustes: la lista a la izquierda (la próxima prueba arriba) y la abierta a la derecha */
+  const {ctx, p} = await conReloj({width: 844, height: 390});
+  await ir(p, "#/planes");
+  ok(await p.evaluate(() => { const a = document.querySelector(".split>.lado").getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect(), c = document.querySelector(".lado .pl-prox").getBoundingClientRect();
+    return b.left >= a.right - 1 && c.right <= a.right + 1 && document.documentElement.scrollWidth <= innerWidth; }), "Planes en horizontal no sigue el patrón de Ajustes");
+  ok(await p.$(".pl-prox[data-sel]") && await p.$(".split>.abierto #hz-empezar"), "a la derecha no está la próxima prueba");
+  ok(await p.$$eval("#hz-empezar", x => x.length) === 1, "hay dos botones con el mismo id");
+  await p.click('.lado [data-ir="#/planes/hazanas/orion"]'); await p.waitForFunction(() => document.querySelector(".split>.abierto .enc-tit h1")?.textContent === "Orión");
+  ok(await p.evaluate(() => history.length) === 2, "abrir una prueba suma pasos al botón atrás");
+  await p.click(".split>.abierto #hz-empezar"); await p.waitForSelector(".ses.circuito"); await tick(p, 5000); await tick(p, 600000);
+  await p.click("#s-vuelta"); await p.waitForSelector(".ses.cierre"); await p.click("#s-terminar"); await p.waitForSelector(".res-pruebas");
+  ok(await p.evaluate(() => { const a = document.querySelector(".res-a").getBoundingClientRect(), b = document.querySelector(".res-pruebas").getBoundingClientRect(); return b.left >= a.right - 1 && document.documentElement.scrollWidth <= innerWidth; }), "el resumen de la prueba en horizontal no va en dos columnas");
+  ok(/10:0\d/.test(await p.textContent(".res-tit")), "Mil saltos no anotó el tiempo: " + await p.textContent(".res-tit"));
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -1124,9 +1259,9 @@ prueba("planes-horizontal", async () => {
   const {ctx, p} = await pagina({width: 844, height: 390});
   await ir(p, "#/planes");
   ok(await p.evaluate(() => { const a = document.querySelector(".split>.lado").getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect(); return b.left >= a.right - 1 && b.width > 200; }), "Planes en horizontal no va en dos columnas");
-  ok(await p.$(".split>.abierto #hz-empezar"), "a la derecha no está la primera hazaña abierta");
-  /* los nombres de las hazañas entran enteros, Andrómeda también */
-  const cortados = await p.$$eval(".hz-t span", xs => xs.filter(x => x.scrollWidth > x.clientWidth + 1).map(x => x.textContent));
+  ok(await p.$(".split>.abierto #hz-empezar"), "a la derecha no está la próxima prueba abierta");
+  /* los nombres de las pruebas entran enteros, Andrómeda también */
+  const cortados = await p.$$eval(".lado .ajr .ses-fila", xs => xs.filter(x => x.scrollWidth > x.clientWidth + 1).map(x => x.textContent));
   ok(!cortados.length, "nombres cortados en horizontal: " + cortados);
   await p.click('[data-ir="#/planes/rutinas/z2"]'); await p.waitForFunction(() => document.querySelector(".split>.abierto .enc-tit h1")?.textContent === "Base aeróbica", null, {timeout: 3000}).catch(() => { throw new Error("no abre la elegida a la derecha"); });
   ok(await p.evaluate(() => history.length) === 2, "en horizontal, abrir una rutina no suma pasos al botón atrás");
@@ -1166,10 +1301,10 @@ prueba("planes-pestana", async () => {
   ok(ics.planes && !ics.otros.includes(ics.planes), "Planes no tiene su ícono");
   await aPlanes(p);
   ok(await p.evaluate(() => location.hash) === "#/planes", "la ruta de Planes no es #/planes");
-  /* hazañas arriba, rutinas abajo */
+  /* pruebas arriba, rutinas abajo */
   const [yh, yr] = await p.evaluate(() => ["#pl-hazanas", "#pl-rutinas"].map(s => document.querySelector(s).getBoundingClientRect().top));
   ok(yh < yr, "las hazañas no van arriba de las rutinas");
-  ok(await p.$$eval(".hz-t", x => x.length) === 8 && await p.$$eval(".lado .ajr", x => x.length) === 26, "Planes no tiene las 8 hazañas y las 26 rutinas");
+  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 8 && await p.$$eval('.lado .ajr[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "Planes no tiene las 8 pruebas y las 26 rutinas");
   /* abrir una hazaña y volver a Planes */
   await p.click('[data-ir="#/planes/hazanas/orion"]'); await esperarTitulo(p, "Orión");
   ok(await p.evaluate(() => location.hash) === "#/planes/hazanas/orion", "la hazaña no vive en Planes");
@@ -1356,7 +1491,7 @@ prueba("maniqui", async () => {
   await p.click("#s-cortar"); await p.waitForSelector(".res"); await tick(p, 200);
   ok(!(await p.$("svg.fig[data-fig]")), "quedó una figura animada fuera de la sesión");
   /* en un circuito, cada ejercicio de la lista lleva su persona chiquita */
-  await ir(p, "#/planes/hazanas/hercules"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
+  await ir(p, "#/planes/hazanas/andromeda"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.circuito");
   const conFig = await p.$$eval(".circ-items .ln", ls => ls.filter(l => l.querySelector(".fig-chica svg.fig")).length);
   ok(conFig > 0, "el circuito no muestra a nadie en la lista");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));

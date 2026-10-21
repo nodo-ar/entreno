@@ -7,6 +7,8 @@
 .pie,.ayuda{padding:4px 4px 0}
 /* las dos mitades de Vos se apilan igual que una pantalla */
 .split>.lado{display:flex; flex-direction:column; gap:12px}
+/* en horizontal la lista corre adentro de su columna: nada se achica para entrar */
+.split>.lado>*{flex-shrink:0}
 /* Vos en vertical: el ajuste abierto ocupa la pantalla */
 @media not ((orientation:landscape) and (max-height:520px)){
   .split.en-detalle>.lado{display:none}
