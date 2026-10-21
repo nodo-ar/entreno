@@ -70,15 +70,6 @@
       {torso: 178, head: 180, armN: [8,78], armF: [328,18], legN: [6, 354], legF: [8, 353], pies: [-40, -41], alto: 17.6},
       {torso: 178, head: 180, armN: [6,66], armF: [326,6], legN: [7, 355], legF: [9, 354], pies: [-27, -28], alto: 1.9}
     ];
-  /* criss-cross: un salto abierto y el siguiente con los brazos estirados adelante, cruzados */
-  const cruce = [
-      {torso: 178, head: 180, armN: [2,56], armF: [324,356], legN: [10, 350], legF: [12, 349], pies: [-10, -11], alto: -1.5},
-      {torso: 178, head: 180, armN: [6,62], armF: [330,6], legN: [4, 357], legF: [6, 356], pies: [-31, -32], alto: 2.7},
-      {torso: 178, head: 180, armN: [8,78], armF: [38,42], legN: [4, 355], legF: [6, 354], pies: [-29, -30], alto: 10.6},
-      {torso: 178, head: 180, armN: [10,82], armF: [40,42], legN: [10, 350], legF: [12, 349], pies: [-10, -11], alto: -1.5},
-      {torso: 178, head: 180, armN: [8,78], armF: [38,42], legN: [4, 357], legF: [6, 356], pies: [-31, -32], alto: 2.7},
-      {torso: 178, head: 180, armN: [6,62], armF: [330,6], legN: [4, 355], legF: [6, 354], pies: [-29, -30], alto: 10.6}
-    ];
   /* pesas: parado, pies planos */
   const parado = {...K.fig.PARADO, armF: [2, 4], legF: [2, 1]};
   /* swing: abajo bisagra con la pesa entre los muslos; la cadera se estira primero y la pesa sigue flotando */
@@ -124,7 +115,6 @@
     /* soga: la soga pasa por abajo en el vuelo */
     "soga": {con: "soga", fijo: "hip", en: [150, 176], ciclo: true, k: soga, ritmo: [.46]},
     "double-under": {con: "soga", soga: "doble", fijo: "hip", en: [150, 176], ciclo: true, k: doble, ritmo: [.56]},
-    "criss-cross": {con: "soga", vueltas: 2, sogaPie: 1 / 3, fijo: "hip", en: [150, 176], ciclo: true, k: cruce, ritmo: [.94], muestra: 3},
     /* pesas */
     "swing-kettlebell": {con: "pesa", fijo: "fN", en: [150, T], k: [swAbajo, swMedio, swArriba], ritmo: [.6, .12, .6, .1]},
     "swing-mancuerna": {con: "mancuerna", fijo: "fN", en: [150, T], k: [swAbajo, swMedio, swCabeza], ritmo: [.7, .2, .7, .12], muestra: .8},

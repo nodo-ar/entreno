@@ -531,6 +531,25 @@ prueba("poses-de-cada-ejercicio", () => {
   ok(fig.persona("dominada", "fu").pelo !== "afro", "un peinado que no le va a un hombre se aplicó igual");
   fig.fijar({});
 });
+prueba("poses-en-otra-vista", () => {
+  /* los ejercicios que de perfil no se entienden van de frente, en tres cuartos o desde arriba: viven en vistas.js (lo genera tools/vistas.mjs)
+     y reemplazan a la de perfil con el mismo id. Cada una pasa la revisión entera, con los rangos en 3D y los apoyos quietos */
+  const fx = {K: {reduce: () => true}, document: {}}; vm.createContext(fx);
+  vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "piezas", "figura.js"), "utf8"), fx);
+  const dir = path.join(RAIZ, "src", "poses"), fuentes = {};
+  for (const f of fs.readdirSync(dir).sort()){ fuentes[f] = fs.readFileSync(path.join(dir, f), "utf8"); vm.runInContext(fuentes[f], fx); }
+  const {POSES, fig} = fx.K, ids = [...fuentes["vistas.js"].matchAll(/^"([a-z0-9-]+)": \{/gm)].map(m => m[1]);
+  ok(ids.length >= 20, "faltan las poses en otra vista: " + ids.length);
+  for (const id of ids){
+    ok(POSES[id] && (POSES[id].vista || POSES[id].alzada), id + ": quedó sin vista");
+    const otro = Object.keys(fuentes).find(f => f !== "vistas.js" && fuentes[f].includes(`"${id}": {`));
+    ok(!otro, id + ": sigue también de perfil en " + otro);
+    const m = fig.revisar(id); ok(!m.length, `${id}: ${m.join(" · ")}`);
+    ok(!/NaN|undefined/.test(fig.grande(id, "fu")), id + ": no se dibuja bien");
+  }
+  /* lo que se entiende de perfil sigue de perfil */
+  for (const id of ["sentadilla", "flexion", "zancada"]) ok(POSES[id] && !POSES[id].vista && !POSES[id].alzada, id + ": tenía que seguir de perfil");
+});
 
 let fallas = 0;
 for (const [n, fn] of PRUEBAS){

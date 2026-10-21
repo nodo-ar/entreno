@@ -13,7 +13,7 @@ const D = path.resolve(process.argv[2] || path.join(RAIZ, "app"));
 /* el orden importa: primero la base, después las piezas, las pantallas y el arranque */
 const CSS = ["base/letra.css", "base/tokens.css", "base/base.css", "piezas/nav.css", "piezas/encabezado.css", "piezas/menu.css",
   "piezas/deshacer.css", "piezas/isla.css", "piezas/movimiento.css", "piezas/figura.css", "piezas/ajustes.css", "piezas/horizontal.css", "pantallas/pantallas.css", "pantallas/cielo.css", "pantallas/hoy.css", "pantallas/progreso.css", "pantallas/rutinas.css"];
-const JS = ["base/base.js", "piezas/nav.js", "piezas/encabezado.js", "piezas/menu.js", "piezas/deshacer.js", "piezas/isla.js", "piezas/movimiento.js", "piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js",
+const JS = ["base/base.js", "piezas/nav.js", "piezas/encabezado.js", "piezas/menu.js", "piezas/deshacer.js", "piezas/isla.js", "piezas/movimiento.js", "piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/vistas.js",
   "cielo/cielo.js", "cielo/dibujo.js", "diario/diario.js", "diario/respaldo.js", "sesion/plan.js", "sesion/rutina.js", "sesion/calorias.js", "sesion/motor.js",
   "pantallas/pantallas.js", "pantallas/cielo.js", "pantallas/hoy.js", "pantallas/rutinas.js", "app.js"];
 

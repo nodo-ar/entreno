@@ -6,14 +6,10 @@
   const respira = (p, {t = 1.5, c = 2, b = 1} = {}) => ({k: [p, {...p, torso: p.torso + t, head: p.head + c,
     armN: [p.armN[0] + b, p.armN[1] + b], armF: [p.armF[0] + b, p.armF[1] + b]}], ritmo: RESPIRA});
   Object.assign(K.POSES, {
-    /* de lado no se ve de perfil: apoyado en el antebrazo, la pierna de arriba algo levantada con el talón al glúteo y la mano en el tobillo */
-    "cuadriceps-costado": {fijo: "hip", en: [170, 259], rango: "avanzado", ...respira({torso: 118, head: 114, armN: [248, 288], armF: [0, 90], legN: [258, 118], legF: [271, 271], pies: [-55, -90]}, {t: 1, c: 2, b: 0})},
     /* estocada corta: la pierna de atrás casi estirada sobre la punta, la cadera adelante y el tronco derecho, manos en la cintura */
     "flexor-cadera-de-pie": {fijo: "fN", en: [175, T], rango: "avanzado", ...respira({...parado, torso: 183, head: 180, armN: [330, 60], armF: [326, 57], legN: [42, 4], legF: [328, 322], pies: [0, 8]}, {t: 1, b: 0})},
     /* manos en la cintura, codos bien atrás y juntos, pecho abierto */
     "codos-atras": {fijo: "fN", en: [150, T], ...respira({...parado, torso: 182, head: 179, armN: [316, 50], armF: [312, 47]}, {b: 0})},
-    /* la inclinación al costado no se ve de perfil: un solo brazo largo arriba (la diferencia con brazos al techo), la otra mano en la cintura */
-    "dorsal-arriba": {fijo: "fN", en: [150, T], rango: "avanzado", ...respira({...parado, torso: 180, head: 178, armN: [189, 187], armF: [328, 58]}, {b: 0})},
     /* contra la pared o el marco: el brazo va atrás (hombro a −75°, avanzado) y el cuerpo se inclina apenas adelante, que es el «girá hacia afuera» visto de perfil */
     "pecho-pared": {fijo: "fN", en: [150, T], pared: 88, rango: "avanzado", ...respira({...parado, torso: 172, head: 176, armN: [278, 356], armF: [10, 16]}, {t: 1, c: 1.5, b: 0})},
     /* las palmas no se mueven y los codos quedan estirados: la cola va atrás hacia los talones y el brazo se inclina */
@@ -29,10 +25,6 @@
     "circulos-muneca": {fijo: "fN", en: [150, T], ciclo: true, k: [
       {...parado, armN: [32, 90], armF: [29, 88]}, {...parado, armN: [25, 104], armF: [22, 102]},
       {...parado, armN: [18, 90], armF: [15, 88]}, {...parado, armN: [25, 76], armF: [22, 74]}], ritmo: [3]},
-    /* de frente en la realidad: el brazo cruzado (el lejano) se ve estirado adelante y el antebrazo cercano lo engancha por delante en el codo */
-    "hombro-cruzado": {fijo: "fN", en: [150, T], ...respira({...parado, armN: [38, 162], armF: [88, 90]}, {t: 1, c: 1.5, b: 0})},
-    /* acostado de lado se ve como de frente: el cuerpo largo en el piso, el brazo de abajo bajo la cabeza y el de arriba en arco por encima de ella hasta el piso */
-    "dorsal-de-costado": {fijo: "hip", en: [170, 259], rango: "avanzado", ...respira({torso: 270, head: 263, armN: [238, 300], armF: [271, 271], legN: [90, 90], legF: [91, 91]}, {t: 0, c: 1, b: 2})},
     /* como el pecho en la pared, pero con el brazo estirado y la palma a la altura del hombro */
     "biceps-pared": {fijo: "fN", en: [150, T], pared: 61, rango: "avanzado", ...respira({...parado, torso: 172, head: 176, armN: [278, 278], armF: [10, 16]}, {t: 1, c: 1.5, b: 0})},
     /* a diferencia del hombro cruzado: brazo bajo adelante y la otra mano tira de la mano */
