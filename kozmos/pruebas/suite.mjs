@@ -997,12 +997,14 @@ prueba("escalera-resumen", async () => {
 prueba("escalera-hoy", async () => {
   /* Tu avance: el escalón de cada escalera, igual en Hoy y en Planes */
   const {ctx, p} = await conReloj();
-  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-rut .esc-filas");
-  const filas = async sel => p.$$eval(sel + " .esc-filas li", ls => ls.map(l => [l.querySelector(".esc-nom").textContent, l.querySelector(".esc-n").textContent, l.querySelector(".esc-ej").textContent, l.querySelectorAll(".esc-seg i").length]));
+  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-rut .esc-mini");
+  const filas = async sel => p.$$eval(sel + " .esc-mini li", ls => ls.map(l => [l.querySelector(".em-nom").textContent, l.querySelector(".em-n").textContent, l.querySelector(".esc-sub").getAttribute("aria-label"), l.querySelectorAll(".esc-sub i").length]));
   const h = await filas(".hoy-rut");
   ok(h.map(f => f[0]).join() === "Tirar,Piernas,Fondos,Isquios,Remo,Empujar,L-sit", "las escaleras de Hoy: " + h.map(f => f[0]));
-  ok(JSON.stringify(h[0]) === '["Tirar","4/7","Dominada",7]', "tirar en Hoy: " + JSON.stringify(h[0]));
-  ok(h[2][1] === "1/2" && h[2][2] === "Flexión cerrada", "fondos en Hoy (sin paralelas): " + JSON.stringify(h[2]));
+  ok(JSON.stringify(h[0]) === '["Tirar","4/7","Escalón 4 de 7: Dominada",7]', "tirar en Hoy: " + JSON.stringify(h[0]));
+  ok(h[2][1] === "1/2" && h[2][2].endsWith("Flexión cerrada"), "fondos en Hoy (sin paralelas): " + JSON.stringify(h[2]));
+  /* una escalerita: los escalones suben de alto, lo hecho en tinta y el de ahora en color */
+  ok(await p.$eval(".hoy-rut .esc-mini li .esc-sub", x => x.querySelectorAll("i.d").length === 3 && x.querySelector("i.n") === x.children[3] && x.children[0].offsetHeight < x.children[6].offsetHeight), "la escalerita de tirar no se dibuja bien");
   ok(!(await p.textContent(".hoy-rut")).includes("de 24"), "Hoy sigue mostrando las semanas en vez de los escalones");
   await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-esc");
   ok(JSON.stringify(await filas(".rut-esc")) === JSON.stringify(h), "Planes no muestra lo mismo que Hoy");
@@ -1018,7 +1020,7 @@ prueba("escalera-diario-viejo", async () => {
   const {ctx, p} = await conReloj();
   const viejas = [sEsc("v1", "2026-10-12", 0, [[null, "dominada-negativa", [5, 5, 5], null, 5], [null, "sentadilla", [10, 10, 10], null, 10]]),
     sEsc("v2", "2026-10-14", 1, [[null, "dominada-negativa", [5, 5, 4], null, 5], [null, "sentadilla", [10, 10, 10], null, 10]])];
-  await ir(p, "#/hoy"); await sembrarEsc(p, viejas); await p.reload(); await p.waitForSelector(".hoy-rut .esc-filas");
+  await ir(p, "#/hoy"); await sembrarEsc(p, viejas); await p.reload(); await p.waitForSelector(".hoy-rut .esc-mini");
   const r = await p.evaluate(() => ({i: K.rutinaActual().cur.i, n: K.diario.sesiones.length, es: K.rutina.escalerasDe(K.rutinaActual().r, K.ctxRutina()).map(x => x.id + ":" + x.paso.ejercicio).join()}));
   ok(r.n === 2 && r.i === 2, "las sesiones viejas no cuentan: " + JSON.stringify(r));
   ok(r.es.startsWith("tirar:dominada-negativa,piernas:sentadilla"), "el escalón no sale de las sesiones viejas: " + r.es);
@@ -1032,7 +1034,7 @@ prueba("escalera-diario-viejo", async () => {
 prueba("escalera-horizontal", async () => {
   /* en horizontal los tres botones entran en la columna de la derecha, con Seguir a la vista; el resumen y Hoy también */
   const {ctx, p} = await conReloj({width: 844, height: 390});
-  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-rut .esc-filas");
+  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-rut .esc-mini");
   const cols = sel => p.evaluate(([a, b]) => { const x = document.querySelector(a).getBoundingClientRect(), y = document.querySelector(b).getBoundingClientRect(); return y.left >= x.right - 1 && document.documentElement.scrollWidth <= innerWidth; }, sel);
   ok(await cols([".hoy-a", ".hoy-b"]), "Hoy en horizontal no va en dos columnas");
   await aLaSerie(p); await tick(p, 20000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");

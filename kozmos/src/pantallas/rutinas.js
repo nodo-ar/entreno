@@ -44,7 +44,7 @@ K.P.rutina = id => {
   }).join("");
   /* sus escaleras: por dónde vas en cada una (sin haberla empezado, por dónde arrancarías), igual que en Hoy */
   const es = K.rutina.escalerasDe(r, K.ctxRutina());
-  const escaleras = es.length ? `<span class="lb pie">${sigo ? "Tus escalones" : "Sus escaleras"}</span><section class="cd rut-esc">${K.filasEscalera(es, r.familia)}</section>` : "";
+  const escaleras = es.length ? `<span class="lb pie">${sigo ? "Tus escalones" : "Sus escaleras"}</span><section class="cd rut-esc">${K.escalerasMini(es, r.familia)}</section>` : "";
   const estado = sigo ? `<p class="ln small rut-sigo"><span>${ru.cur.terminada ? "La terminaste" : `La seguís · semana ${ru.cur.semana} de ${r.semanas}`}</span><span class="num">${ru.cur.i} de ${ru.cur.total}</span></p>` : "";
   const boton = sigo ? `<button type="button" class="btn" data-ir="#/hoy">${ru.cur.terminada ? "Volver a Hoy" : "Ir a Hoy"}</button>`
     : `<button type="button" class="btn" id="rut-seguir" data-rutina="${r.id}">Seguir esta rutina</button>`;

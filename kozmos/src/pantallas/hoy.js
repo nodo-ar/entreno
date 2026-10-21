@@ -37,9 +37,10 @@ const ctxRutina = K.ctxRutina = () => ({ej: K.EJ, equipo: K.diario.perfil.equipo
 /* ===== Escalones: por dónde vas en cada escalera, igual en Hoy y en Planes ===== */
 const MARCA = {sube: "▲ nuevo", baja: "▼ más fácil", carga: "▲ más peso"};
 K.marcaPaso = b => b.descarga ? "más liviana" : MARCA[b.nuevo] || "";
-K.filasEscalera = (es, fam) => `<ul class="esc-filas">${es.map(x => `<li style="--c:var(--${x.familia || fam})">
-    <span class="esc-nom">${K.esc(x.nombre)}</span><span class="esc-seg" role="img" aria-label="Escalón ${x.i + 1} de ${x.total}">${x.pasos.map((_, k) => `<i class="${k < x.i ? "d" : k === x.i ? "n" : ""}"></i>`).join("")}</span>
-    <span class="num esc-n">${x.i + 1}/${x.total}</span><small class="mute esc-ej">${K.esc(K.ej(x.paso.ejercicio).nombre)}${x.descarga ? " · más liviana" : ""}</small></li>`).join("")}</ul>`;
+/* cada escalera dibujada como una escalerita, lo subido en tinta y el escalón de ahora en su color */
+K.escalerasMini = (es, fam) => `<ul class="esc-mini">${es.map(x => `<li style="--c:var(--${x.familia || fam})">
+    <span class="esc-sub" role="img" aria-label="${K.esc(`Escalón ${x.i + 1} de ${x.total}: ${K.ej(x.paso.ejercicio).nombre}${x.descarga ? ", más liviana" : ""}`)}">${x.pasos.map((_, k) => `<i class="${k < x.i ? "d" : k === x.i ? "n" : ""}" style="height:${(30 + 70 * (x.total > 1 ? k / (x.total - 1) : 1)).toFixed(0)}%"></i>`).join("")}</span>
+    <b class="em-nom">${K.esc(x.nombre)}</b><small class="num em-n">${x.i + 1}/${x.total}</small></li>`).join("")}</ul>`;
 /* lo que cambió en cada escalera con una sesión, para el resumen: ▲ subiste, = seguís, ▼ bajás */
 const SIGNO = {sube: "▲", carga: "▲", baja: "▼"};
 const cambioTx = x => {
@@ -137,7 +138,7 @@ K.hoyRutina = ({r, cur}, sin) => {
   const s = r.sesiones[cur.i];
   /* el nombre y la semana van en la fila de origen, arriba; acá, el avance: en una rutina con escaleras, el escalón de cada una */
   const es = K.rutina.escalerasDe(r, ctxRutina());
-  const top = es.length ? `<section class="cd hoy-rut"><span class="lb">Tu avance</span>${K.filasEscalera(es, r.familia)}
+  const top = es.length ? `<section class="cd hoy-rut"><span class="lb">Tu avance</span>${K.escalerasMini(es, r.familia)}
       ${sig ? `<span class="ln mute small"><span>Entrena para</span><span>${K.esc(sig.nombre)}</span></span>` : ""}</section>`
     : `<section class="cd hoy-rut"><span class="lb">Tu avance</span>
       <div class="bar" style="--c:var(--${r.familia})" role="progressbar" aria-label="Avance de la rutina" aria-valuemin="0" aria-valuemax="${cur.total}" aria-valuenow="${cur.i}"><i style="width:${(cur.i / cur.total * 100).toFixed(1)}%"></i></div>
