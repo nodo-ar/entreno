@@ -1,0 +1,133 @@
+{
+ "version": 1,
+ "escaleras": [
+  {
+   "id": "tirar",
+   "nombre": "Tirar",
+   "familia": "fu",
+   "texto": "De colgarte a la negativa a un brazo, pasando por tu primera dominada.",
+   "pasos": [
+    {"ejercicio": "colgado-activo", "tipo": "segundos", "meta": 60},
+    {"ejercicio": "dominada-asistida", "tipo": "repeticiones", "rango": [5, 8]},
+    {"ejercicio": "dominada-negativa", "tipo": "repeticiones", "rango": [3, 5]},
+    {"ejercicio": "dominada", "tipo": "repeticiones"},
+    {"ejercicio": "dominada-explosiva", "tipo": "repeticiones", "rango": [3, 5]},
+    {"ejercicio": "dominada-arquera", "tipo": "repeticiones", "rango": [3, 5]},
+    {"ejercicio": "dominada-un-brazo-negativa", "tipo": "repeticiones", "rango": [1, 3]}
+   ]
+  },
+  {
+   "id": "remo",
+   "nombre": "Remo",
+   "familia": "fu",
+   "texto": "Tirar hacia el pecho, del poste a la barra baja y al remo en tuck.",
+   "pasos": [
+    {"ejercicio": "remo-poste", "tipo": "repeticiones", "rango": [8, 12]},
+    {"ejercicio": "remo-mancuerna", "tipo": "repeticiones", "rango": [8, 12]},
+    {"ejercicio": "remo-invertido", "tipo": "repeticiones"},
+    {"ejercicio": "remo-fl-tuck", "tipo": "repeticiones", "rango": [3, 6]}
+   ]
+  },
+  {
+   "id": "empujar",
+   "nombre": "Empujar",
+   "familia": "fu",
+   "texto": "De la flexión en la mesa a la flexión a un brazo.",
+   "pasos": [
+    {"ejercicio": "flexion-inclinada", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "flexion", "tipo": "repeticiones"},
+    {"ejercicio": "flexion-pausa", "tipo": "repeticiones"},
+    {"ejercicio": "flexion-declinada", "tipo": "repeticiones"},
+    {"ejercicio": "flexion-arquera", "tipo": "repeticiones", "rango": [3, 6]},
+    {"ejercicio": "flexion-pseudo-planche", "tipo": "repeticiones", "rango": [3, 6]},
+    {"ejercicio": "flexion-un-brazo", "tipo": "repeticiones", "rango": [1, 3]}
+   ]
+  },
+  {
+   "id": "fondos",
+   "nombre": "Fondos",
+   "familia": "fu",
+   "texto": "Empujar hacia abajo: del banco a las paralelas.",
+   "pasos": [
+    {"ejercicio": "flexion-cerrada", "tipo": "repeticiones"},
+    {"ejercicio": "fondo-banco", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "fondo", "tipo": "repeticiones"}
+   ]
+  },
+  {
+   "id": "piernas",
+   "nombre": "Piernas",
+   "familia": "fu",
+   "texto": "De la sentadilla a la pistol, de a una pierna.",
+   "pasos": [
+    {"ejercicio": "sentadilla", "tipo": "repeticiones", "rango": [8, 12]},
+    {"ejercicio": "zancada", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "sentadilla-bulgara", "tipo": "repeticiones"},
+    {"ejercicio": "pistol-silla", "tipo": "repeticiones"},
+    {"ejercicio": "shrimp", "tipo": "repeticiones", "rango": [3, 6]},
+    {"ejercicio": "pistol", "tipo": "repeticiones", "rango": [3, 6]}
+   ]
+  },
+  {
+   "id": "isquios",
+   "nombre": "Isquios",
+   "familia": "fu",
+   "texto": "La parte de atrás de la pierna, del puente al nórdico.",
+   "pasos": [
+    {"ejercicio": "puente-gluteo", "tipo": "repeticiones", "rango": [8, 12]},
+    {"ejercicio": "peso-muerto-una-pierna", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "curl-femoral-deslizante", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "nordico-negativa", "tipo": "repeticiones", "rango": [3, 5]},
+    {"ejercicio": "nordico", "tipo": "repeticiones", "rango": [1, 3]}
+   ]
+  },
+  {
+   "id": "lsit",
+   "nombre": "L-sit",
+   "familia": "fu",
+   "texto": "Sostenes del tronco, de la plancha a la V.",
+   "pasos": [
+    {"ejercicio": "plancha", "tipo": "segundos", "meta": 60},
+    {"ejercicio": "hollow", "tipo": "segundos", "meta": 45},
+    {"ejercicio": "l-sit", "tipo": "segundos", "meta": 25},
+    {"ejercicio": "l-sit-alto", "tipo": "segundos", "meta": 15},
+    {"ejercicio": "v-sit", "tipo": "segundos", "meta": 10}
+   ]
+  },
+  {
+   "id": "dragon",
+   "nombre": "Dragon flag",
+   "familia": "fu",
+   "texto": "El tronco en movimiento, de los hollow rocks al dragon flag.",
+   "pasos": [
+    {"ejercicio": "hollow-rock", "tipo": "repeticiones", "rango": [12, 20]},
+    {"ejercicio": "dragon-flag-negativa", "tipo": "repeticiones", "rango": [3, 6]},
+    {"ejercicio": "dragon-flag-bolita", "tipo": "repeticiones", "rango": [3, 6]},
+    {"ejercicio": "dragon-flag-una-pierna", "tipo": "repeticiones", "rango": [3, 5]},
+    {"ejercicio": "dragon-flag", "tipo": "repeticiones", "rango": [3, 5]}
+   ]
+  },
+  {
+   "id": "cadera",
+   "nombre": "Cadera",
+   "familia": "ra",
+   "texto": "Fuerza al final del recorrido: sentadilla profunda, cosaca y espagat a 90°.",
+   "pasos": [
+    {"ejercicio": "sentadilla-profunda", "tipo": "segundos", "meta": 60},
+    {"ejercicio": "cosaca", "tipo": "segundos", "meta": 30},
+    {"ejercicio": "espagat-lateral-90", "tipo": "segundos", "meta": 20}
+   ]
+  },
+  {
+   "id": "puente",
+   "nombre": "Puente",
+   "familia": "ra",
+   "texto": "Muñecas, hombros y espalda, hasta el puente completo.",
+   "pasos": [
+    {"ejercicio": "munecas-dorso", "tipo": "segundos", "meta": 30},
+    {"ejercicio": "hombros-pared", "tipo": "segundos", "meta": 30},
+    {"ejercicio": "puente", "tipo": "segundos", "meta": 20}
+   ]
+  }
+ ]
+}

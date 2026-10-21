@@ -2,7 +2,7 @@
  "id": "prim_dom",
  "nombre": "Primera dominada",
  "familia": "fu",
- "texto": "Colgarte, bajar lento y sumar fuerza hasta tu primera dominada.",
+ "texto": "Colgarte, bajar lento y sumar fuerza hasta tu primera dominada. Pasás de escalón cuando lo dominás, no por fecha.",
  "semanas": 6,
  "dias": 3,
  "minutos": 25,
@@ -59,14 +59,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
+     "escalera": "tirar",
      "series": 3,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -79,37 +79,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      3,
-      5
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
-     "rango": [
-      10,
-      15
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -157,14 +140,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
+     "escalera": "tirar",
      "series": 3,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -177,37 +160,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      3,
-      5
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
-     "rango": [
-      10,
-      15
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -255,14 +221,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
+     "escalera": "tirar",
      "series": 3,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -275,37 +241,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      3,
-      5
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
-     "rango": [
-      10,
-      15
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -353,57 +302,40 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "retraccion-escapular",
-     "tipo": "repeticiones",
-     "series": 3,
-     "rango": [
-      8,
-      12
-     ],
-     "descanso": 60
-    },
-    {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
+     "escalera": "tirar",
      "series": 3,
      "rango": [
       3,
       5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
+     "ejercicio": "retraccion-escapular",
      "tipo": "repeticiones",
      "series": 3,
      "rango": [
-      10,
-      15
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
+      8,
+      12
      ],
      "descanso": 60
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 90,
+     "desde": "remo-invertido"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -451,57 +383,40 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "retraccion-escapular",
-     "tipo": "repeticiones",
-     "series": 3,
-     "rango": [
-      8,
-      12
-     ],
-     "descanso": 60
-    },
-    {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
+     "escalera": "tirar",
      "series": 3,
      "rango": [
       3,
       5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
+     "ejercicio": "retraccion-escapular",
      "tipo": "repeticiones",
      "series": 3,
      "rango": [
-      10,
-      15
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
+      8,
+      12
      ],
      "descanso": 60
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 90,
+     "desde": "remo-invertido"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -549,57 +464,40 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "retraccion-escapular",
-     "tipo": "repeticiones",
-     "series": 3,
-     "rango": [
-      8,
-      12
-     ],
-     "descanso": 60
-    },
-    {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
+     "escalera": "tirar",
      "series": 3,
      "rango": [
       3,
       5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
+     "ejercicio": "retraccion-escapular",
      "tipo": "repeticiones",
      "series": 3,
      "rango": [
-      10,
-      15
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
+      8,
+      12
      ],
      "descanso": 60
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 90,
+     "desde": "remo-invertido"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -647,14 +545,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -667,37 +565,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -745,14 +626,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -765,37 +646,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -843,14 +707,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -863,37 +727,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -941,14 +788,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -961,37 +808,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -1039,14 +869,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -1059,37 +889,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -1137,14 +950,14 @@
      ]
     },
     {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      30,
-      60
+      3,
+      5
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -1157,37 +970,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -1235,27 +1031,14 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      1,
-      3
+      3,
+      5
      ],
-     "descanso": 120
-    },
-    {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -1268,37 +1051,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -1346,27 +1112,14 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      1,
-      3
+      3,
+      5
      ],
-     "descanso": 120
-    },
-    {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -1379,37 +1132,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -1457,27 +1193,14 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      1,
-      3
+      3,
+      5
      ],
-     "descanso": 120
-    },
-    {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -1490,37 +1213,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -1568,27 +1274,14 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      1,
-      3
+      3,
+      5
      ],
-     "descanso": 120
-    },
-    {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -1601,37 +1294,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -1679,27 +1355,14 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      1,
-      3
+      3,
+      5
      ],
-     "descanso": 120
-    },
-    {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -1712,37 +1375,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   },
@@ -1790,27 +1436,14 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa"
-     ],
-     "tipo": "repeticiones",
-     "series": 3,
+     "escalera": "tirar",
+     "series": 4,
      "rango": [
-      1,
-      3
+      3,
+      5
      ],
-     "descanso": 120
-    },
-    {
-     "ejercicio": "colgado-activo",
-     "tipo": "segundos",
-     "series": 3,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "colgado-activo"
     },
     {
      "ejercicio": "retraccion-escapular",
@@ -1823,37 +1456,20 @@
      "descanso": 60
     },
     {
-     "ejercicio": "dominada-negativa",
-     "tipo": "repeticiones",
-     "series": 4,
-     "rango": [
-      4,
-      6
-     ],
-     "descanso": 90
-    },
-    {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
-      10,
-      15
+      8,
+      12
      ],
-     "descanso": 90
+     "descanso": 90,
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 60
+     "descanso": 60,
+     "desde": "hollow"
     }
    ]
   }

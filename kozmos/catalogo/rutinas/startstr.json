@@ -2,14 +2,13 @@
  "id": "startstr",
  "nombre": "Estirar todo el cuerpo",
  "familia": "ra",
- "texto": "Nueve estiramientos de un minuto para todo el cuerpo.",
+ "texto": "Nueve estiramientos de un minuto para todo el cuerpo. Dos días, una sentadilla profunda que se mide.",
  "semanas": 4,
  "dias": 4,
  "minutos": 20,
  "equipo": [],
  "alimenta": [
-  "espagat.sentadilla-30s",
-  "puente.dedos-piso"
+  "espagat.sentadilla-30s"
  ],
  "fuente": "Starting Stretching (r/bodyweightfitness)",
  "sesiones": [
@@ -85,6 +84,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -235,6 +240,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -385,6 +396,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -535,6 +552,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -685,6 +708,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -835,6 +864,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -995,6 +1030,12 @@
        "ejercicio": "postura-nino"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -1165,6 +1206,12 @@
        "ejercicio": "postura-nino"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },

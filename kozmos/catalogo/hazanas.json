@@ -716,18 +716,18 @@
         "remo-invertido",
         "remo-mancuerna"
        ],
-       "reps": 5
+       "reps": 4
       },
       {
        "ejercicio": [
         "fondo",
         "flexion"
        ],
-       "reps": 10
+       "reps": 8
       },
       {
        "ejercicio": "sentadilla",
-       "reps": 15
+       "reps": 12
       }
      ]
     },

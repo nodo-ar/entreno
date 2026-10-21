@@ -2,7 +2,7 @@
  "id": "cien",
  "nombre": "100 flexiones",
  "familia": "fu",
- "texto": "Series de flexiones que crecen cada semana, hasta hacer 100 seguidas.",
+ "texto": "Series de flexiones que crecen cada semana, hasta hacer 100 seguidas. El tercer día cerrás con dos series de tu escalón de empuje.",
  "semanas": 6,
  "dias": 3,
  "minutos": 15,
@@ -259,6 +259,16 @@
       ]
      },
      "descanso": 60
+    },
+    {
+     "escalera": "empujar",
+     "series": 2,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "desde": "flexion-declinada"
     }
    ]
   },
@@ -508,6 +518,16 @@
       ]
      },
      "descanso": 120
+    },
+    {
+     "escalera": "empujar",
+     "series": 2,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "desde": "flexion-declinada"
     }
    ]
   },
@@ -757,6 +777,16 @@
       ]
      },
      "descanso": 120
+    },
+    {
+     "escalera": "empujar",
+     "series": 2,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "desde": "flexion-declinada"
     }
    ]
   },
@@ -1006,6 +1036,16 @@
       ]
      },
      "descanso": 120
+    },
+    {
+     "escalera": "empujar",
+     "series": 2,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "desde": "flexion-declinada"
     }
    ]
   },
@@ -1273,6 +1313,16 @@
       ]
      },
      "descanso": 45
+    },
+    {
+     "escalera": "empujar",
+     "series": 2,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "desde": "flexion-declinada"
     }
    ]
   },
@@ -1546,6 +1596,16 @@
       ]
      },
      "descanso": 45
+    },
+    {
+     "escalera": "empujar",
+     "series": 2,
+     "rango": [
+      3,
+      6
+     ],
+     "descanso": 90,
+     "desde": "flexion-declinada"
     }
    ]
   }

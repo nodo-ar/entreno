@@ -2,15 +2,14 @@
  "id": "hombros",
  "nombre": "Hombros sanos",
  "familia": "ra",
- "texto": "Movilidad de hombros para colgarte de la barra y hacer fondos sin molestias.",
+ "texto": "Movilidad de hombros para colgarte de la barra y hacer fondos sin molestias. Dos días, sostenes que suben de escalón.",
  "semanas": 4,
  "dias": 4,
  "minutos": 12,
  "equipo": [],
  "alimenta": [
-  "puente.manos-atras",
-  "puente.pared-20s",
-  "parada-de-manos.munecas-15s"
+  "parada-de-manos.munecas-15s",
+  "puente.pared-20s"
  ],
  "sesiones": [
   {
@@ -53,6 +52,12 @@
        "ejercicio": "munecas-cuatro-patas"
       }
      ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "munecas-dorso"
     }
    ]
   },
@@ -146,6 +151,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "munecas-dorso"
     }
    ]
   },
@@ -232,6 +243,12 @@
        "ejercicio": "pecho-manos-nuca"
       }
      ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "munecas-dorso"
     }
    ]
   },
@@ -325,6 +342,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "munecas-dorso"
     }
    ]
   },
@@ -416,6 +439,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "munecas-dorso"
     }
    ]
   },
@@ -526,6 +555,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "munecas-dorso"
     }
    ]
   },
@@ -622,6 +657,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "munecas-dorso"
     }
    ]
   },
@@ -732,6 +773,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "munecas-dorso"
     }
    ]
   },

@@ -2,7 +2,7 @@
  "id": "base_cali",
  "nombre": "Base de calistenia",
  "familia": "fu",
- "texto": "Calistenia desde cero: cada ejercicio tiene una versión más fácil y otra más difícil. Con 3 × 8 limpio, pasás a la siguiente.",
+ "texto": "Calistenia desde cero, en escalones: cuando completás el rango dos veces seguidas, pasás al siguiente. Si dos veces no llegás, bajás uno.",
  "semanas": 8,
  "dias": 3,
  "minutos": 50,
@@ -61,105 +61,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": "sentadilla",
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
-      6,
-      10
+      5,
+      8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": "puente-gluteo",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-inclinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 60,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     }
    ]
   },
@@ -207,100 +182,86 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": "sentadilla",
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
-      6,
-      10
+      5,
+      8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": "puente-gluteo",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-inclinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 0,
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": [
       "plancha-lateral",
       "plancha"
      ],
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
      "tipo": "segundos",
      "series": 2,
      "rango": [
@@ -356,94 +317,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": "sentadilla",
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
-      6,
-      10
+      5,
+      8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": "puente-gluteo",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-inclinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
      "descanso": 0,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": "escaladores",
@@ -502,105 +449,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": "sentadilla",
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
-      6,
-      10
+      5,
+      8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": "puente-gluteo",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-inclinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 60,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     }
    ]
   },
@@ -648,100 +570,86 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": "sentadilla",
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
-      6,
-      10
+      5,
+      8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": "puente-gluteo",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-inclinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 0,
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": [
       "plancha-lateral",
       "plancha"
      ],
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
      "tipo": "segundos",
      "series": 2,
      "rango": [
@@ -797,94 +705,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": "sentadilla",
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
-      6,
-      10
+      5,
+      8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": "puente-gluteo",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-inclinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
      "descanso": 0,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": "escaladores",
@@ -943,110 +837,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 60,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     }
    ]
   },
@@ -1094,105 +958,86 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 0,
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": [
       "plancha-lateral",
       "plancha"
      ],
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
      "tipo": "segundos",
      "series": 2,
      "rango": [
@@ -1248,99 +1093,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
      "descanso": 0,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": "escaladores",
@@ -1399,110 +1225,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 60,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     }
    ]
   },
@@ -1550,105 +1346,86 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 0,
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": [
       "plancha-lateral",
       "plancha"
      ],
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
      "tipo": "segundos",
      "series": 2,
      "rango": [
@@ -1704,99 +1481,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
      "descanso": 0,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": "escaladores",
@@ -1855,110 +1613,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 60,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     }
    ]
   },
@@ -2006,105 +1734,86 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 0,
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": [
       "plancha-lateral",
       "plancha"
      ],
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
      "tipo": "segundos",
      "series": 2,
      "rango": [
@@ -2160,99 +1869,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
      "descanso": 0,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": "escaladores",
@@ -2311,110 +2001,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 60,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     }
    ]
   },
@@ -2462,105 +2122,86 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 0,
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": [
       "plancha-lateral",
       "plancha"
      ],
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
      "tipo": "segundos",
      "series": 2,
      "rango": [
@@ -2616,99 +2257,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco",
-      "flexion-cerrada"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "puente-gluteo"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": "flexion",
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
      "descanso": 0,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": "escaladores",
@@ -2767,113 +2389,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "nordico"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 60,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     }
    ]
   },
@@ -2921,108 +2510,86 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "nordico"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 0,
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": [
       "plancha-lateral",
       "plancha"
      ],
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
      "tipo": "segundos",
      "series": 2,
      "rango": [
@@ -3078,102 +2645,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "nordico"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
      "descanso": 0,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": "escaladores",
@@ -3232,113 +2777,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "nordico"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 60,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     }
    ]
   },
@@ -3386,108 +2898,86 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "nordico"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 0,
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": [
       "plancha-lateral",
       "plancha"
      ],
-     "tipo": "segundos",
-     "series": 2,
-     "rango": [
-      20,
-      45
-     ],
-     "descanso": 0,
-     "grupo": "D"
-    },
-    {
-     "ejercicio": "hollow",
      "tipo": "segundos",
      "series": 2,
      "rango": [
@@ -3543,102 +3033,80 @@
      ]
     },
     {
-     "ejercicio": [
-      "dominada",
-      "dominada-negativa",
-      "remo-invertido"
+     "escalera": [
+      "tirar",
+      "remo"
      ],
-     "tipo": "repeticiones",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "dominada-negativa"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "A"
+     "grupo": "A",
+     "desde": "sentadilla"
     },
     {
-     "ejercicio": [
-      "fondo",
-      "fondo-banco"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "fondos",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "fondo-banco"
     },
     {
-     "ejercicio": [
-      "peso-muerto-una-pierna",
-      "nordico"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       8,
       12
      ],
      "descanso": 180,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "puente-gluteo"
     },
     {
-     "ejercicio": [
-      "remo-invertido",
-      "remo-mancuerna",
-      "remo-poste"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 0,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "flexion-declinada",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 180,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "flexion-inclinada"
     },
     {
-     "ejercicio": "plancha",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 2,
-     "rango": [
-      30,
-      60
-     ],
      "descanso": 0,
-     "grupo": "D"
+     "grupo": "D",
+     "desde": "plancha"
     },
     {
      "ejercicio": "escaladores",

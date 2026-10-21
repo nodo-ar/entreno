@@ -2,7 +2,7 @@
  "id": "lastre",
  "nombre": "Calistenia con lastre",
  "familia": "fu",
- "texto": "Dominadas y fondos con peso. Cuando completás las series, sumás 2,5 kg.",
+ "texto": "Dominadas y fondos con peso, de 4 a 6. Cuando completás todas las series dos veces seguidas, sumás 2,5 kg.",
  "semanas": 8,
  "dias": 3,
  "minutos": 50,
@@ -74,7 +74,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -88,58 +89,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -198,7 +189,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -212,7 +204,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -230,29 +223,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -325,7 +315,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -339,58 +330,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -449,7 +430,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -463,7 +445,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -481,29 +464,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -576,7 +556,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -590,58 +571,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -700,7 +671,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -714,7 +686,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -732,29 +705,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -827,7 +797,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -841,58 +812,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -951,7 +912,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -965,7 +927,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -983,29 +946,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -1078,7 +1038,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1092,58 +1053,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -1202,7 +1153,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1216,7 +1168,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1234,29 +1187,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -1329,7 +1279,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1343,58 +1294,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -1453,7 +1394,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1467,7 +1409,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1485,29 +1428,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -1580,7 +1520,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1594,58 +1535,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -1704,7 +1635,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1718,7 +1650,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1736,29 +1669,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -1831,7 +1761,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1845,58 +1776,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -1955,7 +1876,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1969,7 +1891,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -1987,29 +1910,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -2082,7 +2002,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2096,58 +2017,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -2206,7 +2117,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2220,7 +2132,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2238,29 +2151,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -2333,7 +2243,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2347,58 +2258,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -2457,7 +2358,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2471,7 +2373,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2489,29 +2392,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -2584,7 +2484,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2598,58 +2499,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -2708,7 +2599,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2722,7 +2614,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2740,29 +2633,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [
@@ -2835,7 +2725,8 @@
       6
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2849,58 +2740,48 @@
       6
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
-     "ejercicio": [
-      "flexion-arquera",
-      "flexion"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "empujar",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 90,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "flexion-arquera"
     },
     {
-     "ejercicio": "remo-invertido",
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-invertido"
     },
     {
-     "ejercicio": [
-      "shrimp",
-      "sentadilla-bulgara",
-      "sentadilla"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "piernas",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "shrimp"
     },
     {
-     "ejercicio": "hollow",
-     "tipo": "segundos",
+     "escalera": "lsit",
      "series": 3,
-     "rango": [
-      20,
-      45
-     ],
      "descanso": 90,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "hollow"
     }
    ]
   },
@@ -2959,7 +2840,8 @@
       5
      ],
      "descanso": 90,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2973,7 +2855,8 @@
       5
      ],
      "descanso": 150,
-     "grupo": "A"
+     "grupo": "A",
+     "carga": 2.5
     },
     {
      "ejercicio": [
@@ -2991,29 +2874,26 @@
      "grupo": "B"
     },
     {
-     "ejercicio": [
-      "remo-fl-tuck",
-      "remo-invertido"
-     ],
-     "tipo": "repeticiones",
+     "escalera": "remo",
      "series": 3,
      "rango": [
       5,
       8
      ],
      "descanso": 120,
-     "grupo": "B"
+     "grupo": "B",
+     "desde": "remo-fl-tuck"
     },
     {
-     "ejercicio": "curl-femoral-deslizante",
-     "tipo": "repeticiones",
+     "escalera": "isquios",
      "series": 3,
      "rango": [
       6,
       10
      ],
      "descanso": 60,
-     "grupo": "C"
+     "grupo": "C",
+     "desde": "curl-femoral-deslizante"
     },
     {
      "ejercicio": [

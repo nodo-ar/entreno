@@ -2,16 +2,15 @@
  "id": "espagat",
  "nombre": "Camino al espagat",
  "familia": "ra",
- "texto": "Estiramientos de cadera y piernas, cada vez más largos, rumbo al espagat lateral y frontal.",
+ "texto": "Estiramientos de cadera y piernas, cada vez más largos, y dos días de fuerza al final del recorrido, rumbo al espagat.",
  "semanas": 8,
  "dias": 4,
  "minutos": 20,
  "equipo": [],
  "alimenta": [
   "espagat.sentadilla-30s",
-  "espagat.lateral-90-10s",
-  "espagat.lateral",
-  "espagat.frontal"
+  "espagat.cosaca-15s",
+  "espagat.lateral-90-10s"
  ],
  "sesiones": [
   {
@@ -40,6 +39,12 @@
        "ejercicio": "sentadilla-profunda"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -126,6 +131,12 @@
        "ejercicio": "sentadilla-profunda"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -219,6 +230,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -312,6 +329,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -410,6 +433,12 @@
        "ejercicio": "isquios-sentado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -520,6 +549,12 @@
        "ejercicio": "isquios-sentado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -630,6 +665,12 @@
        "ejercicio": "mariposa-acostado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -740,6 +781,12 @@
        "ejercicio": "mariposa-acostado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -855,6 +902,12 @@
        "ejercicio": "sentadilla-profunda"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -982,6 +1035,12 @@
        "ejercicio": "sentadilla-profunda"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -1109,6 +1168,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -1236,6 +1301,12 @@
        "nota": "El otro lado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -1363,6 +1434,12 @@
        "ejercicio": "piernas-abiertas"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -1490,6 +1567,12 @@
        "ejercicio": "piernas-abiertas"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -1617,6 +1700,12 @@
        "ejercicio": "isquios-sentado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },
@@ -1744,6 +1833,12 @@
        "ejercicio": "isquios-sentado"
       }
      ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
     }
    ]
   },

@@ -16,6 +16,10 @@
   const medio = {torso: 187, head: 183, armN: [101, 214], armF: [99, 211], legN: [12, 0], legF: [15, 4], pies: [-36, -32]};
   /* arriba: mentón sobre la barra, pecho cerca, el cuerpo apenas atrás y las piernas apenas adelante */
   const arriba = {torso: 194, head: 188, armN: [33, 181], armF: [31, 178], legN: [20, 6], legF: [23, 10], pies: [-34, -30]};
+  /* asistida: las rodillas dobladas, los pies atrás como si uno apoyara en una silla */
+  const asisAbajo = {...colgado, legN: [20, 280], legF: [24, 286], pies: [-30, -26]};
+  const asisMedio = {...medio, legN: [26, 284], legF: [30, 290], pies: [-30, -26]};
+  const asisArriba = {...arriba, legN: [32, 290], legF: [36, 296], pies: [-30, -26]};
   /* explosiva: el pecho llega a la barra, los hombros por encima y los codos bien abajo */
   const pecho = {torso: 200, head: 192, armN: [4, 144], armF: [2, 141], legN: [26, 12], legF: [29, 16], pies: [-34, -30]};
   /* supina: palmas hacia uno, codos adelante, el cuerpo más derecho */
@@ -63,6 +67,8 @@
     /* dominadas */
     "dominada-negativa": {...B, k: [colgado, medio, arriba], ritmo: [.7, .5, 4.5, .8]},
     "dominada": {...B, k: [colgado, medio, arriba], ritmo: [1, .4, 1.6, .5]},
+    /* asistida: un pie atrás en una silla, la rodilla doblada; la pierna empuja lo justo */
+    "dominada-asistida": {...B, k: [asisAbajo, asisMedio, asisArriba], ritmo: [1.2, .4, 1.8, .5]},
     "dominada-explosiva": {...B, k: [colgado, medio, pecho], ritmo: [.45, .25, 1.5, .8]},
     "dominada-lastre": {...B, lastre: true, k: [colgado, medio, arriba], ritmo: [1.2, .5, 1.8, .6]},
     "dominada-supina": {...B, k: [colgado, supMedio, supina], ritmo: [1, .4, 1.6, .5]},
