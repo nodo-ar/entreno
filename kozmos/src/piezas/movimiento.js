@@ -61,7 +61,7 @@ K.mov = (() => {
     <g class="orb"><circle class="est" cx="123.8" cy="36.2" r="7" fill="var(--bg)" stroke="var(--ink)" stroke-width="2.6"/></g></svg>`;
 
   /* la estrella de la pestaña elegida llega orbitando y se posa; en Progreso sube por el arco */
-  const CENTRO = {hoy: [12, 12.5, -180], cielo: [12, 12, -180], progreso: [20, 20, -90], vos: [12, 12, -180]};
+  const CENTRO = {hoy: [12, 12.5, -180], planes: [9.5, 11, -180], cielo: [12, 12, -180], progreso: [20, 20, -90], vos: [12, 12, -180]};
   function llegar(btn, tab){
     const g = !K.reduce() && btn?.querySelector(".orb"), o = CENTRO[tab]; if (!g || !o) return;
     const c = g.firstElementChild, ms = 420;
