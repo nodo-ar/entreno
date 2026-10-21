@@ -89,7 +89,7 @@ jobs:
   humo:
     needs: apk
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 25
     continue-on-error: true
     steps:
       - uses: actions/download-artifact@v4
@@ -105,9 +105,12 @@ jobs:
           IMG="system-images;android-35;google_apis;x86_64"
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install emulator platform-tools "$IMG" > /dev/null
           echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n kozmos -k "$IMG" --force
-          nohup "$ANDROID_HOME/emulator/emulator" -avd kozmos -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect > emulador.log 2>&1 &
-          adb wait-for-device
-          for i in $(seq 1 120); do [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1 ] && break; sleep 3; done
+          ls -l /dev/kvm; "$ANDROID_HOME/emulator/emulator" -accel-check || true
+          nohup "$ANDROID_HOME/emulator/emulator" -avd kozmos -no-window -no-audio -no-boot-anim -no-snapshot -no-metrics -gpu swiftshader_indirect > emulador.log 2>&1 &
+          timeout 180 adb wait-for-device || { echo "::error::el emulador no arrancó"; tail -60 emulador.log; exit 1; }
+          listo=0
+          for i in $(seq 1 100); do [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = 1 ] && { listo=1; break; }; sleep 3; done
+          [ $listo = 1 ] || { echo "::error::el emulador no terminó de arrancar"; tail -60 emulador.log; exit 1; }
           adb shell settings put global window_animation_scale 0
           adb shell settings put global transition_animation_scale 0
       - name: Abrir sin red, girar, tema oscuro y atrás
