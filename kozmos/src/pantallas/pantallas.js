@@ -51,7 +51,7 @@ K.P.progreso = r => {
     const est = (s.encendio || []).length, pr = s.bloques.length === 1 && s.bloques[0].prueba && K.estrella(s.bloques[0].estrella);
     const ru = s.rutina && K.rutinaDe(s.rutina.id), hz = s.hazana && K.HAZANAS.hazanas.find(h => h.id === s.hazana.id);
     const que = [pr ? `Prueba · ${pr.nombre}` : hz ? `${hz.nombre} · ${K.rutina.NIVELES[s.hazana.nivel]}` : ru ? ru.nombre : "", s.cortada ? "Cortada" : ""].filter(Boolean).join(" · ");
-    return `<button type="button" class="ajr" data-ir="#/progreso/${K.esc(s.id)}" data-quieto="1"${s.id === sel ? " data-sel" : ""}><span class="tile">${K.ic(pr ? "cielo" : hz ? "hazana" : ru ? "ruta" : "play")}</span>
+    return `<button type="button" class="ajr" data-ir="#/progreso/${K.esc(s.id)}" data-quieto="1"${s.id === sel ? " data-sel" : ""}><span class="tile${hz ? " fig" : ""}">${hz ? K.dibujo.figura(hz, 26) : K.ic(pr ? "cielo" : ru ? "ruta" : "play")}</span>
       <span class="ses-fila">${K.esc(K.fechaCorta(s.fecha))}${que ? `<small class="mute">${K.esc(que)}</small>` : ""}</span><em class="num">${est ? `${est} ${est === 1 ? "estrella" : "estrellas"} · ` : ""}${Math.max(1, Math.round(s.duracion / 60))} min</em>${K.ic("chev", "chev")}</button>`;
   }).join("")}</section>` : "";
   const abierto = sel && ses.some(s => s.id === sel) ? K.P.resumen(sel, "progreso") : "";
@@ -89,7 +89,7 @@ K.P.vos = r => {
   const fila = (id, ic, nom, val) => `<button type="button" class="ajr" data-ir="#/vos/${id}" data-quieto="1"${abre === id ? " data-sel" : ""}><span class="tile">${K.ic(ic)}</span><span>${nom}</span><em>${K.esc(val)}</em>${K.ic("chev", "chev")}</button>`;
   const peso = K.diario.perfil.peso;
   return `<div class="split${sub ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Vos", sub: "Ajustes"})}
-    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("dias", "cal", "Tus días", K.resumenDias())}${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
+    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("dias", "dias", "Tus días", K.resumenDias())}${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
       <button type="button" class="ajr" id="avisos-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("vibra")}</span><span>Avisos</span><em>${K.esc(K.avisosNombre())}</em>${K.ic("chevd", "chev")}</button></div>
     <div class="aj">
       <button type="button" class="ajr" id="tema-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("auto")}</span><span>Tema</span><em>${K.esc(K.tema.nombre())}</em>${K.ic("chevd", "chev")}</button>

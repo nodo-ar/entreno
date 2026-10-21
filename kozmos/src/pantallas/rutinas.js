@@ -75,7 +75,7 @@ const mejorTx = h => {
 K.P.hazanas = r => {
   const hs = K.HAZANAS.hazanas, sel = hs.some(x => x.id === r.sub2) ? r.sub2 : "", hz = K.horizontal(), abre = sel || (hz ? hs[0]?.id : "");
   const filas = hs.map(h => { const m = mejorTx(h);
-    return `<button type="button" class="ajr" data-ir="#/hoy/hazanas/${h.id}" data-quieto="1"${abre === h.id ? " data-sel" : ""}><span class="tile" style="color:var(--${h.familia})">${K.ic("hazana")}</span>
+    return `<button type="button" class="ajr" data-ir="#/hoy/hazanas/${h.id}" data-quieto="1"${abre === h.id ? " data-sel" : ""}><span class="tile fig">${K.dibujo.figura(h, 26)}</span>
       <span class="ses-fila">${K.esc(h.nombre)}<small class="mute">${K.esc(h.texto)}</small></span><em class="num">${K.esc(m || "")}</em>${K.ic("chev", "chev")}</button>`; }).join("");
   return `<div class="split${sel ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Hazañas", sub: "Hoy", volver: "#/hoy", raiz: true})}
     <p class="ayuda">Pruebas de cierre con tres niveles. Volvé cada tanto y medí cuánto avanzaste.</p><section class="aj">${filas}</section></div>
@@ -91,7 +91,7 @@ K.P.hazana = id => {
     || b.tramos.filter(x => x.clase === "fuerte").slice(0, 1).map(x => `<div class="ln"><span>Fuerte</span><span class="num">${x.seg} s</span></div>`).join("");
   const mejor = K.rutina.mejorHazana(h, nv, K.diario.sesiones);
   return K.enc({titulo: h.nombre, sub: "Hazañas", volver: "#/hoy/hazanas", raiz: true, det: true}) +
-    `<div class="hzn"><p class="ayuda">${K.esc(h.texto)}</p>
+    `<div class="hzn"><div class="hz-fig">${K.dibujo.figura(h, 120, mejor !== null)}</div><p class="ayuda">${K.esc(h.texto)}</p>
     <section class="aj"><button type="button" class="ajr" id="hz-nivel" data-hazana="${h.id}" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("hazana")}</span><span>Nivel</span><em>${K.rutina.NIVELES[nv]}</em>${K.ic("chevd", "chev")}</button></section>
     <section class="cd hz-items"><span class="lb">${K.esc(formatoTx(h, n))}</span>${filas}
       <span class="ln mute small"><span>Tu mejor en este nivel</span><span class="num">${mejor === null ? "Todavía nada" : K.esc(K.hazanaValor(h, mejor))}</span></span></section>

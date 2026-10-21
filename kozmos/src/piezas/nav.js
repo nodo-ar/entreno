@@ -24,6 +24,8 @@ K.nav = {
     if (animar){ poner(viejo.dataset.tab); n.offsetWidth; }
     n.classList.remove("medir"); n.offsetWidth;
     poner(tab); K.nav.mover(fin, !animar);
+    /* el ícono elegido hace su gesto una vez */
+    if (animar){ b.classList.remove("gesto"); b.offsetWidth; b.classList.add("gesto"); clearTimeout(b._gesto); b._gesto = setTimeout(() => b.classList.remove("gesto"), 700); }
   },
   mover(f, sinAnim){
     const n = K.$("nav.barra"), i = K.$(".ind", n), vertical = getComputedStyle(n).flexDirection === "column";
