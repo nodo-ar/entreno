@@ -1,8 +1,8 @@
 {
  "id": "gimnasta",
- "nombre": "Tronco de gimnasta",
+ "nombre": "Abdomen de gimnasta",
  "familia": "fu",
- "texto": "Cuerpo entero con el tronco primero: hollow, L-sit y dragon flag, cada vez más largos.",
+ "texto": "Cuerpo entero con el abdomen primero: hollow, L-sit y dragon flag, cada vez más largos.",
  "semanas": 8,
  "dias": 3,
  "minutos": 45,
@@ -20,7 +20,7 @@
   "draco.dragon-bolita-3",
   "draco.dragon-3"
  ],
- "fuente": "la tríada de tronco de la rutina de r/bodyweightfitness y la preparación de gimnasia",
+ "fuente": "la tríada de abdominales de la rutina de r/bodyweightfitness y la preparación de gimnasia",
  "sesiones": [
   {
    "nombre": "Día A",

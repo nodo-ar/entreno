@@ -98,7 +98,7 @@ K.P.anotar = (c, orden) => {
   else if (pr.tipo === "porcentaje") valor = `<div class="dos-pasos">${paso("lastre", "Lastre en kilos", f.lastre, "kg de lastre")}${paso("peso", "Tu peso en kilos", f.peso, "kg tu peso")}</div>
       <p class="calc"><span class="num" id="f-pct">${K.pct(f)}</span> de tu peso</p>`;
   /* la mejora sale de tus veces en la prueba, no se anota a mano */
-  else if (pr.tipo === "mejora"){ const h = K.plan.hazanaDe(e.id); valor = `<p class="mute">Se mide con ${K.esc(h ? `${h.nombre} (${h.prueba})` : "su prueba")}: tu primera vez es la base y cada vez nueva se compara con ella.</p>${h ? `<button type="button" class="btn sec" data-ir="#/planes/hazanas/${h.id}">Ir a la prueba</button>` : ""}`; }
+  else if (pr.tipo === "mejora"){ const h = K.plan.hazanaDe(e.id); valor = `<p class="mute">Se mide con ${K.esc(h ? h.nombre : "su prueba")}: tu primera vez es la base y cada vez nueva se compara con ella.</p>${h ? `<button type="button" class="btn sec" data-ir="#/planes/hazanas/${h.id}">Ir a la prueba</button>` : ""}`; }
   else valor = paso("valor", UNIDAD[pr.tipo], f.valor, UNIDAD[pr.tipo]);
   const sin = K.diario.guarda ? "" : `<p class="aviso-tenue">Este navegador no deja guardar datos. Lo que anotes se pierde al cerrar.</p>`;
   return K.enc({titulo: "Anotar una marca", sub: c.nombre, volver: `#/cielo/${c.id}`, det: true}) +

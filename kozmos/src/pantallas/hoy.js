@@ -79,7 +79,7 @@ K.hoyPlan = () => {
 /* lo que dice una fila de «Hoy toca»: qué y cuánto */
 const corto = (tipo, o) => o === "max" ? "máx" : tipo === "segundos" ? `${o} s` : String(o);
 K.filaToca = b => {
-  if (b.hazana){ const h = K.hzDe(b.hazana); return [`Prueba · ${h ? h.prueba : b.nombre}`, b.formato === "escalera" ? "una más por minuto" : b.formato === "tiempo" ? "por tiempo" : b.reloj ? `${Math.round(b.reloj / 60)} min` : "máx"]; }
+  if (b.hazana){ const h = K.hzDe(b.hazana); return [`Prueba · ${h ? h.nombre : b.nombre}`, b.formato === "escalera" ? "una más por minuto" : b.formato === "tiempo" ? "por tiempo" : b.reloj ? `${Math.round(b.reloj / 60)} min` : "máx"]; }
   if (b.prueba) return [`Prueba · ${K.estrella(b.estrella).nombre}`, K.cielo.corto(b, b.umbral)];
   if (b.constelacion) return [`${K.cons(b.constelacion).nombre} · ${K.ej(b.ejercicio).nombre}`, K.queToca(b)];
   if (b.clase === "tramos") return [b.nombre || "", `${Math.round(b.tramos.reduce((a, x) => a + x.seg, 0) / 60)} min`];
@@ -258,7 +258,7 @@ K.P.sesion = () => {
   if (B.clase && S.fase === "cierre") return acc + K.P.cierreBloque(S, B);
   const pasos = `<div class="stp" style="--c:var(--${b.familia})" aria-hidden="true">${Array.from({length: b.series}, (_, i) => `<i class="${i < S.s || (i === S.s && !enSerie) ? "d" : i === S.s ? "n" : ""}"></i>`).join("")}</div>`;
   const mp = K.marcaPaso(b);
-  const nom = hzB ? `<span class="lb">${K.esc(hzB.nombre)} · ${K.esc(hzB.prueba)}</span>` : `<span class="lb">${b.tipo === "logrado" ? "Intento" : "Serie"} ${S.s + 1} de ${b.series}${b.extra ? " · para sostener" : ""}${mp ? ` · <b class="ses-marca">${mp}</b>` : ""}</span>`;
+  const nom = hzB ? `<span class="lb">Prueba · ${K.esc(hzB.nombre)}</span>` : `<span class="lb">${b.tipo === "logrado" ? "Intento" : "Serie"} ${S.s + 1} de ${b.series}${b.extra ? " · para sostener" : ""}${mp ? ` · <b class="ses-marca">${mp}</b>` : ""}</span>`;
   /* en una prueba, la escala con tu vez anterior marcada: sabés a qué apuntás */
   const hzVs = hzB ? K.hzVeces(hzB) : null, hzAntes = hzVs && hzVs[hzVs.length - 1];
   const escalaSes = hzB ? `<div class="ses-escala">${K.escala(hzB, null, {vs: hzVs, antes: hzAntes?.valor})}<span class="ln mute small"><span>${hzAntes ? `Tu última: ${K.esc(K.hzMarca(hzB, hzAntes.valor))}` : "Tu primera vez"}</span><span>${hzAntes ? K.esc(K.fechaCorta(hzAntes.fecha)) : ""}</span></span></div>` : "";
@@ -344,7 +344,7 @@ K.P.circuito = (S, b) => {
   const listo = b.formato === "escalera" ? `<button type="button" class="btn" id="s-vuelta">No llegué</button>` : b.formato === "amrap" ? `<div class="dos-btn"><button type="button" class="btn sec" id="s-vuelta-menos" aria-label="Una vuelta menos">−1</button><button type="button" class="btn" id="s-vuelta">${K.ic("check")}Vuelta</button></div>`
     : `<button type="button" class="btn" id="s-vuelta">${K.ic("check")}${b.rondas > 1 ? "Terminé la vuelta" : "Terminé"}</button>`;
   return `<div class="ses circuito${prep ? " prep" : ""}" style="--c:var(--${b.familia})" data-r="ses"><div class="ses-a">
-      <div class="enc-tit ses-tit"><span class="lb">${K.esc(b.hazana && K.hzDe(b.hazana) ? `${FORMATO[b.formato]} · ${K.hzDe(b.hazana).prueba}` : FORMATO[b.formato])}</span><h1>${K.esc(b.nombre)}</h1></div>${pausa}
+      <div class="enc-tit ses-tit"><span class="lb">${K.esc(FORMATO[b.formato])}</span><h1>${K.esc(b.nombre)}</h1></div>${pausa}
       <div class="ses-reloj"><span class="reloj big num" data-r="fase" role="timer" aria-live="off">${n}</span><span class="lb" data-r="fase-lb">${K.esc(l)}</span></div>${items}</div>
     <div class="ses-b"><p class="ln ses-sig"><span class="mute">${b.formato === "amrap" ? `Todas las vueltas que entren en ${b.minutos} min` : b.formato === "escalera" ? "Lo que sobra del minuto, descansás" : "Lo más rápido que puedas, bien hecho"}</span></p>${listo}</div></div>`;
 };
@@ -362,7 +362,7 @@ const hechoBloque = (S, b) => {
   const h = [...S.hechos].reverse().find(x => x.b === S.b);
   return `<section class="cd ses-anota"><span class="lb">Hecho · ${K.esc(b.nombre || "")}</span><b class="reloj num res-tiempo">${K.reloj(h?.seg ?? 0)}</b></section>`;
 };
-K.P.cierreBloque = (S, b) => `<div class="ses cierre"><div class="ses-a"><div class="enc-tit ses-tit"><span class="lb">${b.hazana ? `Prueba${K.hzDe(b.hazana) ? ` · ${K.esc(K.hzDe(b.hazana).prueba)}` : ""}` : "Último bloque"}</span><h1>${K.esc(b.nombre || "")}</h1></div>
+K.P.cierreBloque = (S, b) => `<div class="ses cierre"><div class="ses-a"><div class="enc-tit ses-tit"><span class="lb">${b.hazana ? "Prueba" : "Último bloque"}</span><h1>${K.esc(b.nombre || "")}</h1></div>
       <div class="ses-reloj"><span class="reloj big num" data-r="total">${K.reloj(K.sesion.total())}</span><span class="lb">toda la sesión</span></div></div>
     <div class="ses-b">${hechoBloque(S, b)}<button type="button" class="btn" id="s-terminar">Terminar</button></div></div>`;
 
@@ -560,7 +560,7 @@ K.P.resumen = (id, desde = "hoy") => {
   const porCons = [...new Map(enc.map(n => [n.c.id, n.c])).values()].map(k => ({c: k, es: enc.filter(n => n.c.id === k.id).map(n => n.e)}));
   if (prs.length){
     const p0 = prs[0], n = enc.length;
-    tx = `<span class="lb" style="color:var(--${p0.h.familia})">${x.semanaPrueba ? "Semana de prueba" : `Prueba · ${K.esc(p0.h.prueba)}`}</span>
+    tx = `<span class="lb" style="color:var(--${p0.h.familia})">${x.semanaPrueba ? "Semana de prueba" : "Prueba"}</span>
       <h1 class="t1 res-tit">${prs.length > 1 ? `${prs.length} pruebas hechas.` : `${K.esc(p0.h.nombre)}: ${K.esc(K.hzMarca(p0.h, p0.v))}${p0.m ? `, m${p0.m}` : ""}.`}</h1>
       <p class="mute">${n ? `${n === 1 ? "Encendiste una estrella" : `Encendiste ${n} estrellas`}${porCons.length > 1 ? ` en ${porCons.length} constelaciones` : ` en ${K.esc(porCons[0].c.nombre)}`}.` : prs.length === 1 && p0.desde ? `${K.esc(p0.desde)}.` : prs.length === 1 && !p0.antes ? "Tu primera vez: ya tenés tu escala." : "Lo que sacaste fija dónde arranca lo que sigue."}</p>`;
   } else if (prim){
@@ -596,7 +596,7 @@ K.P.resumen = (id, desde = "hoy") => {
   const escalones = cs.length ? `<section class="cd res-esc"><span class="lb">Tus escalones</span><ul>${cs.map(y => { const g = signoDe(y);
     return `<li class="${g === "▲" ? "sube" : g === "▼" ? "baja" : "igual"}"><b class="res-signo" role="img" aria-label="${g === "▲" ? "Subiste" : g === "▼" ? "Bajás" : "Seguís"}">${g}</b><span class="ses-fila">${K.esc(y.nombre || K.ej(y.a.ejercicio).nombre)}<small class="mute">${K.esc(cambioTx(y))}</small></span>${y.total > 1 ? `<em class="num mute">${y.i + 1}/${y.total}</em>` : "<em></em>"}</li>`; }).join("")}</ul></section>` : "";
   const pruebas = prs.length ? `<section class="cd res-pruebas"><span class="lb">${prs.length > 1 ? "Tus pruebas" : "Tu escala"}</span>${prs.map(p => `<div class="res-prueba">
-      <span class="ln"><b>${K.esc(p.h.nombre)} <span class="mute">· ${K.esc(p.h.prueba)}</span></b><span class="num">${K.esc(K.hzMarca(p.h, p.v))}${p.m ? ` · m${p.m}` : ""}</span></span>
+      <span class="ln"><b>${K.esc(p.h.nombre)}</b><span class="num">${K.esc(K.hzMarca(p.h, p.v))}${p.m ? ` · m${p.m}` : ""}</span></span>
       ${K.escala(p.h, p.v, {vs: p.vs, antes: p.antes?.valor})}
       <span class="ln mute small"><span>${p.antes ? `La vez anterior: ${K.esc(K.hzMarca(p.h, p.antes.valor))}` : "Tu primera vez"}</span><span>${K.esc(p.desde || `Otra en ${Math.round((p.h.cada || K.rutina.CADA) / 7)} semanas`)}</span></span></div>`).join("")}</section>` : "";
   const nuevasCons = prs.length && enc.length ? `<section class="cd res-nuevas"><span class="lb">${enc.length === 1 ? "Estrella nueva" : "Estrellas nuevas"}</span>${porCons.map(k => `<div class="ln"><span class="tg"><i class="dot" style="--c:var(--${k.c.familia})"></i>${K.esc(k.es.map(e => e.nombre).join(" · "))}</span><button type="button" class="ib chico" data-ir="#/cielo/${k.c.id}" aria-label="Ver ${K.esc(k.c.nombre)} en el cielo">${K.ic("chev")}</button></div>`).join("")}</section>` : "";

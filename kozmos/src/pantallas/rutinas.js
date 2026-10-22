@@ -41,7 +41,7 @@ K.escala = (h, v, {vs = [], antes = null} = {}) => {
   const pos = x => Math.max(2, Math.min(98, (t(x) + .5) * 20)).toFixed(1);
   const tieneV = Number.isFinite(v), m = tieneV ? K.rutina.magnitud(h, v, vs) : null, hasta = tieneV ? t(v) : -1;
   const aria = tieneV ? `Tu marca: ${K.hzMarca(h, v)}, ${m ? `magnitud ${m}` : "todavía sin magnitud"}` : "Todavía sin marca";
-  return `<div class="escala" style="--c:var(--${h.familia})" role="img" aria-label="${K.esc(`Escala de ${h.prueba}. ${aria}`)}">
+  return `<div class="escala" style="--c:var(--${h.familia})" role="img" aria-label="${K.esc(`Escala de ${h.nombre}. ${aria}`)}">
     <div class="esc-pista">${tieneV ? `<i class="esc-lleno" style="width:${pos(v)}%"></i>` : ""}${u.map((_, k) => `<i class="esc-tick${k <= hasta + 1e-9 ? " si" : ""}" style="left:${(k + .5) * 20}%"></i>`).join("")}
       ${Number.isFinite(antes) ? `<i class="esc-antes" style="left:${pos(antes)}%"></i>` : ""}${tieneV ? `<i class="esc-yo" style="left:${pos(v)}%"></i>` : ""}</div>
     <div class="esc-pie" aria-hidden="true">${u.map((x, k) => `<span style="left:${(k + .5) * 20}%"><b class="num">${K.esc(hzCorta(h, x))}</b><small>m${5 - k}</small></span>`).join("")}</div></div>`;
@@ -78,7 +78,7 @@ K.P.planes = r => {
   /* la próxima prueba: la figura, tu última marca en su escala, tus veces y «Probar ahora» a mano */
   const vs = K.hzVeces(prox), ult = vs[vs.length - 1], cu = K.hzCuando(prox), m = ult ? K.rutina.magnitud(prox, ult.valor, vs) : null;
   const tarjeta = `<section class="cd pl-prox" style="--c:var(--${prox.familia})"${abreH === prox.id ? " data-sel" : ""}>
-    <button type="button" class="pl-ir" data-ir="#/planes/hazanas/${prox.id}" data-quieto="1" aria-label="${K.esc(`${prox.nombre}, ${prox.prueba}`)}"></button>
+    <button type="button" class="pl-ir" data-ir="#/planes/hazanas/${prox.id}" data-quieto="1" aria-label="${K.esc(prox.nombre)}"></button>
     <div class="pl-prox-cab"><span class="pl-prox-fig">${K.dibujo.figura(prox, 64, m !== null)}</span><div class="pl-prox-tx"><span class="lb">Próxima prueba · ${K.esc(cu.tx.toLowerCase())}</span>
       <b class="t1">${K.esc(prox.nombre)}</b><span class="mute small">${K.esc(prox.prueba)}${ult ? ` · tu última ${K.esc(K.hzMarca(prox, ult.valor))}${m ? ` · m${m}` : ""}` : " · todavía no la hiciste"}</span></div>${K.hzLinea(prox, vs)}</div>
     ${K.escala(prox, ult?.valor, {vs, antes: vs[vs.length - 2]?.valor})}
@@ -214,7 +214,7 @@ K.P.hazana = id => {
   const veces = filas ? `<span class="lb pie">Tus veces</span><section class="cd hz-veces">${filas}</section>` : "";
   const boton = falta.length ? `<p class="aviso-tenue">${K.esc(pideTx(falta))}. Si lo tenés, marcalo en tu equipo.</p>`
     : `<button type="button" class="btn" id="hz-empezar" data-hazana="${h.id}">${K.ic("play")}Probar ahora</button>`;
-  return K.enc({titulo: h.nombre, sub: `Prueba · ${h.prueba}`, volver: "#/planes", raiz: true, det: true}) +
+  return K.enc({titulo: h.nombre, sub: "Prueba", volver: "#/planes", raiz: true, det: true}) +
     `<div class="hzn"><div class="hz-cab"><span class="hz-fig">${K.dibujo.figura(h, 88, m !== null)}</span><p class="ayuda">${K.esc(h.texto)}</p></div>${tu}
     <section class="cd hz-como"><span class="lb">Cómo se hace</span><p>${K.esc(h.como)}</p></section>
     ${enciende}${veces}${boton}${h.fuente ? `<p class="pie small mute">Fuente: ${K.esc(h.fuente)}.</p>` : ""}</div>`;

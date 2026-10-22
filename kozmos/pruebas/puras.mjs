@@ -425,7 +425,7 @@ prueba("catalogo-hazanas", () => {
   ok(["hercules", "pegaso", "sagitario", "orion", "andromeda", "draco", "perseo", "casiopea"].every(id => HAZANAS.hazanas.some(h => h.id === id)), "se perdió una hazaña de antes");
   for (const h of HAZANAS.hazanas){
     ok(FORMATOS.includes(h.formato) && h.nombre && h.prueba && h.texto && h.como, `${h.id}: formato, nombre, prueba o texto`);
-    ok(!nombres.has(h.nombre) && /^[A-ZÁÉÍÓÚ]/.test(h.nombre), `${h.id}: el nombre es propio y no se repite`); nombres.add(h.nombre);
+    ok(!nombres.has(h.nombre) && /^[A-ZÁÉÍÓÚ0-9]/.test(h.nombre), `${h.id}: el nombre empieza en mayúscula o número y no se repite`); nombres.add(h.nombre);
     ok(ej[h.mide.ejercicio] && cielo.TIPOS[h.mide.tipo] && h.mide.tipo !== "mejora", `${h.id}: mide algo que no existe`);
     const u = Array.isArray(h.escala) ? h.escala : h.escala.propia, menos = cielo.TIPOS[h.mide.tipo].mejor === "menos" && Array.isArray(h.escala);
     ok(u.length === 5 && u.every(Number.isFinite) && u.every((x, i) => !i || (menos ? x < u[i - 1] : x > u[i - 1])), `${h.id}: la escala no va de la magnitud 5 a la 1`);
