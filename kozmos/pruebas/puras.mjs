@@ -734,14 +734,96 @@ prueba("escalera-en-la-rutina", () => {
   ok(pi && pi.evento === "igual" && pi.proxima.join() === "10,10,10", "el resumen no dice lo que sigue en piernas: " + JSON.stringify(pi));
 });
 
-prueba("hazanas-figura", () => {
-  /* cada hazaña se dibuja con su constelación: estrellas dentro de la caja y líneas entre estrellas que existen */
-  for (const h of HAZANAS.hazanas){
-    const f = h.figura;
-    ok(f && Array.isArray(f.estrellas) && f.estrellas.length >= 2, h.id + ": sin figura");
-    ok(f.estrellas.every(e => e.length === 2 && e.every(v => Number.isFinite(v) && v >= 0 && v <= 100)), h.id + ": una estrella fuera de la caja");
-    ok(Array.isArray(f.lineas) && f.lineas.every(([a, b]) => a !== b && f.estrellas[a] && f.estrellas[b]), h.id + ": una línea a una estrella que no está");
+/* ===== Los íconos (vuelta 21): todo sale del maniquí y de los datos ===== */
+let ICX = null;
+const icxArmar = () => {
+  const fx = {K: {reduce: () => true, esc: s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c])),
+    CATALOGO: CAT, HAZANAS, ESCALERAS: ESC, RUTINAS: RUTINAS.map(([, r]) => r)}, document: {}}; vm.createContext(fx);
+  vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "piezas", "figura.js"), "utf8"), fx);
+  for (const f of fs.readdirSync(path.join(RAIZ, "src", "poses")).sort((a, b) => (a === "pruebas.js") - (b === "pruebas.js") || (a === "vistas.js") - (b === "vistas.js") || a.localeCompare(b)))
+    vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "poses", f), "utf8"), fx);
+  vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "rutina.js"), "utf8"), fx);
+  vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "piezas", "iconos.js"), "utf8"), fx);
+  return fx.K;
+};
+const icx = new Proxy({}, {get: (_, k) => (ICX = ICX || icxArmar())[k]});
+const limpio = svg => typeof svg === "string" && svg.startsWith("<svg") && !/NaN|undefined|null/.test(svg);
+/* lo que hace una rutina, en todos sus bloques: ejercicios, escalones de sus escaleras y lo que se hace en los tramos */
+const loQueHace = r => { const xs = new Set(), plano = ts => ts.flatMap(t => t.repetir ? plano(t.tramos) : [t]);
+  for (const s of r.sesiones) for (const b of s.bloques){
+    for (const e of [].concat(b.ejercicio || [])) xs.add(e);
+    for (const id of [].concat(b.escalera || [])) for (const p of (ESC.escaleras.find(x => x.id === id)?.pasos || [])) xs.add(p.ejercicio);
+    for (const t of plano(b.tramos || [])) for (const e of [].concat(t.ejercicio || [])) xs.add(e);
+    if (b.mide) xs.add(b.mide.ejercicio);
   }
+  for (const q of r.equipo || []) xs.add(q);
+  return xs; };
+prueba("iconos-salen-de-una-pose", () => {
+  const {icono, POSES} = icx;
+  /* constelación: la pose de su estrella final */
+  for (const c of CAT.constelaciones){
+    const fin = [...c.estrellas].reverse().find(e => POSES[e.prueba.ejercicio]);
+    ok(fin && icono.poseCons(c) === fin.prueba.ejercicio, `${c.id}: el ícono no sale de su estrella final`);
+    ok(fin === c.estrellas[c.estrellas.length - 1], `${c.id}: la estrella final no tiene dibujo`);
+  }
+  /* prueba: la pose de lo que mide */
+  for (const h of HAZANAS.hazanas) ok(icono.poseHazana(h) === h.mide.ejercicio && POSES[h.mide.ejercicio], `${h.id}: el ícono no sale de lo que mide`);
+  /* rutina: una pose de algo que la rutina hace de verdad (o de su actividad: bici, trote, soga) */
+  for (const [f, r] of RUTINAS){ const p = icono.poseRutina(r), hace = loQueHace(r);
+    ok(p && POSES[p], `${f}: sin pose`);
+    ok(hace.has(p) || (p === "trote" && [...hace].some(x => /trote|10km/.test(x))) || (p === "bici" && hace.has("bici")), `${f}: la pose ${p} no es algo que la rutina hace`); }
+  /* una escalera que alimenta una estrella dibuja ese escalón: Abdomen firme entrena el L-sit, Camino al espagat el espagat a 90 */
+  const R = id => RUTINAS.find(([, r]) => r.id === id)[1];
+  ok(icono.poseRutina(R("tronco")) === "l-sit" && icono.poseRutina(R("espagat")) === "espagat-lateral-90" && icono.poseRutina(R("cien")) === "flexion", "las poses de las rutinas no siguen a lo que entrenan");
+  ok(icono.poseRutina(R("z2")) === "bici" && icono.poseRutina(R("c0a5")) === "trote" && icono.poseRutina(R("kb1515")) === "arranque-kettlebell", "las rutinas de motor no muestran lo que se hace");
+  /* nada se elige por id en el código: el módulo no nombra constelaciones, pruebas ni rutinas */
+  const src = fs.readFileSync(path.join(RAIZ, "src", "piezas", "iconos.js"), "utf8");
+  const ids = [...CAT.constelaciones.map(c => c.id), ...HAZANAS.hazanas.map(h => h.id), ...RUTINAS.map(([, r]) => r.id)].filter(id => id.length > 3 && !["soga", "motor"].includes(id));
+  const nombrados = ids.filter(id => new RegExp(`["']${id}["']`).test(src));
+  ok(!nombrados.length, "iconos.js nombra ids a mano: " + nombrados.join(", "));
+  ok(HAZANAS.hazanas.every(h => !("figura" in h)), "las pruebas siguen trayendo una constelación dibujada a mano");
+});
+prueba("iconos-distintos", () => {
+  const {icono} = icx, dist = (xs, q) => new Set(xs.map(q)).size === xs.length;
+  ok(dist(CAT.constelaciones, c => JSON.stringify(icono.firma.cons(c))), "dos constelaciones con el mismo ícono");
+  ok(dist(CAT.constelaciones, c => icono.poseCons(c)), "dos constelaciones con la misma pose");
+  ok(dist(HAZANAS.hazanas, h => JSON.stringify(icono.firma.hazana(h))), "dos pruebas con el mismo ícono");
+  ok(dist(RUTINAS, ([, r]) => JSON.stringify(icono.firma.rutina(r))), "dos rutinas con el mismo ícono");
+  /* y dibujados: lo chico, lo que se ve en las filas, es distinto para cada una de las 48 cosas */
+  const cs = CAT.constelaciones.map(c => icono.chico.cons({...c, encendidas: 0, total: c.estrellas.length}, 40));
+  const hs = HAZANAS.hazanas.map(h => icono.chico.hazana(h, 40)), rs = RUTINAS.map(([, r]) => icono.chico.rutina(r, 40));
+  const todos = [...cs, ...hs, ...rs];
+  ok(todos.every(limpio), "un ícono chico no se dibuja bien");
+  ok(new Set(todos).size === todos.length, "dos íconos chicos iguales");
+  ok(HAZANAS.hazanas.every(h => limpio(icono.grande.hazana(h)) && limpio(icono.grande.hazana(h, 3, 88)) && limpio(icono.grande.hazana(h, null))), "un asterismo de prueba no se dibuja bien");
+  ok(RUTINAS.every(([, r]) => limpio(icono.grande.rutina(r)) && limpio(icono.grande.rutina(r, 2, 88))), "un asterismo de rutina no se dibuja bien");
+});
+prueba("iconos-asterismo", () => {
+  const {icono} = icx;
+  const casos = [...CAT.constelaciones.map(c => [c.id, icono.poseCons(c), c.estrellas.length]), ...HAZANAS.hazanas.map(h => [h.id, icono.poseHazana(h), 5]),
+    ...RUTINAS.map(([, r]) => [r.id, icono.poseRutina(r), r.semanas])];
+  for (const [id, pose, n] of casos){
+    const u = icono.ubicar(pose, n, 10, 10, 80, 80, 6);
+    ok(u && u.pts.length === n, `${id}: ${u ? u.pts.length : 0} estrellas, esperaba ${n}`);
+    ok(u.pts.every(([x, y]) => x >= 9.9 && x <= 90.1 && y >= 9.9 && y <= 90.1), `${id}: una estrella fuera de la caja`);
+    /* las estrellas no se pisan y todas quedan unidas por los huesos, como una constelación */
+    let dmin = Infinity; for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) dmin = Math.min(dmin, Math.hypot(u.pts[i][0] - u.pts[j][0], u.pts[i][1] - u.pts[j][1]));
+    ok(dmin > 3, `${id}: dos estrellas casi en el mismo lugar (${dmin.toFixed(1)})`);
+    const vis = new Set([0]), cola = [0];
+    while (cola.length){ const a = cola.shift(); for (const [p, q] of u.lineas){ const b = p === a ? q : q === a ? p : -1; if (b >= 0 && !vis.has(b)){ vis.add(b); cola.push(b); } } }
+    ok(vis.size === n, `${id}: estrellas sueltas, sin línea`);
+  }
+});
+prueba("iconos-ritmo-de-la-semana", () => {
+  const {icono} = icx, R = id => RUTINAS.find(([, r]) => r.id === id)[1];
+  for (const [f, r] of RUTINAS){ const xs = icono.ritmo(r);
+    ok(xs.length && xs.every(x => x.a >= 0 && x.b <= 1 && x.b > x.a) && xs.every((x, i) => !i || x.a >= xs[i - 1].b - 1e-9), `${f}: la vuelta no va en orden`);
+    /* un tramo por día: entre días queda un hueco */
+    for (let d = 1; d < r.dias; d++) ok(!xs.some(x => x.a < d / r.dias && x.b > d / r.dias), `${f}: el día ${d} se pega con el siguiente`); }
+  /* lo que se ve: la salida suave no tiene nada fuerte; Tabata, ocho de 20 s por día; 4 × 4, cuatro bloques fuertes */
+  ok(icono.ritmo(R("z2")).every(x => x.k === "s"), "la bici suave tiene algo fuerte");
+  const tab = icono.ritmo(R("tabata")).filter(x => x.k === "f").length; ok(tab >= 16, "Tabata: " + tab + " tramos fuertes en la semana");
+  const n4 = icono.tiempos(R("n4x4"), icono.semanaTipica(R("n4x4"))[0]).filter(x => x.k === "f").length; ok(n4 === 4, "4 × 4: " + n4);
 });
 
 /* ===== El maniquí: cada ejercicio tiene su persona, y cada pose es posible ===== */

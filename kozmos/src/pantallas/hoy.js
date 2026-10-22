@@ -201,9 +201,9 @@ K.hoyMenu = btn => {
 
 /* ===== De dónde sale lo de hoy: tu rutina o tu rumbo, siempre a la vista y a un toque de cambiarlo ===== */
 K.hoyOrigen = () => {
-  const ru = K.rutinaActual(), fila = (ir, ic, lb, tx, em = "") => `<section class="aj hoy-origen"><button type="button" class="ajr" data-ir="${ir}"><span class="tile">${K.ic(ic)}</span>
+  const ru = K.rutinaActual(), fila = (ir, ic, lb, tx, em = "") => `<section class="aj hoy-origen"><button type="button" class="ajr" data-ir="${ir}">${ic.startsWith("<") ? `<span class="tile ico-tile">${ic}</span>` : `<span class="tile">${K.ic(ic)}</span>`}
     <span class="ses-fila"><small class="lb">${lb}</small>${tx}</span><em class="num">${em}</em>${K.ic("chev", "chev")}</button></section>`;
-  if (ru && !ru.cur.terminada) return fila(`#/planes/rutinas/${ru.r.id}`, "ruta", "Sale de tu rutina", K.esc(ru.r.nombre), `sem ${ru.cur.semana} de ${ru.r.semanas}`);
+  if (ru && !ru.cur.terminada) return fila(`#/planes/rutinas/${ru.r.id}`, K.icono.chico.rutina(ru.r, 40) || K.ic("ruta"), "Sale de tu rutina", K.esc(ru.r.nombre), `sem ${ru.cur.semana} de ${ru.r.semanas}`);
   const cs = K.rumbo().map(K.cons).filter(Boolean);
   return cs.length ? fila("#/hoy/rumbo", "rumbo", "Sale de tu rumbo", cs.map(c => K.esc(c.nombre)).join(" · ")) : "";
 };
@@ -221,7 +221,7 @@ K.hoyComo = () => {
   const op = (ir, dib, t, tx) => `<button type="button" class="cd como-op" data-ir="${ir}"><span class="como-dib">${dib}</span><b class="t1">${t}</b><small>${tx}</small>${K.ic("chev", "como-ir")}</button>`;
   return `${K.pasos(1)}<div class="como">${op("#/hoy/rumbo", fl ? K.dibujo.una(fl, []) : "", "Que Kozmos arme tu día", "Elegí de 1 a 3 constelaciones. Cada día te da lo que toca.")}
     ${op("#/planes", dibSemanas(5, "fu"), "Seguí una rutina", "Un plan fijo de semanas. Hoy te da cada sesión.")}</div>
-    ${hz ? `<section class="aj"><button type="button" class="ajr" data-ir="#/planes/hazanas/${hz.id}"><span class="tile fig">${K.dibujo.figura(hz, 26)}</span><span class="ses-fila">¿Solo por hoy?<small class="mute">Probá una hazaña: un desafío, un día</small></span><em></em>${K.ic("chev", "chev")}</button></section>` : ""}
+    ${hz ? `<section class="aj"><button type="button" class="ajr" data-ir="#/planes/hazanas/${hz.id}"><span class="tile ico-tile">${K.icono.chico.hazana(hz, 40)}</span><span class="ses-fila">¿Solo por hoy?<small class="mute">Probá una hazaña: un desafío, un día</small></span><em></em>${K.ic("chev", "chev")}</button></section>` : ""}
     <p class="como-cielo small mute">${K.ic("cielo")}<span>Lo que hagas enciende estrellas en tu cielo.</span></p>`;
 };
 
@@ -607,8 +607,8 @@ K.P.resumen = (id, desde = "hoy") => {
   const hzOk = hz && x.hazana.completa !== false && !x.cortada && x.hazana.valor > 0, rutFin = ruR && !x.cortada && !ruR.sesiones[x.rutina.sesion + 1];
   const arte = prs.length ? (porCons.length > 1 ? `<section class="cd res-varias">${porCons.slice(0, 4).map(k => `<div class="res-una"><div class="res-una-dib">${K.dibujo.una(k.c, k.es.map(e => e.id))}</div><span class="lb" style="color:var(--${k.c.familia})">${K.esc(k.c.nombre)}</span></div>`).join("")}</section>`
       : porCons.length ? `<section class="cd cons-cielo">${K.dibujo.una(porCons[0].c, porCons[0].es.map(e => e.id))}</section>`
-      : `<section class="cd res-fig">${K.dibujo.figura(prs[0].h, 190, prs[0].m !== null)}</section>`)
-    : hz ? `<section class="cd res-fig${hzOk ? " logro" : ""}">${K.dibujo.figura(hz.h, 190, hzOk)}</section>`
+      : `<section class="cd res-fig${prs[0].m !== null ? " logro" : ""}">${K.icono.grande.hazana(prs[0].h, prs[0].m)}</section>`)
+    : hz ? `<section class="cd res-fig${hzOk ? " logro" : ""}">${K.icono.grande.hazana(hz.h, hzOk ? 1 : null)}</section>`
     : rutFin && !prim ? `<section class="cd res-orbita">${K.mov.orbita(170)}<p class="lb">Rutina completa</p></section>`
     : c ? `<section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>` : "";
   const kcal = K.calorias.deSesion(x, K.diario.perfil.peso);

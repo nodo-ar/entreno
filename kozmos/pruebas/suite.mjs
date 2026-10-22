@@ -1214,7 +1214,7 @@ prueba("planes-proxima-prueba", async () => {
   await ir(p, "#/planes"); await p.waitForSelector(".pl-prox");
   const t = await p.textContent(".pl-prox");
   ok(t.includes("Dominadas al máximo") && t.includes("toca ya") && t.includes("×12") && t.includes("m3"), "la próxima prueba no es Dominadas al máximo con tu última: " + t);
-  ok(await p.$(".pl-prox .figura") && await p.$(".pl-prox .escala .esc-yo") && await p.$(".pl-prox .escala .esc-antes") && await p.$(".pl-prox .hz-linea"), "a la tarjeta le falta la figura, la escala o tus veces");
+  ok(await p.$(".pl-prox .ico-ast") && await p.$(".pl-prox .escala .esc-yo") && await p.$(".pl-prox .escala .esc-antes") && await p.$(".pl-prox .hz-linea"), "a la tarjeta le falta la figura, la escala o tus veces");
   ok(!(await p.$('.lado .ajr[data-ir="#/planes/hazanas/perseo"]')), "la próxima se repite en la lista");
   ok((await p.textContent('.ajr[data-ir="#/planes/hazanas/hercules"]')).includes("hace 10 días"), "la lista no dice cuándo la hiciste");
   await ir(p, "#/planes/hazanas/perseo");
@@ -1818,6 +1818,74 @@ prueba("apk-sesion", async () => {
   ok(await p.evaluate(() => !K.sesion.activa()), "no terminó la sesión");
   ok((await nat(p, "Pantalla", "apagar")).length >= 1, "la pantalla quedó encendida después de la sesión");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+/* ===== Los íconos (vuelta 21): asterismo en grande, pictograma en chico ===== */
+prueba("iconos-en-las-filas", async () => {
+  /* cada prueba y cada rutina de Planes con su pictograma, todos distintos; el mismo en Hoy, en la constelación y en Progreso */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarSes(p, [hzSes("t1", "2026-09-01", "perseo", "dominada", "repeticiones", 9)]);
+  await p.evaluate(() => K.diario.perfilPoner("rutina", {id: "base_cali", desde: "2026-10-19"}).then(() => K.refrescar()));
+  await ir(p, "#/planes"); await p.evaluate(() => { K.prefs.set("planes.pruebas", "todas"); K.prefs.set("planes.rutinas", "todas"); K.refrescar(); }); await p.waitForTimeout(150);
+  const filas = await p.$$eval('.lado .ajr[data-ir^="#/planes/"]', bs => bs.map(b => { const t = b.querySelector(".tile"), sv = t && t.querySelector("svg.ico-chico"), tx = b.querySelector(".ses-fila");
+    return {ir: b.dataset.ir, svg: sv ? sv.innerHTML : "", w: sv ? sv.getBoundingClientRect().width : 0, sola: t && tx ? t.getBoundingClientRect().right <= tx.getBoundingClientRect().left + .5 : false}; }));
+  const hz = filas.filter(f => f.ir.includes("/hazanas/")), ru = filas.filter(f => f.ir.includes("/rutinas/"));
+  ok(hz.length === 7 && ru.length === 25, `filas: ${hz.length} pruebas y ${ru.length} rutinas`);
+  ok(filas.every(f => f.svg && f.w >= 36 && f.w <= 44), "una fila sin pictograma o de otro tamaño: " + filas.filter(f => !f.svg || f.w < 36 || f.w > 44).map(f => f.ir).join(", "));
+  ok(new Set(filas.map(f => f.svg)).size === filas.length, "dos filas con el mismo ícono");
+  ok(filas.every(f => f.sola), "el nombre se pega al ícono");
+  /* la tarjeta de la próxima prueba y la prueba abierta: su asterismo, cinco estrellas (una por magnitud) */
+  ok(await p.$$eval(".pl-prox .ico-ast .es", x => x.length) === 5, "la próxima prueba no tiene sus cinco estrellas");
+  /* Hoy: «Sale de tu rutina» con el mismo ícono que la rutina en Planes */
+  const enPlanes = await p.evaluate(() => { const d = document.createElement("div"); d.innerHTML = K.icono.chico.rutina(K.rutinaDe("base_cali"), 40); return d.firstChild.outerHTML; });
+  await ir(p, "#/hoy");
+  ok(await p.$eval(".hoy-origen svg.ico-rut", x => x.outerHTML).catch(() => "") === enPlanes, "Hoy no muestra el ícono de tu rutina");
+  /* la constelación: las rutinas que llevan acá, con su ícono */
+  await ir(p, "#/cielo/muscle-up");
+  const rl = await p.$$eval('.ajr[data-ir^="#/planes/rutinas/"]', bs => bs.map(b => !!b.querySelector("svg.ico-rut")));
+  ok(rl.length && rl.every(Boolean), "«Rutinas que llevan acá» sin íconos");
+  /* el Cielo: cada constelación con su pictograma adentro del anillo de avance */
+  await ir(p, "#/cielo");
+  const cs = await p.$$eval(".cons-fila", bs => bs.map(b => b.querySelector("svg.ico-cons")?.innerHTML || ""));
+  ok(cs.length === 14 && cs.every(Boolean) && new Set(cs).size === 14, "las filas del Cielo sin su pictograma o repetidos");
+  /* Progreso: la prueba con su ícono */
+  await ir(p, "#/progreso");
+  ok(await p.$('.ajr[data-ir="#/progreso/t1"] svg.ico-hz'), "Progreso: la prueba sin su ícono");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("iconos-asterismo-grande", async () => {
+  /* en grande, el asterismo: las estrellas en las articulaciones, unidas por líneas del color de la familia, con la figura detrás */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/cielo");
+  const g = await p.$$eval(".cielo-svg .cons", gs => gs.map(g => ({lin: g.querySelectorAll(".ast-lineas line").length, fan: !!g.querySelector(".ast-fantasma"), col: g.querySelector(".ast-lineas")?.getAttribute("stroke") || ""})));
+  ok(g.length >= 12 && g.every(x => x.lin >= 3 && x.fan && /var\(--(fu|mo|ra)\)/.test(x.col)), "el Cielo no dibuja asterismos: " + JSON.stringify(g.slice(0, 3)));
+  /* las formas salen de la habilidad: ninguna constelación es la cadena de antes (una sola línea quebrada) */
+  ok(!(await p.$(".cielo-svg .cons path[fill=none]")), "queda una constelación dibujada como cadena");
+  await ir(p, "#/cielo/front-lever");
+  const n = await p.evaluate(() => [document.querySelectorAll(".cons-svg .es").length, K.CATALOGO.constelaciones.find(c => c.id === "front-lever").estrellas.length, document.querySelectorAll(".cons-svg .ast-lineas line").length]);
+  ok(n[0] === n[1] && n[2] >= n[1] - 1, "la constelación abierta: " + n);
+  await ir(p, "#/planes/hazanas/orion");
+  ok(await p.$$eval(".hz-fig .ico-ast .es", x => x.length) === 5, "la prueba abierta sin su asterismo");
+  await ir(p, "#/planes/rutinas/tabata");
+  ok(await p.$$eval(".hz-fig .ico-ast .es", x => x.length) === 6, "la rutina abierta sin una estrella por semana");
+  /* en horizontal entra todo */
+  await p.setViewportSize({width: 844, height: 390});
+  for (const h of ["#/planes", "#/planes/rutinas/tabata", "#/cielo/muscle-up", "#/cielo"]){ await ir(p, h);
+    ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, h + ": desborda"); }
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("iconos-rapidos", async () => {
+  /* los 48 íconos se calculan una vez: Planes y el Cielo enteros, la primera vez, en poco tiempo; después salen de la memoria */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/hoy");
+  const t = await p.evaluate(() => { const m = f => { const a = performance.now(); f(); return performance.now() - a; };
+    const r = {planes: m(() => K.P.planes({tab: "planes"})), cielo: m(() => K.P.cielo({tab: "cielo"}))};
+    r.otraVez = m(() => { K.P.planes({tab: "planes"}); K.P.cielo({tab: "cielo"}); }); return r; });
+  ok(t.planes + t.cielo < 400, "la primera vez tarda " + JSON.stringify(t));
+  ok(t.otraVez < Math.max(40, (t.planes + t.cielo) / 2), "no se guardan: " + JSON.stringify(t));
   await ctx.close();
 });
 

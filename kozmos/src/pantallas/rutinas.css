@@ -75,7 +75,6 @@
 .pl-rut .chev{width:14px; height:14px; color:var(--ink-3)}
 .pl-rut-prueba{color:var(--ink)}
 .ajr em.toca{color:var(--ink)}
-.ajr .tile.fig .figura{width:26px; height:26px}
 .rut-bloque{color:var(--ink-2); padding:0 2px}
 .rut-bloque .num{color:var(--ink); white-space:nowrap}
 .rut-escalon{text-align:center; padding:0 12px; margin-top:-4px}
@@ -98,10 +97,10 @@
 .hz-linea polyline{fill:none; stroke:var(--c); stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
 .hz-linea circle{fill:var(--c)}
 
-/* una prueba abierta */
+/* una prueba o una rutina abierta: su asterismo al lado de lo que es */
 .hz-cab{display:flex; align-items:center; gap:14px}
 .hz-cab .hz-fig{flex:none; width:88px; height:88px; display:grid; place-items:center}
-.hz-cab .hz-fig .figura{width:88px; height:88px}
+.hz-cab .hz-fig .ico{width:88px; height:88px}
 .hz-cab .ayuda{margin:0}
 .hz-escala{gap:6px}
 .hz-escala>.ln:last-child{font-size:var(--t-sm)}

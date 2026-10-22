@@ -23,7 +23,7 @@ body:has(.utoast:not(.out)) :is(.hoy-b,.rut,.hzn)>.btn{bottom:calc(144px + env(s
 .rumbo-vacio{gap:8px}
 .rumbo-vacio .cons-svg{display:block; width:100%; height:auto; max-height:120px; margin:-6px 0 4px}
 .rumbo-fila[aria-pressed="true"]{background:var(--s2)}
-.rumbo-fila[aria-pressed="true"] .tile{background:var(--s1)}
+.rumbo-fila[aria-pressed="true"] .tile:not(.anillo){background:var(--s1)}
 .rumbo-fila .ck{width:18px; height:18px}
 .rumbo-listo{position:sticky; bottom:calc(84px + env(safe-area-inset-bottom,0px)); margin-top:4px; box-shadow:var(--shadow)}
 .rumbo-fila .ck{width:24px; height:24px; padding:4px; border-radius:50%; background:var(--ink); color:var(--bg); stroke-width:3}

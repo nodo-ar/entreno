@@ -1,0 +1,17 @@
+/* ===== Íconos de constelaciones, pruebas y rutinas (ver iconos.js) ===== */
+.ico{display:block; overflow:visible; color:var(--ink)}
+/* en una fila: el pictograma en su marco, sin la baldosa gris de los íconos de trazo */
+.ajr .tile.ico-tile,.ajr .tile.anillo{width:40px; height:40px; border-radius:50%; background:transparent; flex:none}
+/* la columna del ícono crece con él, así el nombre no se le pega (también la persona de «Entrena para») */
+.ajr:has(>.tile.ico-tile,>.tile.anillo,>.tile.fig-tile){grid-template-columns:40px 1fr auto 14px}
+.ajr[data-sel] .tile.ico-tile,.ajr[data-sel] .tile.anillo{background:transparent}
+.tile .ico-chico{width:40px; height:40px}
+/* en grande: el asterismo, con la figura tenue detrás */
+.ico-ast{width:100%; height:auto}
+.ico-ast .es{transform-box:fill-box; transform-origin:center}
+/* una prueba lograda: las estrellas se prenden de a una, desde el apoyo hasta la punta */
+.res-fig .ico-ast{width:min(190px,50vw)}
+.res-fig.logro .ico-ast .es.on{animation:prende .5s var(--ease) both}
+.res-fig.logro .ico-ast .es.on:nth-of-type(2){animation-delay:.08s} .res-fig.logro .ico-ast .es.on:nth-of-type(3){animation-delay:.16s}
+.res-fig.logro .ico-ast .es.on:nth-of-type(4){animation-delay:.24s} .res-fig.logro .ico-ast .es.on:nth-of-type(5){animation-delay:.32s}
+@media (prefers-reduced-motion:reduce){ .res-fig.logro .ico-ast .es.on{animation:none!important} }

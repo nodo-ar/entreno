@@ -9,7 +9,7 @@ El modelo, la arquitectura y las seis etapas están en el documento «Kozmos · 
 | Carpeta | Qué tiene |
 | --- | --- |
 | `src/base/` | Letra, tokens de la dirección B «Luz de día», íconos, preferencias y tema |
-| `src/piezas/` | Lo rescatado de Entreno: barra flotante, encabezado que se achica, menús, deshacer, isla, ajustes y horizontal |
+| `src/piezas/` | Lo rescatado de Entreno: barra flotante, encabezado que se achica, menús, deshacer, isla, ajustes y horizontal; el maniquí (`figura.js`) y los íconos que salen de él (`iconos.js`) |
 | `src/pantallas/` | Hoy, Planes (hazañas y rutinas, en `rutinas.js`), Cielo (con Constelación y Anotar), Progreso y Vos |
 | `src/cielo/` | Las reglas del cielo (funciones puras) y su dibujo |
 | `src/diario/` | Lo que hacés, guardado en IndexedDB, y el respaldo (armar y leer el archivo) |
