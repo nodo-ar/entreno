@@ -48,7 +48,7 @@ K.dibujo = (() => {
   const ubicar = (c, x, y, w, h, gw) => { const id = K.icono.poseCons(c), u = id && K.icono.ubicar(id, c.estrellas.length, x, y, w, h, gw);
     return u || {pts: caber(forma(c.id, c.estrellas.length), x + 4, y + 6, w - 8, h - 12), lineas: null, fantasma: ""}; };
   const etiqueta = c => `${c.nombre}, ${c.encendidas} de ${c.total} estrellas`;
-  /* el cielo entero: dos columnas en zigzag, cada constelación se toca para abrirla */
+  /* el cielo entero: dos columnas en zigzag, solo estrellas y líneas (la figura tenue queda para la constelación abierta), cada constelación se toca para abrirla */
   const grande = cielo => {
     const W = 360, CH = 118, cs = cielo.constelaciones.filter(c => c.total > 0), H = Math.ceil(cs.length / 2) * CH + 24;
     let g = fondo(7, W, H);
@@ -58,7 +58,7 @@ K.dibujo = (() => {
       const u = ubicar(c, x + 14, y + 24, 148, 82, 5);
       g += `<g class="cons" data-ir="#/cielo/${c.id}" data-quieto="1" role="link" tabindex="0" aria-label="${K.esc(etiqueta(c))}">
         <rect x="${f1(x + 2)}" y="${f1(y)}" width="172" height="${CH - 8}" rx="14" fill="transparent"/>
-        <text x="${f1(x + 14)}" y="${f1(y + 15)}" class="cons-nom">${K.esc(c.nombre.toUpperCase())}</text>${u.fantasma}${estrellas(c, u.pts, 1, [], true, u.lineas)}</g>`;
+        <text x="${f1(x + 14)}" y="${f1(y + 15)}" class="cons-nom">${K.esc(c.nombre.toUpperCase())}</text>${estrellas(c, u.pts, 1, [], true, u.lineas)}</g>`;
     });
     return `<svg class="cielo-svg" viewBox="0 0 ${W} ${H}" role="group" aria-label="Tu cielo">${g}</svg>`;
   };
@@ -67,7 +67,7 @@ K.dibujo = (() => {
     /* lo vertical (una vertical, una dominada) pide más alto, si no queda un palito */
     const id = K.icono.poseCons(c), a = id && K.icono.aster(id, c.estrellas.length), ys = a ? a.pts.map(q => q[1]) : [], xs = a ? a.pts.map(q => q[0]) : [];
     const alto = a ? (Math.max(...ys) - Math.min(...ys)) / Math.max(1, Math.max(...xs) - Math.min(...xs)) : 0;
-    const W = 340, H = alto > 1.2 ? 210 : 150, u = ubicar(c, 24, 14, W - 48, H - 28, 8);
+    const W = 340, H = alto > 1.2 ? 210 : 150, u = ubicar(c, 24, 14, W - 48, H - 28, 5);
     return `<svg class="cons-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${K.esc(etiqueta(c))}">${fondo(semilla(c.id) % 997, W, H, 700)}${u.fantasma}${estrellas(c, u.pts, 1.6, recien, false, u.lineas)}</svg>`;
   };
   /* anillo de avance: cuánto de la constelación está encendido, con el pictograma de su habilidad adentro */

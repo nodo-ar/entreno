@@ -1860,14 +1860,20 @@ prueba("iconos-asterismo-grande", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/cielo");
   const g = await p.$$eval(".cielo-svg .cons", gs => gs.map(g => ({lin: g.querySelectorAll(".ast-lineas line").length, fan: !!g.querySelector(".ast-fantasma"), col: g.querySelector(".ast-lineas")?.getAttribute("stroke") || ""})));
-  ok(g.length >= 12 && g.every(x => x.lin >= 3 && x.fan && /var\(--(fu|mo|ra)\)/.test(x.col)), "el Cielo no dibuja asterismos: " + JSON.stringify(g.slice(0, 3)));
+  /* en el cielo entero mandan las estrellas y las líneas: la figura tenue va solo en la constelación abierta */
+  ok(g.length >= 12 && g.every(x => x.lin >= 3 && !x.fan && /var\(--(fu|mo|ra)\)/.test(x.col)), "el Cielo no dibuja asterismos limpios: " + JSON.stringify(g.slice(0, 3)));
   /* las formas salen de la habilidad: ninguna constelación es la cadena de antes (una sola línea quebrada) */
   ok(!(await p.$(".cielo-svg .cons path[fill=none]")), "queda una constelación dibujada como cadena");
   await ir(p, "#/cielo/front-lever");
   const n = await p.evaluate(() => [document.querySelectorAll(".cons-svg .es").length, K.CATALOGO.constelaciones.find(c => c.id === "front-lever").estrellas.length, document.querySelectorAll(".cons-svg .ast-lineas line").length]);
-  ok(n[0] === n[1] && n[2] >= n[1] - 1, "la constelación abierta: " + n);
+  ok(n[0] === n[1] && n[2] >= n[1] - 1 && await p.$(".cons-svg .ast-fantasma"), "la constelación abierta: " + n);
+  /* en la cabecera el asterismo llena la medalla: el lado largo, cerca del 80 % del disco, y lo angosto no queda como una columna */
+  const medalla = sel => p.$eval(sel, sv => { const es = [...sv.querySelectorAll(".es")].map(c => [+c.getAttribute("cx"), +c.getAttribute("cy")]), xs = es.map(q => q[0]), ys = es.map(q => q[1]);
+    const w = Math.max(...xs) - Math.min(...xs), h = Math.max(...ys) - Math.min(...ys); return {largo: Math.max(w, h), corto: Math.min(w, h)}; });
   await ir(p, "#/planes/hazanas/orion");
   ok(await p.$$eval(".hz-fig .ico-ast .es", x => x.length) === 5, "la prueba abierta sin su asterismo");
+  for (const id of ["orion", "perseo", "hercules"]){ await ir(p, "#/planes/hazanas/" + id); const m = await medalla(".hz-fig .ico-ast");
+    ok(m.largo >= 75 && m.corto >= 18, `${id}: el asterismo de la cabecera queda chico o en columna: ${JSON.stringify(m)}`); }
   await ir(p, "#/planes/rutinas/tabata");
   ok(await p.$$eval(".hz-fig .ico-ast .es", x => x.length) === 6, "la rutina abierta sin una estrella por semana");
   /* en horizontal entra todo */

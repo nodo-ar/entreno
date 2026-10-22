@@ -53,3 +53,9 @@ Rama `claude/project-thread-985fzq`, sin PR.
 
 ## Bandera roja
 Ninguna.
+
+## Ajuste antes del tablero
+
+- **Cabecera (prueba, rutina, próxima prueba)**: el asterismo ahora llena el disco (caja de la pose al 76 % del disco, sin deformar), con estrellas más grandes que las líneas. Si la pose queda como columna (de pie o colgado), se prueba la vista a tres cuartos o de frente; si igual sigue angosta, se abre un poco el eje corto y no se dibuja la figura de fondo.
+- **Cielo**: la grilla muestra solo estrellas y líneas, sin la figura gris detrás. En la vista de una constelación la figura queda, mucho más tenue.
+- Prueba nueva en la suite: el asterismo de la cabecera mide al menos 75 de largo y 18 de ancho (sobre 100).

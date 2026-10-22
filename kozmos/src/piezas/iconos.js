@@ -198,17 +198,31 @@ K.icono = (() => {
   }
   const lineas = (pts, ls, fam, sw) => `<g class="ast-lineas" stroke="var(--${fam})" stroke-opacity=".55" stroke-width="${f1(sw)}" stroke-linecap="round">${ls.map(([a, b]) => `<line x1="${f1(pts[a][0])}" y1="${f1(pts[a][1])}" x2="${f1(pts[b][0])}" y2="${f1(pts[b][1])}"/>`).join("")}</g>`;
   /* el asterismo en una caja (x, y, w, h) de cualquier dibujo: los puntos, sus líneas y la figura detrás */
-  function ubicar(id, n, x, y, w, h, gw){
-    const a = aster(id, n); if (!a) return null;
+  /* en una medalla (cabecera) lo muy alto o muy chato se lee como una columna de puntos: si de su vista queda más de dos veces
+     más largo que ancho, la cámara gira (tres cuartos o de frente) y queda la vista más pareja que no pierde estrellas */
+  const proporcion = a => { const [x0, y0, x1, y1] = caja(a.pts), w = x1 - x0, h = y1 - y0; return Math.min(w, h) / Math.max(1, w, h); };
+  const asterMedalla = (id, n) => guardado("m" + id + ":" + n, () => {
+    const a0 = aster(id, n); if (!a0 || proporcion(a0) >= .45) return a0;
+    let mejor = a0;
+    for (const v of [35, 90]){ const a = armar(id, n, v); if (a && a.distintos >= Math.min(n, a0.distintos) && proporcion(a) > proporcion(mejor) + .08) mejor = a; }
+    /* si sigue siendo una columna (de pie, colgado), se abre un poco el eje corto para que se lea el gesto y no una fila de puntos;
+       ahí la figura de fondo ya no calza y no se dibuja */
+    if (proporcion(mejor) >= .32) return mejor;
+    const [x0, y0, x1, y1] = caja(mejor.pts), alto = y1 - y0 >= x1 - x0, f = .32 / Math.max(.05, proporcion(mejor)), cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    return {...mejor, abierto: true, pts: mejor.pts.map(([x, y]) => alto ? [cx + (x - cx) * f, y] : [x, cy + (y - cy) * f])};
+  });
+  function ubicar(id, n, x, y, w, h, gw, medalla = false){
+    const a = medalla ? asterMedalla(id, n) : aster(id, n); if (!a) return null;
     const T = encajar(a.pts, x, y, w, h), pts = a.pts.map(T);
     const fantasma = `<g class="ast-fantasma" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" color="var(--ink)" opacity=".08">${cuerpo(id, T, gw, {tenue: 1, vista: a.vista})}</g>`;
-    return {pts, lineas: a.lineas, fantasma};
+    return {pts, lineas: a.lineas, fantasma: a.abierto ? "" : fantasma};
   }
   /* el ícono grande, como una medalla: el disco, la figura tenue, los huesos y las estrellas. estados = [{estado, mag}] o nada.
      Chico (una cabecera, 64 a 96 px) las estrellas y las líneas engordan para que se lean */
   function asterismo(id, n, fam, {estados = null, px = 0, lb = "", cls = ""} = {}){
-    const u = ubicar(id, n, 16, 14, 68, 72, 8); if (!u) return "";
-    const ch = px && px <= 100, R = ch ? 6.4 : 4.8, sw = ch ? 2.6 : 1.8;
+    /* el lado largo ocupa el 80 % del disco */
+    const u = ubicar(id, n, 12, 12, 76, 76, 8, true); if (!u) return "";
+    const ch = px && px <= 100, R = ch ? 7.6 : 5.2, sw = ch ? 2.2 : 1.6;
     return svg(px, "ico-ast " + cls, lb, `<circle class="ast-disco" cx="50" cy="50" r="49" fill="var(--s2)"/>` + u.fantasma + lineas(u.pts, u.lineas, fam, sw) + estrellas(u.pts, estados, fam, R, sw));
   }
   const grande = {
