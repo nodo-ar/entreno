@@ -8,6 +8,25 @@
    "familia": "fu",
    "texto": "Dominadas estrictas, todas las que salgan.",
    "como": "Colgado con los brazos rectos. Cuenta cada una con el pecho a la barra y bajando hasta estirar, sin hamacarte.",
+   "figura": {
+    "estrellas": [
+     [54, 8],
+     [50, 30],
+     [42, 50],
+     [26, 74],
+     [70, 40],
+     [84, 62],
+     [58, 66]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [1, 4],
+     [4, 5],
+     [2, 6]
+    ]
+   },
    "formato": "maximo",
    "mide": {
     "ejercicio": "dominada",
@@ -30,6 +49,28 @@
    "familia": "fu",
    "texto": "Flexiones a ritmo parejo, todas las que salgan.",
    "como": "Una por cada dos segundos: bajás, tocás el puño con el pecho y subís. Cuando no podés seguir el ritmo, se termina.",
+   "figura": {
+    "estrellas": [
+     [30, 34],
+     [62, 32],
+     [66, 58],
+     [34, 60],
+     [14, 14],
+     [82, 10],
+     [18, 90],
+     [86, 88]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [3, 0],
+     [0, 4],
+     [1, 5],
+     [3, 6],
+     [2, 7]
+    ]
+   },
    "formato": "maximo",
    "mide": {
     "ejercicio": "flexion",
@@ -53,6 +94,31 @@
    "familia": "fu",
    "texto": "Sentarte y pararte sin manos, de 0 a 10.",
    "como": "Descalzo, sentate en el piso con las piernas cruzadas y volvé a pararte. Empezás con 10: cada apoyo resta 1 y cada desequilibrio, medio.",
+   "figura": {
+    "estrellas": [
+     [36, 30],
+     [48, 14],
+     [58, 40],
+     [80, 30],
+     [84, 58],
+     [56, 66],
+     [30, 64],
+     [12, 46]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 0],
+     [2, 3],
+     [3, 4],
+     [4, 5],
+     [5, 2],
+     [5, 6],
+     [6, 0],
+     [6, 7],
+     [7, 0]
+    ]
+   },
    "formato": "maximo",
    "mide": {
     "ejercicio": "del-piso",
@@ -82,6 +148,21 @@
    "familia": "fu",
    "texto": "Cada minuto, una dominada más, hasta que no llegues.",
    "como": "En el minuto 1 hacés 1, en el 2 hacés 2, y así. Descansás lo que sobra del minuto. Cuando no llegás a completar uno, tocás «No llegué»: cuenta el último completo.",
+   "figura": {
+    "estrellas": [
+     [10, 80],
+     [32, 62],
+     [54, 44],
+     [86, 16],
+     [64, 72]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [2, 4]
+    ]
+   },
    "formato": "escalera",
    "mide": {
     "ejercicio": "dominada",
@@ -104,6 +185,21 @@
    "familia": "ra",
    "texto": "Cuánto pasan tus dedos los pies, sentado en pike.",
    "como": "Entrá en calor antes. Sentado, piernas juntas y estiradas, plantas contra un escalón. Bajá despacio desde la cadera, sostené dos segundos y medí.",
+   "figura": {
+    "estrellas": [
+     [8, 30],
+     [30, 66],
+     [50, 38],
+     [70, 72],
+     [92, 24]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [3, 4]
+    ]
+   },
    "formato": "maximo",
    "mide": {
     "ejercicio": "pike-alcance",
@@ -132,6 +228,26 @@
    "familia": "mo",
    "texto": "Doce minutos en la bici fija: los km de su pantalla.",
    "como": "Cinco minutos suaves antes. Después, doce minutos lo más fuerte que puedas sostener parejo. Al terminar, anotá los km.",
+   "figura": {
+    "estrellas": [
+     [22, 34],
+     [62, 34],
+     [62, 70],
+     [22, 70],
+     [80, 22],
+     [94, 34],
+     [8, 20]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [3, 0],
+     [1, 4],
+     [4, 5],
+     [0, 6]
+    ]
+   },
    "formato": "reloj",
    "mide": {
     "ejercicio": "bici-12",
@@ -163,6 +279,29 @@
    "familia": "mo",
    "texto": "Mil saltos de soga, por tiempo.",
    "como": "Saltos bajos, en la punta de los pies. Si la soga se traba, seguís contando desde donde ibas. Tocás «Terminé» en el salto mil.",
+   "figura": {
+    "estrellas": [
+     [28, 14],
+     [70, 18],
+     [42, 50],
+     [50, 52],
+     [58, 54],
+     [26, 88],
+     [74, 84],
+     [48, 4]
+    ],
+    "lineas": [
+     [0, 1],
+     [0, 2],
+     [1, 4],
+     [2, 3],
+     [3, 4],
+     [2, 5],
+     [4, 6],
+     [7, 0],
+     [7, 1]
+    ]
+   },
    "formato": "tiempo",
    "mide": {
     "ejercicio": "mil-saltos",
@@ -196,6 +335,30 @@
    "familia": "fu",
    "texto": "L-sit en el piso o en paralelas, al máximo.",
    "como": "Brazos rectos, hombros abajo y las piernas estiradas a la altura de la cadera. El reloj corre hasta que tocás.",
+   "figura": {
+    "estrellas": [
+     [14, 14],
+     [28, 8],
+     [34, 22],
+     [20, 26],
+     [38, 44],
+     [60, 40],
+     [74, 58],
+     [62, 78],
+     [86, 90]
+    ],
+    "lineas": [
+     [0, 1],
+     [1, 2],
+     [2, 3],
+     [3, 0],
+     [2, 4],
+     [4, 5],
+     [5, 6],
+     [6, 7],
+     [7, 8]
+    ]
+   },
    "formato": "maximo",
    "mide": {
     "ejercicio": "l-sit",

@@ -593,5 +593,5 @@ K.fig = (() => {
   const quieto = p => [p, p];
   const PARADO = {torso: 180, head: 180, armN: [4, 6], armF: [358, 2], legN: [0, 0], legF: [2, 2]};
   const CUATRO = {torso: 102, head: 100, armN: [0, 0], armF: [2, 2], legN: [0, 270], legF: [2, 270], pies: [-90, -90]};
-  return {grande, chica, animar, revisar, rangos3, apoyos, persona, esqueleto: ubicar, muestra: id => K.POSES[id] && pMuestra(K.POSES[id]), cuadro: (id, fam, u, pe) => { const f = K.POSES[id]; return frente(f, en(f, u), pe || persona(id, fam), 0, u); }, fijar: x => { fijo = x || {}; }, quieto, PARADO, CUATRO, PISO, TOBILLO: PISO - 5, ESTILOS, TONOS, PELOS};
+  return {grande, chica, animar, revisar, rangos3, apoyos, persona, esqueleto: ubicar, cuadro: (id, fam, u, pe) => { const f = K.POSES[id]; return frente(f, en(f, u), pe || persona(id, fam), 0, u); }, fijar: x => { fijo = x || {}; }, quieto, PARADO, CUATRO, PISO, TOBILLO: PISO - 5, ESTILOS, TONOS, PELOS};
 })();

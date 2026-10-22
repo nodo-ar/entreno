@@ -1,11 +1,10 @@
-/* ===== Dibujo del cielo: cada constelación es el asterismo de su habilidad (K.icono) y cada estrella un punto =====
-   Las estrellas caen en las articulaciones de la pose final; las líneas son los huesos, en el color de la familia, con la figura tenue detrás.
+/* ===== Dibujo del cielo: cada constelación tiene una forma fija (sale de su id) y cada estrella un punto =====
    Encendida: punto lleno en tinta, más grande cuanto menor la magnitud. Próxima: anillo del color de la familia.
    Por delante: anillo gris. Lo que no se practica hace 8 semanas se ve atenuado, nunca apagado. */
 K.dibujo = (() => {
   const semilla = s => { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; };
   const azar = s => () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
-  /* si una constelación no tuviera dibujo (un ejercicio nuevo sin pose): una cadena que avanza de izquierda a derecha y sube y baja suave (como en la carta del cielo aprobada) */
+  /* la forma: una cadena que avanza de izquierda a derecha y sube y baja suave (como en la carta del cielo aprobada) */
   const formas = {};
   const forma = (id, n) => {
     const k = id + ":" + n; if (formas[k]) return formas[k];
@@ -25,10 +24,9 @@ K.dibujo = (() => {
   const radio = (m, esc) => (2 + (5 - m) * .6) * esc;
   /* las estrellas de una constelación ya calculada (K.cielo.calcular), en puntos ya ubicados */
   /* lo que pide equipo que no marcaste: en el cielo entero no aparece; en la constelación abierta, punteado */
-  const estrellas = (c, pts, esc, recien = [], ocultar = false, lineas = null) => {
+  const estrellas = (c, pts, esc, recien = [], ocultar = false) => {
     const ve = c.estrellas.map(e => !(ocultar && e.estado === "sin-equipo"));
-    let g = lineas ? `<g class="ast-lineas" stroke="var(--${c.familia})" stroke-opacity=".5" stroke-width="${esc > 1 ? 1.4 : 1.1}" stroke-linecap="round">${lineas.filter(([a, b]) => ve[a] && ve[b]).map(([a, b]) => `<line x1="${f1(pts[a][0])}" y1="${f1(pts[a][1])}" x2="${f1(pts[b][0])}" y2="${f1(pts[b][1])}"/>`).join("")}</g>`
-      : `<path d="${pts.filter((q, i) => ve[i]).map((q, i) => (i ? "L" : "M") + f1(q[0]) + " " + f1(q[1])).join("")}" fill="none" stroke="var(--ink)" stroke-opacity=".2" stroke-width="${esc > 1 ? 1.2 : 1}"/>`;
+    let g = `<path d="${pts.filter((q, i) => ve[i]).map((q, i) => (i ? "L" : "M") + f1(q[0]) + " " + f1(q[1])).join("")}" fill="none" stroke="var(--ink)" stroke-opacity=".2" stroke-width="${esc > 1 ? 1.2 : 1}"/>`;
     c.estrellas.forEach((e, i) => {
       if (!ve[i]) return;
       const [x, y] = pts[i], r = radio(e.magnitud, esc) + (e.estado === "encendida" ? .8 * esc : 0);
@@ -44,37 +42,36 @@ K.dibujo = (() => {
     for (let i = 0; i < W * H / dens; i++) g += `<circle cx="${f1(r() * W)}" cy="${f1(r() * H)}" r="${(r() * .7 + .5).toFixed(2)}" fill="var(--ink-3)" opacity="${(r() * .35 + .25).toFixed(2)}"/>`;
     return g;
   };
-  /* el asterismo de la constelación en una caja; sin pose, la cadena de siempre */
-  const ubicar = (c, x, y, w, h, gw) => { const id = K.icono.poseCons(c), u = id && K.icono.ubicar(id, c.estrellas.length, x, y, w, h, gw);
-    return u || {pts: caber(forma(c.id, c.estrellas.length), x + 4, y + 6, w - 8, h - 12), lineas: null, fantasma: ""}; };
   const etiqueta = c => `${c.nombre}, ${c.encendidas} de ${c.total} estrellas`;
-  /* el cielo entero: dos columnas en zigzag, solo estrellas y líneas (la figura tenue queda para la constelación abierta), cada constelación se toca para abrirla */
+  /* el cielo entero: dos columnas en zigzag, cada constelación se toca para abrirla */
   const grande = cielo => {
-    const W = 360, CH = 118, cs = cielo.constelaciones.filter(c => c.total > 0), H = Math.ceil(cs.length / 2) * CH + 24;
+    const W = 360, CH = 96, cs = cielo.constelaciones.filter(c => c.total > 0), H = Math.ceil(cs.length / 2) * CH + 24;
     let g = fondo(7, W, H);
     cs.forEach((c, i) => {
       const fila = Math.floor(i / 2), col = i % 2, r = azar(semilla(c.id + "#"));
       const x = col * 180 + r() * 6, y = 10 + fila * CH + r() * 6;
-      const u = ubicar(c, x + 14, y + 24, 148, 82, 5);
+      const pts = caber(forma(c.id, c.estrellas.length), x + 18, y + 30, 140, 44);
       g += `<g class="cons" data-ir="#/cielo/${c.id}" data-quieto="1" role="link" tabindex="0" aria-label="${K.esc(etiqueta(c))}">
         <rect x="${f1(x + 2)}" y="${f1(y)}" width="172" height="${CH - 8}" rx="14" fill="transparent"/>
-        <text x="${f1(x + 14)}" y="${f1(y + 15)}" class="cons-nom">${K.esc(c.nombre.toUpperCase())}</text>${estrellas(c, u.pts, 1, [], true, u.lineas)}</g>`;
+        <text x="${f1(x + 14)}" y="${f1(y + 15)}" class="cons-nom">${K.esc(c.nombre.toUpperCase())}</text>${estrellas(c, pts, 1, [], true)}</g>`;
     });
     return `<svg class="cielo-svg" viewBox="0 0 ${W} ${H}" role="group" aria-label="Tu cielo">${g}</svg>`;
   };
   /* una sola constelación, grande */
   const una = (c, recien) => {
-    /* lo vertical (una vertical, una dominada) pide más alto, si no queda un palito */
-    const id = K.icono.poseCons(c), a = id && K.icono.aster(id, c.estrellas.length), ys = a ? a.pts.map(q => q[1]) : [], xs = a ? a.pts.map(q => q[0]) : [];
-    const alto = a ? (Math.max(...ys) - Math.min(...ys)) / Math.max(1, Math.max(...xs) - Math.min(...xs)) : 0;
-    const W = 340, H = alto > 1.2 ? 210 : 150, u = ubicar(c, 24, 14, W - 48, H - 28, 5);
-    return `<svg class="cons-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${K.esc(etiqueta(c))}">${fondo(semilla(c.id) % 997, W, H, 700)}${u.fantasma}${estrellas(c, u.pts, 1.6, recien, false, u.lineas)}</svg>`;
+    const W = 340, H = 150, pts = caber(forma(c.id, c.estrellas.length), 28, 22, W - 56, H - 44);
+    return `<svg class="cons-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${K.esc(etiqueta(c))}">${fondo(semilla(c.id) % 997, W, H, 700)}${estrellas(c, pts, 1.6, recien)}</svg>`;
   };
-  /* anillo de avance: cuánto de la constelación está encendido, con el pictograma de su habilidad adentro */
-  const anillo = (c, px = 40) => K.icono.chico.cons(c, px) || anilloSolo(c, px);
-  const anilloSolo = (c, px) => {
+  /* anillo de avance: cuánto de la constelación está encendido */
+  const anillo = (c, px = 32) => {
     const C = 2 * Math.PI * 13, p = c.total ? c.encendidas / c.total : 0;
     return `<svg width="${px}" height="${px}" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="var(--line)" stroke-width="4"/>${p ? `<circle cx="16" cy="16" r="13" fill="none" stroke="var(--${c.familia})" stroke-width="4" stroke-linecap="round" stroke-dasharray="${f1(p * C)} ${f1(C)}" transform="rotate(-90 16 16)"/>` : ""}</svg>`;
   };
-  return {forma, grande, una, anillo};
+  /* una hazaña con la figura de su constelación real: la primera estrella, en el color de la familia; logro: todas encendidas */
+  const figura = (h, px = 32, logro = false) => {
+    const f = h.figura; if (!f) return K.ic("hazana");
+    const e = f.estrellas, grueso = px >= 48 ? 2.4 : 4;
+    return `<svg class="figura" width="${px}" height="${px}" viewBox="-8 -8 116 116" aria-hidden="true">${f.lineas.map(([a, b]) => `<line x1="${e[a][0]}" y1="${e[a][1]}" x2="${e[b][0]}" y2="${e[b][1]}" stroke="var(--ink)" stroke-opacity="${logro ? .5 : .28}" stroke-width="${grueso}" stroke-linecap="round"/>`).join("")}${e.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${(i ? 5 : 7) * (px >= 48 ? 1 : 1.5)}" fill="${i === 0 ? `var(--${h.familia})` : "var(--ink)"}"/>`).join("")}</svg>`;
+  };
+  return {forma, grande, una, anillo, figura};
 })();

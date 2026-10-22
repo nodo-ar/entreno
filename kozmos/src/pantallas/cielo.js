@@ -72,7 +72,7 @@ K.P.constelacion = c => {
 /* las rutinas que llevan a alguna estrella de esta constelación */
 const rutinasDe = c => {
   const ids = new Set(c.estrellas.map(e => e.id)), rs = K.RUTINAS.filter(r => r.alimenta.some(id => ids.has(id)));
-  return rs.length ? `<span class="lb pie">Rutinas que llevan acá</span><section class="aj">${rs.map(r => `<button type="button" class="ajr" data-ir="#/planes/rutinas/${r.id}"><span class="tile ico-tile">${K.icono.chico.rutina(r, 40)}</span>
+  return rs.length ? `<span class="lb pie">Rutinas que llevan acá</span><section class="aj">${rs.map(r => `<button type="button" class="ajr" data-ir="#/planes/rutinas/${r.id}"><span class="tile">${K.ic("ruta")}</span>
     <span>${K.esc(r.nombre)}</span><em class="num">${r.semanas} sem</em>${K.ic("chev", "chev")}</button>`).join("")}</section>` : "";
 };
 
