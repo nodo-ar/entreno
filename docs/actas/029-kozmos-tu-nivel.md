@@ -39,6 +39,7 @@ Había dos: la de Hoy («Elegí cómo · Elegí qué · Empezá», también en P
 - Sin pantalla: 112 (antes 105), en verde. Nuevas: nivel-desde, nivel-dadas, nivel-no-se, nivel-confirma, nivel-arrancas-en, respaldo-nivel y dia-con-nivel.
 - De pantallas: 102 (antes 98). Nuevas: primer-dia-nivel (paso 2, cuatro menús con «No sé», sin chips ni deshacer, la escalerita sube, Hoy desde tu nivel, sin barra no pregunta por dominadas), rumbo-arrancas-en, vos-tu-nivel (fila, constelación punteada, el intento que no llega, el respaldo) y nivel-horizontal (844 × 390).
 - Cambiadas porque el primer día tiene un paso más y una sola guía: **primer-dia** (Hoy y Planes sin pasos; Tu equipo 1, Tu nivel 2, Tu rumbo 3; Hoy sin guía después), **primer-dia-equipo** (los pasos son tres; volver desde Tu rumbo pasa por Tu nivel), **sin-nav-al-elegir** (también mide Tu nivel) y **sesion-entera** (pasa por Tu nivel con «Seguir»). Ninguna se debilitó ni se salteó.
+- La corrida entera se cortó dos veces porque algo de afuera cerró el navegador a mitad de camino (67 en verde hasta ahí); las 35 que faltaban se corrieron aparte, todas en verde (`m20/suite.log` y `m20/suite-resto.log`).
 - Tablero: antes (`main` 22a0399) y después, en grafito y en claro, 390 × 844 y 844 × 390, en el scratchpad (`m20/antes`, `m20/despues`). Sin errores de consola ni desbordes, también a 360 px.
 
 ## Objeciones que cambiaron algo
