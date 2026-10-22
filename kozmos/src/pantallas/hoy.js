@@ -265,7 +265,7 @@ const dibSemanas = (hechas, col) => `<svg class="dib-sem" viewBox="0 0 86 34" ar
 K.hoyComo = () => {
   const hz = K.HAZANAS.hazanas[0];
   const op = (ir, dib, t, tx) => `<button type="button" class="cd como-op" data-ir="${ir}"><span class="como-dib">${dib}</span><b class="t1">${t}</b><small>${tx}</small>${K.ic("chev", "como-ir")}</button>`;
-  return `<div class="como">${op(K.ARMAR[0].ir, K.cieloTrio(64), "Que Kozmos arme tu día", "Marcá tu equipo y elegí tus constelaciones. Cada día te da lo que toca.")}
+  return `<div class="como">${op(K.ARMAR[0].ir, K.cieloTrio(64), "Que Kozmos arme tu día", "Tu equipo, tu nivel y tus constelaciones. Cada día te da lo que toca.")}
     ${op("#/planes", dibSemanas(5, "fu"), "Seguí una rutina", "Un plan fijo de semanas. Hoy te da cada sesión.")}</div>
     ${hz ? `<section class="aj"><button type="button" class="ajr" data-ir="#/planes/hazanas/${hz.id}"><span class="tile ico-tile">${K.hzIcono(hz, 40)}</span><span class="ses-fila">¿Solo por hoy?<small class="mute">Probá una hazaña: un desafío, un día</small></span><em></em>${K.ic("chev", "chev")}</button></section>` : ""}
     <p class="como-cielo small mute">${K.ic("cielo")}<span>Lo que hagas enciende estrellas en tu cosmos.</span></p>`;

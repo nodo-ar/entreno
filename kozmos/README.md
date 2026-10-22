@@ -10,10 +10,10 @@ El modelo, la arquitectura y las seis etapas están en el documento «Kozmos · 
 | --- | --- |
 | `src/base/` | Letra, tokens de la dirección B «Luz de día», íconos, preferencias y tema |
 | `src/piezas/` | Lo rescatado de Entreno: barra flotante, encabezado que se achica, menús, deshacer, isla, ajustes y horizontal |
-| `src/pantallas/` | Hoy (con Tu rumbo y el primer día), Planes (hazañas y rutinas, en `rutinas.js`), Cosmos (en `cielo.js`, con Constelación y Anotar), Progreso y Vos (con Tu equipo) |
+| `src/pantallas/` | Hoy (con Tu rumbo y el primer día: Tu equipo, Tu nivel y Tu rumbo), Planes (hazañas y rutinas, en `rutinas.js`), Cosmos (en `cielo.js`, con Constelación y Anotar), Progreso y Vos (con Tu equipo) |
 | `src/cielo/` | Las reglas del cielo (funciones puras) y su dibujo |
 | `src/diario/` | Lo que hacés, guardado en IndexedDB, y el respaldo (armar y leer el archivo) |
-| `src/sesion/` | El plan del día, las rutinas, hazañas y tus días, los caminos y la entrada en calor del motor B, y las calorías (funciones puras), y el motor de la sesión |
+| `src/sesion/` | El plan del día, las rutinas, hazañas y tus días, los caminos, la entrada en calor y tu nivel del motor B, y las calorías (funciones puras), y el motor de la sesión |
 | `catalogo/` | Constelaciones y estrellas, ejercicios, escaleras de progresión, piezas de la entrada en calor (`entradas.json`), rutinas (una por archivo; formato de escaleras y rutinas en `docs/kozmos-rutinas.md`), hazañas y los ids retirados |
 | `src/app.js` | Rutas, transiciones y arranque |
 | `src/sw.js` | Service worker: abre sin conexión desde la segunda vez |
@@ -41,7 +41,7 @@ Para mirarla en el navegador: `cd kozmos/app && python3 -m http.server`, y abrir
 
 ## Datos
 
-Las preferencias van en `localStorage` con la clave `kozmos.prefs.v1`. Lo que hacés va en el diario: IndexedDB, base `kozmos`, versión 2, con `mediciones` (cada marca: estrella, valor, día y origen), `perfil` (tu peso, tu rumbo y tu equipo) y `sesiones` (cada sesión con sus bloques y series). La sesión en curso vive en `localStorage` con la clave `kozmos.vivo.v1` hasta que termina. El cielo no se guarda: se calcula cada vez del catálogo más las mediciones. Kozmos no lee ni toca `barrabici.v4`, los datos de Entreno. Los avisos (todo, vibra, suena, nada) y la fecha del último respaldo van en las preferencias.
+Las preferencias van en `localStorage` con la clave `kozmos.prefs.v1`. Lo que hacés va en el diario: IndexedDB, base `kozmos`, versión 2, con `mediciones` (cada marca: estrella, valor, día y origen), `perfil` (tu peso, tu rumbo, tu equipo y tu nivel) y `sesiones` (cada sesión con sus bloques y series). La sesión en curso vive en `localStorage` con la clave `kozmos.vivo.v1` hasta que termina. El cielo no se guarda: se calcula cada vez del catálogo más las mediciones. Kozmos no lee ni toca `barrabici.v4`, los datos de Entreno. Los avisos (todo, vibra, suena, nada) y la fecha del último respaldo van en las preferencias.
 
 El respaldo es un archivo `kozmos-respaldo_AAAA-MM-DD.json` con las mediciones, las sesiones y el perfil. Su formato está en `docs/kozmos-respaldo.md`; cambiarlo pide subir `formato` y que `leer` siga entendiendo los anteriores.
 
