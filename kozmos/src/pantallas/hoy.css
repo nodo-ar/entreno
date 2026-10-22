@@ -13,6 +13,19 @@
 /* una superserie: sus filas juntas sobre un fondo apenas distinto, con la nota al pie */
 .toca-par{display:flex; flex-direction:column; gap:10px; margin:0 -10px; padding:10px; border-radius:var(--r-sm); background:var(--s2)}
 .toca-par-tx{padding-left:16px; margin-top:-4px; font-size:var(--t-s); font-weight:700; color:var(--ink-2)}
+/* el día del motor por partes (entrada, habilidad, fuerza, abdomen, cierre): un título chico con una línea arriba */
+.toca-sec{margin:4px 0 -2px; padding-top:10px; border-top:1px solid var(--line)}
+.toca-sec.ln{display:flex; justify-content:space-between; align-items:baseline}
+/* lo que viene en la rotación y lo de tu rumbo que pide equipo, al pie de lo que toca */
+.hoy-pie{margin:2px 0 0}
+.hoy-pide{display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; margin:0; padding:10px; border:0; border-radius:var(--r-sm); background:var(--s2); color:var(--ink); font:inherit; font-weight:600; text-align:left; cursor:pointer}
+.hoy-pide-ir{display:flex; align-items:center; gap:2px; flex:none; font-weight:700; color:var(--ink-2)}
+.hoy-pide-ir .chev{width:16px; height:16px}
+/* Tu rumbo: cuántas elegiste y cada cuánto toca, arriba de «Listo»; lo que pide equipo, en vez de «0 de 0» */
+.rumbo-cuanto{margin:0 4px 10px; text-align:center}
+.pie-fijo:has(.rumbo-cuanto){background:linear-gradient(to bottom,transparent,var(--bg) 12px)}
+.rumbo-cuanto b{color:var(--ink)}
+.num.pide{color:var(--ink-2); font-family:var(--f-ui); font-weight:700}
 /* «Empezar» siempre al alcance del pulgar, aunque lo de hoy sea largo (como «Seguir esta rutina») */
 .hoy-b>.btn{position:sticky; bottom:calc(84px + env(safe-area-inset-bottom,0px)); z-index:2; box-shadow:var(--shadow)}
 /* con el aviso de deshacer abierto, el botón fijo sube y queda encima del aviso, nunca tapado */

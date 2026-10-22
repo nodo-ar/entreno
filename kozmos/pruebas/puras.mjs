@@ -1558,6 +1558,8 @@ prueba("dia-equipo", () => {
   ok(ejsDia(p.bloques).every(e => !(ej[e]?.equipo || []).length), "un ejercicio pide equipo: " + ejsDia(p.bloques).filter(e => (ej[e]?.equipo || []).length));
   /* sin barra el tirón es el remo (en el poste, debajo de la mesa o con toalla) */
   ok(deMolde(p.bloques, "fuerza").some(b => b.pasos.some(x => x.escalera === "remo")), "sin barra no tira");
+  /* sin barra, el segundo tirón no tiene escalera: ese lugar es para empujar, y los dos pares siguen de a dos */
+  ok(deMolde(p.bloques, "fuerza").every(b => new Set(b.pasos.map(x => x.ejercicio)).size === 2), "un par quedó solo: " + deMolde(p.bloques, "fuerza").map(b => b.pasos.map(x => x.ejercicio)));
   /* nada de tu rumbo se puede: el día se arma igual, con fuerza (D2) */
   const s = armarDia(["bandera"], {equipo: []});
   ok(!deMolde(s.bloques, "habilidad").length && deMolde(s.bloques, "fuerza").length === 2 && s.pide.length === 1, "solo con fuerza: " + s.bloques.map(b => b.molde));

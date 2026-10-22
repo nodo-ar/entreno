@@ -147,17 +147,19 @@ K.dia = (() => {
     for (const s of sesiones) if (d(hoy) - d(s.fecha) < 7 && d(hoy) >= d(s.fecha)) for (const b of s.bloques || []) for (const x of b.series || [])
       for (const p of K.caminos.patronDe(x.ejercicio, ej)) if (p in semana) semana[p]++;
     const cubre = new Set(hab.flatMap(b => patronesDe(b, ej)));
-    const falta = () => ["tirar", "empujar"].sort((a, b) => sets[a] - sets[b] || semana[a] - semana[b])[0];
+    const elegir = pat => (ESCALERAS[pat] || []).find(id => !usadasEsc.has(id) && sePuedeEscalera(id, ej, equipo) && escalones[id] && !usadosEj.has(escalones[id].paso.ejercicio)) || null;
+    /* el de arriba que más falta: menos series hoy, después menos esta semana; empatados, el que todavía tiene escalera libre */
+    const falta = () => ["tirar", "empujar"].sort((a, b) => sets[a] - sets[b] || semana[a] - semana[b] || !elegir(a) - !elegir(b))[0];
     const lugares = [];
     for (const pierna of ["piernas", "bisagra"]){
       const arriba = falta(); lugares.push(arriba); sets[arriba] += SERIES;
       const abajo = cubre.has(pierna) ? falta() : pierna; lugares.push(abajo); sets[abajo] += SERIES;
     }
-    const elegir = pat => (ESCALERAS[pat] || []).find(id => !usadasEsc.has(id) && sePuedeEscalera(id, ej, equipo) && escalones[id] && !usadosEj.has(escalones[id].paso.ejercicio)) || null;
     const fuerza = [];
     for (let k = 0; k < lugares.length; k += 2){
       const ids = [];
-      for (const pat of lugares.slice(k, k + 2)){ const id = elegir(pat); if (id){ ids.push(id); usadasEsc.add(id); usadosEj.add(escalones[id].paso.ejercicio); } }
+      /* si lo de arriba que tocaba no tiene escalera libre con tu equipo, el otro de arriba */
+      for (const pat of lugares.slice(k, k + 2)){ const otro = {tirar: "empujar", empujar: "tirar"}[pat], id = elegir(pat) || (otro && elegir(otro)); if (id){ ids.push(id); usadasEsc.add(id); usadosEj.add(escalones[id].paso.ejercicio); } }
       if (!ids.length) continue;
       const grupo = ids.length > 1 ? "AB"[k / 2] : null;
       const cbs = ids.map((id, i) => ({escalera: id, series: SERIES, rango: RANGO, desde: nivelDesde?.[id], ...(grupo ? {grupo} : {}), descanso: grupo && i === 0 ? 0 : ENTRE}));
