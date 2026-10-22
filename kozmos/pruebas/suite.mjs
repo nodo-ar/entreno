@@ -714,20 +714,24 @@ prueba("hoy-molde", async () => {
   await ir(p, "#/hoy"); await sembrarMolde(p, {rumbo: ["front-lever", "planche"], equipo: ["barra", "bici"]}); await p.waitForSelector("#s-empezar");
   /* el día por partes, siempre en el mismo orden */
   /* con la bici, el cierre son 5 min de bici y el abdomen entra en la hora */
-  ok(JSON.stringify(await partes(p)) === JSON.stringify(["Entrada en calor", "Habilidad · descansado", "Fuerza · de a dos", "Abdomen", "Cierre"]), "las partes: " + await partes(p));
+  ok(JSON.stringify(await partes(p)) === JSON.stringify(["Entrada en calor", "Habilidad descansado", "Fuerza de a dos", "Abdomen", "Cierre"]), "las partes: " + await partes(p));
   ok(await p.evaluate(() => K.hoyPlan().minutos <= 60), "el día pasa la hora");
   const marcas = await p.$$eval(".hoy-toca .toca-marca", xs => xs.map(x => x.textContent));
-  ok(marcas[0] === "Para Front lever" && /^Camino a .+ · para Planche$/.test(marcas[1]), "las habilidades no dicen para qué meta son: " + marcas);
+  /* cada cosa en su renglón: la meta; y en el camino, el camino y debajo la meta */
+  ok(marcas[0] === "Para Front lever" && /^Camino a .+/.test(marcas[1]) && marcas[2] === "Para Planche", "las habilidades no dicen para qué meta son: " + marcas);
   ok(await p.$$eval(".hoy-toca .toca-par", x => x.length) === 2 && !(await p.$(".hoy-toca .toca-par-tx")), "la fuerza no va de a dos (o repite «en superserie»)");
-  ok((await p.textContent(".hoy-toca .ln .lb")).startsWith("Hoy toca · ") && /\d+ min/.test(await p.textContent(".hoy-toca .ln .lb")), "no dice los minutos");
+  /* «Hoy toca» a la izquierda; a la derecha, el reloj y los minutos (sin la cuenta de bloques) */
+  ok((await p.textContent(".hoy-toca .ln .lb")) === "Hoy toca" && /^\d+ min$/.test(await p.textContent(".hoy-toca > .ln:first-child .num")) && await p.$(".hoy-toca > .ln:first-child .num .dur svg"), "no dice los minutos con su reloj: " + await p.textContent(".hoy-toca > .ln:first-child"));
   /* la sesión arranca por la entrada en calor (con la bici) y sigue con la primera habilidad */
   await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo");
   ok((await p.textContent(".ses-tit .lb")).startsWith("Entrada en calor"), "no arranca por la entrada en calor: " + await p.textContent(".ses-tit .lb"));
   await tick(p, 30000); await p.evaluate(() => { K.sesion.saltear(); K.refrescar(); }); await p.waitForSelector(".ses.serie");
-  ok((await p.textContent(".ses-donde")).endsWith("· Front lever") && (await p.textContent(".ses-tit h1")) === "Colgado con hombros firmes", "la habilidad: " + await p.textContent(".ses-donde"));
+  /* dónde estás: el nombre del bloque y un punto por bloque, el de ahora marcado */
+  ok((await p.textContent(".ses-donde")) === "Front lever" && (await p.textContent(".ses-tit h1")) === "Colgado con hombros firmes", "la habilidad: " + await p.textContent(".ses-donde"));
+  ok(await p.evaluate(() => { const d = document.querySelector(".ses-donde .pdots"), n = K.sesion.estado().plan.bloques.length; return d && d.children.length === n && d.children[K.sesion.estado().b].className === "n" && d.getAttribute("aria-label") === `Bloque ${K.sesion.estado().b + 1} de ${n}`; }), "los puntos de los bloques");
   /* una serie del camino a la planche: guarda la escalera, y lo guardado dice para qué metas era cada bloque */
   await p.evaluate(() => { K.sesion.saltear(); K.refrescar(); }); await p.waitForSelector(".ses.serie");
-  ok((await p.textContent(".ses-donde")).endsWith("· Planche"), "el camino no dice su meta: " + await p.textContent(".ses-donde"));
+  ok((await p.textContent(".ses-donde")) === "Planche", "el camino no dice su meta: " + await p.textContent(".ses-donde"));
   await p.click("#s-listo"); await p.waitForSelector(".ses.descanso"); await p.fill("#s-valor", "7");
   await p.click("#s-cortar"); await p.waitForSelector(".res");
   const g = await p.evaluate(() => K.diario.sesiones[0]);
@@ -749,21 +753,23 @@ prueba("rumbo-sin-tope", async () => {
   ok(!(await p.$(".utoast")), "sumar una quinta avisa");
   ok(await p.evaluate(() => K.rumbo().length) === 5, "no guardó las cinco");
   /* con tus 3 días: dos habilidades por día, entre cinco metas, cada una 1 o 2 veces por semana */
-  ok((await p.textContent(".rumbo-cuanto")) === "5 elegidas · cada una, 1 o 2 veces por semana", "la línea de frecuencia: " + await p.textContent(".rumbo-cuanto"));
+  /* «5 elegidas» a la izquierda; a la derecha, el calendario y cada cuánto toca cada una */
+  ok((await p.textContent(".rumbo-cuanto")) === "5 elegidas 1–2× por semana" && await p.getAttribute(".rumbo-cuanto .frec", "aria-label") === "Cada una, 1 o 2 veces por semana" && await p.$(".rumbo-cuanto .frec svg"), "la línea de frecuencia: " + await p.textContent(".rumbo-cuanto"));
+  ok(await p.evaluate(() => { const a = document.querySelector(".rumbo-cuanto b").getBoundingClientRect(), b = document.querySelector(".rumbo-cuanto .frec").getBoundingClientRect(), c = document.querySelector(".rumbo-cuanto").getBoundingClientRect(); return a.left - c.left < 2 && c.right - b.right < 2; }), "las elegidas no van a la izquierda y la frecuencia a la derecha");
   ok(await p.evaluate(() => { const a = document.querySelector(".rumbo-cuanto").getBoundingClientRect(), b = document.querySelector(".rumbo-listo").getBoundingClientRect(); return a.bottom <= b.top && b.bottom <= innerHeight; }), "la línea no queda arriba de «Listo»");
   /* sin barra, lo que la pide dice «Pide barra», nunca «0 de 0»; en Tu rumbo y en tu cosmos */
   await p.evaluate(() => K.diario.perfilPoner("equipo", []).then(() => K.refrescar())); await p.waitForTimeout(200);
   const filas = await p.$$eval(".rumbo-fila", xs => Object.fromEntries(xs.map(x => [x.dataset.rumbo, x.querySelector("em").textContent])));
   ok(filas["muscle-up"] === "Pide barra" && filas["bandera"] === "Pide poste" && filas["lastre"] === "Pide barra, paralelas y lastre" && filas["planche"] === "0 de 7", "las filas: " + JSON.stringify(filas));
   ok(!Object.values(filas).includes("0 de 0"), "una fila dice 0 de 0");
-  ok((await p.textContent(".rumbo-cuanto")).startsWith("5 elegidas · las que podés, cada una,"), "con metas que piden equipo: " + await p.textContent(".rumbo-cuanto"));
+  ok((await p.textContent(".rumbo-cuanto")).startsWith("5 elegidas las que podés ") && (await p.getAttribute(".rumbo-cuanto .frec", "aria-label")).startsWith("cada una, "), "con metas que piden equipo: " + await p.textContent(".rumbo-cuanto"));
   await ir(p, "#/cielo");
   ok(!(await p.textContent("main.view")).includes("0 de 0"), "tu cosmos dice 0 de 0");
   await ir(p, "#/cielo/muscle-up"); ok(!(await p.textContent("main.view")).includes("0 de 0"), "la constelación dice 0 de 0");
   /* Hoy arma el día igual, con lo que se puede, y dice qué piden las otras con el atajo a Tu equipo */
   await ir(p, "#/hoy");
   ok((await p.textContent(".hoy-pide")).includes("Muscle-up pide barra") && await p.getAttribute(".hoy-pide", "data-ir") === "#/vos/equipo", "Hoy no dice qué piden");
-  ok((await partes(p)).includes("Habilidad · descansado"), "Hoy sin habilidad con planche en el rumbo");
+  ok((await partes(p)).includes("Habilidad descansado"), "Hoy sin habilidad con planche en el rumbo");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -773,8 +779,9 @@ prueba("hoy-rota", async () => {
   await ir(p, "#/hoy"); await sembrarMolde(p, {rumbo: ["front-lever", "planche", "una-pierna"]}); await p.waitForSelector("#s-empezar");
   const metas = () => p.$$eval(".hoy-toca .toca-marca", xs => xs.map(x => x.textContent).filter(t => /para /i.test(t)));
   const hoy = await metas();
-  ok(hoy.length === 2 && hoy[0] === "Para Front lever" && hoy[1].endsWith("para Planche"), "hoy: " + hoy);
-  ok((await p.textContent(".hoy-pie")) === "La próxima: Una pierna", "el pie no dice lo que sigue: " + await p.textContent(".hoy-pie"));
+  ok(hoy.length === 2 && hoy[0] === "Para Front lever" && hoy[1] === "Para Planche", "hoy: " + hoy);
+  /* «La próxima»: la etiqueta y cada una con el punto de su familia */
+  ok((await p.textContent(".hoy-pie")) === "La próxima Una pierna" && await p.$$eval(".hoy-pie .hoy-pie-n .tg .dot", x => x.length) === 1, "el pie no dice lo que sigue: " + await p.textContent(".hoy-pie"));
   await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo");
   await p.evaluate(() => { K.sesion.saltear(); K.refrescar(); }); await p.waitForSelector(".ses.serie");
   await tick(p, 30000); await p.click("#s-listo"); await p.click("#s-cortar"); await p.waitForSelector(".res");
@@ -1103,10 +1110,49 @@ prueba("escalera-isla", async () => {
   ok((await p.textContent(".ses-reloj")).includes("repeticiones"), "falta lo que toca");
   await tick(p, 4000);
   await p.click("#s-mas"); await p.click('.pmi[data-id="cielo"]'); await esperarTitulo(p, "Tu cosmos"); await tick(p, 500);
-  ok((await p.textContent("#isla")).trim().startsWith("Dominada · ▲ nuevo "), "la isla: " + await p.textContent("#isla"));
+  /* en la isla, lo nuevo va como su signo, en el color de la familia, entre el nombre y el reloj */
+  ok(await p.textContent("#isla .tx") === "Dominada" && await p.textContent("#isla .mk") === "▲" && /^Dominada, ▲ nuevo \d+:\d\d$/.test(await p.getAttribute("#isla", "aria-label")), "la isla: " + await p.textContent("#isla") + " / " + await p.getAttribute("#isla", "aria-label"));
   /* en la serie que sigue (sentadilla, mismo escalón) no hay marca */
   await p.click("#isla"); await p.waitForSelector(".ses.serie"); await p.click("#s-listo"); await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
   ok(!(await p.textContent(".ses-tit .lb")).includes("▲"), "la sentadilla dice que es nueva");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+/* la isla con un nombre largo: si no entra, pasea de punta a punta, despacio y con pausa en cada punta; si entra, quieta;
+   sin movimiento, quieta y cortada con «…». El paso lo lleva setTimeout: el reloj falso lo adelanta igual siempre */
+prueba("isla-pasea", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/cielo");
+  const poner = (t, marca = "") => p.evaluate(([t, marca]) => K.isla.mostrar({texto: t, p: .4, familia: "fu", ir: "#/hoy", marca}), [t, marca]);
+  const estado = () => p.evaluate(() => { const b = document.querySelector("#isla"), tx = b.querySelector(".tx"), en = b.querySelector(".tx-in");
+    return {mq: b.dataset.mq || "", tr: en.style.transform, ms: parseFloat((/(\d+)ms/.exec(en.style.transition) || [])[1]) || 0, pasea: tx.classList.contains("pasea"), d: en.scrollWidth - tx.clientWidth,
+      rl: b.querySelector(".rl")?.textContent || "", corta: getComputedStyle(tx).textOverflow, sobra: tx.scrollWidth > tx.clientWidth + 1}; });
+  const largo = "Remo en horizontal con rodillas al pecho, la versión más larga";
+  await poner(`${largo} 0:05`, "▲ nuevo");
+  let e = await estado();
+  ok(e.pasea && e.mq === "inicio" && e.tr === "" && e.d > 20, "un nombre largo no se prepara para pasear: " + JSON.stringify(e));
+  /* la pausa del principio, y después la ida: hacia la izquierda, a unos 30 px por segundo */
+  await p.clock.runFor(1500); e = await estado(); ok(e.mq === "inicio", "arrancó sin pausa: " + JSON.stringify(e));
+  await p.clock.runFor(400); e = await estado();
+  const v = e.d / (e.ms / 1000);
+  ok(e.mq === "ida" && new RegExp(`translateX\\(-${e.d}px\\)`).test(e.tr) && v >= 25 && v <= 35, "no pasea o va muy rápido: " + JSON.stringify(e) + " " + v);
+  /* el reloj de la isla sigue corriendo sin hacerlo volver a empezar */
+  await poner(`${largo} 0:06`, "▲ nuevo"); e = await estado();
+  ok(e.mq === "ida" && e.rl === "0:06" && e.tr !== "", "el reloj reinició el paseo: " + JSON.stringify(e));
+  /* al llegar a la punta, otra pausa; después vuelve */
+  await p.clock.runFor(e.ms); e = await estado(); ok(e.mq === "fin", "no para en la punta: " + JSON.stringify(e));
+  await p.clock.runFor(1900); e = await estado(); ok(e.mq === "vuelta" && e.tr === "", "no vuelve: " + JSON.stringify(e));
+  await p.clock.runFor(e.ms + 100); e = await estado(); ok(e.mq === "inicio", "no vuelve al principio: " + JSON.stringify(e));
+  /* otro nombre (el bloque que sigue): si entra, queda quieto */
+  await poner("Dominada 0:01"); e = await estado();
+  ok(!e.pasea && !e.mq && e.tr === "" && !e.sobra, "un nombre que entra se mueve: " + JSON.stringify(e));
+  await p.clock.runFor(10000); e = await estado(); ok(!e.mq && e.tr === "", "un nombre que entra empezó a pasear: " + JSON.stringify(e));
+  /* y vuelve a pasear con otro largo */
+  await poner(`${largo}, otra vez 0:02`); await p.clock.runFor(1900); e = await estado(); ok(e.mq === "ida", "el nombre nuevo no pasea: " + JSON.stringify(e));
+  /* sin movimiento: quieta, cortada con «…» */
+  await p.emulateMedia({reducedMotion: "reduce"});
+  await poner(`${largo}, sin moverse 0:03`); await p.clock.runFor(5000); e = await estado();
+  ok(!e.pasea && !e.mq && e.tr === "" && e.corta === "ellipsis" && e.sobra, "sin movimiento, la isla se mueve o no se corta: " + JSON.stringify(e));
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -1118,7 +1164,7 @@ prueba("escalera-resumen", async () => {
   const fs = await p.$$eval(".res-esc li", ls => ls.map(l => [l.className, l.querySelector(".res-signo").textContent, l.querySelector(".ses-fila").textContent.trim()]));
   const de = n => fs.find(f => f[2].startsWith(n)) || [];
   ok(de("Tirar")[0] === "sube" && de("Tirar")[1] === "▲" && de("Tirar")[2].includes("Dominada negativa → Dominada"), "tirar: " + JSON.stringify(de("Tirar")));
-  ok(de("Piernas")[0] === "igual" && de("Piernas")[1] === "=" && de("Piernas")[2].includes("11 · 11 · 10"), "piernas: " + JSON.stringify(de("Piernas")));
+  ok(de("Piernas")[0] === "igual" && de("Piernas")[1] === "=" && de("Piernas")[2].includes("La próxima: 11\u200211\u200210"), "piernas: " + JSON.stringify(de("Piernas")));
   ok(de("Fondos")[0] === "baja" && de("Fondos")[1] === "▼" && de("Fondos")[2].includes("Flexión cerrada"), "fondos: " + JSON.stringify(de("Fondos")));
   /* la primera sesión: todavía nada cambia */
   await ir(p, "#/progreso/e1"); await p.waitForSelector(".res-esc");
@@ -1173,9 +1219,10 @@ prueba("rutina-dias-nombres", async () => {
   for (const [id, dias] of rs){
     await ir(p, `#/planes/rutinas/${id}`); await p.waitForSelector(".rut-dia");
     const ds = await p.$$eval(".rut-dia", xs => xs.map(x => ({t: x.querySelector(".lb, span")?.textContent || "", filas: x.querySelectorAll(".ln.toca").length})));
+    ok(ds.every(d => !/·/.test(d.t)), `${id}: un día separa con «·»: ` + ds.map(d => d.t));
     ok(ds.length === dias, `${id}: ${ds.length} días, esperaba ${dias}`);
     for (const d of ds){
-      ok(!/d[ií]a\s+\S+\s*·\s*d[ií]a\s/i.test(d.t), `${id}: el día dice «${d.t}»`);
+      ok(!/d[ií]a\s+\S+\s+d[ií]a\s/i.test(d.t), `${id}: el día dice «${d.t}»`);
       ok(d.filas > 0, `${id}: «${d.t}» no dice qué se hace`);
     }
   }
@@ -1190,7 +1237,7 @@ prueba("rutina-dias-te-toca", async () => {
   await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia.te-toca");
   ok(await p.$$eval(".rut-dia.hecho", x => x.length) === 2, "no marca los dos días hechos de la semana");
   const toca = await p.$eval(".rut-dia.te-toca", x => ({t: x.querySelector(".lb").textContent, filas: [...x.querySelectorAll(".ln.toca")].map(y => [y.querySelector(".tg").textContent, y.querySelector(".num").textContent])}));
-  ok(toca.t === "Te toca · Día C", "el día que toca dice: " + toca.t);
+  ok(toca.t === "Te toca Día C", "el día que toca dice: " + toca.t);
   ok(hoy.every(q => toca.filas.some(([n]) => n === q)), `«Te toca» no es lo de Hoy: ${hoy} / ${toca.filas.map(f => f[0])}`);
   const tirar = await p.evaluate(() => K.ej(K.rutina.escalerasDe(K.rutinaDe("base_cali"), K.ctxRutina()).find(x => x.id === "tirar").paso.ejercicio).nombre);
   ok(toca.filas.some(([n, v]) => n === tirar && /^\d+ × \d+–\d+$/.test(v)), `la escalera de tirar no dice ${tirar} con series × rango: ` + JSON.stringify(toca.filas));
@@ -1208,7 +1255,7 @@ prueba("rutina-dias-te-toca", async () => {
   ok((await p.textContent(".rut-dia")).includes(tirarG), "el día A de Gimnasta no arranca en tu escalón de tirar: " + tirarG);
   /* motor: qué es y cuánto; y en Hoy el bloque ya no se llama como el día */
   await ir(p, "#/planes/rutinas/c0a5"); await p.waitForSelector(".rut-dia");
-  ok(/Trote\s*8 × 1 min · 1:30 suave/.test(await p.textContent(".rut-dia")), "Correr tus primeros 5 km no dice el trote: " + await p.textContent(".rut-dia"));
+  ok(/Trote\s*8 × 1 min 1:30 suave/.test(await p.textContent(".rut-dia")) && (await p.textContent(".rut-dia .toca-n .q")) === "1:30 suave", "Correr tus primeros 5 km no dice el trote: " + await p.textContent(".rut-dia"));
   await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
   ok(!/^D[ií]a/.test(await p.textContent(".hoy-toca .ln.toca .tg")), "en Hoy el bloque de motor se llama como el día");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
@@ -1258,13 +1305,16 @@ prueba("serie-con-kilos", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await sembrarKg(p); await p.waitForSelector("#s-empezar");
   /* Hoy y el día de la rutina dicen los kilos en la fila */
-  const fila = async (sel, q) => p.$$eval(sel + " .ln.toca", (ls, q) => ls.map(l => l.textContent).find(t => t.startsWith(q)) || "", q);
-  ok((await fila("main", "Remo unilateral con mancuerna")).endsWith("3 × 8–12 · 8 kg"), "Hoy: " + await fila("main", "Remo unilateral con mancuerna"));
-  ok((await fila("main", "Sentadilla con mancuernas")).endsWith("· 4 kg"), "la sentadilla con mancuernas: " + await fila("main", "Sentadilla con mancuernas"));
+  /* la fila: lo que toca y, debajo, en la misma columna, los kilos como su propia ficha con la mancuerna */
+  const fila = async (sel, q) => p.$$eval(sel + " .ln.toca", (ls, q) => { const l = ls.find(l => l.querySelector(".tg").textContent.startsWith(q)); if (!l) return "";
+    const n = l.querySelector(".toca-n"), k = n.querySelector(".kg"), a = n.firstElementChild.getBoundingClientRect(), b = k ? k.getBoundingClientRect() : null;
+    return `${n.firstElementChild.textContent}|${k ? k.textContent : ""}|${k && k.querySelector("svg") && Math.abs(a.right - b.right) < 1.5 && b.top >= a.bottom - 1 ? "debajo" : "fuera"}`; }, q);
+  ok((await fila("main", "Remo unilateral con mancuerna")) === "3 × 8–12|8 kg|debajo", "Hoy: " + await fila("main", "Remo unilateral con mancuerna"));
+  ok((await fila("main", "Sentadilla con mancuernas")).endsWith("|4 kg|debajo"), "la sentadilla con mancuernas: " + await fila("main", "Sentadilla con mancuernas"));
   /* la serie: los kilos de la mancuerna y que es más peso */
   await aLaSerie(p);
   ok(await p.evaluate(() => K.sesion.paso().ejercicio) === "remo-mancuerna", "la primera serie: " + await p.evaluate(() => K.sesion.paso().ejercicio));
-  ok((await p.textContent(".ses-reloj")).includes("con 8 kg por mano") && (await p.textContent(".ses-tit .lb")).includes("▲ más peso"), "la serie: " + await p.textContent(".ses-reloj") + " · " + await p.textContent(".ses-tit .lb"));
+  ok((await p.textContent(".ses-reloj .kg")) === "8 kg por mano" && await p.$(".ses-reloj .kg svg") && (await p.textContent(".ses-tit .lb .ses-marca")) === "▲ más peso", "la serie: " + await p.textContent(".ses-reloj") + " · " + await p.textContent(".ses-tit .lb"));
   /* el descanso pide los kilos por mano, con los de la serie puestos; tu peso no */
   await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
   ok(await p.getAttribute("#s-kg", "aria-label") === "Kilos por mano" && await p.inputValue("#s-kg") === "8" && !(await p.$("#s-peso")) && !(await p.$("#s-lastre")), "el descanso no pide los kilos por mano");
@@ -1286,10 +1336,10 @@ prueba("serie-con-kilos", async () => {
   /* el resumen de la segunda sesión sembrada: ▲ más peso, +2 kg */
   await ir(p, "#/progreso/k2"); await p.waitForSelector(".res-esc");
   const li = await p.$$eval(".res-esc li", ls => ls.map(l => [l.className, l.querySelector(".res-signo").textContent, l.querySelector(".ses-fila").textContent.trim()]));
-  ok(li.some(([c, g, t]) => c === "sube" && g === "▲" && t.startsWith("Remo") && t.includes("+2 kg · ahora 8 kg")), "el resumen: " + JSON.stringify(li));
+  ok(li.some(([c, g, t]) => c === "sube" && g === "▲" && t.startsWith("Remo") && t.includes("+2 kg ahora 8 kg")), "el resumen: " + JSON.stringify(li));
   /* la rutina en Planes: los días dicen los kilos, los últimos que pusiste (9, aunque la sesión se cortó) */
   await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia");
-  ok((await fila(".rut-dia", "Remo unilateral con mancuerna")).endsWith("· 9 kg"), "Planes: " + await fila(".rut-dia", "Remo unilateral con mancuerna"));
+  ok((await fila(".rut-dia", "Remo unilateral con mancuerna")).endsWith("|9 kg|debajo"), "Planes: " + await fila(".rut-dia", "Remo unilateral con mancuerna"));
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -1375,7 +1425,7 @@ prueba("hazana-datos-viejos", async () => {
   await ir(p, "#/hoy"); await sembrarSes(p, viejas); await p.reload(); await p.waitForSelector("main.view");
   await ir(p, "#/progreso/hv1"); await p.waitForSelector(".res");
   ok((await p.textContent(".res-txt")).includes("versión anterior") && (await p.textContent(".res-datos")).includes("14:05"), "el resumen viejo: " + await p.textContent(".res-txt"));
-  await ir(p, "#/progreso"); ok((await p.textContent(".lado")).includes("Flexiones a ritmo · Intermedio"), "Progreso no muestra la hazaña vieja");
+  await ir(p, "#/progreso"); ok((await p.textContent(".lado")).includes("Flexiones a ritmo Intermedio"), "Progreso no muestra la hazaña vieja");
   await ir(p, "#/planes/hazanas/perseo");
   ok((await p.textContent(".hz-veces")).includes("versión anterior") && (await p.textContent(".hz-escala")).includes("Todavía no la hiciste"), "la prueba no separa la versión anterior");
   ok(await p.evaluate(() => K.cielo.deSesiones(K.diario.sesiones).length === 0), "las hazañas viejas cuentan como marcas");
@@ -1480,7 +1530,8 @@ prueba("hoy-sin-repetir-constelacion", async () => {
   await ir(p, "#/hoy");
   const [a, b] = await p.evaluate(() => [K.filaToca({constelacion: "parada-de-manos", ejercicio: "vertical-pared", tipo: "segundos", objetivo: [30]})[0], K.filaToca({constelacion: "front-lever", ejercicio: "fl-bolita", tipo: "segundos", objetivo: [10]})[0]]);
   ok(a === "Parada de manos contra la pared", "repite la constelación: " + a);
-  ok(b === "Front lever · Horizontal hecho bolita", "sacó la constelación de más: " + b);
+  /* la constelación, un tono más suave; el ejercicio, en tinta */
+  ok(b === '<span class="q">Front lever</span> Horizontal hecho bolita', "sacó la constelación de más: " + b);
   const q = await p.evaluate(() => [K.queToca({tipo: "repeticiones", series: 4, objetivo: 5}), K.queToca({tipo: "repeticiones", series: 1, objetivo: 5}), K.queToca({tipo: "segundos", series: 4, objetivo: 10})]);
   ok(q.join("|") === "4 × 5|×5|4 × 10 s", "las repeticiones en Hoy: " + q.join("|"));
   await ctx.close();
@@ -1522,7 +1573,7 @@ prueba("rutina-meta", async () => {
   const items = await p.$$eval(".pmi", xs => xs.map(x => x.textContent.trim()));
   ok(items.includes("Semana 5: prueba") && items.includes("Semana 6: la meta") && !items.includes("Semana 6: prueba"), "el menú de semanas: " + items);
   await p.click('.pmi[data-id="6"]'); await p.waitForSelector(".rut .hoy-meta");
-  ok((await p.textContent(".rut .hoy-meta")).trim() === "Semana 6: la meta · 100 flexiones seguidas", "la meta no se dice: " + await p.textContent(".rut .hoy-meta"));
+  ok((await p.textContent(".rut .hoy-meta")).trim() === "Semana 6: la meta 100 flexiones seguidas", "la meta no se dice: " + await p.textContent(".rut .hoy-meta"));
   ok(!(await p.$(".rut-dia .toca-marca")) && (await p.textContent("#rut-sem")).includes("Semana 6: la meta"), "la meta va más liviana");
   await p.click("#rut-sem"); await p.click('.pmi[data-id="5"]'); await p.waitForSelector(".rut .hoy-sp:not(.hoy-meta)");
   ok((await p.textContent(".rut .hoy-sp")).includes("Semana 5: prueba") && await p.$(".rut-dia .toca-marca"), "la semana 5 no es la de prueba");
@@ -1534,7 +1585,7 @@ prueba("rutina-meta", async () => {
   ok((await p.textContent(".hoy-sp")).startsWith("Semana de prueba"), "la semana 3 de Soga no es de prueba");
   await p.evaluate(async ss => { for (const s of ss) await K.diario.guardarSesion(s); K.refrescar(); }, sRut("soga", 9, DIAS_B).slice(6));
   await p.waitForSelector(".hoy-meta"); await p.waitForFunction(() => document.querySelectorAll(".hoy-toca").length === 1);
-  ok((await p.textContent(".hoy-meta")).trim() === "Semana 4: la meta · 1000 saltos seguidos", "Hoy no dice la meta: " + await p.textContent(".hoy-meta"));
+  ok((await p.textContent(".hoy-meta")).trim() === "Semana 4: la meta 1000 saltos seguidos", "Hoy no dice la meta: " + await p.textContent(".hoy-meta"));
   ok(!(await p.$(".hoy-toca .es-prueba")) && !(await p.$(".hoy-toca .toca-marca")), "la meta trae pruebas o va más liviana: " + await p.textContent(".hoy-toca"));
   ok((await p.textContent(".hoy-origen")).includes("sem 4 de 4"), "la meta no es la semana 4");
   await ir(p, "#/planes"); await p.waitForSelector(".pl-rut");
@@ -1551,7 +1602,7 @@ prueba("semana-de-prueba-hoy", async () => {
   await p.evaluate(() => K.diario.perfilPoner("rutina", {id: "base_cali", desde: "2026-09-21"}).then(() => K.refrescar()));
   await p.waitForSelector(".hoy-sp");
   const tx = await p.textContent(".hoy-sp");
-  ok(/^Semana de prueba · \d+ pruebas · encienden hasta \d+ estrellas$/.test(tx.trim()), "Hoy no avisa la semana de prueba: " + tx);
+  ok(/^Semana de prueba \d+ pruebas que encienden hasta \d+ estrellas$/.test(tx.trim()) && await p.$(".hoy-sp .aparte"), "Hoy no avisa la semana de prueba: " + tx);
   ok(await p.$$eval(".hoy-toca .toca.es-prueba", x => x.length) >= 2, "las pruebas no van en lo que toca");
   /* la sesión: pruebas primero; se anota la de Empuje y el resto se saltea */
   await p.click("#s-empezar"); await tick(p, 1000);
@@ -1569,7 +1620,8 @@ prueba("semana-de-prueba-hoy", async () => {
   ok((await p.textContent(".res-txt")).includes("Semana de prueba") && await p.$(".res-pruebas .escala"), "el resumen no muestra la prueba");
   /* el resto de la semana es liviana, sin pruebas */
   await ir(p, "#/hoy"); await p.waitForSelector(".hoy-sp");
-  ok((await p.textContent(".hoy-sp")).includes("más liviana") && !(await p.$(".hoy-toca .es-prueba")), "después de las pruebas, la semana sigue con pruebas");
+  /* lo que agrega va en su renglón, con mayúscula: «Más liviana, para llegar descansado» */
+  ok((await p.textContent(".hoy-sp .aparte")).includes("Más liviana") && !(await p.$(".hoy-toca .es-prueba")), "después de las pruebas, la semana sigue con pruebas");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -1693,7 +1745,7 @@ prueba("origen-de-hoy", async () => {
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever", "motor"]);
   /* con rumbo: la fila dice de dónde sale y lleva a cambiarlo */
   const o = await p.textContent(".hoy-origen");
-  ok(o.includes("Sale de tu rumbo") && o.includes("Front lever · Motor"), "la fila de origen con rumbo: " + o);
+  ok(o.includes("Sale de tu rumbo") && o.includes("Front lever y Motor"), "la fila de origen con rumbo: " + o);
   await p.click(".hoy-origen .ajr"); await esperarTitulo(p, "Tu rumbo");
   await p.click(".rumbo-listo"); await esperarTitulo(p, "Hoy");
   /* con rutina: su nombre, la semana y un toque a la rutina */
@@ -2339,7 +2391,7 @@ prueba("cosmos-nombre", async () => {
   await p.click('nav.barra button[data-tab="cielo"]'); await esperarTitulo(p, "Tu cosmos");
   await p.waitForTimeout(500);
   ok(await p.textContent('nav.barra [aria-current="page"] .nm') === "Cosmos", "la barra no dice Cosmos");
-  ok(await p.evaluate(() => document.title) === "Tu cosmos · Kozmos", "el título de la página: " + await p.evaluate(() => document.title));
+  ok(await p.evaluate(() => document.title) === "Tu cosmos", "el título de la página: " + await p.evaluate(() => document.title));
   await sinCielo("Tu cosmos vacío");
   for (const h of ["#/cielo/front-lever", "#/cielo/front-lever/anotar", "#/planes", "#/progreso", "#/vos", "#/vos/equipo", "#/hoy/equipo", "#/hoy/rumbo"]){ await ir(p, h); await sinCielo(h); }
   /* con historia: Hoy, la sesión con su menú, el resumen y Progreso */

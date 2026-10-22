@@ -1079,14 +1079,14 @@ prueba("plan-solo-con-prueba", () => {
 
 /* ===== Los días de una rutina ===== */
 prueba("rutina-nombre-dia", () => {
-  /* nunca «Día 1 · Día 1»: si el catálogo ya dice el día, va solo; si no, su lugar y su nombre */
+  /* nunca «Día 1» dos veces: si el catálogo ya dice el día, va solo; si no, su lugar y, aparte, su nombre */
   for (const [f, r] of RUTINAS) r.sesiones.forEach((s, i) => {
-    const n = rutina.nombreDia(r, i);
-    ok(n && !/d[ií]a\s+\S+\s*·\s*d[ií]a\s/i.test(n), `${f}: día ${i}: «${n}»`);
-    ok(/^Día \S+/.test(n), `${f}: día ${i} no empieza con «Día»: «${n}»`);
+    const [d, n] = rutina.nombreDia(r, i);
+    ok(d && !/^d[ií]a\s/i.test(n), `${f}: día ${i}: «${d}» «${n}»`);
+    ok(/^Día \S+/.test(d), `${f}: día ${i} no empieza con «Día»: «${d}»`);
   });
   const r = RUTINAS.find(([f]) => f === "armstrong.json")[1], b = RUTINAS.find(([f]) => f === "base_cali.json")[1];
-  ok(rutina.nombreDia(r, 6) === "Día 2 · Pirámide" && rutina.nombreDia(b, 4) === "Día B", "nombres: " + rutina.nombreDia(r, 6) + " / " + rutina.nombreDia(b, 4));
+  ok(rutina.nombreDia(r, 6).join("|") === "Día 2|Pirámide" && rutina.nombreDia(b, 4).join("|") === "Día B|", "nombres: " + rutina.nombreDia(r, 6) + " / " + rutina.nombreDia(b, 4));
   ok(rutina.esSemanaDePrueba(b, 4) && !rutina.esSemanaDePrueba(b, 5) && rutina.esSemanaDePrueba(b, 8), "la semana de prueba de la Base es la 4 y la 8");
 });
 prueba("rutina-dias-filas", () => {
@@ -1102,10 +1102,10 @@ prueba("rutina-dias-filas", () => {
   }
   const base = RUTINAS.find(([f]) => f === "base_cali.json")[1], c0 = RUTINAS.find(([f]) => f === "c0a5.json")[1];
   const a = rutina.dia(base, 0, {ej, equipo: ["barra"]});
-  ok(a.nombre === "Día A" && a.filas.some(x => x.q === "Dominada negativa" && x.n === "3 × 3–5" && x.escalera === "tirar"), "la Base no dice la escalera con series × rango: " + JSON.stringify(a.filas));
+  ok(a.nombre.join("|") === "Día A|" && a.filas.some(x => x.q === "Dominada negativa" && x.n === "3 × 3–5" && x.escalera === "tirar"), "la Base no dice la escalera con series × rango: " + JSON.stringify(a.filas));
   /* en la semana de prueba, la mitad de las series */
   ok(rutina.dia(base, 9, {ej, equipo: ["barra"], descarga: true}).filas.some(x => x.q === "Dominada negativa" && x.n === "2 × 3–5"), "la semana de prueba no va a la mitad");
-  ok(JSON.stringify(rutina.dia(c0, 0, {ej}).filas.map(x => [x.q, x.n])) === '[["Trote","8 × 1 min · 1:30 suave"]]', "el trote: " + JSON.stringify(rutina.dia(c0, 0, {ej}).filas));
+  ok(JSON.stringify(rutina.dia(c0, 0, {ej}).filas.map(x => [x.q, x.n, x.nq])) === '[["Trote","8 × 1 min","1:30 suave"]]', "el trote: " + JSON.stringify(rutina.dia(c0, 0, {ej}).filas));
   /* el bloque de motor se llama por lo que se hace, también en la sesión */
   ok(rutina.deRutina(c0, 0, {ej}).bloques[0].nombre === "Trote", "el bloque de trote se llama " + rutina.deRutina(c0, 0, {ej}).bloques[0].nombre);
 });
@@ -1263,7 +1263,9 @@ prueba("catalogo-entradas", () => {
   ok(ENT.piezas.length >= 12 && ENT.piezas.length <= 18, "piezas: " + ENT.piezas.length);
   for (const x of ENT.piezas){
     ok(/^[a-z0-9]+(-[a-z0-9]+)*$/.test(x.id) && !ids.has(x.id), `pieza con id raro o repetido: ${x.id}`); ids.add(x.id);
-    ok(typeof x.nota === "string" && / · /.test(x.nota) && x.nota.length <= 50, `${x.id}: la nota dice qué y cuánto, corta: ${x.nota}`);
+    /* qué (nota) y cuánto (dosis), cada uno en su campo y cortos: la pantalla los pone en dos renglones, sin «·» */
+    ok(typeof x.nota === "string" && x.nota && !/·/.test(x.nota) && x.nota.length <= 30, `${x.id}: la nota dice qué, corta: ${x.nota}`);
+    ok(typeof x.dosis === "string" && x.dosis && !/·/.test(x.dosis) && (x.nota + x.dosis).length <= 50, `${x.id}: la dosis dice cuánto, corta: ${x.dosis}`);
     ok(Number.isInteger(x.seg) && x.seg >= 15 && x.seg <= 180, `${x.id}: segundos ${x.seg}`);
     ok(Array.isArray(x.para) && x.para.length && x.para.every(p => PARA.includes(p)), `${x.id}: para ${x.para}`);
     ok((x.equipo || []).every(q => EQUIPOS.includes(q)), `${x.id}: equipo ${x.equipo}`);
@@ -1334,7 +1336,7 @@ prueba("escalera-kilos", () => {
   const base = RUTINAS.find(([, y]) => y.id === "base_cali")[1], hist = [{...r("1", [10, 9, 9], 6), rutina: {id: "base_cali", sesion: 1}}];
   const dia = rutina.deRutina(base, 1, {ej, equipo: eq, sesiones: hist}), p = dia.bloques.flatMap(b => b.pasos || []).find(y => y.escalera === "remo");
   ok(p && p.ejercicio === "remo-mancuerna" && p.kg === 6 && p.mano && p.carga === 2, "el paso con mancuerna: " + JSON.stringify(p));
-  ok(rutina.filas(dia.bloques, ej).some(f => f.escalera === "remo" && / · 6 kg$/.test(f.n)), "la fila no dice los kilos: " + JSON.stringify(rutina.filas(dia.bloques, ej).filter(f => f.escalera === "remo")));
+  ok(rutina.filas(dia.bloques, ej).some(f => f.escalera === "remo" && f.kg === "6 kg" && !/kg/.test(f.n)), "la fila no dice los kilos: " + JSON.stringify(rutina.filas(dia.bloques, ej).filter(f => f.escalera === "remo")));
   /* el respaldo lleva «kg» y no deja pasar kilos imposibles */
   const d1 = {mediciones: [], sesiones: [{...x, duracion: 600}], perfil: {}}, leido = respaldo.leer(JSON.stringify(respaldo.armar(d1, "k", 1)));
   ok(leido.descartadas === 0 && leido.sesiones[0].bloques[0].series[0].kg === 40, "el respaldo pierde los kilos");
@@ -1532,7 +1534,7 @@ prueba("dia-rotacion", () => {
   ok(deMolde(armarDia(["front-lever"], {equipo, ss: [ayer]}).bloques, "habilidad")[0].constelaciones.join() === "front-lever", "si es la única, va igual");
   /* el pie dice lo que viene */
   const q = armarDia(r, {equipo});
-  ok(q.pie === "La próxima: Una pierna · Draco" && q.rotacion.join() === r.join(), "el pie: " + q.pie);
+  ok(q.proxima.join() === "una-pierna,draco" && q.rotacion.join() === r.join(), "la próxima: " + q.proxima);
   /* la segunda no entrena lo mismo que la primera si la que sigue no: front lever y la dominada (las dos tiran) */
   const t = armarDia(["front-lever", "lastre", "planche"], {equipo: TODO, nivelDesde: {tirar: "dominada"}}), ht = deMolde(t.bloques, "habilidad");
   ok(ht.map(b => b.constelaciones.join()).join("|") === "front-lever|planche", "dos que tiran el mismo día: " + ht.map(b => b.constelaciones));
@@ -1766,6 +1768,30 @@ prueba("dia-con-nivel", () => {
   ok(pasos.length > 0 && ["fondos", "empujar", "remo", "tirar"].some(id => esc(id)), "sin fuerza de arriba");
   /* todo sigue entrando en el molde: sin repetidos y en la hora */
   ok(new Set(ejsDia(p.bloques)).size === ejsDia(p.bloques).length && p.minutos <= 60, "repetidos o más de una hora: " + p.minutos);
+});
+
+/* ===== Sin «·» (vuelta 30): nada de lo que se ve separa con un punto medio; se separa con jerarquía o con un dibujo =====
+   Revisa el código de la app (sin sus comentarios) y todos los textos del catálogo. */
+prueba("sin-punto-medio", () => {
+  const SRC = path.join(RAIZ, "src"), malos = [];
+  const todos = d => fs.readdirSync(d, {withFileTypes: true}).flatMap(x => x.isDirectory() ? todos(path.join(d, x.name)) : [path.join(d, x.name)]);
+  for (const f of todos(SRC).filter(f => /\.(js|html|css|webmanifest)$/.test(f))){
+    const sin = fs.readFileSync(f, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/<!--[\s\S]*?-->/g, "").replace(/^\s*\/\/.*$/gm, "");
+    sin.split("\n").forEach((l, i) => { if (/·/.test(l)) malos.push(`${path.relative(RAIZ, f)}: ${l.trim().slice(0, 90)}`); });
+  }
+  /* el catálogo: cada texto, en cualquier archivo */
+  const textos = (v, donde) => typeof v === "string" ? (/·/.test(v) ? [`${donde}: ${v}`] : []) : v && typeof v === "object" ? Object.entries(v).flatMap(([k, x]) => textos(x, `${donde}.${k}`)) : [];
+  const CATD = path.join(RAIZ, "catalogo");
+  for (const f of [...fs.readdirSync(CATD).filter(f => f.endsWith(".json")).map(f => path.join(CATD, f)), ...fs.readdirSync(RUT_DIR).filter(f => f.endsWith(".json")).map(f => path.join(RUT_DIR, f))])
+    malos.push(...textos(JSON.parse(fs.readFileSync(f, "utf8")), path.relative(RAIZ, f)));
+  ok(!malos.length, `queda el «·» en ${malos.length} lugares: ${malos.slice(0, 8).join(" | ")}`);
+  /* y los textos que arman las funciones puras tampoco lo traen */
+  const ej = Object.fromEntries(EJ.ejercicios.map(e => [e.id, e]));
+  for (const [f, r] of RUTINAS) for (let i = 0; i < r.sesiones.length; i++){
+    const d = rutina.dia(r, i, {ej, equipo: ["barra", "paralelas", "mancuernas", "bici", "soga", "lastre"]});
+    ok(!/·/.test(JSON.stringify([d.nombre, d.filas])), `${f}: día ${i}: ${JSON.stringify([d.nombre, d.filas])}`);
+  }
+  ok(rutina.serie(["4", "4", "4"]) === "3 × 4" && rutina.serie(["11", "11", "10"]) === "11\u200211\u200210", "los números en fila: " + rutina.serie(["11", "11", "10"]));
 });
 
 let fallas = 0;

@@ -63,7 +63,8 @@ K.mostrar = (anim = "") => {
   /* recién terminada la sesión, la estrella nueva vuela a su lugar */
   if (K._estrella && sub === "resumen"){ K._estrella = false; K.mov.estrella(v); }
   const h1 = K.$$(".enc-tit h1", v).find(x => x.offsetParent !== null);
-  document.title = tab === "hoy" || !h1 ? "Kozmos" : `${h1.textContent} · Kozmos`;
+  /* el título de la ventana: «Kozmos» en Hoy; en el resto, solo el nombre de la pantalla */
+  document.title = tab === "hoy" || !h1 ? "Kozmos" : h1.textContent;
   K._ultima = {tab, sub, hondo};
 };
 /* volver a dibujar sin moverse (por ejemplo, al cambiar el tema) */

@@ -60,7 +60,7 @@ K.caminos = (() => {
     for (let r = 0; listas.some(l => l[r]); r++) for (const l of listas) meter(l[r]);
     for (const x of sirve.filter(x => x.para.includes("general"))) meter(x);
     /* en el orden del catálogo: el pulso, lo general, lo de cada parte y el primer ejercicio suave al final */
-    const ts = todas.filter(x => elegidas.includes(x)).map(x => ({clase: "entrada", seg: x.seg, nota: x.nota, ...(x.ejercicio ? {ejercicio: x.ejercicio} : {})}));
+    const ts = todas.filter(x => elegidas.includes(x)).map(x => ({clase: "entrada", seg: x.seg, nota: x.nota, ...(x.dosis ? {dosis: x.dosis} : {}), ...(x.ejercicio ? {ejercicio: x.ejercicio} : {})}));
     return {clase: "tramos", familia: familia || bs.find(b => b.familia)?.familia || "fu", nombre: "Entrada en calor", tramos: ts, series: ts.length};
   }
 

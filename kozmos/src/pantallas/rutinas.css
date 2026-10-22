@@ -8,7 +8,7 @@
 .rut-dias-tit>.lb.pie{padding-bottom:0}
 .rut-dias{display:grid; gap:8px}
 .rut-dia.te-toca{border:2px solid var(--ink); padding:15px}
-.rut-dia.te-toca>.ln:first-child .lb:first-child{color:var(--ink)}
+.rut-dia.te-toca .te-toca-tx{color:var(--ink)}
 .rut-dia.hecho{padding-top:12px; padding-bottom:12px}
 .rut-dia.hecho .tg .ic{width:14px; height:14px}
 .rut-dia>p.small{margin:0}

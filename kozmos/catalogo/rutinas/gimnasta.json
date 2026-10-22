@@ -32,37 +32,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -120,37 +127,44 @@
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Sentadillas sin peso · 12, bien abajo"
+       "nota": "Sentadillas sin peso",
+       "dosis": "12, bien abajo"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de cadera · 8 por lado"
+       "nota": "Círculos de cadera",
+       "dosis": "8 por lado"
       },
       {
        "clase": "entrada",
        "seg": 10,
-       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+       "nota": "Perro de caza",
+       "dosis": "5 por lado, 5 s arriba"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Zancadas caminando · 8 por pierna"
+       "nota": "Zancadas caminando",
+       "dosis": "8 por pierna"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Estiramiento del mundo · 5 por lado"
+       "nota": "Estiramiento del mundo",
+       "dosis": "5 por lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Puente de glúteo · 12, apretando arriba"
+       "nota": "Puente de glúteo",
+       "dosis": "12, apretando arriba"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -217,37 +231,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -329,37 +350,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -417,37 +445,44 @@
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Sentadillas sin peso · 12, bien abajo"
+       "nota": "Sentadillas sin peso",
+       "dosis": "12, bien abajo"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de cadera · 8 por lado"
+       "nota": "Círculos de cadera",
+       "dosis": "8 por lado"
       },
       {
        "clase": "entrada",
        "seg": 10,
-       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+       "nota": "Perro de caza",
+       "dosis": "5 por lado, 5 s arriba"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Zancadas caminando · 8 por pierna"
+       "nota": "Zancadas caminando",
+       "dosis": "8 por pierna"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Estiramiento del mundo · 5 por lado"
+       "nota": "Estiramiento del mundo",
+       "dosis": "5 por lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Puente de glúteo · 12, apretando arriba"
+       "nota": "Puente de glúteo",
+       "dosis": "12, apretando arriba"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -514,37 +549,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -626,37 +668,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -714,37 +763,44 @@
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Sentadillas sin peso · 12, bien abajo"
+       "nota": "Sentadillas sin peso",
+       "dosis": "12, bien abajo"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de cadera · 8 por lado"
+       "nota": "Círculos de cadera",
+       "dosis": "8 por lado"
       },
       {
        "clase": "entrada",
        "seg": 10,
-       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+       "nota": "Perro de caza",
+       "dosis": "5 por lado, 5 s arriba"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Zancadas caminando · 8 por pierna"
+       "nota": "Zancadas caminando",
+       "dosis": "8 por pierna"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Estiramiento del mundo · 5 por lado"
+       "nota": "Estiramiento del mundo",
+       "dosis": "5 por lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Puente de glúteo · 12, apretando arriba"
+       "nota": "Puente de glúteo",
+       "dosis": "12, apretando arriba"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -811,37 +867,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -923,37 +986,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1011,37 +1081,44 @@
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Sentadillas sin peso · 12, bien abajo"
+       "nota": "Sentadillas sin peso",
+       "dosis": "12, bien abajo"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de cadera · 8 por lado"
+       "nota": "Círculos de cadera",
+       "dosis": "8 por lado"
       },
       {
        "clase": "entrada",
        "seg": 10,
-       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+       "nota": "Perro de caza",
+       "dosis": "5 por lado, 5 s arriba"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Zancadas caminando · 8 por pierna"
+       "nota": "Zancadas caminando",
+       "dosis": "8 por pierna"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Estiramiento del mundo · 5 por lado"
+       "nota": "Estiramiento del mundo",
+       "dosis": "5 por lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Puente de glúteo · 12, apretando arriba"
+       "nota": "Puente de glúteo",
+       "dosis": "12, apretando arriba"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1108,37 +1185,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1220,37 +1304,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1308,37 +1399,44 @@
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Sentadillas sin peso · 12, bien abajo"
+       "nota": "Sentadillas sin peso",
+       "dosis": "12, bien abajo"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de cadera · 8 por lado"
+       "nota": "Círculos de cadera",
+       "dosis": "8 por lado"
       },
       {
        "clase": "entrada",
        "seg": 10,
-       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+       "nota": "Perro de caza",
+       "dosis": "5 por lado, 5 s arriba"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Zancadas caminando · 8 por pierna"
+       "nota": "Zancadas caminando",
+       "dosis": "8 por pierna"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Estiramiento del mundo · 5 por lado"
+       "nota": "Estiramiento del mundo",
+       "dosis": "5 por lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Puente de glúteo · 12, apretando arriba"
+       "nota": "Puente de glúteo",
+       "dosis": "12, apretando arriba"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1405,37 +1503,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1517,37 +1622,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1605,37 +1717,44 @@
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Sentadillas sin peso · 12, bien abajo"
+       "nota": "Sentadillas sin peso",
+       "dosis": "12, bien abajo"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de cadera · 8 por lado"
+       "nota": "Círculos de cadera",
+       "dosis": "8 por lado"
       },
       {
        "clase": "entrada",
        "seg": 10,
-       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+       "nota": "Perro de caza",
+       "dosis": "5 por lado, 5 s arriba"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Zancadas caminando · 8 por pierna"
+       "nota": "Zancadas caminando",
+       "dosis": "8 por pierna"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Estiramiento del mundo · 5 por lado"
+       "nota": "Estiramiento del mundo",
+       "dosis": "5 por lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Puente de glúteo · 12, apretando arriba"
+       "nota": "Puente de glúteo",
+       "dosis": "12, apretando arriba"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1702,37 +1821,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1814,37 +1940,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1902,37 +2035,44 @@
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Sentadillas sin peso · 12, bien abajo"
+       "nota": "Sentadillas sin peso",
+       "dosis": "12, bien abajo"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de cadera · 8 por lado"
+       "nota": "Círculos de cadera",
+       "dosis": "8 por lado"
       },
       {
        "clase": "entrada",
        "seg": 10,
-       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+       "nota": "Perro de caza",
+       "dosis": "5 por lado, 5 s arriba"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Zancadas caminando · 8 por pierna"
+       "nota": "Zancadas caminando",
+       "dosis": "8 por pierna"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Estiramiento del mundo · 5 por lado"
+       "nota": "Estiramiento del mundo",
+       "dosis": "5 por lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Puente de glúteo · 12, apretando arriba"
+       "nota": "Puente de glúteo",
+       "dosis": "12, apretando arriba"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -1999,37 +2139,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -2112,37 +2259,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -2201,37 +2355,44 @@
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Sentadillas sin peso · 12, bien abajo"
+       "nota": "Sentadillas sin peso",
+       "dosis": "12, bien abajo"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de cadera · 8 por lado"
+       "nota": "Círculos de cadera",
+       "dosis": "8 por lado"
       },
       {
        "clase": "entrada",
        "seg": 10,
-       "nota": "Perro de caza · 5 por lado, 5 s arriba"
+       "nota": "Perro de caza",
+       "dosis": "5 por lado, 5 s arriba"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Zancadas caminando · 8 por pierna"
+       "nota": "Zancadas caminando",
+       "dosis": "8 por pierna"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Estiramiento del mundo · 5 por lado"
+       "nota": "Estiramiento del mundo",
+       "dosis": "5 por lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Puente de glúteo · 12, apretando arriba"
+       "nota": "Puente de glúteo",
+       "dosis": "12, apretando arriba"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },
@@ -2299,37 +2460,44 @@
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Círculos de brazos · 30 s cada lado"
+       "nota": "Círculos de brazos",
+       "dosis": "30 s cada lado"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Gato y vaca · 8, lento"
+       "nota": "Gato y vaca",
+       "dosis": "8, lento"
       },
       {
        "clase": "entrada",
        "seg": 60,
-       "nota": "Bicho muerto · 6 por lado, lento"
+       "nota": "Bicho muerto",
+       "dosis": "6 por lado, lento"
       },
       {
        "clase": "entrada",
        "seg": 20,
-       "nota": "Colgarse · 20 s, hombros sueltos"
+       "nota": "Colgarse",
+       "dosis": "20 s, hombros sueltos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Encogerse colgado · 8, codos rectos"
+       "nota": "Encogerse colgado",
+       "dosis": "8, codos rectos"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Flexiones apoyado · 10, en la mesa"
+       "nota": "Flexiones apoyado",
+       "dosis": "10, en la mesa"
       },
       {
        "clase": "entrada",
        "seg": 45,
-       "nota": "Primer ejercicio suave · 5, sin cargar"
+       "nota": "Primer ejercicio suave",
+       "dosis": "5, sin cargar"
       }
      ]
     },

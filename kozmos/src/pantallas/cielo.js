@@ -45,7 +45,7 @@ K.P.constelacion = c => {
   K._recien = null;
   let estado = "";
   if (c.completa) estado = `<section class="cd cons-estado"><span class="lb" style="color:var(--${c.familia})">Constelación completa</span><b class="t1">${K.esc(c.nombre)}, completa.</b><p class="mute">Ya es parte de tu cosmos.</p></section>`;
-  else if (p) estado = `<section class="cd cons-estado"><span class="lb">Próxima estrella · m${p.magnitud}</span><b class="t1">${K.nw(p.nombre)}</b>
+  else if (p) estado = `<section class="cd cons-estado"><span class="lb">${K.jer("Próxima estrella", `m${p.magnitud}`)}</span><b class="t1">${K.nw(p.nombre)}</b>
       <div class="bar" style="--c:var(--${c.familia})" role="progressbar" aria-label="Avance hacia ${K.esc(p.nombre)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(c.avance * 100)}"><i style="width:${(c.avance * 100).toFixed(1)}%"></i></div>
       <span class="ln mute"><span>Tu mejor marca</span>${p.mejor === null ? "<span>Todavía ninguna</span>" : `<span class="num">${K.esc(K.cielo.corto(p.prueba, p.mejor))}</span>`}</span></section>`;
   else if (c.pide.length) estado = `<section class="cd cons-estado"><span class="lb">Lo que sigue</span><b class="t1">Pide ${K.esc(K.pide(c.pide))}.</b><p class="mute">Si lo tenés, marcalo en tu equipo.</p></section>`;

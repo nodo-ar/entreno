@@ -304,13 +304,13 @@ K.rutina = (() => {
   const escalonesTodos = (ctx = {}) => Object.fromEntries(escaleras().map(e => [e.id, escalonDe(e.id, {...ctx, desde: ctx.desde?.[e.id]})]).filter(([, st]) => st));
 
   /* ===== Los días de una rutina, para saber qué toca antes de empezar =====
-     El nombre de un día: el del catálogo si ya dice «Día A» o «Día 1»; si no, su lugar en la semana y su nombre
-     («Día 1 · Máximas»). Nunca «Día 1 · Día 1». */
+     El nombre de un día, en dos partes: el día y lo que lo califica. El del catálogo si ya dice «Día A» o «Día 1»
+     (["Día A", ""]); si no, su lugar en la semana y su nombre (["Día 1", "Máximas"]). Nunca «Día 1» dos veces. */
   const DIA = /^d[ií]a\s/i;
   function nombreDia(r, i){
-    const s = r.sesiones[i]; if (!s) return "";
+    const s = r.sesiones[i]; if (!s) return ["", ""];
     const k = i % (r.dias || 1) + 1;
-    return !s.nombre ? `Día ${k}` : DIA.test(s.nombre) ? s.nombre : `Día ${k} · ${s.nombre}`;
+    return !s.nombre ? [`Día ${k}`, ""] : DIA.test(s.nombre) ? [s.nombre, ""] : [`Día ${k}`, s.nombre];
   }
   /* ===== Las semanas de una rutina: carga, prueba y, en las que terminan en un desafío, la meta =====
      Cada bloque son «carga» semanas y después «prueba». Con «meta» en el bloque (true o lo que se busca, «100 flexiones
@@ -357,7 +357,7 @@ K.rutina = (() => {
     return actividad(o, ej);
   }
   /* las filas de un bloque de tramos: la entrada en calor en una fila; si no, cada ejercicio con cuántas veces y cuánto,
-     o, sin ejercicios, lo que se hace y su forma («8 × 1 min · 1:30 suave») */
+     o, sin ejercicios, lo que se hace y su forma: «8 × 1 min» y, aparte (nq, lo que la califica), «1:30 suave» */
   function filasTramos(b, ej = {}){
     const ts = b.tramos, total = ts.reduce((t, x) => t + x.seg, 0), fam = b.familia;
     if (ts.every(t => t.clase === "entrada") || ts.every(t => t.clase === "vuelta")) return [{q: b.nombre, n: `${Math.max(1, Math.round(total / 60))} min`, familia: fam}];
@@ -368,19 +368,23 @@ K.rutina = (() => {
       return {q: ej[e]?.nombre || e, n: una ? (n > 1 ? `${n} × ${una}` : una) : dur(xs.reduce((t, x) => t + x.seg, 0)), familia: fam};
     });
     if (!w.length) return [{q: b.nombre, n: `${Math.max(1, Math.round(total / 60))} min`, familia: fam}];
-    let n = dur(w.reduce((t, x) => t + x.seg, 0));
+    let n = dur(w.reduce((t, x) => t + x.seg, 0)), nq = "";
     if (w.length > 1 && !w.every(t => t.seg === w[0].seg)) n += ` en ${w.length} tramos`;
     else if (w.length > 1){
       const i = ts.indexOf(w[0]), entre = ts.slice(i + 1, ts.indexOf(w[w.length - 1])).find(t => !TRABAJO.includes(t.clase) && t.clase !== w[0].clase);
-      n = `${w.length} × ${dur(w[0].seg)}${entre ? ` · ${dur(entre.seg)} ${entre.clase === "pausa" ? "de pausa" : "suave"}` : ""}`;
+      n = `${w.length} × ${dur(w[0].seg)}`;
+      if (entre) nq = `${dur(entre.seg)} ${entre.clase === "pausa" ? "de pausa" : "suave"}`;
       /* lo suave largo antes de lo fuerte también es parte del día: «30 min suave + 4 × 20 s» */
       const antes = ts.slice(0, i).filter(t => t.clase === "suave").reduce((t, x) => t + x.seg, 0);
       if (antes >= 300) n = `${dur(antes)} suave + ${n}`;
     }
-    return [{q: b.nombre, n, familia: fam}];
+    return [{q: b.nombre, n, ...(nq ? {nq} : {}), familia: fam}];
   }
-  /* las filas de un bloque de series: una por ejercicio (una superserie da dos), con series × rango; sin rango, lo que se pide */
+  /* las filas de un bloque de series: una por ejercicio (una superserie da dos), con series × rango; sin rango, lo que se pide.
+     Los kilos van aparte (kg: «6 kg»): la pantalla los dibuja como su propia ficha */
   const cortoV = (tipo, o) => o === "max" ? "máx" : tipo === "segundos" ? `${o} s` : String(o);
+  /* números en fila, sin punto entre ellos: si son iguales, «3 × 4»; si no, con aire (un espacio ancho) entre uno y otro */
+  const serie = xs => xs.length > 1 && xs.every(x => x === xs[0]) ? `${xs.length} × ${xs[0]}` : xs.join("\u2002");
   function filasSeries(b, ej = {}, par = null){
     const es = [...new Set(b.pasos.map(p => p.ejercicio))];
     return es.map(e => {
@@ -391,10 +395,10 @@ K.rutina = (() => {
       else if (p.rango && p.tipo !== "segundos") v = veces(p.rango[0] === p.rango[1] ? String(p.rango[0]) : `${p.rango[0]}–${p.rango[1]}`);
       else if (os.length === 1) v = veces(cortoV(p.tipo, os[0]));
       /* una pirámide larga no entra en una fila: «11 series, de 1 a máx» */
-      else v = n > 5 ? `${n} series, de ${cortoV(p.tipo, ps[0].objetivo)} a ${cortoV(p.tipo, ps[n - 1].objetivo)}` : ps.map(x => cortoV(p.tipo, x.objetivo)).join(" · ");
-      if (p.kg) v += ` · ${String(p.kg).replace(".", ",")} kg`;
+      else v = n > 5 ? `${n} series, de ${cortoV(p.tipo, ps[0].objetivo)} a ${cortoV(p.tipo, ps[n - 1].objetivo)}` : serie(ps.map(x => cortoV(p.tipo, x.objetivo)));
+      const kg = p.kg ? `${String(p.kg).replace(".", ",")} kg` : "";
       /* una superserie (o una triserie) se alterna serie a serie: sus filas van juntas, con «par» y cuántos son */
-      return {q: ej[e]?.nombre || e, n: v, familia: b.familia, ...(p.escalera ? {escalera: p.escalera} : {}), ...(p.nuevo ? {nuevo: p.nuevo} : {}), ...(p.descarga ? {descarga: true} : {}),
+      return {q: ej[e]?.nombre || e, n: v, ...(kg ? {kg} : {}), familia: b.familia, ...(p.escalera ? {escalera: p.escalera} : {}), ...(p.nuevo ? {nuevo: p.nuevo} : {}), ...(p.descarga ? {descarga: true} : {}),
         ...(es.length > 1 && par !== null ? {par, de: es.length} : {})};
     });
   }
@@ -497,7 +501,7 @@ K.rutina = (() => {
   /* el próximo día de entrenamiento después de hoy, como número de días que faltan (1 = mañana) */
   const faltan = (dias, f) => { if (!dias || !dias.length) return 1; const h = diaSemana(f); for (let k = 1; k <= 7; k++) if (dias.includes((h + k) % 7)) return k; return 1; };
 
-  return {NIVELES, SENS, duracion, minutos, nombreDia, semanas, tipoSemana, esSemanaDePrueba, esMeta, metaDe, nombreTramos, filasTramos, filasSeries, filas, dia, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
+  return {NIVELES, SENS, duracion, minutos, nombreDia, serie, semanas, tipoSemana, esSemanaDePrueba, esMeta, metaDe, nombreTramos, filasTramos, filasSeries, filas, dia, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
     escalera, escaleras, elegirEscalera, defEscalera, defSuelto, escalon, idsPaso, variante, armarBloques, escalonDe, escalonesTodos, metas, arranque, inferir, sensDe, escalerasDe, cambios,
     veces, anteriores, umbrales, magnitud, cuando, proximaPrueba, hazanasDe, supera, CADA};
 })();

@@ -14,7 +14,7 @@ K.hzVeces = h => K.rutina.veces(h, K.diario.sesiones);
 K.hzIcono = (h, px, lb) => { const vs = K.hzVeces(h), u = vs[vs.length - 1]; return K.icono.medalla(h, !!u && K.rutina.magnitud(h, u.valor, vs) !== null, px, lb); };
 /* una estrella en una fila («Entrena para», «Enciende»): su constelación en su anillo */
 const estFila = (c, e, sub, em) => `<button type="button" class="ajr" data-ir="#/cielo/${c.id}"><span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span>
-      <span class="ses-fila">${K.esc(e.nombre)}<small class="mute">${K.esc(sub)}</small></span><em>${em}</em>${K.ic("chev", "chev")}</button>`;
+      <span class="ses-fila">${K.esc(e.nombre)}<small class="mute">${sub}</small></span><em>${em}</em>${K.ic("chev", "chev")}</button>`;
 const mesDe = f => { const [a, m] = f.split("-").map(Number); return new Date(a, m - 1, 1).toLocaleDateString("es-AR", {month: "long"}); };
 /* contra tu vez anterior: «+3 desde agosto», «0:40 menos desde agosto» */
 K.hzDesde = (h, vs) => {
@@ -84,8 +84,8 @@ K.P.planes = r => {
   const vs = K.hzVeces(prox), ult = vs[vs.length - 1], cu = K.hzCuando(prox), m = ult ? K.rutina.magnitud(prox, ult.valor, vs) : null;
   const tarjeta = `<section class="cd pl-prox" style="--c:var(--${prox.familia})"${abreH === prox.id ? " data-sel" : ""}>
     <button type="button" class="pl-ir" data-ir="#/planes/hazanas/${prox.id}" data-quieto="1" aria-label="${K.esc(prox.nombre)}"></button>
-    <div class="pl-prox-cab"><span class="pl-prox-fig">${K.icono.medalla(prox, m !== null, 64)}</span><div class="pl-prox-tx"><span class="lb">Próxima prueba · ${K.esc(cu.tx.toLowerCase())}</span>
-      <b class="t1">${K.esc(prox.nombre)}</b><span class="mute small">${K.esc(prox.prueba)}${ult ? ` · tu última ${K.esc(K.hzMarca(prox, ult.valor))}${m ? ` · m${m}` : ""}` : " · todavía no la hiciste"}</span></div>${K.hzLinea(prox, vs)}</div>
+    <div class="pl-prox-cab"><span class="pl-prox-fig">${K.icono.medalla(prox, m !== null, 64)}</span><div class="pl-prox-tx"><span class="lb">${K.jer("Próxima prueba", K.esc(cu.tx.toLowerCase()))}</span>
+      <b class="t1">${K.esc(prox.nombre)}</b><span class="mute small">${K.aparte(K.esc(prox.prueba), ult ? K.jer(`Tu última: ${K.esc(K.hzMarca(prox, ult.valor))}`, m ? `m${m}` : "") : "Todavía no la hiciste")}</span></div>${K.hzLinea(prox, vs)}</div>
     ${K.escala(prox, ult?.valor, {vs, antes: vs[vs.length - 2]?.valor})}
     <button type="button" class="btn" id="pl-probar" data-hazana="${prox.id}">${K.ic("play")}Probar ahora</button></section>`;
   /* las pruebas, por familia: cada una con tu última marca y cuándo toca */
@@ -93,7 +93,7 @@ K.P.planes = r => {
   const pruebas = hs.filter(h => h.id !== prox.id && (fp === "todas" || h.familia === fp)).map(h => {
     const v = K.hzVeces(h), u = v[v.length - 1], c = K.hzCuando(h), mg = u ? K.rutina.magnitud(h, u.valor, v) : null, falta = hzPuede(h);
     return `<button type="button" class="ajr" data-ir="#/planes/hazanas/${h.id}" data-quieto="1"${abreH === h.id ? " data-sel" : ""}><span class="tile ico-tile">${K.icono.medalla(h, mg !== null, 40)}</span>
-      <span class="ses-fila">${K.esc(h.nombre)}<small class="mute">${K.esc(falta.length ? `${h.prueba} · ${pideTx(falta)}` : `${h.prueba}${u ? ` · ${K.hzMarca(h, u.valor)}${mg ? ` · m${mg}` : ""}` : ""}`)}</small></span>
+      <span class="ses-fila">${K.esc(h.nombre)}<small class="mute">${falta.length ? K.jer(K.esc(h.prueba), K.esc(pideTx(falta))) : K.jer(K.esc(h.prueba), u ? K.esc(K.hzMarca(h, u.valor)) : "", u && mg ? `m${mg}` : "")}</small></span>
       <em class="num${c.ya && !c.nunca ? " toca" : ""}">${K.esc(c.nunca ? "Sin hacer" : c.ya ? "Toca ya" : c.hace)}</em>${K.ic("chev", "chev")}</button>`;
   }).join("");
   /* tu rutina: el bloque, tus escalones y cuándo es la prueba */
@@ -102,13 +102,13 @@ K.P.planes = r => {
     const sp = K.plan.semanaDePrueba(K.diario.perfil, K.diario.sesiones, K.hoy()), es = K.rutina.escalerasDe(ru.r, K.ctxRutina());
     tuya = `<div class="pl-tit"><h2>Tu rutina</h2></div><section class="cd pl-rut"${abreR === ru.r.id ? " data-sel" : ""}>
       <button type="button" class="pl-ir" data-ir="#/planes/rutinas/${ru.r.id}" data-quieto="1" aria-label="${K.esc(ru.r.nombre)}"></button>
-      <div class="pl-rut-cab"><span class="tile ico-tile">${K.icono.rutina(ru.r, 40)}</span><span class="ses-fila"><b>${K.esc(ru.r.nombre)}</b><small class="mute">Semana ${ru.cur.semana} de ${ru.r.semanas}${sp ? ` · bloque ${sp.bloque}` : ""}</small></span>${K.ic("chev", "chev")}</div>
+      <div class="pl-rut-cab"><span class="tile ico-tile">${K.icono.rutina(ru.r, 40)}</span><span class="ses-fila"><b>${K.esc(ru.r.nombre)}</b><small class="mute">${K.jer(`Semana ${ru.cur.semana} de ${ru.r.semanas}`, sp ? `bloque ${sp.bloque}` : "")}</small></span>${K.ic("chev", "chev")}</div>
       ${es.length ? K.escalerasMini(es, ru.r.familia) : ""}<span class="small pl-rut-prueba">${K.esc(K.pruebaTx(sp, ru.r))}</span></section>`;
   }
   const fr = famDe("planes.rutinas");
   const fila = x => { const falta = K.rutina.falta(x, K.EJ, equipo);
     return `<button type="button" class="ajr" data-ir="#/planes/rutinas/${x.id}" data-quieto="1"${abreR === x.id ? " data-sel" : ""}><span class="tile ico-tile">${K.icono.rutina(x, 40)}</span>
-      <span class="ses-fila">${K.esc(x.nombre)}${falta.length ? `<small class="mute">${K.esc(pideTx(falta))}</small>` : ""}</span><em class="num">${x.semanas} sem · ${x.dias} días</em>${K.ic("chev", "chev")}</button>`; };
+      <span class="ses-fila">${K.esc(x.nombre)}${falta.length ? `<small class="mute">${K.esc(pideTx(falta))}</small>` : ""}</span><em class="num">${K.jer(`${x.semanas} sem`, `${x.dias} días`)}</em>${K.ic("chev", "chev")}</button>`; };
   const otras = K.RUTINAS.filter(x => !(sigo && x.id === ru.r.id) && (fr === "todas" || x.familia === fr)).map(fila).join("");
   /* el satélite de las medallas ganadas llega orbitando la primera vez que abrís Planes; después queda quieto */
   const llega = !K.planesVisto; K.planesVisto = true;
@@ -139,7 +139,7 @@ K.P.rutina = id => {
   const enc = K.enc({titulo: r.nombre, sub: "Planes", volver: "#/planes", raiz: true, det: true, acciones: sigo ? K.mas("rut-mas", "Opciones de la rutina") : ""});
   const dato = (n, t) => `<div class="cd res-dato"><span class="num">${K.esc(n)}</span><span class="lb">${t}</span></div>`;
   const est = r.alimenta.map(eid => { const c = cielo.constelaciones.find(k => k.estrellas.some(y => y.id === eid)); return c && {c, e: c.estrellas.find(y => y.id === eid)}; }).filter(Boolean);
-  const lleva = est.length ? `<span class="lb pie">Entrena para</span><section class="aj">${est.map(({c, e}) => estFila(c, e, c.nombre, e.encendida ? "Encendida" : e.estado === "proxima" ? "La próxima" : "")).join("")}</section>` : "";
+  const lleva = est.length ? `<span class="lb pie">Entrena para</span><section class="aj">${est.map(({c, e}) => estFila(c, e, K.esc(c.nombre), e.encendida ? "Encendida" : e.estado === "proxima" ? "La próxima" : "")).join("")}</section>` : "";
   /* cada día de una semana: lo que harías en cada uno con tus escalones de ahora, cuánto dura y cuál te toca */
   const dias = K.rutinaDias(r, sigo ? ru.cur : null);
   /* sus escaleras: por dónde vas en cada una (sin haberla empezado, por dónde arrancarías), igual que en Hoy */
@@ -148,7 +148,7 @@ K.P.rutina = id => {
   /* el bloque: semanas de carga y una de prueba */
   const sp = sigo && !ru.cur.terminada ? K.plan.semanaDePrueba(K.diario.perfil, K.diario.sesiones, K.hoy()) : null;
   const bloque = `<p class="ln small rut-bloque"><span>${K.esc(K.bloqueTx(r))}</span>${sp ? `<span class="num">${K.esc(K.pruebaTx(sp, r))}</span>` : ""}</p>`;
-  const estado = sigo ? `<p class="ln small rut-sigo"><span>${ru.cur.terminada ? "La terminaste" : `La seguís · semana ${ru.cur.semana} de ${r.semanas}`}</span><span class="num">${ru.cur.i} de ${ru.cur.total}</span></p>` : "";
+  const estado = sigo ? `<p class="ln small rut-sigo"><span>${ru.cur.terminada ? "La terminaste" : K.jer("La seguís", `semana ${ru.cur.semana} de ${r.semanas}`)}</span><span class="num">${ru.cur.i} de ${ru.cur.total}</span></p>` : "";
   const boton = sigo ? `<button type="button" class="btn" data-ir="#/hoy">${ru.cur.terminada ? "Volver a Hoy" : "Ir a Hoy"}</button>`
     : `<button type="button" class="btn" id="rut-seguir" data-rutina="${r.id}">Seguir esta rutina</button>`;
   /* el escalón es de la persona: cambiar de rutina no la manda al principio */
@@ -170,18 +170,18 @@ K.rutinaDias = (r, cur) => {
   const cards = Array.from({length: r.dias}, (_, k) => {
     const i = (n - 1) * r.dias + k; if (!r.sesiones[i]) return "";
     const toca = actual === n && i === cur.i, hecho = actual === n && i < cur.i, nombre = K.rutina.nombreDia(r, i);
-    if (hecho) return `<section class="cd hoy-toca rut-dia hecho"><div class="ln"><span class="lb">${K.esc(nombre)}</span><span class="lb tg">${K.ic("check")}Hecho</span></div></section>`;
+    if (hecho) return `<section class="cd hoy-toca rut-dia hecho"><div class="ln"><span class="lb">${K.jer(K.esc(nombre[0]), K.esc(nombre[1]))}</span><span class="lb tg">${K.ic("check")}Hecho</span></div></section>`;
     /* el día que te toca es el mismo que muestra Hoy, con las pruebas si es semana de prueba */
     const pl = toca ? K.hoyPlan() : null;
     const d = pl ? {minutos: pl.minutos, filas: K.rutina.filas(pl.bloques, K.EJ), nota: pl.nota || ""} : K.rutina.dia(r, i, {...ctx, descarga: prueba});
-    return `<section class="cd hoy-toca rut-dia${toca ? " te-toca" : ""}"><div class="ln"><span class="lb">${toca ? "Te toca · " : ""}${K.esc(nombre)}</span><span class="num lb">${d.minutos} min</span></div>
+    return `<section class="cd hoy-toca rut-dia${toca ? " te-toca" : ""}"><div class="ln"><span class="lb">${toca ? `<b class="te-toca-tx">Te toca</b> ` : ""}${K.jer(K.esc(nombre[0]), K.esc(nombre[1]))}</span><span class="num lb">${K.dur(`${d.minutos} min`)}</span></div>
       ${pl ? K.pruebaLn(pl) : ""}${K.filasHtml(d.filas)}${d.nota ? `<p class="mute small">${K.esc(d.nota)}</p>` : ""}</section>`;
   }).join("");
   /* lo que hay que saber de esa semana: si es de prueba, cuándo es la próxima y que los escalones son los tuyos */
   const tuyos = conEsc ? (actual ? "Con tus escalones de hoy." : "Si la empezás hoy, con tus escalones.") : "";
-  const tx = prueba && actual !== n ? `<p class="hoy-ventana hoy-sp small"><b>Semana ${n}: prueba</b> · más liviana, con las pruebas el primer día</p>`
+  const tx = prueba && actual !== n ? `<p class="hoy-ventana hoy-sp small">${K.aparte(`<b>Semana ${n}: prueba</b>`, "Más liviana, con las pruebas el primer día")}</p>`
     : meta && actual !== n ? K.metaLn(r, n) : tuyos ? `<p class="small mute rut-dias-tx">${K.esc(tuyos)}</p>` : "";
-  const boton = r.semanas > 1 ? `<button type="button" class="pl-fam" id="rut-sem" data-rutina="${r.id}" aria-haspopup="menu" aria-expanded="false" aria-label="${K.esc(`Semana ${n} de ${r.semanas}`)}"><span>${K.esc(K.semanaTx(r, n))}${!prueba && !meta && actual === n ? " · la tuya" : ""}</span>${K.ic("chevd")}</button>` : "";
+  const boton = r.semanas > 1 ? `<button type="button" class="pl-fam" id="rut-sem" data-rutina="${r.id}" aria-haspopup="menu" aria-expanded="false" aria-label="${K.esc(`Semana ${n} de ${r.semanas}`)}"><span>${K.jer(K.esc(K.semanaTx(r, n)), !prueba && !meta && actual === n ? "la tuya" : "")}</span>${K.ic("chevd")}</button>` : "";
   return `<div class="pl-fila rut-dias-tit"><span class="lb pie">Cada día</span>${boton}</div>${tx}<div class="rut-dias">${cards}</div>`;
 };
 /* el menú de semanas: la tuya y las de prueba se dicen; elegir una no guarda nada */
@@ -189,7 +189,7 @@ K.rutinaSemana = btn => {
   const r = K.rutinaDe(btn.dataset.rutina); if (!r) return;
   const ru = K.rutinaActual(), actual = ru && ru.r.id === r.id && !ru.cur.terminada ? ru.cur.semana : 0, n = semanaVista(r, actual);
   K.menu.abrir(btn, {titulo: "Semana", items: Array.from({length: r.semanas}, (_, k) => k + 1).map(w => ({id: String(w), elegido: w === n,
-      texto: `${K.semanaTx(r, w)}${w === actual ? " · la tuya" : ""}`})),
+      texto: K.semanaTx(r, w), ...(w === actual ? {nota: "la tuya"} : {})})),
     elegir: id => { const ab = K.$(".split>.abierto"), y = ab ? ab.scrollTop : 0; K._semRut = {id: r.id, n: Number(id)}; K.refrescar(); const ab2 = K.$(".split>.abierto"); if (ab2) ab2.scrollTop = y; }});
 };
 
@@ -212,17 +212,17 @@ K.P.hazana = id => {
   const h = K.hzDe(id), vs = K.hzVeces(h), ult = vs[vs.length - 1], cu = K.hzCuando(h), viejas = K.rutina.anteriores(h, K.diario.sesiones);
   const m = ult ? K.rutina.magnitud(h, ult.valor, vs) : null, falta = hzPuede(h);
   const desde = K.hzDesde(h, vs);
-  const tu = `<section class="cd hz-escala"><div class="ln"><span class="lb">${ult ? `Tu última · ${K.esc(K.fechaCorta(ult.fecha))}` : "Todavía no la hiciste"}</span>${ult ? `<span class="num hz-ult">${K.esc(K.hzMarca(h, ult.valor))}${m ? ` · m${m}` : ""}</span>` : ""}</div>
+  const tu = `<section class="cd hz-escala"><div class="ln"><span class="lb">${ult ? K.jer("Tu última", K.esc(K.fechaCorta(ult.fecha))) : "Todavía no la hiciste"}</span>${ult ? `<span class="num hz-ult">${K.esc(K.hzMarca(h, ult.valor))}${m ? ` <small class="mute">m${m}</small>` : ""}</span>` : ""}</div>
     ${K.escala(h, ult?.valor, {vs, antes: vs[vs.length - 2]?.valor})}
     <div class="ln small"><span class="${vs.length > 1 && K.rutina.supera(h, ult.valor, vs[vs.length - 2].valor) ? "hz-sube" : "mute"}">${K.esc(desde || (ult ? "Tu primera vez" : h.texto))}</span><span class="num${cu.ya ? " toca" : ""}">${K.esc(cu.tx)}</span></div></section>`;
   /* las estrellas que puede encender, en todo el cielo */
   const cielo = K.cieloActual();
   const est = (h.estrellas || []).map(eid => { const c = cielo.constelaciones.find(k => k.estrellas.some(y => y.id === eid)); return c && {c, e: c.estrellas.find(y => y.id === eid)}; }).filter(Boolean);
-  const enciende = est.length ? `<span class="lb pie">Enciende</span><section class="aj">${est.map(({c, e}) => estFila(c, e, `${c.nombre} · m${e.magnitud}`, e.encendida ? "Encendida" : "")).join("")}</section>` : "";
+  const enciende = est.length ? `<span class="lb pie">Enciende</span><section class="aj">${est.map(({c, e}) => estFila(c, e, K.jer(K.esc(c.nombre), `m${e.magnitud}`), e.encendida ? "Encendida" : "")).join("")}</section>` : "";
   /* tus veces, la última arriba; las de la versión anterior (por niveles) quedan al final, con su nivel */
   const filas = [...vs].reverse().map(x => { const g = K.rutina.magnitud(h, x.valor, vs);
     return `<div class="ln"><span>${K.esc(K.fechaCorta(x.fecha))}</span><span class="num">${K.esc(K.hzMarca(h, x.valor))}${g ? ` <small class="mute">m${g}</small>` : ""}</span></div>`; }).join("")
-    + [...viejas].reverse().map(x => `<div class="ln mute"><span>${K.esc(K.fechaCorta(x.fecha))} · versión anterior, ${K.rutina.NIVELES[x.nivel] || ""}</span><span class="num">${x.completa && x.valor > 0 ? K.esc(K.hazanaValor(h, x.valor)) : "a medias"}</span></div>`).join("");
+    + [...viejas].reverse().map(x => `<div class="ln mute"><span>${K.jer(K.esc(K.fechaCorta(x.fecha)), `versión anterior, ${K.rutina.NIVELES[x.nivel] || ""}`)}</span><span class="num">${x.completa && x.valor > 0 ? K.esc(K.hazanaValor(h, x.valor)) : "a medias"}</span></div>`).join("");
   const veces = filas ? `<span class="lb pie">Tus veces</span><section class="cd hz-veces">${filas}</section>` : "";
   const boton = falta.length ? `<p class="aviso-tenue">${K.esc(pideTx(falta))}. Si lo tenés, marcalo en tu equipo.</p>`
     : `<button type="button" class="btn" id="hz-empezar" data-hazana="${h.id}">${K.ic("play")}Probar ahora</button>`;
