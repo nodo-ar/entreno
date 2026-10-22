@@ -22,7 +22,7 @@
  "sesiones": [
   {
    "nombre": "Tabata",
-   "nota": "7 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "7 × 20 s a fondo, 10 s de pausa. Si terminás los 7 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -104,7 +104,7 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "7 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "7 × 20 s a fondo, 10 s de pausa. Si terminás los 7 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -143,7 +143,7 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "7 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "7 × 20 s a fondo, 10 s de pausa. Si terminás los 7 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -225,7 +225,7 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "7 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "7 × 20 s a fondo, 10 s de pausa. Si terminás los 7 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -264,7 +264,7 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si terminás los 8 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -346,7 +346,7 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si terminás los 8 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -385,128 +385,7 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
-   "bloques": [
-    {
-     "tramos": [
-      {
-       "clase": "entrada",
-       "seg": 600
-      },
-      {
-       "repetir": 7,
-       "tramos": [
-        {
-         "clase": "fuerte",
-         "seg": 20
-        },
-        {
-         "clase": "suave",
-         "seg": 10
-        }
-       ]
-      },
-      {
-       "clase": "fuerte",
-       "seg": 20
-      },
-      {
-       "clase": "vuelta",
-       "seg": 300
-      }
-     ],
-     "mide": {
-      "ejercicio": "intervalos",
-      "tipo": "sesiones"
-     }
-    }
-   ]
-  },
-  {
-   "nombre": "Suave + 4",
-   "nota": "30 min firme pero cómodo y al final 4 × 20 s fuertes con 10 s de pausa.",
-   "bloques": [
-    {
-     "tramos": [
-      {
-       "clase": "entrada",
-       "seg": 300
-      },
-      {
-       "clase": "suave",
-       "seg": 1800
-      },
-      {
-       "repetir": 3,
-       "tramos": [
-        {
-         "clase": "fuerte",
-         "seg": 20
-        },
-        {
-         "clase": "suave",
-         "seg": 10
-        }
-       ]
-      },
-      {
-       "clase": "fuerte",
-       "seg": 20
-      },
-      {
-       "clase": "vuelta",
-       "seg": 180
-      }
-     ],
-     "mide": {
-      "ejercicio": "intervalos",
-      "tipo": "sesiones"
-     }
-    }
-   ]
-  },
-  {
-   "nombre": "Tabata",
-   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
-   "bloques": [
-    {
-     "tramos": [
-      {
-       "clase": "entrada",
-       "seg": 600
-      },
-      {
-       "repetir": 7,
-       "tramos": [
-        {
-         "clase": "fuerte",
-         "seg": 20
-        },
-        {
-         "clase": "suave",
-         "seg": 10
-        }
-       ]
-      },
-      {
-       "clase": "fuerte",
-       "seg": 20
-      },
-      {
-       "clase": "vuelta",
-       "seg": 300
-      }
-     ],
-     "mide": {
-      "ejercicio": "intervalos",
-      "tipo": "sesiones"
-     }
-    }
-   ]
-  },
-  {
-   "nombre": "Tabata",
-   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si terminás los 8 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -588,7 +467,7 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si terminás los 8 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -627,7 +506,7 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si terminás los 8 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [
@@ -709,7 +588,128 @@
   },
   {
    "nombre": "Tabata",
-   "nota": "8 × 20 s a fondo, 10 s de pausa. Si una semana llegás a más de 9, subí un nivel.",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si terminás los 8 con aire para otro, subí un nivel de resistencia.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si terminás los 8 con aire para otro, subí un nivel de resistencia.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 600
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 300
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Suave + 4",
+   "nota": "30 min firme pero cómodo y al final 4 × 20 s fuertes con 10 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 300
+      },
+      {
+       "clase": "suave",
+       "seg": 1800
+      },
+      {
+       "repetir": 3,
+       "tramos": [
+        {
+         "clase": "fuerte",
+         "seg": 20
+        },
+        {
+         "clase": "suave",
+         "seg": 10
+        }
+       ]
+      },
+      {
+       "clase": "fuerte",
+       "seg": 20
+      },
+      {
+       "clase": "vuelta",
+       "seg": 180
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Tabata",
+   "nota": "8 × 20 s a fondo, 10 s de pausa. Si terminás los 8 con aire para otro, subí un nivel de resistencia.",
    "bloques": [
     {
      "tramos": [

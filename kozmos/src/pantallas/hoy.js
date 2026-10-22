@@ -71,6 +71,8 @@ K.hoyPlan = () => {
     return K.plan.deSemanaDePrueba(plan, sp, {...pc, cons, ejs});
   }
   const plan = K.rutina.deRutina(ru.r, ru.cur.i, ctx);
+  /* la última semana de una rutina que termina en un desafío es la meta: completa, sin descarga ni pruebas sueltas */
+  if (sp && sp.meta) return {...plan, ventana: [], volviste: false, meta: {rutina: ru.r.id, semana: sp.semana}};
   /* con rutina, la ventana abre solo para lo que la rutina entrena, y nunca una prueba larga (minutos) antes de la sesión */
   const lleva = new Set(ru.r.alimenta.map(id => id.split(".")[0]));
   const pruebas = base.bloques.filter(b => b.prueba && lleva.has(b.constelacion) && b.tipo !== "minutos");
@@ -87,11 +89,30 @@ K.filaToca = b => {
   const ejs = [...new Set(b.pasos.map(p => p.ejercicio))], os = [...new Set(b.pasos.map(p => p.objetivo))];
   return [ejs.map(e => K.ej(e).nombre).join(" + "), ejs.length > 1 ? `${b.series} series` : os.length === 1 ? `${b.series} × ${corto(b.tipo, os[0])}` : b.pasos.map(p => corto(p.tipo, p.objetivo)).join("·")];
 };
-/* una fila de lo que toca: el punto de su familia, qué y cuánto. La misma en Hoy y en los días de una rutina */
-K.filaLn = (q, n, fam, prueba = false) => `<div class="ln toca${prueba ? " es-prueba" : ""}"><span class="tg"><i class="dot" style="--c:var(--${fam})"></i>${K.esc(q)}</span><span class="num">${K.esc(n)}</span></div>`;
-const filasToca = bs => bs.map(b => { const [q, n] = K.filaToca(b); return K.filaLn(q, n, b.familia, !!(b.prueba || b.hazana)); }).join("");
-/* la semana de prueba se dice arriba de lo que toca: cuántas pruebas y cuántas estrellas pueden encender */
+/* una fila de lo que toca: el punto de su familia, qué y cuánto. La misma en Hoy y en los días de una rutina.
+   «marca»: lo que la sesión dice en la serie («más liviana»), debajo del nombre y en el color de la familia */
+K.filaLn = (q, n, fam, prueba = false, marca = "") => `<div class="ln toca${prueba ? " es-prueba" : ""}" style="--c:var(--${fam})"><span class="toca-q"><span class="tg"><i class="dot"></i>${K.esc(q)}</span>${marca ? `<small class="toca-marca">${K.esc(marca)}</small>` : ""}</span><span class="num">${K.esc(n)}</span></div>`;
+/* las filas de una sesión armada (K.rutina.filas): una por ejercicio. Los de una superserie van juntos, con su nota */
+const PAR = {2: "en superserie", 3: "en triserie"};
+K.filasHtml = fs => {
+  const una = f => f.otro ? K.filaLn(...K.filaToca(f.otro), f.otro.familia, !!(f.otro.prueba || f.otro.hazana), f.otro.descarga ? "más liviana" : "")
+    : K.filaLn(f.q, f.n, f.familia, false, f.descarga ? "más liviana" : "");
+  let h = "";
+  for (let k = 0; k < fs.length;){
+    const f = fs[k];
+    if (f.par === undefined){ h += una(f); k++; continue; }
+    let j = k; while (j < fs.length && fs[j].par === f.par) j++;
+    h += `<div class="toca-par">${fs.slice(k, j).map(una).join("")}<small class="toca-par-tx">${PAR[j - k] || "alternadas"}</small></div>`;
+    k = j;
+  }
+  return h;
+};
+const filasToca = bs => K.filasHtml(K.rutina.filas(bs, K.EJ));
+/* la semana de prueba se dice arriba de lo que toca: cuántas pruebas y cuántas estrellas pueden encender.
+   En la última semana de una rutina que termina en un desafío, la meta */
+K.metaLn = (r, w) => { const m = K.rutina.metaDe(r); return `<p class="hoy-ventana hoy-sp hoy-meta small"><b>Semana ${w}: la meta</b>${m ? ` · ${K.esc(m)}` : ""}</p>`; };
 const pruebaLn = K.pruebaLn = plan => {
+  if (plan.meta) return K.metaLn(K.rutinaDe(plan.meta.rutina), plan.meta.semana);
   const sp = plan.semanaPrueba; if (!sp) return "";
   const n = sp.pruebas, e = plan.pruebas ? plan.pruebas.encienden.length : 0;
   return `<p class="hoy-ventana hoy-sp small"><b>Semana de prueba</b>${n ? ` · ${n} ${n === 1 ? "prueba" : "pruebas"}${e ? ` · ${n === 1 ? "enciende" : "encienden"} hasta ${e} ${e === 1 ? "estrella" : "estrellas"}` : ""}` : " · más liviana, para llegar descansado"}</p>`;

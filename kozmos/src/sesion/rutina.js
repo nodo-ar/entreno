@@ -205,7 +205,7 @@ K.rutina = (() => {
   }
   const duracion = b => b.clase === "tramos" ? b.tramos.reduce((t, x) => t + x.seg, 0)
     : b.clase === "circuito" ? (b.minutos ? b.minutos * 60 : b.rondas * b.items.reduce((t, x) => t + (x.min ? x.min * 60 : x.seg ? x.seg + 10 : x.reps * REP), 0))
-    : b.pasos.reduce((t, p) => t + (p.tipo === "segundos" ? (p.objetivo === "max" ? 30 : p.objetivo) + 20 : 45) + p.descanso, 0);
+    : b.pasos.reduce((t, p) => t + (p.dura || (p.tipo === "segundos" ? (p.objetivo === "max" ? 30 : p.objetivo) + 20 : 45)) + p.descanso, 0);
   const minutos = bs => Math.max(5, Math.round((bs.reduce((t, b) => t + duracion(b), 0) + Math.max(0, bs.length - 1) * ENTRE_BLOQUES) / 300) * 5);
 
   /* {"repetir": n, "tramos": […]} se despliega: n veces lo mismo, sin escribirlo n veces en el catálogo */
@@ -214,7 +214,8 @@ K.rutina = (() => {
 
   /* un bloque de series, listo para el motor: con escalera, el escalón que toca y sus objetivos; suelto, el ejercicio que tu equipo permite */
   function bloqueSeries(r, cb, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false}){
-    const base = {tipo: cb.tipo, descanso: cb.descanso ?? 90};
+    /* «dura»: los segundos que lleva una serie larga (1000 saltos), para que los minutos del día no mientan */
+    const base = {tipo: cb.tipo, descanso: cb.descanso ?? 90, ...(cb.dura ? {dura: cb.dura} : {})};
     let e, tipo = cb.tipo, m, st = null, def = null, extra = {};
     if (cb.escalera){
       const esc = elegirEscalera(cb.escalera, ej, equipo);
@@ -266,8 +267,30 @@ K.rutina = (() => {
     const k = i % (r.dias || 1) + 1;
     return !s.nombre ? `Día ${k}` : DIA.test(s.nombre) ? s.nombre : `Día ${k} · ${s.nombre}`;
   }
-  /* ¿la semana w (desde 1) es de prueba? Cada bloque son «carga» semanas y después la de prueba */
-  const esSemanaDePrueba = (r, w) => { const bl = r.bloque || {carga: 4, prueba: 1}; return (w - 1) % (bl.carga + bl.prueba) >= bl.carga; };
+  /* ===== Las semanas de una rutina: carga, prueba y, en las que terminan en un desafío, la meta =====
+     Cada bloque son «carga» semanas y después «prueba». Con «meta» en el bloque (true o lo que se busca, «100 flexiones
+     seguidas»), la última semana es la meta: completa, sin descarga ni pruebas. Si ahí caía la semana de prueba,
+     pasa a la semana anterior y cierra ese bloque. Lo dice el catálogo, no el motor: ninguna rutina tiene su id acá. */
+  function semanas(r){
+    const bl = r.bloque || {carga: 4, prueba: 1}, L = bl.carga + bl.prueba, N = r.semanas || Math.ceil((r.sesiones || []).length / (r.dias || 1)) || 1;
+    const xs = Array.from({length: N}, (_, k) => ({n: k + 1, tipo: k % L >= bl.carga ? "prueba" : "carga", bloque: Math.floor(k / L) + 1}));
+    if (bl.meta){
+      const u = xs[N - 1];
+      if (u.tipo === "prueba" && N > 1 && xs[N - 2].tipo === "carga") xs[N - 2] = {...xs[N - 2], tipo: "prueba", bloque: u.bloque};
+      xs[N - 1] = {...u, tipo: "meta"};
+    }
+    return xs;
+  }
+  /* el tipo de la semana w (desde 1): «carga», «prueba» o «meta»; después de la última, sigue el ciclo de carga y prueba */
+  function tipoSemana(r, w){
+    const xs = semanas(r); if (w >= 1 && w <= xs.length) return xs[w - 1];
+    const bl = r.bloque || {carga: 4, prueba: 1}, L = bl.carga + bl.prueba;
+    return {n: w, tipo: (w - 1) % L >= bl.carga ? "prueba" : "carga", bloque: Math.floor((w - 1) / L) + 1};
+  }
+  const esSemanaDePrueba = (r, w) => tipoSemana(r, w).tipo === "prueba";
+  const esMeta = (r, w) => tipoSemana(r, w).tipo === "meta";
+  /* lo que se busca en la meta («100 flexiones seguidas»), o nada si el catálogo solo dice que hay meta */
+  const metaDe = r => r.bloque && typeof r.bloque.meta === "string" ? r.bloque.meta : "";
   /* 45 → «45 s», 240 → «4 min», 90 → «1:30» */
   const dur = seg => seg < 60 ? `${seg} s` : seg % 60 ? `${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, "0")}` : `${seg / 60} min`;
   const TRABAJO = ["fuerte", "trabajo", "postura"];
@@ -313,8 +336,9 @@ K.rutina = (() => {
   }
   /* las filas de un bloque de series: una por ejercicio (una superserie da dos), con series × rango; sin rango, lo que se pide */
   const cortoV = (tipo, o) => o === "max" ? "máx" : tipo === "segundos" ? `${o} s` : String(o);
-  function filasSeries(b, ej = {}){
-    return [...new Set(b.pasos.map(p => p.ejercicio))].map(e => {
+  function filasSeries(b, ej = {}, par = null){
+    const es = [...new Set(b.pasos.map(p => p.ejercicio))];
+    return es.map(e => {
       const ps = b.pasos.filter(p => p.ejercicio === e), p = ps[0], n = ps.length;
       let v;
       const veces = x => n > 1 ? `${n} × ${x}` : x, os = [...new Set(ps.map(x => x.objetivo))];
@@ -324,11 +348,13 @@ K.rutina = (() => {
       /* una pirámide larga no entra en una fila: «11 series, de 1 a máx» */
       else v = n > 5 ? `${n} series, de ${cortoV(p.tipo, ps[0].objetivo)} a ${cortoV(p.tipo, ps[n - 1].objetivo)}` : ps.map(x => cortoV(p.tipo, x.objetivo)).join(" · ");
       if (p.kg) v += ` · ${String(p.kg).replace(".", ",")} kg`;
-      return {q: ej[e]?.nombre || e, n: v, familia: b.familia, ...(p.escalera ? {escalera: p.escalera} : {}), ...(p.nuevo ? {nuevo: p.nuevo} : {}), ...(p.descarga ? {descarga: true} : {})};
+      /* una superserie (o una triserie) se alterna serie a serie: sus filas van juntas, con «par» y cuántos son */
+      return {q: ej[e]?.nombre || e, n: v, familia: b.familia, ...(p.escalera ? {escalera: p.escalera} : {}), ...(p.nuevo ? {nuevo: p.nuevo} : {}), ...(p.descarga ? {descarga: true} : {}),
+        ...(es.length > 1 && par !== null ? {par, de: es.length} : {})};
     });
   }
   /* las filas de una sesión armada; lo que no es de la rutina (una prueba) va como {otro: bloque} y lo dibuja la pantalla */
-  const filas = (bs, ej = {}) => bs.flatMap(b => b.prueba || b.hazana || b.constelacion ? [{otro: b}] : b.clase === "tramos" ? filasTramos(b, ej) : b.pasos ? filasSeries(b, ej) : [{otro: b}]);
+  const filas = (bs, ej = {}) => bs.flatMap((b, k) => b.prueba || b.hazana || b.constelacion ? [{otro: b}] : b.clase === "tramos" ? filasTramos(b, ej).map(x => b.descarga ? {...x, descarga: true} : x) : b.pasos ? filasSeries(b, ej, k) : [{otro: b}]);
   /* un día de la rutina como lo harías hoy: tus escalones de ahora, con su nombre, los minutos y la nota */
   function dia(r, i, ctx = {}){
     const p = deRutina(r, i, ctx); if (!p) return null;
@@ -426,7 +452,7 @@ K.rutina = (() => {
   /* el próximo día de entrenamiento después de hoy, como número de días que faltan (1 = mañana) */
   const faltan = (dias, f) => { if (!dias || !dias.length) return 1; const h = diaSemana(f); for (let k = 1; k <= 7; k++) if (dias.includes((h + k) % 7)) return k; return 1; };
 
-  return {NIVELES, SENS, nombreDia, esSemanaDePrueba, nombreTramos, filasTramos, filasSeries, filas, dia, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
+  return {NIVELES, SENS, nombreDia, semanas, tipoSemana, esSemanaDePrueba, esMeta, metaDe, nombreTramos, filasTramos, filasSeries, filas, dia, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
     escalera, escaleras, elegirEscalera, defEscalera, defSuelto, escalon, metas, arranque, inferir, sensDe, escalerasDe, cambios,
     veces, anteriores, umbrales, magnitud, cuando, proximaPrueba, hazanasDe, supera, CADA};
 })();

@@ -8,7 +8,8 @@
  "minutos": 40,
  "bloque": {
   "carga": 3,
-  "prueba": 1
+  "prueba": 1,
+  "meta": "los 10 km"
  },
  "equipo": [],
  "alimenta": [
