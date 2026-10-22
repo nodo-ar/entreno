@@ -6,13 +6,17 @@
  "semanas": 8,
  "dias": 3,
  "minutos": 40,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
  "equipo": [
   "bici"
  ],
  "alimenta": [
   "motor.intervalos-1",
-  "motor.intervalos-8",
-  "motor.intervalos-12",
+  "motor.m12-10",
+  "motor.m12-20",
   "motor.bici-40"
  ],
  "fuente": "el protocolo 4×4 de la Universidad Noruega (NTNU)",

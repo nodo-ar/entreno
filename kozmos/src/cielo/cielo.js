@@ -10,20 +10,32 @@ K.cielo = (() => {
     "menos-minutos":{mejor: "menos", corto: v => `${v} min`},
     porcentaje:     {mejor: "mas",   corto: v => `+${v} %`},
     sesiones:       {mejor: "mas",   corto: v => `${v} ${v === 1 ? "sesión" : "sesiones"}`},
-    logrado:        {mejor: "mas",   corto: () => "Logrado"}
+    logrado:        {mejor: "mas",   corto: () => "Logrado"},
+    /* lo que se mide en las pruebas (hazañas): puntos de 0 a 10, centímetros (pueden ser negativos), km, tiempo en segundos
+       y la mejora contra tu primera vez, en % */
+    puntos:         {mejor: "mas",   corto: v => `${coma(v)} ${v === 1 ? "punto" : "puntos"}`},
+    cm:             {mejor: "mas",   corto: v => `${v > 0 ? "+" : ""}${coma(v)} cm`},
+    km:             {mejor: "mas",   corto: v => `${coma(v)} km`},
+    tiempo:         {mejor: "menos", corto: v => `${Math.floor(v / 60)}:${String(Math.round(v % 60)).padStart(2, "0")}`},
+    mejora:         {mejor: "mas",   corto: v => `${v >= 0 ? "+" : ""}${coma(v)} %`}
   };
+  function coma(v){ return String(Math.round(v * 10) / 10).replace(".", ","); }
   /* «2026-10-20» → días desde 1970, sin husos horarios de por medio */
   const dia = f => { const [a, m, d] = String(f).split("-").map(Number); return Date.UTC(a, m - 1, d) / DIA; };
   const llega = (p, v) => TIPOS[p.tipo].mejor === "menos" ? v <= p.umbral : v >= p.umbral;
   const mejorDe = (p, vs) => vs.length ? (TIPOS[p.tipo].mejor === "menos" ? Math.min(...vs) : Math.max(...vs)) : null;
 
-  /* las series de una sesión cuentan como marcas: la mejor de cada ejercicio en cada sesión, con su día */
+  /* las series de una sesión cuentan como marcas: la mejor de cada ejercicio en cada sesión, con su día.
+     Una sesión de hazaña (las pruebas del Modelo B) cuenta como una marca de lo que mide: Perseo es una marca de dominadas.
+     Las hazañas de antes (circuitos con niveles) no guardaron qué ejercicio midieron: no se leen como marcas.
+     Lo que se mide en km (Motor 12) también deja la mejora contra tu primera vez, en %. */
   function deSesiones(sesiones){
-    const r = [];
-    for (const s of sesiones || []){
+    const r = [], primera = {};
+    const orden = [...(sesiones || [])].sort((a, b) => String(a.fecha).localeCompare(String(b.fecha)) || String(a.inicio || "").localeCompare(String(b.inicio || "")));
+    for (const s of orden){
       const mejor = {};
-      for (const b of s.bloques || []) for (const x of b.series || []){
-        if (!x || !TIPOS[x.tipo] || !Number.isFinite(x.valor)) continue;
+      const sumar = x => {
+        if (!x || !TIPOS[x.tipo] || !Number.isFinite(x.valor) || !x.ejercicio || x.completa === false) return;
         const k = x.ejercicio + "|" + x.tipo, a = mejor[k];
         const gana = !a || (TIPOS[x.tipo].mejor === "menos" ? x.valor < a.valor : x.valor > a.valor);
         if (gana) mejor[k] = {id: s.id + ":" + k, estrella: x.estrella, ejercicio: x.ejercicio, tipo: x.tipo, valor: x.valor, fecha: s.fecha, origen: "serie", sesion: s.id};
@@ -32,6 +44,13 @@ K.cielo = (() => {
           const v = Math.round(x.lastreKg / x.pesoKg * 1000) / 10, kp = x.ejercicio + "|porcentaje", ap = mejor[kp];
           if (!ap || v > ap.valor) mejor[kp] = {id: s.id + ":" + kp, ejercicio: x.ejercicio, tipo: "porcentaje", valor: v, fecha: s.fecha, origen: "serie", sesion: s.id};
         }
+      };
+      for (const b of s.bloques || []) for (const x of b.series || []) sumar(x);
+      const hz = s.hazana;
+      if (hz && hz.ejercicio && s.hazana.completa !== false) sumar({ejercicio: hz.ejercicio, tipo: hz.tipo, valor: hz.valor});
+      for (const m of Object.values(mejor)) if (m.tipo === "km" && m.valor > 0){
+        const base = primera[m.ejercicio] ??= m.valor, km = m.ejercicio + "|mejora";
+        mejor[km] = {id: s.id + ":" + km, ejercicio: m.ejercicio, tipo: "mejora", valor: Math.round((m.valor / base - 1) * 1000) / 10, fecha: s.fecha, origen: "serie", sesion: s.id};
       }
       r.push(...Object.values(mejor));
     }
@@ -116,5 +135,5 @@ K.cielo = (() => {
     for (const c of calcular(cat, despues, hoy, sesDespues).constelaciones) for (const e of c.estrellas) if (e.encendida && !a.has(e.id)) r.push({constelacion: c, estrella: e});
     return r;
   }
-  return {TIPOS, calcular, avance, corto, llega, nuevas, dia};
+  return {TIPOS, calcular, avance, corto, llega, nuevas, dia, deSesiones, coma};
 })();

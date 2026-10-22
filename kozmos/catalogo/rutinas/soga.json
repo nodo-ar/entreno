@@ -6,6 +6,10 @@
  "semanas": 4,
  "dias": 3,
  "minutos": 20,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
  "equipo": [
   "soga"
  ],

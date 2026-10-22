@@ -991,6 +991,32 @@
    "equipo": [
     "mancuernas"
    ]
+  },
+  {
+   "id": "del-piso",
+   "nombre": "Sentarte y pararte del piso",
+   "indicacion": "Piernas cruzadas, sentate en el piso y parate sin apoyos. Cada apoyo resta 1 de 10."
+  },
+  {
+   "id": "pike-alcance",
+   "nombre": "Alcance en pike",
+   "indicacion": "Sentado, piernas estiradas: medí cuánto pasan tus dedos la punta de los pies."
+  },
+  {
+   "id": "bici-12",
+   "nombre": "Doce minutos en la bici",
+   "indicacion": "Lo más fuerte que puedas sostener parejo. Al final, los km de la pantalla.",
+   "equipo": [
+    "bici"
+   ]
+  },
+  {
+   "id": "mil-saltos",
+   "nombre": "Mil saltos de soga",
+   "indicacion": "Lo más rápido que puedas. Si la soga se traba, seguís desde donde ibas.",
+   "equipo": [
+    "soga"
+   ]
   }
  ]
 }

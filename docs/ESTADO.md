@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-21 (escaleras) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-21 (pruebas, Modelo B) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -32,7 +32,17 @@
   - Las sesiones viejas cargan y cuentan; la serie suma campos opcionales (`escalera`, `rango`, `n`, `descarga`, `sensacion`) y el respaldo los lleva. Formato en `docs/kozmos-rutinas.md`.
   - Pruebas: 59 sin pantalla y 66 de pantallas, en verde.
   - **Esperando a Fer**: el OK al tablero; si «trabado» = tres sesiones sin mejorar le cierra; si la escalerita de «Tu avance» le gusta o prefiere filas con el ejercicio.
-  - **Próximo**: Modelo B (ciclos con semana de prueba). Después, los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
+  - **Hecho después**: el Modelo B (abajo). Siguen los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
+- **Versiones publicadas**: kozmos-21 (Planes, PR #23) y kozmos-22 (escaleras, PR #24, la última). Registros en `docs/versiones/`.
+- **Pruebas con escala y semana de prueba, Modelo B** (2026-10-21): vuelta 18 (acta `docs/actas/018-kozmos-pruebas.md`), en la rama `claude/project-thread-985fzq`, sin PR:
+  - Las 8 hazañas son pruebas que miden algo (`hazanas.json` versión 2): escala de magnitud 5 a 1, las estrellas que encienden y cada 42 días. Pegaso, Sagitario, Draco y Casiopea ahora miden km, puntos, segundos y centímetros.
+  - El Cielo lee las pruebas como marcas; nueve estrellas nuevas medidas con pruebas; Motor 12 reemplaza las estrellas de 8 y 12 sesiones de intervalos.
+  - Las rutinas tienen `bloque` (carga + 1 de prueba). La semana de prueba es una descarga con las pruebas adelante, y la marca fija dónde arranca cada escalera.
+  - Planes nuevo según el boceto (próxima prueba, pruebas y rutinas con menú de familia, tu rutina con «Prueba en la semana N»), la prueba abierta, la línea del escalón debajo de «Seguir esta rutina», Hoy con «Semana de prueba · N pruebas · encienden hasta M estrellas» y el resumen de una prueba.
+  - Lo guardado sigue cargando: las hazañas por niveles se ven como «versión anterior». El respaldo pasa a formato 2 y lee el 1. Formato en `docs/kozmos-rutinas.md` y `docs/kozmos-respaldo.md`.
+  - Pruebas: 67 sin pantalla y 71 de pantallas, en verde.
+  - **Esperando a Fer**: el OK al tablero; si los nombres mitológicos quedan con la prueba al lado; si Draco como «Escuadra» (L-sit) le cierra.
+  - **Próximo**: los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
 
 ## Dónde quedó
 

@@ -22,8 +22,11 @@ K.queToca = b => {
   if (b.tipo === "sesiones") return "1 sesión";
   return b.series > 1 ? `${b.series} × ${v}` : v;
 };
-const PREGUNTA = {segundos: "¿Cuántos segundos?", repeticiones: "¿Cuántas salieron?", minutos: "¿Cuántos minutos?", "menos-minutos": "¿En cuántos minutos?", porcentaje: "¿Cuánto lastre?", logrado: "¿Salió?", sesiones: "¿La hiciste?"};
-const UNI = {segundos: "segundos", repeticiones: "repeticiones", minutos: "minutos", "menos-minutos": "minutos"};
+const PREGUNTA = {segundos: "¿Cuántos segundos?", repeticiones: "¿Cuántas salieron?", minutos: "¿Cuántos minutos?", "menos-minutos": "¿En cuántos minutos?", porcentaje: "¿Cuánto lastre?", logrado: "¿Salió?", sesiones: "¿La hiciste?",
+  puntos: "¿Cuántos puntos?", cm: "¿Cuántos centímetros?", km: "¿Cuántos km?"};
+const UNI = {segundos: "segundos", repeticiones: "repeticiones", minutos: "minutos", "menos-minutos": "minutos", puntos: "puntos, de 0 a 10", cm: "cm más allá de los pies", km: "km en la pantalla"};
+/* cuánto suma cada toque de − y +, y hasta dónde baja: los centímetros pueden ser negativos, los puntos van de medio en medio */
+K.pasoDe = (tipo, campo = "valor") => campo !== "valor" ? {inc: .5, min: 0, max: 1e5} : ({puntos: {inc: .5, min: 0, max: 10}, cm: {inc: 1, min: -50, max: 100}, km: {inc: .1, min: 0, max: 1e3}})[tipo] || {inc: 1, min: 0, max: 1e5};
 
 K.P.hoy = r => r.sub === "rumbo" ? K.P.rumbo() : r.sub === "sesion" ? K.P.sesion() : r.sub === "resumen" ? K.P.resumen(r.sub2) : K.P.hoyInicio();
 
@@ -43,6 +46,7 @@ K.escalerasMini = (es, fam) => `<ul class="esc-mini">${es.map(x => `<li style="-
     <b class="em-nom">${K.esc(x.nombre)}</b><small class="num em-n">${x.i + 1}/${x.total}</small></li>`).join("")}</ul>`;
 /* lo que cambió en cada escalera con una sesión, para el resumen: ▲ subiste, = seguís, ▼ bajás */
 const SIGNO = {sube: "▲", carga: "▲", baja: "▼"};
+const signoDe = y => SIGNO[y.evento] || (y.evento === "prueba" && SIGNO[y.nuevo]) || "=";
 const cambioTx = x => {
   const n = id => K.ej(id).nombre, kg = v => String(v).replace(".", ",");
   if (x.evento === "sube") return `${n(x.de.ejercicio)} → ${n(x.a.ejercicio)}`;
@@ -51,13 +55,22 @@ const cambioTx = x => {
   if (x.evento === "trabado") return "La próxima, más liviana";
   if (x.evento === "descarga") return "La próxima, volvés a probar";
   if (x.evento === "cima") return "Arriba de todo";
+  if (x.evento === "prueba") return x.nuevo === "sube" ? `Por la prueba, pasás a ${n(x.a.ejercicio)}` : x.nuevo === "baja" ? `Por la prueba, volvés a ${n(x.a.ejercicio)}` : `Seguís en ${n(x.a.ejercicio)}${Number.isFinite(x.proxima?.[0]) ? `, ${x.proxima[0]} por serie` : ""}`;
   return x.proxima?.length ? `La próxima: ${x.proxima.map(v => v === "max" ? "máx" : v).join(" · ")}` : "Seguís acá";
 };
 /* lo que toca hoy: la sesión de tu rutina, o lo que arma tu rumbo. La ventana de prueba va primero en los dos casos. */
+/* En la semana de prueba (cada tantas semanas, según el bloque de tu rutina) es una descarga, la mitad de las series, con las pruebas adelante. */
 K.hoyPlan = () => {
-  const base = K.plan.armar(K.cieloActual(), K.rumbo(), K.diario.sesiones, K.hoy()), ru = K.rutinaActual();
-  if (!ru || ru.cur.terminada) return base;
-  const plan = K.rutina.deRutina(ru.r, ru.cur.i, ctxRutina());
+  const cielo = K.cieloActual(), ses = K.diario.sesiones, hoy = K.hoy(), ctx = ctxRutina();
+  const base = K.plan.armar(cielo, K.rumbo(), ses, hoy), ru = K.rutinaActual();
+  const sp = K.plan.semanaDePrueba(K.diario.perfil, ses, hoy), pc = {cielo, sesiones: ses, equipo: ctx.equipo, ej: K.EJ, hoy};
+  if (!ru || ru.cur.terminada) return sp && sp.toca && base.bloques.length ? K.plan.deSemanaDePrueba(base, sp, {...pc, cons: K.rumbo(), ejs: []}) : base;
+  if (sp && sp.toca){
+    const plan = K.rutina.deRutina(ru.r, ru.cur.i, {...ctx, descarga: true});
+    const cons = [...new Set(ru.r.alimenta.map(id => id.split(".")[0]))], ejs = K.rutina.escalerasDe(ru.r, ctx).flatMap(x => x.pasos.map(p => p.ejercicio));
+    return K.plan.deSemanaDePrueba(plan, sp, {...pc, cons, ejs});
+  }
+  const plan = K.rutina.deRutina(ru.r, ru.cur.i, ctx);
   /* con rutina, la ventana abre solo para lo que la rutina entrena, y nunca una prueba larga (minutos) antes de la sesión */
   const lleva = new Set(ru.r.alimenta.map(id => id.split(".")[0]));
   const pruebas = base.bloques.filter(b => b.prueba && lleva.has(b.constelacion) && b.tipo !== "minutos");
@@ -66,6 +79,7 @@ K.hoyPlan = () => {
 /* lo que dice una fila de «Hoy toca»: qué y cuánto */
 const corto = (tipo, o) => o === "max" ? "máx" : tipo === "segundos" ? `${o} s` : String(o);
 K.filaToca = b => {
+  if (b.hazana){ const h = K.hzDe(b.hazana); return [`Prueba · ${h ? h.prueba : b.nombre}`, b.formato === "escalera" ? "una más por minuto" : b.formato === "tiempo" ? "por tiempo" : b.reloj ? `${Math.round(b.reloj / 60)} min` : "máx"]; }
   if (b.prueba) return [`Prueba · ${K.estrella(b.estrella).nombre}`, K.cielo.corto(b, b.umbral)];
   if (b.constelacion) return [`${K.cons(b.constelacion).nombre} · ${K.ej(b.ejercicio).nombre}`, K.queToca(b)];
   if (b.clase === "tramos") return [b.nombre || "", `${Math.round(b.tramos.reduce((a, x) => a + x.seg, 0) / 60)} min`];
@@ -74,7 +88,13 @@ K.filaToca = b => {
   return [ejs.map(e => K.ej(e).nombre).join(" + "), ejs.length > 1 ? `${b.series} series` : os.length === 1 ? `${b.series} × ${corto(b.tipo, os[0])}` : b.pasos.map(p => corto(p.tipo, p.objetivo)).join("·")];
 };
 const filasToca = bs => bs.map(b => { const [q, n] = K.filaToca(b);
-  return `<div class="ln toca${b.prueba ? " es-prueba" : ""}"><span class="tg"><i class="dot" style="--c:var(--${b.familia})"></i>${K.esc(q)}</span><span class="num">${K.esc(n)}</span></div>`; }).join("");
+  return `<div class="ln toca${b.prueba || b.hazana ? " es-prueba" : ""}"><span class="tg"><i class="dot" style="--c:var(--${b.familia})"></i>${K.esc(q)}</span><span class="num">${K.esc(n)}</span></div>`; }).join("");
+/* la semana de prueba se dice arriba de lo que toca: cuántas pruebas y cuántas estrellas pueden encender */
+const pruebaLn = plan => {
+  const sp = plan.semanaPrueba; if (!sp) return "";
+  const n = sp.pruebas, e = plan.pruebas ? plan.pruebas.encienden.length : 0;
+  return `<p class="hoy-ventana hoy-sp small"><b>Semana de prueba</b>${n ? ` · ${n} ${n === 1 ? "prueba" : "pruebas"}${e ? ` · ${n === 1 ? "enciende" : "encienden"} hasta ${e} ${e === 1 ? "estrella" : "estrellas"}` : ""}` : " · más liviana, para llegar descansado"}</p>`;
+};
 const DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
 K.DIAS = DIAS;
 
@@ -96,17 +116,17 @@ K.P.hoyInicio = () => {
   if (!rumbo.length) return enc + `<section class="cd rumbo-vacio">${K.dibujo.una(K.cieloActual().constelaciones.find(c => c.id === "front-lever"), [])}
     <span class="lb">Tu rumbo</span><b class="t1">Elegí tu rumbo.</b><p class="mute">De 1 a 3 constelaciones. Kozmos arma cada día lo que toca para llegar.</p></section>${sin}
     <button type="button" class="btn" data-ir="#/hoy/rumbo">Elegir</button>`;
-  const cielo = K.cieloActual(), ses = K.diario.sesiones, plan = K.plan.armar(cielo, rumbo, ses, K.hoy());
+  const cielo = K.cieloActual(), ses = K.diario.sesiones, base = K.plan.armar(cielo, rumbo, ses, K.hoy()), plan = K.hoyPlan();
   const hecho = hechoHoy();
-  const prin = plan.bloques.find(b => !b.extra) || plan.bloques[0];
+  const prin = base.bloques.find(b => !b.extra) || base.bloques[0];
   const delRumbo = cielo.constelaciones.filter(c => rumbo.includes(c.id));
-  if (!plan.bloques.some(b => !b.extra) && delRumbo.some(c => c.pide.length)){
+  if (!base.bloques.some(b => !b.extra) && delRumbo.some(c => c.pide.length)){
     /* lo que sigue de tu rumbo pide equipo que no marcaste */
     const pide = K.pide([...new Set(delRumbo.flatMap(c => c.pide))]);
     return enc + hecho + `<section class="cd"><span class="lb">Tu rumbo</span><b class="t1">Lo que sigue pide ${K.esc(pide)}.</b><p class="mute">Si lo tenés, marcalo en tu equipo. Si no, elegí otro rumbo.</p></section>
       <div class="dos-btn"><button type="button" class="btn sec" data-ir="#/hoy/rumbo">Cambiar el rumbo</button><button type="button" class="btn" data-ir="#/vos/equipo">Tu equipo</button></div>`;
   }
-  if (!prin || plan.bloques.every(b => b.extra) && delRumbo.every(c => c.completa)) return enc + hecho + `<section class="cd"><span class="lb">Tu rumbo, completo</span><b class="t1">Llegaste.</b><p class="mute">¿Cuál sigue?</p></section>
+  if (!prin || base.bloques.every(b => b.extra) && delRumbo.every(c => c.completa)) return enc + hecho + `<section class="cd"><span class="lb">Tu rumbo, completo</span><b class="t1">Llegaste.</b><p class="mute">¿Cuál sigue?</p></section>
     <button type="button" class="btn" data-ir="#/hoy/rumbo">Elegir la que sigue</button>`;
   const c = cielo.constelaciones.find(x => x.id === prin.constelacion), p = c.proxima;
   const proxima = `<section class="cd hoy-prox"><div class="hoy-cielo">${K.dibujo.una(c, [])}</div><div class="hoy-prox-tx">
@@ -116,7 +136,7 @@ K.P.hoyInicio = () => {
   const filas = filasToca(plan.bloques);
   /* la ventana abierta se dice con la estrella que toca probar */
   const ventana = plan.ventana.length ? `<p class="hoy-ventana small"><b>Ventana abierta:</b> probá ${plan.ventana.map(id => K.esc(cielo.constelaciones.find(c => c.id === id).proxima.nombre)).join(" y ")}.</p>` : "";
-  const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${plan.bloques.length} ${plan.bloques.length === 1 ? "bloque" : "bloques"}</span></div>${ventana}${filas}
+  const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${plan.bloques.length} ${plan.bloques.length === 1 ? "bloque" : "bloques"}</span></div>${pruebaLn(plan)}${ventana}${filas}
     ${plan.volviste ? `<p class="mute small">Tu cielo te esperó. Hoy arrancás más suave.</p>` : ""}</section>`;
   return enc + `<div class="hoy"><div class="hoy-a">${hecho}${pasoEmpeza()}${K.hoyOrigen()}${proxima}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
 };
@@ -145,7 +165,7 @@ K.hoyRutina = ({r, cur}, sin) => {
       <span class="ln mute"><span>Día ${cur.dia} de ${r.dias}</span><span class="num">${cur.i} de ${cur.total}</span></span>
       ${sig ? `<span class="ln mute small"><span>Entrena para</span><span>${K.esc(sig.nombre)}</span></span>` : ""}</section>`;
   const ventana = plan.ventana.length ? `<p class="hoy-ventana small"><b>Ventana abierta:</b> probá ${plan.ventana.map(id => K.esc(cielo.constelaciones.find(c => c.id === id).proxima.nombre)).join(" y ")}.</p>` : "";
-  const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${K.esc(s.nombre)}</span></div>${ventana}${filasToca(plan.bloques)}
+  const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${K.esc(s.nombre)}</span></div>${pruebaLn(plan)}${ventana}${filasToca(plan.bloques)}
     ${s.nota ? `<p class="mute small">${K.esc(s.nota)}</p>` : ""}</section>`;
   return `<div class="hoy"><div class="hoy-a">${hecho}${pasoEmpeza()}${K.hoyOrigen()}${top}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
 };
@@ -212,6 +232,8 @@ const figura = (id, fam, chica) => id && K.POSES[id] ? `<div class="ses-fig${chi
 /* el número grande de una serie: la cuenta para prepararse, el reloj que corre o lo que toca */
 const grandeSerie = b => {
   const pr = K.sesion.prep();
+  /* una prueba con reloj fijo (Motor 12): lo que queda; al llegar, a anotar */
+  if (b.reloj){ const q = b.reloj - K.sesion.enFase(); return q > 0 ? [K.reloj(Math.ceil(q)), "lo más fuerte que sostengas"] : ["0:00", "Listo: anotá lo que hiciste"]; }
   if (b.tipo === "segundos") return pr > 0 ? [String(Math.ceil(pr)), "Preparate"] : [K.reloj(K.sesion.enFase()), b.objetivo === "max" ? "al máximo" : `de ${b.objetivo} s`];
   return [K.reloj(K.sesion.enFase()), b.tipo === "minutos" ? `de ${b.objetivo} min` : b.tipo === "sesiones" ? "unos 28 min" : "10 km"];
 };
@@ -226,7 +248,8 @@ K.P.sesion = () => {
   const c = b.constelacion ? K.cons(b.constelacion) : null;
   const enSerie = S.fase === "serie";
   const nombreB = c ? c.nombre : B.clase ? B.nombre : b.escalera ? K.rutina.escalera(b.escalera)?.nombre || "" : "";
-  const donde = B.hazana ? `Hazaña · ${K.rutina.NIVELES[B.nivel]}` : S.fase === "descanso" ? "Descanso" : S.fase === "cierre" ? (B.clase ? "Fin" : "Última serie") : b.prueba ? "Prueba de estrella" : `Bloque ${S.b + 1} de ${nb}${nombreB ? ` · ${nombreB}` : ""}`;
+  const hzB = B.hazana && K.hzDe(B.hazana);
+  const donde = S.fase === "descanso" ? "Descanso" : B.hazana ? (nb > 1 ? `Bloque ${S.b + 1} de ${nb} · Prueba` : "Prueba") : S.fase === "cierre" ? (B.clase ? "Fin" : "Última serie") : b.prueba ? "Prueba de estrella" : `Bloque ${S.b + 1} de ${nb}${nombreB ? ` · ${nombreB}` : ""}`;
   const acc = `<div class="enc-acc ses-acc"><button type="button" class="ib" id="s-cortar" aria-label="Terminar la sesión">${K.ic("x")}</button>
     <span class="lb ses-donde">${K.esc(donde)}</span>${K.mas("s-mas", "Opciones de la sesión")}</div>`;
   if (S.fase === "tramo") return acc + K.P.tramo(S, B);
@@ -234,19 +257,24 @@ K.P.sesion = () => {
   if (B.clase && S.fase === "cierre") return acc + K.P.cierreBloque(S, B);
   const pasos = `<div class="stp" style="--c:var(--${b.familia})" aria-hidden="true">${Array.from({length: b.series}, (_, i) => `<i class="${i < S.s || (i === S.s && !enSerie) ? "d" : i === S.s ? "n" : ""}"></i>`).join("")}</div>`;
   const mp = K.marcaPaso(b);
-  const nom = `<span class="lb">${b.tipo === "logrado" ? "Intento" : "Serie"} ${S.s + 1} de ${b.series}${b.extra ? " · para sostener" : ""}${mp ? ` · <b class="ses-marca">${mp}</b>` : ""}</span>`;
+  const nom = hzB ? `<span class="lb">${K.esc(hzB.nombre)} · ${K.esc(hzB.prueba)}</span>` : `<span class="lb">${b.tipo === "logrado" ? "Intento" : "Serie"} ${S.s + 1} de ${b.series}${b.extra ? " · para sostener" : ""}${mp ? ` · <b class="ses-marca">${mp}</b>` : ""}</span>`;
+  /* en una prueba, la escala con tu vez anterior marcada: sabés a qué apuntás */
+  const hzVs = hzB ? K.hzVeces(hzB) : null, hzAntes = hzVs && hzVs[hzVs.length - 1];
+  const escalaSes = hzB ? `<div class="ses-escala">${K.escala(hzB, null, {vs: hzVs, antes: hzAntes?.valor})}<span class="ln mute small"><span>${hzAntes ? `Tu última: ${K.esc(K.hzMarca(hzB, hzAntes.valor))}` : "Tu primera vez"}</span><span>${hzAntes ? K.esc(K.fechaCorta(hzAntes.fecha)) : ""}</span></span></div>` : "";
   const pausa = S.pausa !== null ? `<p class="ses-pausa lb">En pausa</p>` : "";
   if (enSerie && b.prueba) return acc + K.P.prueba(S, b, e, pausa);
   if (enSerie){
-    const o = b.objetivo, corre = CORRE.includes(b.tipo);
+    const o = b.objetivo, corre = CORRE.includes(b.tipo) || !!b.reloj;
     const [gn, gl] = corre ? grandeSerie(b) : [];
     const grande = corre ? `<span class="reloj big num" data-r="fase">${gn}</span><span class="lb" data-r="fase-lb">${gl}</span>`
       : b.tipo === "repeticiones" ? (o === "max" ? `<span class="reloj big num">Máx</span><span class="lb">todas las que salgan</span>` : `<span class="reloj big num">${o}</span><span class="lb">repeticiones${b.carga && b.kg ? ` · con ${String(b.kg).replace(".", ",")} kg` : b.antes !== undefined ? ` · la vez pasada ${b.antes}` : ""}</span>`)
       : b.tipo === "porcentaje" ? `<span class="reloj big num">+${o} %</span><span class="lb">de tu peso${K.diario.perfil.peso ? ` · ${Math.round(o * K.diario.perfil.peso / 100 * 2) / 2} kg` : ""}</span>`
+      : b.tipo === "puntos" ? `<span class="reloj big num">10</span><span class="lb">arrancás con 10 puntos</span>`
+      : b.tipo === "cm" ? `<span class="reloj big num">cm</span><span class="lb">más allá de la punta de los pies</span>`
       : `<span class="lb">De punta a punta, sin ayuda</span>`;
     const sig = K.sesion.ultima() ? "Es la última" : b.series > S.s + 1 ? (b.descanso ? `Después: descanso de ${K.reloj(b.descanso)}` : `Después: ${K.sesion.proxima()}`) : `Después: ${K.sesion.nombreBloque(S.plan.bloques[S.b + 1])}`;
     return acc + `<div class="ses serie"><div class="ses-a">${pasos}<div class="enc-tit ses-tit">${nom}<h1>${K.esc(e.nombre)}</h1></div>
-        <p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}${figura(e.id, b.familia)}<div class="ses-reloj">${grande}</div></div>
+        <p class="mute ses-ind">${K.esc(hzB ? hzB.como : e.indicacion)}</p>${pausa}${figura(e.id, b.familia)}<div class="ses-reloj">${grande}</div>${escalaSes}</div>
       <div class="ses-b"><p class="ln ses-sig"><span class="mute">${K.esc(sig)}</span><span class="reloj num" data-r="total">${K.reloj(K.sesion.total())}</span></p>
         <button type="button" class="btn" id="s-listo">${K.ic("check")}Listo</button></div></div>`;
   }
@@ -260,7 +288,10 @@ K.P.sesion = () => {
   else if (b.tipo === "porcentaje") campo = `<div class="dos-pasos">${paso("lastre", "Lastre en kilos", v?.lastre, "kg de lastre")}${K.diario.perfil.peso ? "" : paso("peso", "Tu peso en kilos", v?.peso, "kg tu peso")}</div>`;
   else campo = paso("valor", PREGUNTA[b.tipo], v, UNI[b.tipo]);
   const antes = b.antes !== undefined ? b.antes : K.plan.vezPasada(K.diario.sesiones, b.ejercicio, b.tipo);
-  const pie = (b.rango && !b.descarga ? sensBotones(S) : "") + (b.tipo === "logrado" || b.tipo === "sesiones" ? "" : antes !== null ? `<span class="ln mute"><span>La vez pasada</span><span class="num">${K.esc(K.cielo.corto(b, antes))}</span></span>`
+  /* en una prueba, contra tu prueba anterior (no contra las series de todos los días) */
+  const hzP = hzB && !B.clase ? K.hzVeces(hzB) : null, hzU = hzP && hzP[hzP.length - 1];
+  const pie = hzP ? `<span class="ln mute"><span>${hzU ? "Tu prueba anterior" : "Tu primera vez arma tu escala"}</span>${hzU ? `<span class="num">${K.esc(K.hzMarca(hzB, hzU.valor))}</span>` : ""}</span>`
+    : (b.rango && !b.descarga ? sensBotones(S) : "") + (b.tipo === "logrado" || b.tipo === "sesiones" ? "" : antes !== null ? `<span class="ln mute"><span>La vez pasada</span><span class="num">${K.esc(K.cielo.corto(b, antes))}</span></span>`
     : b.umbral ? `<span class="ln mute"><span>Para la próxima estrella</span><span class="num">${K.esc(K.cielo.corto(b, b.umbral))}</span></span>` : "");
   const tarjeta = B.clase ? hechoBloque(S, B) : `<section class="cd ses-anota"><span class="lb">${PREGUNTA[b.tipo]} · ${K.esc(e.nombre)}</span>${campo}${pie}</section>`;
   if (S.fase === "cierre") return acc + `<div class="ses cierre"><div class="ses-a">${pasos}<div class="enc-tit ses-tit">${nom}<h1>${K.esc(e.nombre)}</h1></div>${pausa}
@@ -302,23 +333,27 @@ const circGrande = (S, b) => {
   const pr = K.sesion.prep();
   if (pr > 0) return [String(Math.ceil(pr)), "Preparate"];
   if (b.formato === "amrap") return [K.reloj(Math.max(0, Math.ceil(K.sesion.queda()))), `${S.vueltas} ${S.vueltas === 1 ? "vuelta" : "vueltas"}`];
+  /* la escalera de minutos: el número grande es lo que toca este minuto */
+  if (b.formato === "escalera"){ const t = K.sesion.enFase(), m = Math.floor(t / 60); return [`×${m + 1}`, `minuto ${m + 1} · quedan ${K.reloj(Math.ceil(60 - t % 60))}`]; }
   return [K.reloj(K.sesion.enFase()), b.rondas > 1 ? `Vuelta ${Math.min(S.vueltas + 1, b.rondas)} de ${b.rondas}` : "Todo, en orden"];
 };
 K.P.circuito = (S, b) => {
   const [n, l] = circGrande(S, b), pausa = S.pausa !== null ? `<p class="ses-pausa lb">En pausa</p>` : "", prep = K.sesion.prep() > 0;
-  const items = `<section class="cd circ-items">${b.items.map(x => `<div class="ln">${x.ejercicio && K.POSES[x.ejercicio] ? K.fig.chica(x.ejercicio, b.familia) : ""}<span>${K.esc(x.ejercicio ? K.ej(x.ejercicio).nombre : x.nombre || "")}</span><span class="num">${K.esc(circItem(x))}</span></div>`).join("")}</section>`;
-  const listo = b.formato === "amrap" ? `<div class="dos-btn"><button type="button" class="btn sec" id="s-vuelta-menos" aria-label="Una vuelta menos">−1</button><button type="button" class="btn" id="s-vuelta">${K.ic("check")}Vuelta</button></div>`
+  const items = `<section class="cd circ-items">${b.items.map(x => `<div class="ln">${x.ejercicio && K.POSES[x.ejercicio] ? K.fig.chica(x.ejercicio, b.familia) : ""}<span>${K.esc(x.ejercicio ? K.ej(x.ejercicio).nombre : x.nombre || "")}</span><span class="num">${K.esc(b.formato === "escalera" ? "una más por minuto" : circItem(x))}</span></div>`).join("")}</section>`;
+  const listo = b.formato === "escalera" ? `<button type="button" class="btn" id="s-vuelta">No llegué</button>` : b.formato === "amrap" ? `<div class="dos-btn"><button type="button" class="btn sec" id="s-vuelta-menos" aria-label="Una vuelta menos">−1</button><button type="button" class="btn" id="s-vuelta">${K.ic("check")}Vuelta</button></div>`
     : `<button type="button" class="btn" id="s-vuelta">${K.ic("check")}${b.rondas > 1 ? "Terminé la vuelta" : "Terminé"}</button>`;
   return `<div class="ses circuito${prep ? " prep" : ""}" style="--c:var(--${b.familia})" data-r="ses"><div class="ses-a">
-      <div class="enc-tit ses-tit"><span class="lb">${K.esc(FORMATO[b.formato])}</span><h1>${K.esc(b.nombre)}</h1></div>${pausa}
+      <div class="enc-tit ses-tit"><span class="lb">${K.esc(b.hazana && K.hzDe(b.hazana) ? `${FORMATO[b.formato]} · ${K.hzDe(b.hazana).prueba}` : FORMATO[b.formato])}</span><h1>${K.esc(b.nombre)}</h1></div>${pausa}
       <div class="ses-reloj"><span class="reloj big num" data-r="fase" role="timer" aria-live="off">${n}</span><span class="lb" data-r="fase-lb">${K.esc(l)}</span></div>${items}</div>
-    <div class="ses-b"><p class="ln ses-sig"><span class="mute">${b.formato === "amrap" ? `Todas las vueltas que entren en ${b.minutos} min` : "Lo más rápido que puedas, bien hecho"}</span></p>${listo}</div></div>`;
+    <div class="ses-b"><p class="ln ses-sig"><span class="mute">${b.formato === "amrap" ? `Todas las vueltas que entren en ${b.minutos} min` : b.formato === "escalera" ? "Lo que sobra del minuto, descansás" : "Lo más rápido que puedas, bien hecho"}</span></p>${listo}</div></div>`;
 };
-const FORMATO = {tiempo: "Por tiempo", amrap: "Todas las vueltas que entren"};
+const FORMATO = {tiempo: "Por tiempo", amrap: "Todas las vueltas que entren", escalera: "Cada minuto, una más"};
 
 /* el fin de un bloque de tramos o de una hazaña: lo hecho, sin nada que escribir (salvo las vueltas, que se pueden corregir) */
 const hechoBloque = (S, b) => {
   if (b.clase === "circuito"){
+    if (b.formato === "escalera") return `<section class="cd ses-anota"><span class="lb">El último minuto completo · ${K.esc(K.ej(b.mide.ejercicio).nombre)}</span><div class="pmw"><div class="pm"><button type="button" class="pmb" data-spaso="-1" data-campo="valor" aria-label="Menos">−</button>
+      <input class="pmv spv num" id="s-valor" data-campo="valor" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="Repeticiones del último minuto completo" value="${K.esc(S.borrador ?? "")}"><button type="button" class="pmb" data-spaso="1" data-campo="valor" aria-label="Más">+</button></div><span class="lb">repeticiones</span></div></section>`;
     if (b.formato === "amrap") return `<section class="cd ses-anota"><span class="lb">¿Cuántas vueltas? · ${K.esc(b.nombre)}</span><div class="pmw"><div class="pm"><button type="button" class="pmb" data-spaso="-1" data-campo="valor" aria-label="Menos">−</button>
       <input class="pmv spv num" id="s-valor" data-campo="valor" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="Vueltas" value="${K.esc(S.borrador ?? "")}"><button type="button" class="pmb" data-spaso="1" data-campo="valor" aria-label="Más">+</button></div><span class="lb">vueltas</span></div></section>`;
     return `<section class="cd ses-anota"><span class="lb">Tu tiempo · ${K.esc(b.nombre)}</span><b class="reloj num res-tiempo">${K.reloj(S.borrador || 0)}</b></section>`;
@@ -326,7 +361,7 @@ const hechoBloque = (S, b) => {
   const h = [...S.hechos].reverse().find(x => x.b === S.b);
   return `<section class="cd ses-anota"><span class="lb">Hecho · ${K.esc(b.nombre || "")}</span><b class="reloj num res-tiempo">${K.reloj(h?.seg ?? 0)}</b></section>`;
 };
-K.P.cierreBloque = (S, b) => `<div class="ses cierre"><div class="ses-a"><div class="enc-tit ses-tit"><span class="lb">${b.hazana ? "Hazaña" : "Último bloque"}</span><h1>${K.esc(b.nombre || "")}</h1></div>
+K.P.cierreBloque = (S, b) => `<div class="ses cierre"><div class="ses-a"><div class="enc-tit ses-tit"><span class="lb">${b.hazana ? `Prueba${K.hzDe(b.hazana) ? ` · ${K.esc(K.hzDe(b.hazana).prueba)}` : ""}` : "Último bloque"}</span><h1>${K.esc(b.nombre || "")}</h1></div>
       <div class="ses-reloj"><span class="reloj big num" data-r="total">${K.reloj(K.sesion.total())}</span><span class="lb">toda la sesión</span></div></div>
     <div class="ses-b">${hechoBloque(S, b)}<button type="button" class="btn" id="s-terminar">Terminar</button></div></div>`;
 
@@ -398,7 +433,7 @@ K.sesion.alLatir = () => {
   else if (S.fase === "cierre") texto = b.clase ? "A terminar" : "Última serie";
   else if (S.fase === "tramo"){ const x = b.tramos[S.s], q = K.sesion.queda(); texto = `${tramoTx(x)} ${K.reloj(Math.max(0, Math.ceil(q)))}`; p = Math.max(0, q) / x.seg; }
   else if (K.sesion.prep() > 0) texto = `Preparate ${Math.ceil(K.sesion.prep())}`;
-  else if (S.fase === "circuito"){ const [n] = circGrande(S, b); texto = `${b.nombre} ${n}`; p = b.formato === "amrap" ? Math.max(0, K.sesion.queda()) / (b.minutos * 60) : S.vueltas / b.rondas; }
+  else if (S.fase === "circuito"){ const [n] = circGrande(S, b); texto = `${b.nombre} ${n}`; p = b.formato === "amrap" ? Math.max(0, K.sesion.queda()) / (b.minutos * 60) : b.formato === "escalera" ? K.sesion.enFase() % 60 / 60 : S.vueltas / b.rondas; }
   else { const pa = K.sesion.paso(), mp = K.marcaPaso(pa); texto = `${K.ej(pa.ejercicio).nombre}${mp ? ` · ${mp}` : ""} ${K.reloj(K.sesion.enFase())}`; p = (S.s + 1) / b.series; }
   K.isla.mostrar({texto, p, familia: b.familia, ir: "#/hoy/sesion"});
 };
@@ -431,9 +466,9 @@ K.ses = {
   seguir(){ K.sesion.seguir(); K.refrescar(); },
   ajustar(d){ K.sesion.ajustar(d); K.sesion.alLatir(); },
   paso(campo, s){
-    const S = K.sesion.estado(), inc = campo === "valor" ? 1 : .5, obj = S.borrador !== null && typeof S.borrador === "object";
+    const S = K.sesion.estado(), B = K.sesion.bloque(), {inc, min, max} = K.pasoDe(B.clase ? "repeticiones" : K.sesion.paso().tipo, campo), obj = S.borrador !== null && typeof S.borrador === "object";
     const v = K.sesion.numero((obj ? S.borrador[campo] : campo === "valor" ? S.borrador : undefined) ?? "");
-    const n = Math.max(0, Math.round(((Number.isFinite(v) ? v : 0) + s * inc) * 2) / 2);
+    const n = Math.max(min, Math.min(max, Math.round(((Number.isFinite(v) ? v : 0) + s * inc) * 10) / 10));
     K.sesion.anotar(campo, n); const el = K.$("#s-" + campo); if (el) el.value = n;
     K.ses.pintarSens();
   },
@@ -462,11 +497,11 @@ K.ses = {
   },
   pausa(){ K.sesion.pausar(); K.refrescar(); },
   vuelta(d){ K.sesion.vuelta(d); K.refrescar(); },
-  /* una hazaña en un nivel, desde su pantalla */
-  hazana(id, nivel, btn){
+  /* una prueba (hazaña), desde su pantalla o desde Planes */
+  hazana(id, btn){
     if (K.sesion.activa()){ K.ir("#/hoy/sesion"); K.aviso("Tenés una sesión abierta. Terminala para empezar otra."); return; }
-    const h = K.HAZANAS.hazanas.find(x => x.id === id); if (!h) return;
-    const plan = K.rutina.deHazana(h, nivel, ctxRutina());
+    const h = K.hzDe(id); if (!h) return;
+    const plan = K.rutina.deHazana(h, ctxRutina());
     K.mov.iris(btn); K.sesion.empezar({...plan, ventana: [], volviste: false, desde: `#/planes/hazanas/${h.id}`}); K.ir("#/hoy/sesion");
   },
   terminar(){ return K.ses._fin(false); },
@@ -494,10 +529,18 @@ K.P.resumen = (id, desde = "hoy") => {
   const ses = K.diario.sesiones, x = ses.find(s => s.id === id);
   if (!x) return desde === "hoy" ? K.P.hoyInicio() : K.P.progreso({});
   const cielo = K.cieloActual(), estrella = eid => { const e0 = K.estrella(eid), c = e0 && cielo.constelaciones.find(k => k.estrellas.some(y => y.id === eid)); return c ? {c, e: c.estrellas.find(y => y.id === eid)} : null; };
-  /* una hazaña: lo de hoy contra tu mejor en ese nivel */
-  const hzH = x.hazana && K.HAZANAS.hazanas.find(h => h.id === x.hazana.id);
-  const hz = hzH ? (() => { const mejor = K.rutina.mejorHazana(hzH, x.hazana.nivel, ses.filter(s => s.id !== id)), v = x.hazana.valor, m = K.rutina.mejorEs(hzH);
+  /* una hazaña de antes (por niveles): lo de ese día contra tu mejor en ese nivel */
+  const hzH = x.hazana && x.hazana.v !== 2 && Number.isInteger(x.hazana.nivel) && K.hzDe(x.hazana.id);
+  const hz = hzH ? (() => { const m = K.rutina.mejorEs(hzH), v = x.hazana.valor, otras = K.rutina.anteriores(hzH, ses.filter(s => s.id !== id)).filter(y => y.nivel === x.hazana.nivel && y.completa && y.valor > 0 && y.fecha <= x.fecha);
+    const mejor = !otras.length || m === "hecha" ? (otras.length ? otras[0].valor : null) : otras.reduce((a, y) => (m === "menos" ? y.valor < a : y.valor > a) ? y.valor : a, otras[0].valor);
     return {h: hzH, mejor, record: v > 0 && (mejor === null || (m === "menos" ? v < mejor : m === "mas" ? v > mejor : false))}; })() : null;
+  /* las pruebas de esta sesión (Modelo B): cada una con su marca, la vez anterior y su escala */
+  const hasta = ses.slice(0, ses.indexOf(x) + 1);
+  const prs = [...new Set(x.bloques.flatMap(b => b.series.filter(y => y.hazana && y.completa !== false).map(y => y.hazana)))].map(K.hzDe).filter(Boolean).map(h => {
+    const vs = K.rutina.veces(h, hasta), yo = vs.find(v => v.sesion === x.id); if (!yo) return null;
+    const k = vs.indexOf(yo), antes = k > 0 ? vs[k - 1] : null, hastaYo = vs.slice(0, k + 1);
+    return {h, v: yo.valor, vs: hastaYo, antes, m: K.rutina.magnitud(h, yo.valor, hastaYo), desde: K.hzDesde(h, hastaYo)};
+  }).filter(Boolean);
   let nuevas = x.encendio;
   if (!Array.isArray(nuevas)){ const ms = K.diario.mediciones; nuevas = K.cielo.nuevas(K.CATALOGO, ms, ms, x.fecha, ses.filter(s => s.id !== id), ses).map(n => n.estrella.id); } /* sesiones viejas, sin lo encendido escrito */
   const enc = nuevas.map(estrella).filter(Boolean), prim = enc[0];
@@ -512,7 +555,14 @@ K.P.resumen = (id, desde = "hoy") => {
   const antes = s0 ? K.cielo.calcular(K.CATALOGO, K.diario.mediciones, x.fecha, ses.filter(s => s.id !== id)).constelaciones.find(k => k.id === c.id).estrellas.find(e => e.prueba.ejercicio === s0.ejercicio && e.prueba.tipo === s0.tipo)?.mejor ?? null : null;
   const record = s0 && s0.tipo !== "logrado" && (antes === null || (K.cielo.TIPOS[s0.tipo].mejor === "menos" ? mejorHoy < antes : mejorHoy > antes));
   let tx;
-  if (prim){
+  /* las estrellas nuevas, por constelación: una prueba puede encender en varias a la vez */
+  const porCons = [...new Map(enc.map(n => [n.c.id, n.c])).values()].map(k => ({c: k, es: enc.filter(n => n.c.id === k.id).map(n => n.e)}));
+  if (prs.length){
+    const p0 = prs[0], n = enc.length;
+    tx = `<span class="lb" style="color:var(--${p0.h.familia})">${x.semanaPrueba ? "Semana de prueba" : `Prueba · ${K.esc(p0.h.prueba)}`}</span>
+      <h1 class="t1 res-tit">${prs.length > 1 ? `${prs.length} pruebas hechas.` : `${K.esc(p0.h.nombre)}: ${K.esc(K.hzMarca(p0.h, p0.v))}${p0.m ? `, m${p0.m}` : ""}.`}</h1>
+      <p class="mute">${n ? `${n === 1 ? "Encendiste una estrella" : `Encendiste ${n} estrellas`}${porCons.length > 1 ? ` en ${porCons.length} constelaciones` : ` en ${K.esc(porCons[0].c.nombre)}`}.` : prs.length === 1 && p0.desde ? `${K.esc(p0.desde)}.` : prs.length === 1 && !p0.antes ? "Tu primera vez: ya tenés tu escala." : "Lo que sacaste fija dónde arranca lo que sigue."}</p>`;
+  } else if (prim){
     tx = `<span class="lb" style="color:var(--${c.familia})">${enc.length > 1 ? `${enc.length} estrellas nuevas` : `Estrella nueva · m${prim.e.magnitud}`}</span>
       <h1 class="t1 res-tit">${K.esc(prim.e.nombre)}, encendida.</h1>
       <p class="mute">${c.completa ? `${K.esc(c.nombre)}, completa. Ya es parte de tu cielo.` : `${K.esc(c.nombre)}: ${c.encendidas} de ${c.total}.${c.proxima ? ` La que sigue es ${K.esc(c.proxima.nombre)}.` : c.pide.length ? ` Lo que sigue pide ${K.esc(K.pide(c.pide))}.` : ""}`}</p>`;
@@ -523,7 +573,7 @@ K.P.resumen = (id, desde = "hoy") => {
       <p class="mute">${e && sp && sp.tipo !== "logrado" ? `${K.esc(K.cielo.corto(sp, sp.valor))} de ${K.esc(K.cielo.corto(e.prueba, e.prueba.umbral))} en ${K.esc(e.nombre)}. La próxima.` : "La próxima."}</p>`;
   } else if (hz){
     const ok = x.hazana.completa !== false && !x.cortada && x.hazana.valor > 0;
-    tx = `<span class="lb" style="color:var(--${hz.h.familia})">Hazaña · ${K.rutina.NIVELES[x.hazana.nivel]}</span><h1 class="t1 res-tit">${ok ? `${K.esc(hz.h.nombre)}, ${K.esc(K.hazanaValor(hz.h, x.hazana.valor))}.` : "Lo hecho cuenta."}</h1>
+    tx = `<span class="lb" style="color:var(--${hz.h.familia})">Hazaña · versión anterior, ${K.rutina.NIVELES[x.hazana.nivel]}</span><h1 class="t1 res-tit">${ok ? `${K.esc(hz.h.nombre)}, ${K.esc(K.hazanaValor(hz.h, x.hazana.valor))}.` : "Lo hecho cuenta."}</h1>
       <p class="mute">${!ok ? `${K.esc(hz.h.nombre)} quedó a medias. La próxima.` : hz.record ? "Tu mejor marca en este nivel." : hz.mejor !== null ? `Tu mejor: ${K.esc(K.hazanaValor(hz.h, hz.mejor))}.` : ""}</p>`;
   } else {
     const p = c && c.proxima, ru = x.rutina && K.rutinaDe(x.rutina.id);
@@ -533,14 +583,22 @@ K.P.resumen = (id, desde = "hoy") => {
   }
   /* arriba va lo que la sesión dibujó: la figura de la hazaña, la vuelta entera de una rutina terminada o la constelación */
   const hzOk = hz && x.hazana.completa !== false && !x.cortada && x.hazana.valor > 0, rutFin = ruR && !x.cortada && !ruR.sesiones[x.rutina.sesion + 1];
-  const arte = hz ? `<section class="cd res-fig${hzOk ? " logro" : ""}">${K.dibujo.figura(hz.h, 190, hzOk)}</section>`
+  const arte = prs.length ? (porCons.length > 1 ? `<section class="cd res-varias">${porCons.slice(0, 4).map(k => `<div class="res-una"><div class="res-una-dib">${K.dibujo.una(k.c, k.es.map(e => e.id))}</div><span class="lb" style="color:var(--${k.c.familia})">${K.esc(k.c.nombre)}</span></div>`).join("")}</section>`
+      : porCons.length ? `<section class="cd cons-cielo">${K.dibujo.una(porCons[0].c, porCons[0].es.map(e => e.id))}</section>`
+      : `<section class="cd res-fig">${K.dibujo.figura(prs[0].h, 190, prs[0].m !== null)}</section>`)
+    : hz ? `<section class="cd res-fig${hzOk ? " logro" : ""}">${K.dibujo.figura(hz.h, 190, hzOk)}</section>`
     : rutFin && !prim ? `<section class="cd res-orbita">${K.mov.orbita(170)}<p class="lb">Rutina completa</p></section>`
     : c ? `<section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>` : "";
   const kcal = K.calorias.deSesion(x, K.diario.perfil.peso);
   /* lo que pasó en cada escalera: ▲ subiste, = seguís (y lo que toca la próxima), ▼ bajás */
-  const cs = x.rutina ? K.rutina.cambios(x, ses, {...ctxRutina(), rutina: ruR}) : [];
-  const escalones = cs.length ? `<section class="cd res-esc"><span class="lb">Tus escalones</span><ul>${cs.map(y => { const g = SIGNO[y.evento] || "=";
+  const cs = x.rutina || prs.length ? K.rutina.cambios(x, ses, {...ctxRutina(), rutina: ruR}) : [];
+  const escalones = cs.length ? `<section class="cd res-esc"><span class="lb">Tus escalones</span><ul>${cs.map(y => { const g = signoDe(y);
     return `<li class="${g === "▲" ? "sube" : g === "▼" ? "baja" : "igual"}"><b class="res-signo" role="img" aria-label="${g === "▲" ? "Subiste" : g === "▼" ? "Bajás" : "Seguís"}">${g}</b><span class="ses-fila">${K.esc(y.nombre || K.ej(y.a.ejercicio).nombre)}<small class="mute">${K.esc(cambioTx(y))}</small></span>${y.total > 1 ? `<em class="num mute">${y.i + 1}/${y.total}</em>` : "<em></em>"}</li>`; }).join("")}</ul></section>` : "";
+  const pruebas = prs.length ? `<section class="cd res-pruebas"><span class="lb">${prs.length > 1 ? "Tus pruebas" : "Tu escala"}</span>${prs.map(p => `<div class="res-prueba">
+      <span class="ln"><b>${K.esc(p.h.nombre)} <span class="mute">· ${K.esc(p.h.prueba)}</span></b><span class="num">${K.esc(K.hzMarca(p.h, p.v))}${p.m ? ` · m${p.m}` : ""}</span></span>
+      ${K.escala(p.h, p.v, {vs: p.vs, antes: p.antes?.valor})}
+      <span class="ln mute small"><span>${p.antes ? `La vez anterior: ${K.esc(K.hzMarca(p.h, p.antes.valor))}` : "Tu primera vez"}</span><span>${K.esc(p.desde || `Otra en ${Math.round((p.h.cada || K.rutina.CADA) / 7)} semanas`)}</span></span></div>`).join("")}</section>` : "";
+  const nuevasCons = prs.length && enc.length ? `<section class="cd res-nuevas"><span class="lb">${enc.length === 1 ? "Estrella nueva" : "Estrellas nuevas"}</span>${porCons.map(k => `<div class="ln"><span class="tg"><i class="dot" style="--c:var(--${k.c.familia})"></i>${K.esc(k.es.map(e => e.nombre).join(" · "))}</span><button type="button" class="ib chico" data-ir="#/cielo/${k.c.id}" aria-label="Ver ${K.esc(k.c.nombre)} en el cielo">${K.ic("chev")}</button></div>`).join("")}</section>` : "";
   const dato = (n, t) => `<div class="cd res-dato"><span class="num">${K.esc(n)}</span><span class="lb">${t}</span></div>`;
   /* un día sin estrella no muestra un cero: muestra tu mejor serie */
   /* una prueba que no llegó: lo de esta vez al lado de tu marca, sin minutos ni series que confundan */
@@ -553,16 +611,15 @@ K.P.resumen = (id, desde = "hoy") => {
   return arriba + `
     <div class="res" data-sesion="${K.esc(x.id)}"><div class="res-a">${arte}</div>
     <div class="res-b"><div class="enc-tit res-txt">${tx}</div>
-      <div class="res-datos">${hz ? (K.rutina.mejorEs(hz.h) === "hecha" ? dato(K.reloj(x.duracion), "tiempo") : dato(K.hazanaValor(hz.h, x.hazana.valor, true), hz.h.formato === "amrap" ? "vueltas" : "tiempo")) + dato(K.rutina.NIVELES[x.hazana.nivel], "nivel") + dato(Math.max(1, Math.round(x.duracion / 60)), "min")
+      <div class="res-datos">${prs.length ? dato(prs.length === 1 ? K.hzMarca(prs[0].h, prs[0].v) : prs.length, prs.length === 1 ? "esta vez" : "pruebas") + dato(enc.length, enc.length === 1 ? "estrella" : "estrellas") + dato(Math.max(1, Math.round(x.duracion / 60)), "min")
+        : hz ? (K.rutina.mejorEs(hz.h) === "hecha" ? dato(K.reloj(x.duracion), "tiempo") : dato(K.hazanaValor(hz.h, x.hazana.valor, true), (hz.h.antes ? hz.h.antes.formato : hz.h.formato) === "amrap" ? "vueltas" : "tiempo")) + dato(K.rutina.NIVELES[x.hazana.nivel], "nivel") + dato(Math.max(1, Math.round(x.duracion / 60)), "min")
         : sp && sp.tipo !== "logrado" ? dato(K.cielo.corto(sp, sp.valor), "esta vez") + (marcaAntes !== null ? dato(K.cielo.corto(sp, marcaAntes), "tu marca") : "")
         : dato(Math.max(1, Math.round(x.duracion / 60)), "min") + dato(nSeries, nSeries === 1 ? "serie" : "series") + tercero}</div>
-      ${escalones}
+      ${pruebas}${nuevasCons}${escalones}
       ${kcal ? `<p class="ln mute small res-kcal"><span>Calorías, aproximadas</span><span class="num">${kcal} kcal</span></p>` : ""}
       ${c ? `<button type="button" class="btn" data-ir="#/cielo/${c.id}">Ver en el cielo</button>` : ""}</div></div>`;
 };
 
-/* 754 s → «12:34»; 7 vueltas → «7 vueltas»; corto, para un dato: «7» */
-K.hazanaValor = (h, v, corto) => h.formato === "amrap" ? (corto ? String(v) : `${v} ${v === 1 ? "vuelta" : "vueltas"}`) : h.formato === "tiempo" || h.formato === "chipper" ? K.reloj(v) : "hecha";
 
 /* el ⋯ del resumen: borrar esta sesión, con deshacer */
 K.resumenMenu = btn => {

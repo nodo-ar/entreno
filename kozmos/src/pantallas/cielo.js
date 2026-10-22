@@ -49,8 +49,11 @@ K.P.constelacion = c => {
         : e.mejor !== null && e.estado !== "encendida" ? K.esc(K.cielo.corto(e.prueba, e.mejor)) : "m" + e.magnitud}</span></button>`).join("");
   /* probar la próxima es lo principal; anotar algo hecho por tu cuenta queda al lado */
   const probar = p && K.plan.sePrueba(c);
+  /* la que se mide con una prueba (Del piso, Motor 12…) se prueba desde la prueba: Probar lleva a su pantalla */
+  const hzP = p && !probar && K.plan.soloPrueba(p.prueba) && K.plan.hazanaDe(p.id);
   const botones = c.pide.length ? `<div class="dos-btn"><button type="button" class="btn sec" data-ir="#/cielo/${c.id}/anotar">Anotar</button><button type="button" class="btn" data-ir="#/vos/equipo">Tu equipo</button></div>`
     : probar ? `<div class="dos-btn"><button type="button" class="btn sec" data-ir="#/cielo/${c.id}/anotar">Anotar</button><button type="button" class="btn" data-probar="${c.id}">${K.ic("play")}Probar</button></div>`
+    : hzP ? `<div class="dos-btn"><button type="button" class="btn sec" data-ir="#/cielo/${c.id}/anotar">Anotar</button><button type="button" class="btn" data-ir="#/planes/hazanas/${hzP.id}">${K.ic("play")}Probar</button></div>`
     : `<button type="button" class="btn" data-ir="#/cielo/${c.id}/anotar">Anotar una marca</button>`;
   const marcas = [...c.marcas].reverse().slice(0, 12).map(m => {
     const e = c.estrellas.find(x => x.id === m.estrella) || c.estrellas.find(x => x.prueba.ejercicio === m.ejercicio && x.prueba.tipo === m.tipo) || c.estrellas[0];
@@ -74,7 +77,8 @@ const rutinasDe = c => {
 };
 
 /* ===== Anotar una marca a mano: estrella, valor y día. Se guarda y se ofrece deshacer. ===== */
-const UNIDAD = {segundos: "segundos", repeticiones: "repeticiones", minutos: "minutos", "menos-minutos": "minutos en 10 km", sesiones: "sesiones", porcentaje: "% de tu peso"};
+const UNIDAD = {segundos: "segundos", repeticiones: "repeticiones", minutos: "minutos", "menos-minutos": "minutos en 10 km", sesiones: "sesiones", porcentaje: "% de tu peso",
+  puntos: "puntos, de 0 a 10", cm: "cm más allá de los pies", km: "km", tiempo: "segundos", mejora: "% sobre tu primera vez"};
 K.P.anotar = (c, orden) => {
   const e0 = c.estrellas.find(e => e.orden === orden) || c.proxima || c.estrellas[c.estrellas.length - 1];
   /* lo que se va escribiendo queda en K._form mientras sigas en esta constelación */
@@ -93,6 +97,8 @@ K.P.anotar = (c, orden) => {
   if (pr.tipo === "logrado") valor = `<p class="mute">Marcalo cuando te salga de punta a punta, sin ayuda.</p>`;
   else if (pr.tipo === "porcentaje") valor = `<div class="dos-pasos">${paso("lastre", "Lastre en kilos", f.lastre, "kg de lastre")}${paso("peso", "Tu peso en kilos", f.peso, "kg tu peso")}</div>
       <p class="calc"><span class="num" id="f-pct">${K.pct(f)}</span> de tu peso</p>`;
+  /* la mejora sale de tus veces en la prueba, no se anota a mano */
+  else if (pr.tipo === "mejora"){ const h = K.plan.hazanaDe(e.id); valor = `<p class="mute">Se mide con ${K.esc(h ? `${h.nombre} (${h.prueba})` : "su prueba")}: tu primera vez es la base y cada vez nueva se compara con ella.</p>${h ? `<button type="button" class="btn sec" data-ir="#/planes/hazanas/${h.id}">Ir a la prueba</button>` : ""}`; }
   else valor = paso("valor", UNIDAD[pr.tipo], f.valor, UNIDAD[pr.tipo]);
   const sin = K.diario.guarda ? "" : `<p class="aviso-tenue">Este navegador no deja guardar datos. Lo que anotes se pierde al cerrar.</p>`;
   return K.enc({titulo: "Anotar una marca", sub: c.nombre, volver: `#/cielo/${c.id}`, det: true}) +
@@ -101,7 +107,7 @@ K.P.anotar = (c, orden) => {
       <button type="button" class="ajr" id="f-fecha" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("cal")}</span><span>Día</span><em>${K.esc(K.fechaCorta(f.fecha))}</em>${K.ic("chevd", "chev")}</button>
     </section>
     <section class="cd anotar-valor">${valor}<p class="ln mute"><span>Para encenderla</span><span class="num">${K.esc(K.cielo.corto(pr, pr.umbral))}</span></p></section>${sin}
-    <button type="button" class="btn" id="f-guardar">${pr.tipo === "logrado" ? "Lo logré" : "Guardar"}</button>`;
+    ${pr.tipo === "mejora" ? "" : `<button type="button" class="btn" id="f-guardar">${pr.tipo === "logrado" ? "Lo logré" : "Guardar"}</button>`}`;
 };
 K.pct = f => { const l = numero(f.lastre), p = numero(f.peso); return p > 0 && l >= 0 ? K.cielo.TIPOS.porcentaje.corto(Math.round(l / p * 100)) : "—"; };
 const numero = s => { const v = Number(String(s).replace(",", ".").trim()); return Number.isFinite(v) ? v : NaN; };
@@ -119,8 +125,8 @@ K.anotar = {
       elegir: d => { K._form.fecha = d; K.refrescar(); }});
   },
   paso(campo, s){
-    const f = K._form, inc = campo === "valor" ? 1 : .5;
-    const v = numero(f[campo]); f[campo] = Math.max(0, Math.round(((Number.isFinite(v) ? v : 0) + s * inc) * 2) / 2);
+    const f = K._form, e = K.estrella(f.estrella), {inc, min, max} = K.pasoDe(e ? e.prueba.tipo : "repeticiones", campo);
+    const v = numero(f[campo]); f[campo] = Math.max(min, Math.min(max, Math.round(((Number.isFinite(v) ? v : 0) + s * inc) * 10) / 10));
     K.$("#f-" + campo).value = f[campo]; const p = K.$("#f-pct"); if (p) p.textContent = K.pct(f);
   },
   escribir(campo, txt){ K._form[campo] = txt; const p = K.$("#f-pct"); if (p) p.textContent = K.pct(K._form); },
@@ -141,7 +147,9 @@ K.anotar = {
       m = {...m, valor: Math.round(l / p * 100), lastreKg: l, pesoKg: p};
     } else {
       const v = numero(f.valor);
-      if (!(v > 0 && v <= 100000)){ K.aviso("Poné un número mayor que cero."); K.$("#f-valor")?.focus(); return; }
+      const {min, max} = K.pasoDe(pr.tipo), cero = pr.tipo === "cm" || pr.tipo === "puntos";
+      if (pr.tipo === "mejora") return;
+      if (String(f.valor).trim() === "" || !Number.isFinite(v) || v < min || v > max || (!cero && v <= 0)){ K.aviso(cero ? `Poné un número de ${min} a ${max}.` : "Poné un número mayor que cero."); K.$("#f-valor")?.focus(); return; }
       m.valor = v;
     }
     const antes = K.diario.mediciones;

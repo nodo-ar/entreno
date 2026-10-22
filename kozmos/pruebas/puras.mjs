@@ -22,6 +22,8 @@ const HAZANAS = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "hazanas.
 const EJ = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "ejercicios.json"), "utf8"));
 const ESC = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "escaleras.json"), "utf8"));
 ctx.K.ESCALERAS = ESC;
+ctx.K.HAZANAS = HAZANAS;
+ctx.K.RUTINAS = RUTINAS.map(([, r]) => r);
 
 const PRUEBAS = [];
 const prueba = (n, fn) => PRUEBAS.push([n, fn]);
@@ -387,6 +389,8 @@ prueba("catalogo-rutinas", () => {
     ok(!ids.has(r.id), `rutina repetida: ${r.id}`); ids.add(r.id);
     ok(fams.has(r.familia) && r.nombre && r.texto, `${r.id}: familia, nombre o texto`);
     ok(r.sesiones.length === r.semanas * r.dias, `${r.id}: ${r.sesiones.length} sesiones para ${r.semanas} × ${r.dias}`);
+    /* bloques de 4 a 6 semanas: de 3 a 5 de carga y una de prueba, y al menos una semana de prueba en la rutina */
+    ok(r.bloque && Number.isInteger(r.bloque.carga) && r.bloque.carga >= 3 && r.bloque.carga <= 5 && r.bloque.prueba === 1 && r.semanas > r.bloque.carga, `${r.id}: bloque ${JSON.stringify(r.bloque)}`);
     ok(r.alimenta.length && r.alimenta.every(e => ESTRELLAS.has(e)), `${r.id}: alimenta una estrella que no existe`);
     ok((r.equipo || []).every(e => EQUIPOS.includes(e)), `${r.id}: equipo desconocido`);
     r.sesiones.forEach((s, i) => {
@@ -414,18 +418,40 @@ prueba("catalogo-rutinas", () => {
   }
 });
 prueba("catalogo-hazanas", () => {
-  const ej = EJM(), FORMATOS = ["tiempo", "chipper", "amrap", "emom", "intervalos", "flujo"];
-  ok(HAZANAS.hazanas.length === 8, "esperaba 8 hazañas");
+  /* hazañas v2: pruebas estandarizadas. Miden un ejercicio, tienen escala de cinco (magnitud 5 a 1), estrellas que encienden y cada cuánto */
+  const ej = EJM(), FORMATOS = ["maximo", "reloj", "escalera", "tiempo"], nombres = new Set();
+  ok(HAZANAS.version === 2 && HAZANAS.hazanas.length === 8, "esperaba las 8 hazañas, en la versión 2");
+  /* las ocho de antes siguen (sus marcas guardadas las nombran) */
+  ok(["hercules", "pegaso", "sagitario", "orion", "andromeda", "draco", "perseo", "casiopea"].every(id => HAZANAS.hazanas.some(h => h.id === id)), "se perdió una hazaña de antes");
   for (const h of HAZANAS.hazanas){
-    ok(FORMATOS.includes(h.formato) && h.nombre && h.texto, `${h.id}: formato, nombre o texto`);
-    ok(h.niveles.length === 3, `${h.id}: siempre tres niveles`);
-    h.niveles.forEach((n, k) => {
-      if (n.tramos) revisarTramos(n.tramos, ej, `${h.id} nivel ${k}`);
-      else ok(n.items.length && n.items.every(x => alts(x.ejercicio).every(e => ej[e])), `${h.id} nivel ${k}: ítems`);
-      const p = rutina.deHazana(h, k, {ej});
-      ok(p && p.bloques.length === 1 && p.minutos >= 5, `${h.id} nivel ${k}: no arma nada`);
-    });
+    ok(FORMATOS.includes(h.formato) && h.nombre && h.prueba && h.texto && h.como, `${h.id}: formato, nombre, prueba o texto`);
+    ok(!nombres.has(h.nombre) && /^[A-ZÁÉÍÓÚ]/.test(h.nombre), `${h.id}: el nombre es propio y no se repite`); nombres.add(h.nombre);
+    ok(ej[h.mide.ejercicio] && cielo.TIPOS[h.mide.tipo] && h.mide.tipo !== "mejora", `${h.id}: mide algo que no existe`);
+    const u = Array.isArray(h.escala) ? h.escala : h.escala.propia, menos = cielo.TIPOS[h.mide.tipo].mejor === "menos" && Array.isArray(h.escala);
+    ok(u.length === 5 && u.every(Number.isFinite) && u.every((x, i) => !i || (menos ? x < u[i - 1] : x > u[i - 1])), `${h.id}: la escala no va de la magnitud 5 a la 1`);
+    ok(Number.isInteger(h.cada) && h.cada >= 28 && h.cada <= 84, `${h.id}: cada ${h.cada} días`);
+    ok(h.estrellas.length >= 1, `${h.id}: no enciende nada`);
+    for (const id of h.estrellas){
+      const e = ESTRELLA.get(id); ok(e, `${h.id}: la estrella ${id} no existe`);
+      const tipo = Array.isArray(h.escala) ? h.mide.tipo : "mejora";
+      ok(e.prueba.ejercicio === h.mide.ejercicio && e.prueba.tipo === tipo, `${h.id}: ${id} se mide con otra cosa (${e.prueba.ejercicio} ${e.prueba.tipo})`);
+    }
+    ok(!h.entrena || (ej[h.entrena.ejercicio] && cielo.TIPOS[h.entrena.tipo] && h.entrena.objetivo > 0 && h.entrena.series > 0), `${h.id}: lo que entrena entre pruebas`);
+    ok(h.antes && h.antes.formato, `${h.id}: sin el formato de antes (las marcas viejas se leen con él)`);
+    const p = rutina.deHazana(h, {ej});
+    ok(p && p.bloques.length === 1 && p.hazana.v === 2 && p.bloques[0].hazana === h.id && p.minutos >= 5, `${h.id}: no arma nada`);
   }
+  /* las de solo «la hiciste» pasaron a medir algo */
+  for (const id of ["pegaso", "sagitario", "draco", "casiopea"]) ok(HAZANAS.hazanas.find(h => h.id === id).mide, id + ": sigue sin medir nada");
+  /* una prueba enciende estrellas en más de una constelación */
+  ok(HAZANAS.hazanas.filter(h => new Set(h.estrellas.map(e => e.split(".")[0])).size > 1).length >= 4, "pocas pruebas que enciendan en varias constelaciones");
+  /* lo que solo se mide con una prueba tiene su hazaña, y la hazaña dice qué entrenar entre pruebas */
+  for (const c of CAT.constelaciones) for (const e of c.estrellas) if (plan.soloPrueba(e.prueba)){
+    const h = HAZANAS.hazanas.find(x => x.estrellas.includes(e.id));
+    ok(h && h.entrena, `${e.id}: solo se enciende con una prueba y ninguna hazaña la mide (o no dice qué entrenar)`);
+  }
+  /* las metas de ir (8 y 12 sesiones de intervalos) se fueron: el motor se mide con Motor 12 */
+  ok(RET.estrellas.includes("motor.intervalos-8") && RET.estrellas.includes("motor.intervalos-12") && ESTRELLA.get("motor.m12-10") && ESTRELLA.get("motor.m12-20"), "el motor sigue con metas de ir");
 });
 const R = (bloques, extra = {}) => ({id: "r", familia: "fu", semanas: 1, dias: 1, alimenta: [], sesiones: [{nombre: "Uno", bloques}], ...extra});
 const EJP = {dominada: {equipo: ["barra"]}, remo: {}, flexion: {}, fondo: {equipo: ["paralelas"]}};
@@ -466,20 +492,38 @@ prueba("rutina-tramos-y-medir", () => {
   ok(rutina.medir({...b, mide: {tipo: "sesiones"}}, [300, 120, 60, 120, 60, 120, 60]) === 1 && rutina.medir({...b, mide: {tipo: "sesiones"}}, [300]) === 0, "sesiones: cuenta si hiciste el 80 %");
 });
 prueba("hazana-formatos", () => {
-  const items = [{ejercicio: ["dominada", "remo"], reps: 5}, {ejercicio: "flexion", reps: 10}];
-  const h = f => ({id: "h", nombre: "H", familia: "fu", formato: f, niveles: [{rondas: 3, minutos: 6, items}, {}, {}]});
-  const t = rutina.deHazana(h("tiempo"), 0, {ej: EJP, equipo: []}).bloques[0];
-  ok(t.clase === "circuito" && t.rondas === 3 && t.items[0].ejercicio === "remo", "por tiempo: circuito con el equipo que tenés");
-  ok(rutina.deHazana(h("chipper"), 0).bloques[0].rondas === 1, "chipper: una sola vuelta");
-  ok(rutina.deHazana(h("amrap"), 0).bloques[0].formato === "amrap", "amrap");
-  const e = rutina.deHazana(h("emom"), 0).bloques[0];
-  ok(e.clase === "tramos" && e.tramos.length === 6 && e.tramos.every(x => x.seg === 60) && e.tramos[1].ejercicio === "flexion", "emom: un minuto por ítem, alternando");
-  const em = rutina.deHazana({...h("emom"), niveles: [{minutos: 4, items: [{ejercicio: "flexion", seg: 30}]}]}, 0).bloques[0];
-  ok(em.tramos.every(x => x.seg === 60 && x.trabajo === 30), "emom: un ítem por segundos no acorta el minuto");
-  ok(rutina.mejorEs(h("tiempo")) === "menos" && rutina.mejorEs(h("amrap")) === "mas" && rutina.mejorEs(h("emom")) === "hecha", "cómo se cuenta lo mejor");
-  const ss = [{hazana: {id: "h", nivel: 0, valor: 300}}, {hazana: {id: "h", nivel: 0, valor: 250}}, {hazana: {id: "h", nivel: 0, valor: 100, completa: false}},
-    {hazana: {id: "h", nivel: 0, valor: 90}, cortada: true}, {hazana: {id: "h", nivel: 1, valor: 50}}];
-  ok(rutina.mejorHazana(h("tiempo"), 0, ss) === 250 && rutina.mejorHazana(h("amrap"), 0, ss) === 300 && rutina.mejorHazana(h("tiempo"), 2, ss) === null, "lo cortado o incompleto no es marca");
+  const H = id => HAZANAS.hazanas.find(h => h.id === id), ej = EJM();
+  const t = rutina.deHazana(H("perseo"), {ej}).bloques[0];
+  ok(!t.clase && t.ejercicio === "dominada" && t.tipo === "repeticiones" && t.objetivo === "max" && t.series === 1, "máximo: una serie, todas las que salgan");
+  const r = rutina.deHazana(H("pegaso"), {ej}).bloques[0];
+  ok(r.tipo === "km" && r.reloj === 720, "reloj: 12 minutos y anotás los km");
+  const e = rutina.deHazana(H("andromeda"), {ej}).bloques[0];
+  ok(e.clase === "circuito" && e.formato === "escalera" && e.mide.ejercicio === "dominada", "escalera de minutos: un circuito que mide dominadas");
+  const o = rutina.deHazana(H("orion"), {ej}).bloques[0];
+  ok(o.clase === "circuito" && o.formato === "tiempo" && o.rondas === 1 && o.items[0].reps === 1000 && o.mide.tipo === "tiempo", "mil saltos: por tiempo");
+  ok(rutina.mejorEs({antes: {formato: "amrap"}}) === "mas" && rutina.mejorEs({antes: {formato: "chipper"}}) === "menos" && rutina.mejorEs({antes: {formato: "emom"}}) === "hecha", "lo de antes se cuenta como se contaba");
+});
+prueba("hazana-escala-y-magnitud", () => {
+  const H = id => HAZANAS.hazanas.find(h => h.id === id);
+  const p = H("perseo"), o = H("orion"), g = H("pegaso"), c = H("casiopea");
+  ok([0, 1, 4, 5, 12, 20, 31].map(v => rutina.magnitud(p, v)).join() === ",5,5,4,3,1,1", "Tirón: 1 · 5 · 10 · 15 · 20");
+  ok([1000, 900, 700, 541, 480].map(v => rutina.magnitud(o, v)).join() === ",5,4,3,1", "Mil saltos: menos tiempo, mejor magnitud");
+  ok([-12, -10, 0, 7, 15].map(v => rutina.magnitud(c, v)).join() === ",5,4,3,1", "Compresión: centímetros, también negativos");
+  ok(rutina.umbrales(g, []) === null && rutina.magnitud(g, 6, []) === null, "Motor 12 sin primera vez no tiene escala");
+  const vs = [{fecha: "2026-08-01", valor: 6}];
+  ok(rutina.umbrales(g, vs).join() === "6,6.3,6.6,6.9,7.2" && rutina.magnitud(g, 6, vs) === 5 && rutina.magnitud(g, 6.7, vs) === 3, "Motor 12: contra tu primera vez");
+  /* tus veces: una por sesión, la mejor; lo de antes queda aparte */
+  const ses = [
+    {id: "v", fecha: "2026-07-01", hazana: {id: "perseo", nivel: 1, valor: 4}, bloques: [{series: [{ejercicio: "perseo", tipo: "hazana", valor: 4}]}]},
+    {id: "a", fecha: "2026-08-20", bloques: [{hazana: "perseo", series: [{ejercicio: "dominada", tipo: "repeticiones", valor: 9, hazana: "perseo"}]}]},
+    {id: "b", fecha: "2026-10-01", bloques: [{hazana: "perseo", series: [{ejercicio: "dominada", tipo: "repeticiones", valor: 12, hazana: "perseo"}, {ejercicio: "dominada", tipo: "repeticiones", valor: 10, hazana: "perseo"}]}]}];
+  const v = rutina.veces(p, ses);
+  ok(v.map(x => x.valor).join() === "9,12", "tus veces: " + JSON.stringify(v));
+  ok(rutina.anteriores(p, ses).length === 1 && rutina.anteriores(p, ses)[0].nivel === 1, "la de antes queda en tu historia");
+  const q = rutina.cuando(p, ses, "2026-10-21");
+  ok(q.dias === 20 && q.falta === 22 && rutina.cuando(o, ses, "2026-10-21").falta < 0, "cuándo toca: cada 6 semanas; nunca hecha, ya");
+  ok(rutina.proximaPrueba([p, o], ses, "2026-10-21").id === "orion", "la próxima prueba es la que toca antes");
+  ok(rutina.proximaPrueba([o, p], ses, "2026-10-21", {ej: EJM(), equipo: ["barra"]}).id === "perseo", "sin soga, Mil saltos no es la próxima");
 });
 prueba("rutina-en-curso", () => {
   const r = {id: "r", dias: 3, sesiones: Array(9).fill({})};
@@ -532,7 +576,8 @@ prueba("catalogo-escaleras", () => {
 });
 prueba("rutina-alimenta-alcanzable", () => {
   /* cada estrella de «Entrena para» tiene que poder encenderse desde la rutina: su ejercicio está en alguna escalera que la
-     rutina usa, en un bloque suelto que lo mide igual (o con carga, si se mide en % de tu peso) o en lo que anotan sus tramos */
+     rutina usa, en un bloque suelto que lo mide igual (o con carga, si se mide en % de tu peso), en lo que anotan sus tramos
+     o en una hazaña de su semana de prueba */
   const ej = EJM(), mal = [];
   for (const [, r] of RUTINAS){
     const bs = r.sesiones.flatMap(s => s.bloques);
@@ -542,6 +587,8 @@ prueba("rutina-alimenta-alcanzable", () => {
       for (const id of alts(b.escalera)) for (const p of ESC.escaleras.find(e => e.id === id).pasos){ alcanza.add(p.ejercicio + "|" + p.tipo); if (p.carga) alcanza.add(p.ejercicio + "|porcentaje"); }
       for (const e of alts(b.ejercicio)){ if (b.tipo) alcanza.add(e + "|" + b.tipo); if (b.carga) alcanza.add(e + "|porcentaje"); }
     }
+    /* y lo que miden las hazañas de su semana de prueba */
+    for (const h of rutina.hazanasDe(r, HAZANAS.hazanas, {ej})) for (const id of h.estrellas){ const p = ESTRELLA.get(id).prueba; alcanza.add(p.ejercicio + "|" + p.tipo); }
     for (const id of r.alimenta){ const p = ESTRELLA.get(id).prueba; if (!alcanza.has(p.ejercicio + "|" + p.tipo)) mal.push(`${r.id} → ${id}`); }
   }
   ok(!mal.length, `${mal.length} estrellas de «Entrena para» que la rutina nunca mide: ${mal.join(", ")}`);
@@ -742,6 +789,137 @@ prueba("poses-en-otra-vista", () => {
   }
   /* lo que se entiende de perfil sigue de perfil */
   for (const id of ["sentadilla", "flexion", "zancada"]) ok(POSES[id] && !POSES[id].vista && !POSES[id].alzada, id + ": tenía que seguir de perfil");
+});
+
+/* ===== Modelo B: las hazañas como pruebas, el cielo que las lee y la semana de prueba ===== */
+const HZ = id => HAZANAS.hazanas.find(h => h.id === id);
+/* una sesión con una prueba de hazaña: la serie dice de qué hazaña es */
+const deHz = (id, fecha, h, v, extra = {}) => ({id, fecha, duracion: 300, hazana: {id: h, v: 2, valor: v, ejercicio: HZ(h).mide.ejercicio, tipo: HZ(h).mide.tipo, completa: true},
+  bloques: [{familia: HZ(h).familia, hazana: h, series: [{ejercicio: HZ(h).mide.ejercicio, tipo: HZ(h).mide.tipo, objetivo: "max", valor: v, hazana: h}]}], ...extra});
+const encendidas = (ss, ms = []) => cielo.calcular(CAT, ms, "2026-10-21", ss).constelaciones.flatMap(c => c.estrellas.filter(e => e.encendida).map(e => e.id));
+prueba("cielo-desde-hazana", () => {
+  /* Perseo con 16 dominadas enciende en dos constelaciones a la vez: muscle-up y un brazo */
+  const on = encendidas([deHz("a", "2026-10-20", "perseo", 16)]);
+  ok(on.includes("muscle-up.dominadas-10") && on.includes("un-brazo.dominadas-15"), "Tirón no encendió en las dos: " + on);
+  ok(cielo.nuevas(CAT, [], [], "2026-10-21", [], [deHz("a", "2026-10-20", "perseo", 16)]).map(n => n.constelacion.id).sort().join() === "muscle-up,un-brazo", "nuevas en dos constelaciones");
+  /* la sesión guarda lo que midió también arriba: alcanza con eso */
+  const sola = {...deHz("b", "2026-10-20", "hercules", 41), bloques: []};
+  ok(encendidas([sola]).filter(id => id.includes("flexiones")).sort().join() === "planche.flexiones-30,un-brazo.flexiones-40", "la marca de la hazaña, sin series");
+  /* Motor 12: la primera vez es la base; la mejora en % enciende */
+  const m = [deHz("c", "2026-08-01", "pegaso", 6), deHz("d", "2026-09-15", "pegaso", 6.7)];
+  ok(encendidas(m).includes("motor.m12-10") && !encendidas(m).includes("motor.m12-20"), "Motor 12 +11,7 % enciende +10 %, no +20 %");
+  ok(!encendidas([m[0]]).includes("motor.m12-10"), "la primera vez sola no es mejora");
+  /* el orden del diario no importa: la base es la primera por fecha */
+  ok(encendidas([m[1], m[0]]).includes("motor.m12-10"), "la base sale de la fecha, no del orden");
+  /* centímetros negativos: valen como marca, sin encender */
+  ok(!encendidas([deHz("e", "2026-10-20", "casiopea", -4)]).some(id => id.includes("alcance")) && encendidas([deHz("f", "2026-10-20", "casiopea", 11)]).filter(id => id.includes("alcance")).length === 2, "Compresión: de −4 nada, de +11 las dos");
+  /* Mil saltos: lo que no llegó al final no es marca */
+  ok(!encendidas([deHz("g", "2026-10-20", "orion", 300, {hazana: {id: "orion", v: 2, valor: 300, completa: false}})].map(x => ({...x, bloques: x.bloques.map(b => ({...b, series: b.series.map(y => ({...y, completa: false}))}))}))).includes("soga.mil-12"), "un corte en Mil saltos encendió");
+  ok(encendidas([deHz("h", "2026-10-20", "orion", 700)]).includes("soga.mil-12"), "11:40 en Mil saltos enciende «en 12 min»");
+});
+prueba("hazana-datos-viejos", () => {
+  /* una sesión de hazaña de antes (circuito con nivel): carga, cuenta en tu historia y no se lee como marca */
+  const vieja = {id: "v1", fecha: "2026-09-01", duracion: 900, hazana: {id: "hercules", nivel: 2, valor: 640, completa: true},
+    bloques: [{orden: 0, familia: "fu", clase: "circuito", nombre: "Hércules", series: [{ejercicio: "hercules", tipo: "hazana", objetivo: 1, valor: 640}]}]};
+  const archivo = JSON.stringify({app: "kozmos", formato: 1, version: "k-viejo", exportado: "2026-09-02T00:00:00Z", catalogo: 1, mediciones: [], sesiones: [vieja], perfil: {}});
+  const r = respaldo.leer(archivo);
+  ok(!r.error && r.sesiones.length === 1 && r.descartadas === 0, "un respaldo de antes no carga: " + (r.error || r.descartadas));
+  ok(cielo.deSesiones([vieja]).length === 0, "la hazaña de antes se leyó como marca");
+  ok(rutina.anteriores(HZ("hercules"), [vieja]).length === 1 && rutina.veces(HZ("hercules"), [vieja]).length === 0, "la de antes no entra en la escala, pero queda");
+  /* y con el mismo valor guardado, valor sigue diciendo lo de antes: 640 son segundos de circuito, no flexiones */
+  ok(!encendidas([vieja]).some(id => id.includes("flexiones")), "640 segundos de Hércules encendieron flexiones");
+});
+prueba("respaldo-pruebas", () => {
+  const ses = [deHz("a", "2026-10-20", "casiopea", -6, {semanaPrueba: {bloque: 2, rutina: "base_cali", semana: 10, pruebas: 2}}), deHz("b", "2026-10-20", "pegaso", 6.4)];
+  const txt = JSON.stringify(respaldo.armar({mediciones: [], sesiones: ses, perfil: {}}, "k", 1, new Date("2026-10-21T00:00:00Z")));
+  const r = respaldo.leer(txt);
+  ok(JSON.parse(txt).formato === 2 && !r.error && r.descartadas === 0 && JSON.stringify(r.sesiones) === JSON.stringify(ses), "la ida y vuelta de una prueba pierde algo: " + (r.error || r.descartadas));
+  const mal = respaldo.leer(JSON.stringify({...JSON.parse(txt), sesiones: [{...ses[0], hazana: {id: "casiopea", v: 2, tipo: "cm", valor: -900}}]}));
+  ok(mal.sesiones.length === 0 && mal.descartadas === 1, "centímetros imposibles entraron");
+});
+/* una rutina chica para la semana de prueba: 2 días por semana, bloques de 2 + 1 */
+const RP = {id: "rp", nombre: "RP", familia: "fu", semanas: 6, dias: 2, bloque: {carga: 2, prueba: 1}, alimenta: ["muscle-up.explosiva-3"],
+  sesiones: Array.from({length: 12}, () => ({nombre: "A", bloques: [{escalera: "tirar", series: 3, rango: [5, 8], descanso: 90, desde: "dominada"}, {ejercicio: "sentadilla", tipo: "repeticiones", series: 4, objetivo: 10}]}))};
+const deRut = (i, fecha, extra = {}) => ({id: "r" + i, fecha, duracion: 1800, rutina: {id: "rp", sesion: i}, bloques: [{series: [{ejercicio: "sentadilla", tipo: "repeticiones", valor: 10}]}], ...extra});
+prueba("semana-de-prueba-cuando", () => {
+  const perfil = {rutina: {id: "rp", desde: "2026-09-01"}}, op = {rutinas: [RP]};
+  const ses = n => Array.from({length: n}, (_, i) => deRut(i, `2026-10-${String(i + 1).padStart(2, "0")}`));
+  const a = plan.semanaDePrueba(perfil, ses(3), "2026-10-04", op);
+  ok(!a.toca && a.semana === 2 && a.proxima === 3 && a.bloque === 1, "semana 2: todavía carga, prueba en la 3: " + JSON.stringify(a));
+  const b = plan.semanaDePrueba(perfil, ses(4), "2026-10-05", op);
+  ok(b.toca && b.conPruebas && b.semana === 3 && b.proxima === 3, "semana 3: toca la prueba: " + JSON.stringify(b));
+  /* hecha la prueba, el resto de la semana es solo la descarga */
+  const hecha = [...ses(4), deRut(4, "2026-10-05", {semanaPrueba: {rutina: "rp", bloque: 1, semana: 3, pruebas: 2}})];
+  const c = plan.semanaDePrueba(perfil, hecha, "2026-10-06", op);
+  ok(c.toca && !c.conPruebas, "la segunda sesión de la semana de prueba va sin pruebas");
+  const d = plan.semanaDePrueba(perfil, [...hecha, deRut(5, "2026-10-07")], "2026-10-08", op);
+  ok(!d.toca && d.bloque === 2 && d.proxima === 6, "después, el bloque 2 con prueba en la semana 6: " + JSON.stringify(d));
+  /* al volver de 3 semanas o más, primero se recupera */
+  const e = plan.semanaDePrueba(perfil, ses(4), "2026-11-01", op);
+  ok(!e.toca && e.aplazada, "volviendo de 3 semanas abrió la prueba");
+  /* sin rutina: cuatro semanas entrenadas desde la última prueba */
+  const sem = ["2026-09-21", "2026-09-29", "2026-10-06", "2026-10-13"].map((f, i) => ({id: "s" + i, fecha: f, duracion: 600, bloques: []}));
+  ok(!plan.semanaDePrueba({}, sem.slice(0, 3), "2026-10-14").toca && plan.semanaDePrueba({}, sem, "2026-10-20").toca, "con rumbo: a la quinta semana");
+  const conP = [...sem, {id: "p", fecha: "2026-10-20", duracion: 600, bloques: [], semanaPrueba: {bloque: 1, pruebas: 3}}];
+  const f = plan.semanaDePrueba({}, conP, "2026-10-22");
+  ok(f.toca && !f.conPruebas, "con rumbo, el resto de la semana de prueba va sin pruebas");
+  ok(!plan.semanaDePrueba({}, conP, "2026-10-27").toca, "la semana siguiente vuelve la carga");
+  ok(plan.semanaDePrueba({}, [], "2026-10-27") === null, "sin nada hecho, no hay semana de prueba");
+});
+prueba("semana-de-prueba-sesion", () => {
+  const ej = EJM(), equipo = ["barra"], ses = Array.from({length: 4}, (_, i) => deRut(i, `2026-10-0${i + 1}`));
+  const cieloA = cielo.calcular(CAT, [], "2026-10-05", ses, equipo);
+  const base = rutina.deRutina(RP, 4, {ej, equipo, sesiones: ses, descarga: true});
+  const sp = plan.semanaDePrueba({rutina: {id: "rp", desde: "2026-09-01"}}, ses, "2026-10-05", {rutinas: [RP]});
+  const pl = plan.deSemanaDePrueba(base, sp, {cielo: cieloA, cons: ["muscle-up"], ejs: ["dominada"], sesiones: ses, equipo, ej, hoy: "2026-10-05"});
+  const pr = pl.bloques.filter(b => b.prueba || b.hazana), resto = pl.bloques.filter(b => !b.prueba && !b.hazana);
+  /* las pruebas van primero: la próxima estrella de muscle-up y Perseo (mide dominadas, el escalón de la rutina) */
+  ok(pl.bloques[0].prueba && pl.bloques[0].estrella === "muscle-up.dominadas-10", "la primera, la próxima estrella: " + pl.bloques[0].estrella);
+  ok(pr.some(b => b.hazana === "perseo") && pl.pruebas.hazanas.length >= 1 && pl.pruebas.hazanas.length <= 2, "las hazañas de la semana: " + pl.pruebas.hazanas);
+  ok(pl.bloques.indexOf(pr[pr.length - 1]) < pl.bloques.indexOf(resto[0]), "las pruebas, antes de la descarga");
+  /* la descarga: la mitad de las series, marcadas */
+  const tir = resto.find(b => b.pasos && b.pasos[0].escalera === "tirar"), sen = resto.find(b => b.pasos && b.pasos[0].ejercicio === "sentadilla");
+  ok(tir.pasos.length === 2 && tir.pasos.every(x => x.descarga && x.n === 3) && sen.pasos.length === 2 && sen.pasos.every(x => x.descarga), "la descarga no es la mitad: " + [tir.pasos.length, sen.pasos.length]);
+  ok(pl.semanaPrueba.bloque === 1 && pl.semanaPrueba.rutina === "rp" && pl.pruebas.encienden.includes("muscle-up.dominadas-10") && pl.pruebas.encienden.includes("un-brazo.dominadas-15"), "lo que pueden encender: " + pl.pruebas.encienden);
+  /* sin pruebas pendientes (ya hechas esta semana), solo la descarga */
+  const sola = plan.deSemanaDePrueba(base, {...sp, conPruebas: false}, {cielo: cieloA, cons: ["muscle-up"], sesiones: ses, equipo, ej, hoy: "2026-10-06"});
+  ok(sola.bloques.every(b => !b.prueba && !b.hazana) && sola.pruebas.hazanas.length === 0, "con las pruebas hechas, siguen apareciendo");
+  /* con rumbo: la descarga parte el plan del día por la mitad */
+  const dia = plan.armar(cieloA, ["front-lever"], ses, "2026-10-05");
+  const pd = plan.deSemanaDePrueba(dia, {bloque: 1, conPruebas: true}, {cielo: cieloA, cons: ["front-lever"], sesiones: ses, equipo, ej, hoy: "2026-10-05"});
+  const fl = pd.bloques.find(b => b.constelacion === "front-lever" && !b.prueba);
+  ok(fl && fl.descarga && fl.series === Math.ceil(dia.bloques.find(b => b.constelacion === "front-lever").series / 2), "con rumbo, la mitad de las series");
+});
+prueba("bloque-desde-la-prueba", () => {
+  /* lo que sacás en la prueba fija dónde arranca el bloque siguiente en cada escalera */
+  const ej = EJM(), equipo = ["barra"];
+  const def = rutina.defEscalera(rutina.escalera("tirar"), ej, equipo, "dominada", [5, 8]);
+  const trabajo = {id: "w", fecha: "2026-10-01", rutina: {id: "rp", sesion: 0}, bloques: [{series: [5, 5, 4].map(v => ({ejercicio: "dominada", tipo: "repeticiones", valor: v, objetivo: 5, escalera: "tirar", rango: [5, 8], n: 3}))}]};
+  const desc = {id: "d", fecha: "2026-10-08", rutina: {id: "rp", sesion: 6}, semanaPrueba: {rutina: "rp", bloque: 1, pruebas: 1}, bloques: [{series: [5, 5].map(v => ({ejercicio: "dominada", tipo: "repeticiones", valor: v, objetivo: 5, escalera: "tirar", rango: [5, 8], n: 3, descarga: true}))}]};
+  const conHz = v => ({...desc, bloques: [{hazana: "perseo", series: [{ejercicio: "dominada", tipo: "repeticiones", valor: v, objetivo: "max", hazana: "perseo"}]}, ...desc.bloques]});
+  const i = ss => { const st = rutina.escalon(def, ss); return {e: st.paso.ejercicio, ev: st.evento, os: rutina.metas(def, st, {series: 3}).objetivos.join()}; };
+  ok(i([trabajo, desc]).ev === "descarga", "sin prueba, la descarga sola");
+  const a = i([trabajo, conHz(12)]);
+  ok(a.e === "dominada-explosiva" && a.ev === "prueba", "con 12 dominadas, el bloque arranca en la explosiva: " + JSON.stringify(a));
+  const b = i([trabajo, conHz(9)]);
+  ok(b.e === "dominada" && b.os === "6,6,6", "con 9, sigue en la dominada con cada serie al 75 %: " + JSON.stringify(b));
+  const c = i([trabajo, conHz(4)]);
+  ok(c.e === "dominada-negativa", "con 4, el bloque arranca un escalón abajo: " + JSON.stringify(c));
+  /* también la prueba de una estrella (la explosiva de muscle-up), aunque la rutina esté más abajo */
+  const est = {...desc, bloques: [{prueba: true, estrella: "muscle-up.explosiva-3", series: [{ejercicio: "dominada-explosiva", tipo: "repeticiones", valor: 5, objetivo: 3, estrella: "muscle-up.explosiva-3"}]}, ...desc.bloques]};
+  ok(i([trabajo, est]).e === "dominada-explosiva", "la prueba de una estrella de la escalera no movió el escalón");
+  /* y en el resumen: el cambio dice que fue por la prueba */
+  const cs = rutina.cambios(conHz(12), [trabajo, conHz(12)], {ej, equipo}).find(x => x.id === "tirar");
+  ok(cs && cs.evento === "prueba" && cs.a.ejercicio === "dominada-explosiva" && cs.de.ejercicio === "dominada", "el resumen no dice dónde arrancás: " + JSON.stringify(cs && {e: cs.evento, de: cs.de, a: cs.a}));
+});
+prueba("plan-solo-con-prueba", () => {
+  /* una estrella que solo se enciende con una prueba (Del piso) no se persigue serie a serie: el día entrena lo que la prepara */
+  const ms = [{id: "m", estrella: "una-pierna.pistol-silla-5", ejercicio: "pistol-silla", tipo: "repeticiones", valor: 6, fecha: "2026-10-10"}];
+  const ci = cielo.calcular(CAT, ms, "2026-10-21", []);
+  ok(ci.constelaciones.find(c => c.id === "una-pierna").proxima.id === "una-pierna.del-piso-8", "la próxima de una pierna es Del piso");
+  const p = plan.armar(ci, ["una-pierna"], [], "2026-10-21"), b = p.bloques.find(x => x.constelacion === "una-pierna");
+  ok(b && b.ejercicio === "sentadilla-profunda" && b.entrena === "sagitario" && !b.estrella && !b.prueba, "el día no entrena lo de Sagitario: " + JSON.stringify(b));
+  ok(!plan.sePrueba(ci.constelaciones.find(c => c.id === "una-pierna")), "una estrella de prueba no abre la ventana suelta");
 });
 
 let fallas = 0;

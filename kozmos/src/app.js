@@ -89,7 +89,7 @@ document.addEventListener("click", e => {
   if (e.target.closest(".ses.prueba.serie") && !e.target.closest("button, a, input")){ K.ses.listo(); return; }
   const ra = e.target.closest("[data-rasgo]");
   if (ra){ K.menuRasgo(ra); return; }
-  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-nivel, #hz-empezar, [data-probar], [data-equipo], [data-ppaso], [data-dia]");
+  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-empezar, #pl-probar, #pl-fam-pruebas, #pl-fam-rutinas, [data-probar], [data-equipo], [data-ppaso], [data-dia]");
   if (m){
     if (m.dataset.probar) K.ses.probar(m.dataset.probar, m);
     else if (m.dataset.equipo) K.equipoTocar(m.dataset.equipo);
@@ -98,7 +98,7 @@ document.addEventListener("click", e => {
     else ({"tema-menu": () => K.menuTema(m), "avisos-menu": () => K.menuAvisos(m), "res-mas": () => K.resumenMenu(m),
       "rs-guardar": () => K.mov.girando(m, K.resp.guardar), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo(),
       "hoy-igual": () => { K._igual = K.hoy(); K.refrescar(); }, "rut-seguir": () => K.rutinaSeguir(m.dataset.rutina), "rut-mas": () => K.rutinaMenu(m),
-      "hz-nivel": () => K.hazanaNivelMenu(m), "hz-empezar": () => K.ses.hazana(m.dataset.hazana, K._nivel[m.dataset.hazana] ?? 0, m)})[m.id]();
+      "hz-empezar": () => K.ses.hazana(m.dataset.hazana, m), "pl-probar": () => K.ses.hazana(m.dataset.hazana, m), "pl-fam-pruebas": () => K.planesFamilia(m), "pl-fam-rutinas": () => K.planesFamilia(m)})[m.id]();
     return;
   }
   const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #s-pausa, #s-vuelta, #s-vuelta-menos, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio], [data-sens]");

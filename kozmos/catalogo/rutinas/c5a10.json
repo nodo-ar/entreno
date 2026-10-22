@@ -6,6 +6,10 @@
  "semanas": 8,
  "dias": 5,
  "minutos": 40,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
  "equipo": [],
  "alimenta": [
   "diez-km.45min",

@@ -6,6 +6,10 @@
  "semanas": 4,
  "dias": 5,
  "minutos": 10,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
  "equipo": [],
  "alimenta": [
   "espagat.sentadilla-30s",

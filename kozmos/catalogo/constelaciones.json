@@ -184,16 +184,33 @@
    "meta": "Pasar arriba de la barra, limpio.",
    "estrellas": [
     {
+     "id": "muscle-up.dominadas-10",
+     "nombre": "Dominadas ×10",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "dominada",
+      "tipo": "repeticiones",
+      "umbral": 10
+     },
+     "requiere": [],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
      "id": "muscle-up.fondo-ruso",
      "nombre": "Fondo ruso",
      "magnitud": 5,
-     "orden": 1,
+     "orden": 2,
      "prueba": {
       "ejercicio": "fondo-ruso",
       "tipo": "logrado",
       "umbral": 1
      },
-     "requiere": [],
+     "requiere": [
+      "muscle-up.dominadas-10"
+     ],
      "equipo": [
       "barra"
      ]
@@ -202,7 +219,7 @@
      "id": "muscle-up.explosiva-3",
      "nombre": "Dominada explosiva al pecho ×3",
      "magnitud": 4,
-     "orden": 2,
+     "orden": 3,
      "prueba": {
       "ejercicio": "dominada-explosiva",
       "tipo": "repeticiones",
@@ -219,7 +236,7 @@
      "id": "muscle-up.negativa-3",
      "nombre": "Negativa de muscle-up ×3",
      "magnitud": 3,
-     "orden": 3,
+     "orden": 4,
      "prueba": {
       "ejercicio": "muscle-up-negativa",
       "tipo": "repeticiones",
@@ -236,7 +253,7 @@
      "id": "muscle-up.impulso-1",
      "nombre": "Con impulso ×1",
      "magnitud": 2,
-     "orden": 4,
+     "orden": 5,
      "prueba": {
       "ejercicio": "muscle-up-impulso",
       "tipo": "repeticiones",
@@ -253,7 +270,7 @@
      "id": "muscle-up.estricto-3",
      "nombre": "Muscle-up ×3",
      "magnitud": 1,
-     "orden": 5,
+     "orden": 6,
      "prueba": {
       "ejercicio": "muscle-up",
       "tipo": "repeticiones",
@@ -417,22 +434,36 @@
    "meta": "El cuerpo horizontal sobre las manos.",
    "estrellas": [
     {
+     "id": "planche.flexiones-30",
+     "nombre": "Flexiones ×30",
+     "magnitud": 5,
+     "orden": 1,
+     "prueba": {
+      "ejercicio": "flexion",
+      "tipo": "repeticiones",
+      "umbral": 30
+     },
+     "requiere": []
+    },
+    {
      "id": "planche.lean-15s",
      "nombre": "Planche lean 15 s",
      "magnitud": 5,
-     "orden": 1,
+     "orden": 2,
      "prueba": {
       "ejercicio": "planche-lean",
       "tipo": "segundos",
       "umbral": 15
      },
-     "requiere": []
+     "requiere": [
+      "planche.flexiones-30"
+     ]
     },
     {
      "id": "planche.pseudo-5",
      "nombre": "Flexión pseudo planche ×5",
      "magnitud": 4,
-     "orden": 2,
+     "orden": 3,
      "prueba": {
       "ejercicio": "flexion-pseudo-planche",
       "tipo": "repeticiones",
@@ -446,7 +477,7 @@
      "id": "planche.tuck-5s",
      "nombre": "Tuck 5 s",
      "magnitud": 3,
-     "orden": 3,
+     "orden": 4,
      "prueba": {
       "ejercicio": "planche-tuck",
       "tipo": "segundos",
@@ -460,7 +491,7 @@
      "id": "planche.tuck-15s",
      "nombre": "Tuck 15 s",
      "magnitud": 3,
-     "orden": 4,
+     "orden": 5,
      "prueba": {
       "ejercicio": "planche-tuck",
       "tipo": "segundos",
@@ -474,7 +505,7 @@
      "id": "planche.tuck-avanzado-10s",
      "nombre": "Tuck avanzado 10 s",
      "magnitud": 2,
-     "orden": 5,
+     "orden": 6,
      "prueba": {
       "ejercicio": "planche-tuck-avanzado",
       "tipo": "segundos",
@@ -488,7 +519,7 @@
      "id": "planche.straddle-5s",
      "nombre": "Straddle 5 s",
      "magnitud": 1,
-     "orden": 6,
+     "orden": 7,
      "prueba": {
       "ejercicio": "planche-straddle",
       "tipo": "segundos",
@@ -507,13 +538,13 @@
    "meta": "Dominada y flexión a un brazo.",
    "estrellas": [
     {
-     "id": "un-brazo.colgado-15s",
-     "nombre": "Colgado a un brazo 15 s",
+     "id": "un-brazo.dominadas-15",
+     "nombre": "Dominadas ×15",
      "magnitud": 5,
      "orden": 1,
      "prueba": {
-      "ejercicio": "colgado-un-brazo",
-      "tipo": "segundos",
+      "ejercicio": "dominada",
+      "tipo": "repeticiones",
       "umbral": 15
      },
      "requiere": [],
@@ -522,10 +553,41 @@
      ]
     },
     {
+     "id": "un-brazo.flexiones-40",
+     "nombre": "Flexiones ×40",
+     "magnitud": 5,
+     "orden": 2,
+     "prueba": {
+      "ejercicio": "flexion",
+      "tipo": "repeticiones",
+      "umbral": 40
+     },
+     "requiere": [
+      "un-brazo.dominadas-15"
+     ]
+    },
+    {
+     "id": "un-brazo.colgado-15s",
+     "nombre": "Colgado a un brazo 15 s",
+     "magnitud": 5,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "colgado-un-brazo",
+      "tipo": "segundos",
+      "umbral": 15
+     },
+     "requiere": [
+      "un-brazo.flexiones-40"
+     ],
+     "equipo": [
+      "barra"
+     ]
+    },
+    {
      "id": "un-brazo.flexion-arquera-5",
      "nombre": "Flexión arquera ×5",
      "magnitud": 4,
-     "orden": 2,
+     "orden": 4,
      "prueba": {
       "ejercicio": "flexion-arquera",
       "tipo": "repeticiones",
@@ -542,7 +604,7 @@
      "id": "un-brazo.dominada-arquera-5",
      "nombre": "Dominada arquera ×5",
      "magnitud": 3,
-     "orden": 3,
+     "orden": 5,
      "prueba": {
       "ejercicio": "dominada-arquera",
       "tipo": "repeticiones",
@@ -559,7 +621,7 @@
      "id": "un-brazo.negativa-3",
      "nombre": "Negativa a un brazo ×3",
      "magnitud": 3,
-     "orden": 4,
+     "orden": 6,
      "prueba": {
       "ejercicio": "dominada-un-brazo-negativa",
       "tipo": "repeticiones",
@@ -576,7 +638,7 @@
      "id": "un-brazo.flexion-3",
      "nombre": "Flexión a un brazo ×3",
      "magnitud": 2,
-     "orden": 5,
+     "orden": 7,
      "prueba": {
       "ejercicio": "flexion-un-brazo",
       "tipo": "repeticiones",
@@ -593,7 +655,7 @@
      "id": "un-brazo.dominada-1",
      "nombre": "Dominada a un brazo ×1",
      "magnitud": 1,
-     "orden": 6,
+     "orden": 8,
      "prueba": {
       "ejercicio": "dominada-un-brazo",
       "tipo": "repeticiones",
@@ -715,24 +777,38 @@
      ]
     },
     {
-     "id": "draco.dragon-bolita-3",
-     "nombre": "Dragon flag en bolita ×3",
+     "id": "draco.alcance-5",
+     "nombre": "Pike: 5 cm más allá de los pies",
      "magnitud": 4,
      "orden": 3,
      "prueba": {
-      "ejercicio": "dragon-flag-bolita",
-      "tipo": "repeticiones",
-      "umbral": 3
+      "ejercicio": "pike-alcance",
+      "tipo": "cm",
+      "umbral": 5
      },
      "requiere": [
       "draco.lsit-20s"
      ]
     },
     {
+     "id": "draco.dragon-bolita-3",
+     "nombre": "Dragon flag en bolita ×3",
+     "magnitud": 4,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "dragon-flag-bolita",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "draco.alcance-5"
+     ]
+    },
+    {
      "id": "draco.pies-arriba-10s",
      "nombre": "L-sit con pies arriba 10 s",
      "magnitud": 3,
-     "orden": 4,
+     "orden": 5,
      "prueba": {
       "ejercicio": "l-sit-alto",
       "tipo": "segundos",
@@ -746,7 +822,7 @@
      "id": "draco.dragon-una-pierna-3",
      "nombre": "Dragon flag a una pierna ×3",
      "magnitud": 2,
-     "orden": 5,
+     "orden": 6,
      "prueba": {
       "ejercicio": "dragon-flag-una-pierna",
       "tipo": "repeticiones",
@@ -760,7 +836,7 @@
      "id": "draco.vsit-5s",
      "nombre": "V-sit 5 s",
      "magnitud": 2,
-     "orden": 6,
+     "orden": 7,
      "prueba": {
       "ejercicio": "v-sit",
       "tipo": "segundos",
@@ -774,7 +850,7 @@
      "id": "draco.dragon-3",
      "nombre": "Dragon flag ×3",
      "magnitud": 1,
-     "orden": 7,
+     "orden": 8,
      "prueba": {
       "ejercicio": "dragon-flag",
       "tipo": "repeticiones",
@@ -805,24 +881,38 @@
      "requiere": []
     },
     {
-     "id": "una-pierna.shrimp-3",
-     "nombre": "Shrimp ×3",
-     "magnitud": 4,
+     "id": "una-pierna.del-piso-8",
+     "nombre": "Del piso: 8 puntos",
+     "magnitud": 5,
      "orden": 2,
      "prueba": {
-      "ejercicio": "shrimp",
-      "tipo": "repeticiones",
-      "umbral": 3
+      "ejercicio": "del-piso",
+      "tipo": "puntos",
+      "umbral": 8
      },
      "requiere": [
       "una-pierna.pistol-silla-5"
      ]
     },
     {
+     "id": "una-pierna.shrimp-3",
+     "nombre": "Shrimp ×3",
+     "magnitud": 4,
+     "orden": 3,
+     "prueba": {
+      "ejercicio": "shrimp",
+      "tipo": "repeticiones",
+      "umbral": 3
+     },
+     "requiere": [
+      "una-pierna.del-piso-8"
+     ]
+    },
+    {
      "id": "una-pierna.pistol-3",
      "nombre": "Pistol ×3",
      "magnitud": 4,
-     "orden": 3,
+     "orden": 4,
      "prueba": {
       "ejercicio": "pistol",
       "tipo": "repeticiones",
@@ -836,7 +926,7 @@
      "id": "una-pierna.nordico-negativa-5",
      "nombre": "Nórdico, negativa lenta ×5",
      "magnitud": 3,
-     "orden": 4,
+     "orden": 5,
      "prueba": {
       "ejercicio": "nordico-negativa",
       "tipo": "repeticiones",
@@ -850,7 +940,7 @@
      "id": "una-pierna.pistol-6",
      "nombre": "Pistol ×6",
      "magnitud": 2,
-     "orden": 5,
+     "orden": 6,
      "prueba": {
       "ejercicio": "pistol",
       "tipo": "repeticiones",
@@ -864,7 +954,7 @@
      "id": "una-pierna.shrimp-6",
      "nombre": "Shrimp ×6",
      "magnitud": 2,
-     "orden": 6,
+     "orden": 7,
      "prueba": {
       "ejercicio": "shrimp",
       "tipo": "repeticiones",
@@ -878,7 +968,7 @@
      "id": "una-pierna.nordico-1",
      "nombre": "Nórdico ×1",
      "magnitud": 1,
-     "orden": 7,
+     "orden": 8,
      "prueba": {
       "ejercicio": "nordico",
       "tipo": "repeticiones",
@@ -1043,24 +1133,38 @@
      ]
     },
     {
-     "id": "espagat.lateral-90-10s",
-     "nombre": "Lateral a 90° 10 s",
-     "magnitud": 3,
+     "id": "espagat.del-piso-9",
+     "nombre": "Del piso: 9 puntos",
+     "magnitud": 4,
      "orden": 3,
      "prueba": {
-      "ejercicio": "espagat-lateral-90",
-      "tipo": "segundos",
-      "umbral": 10
+      "ejercicio": "del-piso",
+      "tipo": "puntos",
+      "umbral": 9
      },
      "requiere": [
       "espagat.cosaca-15s"
      ]
     },
     {
+     "id": "espagat.lateral-90-10s",
+     "nombre": "Lateral a 90° 10 s",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "espagat-lateral-90",
+      "tipo": "segundos",
+      "umbral": 10
+     },
+     "requiere": [
+      "espagat.del-piso-9"
+     ]
+    },
+    {
      "id": "espagat.lateral",
      "nombre": "Lateral completo",
      "magnitud": 2,
-     "orden": 4,
+     "orden": 5,
      "prueba": {
       "ejercicio": "espagat-lateral",
       "tipo": "logrado",
@@ -1074,7 +1178,7 @@
      "id": "espagat.frontal",
      "nombre": "Frontal completo",
      "magnitud": 1,
-     "orden": 5,
+     "orden": 6,
      "prueba": {
       "ejercicio": "espagat-frontal",
       "tipo": "logrado",
@@ -1133,24 +1237,38 @@
      ]
     },
     {
-     "id": "puente.pike",
-     "nombre": "Pike: pecho a las piernas",
+     "id": "puente.alcance-10",
+     "nombre": "Pike: 10 cm más allá de los pies",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
-      "ejercicio": "pike-pecho",
-      "tipo": "logrado",
-      "umbral": 1
+      "ejercicio": "pike-alcance",
+      "tipo": "cm",
+      "umbral": 10
      },
      "requiere": [
       "puente.pared-20s"
      ]
     },
     {
+     "id": "puente.pike",
+     "nombre": "Pike: pecho a las piernas",
+     "magnitud": 3,
+     "orden": 5,
+     "prueba": {
+      "ejercicio": "pike-pecho",
+      "tipo": "logrado",
+      "umbral": 1
+     },
+     "requiere": [
+      "puente.alcance-10"
+     ]
+    },
+    {
      "id": "puente.completo-10s",
      "nombre": "Puente completo 10 s",
      "magnitud": 2,
-     "orden": 5,
+     "orden": 6,
      "prueba": {
       "ejercicio": "puente",
       "tipo": "segundos",
@@ -1164,7 +1282,7 @@
      "id": "puente.pancake",
      "nombre": "Pancake: pecho al piso",
      "magnitud": 1,
-     "orden": 6,
+     "orden": 7,
      "prueba": {
       "ejercicio": "pancake",
       "tipo": "logrado",
@@ -1308,14 +1426,14 @@
      ]
     },
     {
-     "id": "motor.intervalos-8",
-     "nombre": "8 sesiones de intervalos",
+     "id": "motor.m12-10",
+     "nombre": "Motor 12: +10 % sobre tu primera vez",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
-      "ejercicio": "intervalos",
-      "tipo": "sesiones",
-      "umbral": 8
+      "ejercicio": "bici-12",
+      "tipo": "mejora",
+      "umbral": 10
      },
      "requiere": [
       "motor.intervalos-1"
@@ -1335,21 +1453,21 @@
       "umbral": 60
      },
      "requiere": [
-      "motor.intervalos-8"
+      "motor.m12-10"
      ],
      "equipo": [
       "bici"
      ]
     },
     {
-     "id": "motor.intervalos-12",
-     "nombre": "12 sesiones de intervalos",
+     "id": "motor.m12-20",
+     "nombre": "Motor 12: +20 % sobre tu primera vez",
      "magnitud": 1,
      "orden": 6,
      "prueba": {
-      "ejercicio": "intervalos",
-      "tipo": "sesiones",
-      "umbral": 12
+      "ejercicio": "bici-12",
+      "tipo": "mejora",
+      "umbral": 20
      },
      "requiere": [
       "motor.bici-60"
@@ -1399,14 +1517,14 @@
      ]
     },
     {
-     "id": "soga.double-under-1",
-     "nombre": "Un double under",
-     "magnitud": 3,
+     "id": "soga.mil-12",
+     "nombre": "Mil saltos en 12 min",
+     "magnitud": 4,
      "orden": 3,
      "prueba": {
-      "ejercicio": "double-under",
-      "tipo": "repeticiones",
-      "umbral": 1
+      "ejercicio": "mil-saltos",
+      "tipo": "tiempo",
+      "umbral": 720
      },
      "requiere": [
       "soga.400"
@@ -1416,10 +1534,27 @@
      ]
     },
     {
+     "id": "soga.double-under-1",
+     "nombre": "Un double under",
+     "magnitud": 3,
+     "orden": 4,
+     "prueba": {
+      "ejercicio": "double-under",
+      "tipo": "repeticiones",
+      "umbral": 1
+     },
+     "requiere": [
+      "soga.mil-12"
+     ],
+     "equipo": [
+      "soga"
+     ]
+    },
+    {
      "id": "soga.double-under-20",
      "nombre": "Double under ×20",
      "magnitud": 3,
-     "orden": 4,
+     "orden": 5,
      "prueba": {
       "ejercicio": "double-under",
       "tipo": "repeticiones",
@@ -1436,7 +1571,7 @@
      "id": "soga.criss-cross-10",
      "nombre": "Criss-cross ×10",
      "magnitud": 2,
-     "orden": 5,
+     "orden": 6,
      "prueba": {
       "ejercicio": "criss-cross",
       "tipo": "repeticiones",
@@ -1453,7 +1588,7 @@
      "id": "soga.1000",
      "nombre": "1000 saltos seguidos",
      "magnitud": 1,
-     "orden": 6,
+     "orden": 7,
      "prueba": {
       "ejercicio": "soga",
       "tipo": "repeticiones",
