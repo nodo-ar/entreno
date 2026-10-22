@@ -20,11 +20,11 @@ K.P.cielo = r => {
   const sub = cielo.encendidas ? `${cielo.encendidas} de ${cielo.total} estrellas` : "Todavía sin estrellas";
   const lista = K.CATALOGO.familias.map(f => `<section class="fam"><span class="lb tg"><i class="dot" style="--c:var(--${f.id})"></i>${K.esc(f.nombre)}</span>
     <div class="aj">${cielo.constelaciones.filter(c => c.familia === f.id).map(c => `<button type="button" class="ajr cons-fila" data-ir="#/cielo/${c.id}" data-quieto="1"${c.id === sel ? " data-sel" : ""}>
-      <span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span><span>${K.esc(c.nombre)}</span><em class="num">${c.encendidas} de ${c.total}</em>${K.ic("chev", "chev")}</button>`).join("")}</div></section>`).join("");
+      <span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span><span>${K.esc(c.nombre)}</span><em class="num${!c.proxima && !c.completa && c.pide.length ? " pide" : ""}">${K.esc(K.cuentaCons(c))}</em>${K.ic("chev", "chev")}</button>`).join("")}</div></section>`).join("");
   /* el cielo entero: cada constelación, su figura adentro del anillo de avance. Lo que pide equipo que no marcaste no aparece */
   const grilla = `<section class="cielo-grilla solo-vertical" aria-label="Tu cosmos">${cielo.constelaciones.filter(c => c.total > 0).map(c =>
-    `<button type="button" class="cd cons-tile" data-ir="#/cielo/${c.id}" data-quieto="1" aria-label="${K.esc(`${c.nombre}, ${c.encendidas} de ${c.total} estrellas`)}">${K.icono.constelacion(c, 76)}
-      <b>${K.esc(c.nombre)}</b><span class="num">${c.encendidas} de ${c.total}</span></button>`).join("")}</section>`;
+    `<button type="button" class="cd cons-tile" data-ir="#/cielo/${c.id}" data-quieto="1" aria-label="${K.esc(`${c.nombre}, ${!c.proxima && !c.completa && c.pide.length ? K.cuentaCons(c).toLowerCase() : `${c.encendidas} de ${c.total} estrellas`}`)}">${K.icono.constelacion(c, 76)}
+      <b>${K.esc(c.nombre)}</b><span class="num${!c.proxima && !c.completa && c.pide.length ? " pide" : ""}">${K.esc(K.cuentaCons(c))}</span></button>`).join("")}</section>`;
   /* los anillos se cierran y el satélite llega orbitando la primera vez que abrís el Cielo; después quedan quietos */
   const llega = !K.cieloVisto; K.cieloVisto = true;
   const lado = K.enc({titulo: "Tu cosmos", sub}) +

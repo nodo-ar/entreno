@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (los cimientos del motor) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (un molde para cada día) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -107,6 +107,15 @@
   - Pruebas: 91 sin pantalla y 94 de pantallas, en verde. Nuevas: 11 sin pantalla y serie-con-kilos.
   - **Esperando a Fer**: el OK al tablero (capturas `m17/antes` y `m17/despues` en claro y grafito) y tres decisiones del acta (los remos nuevos dentro de la escalera de Remo, Piernas e Isquios con peso desde el primer escalón, la indicación del fondo ruso).
   - **Próximo**: el PR2, el día del motor B (molde, entrada en calor y caminos en Hoy).
+  - **Decidido por Fer (2026-10-22)**: las tres decisiones del acta 027 como se recomendaron, y la regla «Pide barra» (o lo que pida), nunca «0 de 0», en todos lados.
+- **Un molde para cada día** (2026-10-22): vuelta 28 (acta `docs/actas/028-kozmos-un-molde-para-cada-dia.md`), rama `claude/project-thread-985fzq`, sin PR. El segundo de tres PR del motor B. Lo nuevo:
+  - Hoy es el mismo molde todos los días: Entrada en calor → Habilidad · descansado (dos de tus metas, «Para …» o «Camino a … · para …») → Fuerza · de a dos → Abdomen → Cierre. Kozmos rota las metas («La próxima: …»), nunca repite un ejercicio y el día no pasa la hora.
+  - Tu rumbo sin tope, con la línea «N elegidas · cada una, X por semana» arriba de «Listo». Lo que pide equipo dice «Pide barra» (Tu rumbo, cosmos, constelación) y Hoy lo dice con atajo a Tu equipo.
+  - `K.dia` (`src/sesion/dia.js`) reemplaza a `K.plan.armar`, que ya no existe. El diario guarda `molde` y `constelaciones` por bloque; el respaldo acepta el rumbo sin tope.
+  - La sesión empieza por la entrada en calor; saltearla al toque no guarda nada. La entrada ya no cuenta como bici en las calorías.
+  - Pruebas: 105 sin pantalla y 98 de pantallas, en verde. Siete `plan-*` reescritas para el motor B (detalle en el acta).
+  - **Esperando a Fer**: el OK al tablero (capturas `m18/antes` y `m18/despues` en claro y grafito) y tres decisiones del acta 028 (el cierre con bici y el abdomen, la línea de frecuencia fija abajo, la ventana en lugar de la habilidad).
+  - **Próximo**: el PR3, Tu nivel (`nivelDesde` y `dadas` ya entran en `K.dia.armar`, sin pantalla).
 
 ## Dónde quedó
 

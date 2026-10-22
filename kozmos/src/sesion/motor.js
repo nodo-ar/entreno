@@ -110,10 +110,12 @@ K.sesion = (() => {
   /* lo que se hizo de un bloque de tramos queda como una serie: lo que mide la rutina, o los segundos hechos */
   const cerrarTramos = () => {
     const b = s.bloque(), hechos = b.tramos.map((x, k) => S.th[k] ?? 0), total = hechos.reduce((a, x) => a + x, 0);
-    const v = b.mide ? K.rutina.medir(b, hechos) : null, ej = b.tramos.find(x => x.ejercicio)?.ejercicio || null;
+    /* la entrada en calor no es de un ejercicio (aunque arranque en la bici): las calorías la cuentan como el resto del día */
+    const v = b.mide ? K.rutina.medir(b, hechos) : null, ej = b.tramos.every(x => x.clase === "entrada") ? null : b.tramos.find(x => x.ejercicio)?.ejercicio || null;
     const completa = total >= b.tramos.reduce((a, x) => a + x.seg, 0) * .8;
     if (b.mide && v > 0) S.hechos.push({b: S.b, s: 0, ejercicio: b.mide.ejercicio, tipo: b.mide.tipo, valor: v, seg: total});
-    else if (total > 0) S.hechos.push({b: S.b, s: 0, ejercicio: b.hazana || ej, tipo: b.hazana ? "hazana" : "tramos", valor: b.hazana ? (completa ? 1 : 0) : total, seg: total, completa});
+    /* un bloque salteado de entrada (menos de un segundo) no queda como hecho */
+    else if (total >= 1) S.hechos.push({b: S.b, s: 0, ejercicio: b.hazana || ej, tipo: b.hazana ? "hazana" : "tramos", valor: b.hazana ? (completa ? 1 : 0) : total, seg: total, completa});
   };
   const avanzarTramo = (hecho = s.bloque().tramos[S.s].seg) => {
     const b = s.bloque();
@@ -303,7 +305,8 @@ K.sesion = (() => {
       ...(pl.rutina ? {rutina: {...pl.rutina, ...(cortada ? {mitad: S.hechos.length * 2 >= pl.bloques.reduce((t, b) => t + (b.series || 1), 0)} : {})}} : {}),
       ...(pl.hazana ? {hazana: {...pl.hazana, valor: hz ? hz.valor : 0, completa: !!(hz && hz.completa !== false), ...(pl.hazana.v === 2 && hz ? {ejercicio: hz.ejercicio, tipo: hz.tipo} : {})}} : {}),
       ...(pl.semanaPrueba ? {semanaPrueba: {...pl.semanaPrueba, pruebas: S.hechos.filter(h => h.hazana || pl.bloques[h.b]?.prueba).length}} : {}),
-      bloques: pl.bloques.map((b, i) => ({orden: i, ...(b.constelacion ? {constelacion: b.constelacion} : {}), familia: b.familia, ...(b.estrella ? {estrella: b.estrella} : {}),
+      /* del día del motor: para qué metas era el bloque (rota con eso) y en qué parte del molde iba */
+      bloques: pl.bloques.map((b, i) => ({orden: i, ...(b.constelacion ? {constelacion: b.constelacion} : {}), ...(b.constelaciones ? {constelaciones: b.constelaciones} : {}), ...(b.molde ? {molde: b.molde} : {}), familia: b.familia, ...(b.estrella ? {estrella: b.estrella} : {}),
         objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}), ...(b.clase ? {clase: b.clase, nombre: b.nombre} : {}), ...(b.hazana ? {hazana: b.hazana} : {}),
         series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: "ejercicio" in h ? h.ejercicio : b.ejercicio, tipo: h.tipo ?? b.tipo, ...(b.estrella ? {estrella: b.estrella} : {}), objetivo: h.objetivo ?? b.objetivo, valor: h.valor,
           ...(h.seg !== undefined ? {seg: Math.round(h.seg)} : {}), ...(h.kg !== undefined ? {kg: h.kg} : {}), ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, ...(h.pesoKg !== undefined ? {pesoKg: h.pesoKg} : {})} : {}),

@@ -44,7 +44,7 @@ Las reglas, en `src/sesion/rutina.js`:
 - **Sostenes**: se juntan 60 s por sesión en sostenes del 50 al 80 % de tu mejor marca (70 % de base; 80 si sobró, 50 si no llegaste). Si en una sesión no llegás a 5 s, bajás un escalón. Subís cuando todas las series llegan a la meta del escalón, dos sesiones seguidas (o una si sobró).
 - **Sin tocar nada**: la sensación sale de las repeticiones. Dos o más arriba del objetivo (5 s en segundos) es «Sobró»; llegar es «Justo»; menos es «No llegué».
 
-Fuera de una rutina: `K.rutina.escalonDe(id, {ej, equipo, sesiones, marcas, desde})` dice dónde estás en una escalera (con `desde`, el escalón de arranque si todavía no la hiciste) y `K.rutina.escalonesTodos(ctx)` todas a la vez. Cuentan las series que dicen su `escalera`, vengan de una rutina o no. `K.rutina.armarBloques(familia, bloques, ctx)` arma bloques con el formato de los de una rutina (lo usa `deRutina`, y lo va a usar el día del motor B).
+Fuera de una rutina: `K.rutina.escalonDe(id, {ej, equipo, sesiones, marcas, desde})` dice dónde estás en una escalera (con `desde`, el escalón de arranque si todavía no la hiciste) y `K.rutina.escalonesTodos(ctx)` todas a la vez. Cuentan las series que dicen su `escalera`, vengan de una rutina o no. `K.rutina.armarBloques(familia, bloques, ctx)` arma bloques con el formato de los de una rutina (lo usa `deRutina`, y el día del motor B).
 
 ## Entrada en calor (`catalogo/entradas.json`)
 
@@ -53,6 +53,22 @@ Piezas para armar la entrada en calor de un día que no viene de una rutina: `{i
 ## Caminos a una estrella
 
 `K.caminos.caminoDe(estrella, {escalones})`: si la estrella se mide con el ejercicio del escalón k de una escalera y tu escalón está debajo, lo que toca es el camino («Camino a …», esa escalera); si no, la estrella. Cuando el ejercicio no está en ninguna escalera, la estrella puede decirlo en el catálogo con `camino: {escalera, hasta}` (el fondo ruso se llega por los fondos).
+
+## El día del motor: un molde para cada día (`src/sesion/dia.js`)
+
+Sin rutina, Hoy sale de `K.dia.armar(cielo, rumbo, sesiones, hoy, {ej, equipo, marcas, nivelDesde?, dadas?, descarga?})`. El día tiene siempre la misma forma; cada bloque dice su parte en `molde`:
+
+1. **Entrada en calor** (`entrada`): `K.caminos.entrada` según lo que pide el resto del día.
+2. **Habilidad, descansado** (`habilidad`): dos metas de tu rumbo (Dominio del cuerpo), en el orden de `K.dia.rotar`: la ventana abierta primero; después la que hace más que no tocás (la que nunca tocaste, antes); empate: la que menos tocaste en 14 días y el orden de tu rumbo. Lo de ayer no se repite si hay otra. Cada meta da su camino (si estás abajo en la escalera de la próxima estrella: un bloque de esa escalera, 3 series, «Camino a …»), su estrella (sostenes del 50 al 80 % de tu mejor marca hasta sumar unos 60 s, con 45 a 90 s de descanso según lo largo del sostén) o la prueba si la ventana está abierta. Dos metas con el mismo ejercicio o la misma escalera van en un solo bloque «para» las dos (`constelaciones`). Si la segunda entrena lo mismo que la primera (mismo patrón principal) y la que sigue no, va la que sigue.
+3. **Fuerza de a dos** (`fuerza`): dos superseries de 3 series (rango del escalón o 5–8; sin descanso entre los dos ejercicios y 2 min después del par). Cada par lleva un tirón o un empuje (el que menos series tiene hoy, después el que menos hiciste en 7 días) con piernas (primer par) o bisagra (segundo). Si una habilidad ya entrena piernas o bisagra, ese lugar es para el de arriba que más falta. Escaleras: tirar → remo o tirar; empujar → fondos o empujar; piernas; bisagra → isquios: la primera que tu equipo permite y que el día no usó.
+4. **Abdomen** (`abdomen`): L-sit o bandera acostada (la que hace más que no tocás), salvo que una habilidad ya lo entrene (Draco, Bandera humana).
+5. **Cierre** (`cierre`): la meta de rango o motor de tu rumbo que hace más que no tocás (corta, `extra`); si no hay, 10 min de bici suave si tenés bici; si no, tres posturas de 40 s según lo que entrenó el día.
+
+Sin ninguna habilidad posible (lo de tu rumbo pide equipo que no marcaste), rango o motor toman ese lugar; si tampoco hay, el día es de fuerza. Lo que pide equipo queda en `pide` y Hoy lo dice con el atajo a Tu equipo. Al volver de 3 semanas o más, las estrellas al 70 % y las escaleras más livianas, sin ventana. El día apunta a 40–55 minutos: si pasa de 60, el abdomen queda para otro día, y si igual pasa, la fuerza va con 2 series. En la semana de prueba (`K.dia.deSemanaDePrueba`) las escaleras van a la mitad, las pruebas adelante y la entrada en calor antes que todo. Nada se repite en un día: ni un ejercicio ni una escalera.
+
+`K.dia.frecuencia(n, D) = min(D, 2D/n)`: cada cuánto toca cada meta con n metas y D días por semana (`K.dia.diasSemana`: tus días; si no, lo de las últimas 4 semanas; si no, 3). Tu rumbo no tiene tope y lo dice: «5 elegidas · cada una, 1 o 2 veces por semana».
+
+`nivelDesde` (el escalón de arranque de cada escalera) y `dadas` (estrellas que tu nivel da por hechas) son para Tu nivel (PR3): lo que hiciste manda sobre el nivel.
 
 ## Rutinas (`catalogo/rutinas/<id>.json`, una por archivo)
 
@@ -156,8 +172,8 @@ Cada rutina trae `"bloque": {"carga": 3, "prueba": 1}`: tantas semanas de carga 
 
 En la semana de prueba y en una escalera trabada, cada fila de Hoy y de los días dice «más liviana», como la serie en la sesión.
 
-Sin rutina, con tu rumbo, cuenta semanas de calendario con alguna sesión: después de 4, la semana de prueba. La ventana de prueba del 80 % sigue como prueba suelta entre bloques.
+Sin rutina, con tu rumbo, cuenta semanas de calendario con alguna sesión: después de 4, la semana de prueba. La ventana de prueba del 80 % es la habilidad del día de esa meta.
 
 ## Lo que guarda el diario
 
-Una sesión de rutina guarda `rutina: {id, sesion}`. Cada serie de una escalera guarda además `escalera`, `rango`, `n` (cuántas series pedía), `descarga` si era una descarga y, si la tocaste, `sensacion` (`sobro`, `justo` o `no-llego`). Una serie con lastre guarda `lastreKg` y `pesoKg`; una con mancuernas, `kg` (por mano, sin tu peso). Las sesiones viejas, sin esos campos, siguen contando: sus series entran en la escalera del ejercicio que hicieron. Una prueba (hazaña) guarda `hazana: {id, v: 2, valor, completa, ejercicio, tipo}` y su serie lleva `hazana` con el id; esa serie cuenta como marca en el Cielo. Una sesión de la semana de prueba guarda `semanaPrueba: {bloque, rutina, semana, pruebas}`. Las hazañas de antes (versión 1) guardaban `hazana: {id, nivel, valor}`, con `valor` en segundos (tiempo, chipper), rondas (amrap) o 1 (completada): se siguen viendo en tu historia y en la prueba, como «versión anterior», y no cuentan como marcas. El perfil guarda `rutina: {id, desde}` mientras la seguís y `dias`: los días de la semana que entrenás (0 = lunes).
+Una sesión de rutina guarda `rutina: {id, sesion}`. Cada bloque del día del motor guarda `molde` (la parte: `entrada`, `habilidad`, `fuerza`, `abdomen`, `cierre`) y, si era para metas de tu rumbo, `constelaciones` (la lista; los bloques de antes guardan una sola, `constelacion`, y las dos cuentan para rotar). La serie de una entrada en calor no guarda ejercicio: las calorías la cuentan como el resto del día. Cada serie de una escalera guarda además `escalera`, `rango`, `n` (cuántas series pedía), `descarga` si era una descarga y, si la tocaste, `sensacion` (`sobro`, `justo` o `no-llego`). Una serie con lastre guarda `lastreKg` y `pesoKg`; una con mancuernas, `kg` (por mano, sin tu peso). Las sesiones viejas, sin esos campos, siguen contando: sus series entran en la escalera del ejercicio que hicieron. Una prueba (hazaña) guarda `hazana: {id, v: 2, valor, completa, ejercicio, tipo}` y su serie lleva `hazana` con el id; esa serie cuenta como marca en el Cielo. Una sesión de la semana de prueba guarda `semanaPrueba: {bloque, rutina, semana, pruebas}`. Las hazañas de antes (versión 1) guardaban `hazana: {id, nivel, valor}`, con `valor` en segundos (tiempo, chipper), rondas (amrap) o 1 (completada): se siguen viendo en tu historia y en la prueba, como «versión anterior», y no cuentan como marcas. El perfil guarda `rutina: {id, desde}` mientras la seguís y `dias`: los días de la semana que entrenás (0 = lunes).

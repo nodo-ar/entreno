@@ -16,7 +16,8 @@ vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "calorias.js"),
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "diario", "respaldo.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "rutina.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "caminos.js"), "utf8"), ctx);
-const {cielo, plan, calorias, respaldo, rutina, caminos} = ctx.K;
+vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "dia.js"), "utf8"), ctx);
+const {cielo, plan, calorias, respaldo, rutina, caminos, dia: molde} = ctx.K;
 const RUT_DIR = path.join(RAIZ, "catalogo", "rutinas");
 const RUTINAS = fs.readdirSync(RUT_DIR).filter(f => f.endsWith(".json")).map(f => [f, JSON.parse(fs.readFileSync(path.join(RUT_DIR, f), "utf8"))]);
 const HAZANAS = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "hazanas.json"), "utf8"));
@@ -291,28 +292,31 @@ prueba("plan-objetivo", () => {
   ok(plan.objetivo({tipo: "logrado", umbral: 1}, null) === 1, "logrado: un intento");
 });
 prueba("plan-rumbo", () => {
-  const p = plan.armar(cieloReal(), ["front-lever"], [], HOY);
-  ok(p.bloques.map(b => b.constelacion).join() === "front-lever,espagat,motor", "fuerza, después rango y motor de regalo: " + p.bloques.map(b => b.constelacion));
-  ok(p.bloques[0].ejercicio === "colgado-activo" && p.bloques[0].series === 4 && p.bloques[0].objetivo === 30, "front lever arranca con colgado 4 × 30 s");
-  ok(p.bloques[1].extra && p.bloques[1].series === 2 && p.bloques[2].extra && p.bloques[2].objetivo === 15, "los de regalo son cortos");
+  /* motor B (reescrita del plan de antes): la habilidad sale de tu rumbo; rango y motor ya no se suman de regalo:
+     el cierre es lo de rango o motor de tu rumbo y, si no hay, posturas */
+  const p = armarDia(["front-lever"]), h = deMolde(p.bloques, "habilidad");
+  ok(h.length === 1 && h[0].constelaciones.join() === "front-lever" && h[0].ejercicio === "colgado-activo" && h[0].series === 2 && h[0].objetivo === 30, "front lever arranca con colgado 2 × 30 s: " + JSON.stringify(h.map(b => [b.ejercicio, b.series, b.objetivo])));
+  ok(!p.bloques.some(b => (b.constelaciones || []).some(id => id !== "front-lever")), "suma constelaciones de regalo: " + p.bloques.map(b => b.constelaciones));
   ok(p.minutos >= 15 && p.minutos % 5 === 0, "minutos redondos: " + p.minutos);
-  const t = plan.armar(cieloReal(), ["front-lever", "diez-km", "puente"], [], HOY);
-  ok(t.bloques.length === 3 && t.bloques.every(b => !b.extra), "con motor y rango en el rumbo, no suma de regalo");
-  ok(plan.armar(cieloReal(), [], [], HOY).bloques.every(b => b.extra), "sin rumbo, solo lo de siempre");
-  ok(plan.armar(cieloReal(), ["no-existe"], [], HOY).bloques.length === 2, "un id viejo en el rumbo no rompe");
+  const t = armarDia(["front-lever", "diez-km", "puente"]), c = deMolde(t.bloques, "cierre")[0];
+  ok(c.constelaciones.join() === "diez-km" && c.extra && c.objetivo <= 15, "con motor y rango en el rumbo, el cierre es uno de los dos, corto: " + JSON.stringify([c.constelaciones, c.objetivo]));
+  ok(armarDia([]).bloques.every(b => !b.constelaciones), "sin rumbo, nada de constelaciones");
+  ok(armarDia(["no-existe"]).bloques.length >= 4, "un id viejo en el rumbo no rompe");
 });
 prueba("plan-no-repite-ayer", () => {
+  /* reescrita para el motor B: una sesión de antes (un bloque por constelación) también cuenta como ayer */
   const ayer = {id: "a", fecha: "2026-10-19", bloques: [{constelacion: "front-lever", series: []}]};
-  const p = plan.armar(cieloReal([], [ayer]), ["front-lever", "planche"], [ayer], HOY);
-  ok(!p.bloques.some(b => b.constelacion === "front-lever") && p.bloques.some(b => b.constelacion === "planche"), "repitió front lever: " + p.bloques.map(b => b.constelacion));
-  const solo = plan.armar(cieloReal([], [ayer]), ["front-lever"], [ayer], HOY);
-  ok(solo.bloques[0].constelacion === "front-lever", "si es la única, va igual");
+  const hab = p => deMolde(p.bloques, "habilidad").flatMap(b => b.constelaciones);
+  const p = armarDia(["front-lever", "planche"], {ss: [ayer]});
+  ok(!hab(p).includes("front-lever") && hab(p).includes("planche"), "repitió front lever: " + hab(p));
+  ok(hab(armarDia(["front-lever"], {ss: [ayer]}))[0] === "front-lever", "si es la única, va igual");
 });
 prueba("plan-volviste", () => {
+  /* reescrita para el motor B: los sostenes salen del 70 % de tu mejor marca (28 s de 40) y al volver, del 70 % de eso */
   const vieja = {id: "a", fecha: "2026-09-20", bloques: []};
   const ms = [{id: "x", estrella: "front-lever.colgado-60s", valor: 40, fecha: "2026-09-20"}];
-  const p = plan.armar(cieloReal(ms, [vieja]), ["front-lever"], [vieja], HOY);
-  ok(p.volviste && p.bloques[0].objetivo === Math.round(46 * .7), "después de 3 semanas, al 70 %: " + p.bloques[0].objetivo);
+  const p = armarDia(["front-lever"], {ms, ss: [vieja]}), b = deMolde(p.bloques, "habilidad")[0];
+  ok(p.volviste && b.objetivo === Math.round(Math.round(40 * .7) * .7), "después de 3 semanas, al 70 %: " + b.objetivo);
 });
 prueba("plan-vez-pasada", () => {
   const ss = [ses("a", "2026-10-10", [sx("e", "fl-tuck", "segundos", 7), sx("e", "fl-tuck", "segundos", 9)]), ses("b", "2026-10-12", [sx("e", "colgado-activo", "segundos", 30)])];
@@ -344,23 +348,24 @@ prueba("cielo-equipo-inalcanzable", () => {
   ok(c.total === 1 && c.encendidas === 1 && !c.completa && !c.proxima && c.pide.join() === "barra", "sin barra: 1 de 1, no completa, pide barra: " + JSON.stringify([c.total, c.encendidas, c.completa, c.pide]));
 });
 prueba("plan-equipo", () => {
-  const p = plan.armar(cielo.calcular(CAT, [], HOY, [], ["barra"]), ["front-lever", "soga"], [], HOY);
-  ok(!p.bloques.some(b => b.constelacion === "soga" || b.constelacion === "motor"), "sin soga ni bici no aparecen: " + p.bloques.map(b => b.constelacion));
-  ok(p.bloques.some(b => b.familia === "mo"), "el motor de regalo busca otro que puedas hacer: " + p.bloques.map(b => b.constelacion));
+  /* reescrita para el motor B: lo que pide equipo que no tenés no aparece y se dice qué pide; ya no hay motor de regalo */
+  const p = armarDia(["front-lever", "soga"], {equipo: ["barra"]});
+  ok(!p.bloques.some(b => (b.constelaciones || []).some(id => id === "soga" || id === "motor")) && !ejsDia(p.bloques).some(e => e === "soga" || e === "bici"), "sin soga ni bici aparecen: " + p.bloques.map(b => b.constelaciones));
+  ok(p.pide.map(x => x.id + ":" + x.pide.join("+")).join() === "soga:soga", "no dice que soga pide soga: " + JSON.stringify(p.pide));
 });
 prueba("plan-ventana", () => {
-  /* colgado 50 s de 60 s: 83 %, se abre la ventana y la sesión empieza probándola */
+  /* reescrita para el motor B. Colgado 50 s de 60 s: 83 %, se abre la ventana y la habilidad del día es la prueba */
   const ms = [{id: "x", estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 50, fecha: "2026-10-18"}];
-  const p = plan.armar(cieloReal(ms), ["front-lever"], [], HOY), b = p.bloques[0];
+  const p = armarDia(["front-lever"], {ms}), b = deMolde(p.bloques, "habilidad")[0];
   ok(b.prueba && b.series === 1 && b.objetivo === 60 && b.estrella === "front-lever.colgado-60s", "primero, la prueba: " + JSON.stringify(b));
-  ok(p.ventana.join() === "front-lever" && p.bloques[1].constelacion === "front-lever" && !p.bloques[1].prueba, "después, el entrenamiento de siempre");
-  const flojo = plan.armar(cieloReal([{...ms[0], valor: 40}]), ["front-lever"], [], HOY);
-  ok(!flojo.bloques.some(x => x.prueba) && !flojo.ventana.length, "al 67 % no hay prueba");
+  ok(p.ventana.join() === "front-lever" && !p.bloques.some(x => x !== b && (x.constelaciones || []).includes("front-lever")), "la prueba es el entrenamiento de front lever del día");
+  ok(!armarDia(["front-lever"], {ms: [{...ms[0], valor: 40}]}).bloques.some(x => x.prueba) && !armarDia(["front-lever"], {ms: [{...ms[0], valor: 40}]}).ventana.length, "al 67 % no hay prueba");
   const vieja = {id: "a", fecha: "2026-09-20", bloques: []};
-  ok(!plan.armar(cieloReal([{...ms[0], fecha: "2026-09-20"}], [vieja]), ["front-lever"], [vieja], HOY).ventana.length, "al volver de 3 semanas, primero se recupera");
+  ok(!armarDia(["front-lever"], {ms: [{...ms[0], fecha: "2026-09-20"}], ss: [vieja]}).ventana.length, "al volver de 3 semanas, primero se recupera");
   /* bici 17 de 20 min: la prueba es la salida del día, no se suma otra */
-  const bi = plan.armar(cieloReal([{id: "b", estrella: "motor.bici-20", ejercicio: "bici", tipo: "minutos", valor: 17, fecha: "2026-10-18"}]), ["motor"], [], HOY);
-  ok(bi.bloques.filter(x => x.constelacion === "motor").length === 1 && bi.bloques[0].prueba, "bici: una sola salida, la de la prueba: " + bi.bloques.map(x => x.constelacion + (x.prueba ? "*" : "")));
+  const bi = armarDia(["motor"], {ms: [{id: "b", estrella: "motor.bici-20", ejercicio: "bici", tipo: "minutos", valor: 17, fecha: "2026-10-18"}], equipo: ["bici"]});
+  const mo = bi.bloques.filter(x => (x.constelaciones || []).includes("motor"));
+  ok(mo.length === 1 && mo[0].prueba && ejsDia(bi.bloques).filter(e => e === "bici").length === 1, "bici: una sola salida, la de la prueba: " + bi.bloques.map(x => x.molde + (x.prueba ? "*" : "")));
   ok(!plan.sePrueba({proxima: {prueba: {tipo: "menos-minutos", umbral: 50}, mejor: 52}}), "los 10 km no se prueban a manos libres: un toque antes de tiempo encendería la estrella");
   const c = cieloReal().constelaciones.find(x => x.id === "motor");
   ok(plan.sePrueba(cieloReal().constelaciones.find(x => x.id === "front-lever")) && plan.sePrueba(c), "bici 20 min se prueba");
@@ -1034,7 +1039,7 @@ prueba("semana-de-prueba-sesion", () => {
   const sola = plan.deSemanaDePrueba(base, {...sp, conPruebas: false}, {cielo: cieloA, cons: ["muscle-up"], sesiones: ses, equipo, ej, hoy: "2026-10-06"});
   ok(sola.bloques.every(b => !b.prueba && !b.hazana) && sola.pruebas.hazanas.length === 0, "con las pruebas hechas, siguen apareciendo");
   /* con rumbo: la descarga parte el plan del día por la mitad */
-  const dia = plan.armar(cieloA, ["front-lever"], ses, "2026-10-05");
+  const dia = molde.armar(cieloA, ["front-lever"], ses, "2026-10-05", {ej, equipo}); /* motor B: el día del molde, en vez del plan de antes */
   const pd = plan.deSemanaDePrueba(dia, {bloque: 1, conPruebas: true}, {cielo: cieloA, cons: ["front-lever"], sesiones: ses, equipo, ej, hoy: "2026-10-05"});
   const fl = pd.bloques.find(b => b.constelacion === "front-lever" && !b.prueba);
   ok(fl && fl.descarga && fl.series === Math.ceil(dia.bloques.find(b => b.constelacion === "front-lever").series / 2), "con rumbo, la mitad de las series");
@@ -1066,7 +1071,7 @@ prueba("plan-solo-con-prueba", () => {
   const ms = [{id: "m", estrella: "una-pierna.pistol-silla-5", ejercicio: "pistol-silla", tipo: "repeticiones", valor: 6, fecha: "2026-10-10"}];
   const ci = cielo.calcular(CAT, ms, "2026-10-21", []);
   ok(ci.constelaciones.find(c => c.id === "una-pierna").proxima.id === "una-pierna.del-piso-8", "la próxima de una pierna es Del piso");
-  const p = plan.armar(ci, ["una-pierna"], [], "2026-10-21"), b = p.bloques.find(x => x.constelacion === "una-pierna");
+  const p = molde.armar(ci, ["una-pierna"], [], "2026-10-21", {ej: EJM()}), b = p.bloques.find(x => x.constelacion === "una-pierna"); /* motor B */
   ok(b && b.ejercicio === "sentadilla-profunda" && b.entrena === "sagitario" && !b.estrella && !b.prueba, "el día no entrena lo de Sagitario: " + JSON.stringify(b));
   ok(!plan.sePrueba(ci.constelaciones.find(c => c.id === "una-pierna")), "una estrella de prueba no abre la ventana suelta");
 });
@@ -1409,6 +1414,222 @@ prueba("rutina-armar-bloques", () => {
   /* y con el catálogo de ahora, deRutina es armarBloques */
   for (const [f, r] of RUTINAS) r.sesiones.forEach((s, i) => { const o = {ej, equipo: ["mancuernas"], sesiones: hist};
     ok(JSON.stringify(rutina.deRutina(r, i, o).bloques) === JSON.stringify(rutina.armarBloques(r.familia, s.bloques, {...o, equipoRutina: r.equipo, dia: s.nombre})), `${f} día ${i + 1}`); });
+});
+
+/* ===== El día del motor B: un molde para cada día ===== */
+const TODO = ["barra", "paralelas", "pared", "poste", "lastre", "bici", "soga", "mancuernas", "kettlebell"];
+const armarDia = (rumbo, {ms = [], ss = [], equipo = null, hoy = HOY, ...o} = {}) => molde.armar(cielo.calcular(CAT, ms, hoy, ss, equipo), rumbo, ss, hoy, {ej: EJM(), equipo, marcas: [], ...o});
+const deMolde = (bs, m) => bs.filter(b => b.molde === m);
+/* los ejercicios de trabajo de un día (la entrada en calor no cuenta: es para todo el día) */
+const ejsDia = bs => bs.filter(b => b.molde !== "entrada").flatMap(b => molde.ejerciciosDe(b));
+const escsDia = bs => bs.flatMap(b => b.pasos ? [...new Set(b.pasos.map(p => p.escalera).filter(Boolean))] : []);
+/* una sesión hecha con lo que dio el día: los bloques con sus constelaciones (y las series que se piden, al tope si «tope») */
+const hechaDia = (id, fecha, pl, {tope = false} = {}) => ({id, fecha, duracion: 2400, bloques: pl.bloques.filter(b => b.constelacion || b.constelaciones || b.pasos).map((b, i) => ({orden: i, familia: b.familia,
+  ...(b.constelacion ? {constelacion: b.constelacion} : {}), ...(b.constelaciones ? {constelaciones: b.constelaciones} : {}), ...(b.molde ? {molde: b.molde} : {}),
+  series: b.pasos ? b.pasos.map(p => ({ejercicio: p.ejercicio, tipo: p.tipo, objetivo: p.objetivo, valor: tope && p.rango ? p.rango[1] : Number.isFinite(p.objetivo) ? p.objetivo : 5,
+    ...(p.escalera ? {escalera: p.escalera} : {}), ...(p.rango ? {rango: p.rango, n: p.n} : {})})) : []}))});
+prueba("dia-molde", () => {
+  const p = armarDia(["front-lever", "planche"], {equipo: ["barra"]}), ms = p.bloques.map(b => b.molde);
+  ok(p.molde && ms.join() === "entrada,habilidad,habilidad,fuerza,fuerza,abdomen,cierre", "el molde: " + ms);
+  ok(p.bloques[0].clase === "tramos" && p.bloques[0].nombre === "Entrada en calor", "primero la entrada en calor");
+  const [a, b] = deMolde(p.bloques, "habilidad");
+  ok(a.constelaciones.join() === "front-lever" && b.constelaciones.join() === "planche", "las dos metas de tu rumbo: " + [a.constelaciones, b.constelaciones]);
+  ok(a.ejercicio === "colgado-activo" && a.estrella === "front-lever.colgado-60s" && a.series === 2 && a.objetivo === 30, "front lever, sostenes de 30 s hasta sumar 60: " + JSON.stringify([a.ejercicio, a.series, a.objetivo]));
+  /* la fuerza va de a dos: cada par alterna dos ejercicios, sin descanso entre ellos y 2 min después del par */
+  for (const f of deMolde(p.bloques, "fuerza")){
+    const es = [...new Set(f.pasos.map(x => x.ejercicio))];
+    ok(es.length === 2 && f.pasos.length === 6 && f.pasos[0].ejercicio !== f.pasos[1].ejercicio, "un par de fuerza: " + f.pasos.map(x => x.ejercicio));
+    ok(f.pasos.every((x, k) => x.descanso === (k % 2 ? 120 : 0)), "descansos del par: " + f.pasos.map(x => x.descanso));
+    ok(f.pasos.every(x => x.escalera && x.rango && x.n === 3), "cada serie dice su escalera, su rango y cuántas pide");
+  }
+  ok(p.minutos >= 35 && p.minutos <= 60 && p.minutos % 5 === 0, "de 40 a 55 minutos, más o menos: " + p.minutos);
+  ok(!p.ventana.length && !p.volviste, "sin ventana ni vuelta");
+  /* sin rumbo: igual hay día (fuerza, abdomen y cierre), sin habilidad */
+  const s = armarDia([], {equipo: []});
+  ok(!deMolde(s.bloques, "habilidad").length && deMolde(s.bloques, "fuerza").length === 2 && s.bloques[0].molde === "entrada", "sin rumbo: " + s.bloques.map(b => b.molde));
+  ok(armarDia(["no-existe", "planche"], {equipo: []}).bloques.some(b => (b.constelaciones || []).includes("planche")), "un id viejo en el rumbo no rompe");
+});
+prueba("dia-sin-repetidos", () => {
+  /* todas las combinaciones de tres metas de fuerza, con cuatro equipos: nada dos veces y todo posible con tu equipo */
+  const fu = CAT.constelaciones.filter(c => c.familia === "fu").map(c => c.id), ej = EJM();
+  const combos = [];
+  for (let i = 0; i < fu.length; i++) for (let j = i + 1; j < fu.length; j++) for (let k = j + 1; k < fu.length; k++) combos.push([fu[i], fu[j], fu[k]]);
+  let n = 0;
+  for (const equipo of [null, [], ["barra"], TODO]) for (const r of combos){
+    const p = armarDia(r, {equipo}), es = ejsDia(p.bloques), xs = escsDia(p.bloques), hab = deMolde(p.bloques, "habilidad");
+    ok(new Set(es).size === es.length, `${r} ${JSON.stringify(equipo)}: un ejercicio dos veces: ${es}`);
+    ok(new Set(xs).size === xs.length, `${r} ${JSON.stringify(equipo)}: una escalera dos veces: ${xs}`);
+    ok(!equipo || es.every(e => (ej[e]?.equipo || []).every(q => equipo.includes(q))), `${r} ${JSON.stringify(equipo)}: pide lo que no tenés: ${es.filter(e => (ej[e]?.equipo || []).some(q => !(equipo || []).includes(q)))}`);
+    ok(hab.length <= 2 && hab.every(b => b.constelaciones.every(id => r.includes(id))), `${r}: habilidades ${hab.map(b => b.constelaciones)}`);
+    ok(p.bloques[0].molde === "entrada" && p.bloques.at(-1).molde === "cierre" && p.minutos <= 60, `${r} ${JSON.stringify(equipo)}: molde o minutos (${p.minutos})`);
+    n++;
+  }
+  ok(n === combos.length * 4 && combos.length === 84, "no recorrió todo: " + n);
+});
+prueba("dia-dos-metas-un-ejercicio", () => {
+  /* muscle-up (10 dominadas) y un brazo (15 dominadas): el mismo camino, un solo bloque para las dos */
+  const p = armarDia(["muscle-up", "un-brazo"], {equipo: ["barra"]}), hab = deMolde(p.bloques, "habilidad");
+  ok(hab.length === 1 && hab[0].constelaciones.join() === "muscle-up,un-brazo" && hab[0].camino && hab[0].pasos.every(x => x.escalera === "tirar"), "dos metas, un camino: " + JSON.stringify(hab.map(b => [b.constelaciones, b.nombre])));
+  /* front lever (colgado) y muscle-up (camino desde el colgado): el mismo ejercicio, un bloque */
+  const q = armarDia(["front-lever", "muscle-up", "planche"], {equipo: ["barra"]}), hq = deMolde(q.bloques, "habilidad");
+  ok(hq.length === 2 && hq[0].constelaciones.join() === "front-lever,muscle-up" && hq[1].constelaciones.join() === "planche", "front lever y muscle-up juntos: " + JSON.stringify(hq.map(b => b.constelaciones)));
+  ok(ejsDia(q.bloques).filter(e => e === "colgado-activo").length === 1, "el colgado dos veces");
+});
+prueba("dia-equilibrio", () => {
+  const pats = b => [...new Set(b.pasos.map(x => rutina.escalera(x.escalera).patron))];
+  /* front lever tira: el primer par empuja, con piernas; el segundo tira, con bisagra */
+  const p = armarDia(["front-lever"], {equipo: ["barra", "paralelas"]}), [f1, f2] = deMolde(p.bloques, "fuerza");
+  ok(pats(f1).join() === "empujar,piernas" && pats(f2).join() === "tirar,bisagra", "el equilibrio con front lever: " + [pats(f1), pats(f2)]);
+  ok(f1.pasos[0].escalera === "fondos" && f2.pasos[0].escalera === "remo", "fuerza con fondos y remo, no lo de las habilidades: " + [f1.pasos[0].escalera, f2.pasos[0].escalera]);
+  /* planche empuja: el primer par tira */
+  const q = armarDia(["planche"], {equipo: ["barra"]});
+  ok(pats(deMolde(q.bloques, "fuerza")[0])[0] === "tirar", "con planche, el primer par tira");
+  /* una pierna ya entrena piernas: ese lugar es para arriba, y la bisagra queda */
+  const u = armarDia(["una-pierna"], {equipo: ["barra"]}), fu = deMolde(u.bloques, "fuerza").flatMap(pats);
+  ok(!fu.includes("piernas") && fu.includes("bisagra") && fu.filter(x => x === "tirar" || x === "empujar").length === 3, "con una pierna: " + fu);
+  /* la bandera humana entrena abdomen: el día no suma abdomen; sin abdomen en las habilidades, sí */
+  ok(!deMolde(armarDia(["bandera"], {equipo: ["poste"]}).bloques, "abdomen").length, "con bandera, abdomen de más");
+  ok(deMolde(p.bloques, "abdomen").length === 1, "sin abdomen");
+  ok(!deMolde(armarDia(["draco"], {equipo: []}).bloques, "abdomen").length, "con draco, abdomen de más");
+  /* empate en series: el que menos hiciste esta semana */
+  const tiro = {id: "t", fecha: "2026-10-18", bloques: [{familia: "fu", series: Array(6).fill({ejercicio: "dominada", tipo: "repeticiones", valor: 6})}]};
+  const v = armarDia([], {equipo: ["barra"], ss: [tiro]});
+  ok(pats(deMolde(v.bloques, "fuerza")[0])[0] === "empujar", "después de tirar esta semana, el primer par empuja");
+});
+prueba("dia-desde-tu-escalon", () => {
+  /* tu nivel (PR3) dice dónde arrancás en cada escalera; lo que hiciste manda */
+  const fondo = p => deMolde(p.bloques, "fuerza").flatMap(b => b.pasos).find(x => x.escalera === "fondos")?.ejercicio;
+  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"]})) === "flexion-cerrada", "sin nivel, el primer escalón");
+  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], nivelDesde: {fondos: "fondo"}})) === "fondo", "con nivel, desde el fondo");
+  const hist = deDia("h", "2026-10-10", "fondos", "fondo-banco", [8, 8, 8], {rango: [5, 8]});
+  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], nivelDesde: {fondos: "fondo"}, ss: [hist]})) === "fondo-banco", "lo hecho manda sobre el nivel");
+  /* el camino también arranca en tu escalón: muscle-up desde la dominada es la estrella, no el camino */
+  const mu = armarDia(["muscle-up"], {equipo: ["barra"], nivelDesde: {tirar: "dominada"}}), h = deMolde(mu.bloques, "habilidad")[0];
+  ok(!h.camino && h.estrella === "muscle-up.dominadas-10", "desde la dominada, la estrella: " + JSON.stringify([h.ejercicio, h.camino]));
+  const mu0 = deMolde(armarDia(["muscle-up"], {equipo: ["barra"]}).bloques, "habilidad")[0];
+  ok(mu0.camino && mu0.nombre.startsWith("Camino a ") && mu0.pasos[0].ejercicio === "colgado-activo", "sin nivel, el camino: " + mu0.nombre);
+  /* las estrellas que tu nivel da por hechas: la próxima es la que sigue */
+  const d = deMolde(armarDia(["front-lever"], {equipo: ["barra"], dadas: ["front-lever.colgado-60s"]}).bloques, "habilidad")[0];
+  ok(d.estrella === "front-lever.bolita-10s", "con el colgado dado, la bolita: " + d.estrella);
+});
+prueba("dia-rotacion", () => {
+  /* cinco metas: dos por día, primero las que nunca tocaste (en el orden de tu rumbo), después la que hace más que no tocás */
+  const r = ["front-lever", "planche", "una-pierna", "draco", "parada-de-manos"], equipo = ["barra", "pared"];
+  let ss = []; const dias = [], fechas = ["2026-10-12", "2026-10-14", "2026-10-16", "2026-10-19", "2026-10-21", "2026-10-23"];
+  for (const f of fechas){ const p = armarDia(r, {equipo, ss, hoy: f}); dias.push(deMolde(p.bloques, "habilidad").flatMap(b => b.constelaciones)); ss = [...ss, hechaDia("d" + f, f, p)]; }
+  ok(dias[0].join() === "front-lever,planche", "el primer día, las dos primeras: " + dias[0]);
+  ok(dias.slice(0, 3).flat().length >= 5 && r.every(id => dias.slice(0, 3).flat().includes(id)), "en tres días tocó todas: " + JSON.stringify(dias.slice(0, 3)));
+  const cuenta = id => dias.flat().filter(x => x === id).length;
+  ok(r.every(id => cuenta(id) >= 2 && cuenta(id) <= 3), "repartidas parejo en seis días: " + r.map(id => id + " " + cuenta(id)));
+  /* lo de ayer no se repite si hay otra */
+  const ayer = {id: "a", fecha: "2026-10-19", bloques: [{constelaciones: ["front-lever"], series: []}]};
+  const p = armarDia(["front-lever", "planche"], {equipo, ss: [ayer]});
+  ok(!deMolde(p.bloques, "habilidad").some(b => b.constelaciones.includes("front-lever")), "repitió front lever: " + deMolde(p.bloques, "habilidad").map(b => b.constelaciones));
+  ok(deMolde(armarDia(["front-lever"], {equipo, ss: [ayer]}).bloques, "habilidad")[0].constelaciones.join() === "front-lever", "si es la única, va igual");
+  /* el pie dice lo que viene */
+  const q = armarDia(r, {equipo});
+  ok(q.pie === "La próxima: Una pierna · Draco" && q.rotacion.join() === r.join(), "el pie: " + q.pie);
+  /* la segunda no entrena lo mismo que la primera si la que sigue no: front lever y la dominada (las dos tiran) */
+  const t = armarDia(["front-lever", "lastre", "planche"], {equipo: TODO, nivelDesde: {tirar: "dominada"}}), ht = deMolde(t.bloques, "habilidad");
+  ok(ht.map(b => b.constelaciones.join()).join("|") === "front-lever|planche", "dos que tiran el mismo día: " + ht.map(b => b.constelaciones));
+});
+prueba("dia-rotacion-ventana", () => {
+  /* colgado 50 s de 60: la ventana abre y la prueba es la habilidad del día, primero aunque no le toque */
+  const ms = [{id: "x", estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 50, fecha: "2026-10-18"}];
+  const ayer = {id: "a", fecha: "2026-10-17", bloques: [{constelaciones: ["front-lever"], series: []}]};
+  const p = armarDia(["planche", "una-pierna", "front-lever"], {ms, ss: [ayer], equipo: ["barra"]}), h = deMolde(p.bloques, "habilidad");
+  ok(h[0].prueba && h[0].series === 1 && h[0].objetivo === 60 && h[0].estrella === "front-lever.colgado-60s", "primero, la prueba: " + JSON.stringify(h[0]));
+  ok(p.ventana.join() === "front-lever" && h.length === 2 && h[1].constelaciones.join() === "planche", "después, la que toca: " + h.map(b => b.constelaciones));
+  ok(molde.ventana(cieloReal(ms), ["front-lever", "planche"], [], HOY).map(c => c.id).join() === "front-lever", "la ventana para una rutina");
+});
+prueba("dia-frecuencia", () => {
+  ok(molde.frecuencia(5, 3) === 1.2 && molde.frecuencia(1, 3) === 3 && molde.frecuencia(2, 3) === 3 && molde.frecuencia(3, 3) === 2 && molde.frecuencia(6, 4) === 4 / 3, "frecuencia = min(D, 2D/n)");
+  ok(molde.frecuencia(0, 3) === 0, "sin metas, cero");
+  ok(molde.diasSemana({dias: [0, 2, 4]}, [], HOY) === 3, "tus días mandan");
+  const ss = ["2026-09-25", "2026-09-29", "2026-10-02", "2026-10-06", "2026-10-09", "2026-10-13", "2026-10-15", "2026-10-19", "2026-10-19"].map((f, i) => ({id: "s" + i, fecha: f, bloques: []}));
+  ok(molde.diasSemana({}, ss, HOY) === 2, "sin tus días, lo de las últimas 4 semanas: " + molde.diasSemana({}, ss, HOY));
+  ok(molde.diasSemana({}, [], HOY) === 3, "sin nada, 3");
+});
+prueba("dia-equipo", () => {
+  /* sin poste ni barra: la bandera y el front lever quedan afuera y se dice qué piden */
+  const p = armarDia(["bandera", "front-lever", "planche"], {equipo: []}), ej = EJM();
+  ok(p.pide.map(x => x.id + ":" + x.pide).join() === "bandera:poste,front-lever:barra", "lo que piden: " + JSON.stringify(p.pide));
+  ok(deMolde(p.bloques, "habilidad").map(b => b.constelaciones.join()).join() === "planche", "la habilidad que sí podés");
+  ok(ejsDia(p.bloques).every(e => !(ej[e]?.equipo || []).length), "un ejercicio pide equipo: " + ejsDia(p.bloques).filter(e => (ej[e]?.equipo || []).length));
+  /* sin barra el tirón es el remo (en el poste, debajo de la mesa o con toalla) */
+  ok(deMolde(p.bloques, "fuerza").some(b => b.pasos.some(x => x.escalera === "remo")), "sin barra no tira");
+  /* sin barra, el segundo tirón no tiene escalera: ese lugar es para empujar, y los dos pares siguen de a dos */
+  ok(deMolde(p.bloques, "fuerza").every(b => new Set(b.pasos.map(x => x.ejercicio)).size === 2), "un par quedó solo: " + deMolde(p.bloques, "fuerza").map(b => b.pasos.map(x => x.ejercicio)));
+  /* nada de tu rumbo se puede: el día se arma igual, con fuerza (D2) */
+  const s = armarDia(["bandera"], {equipo: []});
+  ok(!deMolde(s.bloques, "habilidad").length && deMolde(s.bloques, "fuerza").length === 2 && s.pide.length === 1, "solo con fuerza: " + s.bloques.map(b => b.molde));
+  /* con rango en tu rumbo, toma el lugar de la habilidad */
+  const e = armarDia(["bandera", "espagat"], {equipo: []}), he = deMolde(e.bloques, "habilidad");
+  ok(he.length === 1 && he[0].constelaciones.join() === "espagat" && !he[0].extra, "espagat a la habilidad: " + JSON.stringify(he.map(b => b.constelaciones)));
+  /* el cierre: rango o motor de tu rumbo; si no, bici suave con bici; si no, posturas */
+  ok(deMolde(armarDia(["planche", "puente"], {equipo: []}).bloques, "cierre")[0].constelaciones.join() === "puente", "el cierre con puente");
+  const cb = deMolde(armarDia(["planche"], {equipo: ["bici"]}).bloques, "cierre")[0];
+  ok(cb.clase === "tramos" && cb.tramos[0].ejercicio === "bici" && cb.tramos[0].seg === 600, "con bici, 10 min suaves");
+  const cp = deMolde(armarDia(["planche"], {equipo: []}).bloques, "cierre")[0];
+  ok(cp.clase === "tramos" && cp.tramos.length === 3 && cp.tramos.every(t => t.clase === "postura" && t.seg === 40 && ej[t.ejercicio]), "sin bici, tres posturas: " + JSON.stringify(cp.tramos));
+  ok(cp.tramos[0].ejercicio === "codos-atras", "la primera postura, por lo que empujó el día: " + cp.tramos[0].ejercicio);
+});
+prueba("dia-volviste", () => {
+  const vieja = {id: "a", fecha: "2026-09-20", bloques: []};
+  const ms = [{id: "x", estrella: "front-lever.colgado-60s", valor: 50, fecha: "2026-09-20"}];
+  const p = armarDia(["front-lever", "muscle-up"], {ms, ss: [vieja], equipo: ["barra"]}), h = deMolde(p.bloques, "habilidad");
+  /* 50 s: los sostenes irían a 35 s; al volver, al 70 % de eso. Sin ventana, aunque esté al 83 % */
+  ok(p.volviste && !p.ventana.length && h[0].objetivo === 25 && !h[0].prueba, "al volver: " + JSON.stringify([h[0].objetivo, h[0].prueba]));
+  ok(deMolde(p.bloques, "fuerza").every(b => b.pasos.every(x => x.descarga)), "la fuerza no va más liviana");
+});
+prueba("dia-semana-de-prueba", () => {
+  const sem = ["2026-09-21", "2026-09-29", "2026-10-06", "2026-10-13"].map((f, i) => ({id: "s" + i, fecha: f, duracion: 600, bloques: []}));
+  const ci = cielo.calcular(CAT, [], HOY, sem, ["barra"]), sp = plan.semanaDePrueba({}, sem, HOY);
+  ok(sp.toca && sp.conPruebas, "toca la semana de prueba");
+  const base = armarDia(["front-lever"], {ss: sem, equipo: ["barra"], descarga: true});
+  const pd = molde.deSemanaDePrueba(base, sp, {cielo: ci, cons: ["front-lever"], sesiones: sem, equipo: ["barra"], ej: EJM(), hoy: HOY});
+  ok(pd.bloques[0].molde === "entrada", "la entrada sigue adelante: " + pd.bloques.map(b => b.molde || (b.prueba ? "prueba" : b.hazana ? "hazaña" : "?")));
+  ok(pd.bloques[1].prueba && pd.semanaPrueba.pruebas >= 1, "después, las pruebas");
+  const fl = pd.bloques.find(b => b.constelacion === "front-lever" && !b.prueba), fl0 = deMolde(base.bloques, "habilidad")[0];
+  ok(fl && fl.descarga && fl.series === Math.ceil(fl0.series / 2), "la habilidad, a la mitad");
+  ok(deMolde(pd.bloques, "fuerza").every(b => b.pasos.every(x => x.descarga && x.n === 3) && b.pasos.length === 4), "la fuerza, a la mitad: " + deMolde(pd.bloques, "fuerza").map(b => b.pasos.length));
+});
+prueba("dia-sesiones-viejas", () => {
+  /* una sesión del plan de antes (un bloque por constelación) cuenta para rotar */
+  const vieja = {id: "a", fecha: "2026-10-18", bloques: [{constelacion: "front-lever", familia: "fu", series: [{estrella: "front-lever.colgado-60s", ejercicio: "colgado-activo", tipo: "segundos", valor: 20}]}]};
+  const p = armarDia(["front-lever", "planche", "una-pierna"], {ss: [vieja], equipo: ["barra"]});
+  ok(deMolde(p.bloques, "habilidad").map(b => b.constelaciones.join()).join() === "planche,una-pierna", "front lever, hecho hace dos días, va después: " + deMolde(p.bloques, "habilidad").map(b => b.constelaciones));
+  ok(molde.tocadas(vieja).has("front-lever"), "la sesión vieja no toca front lever");
+  /* las series de una rutina mueven las escaleras del molde */
+  const rut = {...deDia("r", "2026-10-15", "remo", "remo-invertido", [8, 8, 8], {rango: [5, 8]}), rutina: {id: "base_cali", sesion: 0}};
+  ok(deMolde(armarDia(["planche"], {ss: [rut], equipo: ["barra"]}).bloques, "fuerza").flatMap(b => b.pasos).some(x => x.ejercicio === "remo-invertido"), "el remo de la rutina no cuenta");
+});
+prueba("respaldo-rumbo-sin-tope", () => {
+  const ids = CAT.constelaciones.map(c => c.id), arch = r => JSON.stringify({app: "kozmos", formato: 2, mediciones: [], sesiones: [], perfil: {rumbo: r}});
+  const antes = ctx.K.CATALOGO; ctx.K.CATALOGO = CAT;
+  try {
+    ok(respaldo.leer(arch(ids.slice(0, 6))).perfil.rumbo?.length === 6, "seis metas no vuelven del respaldo");
+    ok(respaldo.leer(arch(ids)).perfil.rumbo?.length === ids.length, "todo el catálogo no vuelve");
+    ok(!respaldo.leer(arch([...ids, "otra"])).perfil.rumbo, "más metas que constelaciones");
+  } finally { ctx.K.CATALOGO = antes; }
+  /* las sesiones del molde vuelven enteras, con sus constelaciones */
+  const s = {id: "m", fecha: HOY, duracion: 600, bloques: [{orden: 0, familia: "fu", molde: "habilidad", constelaciones: ["muscle-up", "un-brazo"], series: [{ejercicio: "dominada", tipo: "repeticiones", valor: 5, escalera: "tirar", rango: [5, 8], n: 3}]}]};
+  const l = respaldo.leer(JSON.stringify({app: "kozmos", formato: 2, mediciones: [], sesiones: [s, {...s, id: "x", bloques: [{...s.bloques[0], constelaciones: "muscle-up"}]}], perfil: {}}));
+  ok(l.sesiones.length === 1 && JSON.stringify(l.sesiones[0]) === JSON.stringify(s) && l.descartadas === 1, "la sesión del molde: " + JSON.stringify(l));
+});
+prueba("dia-serie-escalera", () => {
+  /* lo que guarda cada serie mueve el escalón: el camino y la fuerza dicen escalera, rango y n; la estrella, solo su estrella */
+  const p = armarDia(["muscle-up", "front-lever"], {equipo: ["barra"], nivelDesde: {tirar: "dominada-negativa"}});
+  for (const b of p.bloques.filter(b => b.pasos)) ok(b.pasos.every(x => x.escalera && x.rango && x.n), "una serie de escalera sin escalera: " + b.molde);
+  const st = deMolde(p.bloques, "habilidad").find(b => b.estrella);
+  ok(st && !st.pasos && !st.escalera, "la estrella no lleva escalera");
+  /* dos días al tope: el camino sube un escalón */
+  const cam = () => deMolde(armarDia(["muscle-up"], {equipo: ["barra"], nivelDesde: {tirar: "dominada-asistida"}, ss, hoy: "2026-10-24"}).bloques, "habilidad")[0];
+  let ss = [];
+  const d0 = armarDia(["muscle-up"], {equipo: ["barra"], nivelDesde: {tirar: "dominada-asistida"}});
+  ok(deMolde(d0.bloques, "habilidad")[0].pasos[0].ejercicio === "dominada-asistida", "arranca en la asistida");
+  ss = [hechaDia("a", "2026-10-20", d0, {tope: true}), hechaDia("b", "2026-10-22", d0, {tope: true})];
+  ok(cam().pasos[0].ejercicio === "dominada-negativa" && cam().pasos[0].nuevo === "sube", "no subió: " + cam().pasos[0].ejercicio);
 });
 
 let fallas = 0;
