@@ -9,6 +9,9 @@ Cada ejercicio: `id` (texto estable, en castellano y con guiones; nunca se reusa
 - `equipo`: lista de ids de equipo (`barra`, `paralelas`, `pared`, `poste`, `lastre`, `bici`, `soga`, `mancuernas`, `kettlebell`). Sin equipo, se hace en el piso.
 - `lado: true`: se cuenta por lado.
 - `mide: "segundos"`: se sostiene en vez de contar repeticiones.
+- `patron`: lista de lo que entrena (`tirar`, `empujar`, `piernas`, `bisagra`, `abdomen`, `movilidad`). Lo llevan las habilidades que no están en una escalera (front lever, planche, bandera, muscle-up, parada de manos); los de una escalera toman el de su escalera (`K.caminos.patronDe`).
+
+El equipo de un ejercicio es lo que pide de verdad; una estrella nunca pide menos que su ejercicio. Si pide más, es porque la constelación entera lo pide (Parada de manos pide pared, Lastre pide barra y paralelas); la prueba `catalogo-equipo-coherente` tiene la lista.
 
 ## Escaleras (`catalogo/escaleras.json`)
 
@@ -16,7 +19,7 @@ Una escalera es una fila de ejercicios del más fácil al más difícil. Las rut
 
 ```json
 {"version": 1, "escaleras": [{
-  "id": "tirar", "nombre": "Tirar", "familia": "fu", "texto": "…",
+  "id": "tirar", "nombre": "Tirar", "familia": "fu", "patron": "tirar", "texto": "…",
   "pasos": [{"ejercicio": "colgado-activo", "tipo": "segundos", "meta": 60},
             {"ejercicio": "dominada-negativa", "tipo": "repeticiones", "rango": [3, 5]}, …]
 }]}
@@ -25,6 +28,12 @@ Una escalera es una fila de ejercicios del más fácil al más difícil. Las rut
 - Un escalón de `repeticiones` puede traer su propio `rango`; si no, vale el del bloque.
 - Un escalón de `segundos` es un sostén: lleva `meta`, los segundos que hay que juntar para subir.
 - Los escalones que tu equipo no permite se saltean (y no cuentan en el total).
+- `patron`: lo que entrena la escalera (tirar y remo → `tirar`; empujar y fondos → `empujar`; piernas; isquios → `bisagra`; L-sit y bandera acostada → `abdomen`; cadera y puente → `movilidad`).
+- **Variantes de un escalón** (cuentan como el mismo escalón, también en el diario):
+  - `tambien`: ejercicios que lo reemplazan si tu equipo no permite el de siempre, sin kilos (sin barra, el remo invertido es el remo debajo de la mesa; sin mancuernas, el remo con mancuerna es el remo con toalla en la puerta).
+  - `conPeso`: `{ejercicio, carga, kgInicial, hastaKg}`, el mismo escalón con mancuernas; se usa si las tenés (sentadilla → sentadilla con mancuernas, puente de glúteo → peso muerto rumano).
+  - Sin decir tu equipo, siempre el de siempre.
+- **Kilos con mancuernas**: un escalón con `carga`, `kgInicial` y `hastaKg` (remo con mancuerna 2/6/16, sentadilla búlgara 2/6/14, peso muerto a una pierna 2/8/16). Arrancás en `kgInicial`; con el tope del rango dos veces (o una con «Sobró») sumás `carga` y volvés al mínimo; si pasarías de `hastaKg`, subís al escalón siguiente (sin esos kilos). Dos veces sin el mínimo: `carga` de menos, nunca debajo de `kgInicial`; ya en `kgInicial`, el escalón de abajo. Los kilos que pusiste mandan. La sesión pide «Kilos por mano» y nunca tu peso: no son % de tu peso ni encienden estrellas de Lastre.
 
 Las reglas, en `src/sesion/rutina.js`:
 
@@ -34,6 +43,16 @@ Las reglas, en `src/sesion/rutina.js`:
 - **Trabado**: tres sesiones sin mejorar abren una descarga (la mitad de las series, sin sumar). Después se vuelve a probar.
 - **Sostenes**: se juntan 60 s por sesión en sostenes del 50 al 80 % de tu mejor marca (70 % de base; 80 si sobró, 50 si no llegaste). Si en una sesión no llegás a 5 s, bajás un escalón. Subís cuando todas las series llegan a la meta del escalón, dos sesiones seguidas (o una si sobró).
 - **Sin tocar nada**: la sensación sale de las repeticiones. Dos o más arriba del objetivo (5 s en segundos) es «Sobró»; llegar es «Justo»; menos es «No llegué».
+
+Fuera de una rutina: `K.rutina.escalonDe(id, {ej, equipo, sesiones, marcas, desde})` dice dónde estás en una escalera (con `desde`, el escalón de arranque si todavía no la hiciste) y `K.rutina.escalonesTodos(ctx)` todas a la vez. Cuentan las series que dicen su `escalera`, vengan de una rutina o no. `K.rutina.armarBloques(familia, bloques, ctx)` arma bloques con el formato de los de una rutina (lo usa `deRutina`, y lo va a usar el día del motor B).
+
+## Entrada en calor (`catalogo/entradas.json`)
+
+Piezas para armar la entrada en calor de un día que no viene de una rutina: `{id, nota, seg, para, equipo?, ejercicio?, pulso?, ultima?}`. `para` dice para qué sirve (`general`, `barra`, `manos`, `piernas`); `pulso`, que sube el pulso (va primero); `ultima`, que cierra («Primer ejercicio suave · 5, sin cargar»). `K.caminos.entrada(bloques, {equipo, ej})` arma un bloque de tramos de 5 a 6 minutos: 2 min de bici si tenés bici (si no, saltos de tijera), una pieza por cada cosa que pide el día, lo general hasta completar y la última. Solo usa lo que tu equipo permite; sin decir tu equipo, lo que usan los ejercicios del día.
+
+## Caminos a una estrella
+
+`K.caminos.caminoDe(estrella, {escalones})`: si la estrella se mide con el ejercicio del escalón k de una escalera y tu escalón está debajo, lo que toca es el camino («Camino a …», esa escalera); si no, la estrella. Cuando el ejercicio no está en ninguna escalera, la estrella puede decirlo en el catálogo con `camino: {escalera, hasta}` (el fondo ruso se llega por los fondos).
 
 ## Rutinas (`catalogo/rutinas/<id>.json`, una por archivo)
 
@@ -72,7 +91,7 @@ Las reglas, en `src/sesion/rutina.js`:
   - `rango`: mínimo y máximo; arranca en el mínimo y suma por serie con las mismas reglas de las escaleras (es una escalera de un solo escalón);
   - `objetivo`: un número fijo.
 - `elegir` (solo 100 flexiones): `{"umbrales": [5, 10], "columnas": [[…], […], […]]}`. Tu mejor serie de ese ejercicio elige la columna de `porSerie`.
-- `carga` (con lastre): kilos que se suman cuando completás el rango dos veces seguidas, en vez de subir de escalón. La sesión pide repeticiones y kilos.
+- `carga` (con lastre): kilos que se suman cuando completás el rango dos veces seguidas, en vez de subir de escalón. La sesión pide repeticiones y los kilos de lastre (y tu peso, para el %). Los kilos de las mancuernas van en la escalera, no en el bloque.
 - `descanso`: segundos después de cada serie.
 - `grupo`: dos bloques seguidos con el mismo grupo se alternan serie a serie (superserie). En Hoy y en los días de la rutina van en una fila cada uno, juntos, con «en superserie» (tres: «en triserie»).
 - `dura` (opcional): los segundos que lleva una serie larga (los 1000 saltos), para que los minutos del día no mientan. Sin esto, una serie de repeticiones cuenta 45 s.
@@ -141,4 +160,4 @@ Sin rutina, con tu rumbo, cuenta semanas de calendario con alguna sesión: despu
 
 ## Lo que guarda el diario
 
-Una sesión de rutina guarda `rutina: {id, sesion}`. Cada serie de una escalera guarda además `escalera`, `rango`, `n` (cuántas series pedía), `descarga` si era una descarga y, si la tocaste, `sensacion` (`sobro`, `justo` o `no-llego`). Una serie con lastre guarda `lastreKg` y `pesoKg`. Las sesiones viejas, sin esos campos, siguen contando: sus series entran en la escalera del ejercicio que hicieron. Una prueba (hazaña) guarda `hazana: {id, v: 2, valor, completa, ejercicio, tipo}` y su serie lleva `hazana` con el id; esa serie cuenta como marca en el Cielo. Una sesión de la semana de prueba guarda `semanaPrueba: {bloque, rutina, semana, pruebas}`. Las hazañas de antes (versión 1) guardaban `hazana: {id, nivel, valor}`, con `valor` en segundos (tiempo, chipper), rondas (amrap) o 1 (completada): se siguen viendo en tu historia y en la prueba, como «versión anterior», y no cuentan como marcas. El perfil guarda `rutina: {id, desde}` mientras la seguís y `dias`: los días de la semana que entrenás (0 = lunes).
+Una sesión de rutina guarda `rutina: {id, sesion}`. Cada serie de una escalera guarda además `escalera`, `rango`, `n` (cuántas series pedía), `descarga` si era una descarga y, si la tocaste, `sensacion` (`sobro`, `justo` o `no-llego`). Una serie con lastre guarda `lastreKg` y `pesoKg`; una con mancuernas, `kg` (por mano, sin tu peso). Las sesiones viejas, sin esos campos, siguen contando: sus series entran en la escalera del ejercicio que hicieron. Una prueba (hazaña) guarda `hazana: {id, v: 2, valor, completa, ejercicio, tipo}` y su serie lleva `hazana` con el id; esa serie cuenta como marca en el Cielo. Una sesión de la semana de prueba guarda `semanaPrueba: {bloque, rutina, semana, pruebas}`. Las hazañas de antes (versión 1) guardaban `hazana: {id, nivel, valor}`, con `valor` en segundos (tiempo, chipper), rondas (amrap) o 1 (completada): se siguen viendo en tu historia y en la prueba, como «versión anterior», y no cuentan como marcas. El perfil guarda `rutina: {id, desde}` mientras la seguís y `dias`: los días de la semana que entrenás (0 = lunes).

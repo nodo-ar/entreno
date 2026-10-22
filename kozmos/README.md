@@ -13,8 +13,8 @@ El modelo, la arquitectura y las seis etapas están en el documento «Kozmos · 
 | `src/pantallas/` | Hoy (con Tu rumbo y el primer día), Planes (hazañas y rutinas, en `rutinas.js`), Cosmos (en `cielo.js`, con Constelación y Anotar), Progreso y Vos (con Tu equipo) |
 | `src/cielo/` | Las reglas del cielo (funciones puras) y su dibujo |
 | `src/diario/` | Lo que hacés, guardado en IndexedDB, y el respaldo (armar y leer el archivo) |
-| `src/sesion/` | El plan del día, las rutinas, hazañas y tus días, y las calorías (funciones puras), y el motor de la sesión |
-| `catalogo/` | Constelaciones y estrellas, ejercicios, escaleras de progresión, rutinas (una por archivo; formato de escaleras y rutinas en `docs/kozmos-rutinas.md`), hazañas y los ids retirados |
+| `src/sesion/` | El plan del día, las rutinas, hazañas y tus días, los caminos y la entrada en calor del motor B, y las calorías (funciones puras), y el motor de la sesión |
+| `catalogo/` | Constelaciones y estrellas, ejercicios, escaleras de progresión, piezas de la entrada en calor (`entradas.json`), rutinas (una por archivo; formato de escaleras y rutinas en `docs/kozmos-rutinas.md`), hazañas y los ids retirados |
 | `src/app.js` | Rutas, transiciones y arranque |
 | `src/sw.js` | Service worker: abre sin conexión desde la segunda vez |
 | `fuentes/` | Mona Sans y Geist Mono (latín, woff2) con su licencia SIL OFL |
