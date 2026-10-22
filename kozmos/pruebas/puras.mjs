@@ -106,6 +106,30 @@ prueba("catalogo-contra-main", () => {
   }
 });
 
+prueba("catalogo-nombres-claros", () => {
+  /* cada estrella y cada ejercicio dicen qué hacés, en palabras de todos los días (acta 024).
+     Las constelaciones guardan su nombre («Muscle-up», «Front lever», «Planche»…) y «L-sit» se queda. */
+  const JERGA = /\b(tuck|straddle|pike|pistol|shrimp|n[óo]rdico|dragon flag|planche lean|cuervo|criss-cross|double under|muscle-up|arquera|pseudo planche|v-sit|cosaca)\b/i;
+  const nombres = [...CAT.constelaciones.flatMap(c => c.estrellas.map(e => [e.id, e.nombre])), ...EJ.ejercicios.map(e => [e.id, e.nombre]), ...ESC.escaleras.map(e => [e.id, e.nombre])];
+  for (const [id, n] of nombres) ok(!JERGA.test(n), `${id}: «${n}» usa jerga (${n.match(JERGA)?.[0]})`);
+  /* la regla no deja afuera nombres que ya están aprobados */
+  ok(["Muscle-up", "Front lever", "Planche", "Draco", "Espagat"].every(n => CAT.constelaciones.some(c => c.nombre === n)), "cambió el nombre de una constelación");
+  ok(EJ.ejercicios.some(e => e.nombre === "L-sit"), "«L-sit» tiene que quedar");
+  /* cambiar un nombre nunca cambia un id: la historia de cada uno sigue contando */
+  const main = f => { try { return JSON.parse(execSync(`git show origin/main:kozmos/catalogo/${f}`, {cwd: RAIZ, stdio: ["ignore", "pipe", "ignore"]}).toString()); } catch (e) { return null; } };
+  const ids = {
+    "constelaciones.json": c => [...c.constelaciones.map(x => x.id), ...c.constelaciones.flatMap(x => x.estrellas.map(e => e.id))],
+    "ejercicios.json": c => c.ejercicios.map(x => x.id),
+    "escaleras.json": c => c.escaleras.map(x => x.id),
+    "hazanas.json": c => c.hazanas.map(x => x.id)};
+  const hoy = {"constelaciones.json": CAT, "ejercicios.json": EJ, "escaleras.json": ESC, "hazanas.json": HAZANAS};
+  for (const [f, de] of Object.entries(ids)){
+    const viejo = main(f); if (!viejo) continue;
+    const ahora = new Set(de(hoy[f])), falta = de(viejo).filter(id => !ahora.has(id) && !RET.estrellas?.includes(id) && !RET.constelaciones?.includes(id));
+    ok(!falta.length, `${f}: ids que ya no están: ${falta.join(", ")}`);
+  }
+});
+
 /* ===== El cielo, con un catálogo chico escrito a mano ===== */
 const MINI = {familias: [{id: "fu", nombre: "F"}], constelaciones: [
   {id: "fl", nombre: "Front lever", familia: "fu", meta: "", estrellas: [

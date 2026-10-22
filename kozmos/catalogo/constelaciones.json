@@ -26,7 +26,7 @@
    "estrellas": [
     {
      "id": "parada-de-manos.munecas-15s",
-     "nombre": "Muñecas en el dorso 15 s",
+     "nombre": "Apoyo en el dorso de las manos 15 s",
      "magnitud": 5,
      "orden": 1,
      "prueba": {
@@ -41,7 +41,7 @@
     },
     {
      "id": "parada-de-manos.cuervo-10s",
-     "nombre": "Cuervo 10 s",
+     "nombre": "Rodillas sobre los codos 10 s",
      "magnitud": 4,
      "orden": 2,
      "prueba": {
@@ -58,7 +58,7 @@
     },
     {
      "id": "parada-de-manos.pared-30s",
-     "nombre": "Contra la pared 30 s",
+     "nombre": "Parada de manos contra la pared 30 s",
      "magnitud": 4,
      "orden": 3,
      "prueba": {
@@ -75,7 +75,7 @@
     },
     {
      "id": "parada-de-manos.pared-60s",
-     "nombre": "Contra la pared 60 s",
+     "nombre": "Parada de manos contra la pared 60 s",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -92,7 +92,7 @@
     },
     {
      "id": "parada-de-manos.pike-elevado-8",
-     "nombre": "Pike con pies elevados ×8",
+     "nombre": "Flexión de hombros con pies en alto ×8",
      "magnitud": 3,
      "orden": 5,
      "prueba": {
@@ -109,7 +109,7 @@
     },
     {
      "id": "parada-de-manos.libre-5s",
-     "nombre": "Libre 5 s",
+     "nombre": "Parada de manos libre 5 s",
      "magnitud": 2,
      "orden": 6,
      "prueba": {
@@ -126,7 +126,7 @@
     },
     {
      "id": "parada-de-manos.flexion-vertical-3",
-     "nombre": "Flexión en vertical contra la pared ×3",
+     "nombre": "Flexión cabeza abajo contra la pared ×3",
      "magnitud": 2,
      "orden": 7,
      "prueba": {
@@ -143,7 +143,7 @@
     },
     {
      "id": "parada-de-manos.libre-15s",
-     "nombre": "Libre 15 s",
+     "nombre": "Parada de manos libre 15 s",
      "magnitud": 1,
      "orden": 8,
      "prueba": {
@@ -160,7 +160,7 @@
     },
     {
      "id": "parada-de-manos.libre-30s",
-     "nombre": "Libre 30 s",
+     "nombre": "Parada de manos libre 30 s",
      "magnitud": 1,
      "orden": 9,
      "prueba": {
@@ -200,7 +200,7 @@
     },
     {
      "id": "muscle-up.fondo-ruso",
-     "nombre": "Fondo ruso",
+     "nombre": "Fondo pasando por los antebrazos",
      "magnitud": 5,
      "orden": 2,
      "prueba": {
@@ -234,7 +234,7 @@
     },
     {
      "id": "muscle-up.negativa-3",
-     "nombre": "Negativa de muscle-up ×3",
+     "nombre": "Bajar lento desde arriba de la barra ×3",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -251,7 +251,7 @@
     },
     {
      "id": "muscle-up.impulso-1",
-     "nombre": "Con impulso ×1",
+     "nombre": "Subir arriba de la barra con impulso ×1",
      "magnitud": 2,
      "orden": 5,
      "prueba": {
@@ -268,7 +268,7 @@
     },
     {
      "id": "muscle-up.estricto-3",
-     "nombre": "Muscle-up ×3",
+     "nombre": "Subir arriba de la barra sin impulso ×3",
      "magnitud": 1,
      "orden": 6,
      "prueba": {
@@ -293,7 +293,7 @@
    "estrellas": [
     {
      "id": "front-lever.colgado-60s",
-     "nombre": "Colgado activo 60 s",
+     "nombre": "Colgado con hombros firmes 60 s",
      "magnitud": 5,
      "orden": 1,
      "prueba": {
@@ -308,7 +308,7 @@
     },
     {
      "id": "front-lever.bolita-10s",
-     "nombre": "Bolita 10 s",
+     "nombre": "Horizontal hecho bolita 10 s",
      "magnitud": 4,
      "orden": 2,
      "prueba": {
@@ -325,7 +325,7 @@
     },
     {
      "id": "front-lever.tuck-10s",
-     "nombre": "Tuck 10 s",
+     "nombre": "Horizontal con rodillas al pecho 10 s",
      "magnitud": 4,
      "orden": 3,
      "prueba": {
@@ -342,7 +342,7 @@
     },
     {
      "id": "front-lever.tuck-20s",
-     "nombre": "Tuck 20 s",
+     "nombre": "Horizontal con rodillas al pecho 20 s",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -359,7 +359,7 @@
     },
     {
      "id": "front-lever.tuck-avanzado-10s",
-     "nombre": "Tuck avanzado 10 s",
+     "nombre": "Horizontal con rodillas a la cadera 10 s",
      "magnitud": 3,
      "orden": 5,
      "prueba": {
@@ -376,7 +376,7 @@
     },
     {
      "id": "front-lever.una-pierna-10s",
-     "nombre": "Una pierna 10 s",
+     "nombre": "Horizontal con una pierna estirada 10 s",
      "magnitud": 2,
      "orden": 6,
      "prueba": {
@@ -393,7 +393,7 @@
     },
     {
      "id": "front-lever.straddle-5s",
-     "nombre": "Straddle 5 s",
+     "nombre": "Horizontal con piernas abiertas 5 s",
      "magnitud": 2,
      "orden": 7,
      "prueba": {
@@ -410,7 +410,7 @@
     },
     {
      "id": "front-lever.completo-5s",
-     "nombre": "Front lever 5 s",
+     "nombre": "Horizontal completo 5 s",
      "magnitud": 1,
      "orden": 8,
      "prueba": {
@@ -447,7 +447,7 @@
     },
     {
      "id": "planche.lean-15s",
-     "nombre": "Planche lean 15 s",
+     "nombre": "Inclinado adelante sobre las manos 15 s",
      "magnitud": 5,
      "orden": 2,
      "prueba": {
@@ -461,7 +461,7 @@
     },
     {
      "id": "planche.pseudo-5",
-     "nombre": "Flexión pseudo planche ×5",
+     "nombre": "Flexión con manos a la cintura ×5",
      "magnitud": 4,
      "orden": 3,
      "prueba": {
@@ -475,7 +475,7 @@
     },
     {
      "id": "planche.tuck-5s",
-     "nombre": "Tuck 5 s",
+     "nombre": "En el aire con rodillas al pecho 5 s",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -489,7 +489,7 @@
     },
     {
      "id": "planche.tuck-15s",
-     "nombre": "Tuck 15 s",
+     "nombre": "En el aire con rodillas al pecho 15 s",
      "magnitud": 3,
      "orden": 5,
      "prueba": {
@@ -503,7 +503,7 @@
     },
     {
      "id": "planche.tuck-avanzado-10s",
-     "nombre": "Tuck avanzado 10 s",
+     "nombre": "En el aire con rodillas a la cadera 10 s",
      "magnitud": 2,
      "orden": 6,
      "prueba": {
@@ -517,7 +517,7 @@
     },
     {
      "id": "planche.straddle-5s",
-     "nombre": "Straddle 5 s",
+     "nombre": "En el aire con piernas abiertas 5 s",
      "magnitud": 1,
      "orden": 7,
      "prueba": {
@@ -585,7 +585,7 @@
     },
     {
      "id": "un-brazo.flexion-arquera-5",
-     "nombre": "Flexión arquera ×5",
+     "nombre": "Flexión cargando un brazo ×5",
      "magnitud": 4,
      "orden": 4,
      "prueba": {
@@ -602,7 +602,7 @@
     },
     {
      "id": "un-brazo.dominada-arquera-5",
-     "nombre": "Dominada arquera ×5",
+     "nombre": "Dominada cargando un brazo ×5",
      "magnitud": 3,
      "orden": 5,
      "prueba": {
@@ -619,7 +619,7 @@
     },
     {
      "id": "un-brazo.negativa-3",
-     "nombre": "Negativa a un brazo ×3",
+     "nombre": "Bajar lento con un brazo ×3",
      "magnitud": 3,
      "orden": 6,
      "prueba": {
@@ -678,7 +678,7 @@
    "estrellas": [
     {
      "id": "bandera.rodillas-5s",
-     "nombre": "Con rodillas 5 s",
+     "nombre": "Bandera con rodillas recogidas 5 s",
      "magnitud": 5,
      "orden": 1,
      "prueba": {
@@ -693,7 +693,7 @@
     },
     {
      "id": "bandera.abierta-5s",
-     "nombre": "Abierta 5 s",
+     "nombre": "Bandera con piernas abiertas 5 s",
      "magnitud": 4,
      "orden": 2,
      "prueba": {
@@ -710,7 +710,7 @@
     },
     {
      "id": "bandera.completa-5s",
-     "nombre": "Completa 5 s",
+     "nombre": "Bandera completa 5 s",
      "magnitud": 2,
      "orden": 3,
      "prueba": {
@@ -727,7 +727,7 @@
     },
     {
      "id": "bandera.completa-10s",
-     "nombre": "Completa 10 s",
+     "nombre": "Bandera completa 10 s",
      "magnitud": 1,
      "orden": 4,
      "prueba": {
@@ -778,7 +778,7 @@
     },
     {
      "id": "draco.alcance-5",
-     "nombre": "Pike: 5 cm más allá de los pies",
+     "nombre": "Sentado, manos 5 cm más allá de los pies",
      "magnitud": 4,
      "orden": 3,
      "prueba": {
@@ -792,7 +792,7 @@
     },
     {
      "id": "draco.dragon-bolita-3",
-     "nombre": "Dragon flag en bolita ×3",
+     "nombre": "Bandera acostada con rodillas recogidas ×3",
      "magnitud": 4,
      "orden": 4,
      "prueba": {
@@ -806,7 +806,7 @@
     },
     {
      "id": "draco.pies-arriba-10s",
-     "nombre": "L-sit con pies arriba 10 s",
+     "nombre": "L-sit con pies en alto 10 s",
      "magnitud": 3,
      "orden": 5,
      "prueba": {
@@ -820,7 +820,7 @@
     },
     {
      "id": "draco.dragon-una-pierna-3",
-     "nombre": "Dragon flag a una pierna ×3",
+     "nombre": "Bandera acostada con una pierna ×3",
      "magnitud": 2,
      "orden": 6,
      "prueba": {
@@ -834,7 +834,7 @@
     },
     {
      "id": "draco.vsit-5s",
-     "nombre": "V-sit 5 s",
+     "nombre": "Piernas en V en el aire 5 s",
      "magnitud": 2,
      "orden": 7,
      "prueba": {
@@ -848,7 +848,7 @@
     },
     {
      "id": "draco.dragon-3",
-     "nombre": "Dragon flag ×3",
+     "nombre": "Bandera acostada completa ×3",
      "magnitud": 1,
      "orden": 8,
      "prueba": {
@@ -870,7 +870,7 @@
    "estrellas": [
     {
      "id": "una-pierna.pistol-silla-5",
-     "nombre": "Pistol a una silla ×5",
+     "nombre": "Sentadilla a una pierna hasta una silla ×5",
      "magnitud": 5,
      "orden": 1,
      "prueba": {
@@ -896,7 +896,7 @@
     },
     {
      "id": "una-pierna.shrimp-3",
-     "nombre": "Shrimp ×3",
+     "nombre": "Sentadilla a una pierna, rodilla atrás ×3",
      "magnitud": 4,
      "orden": 3,
      "prueba": {
@@ -910,7 +910,7 @@
     },
     {
      "id": "una-pierna.pistol-3",
-     "nombre": "Pistol ×3",
+     "nombre": "Sentadilla a una pierna ×3",
      "magnitud": 4,
      "orden": 4,
      "prueba": {
@@ -924,7 +924,7 @@
     },
     {
      "id": "una-pierna.nordico-negativa-5",
-     "nombre": "Nórdico, negativa lenta ×5",
+     "nombre": "De rodillas, caer lento hacia adelante ×5",
      "magnitud": 3,
      "orden": 5,
      "prueba": {
@@ -938,7 +938,7 @@
     },
     {
      "id": "una-pierna.pistol-6",
-     "nombre": "Pistol ×6",
+     "nombre": "Sentadilla a una pierna ×6",
      "magnitud": 2,
      "orden": 6,
      "prueba": {
@@ -952,7 +952,7 @@
     },
     {
      "id": "una-pierna.shrimp-6",
-     "nombre": "Shrimp ×6",
+     "nombre": "Sentadilla a una pierna, rodilla atrás ×6",
      "magnitud": 2,
      "orden": 7,
      "prueba": {
@@ -966,7 +966,7 @@
     },
     {
      "id": "una-pierna.nordico-1",
-     "nombre": "Nórdico ×1",
+     "nombre": "De rodillas, bajar y volver a subir ×1",
      "magnitud": 1,
      "orden": 8,
      "prueba": {
@@ -988,7 +988,7 @@
    "estrellas": [
     {
      "id": "lastre.dominada-10",
-     "nombre": "Dominada +10 % de tu peso",
+     "nombre": "Dominada con +10 % de tu peso",
      "magnitud": 5,
      "orden": 1,
      "prueba": {
@@ -1005,7 +1005,7 @@
     },
     {
      "id": "lastre.fondo-25",
-     "nombre": "Fondo +25 %",
+     "nombre": "Fondo con +25 % de tu peso",
      "magnitud": 4,
      "orden": 2,
      "prueba": {
@@ -1024,7 +1024,7 @@
     },
     {
      "id": "lastre.dominada-25",
-     "nombre": "Dominada +25 %",
+     "nombre": "Dominada con +25 % de tu peso",
      "magnitud": 3,
      "orden": 3,
      "prueba": {
@@ -1043,7 +1043,7 @@
     },
     {
      "id": "lastre.fondo-50",
-     "nombre": "Fondo +50 %",
+     "nombre": "Fondo con +50 % de tu peso",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -1062,7 +1062,7 @@
     },
     {
      "id": "lastre.dominada-50",
-     "nombre": "Dominada +50 %",
+     "nombre": "Dominada con +50 % de tu peso",
      "magnitud": 2,
      "orden": 5,
      "prueba": {
@@ -1081,7 +1081,7 @@
     },
     {
      "id": "lastre.fondo-100",
-     "nombre": "Fondo +100 %",
+     "nombre": "Fondo con +100 % de tu peso",
      "magnitud": 1,
      "orden": 6,
      "prueba": {
@@ -1120,7 +1120,7 @@
     },
     {
      "id": "espagat.cosaca-15s",
-     "nombre": "Cosaca 15 s",
+     "nombre": "Sentadilla de costado 15 s",
      "magnitud": 4,
      "orden": 2,
      "prueba": {
@@ -1148,7 +1148,7 @@
     },
     {
      "id": "espagat.lateral-90-10s",
-     "nombre": "Lateral a 90° 10 s",
+     "nombre": "Piernas abiertas a 90° 10 s",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -1162,7 +1162,7 @@
     },
     {
      "id": "espagat.lateral",
-     "nombre": "Lateral completo",
+     "nombre": "Espagat abierto al costado",
      "magnitud": 2,
      "orden": 5,
      "prueba": {
@@ -1176,7 +1176,7 @@
     },
     {
      "id": "espagat.frontal",
-     "nombre": "Frontal completo",
+     "nombre": "Espagat con una pierna adelante",
      "magnitud": 1,
      "orden": 6,
      "prueba": {
@@ -1238,7 +1238,7 @@
     },
     {
      "id": "puente.alcance-10",
-     "nombre": "Pike: 10 cm más allá de los pies",
+     "nombre": "Sentado, manos 10 cm más allá de los pies",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -1252,7 +1252,7 @@
     },
     {
      "id": "puente.pike",
-     "nombre": "Pike: pecho a las piernas",
+     "nombre": "Sentado, pecho a las piernas",
      "magnitud": 3,
      "orden": 5,
      "prueba": {
@@ -1280,7 +1280,7 @@
     },
     {
      "id": "puente.pancake",
-     "nombre": "Pancake: pecho al piso",
+     "nombre": "Piernas abiertas, pecho al piso",
      "magnitud": 1,
      "orden": 7,
      "prueba": {
@@ -1410,7 +1410,7 @@
     },
     {
      "id": "motor.intervalos-1",
-     "nombre": "Primeros intervalos",
+     "nombre": "Primera sesión de intervalos",
      "magnitud": 3,
      "orden": 3,
      "prueba": {
@@ -1535,7 +1535,7 @@
     },
     {
      "id": "soga.double-under-1",
-     "nombre": "Un double under",
+     "nombre": "Doble vuelta de soga en un salto",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -1552,7 +1552,7 @@
     },
     {
      "id": "soga.double-under-20",
-     "nombre": "Double under ×20",
+     "nombre": "Doble vuelta de soga ×20",
      "magnitud": 3,
      "orden": 5,
      "prueba": {
@@ -1569,7 +1569,7 @@
     },
     {
      "id": "soga.criss-cross-10",
-     "nombre": "Criss-cross ×10",
+     "nombre": "Saltos cruzando los brazos ×10",
      "magnitud": 2,
      "orden": 6,
      "prueba": {
