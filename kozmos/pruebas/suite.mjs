@@ -1303,6 +1303,8 @@ prueba("hoy-sin-repetir-constelacion", async () => {
   const [a, b] = await p.evaluate(() => [K.filaToca({constelacion: "parada-de-manos", ejercicio: "vertical-pared", tipo: "segundos", objetivo: [30]})[0], K.filaToca({constelacion: "front-lever", ejercicio: "fl-bolita", tipo: "segundos", objetivo: [10]})[0]]);
   ok(a === "Parada de manos contra la pared", "repite la constelación: " + a);
   ok(b === "Front lever · Horizontal hecho bolita", "sacó la constelación de más: " + b);
+  const q = await p.evaluate(() => [K.queToca({tipo: "repeticiones", series: 4, objetivo: 5}), K.queToca({tipo: "repeticiones", series: 1, objetivo: 5}), K.queToca({tipo: "segundos", series: 4, objetivo: 10})]);
+  ok(q.join("|") === "4 × 5|×5|4 × 10 s", "las repeticiones en Hoy: " + q.join("|"));
   await ctx.close();
 });
 prueba("hoy-mas-liviana", async () => {
