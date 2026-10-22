@@ -1214,7 +1214,7 @@ prueba("planes-proxima-prueba", async () => {
   await ir(p, "#/planes"); await p.waitForSelector(".pl-prox");
   const t = await p.textContent(".pl-prox");
   ok(t.includes("Dominadas al máximo") && t.includes("toca ya") && t.includes("×12") && t.includes("m3"), "la próxima prueba no es Dominadas al máximo con tu última: " + t);
-  ok(await p.$(".pl-prox .figura") && await p.$(".pl-prox .escala .esc-yo") && await p.$(".pl-prox .escala .esc-antes") && await p.$(".pl-prox .hz-linea"), "a la tarjeta le falta la figura, la escala o tus veces");
+  ok(await p.$(".pl-prox svg.ico-medalla.ganada") && await p.$(".pl-prox .escala .esc-yo") && await p.$(".pl-prox .escala .esc-antes") && await p.$(".pl-prox .hz-linea"), "a la tarjeta le falta la figura, la escala o tus veces");
   ok(!(await p.$('.lado .ajr[data-ir="#/planes/hazanas/perseo"]')), "la próxima se repite en la lista");
   ok((await p.textContent('.ajr[data-ir="#/planes/hazanas/hercules"]')).includes("hace 10 días"), "la lista no dice cuándo la hiciste");
   await ir(p, "#/planes/hazanas/perseo");
@@ -1818,6 +1818,70 @@ prueba("apk-sesion", async () => {
   ok(await p.evaluate(() => !K.sesion.activa()), "no terminó la sesión");
   ok((await nat(p, "Pantalla", "apagar")).length >= 1, "la pantalla quedó encendida después de la sesión");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+/* ===== Los íconos, opción B (vuelta 21): primero solo en Planes ===== */
+prueba("planes-iconos-b", async () => {
+  /* las pruebas son medallas (a color si ya tenés una magnitud, en gris si no) y las rutinas, la persona sobre un círculo del color de su familia */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarSes(p, [hzSes("t1", "2026-09-01", "hercules", "flexion", "repeticiones", 22)]);
+  await ir(p, "#/planes"); await p.evaluate(() => { K.prefs.set("planes.pruebas", "todas"); K.prefs.set("planes.rutinas", "todas"); K.refrescar(); }); await p.waitForTimeout(150);
+  const filas = await p.$$eval('.lado .ajr[data-ir^="#/planes/"]', bs => bs.map(b => { const t = b.querySelector(".tile"), sv = t && t.querySelector("svg.ico"), tx = b.querySelector(".ses-fila"), r = sv ? sv.getBoundingClientRect() : null;
+    return {ir: b.dataset.ir, cls: sv ? sv.getAttribute("class") : "", sat: !!(sv && sv.querySelector(".ico-sat")), w: r ? r.width : 0, h: r ? r.height : 0, html: sv ? sv.outerHTML : "",
+      sola: t && tx ? t.getBoundingClientRect().right <= tx.getBoundingClientRect().left + .5 : false, fondo: t ? getComputedStyle(t).backgroundColor : ""}; }));
+  const hz = filas.filter(f => f.ir.includes("/hazanas/")), ru = filas.filter(f => f.ir.includes("/rutinas/"));
+  const n = await p.evaluate(() => [K.HAZANAS.hazanas.length - 1, K.RUTINAS.length]);
+  ok(hz.length === n[0] && ru.length === n[1], `filas: ${hz.length} pruebas y ${ru.length} rutinas, esperaba ${n}`);
+  ok(hz.every(f => /ico-medalla/.test(f.cls)) && ru.every(f => /ico-rutina/.test(f.cls)), "una fila sin su medalla o su pictograma: " + filas.filter(f => !/ico-(medalla|rutina)/.test(f.cls)).map(f => f.ir).join(", "));
+  ok(filas.every(f => Math.abs(f.w - 40) < 1 && Math.abs(f.h - 40) < 1 && f.sola && f.fondo === "rgba(0, 0, 0, 0)"), "un ícono que no mide 40 px, se pega al nombre o lleva baldosa");
+  /* ganada: a color y con el satélite; sin ganar: gris y sin satélite */
+  const fl = hz.find(f => f.ir.endsWith("/hercules")), sin = hz.filter(f => !f.ir.endsWith("/hercules"));
+  ok(fl && /ganada/.test(fl.cls) && fl.sat && fl.html.includes("var(--fu)"), "la prueba ganada no es una medalla a color con su satélite");
+  ok(sin.every(f => !/ganada/.test(f.cls) && !f.sat && f.html.includes("var(--off)") && !/var\(--(fu|mo|ra)\)/.test(f.html)), "una prueba sin hacer no está en gris");
+  /* la rutina: el círculo en el color suave de su familia y la figura en el de la familia */
+  const R = await p.evaluate(() => K.RUTINAS.map(r => [r.id, r.familia]));
+  for (const [id, fam] of R){ const f = ru.find(x => x.ir.endsWith("/" + id)); ok(f && f.html.includes(`var(--${fam}-soft)`) && f.html.includes(`var(--${fam})`), id + ": la rutina no va en el color de su familia"); }
+  /* solo con los colores de la app: nada de colores sueltos */
+  ok(filas.every(f => !/#[0-9a-f]{3,8}\b|rgb\(/i.test(f.html) && !/NaN|undefined/.test(f.html)), "un ícono con un color suelto o un número roto");
+  /* la próxima prueba (64 px) y la prueba abierta (88 px), con la misma medalla */
+  ok(await p.$eval(".pl-prox svg.ico-medalla", x => Math.round(x.getBoundingClientRect().width)) === 64, "la tarjeta de la próxima prueba sin su medalla");
+  await ir(p, "#/planes/hazanas/hercules");
+  ok(await p.$eval(".hz-fig svg.ico-medalla.ganada", x => Math.round(x.getBoundingClientRect().width)).catch(() => 0) === 88, "la prueba abierta sin su medalla");
+  /* por ahora es solo Planes: Hoy, el Cielo y Progreso siguen como estaban */
+  for (const h of ["#/hoy", "#/cielo", "#/cielo/front-lever", "#/progreso"]){ await ir(p, h); const donde = await p.$$eval("#app svg.ico-medalla, #app svg.ico-rutina", xs => xs.map(x => x.closest("[class]:not(svg):not(.tile)")?.className || "?"));
+    ok(!donde.length, h + ": ya cambió, y era solo Planes: " + donde.join(", ")); }
+  /* en horizontal, la lista y lo abierto entran sin desplazar de costado */
+  await p.setViewportSize({width: 844, height: 390});
+  for (const h of ["#/planes", "#/planes/hazanas/orion", "#/planes/rutinas/tabata"]){ await ir(p, h);
+    ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, h + ": desborda");
+    ok(await p.$$eval(".lado svg.ico-medalla, .lado svg.ico-rutina", x => x.length) >= 30, h + ": la lista sin íconos"); }
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("planes-iconos-satelite", async () => {
+  /* el satélite llega orbitando la primera vez que abrís Planes, después queda quieto; con movimiento reducido, nunca se mueve */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarSes(p, [hzSes("t1", "2026-09-01", "hercules", "flexion", "repeticiones", 22)]);
+  await p.evaluate(() => K.ir("#/planes")); await p.waitForSelector(".ico-sat");
+  ok(await p.$eval(".ico-sat", x => getComputedStyle(x).animationName) === "ico-orbita", "el satélite no llega orbitando");
+  await p.evaluate(() => K.ir("#/planes/hazanas/hercules")); await p.waitForTimeout(150); await p.evaluate(() => K.ir("#/planes")); await p.waitForSelector(".ico-sat");
+  ok(await p.$eval(".ico-sat", x => getComputedStyle(x).animationName) === "none", "el satélite orbita cada vez que volvés");
+  await ctx.close();
+  const r = await pagina(undefined, {reducedMotion: "reduce"});
+  await ir(r.p, "#/hoy"); await sembrarSes(r.p, [hzSes("t1", "2026-09-01", "hercules", "flexion", "repeticiones", 22)]);
+  await r.p.evaluate(() => K.ir("#/planes")); await r.p.waitForSelector(".ico-sat");
+  ok(await r.p.$eval(".ico-sat", x => getComputedStyle(x).animationName) === "none", "con movimiento reducido el satélite se mueve");
+  await r.ctx.close();
+});
+prueba("planes-iconos-rapidos", async () => {
+  /* los 33 íconos de Planes se calculan una vez y se guardan: la primera vez en poco tiempo, después casi nada */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/hoy");
+  const t = await p.evaluate(() => { const m = f => { const a = performance.now(); f(); return performance.now() - a; };
+    const primera = m(() => K.P.planes({tab: "planes"})); const otra = m(() => { for (let i = 0; i < 5; i++) K.P.planes({tab: "planes"}); }) / 5; return {primera, otra}; });
+  ok(t.primera < 250, "la primera vez tarda " + JSON.stringify(t));
+  ok(t.otra < Math.max(25, t.primera / 2), "los íconos no se guardan: " + JSON.stringify(t));
   await ctx.close();
 });
 
