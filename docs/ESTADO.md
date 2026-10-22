@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (un molde para cada día) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (Tu nivel) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -116,6 +116,15 @@
   - Pruebas: 105 sin pantalla y 98 de pantallas, en verde. Siete `plan-*` reescritas para el motor B (detalle en el acta).
   - **Esperando a Fer**: el OK al tablero (capturas `m18/antes` y `m18/despues` en claro y grafito) y tres decisiones del acta 028 (el cierre con bici y el abdomen, la línea de frecuencia fija abajo, la ventana en lugar de la habilidad).
   - **Próximo**: el PR3, Tu nivel (`nivelDesde` y `dadas` ya entran en `K.dia.armar`, sin pantalla).
+- **Tu nivel y «Arrancás en»** (2026-10-22): vuelta 29 (acta `docs/actas/029-kozmos-tu-nivel.md`), rama `claude/project-thread-985fzq`, sin PR. El tercero de tres PR del motor B. Lo nuevo:
+  - El primer día es una sola guía: Tu equipo → **Tu nivel** → Tu rumbo. Hoy y Planes ya no muestran «Elegí cómo · Elegí qué · Empezá».
+  - Tu nivel: cuatro menús (dominadas solo con barra, parada de manos solo con pared), «No sé» en todos, y las escaleritas de «Arrancás en». También en Vos (fila Tu nivel, «Sin decir» o «2 de 4»).
+  - Hoy arranca cada escalera en tu escalón; las estrellas que tu nivel da por hechas se ven punteadas en tu cosmos (nunca encendidas) y la próxima es la que sigue. Un intento a esa estrella que no llega le saca lo de dada.
+  - Tu rumbo dice «Arrancás en …» en las elegidas que todavía no empezaste.
+  - `K.nivel` (`src/sesion/nivel.js`), `perfil.nivel` y el respaldo lo lleva. Tabla en `docs/kozmos-rutinas.md`.
+  - Pruebas: 112 sin pantalla y 102 de pantallas, en verde. primer-dia, primer-dia-equipo, sin-nav-al-elegir y sesion-entera pasan por el paso nuevo (detalle en el acta).
+  - **Esperando a Fer**: el OK al tablero (capturas `m20/antes` y `m20/despues` en claro y grafito) y tres decisiones del acta 029 (una sola guía, «Arrancás en» solo en las elegidas, qué saca una dada).
+  - **Próximo**: lo que Fer decida del tablero de los tres PR del motor B.
 
 ## Dónde quedó
 

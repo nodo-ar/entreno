@@ -41,9 +41,11 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - ~~**El deshacer dura lo que dura el aviso** (Casandra).~~ Hecho en la vuelta 23, misma causa que «Aviso y deshacer a la vez»: el deshacer ya no muere con el aviso que lo tapa. Si se quiere más que 5 s, es diseño: lo decide Fer.
 - ~~**Deshacer en cada elección** (Fer, 2026-10-22): el deshacer aparecía al elegir rumbo, equipo, días, tema, avisos, peso o la persona.~~ Hecho en la vuelta 25: solo aparece al borrar, terminar o reemplazar. *Espera el OK de Fer al tablero.*
 - ~~**Tu rumbo con equipo que no marcaste** (Casandra, vuelta 26): «0 de 0».~~ Hecho en la vuelta 28 con la regla de Fer: «Pide barra» (o lo que pida) en Tu rumbo, tu cosmos y la constelación; Hoy dice qué piden con atajo a Tu equipo. *Espera el OK de Fer al tablero.*
-- **Dos guías el primer día** (coherencia, vuelta 26): Hoy dice «Elegí cómo · Elegí qué · Empezá» y «Que Kozmos arme tu día», «Tu equipo · Tu rumbo». Mirarlo con Fer cuando llegue Tu nivel.
-- **Tu nivel en el primer día** (Fer, boceto del motor): el paso del medio entre Tu equipo y Tu rumbo; se suma en `K.ARMAR`.
-- **Horizontal de Tu rumbo y Tu equipo** (la persona, vuelta 26): la columna derecha queda vacía arriba del botón.
+- ~~**Dos guías el primer día** (coherencia, vuelta 26)~~: hecho en la vuelta 29, una sola guía «Tu equipo · Tu nivel · Tu rumbo». *Espera el OK de Fer al tablero.*
+- ~~**Tu nivel en el primer día** (Fer, boceto del motor)~~: hecho en la vuelta 29. *Espera el OK de Fer al tablero.*
+- **Horizontal de Tu rumbo, Tu equipo y Tu nivel** (la persona, vuelta 26): la columna derecha queda vacía arriba del botón.
+- **Las rutinas no usan tu nivel** (vuelta 29): sus escaleras arrancan donde dice la rutina o donde estás.
+- **Cambiar tu nivel renueva su fecha** (Casandra, vuelta 29): un intento que no llegó antes de cambiarlo vuelve a no contar para sacar una dada.
 - **Atajos entre pestañas** (la cartógrafa): Tu equipo abierto desde Hoy o el cielo vuelve a Vos, no a donde estabas.
 - **Progreso en horizontal** (la cartógrafa): al borrar la sesión abierta se muestra la siguiente sin avisar; «Tus sesiones» queda abajo en la columna izquierda; el ⋯ no deja claro a qué lado pertenece.
 - **`AVISOS` definido en dos lugares** (la tijera).
@@ -106,7 +108,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - ~~**Decisiones de la vuelta 27** (acta 027).~~ Decididas por Fer (2026-10-22): los remos nuevos en la escalera de Remo, Piernas e Isquios con peso desde el primer escalón y el fondo ruso como está.
 - **El cierre con bici se lleva el abdomen** (el entrenador, vuelta 28): con bici, el cierre de 10 minutos lleva el día a la hora y el abdomen se cae. Lo decide Fer (acta 028, decisión 1).
 - **Dos maneras de mostrar las partes de un día** (coherencia, vuelta 28): Hoy con el molde va por partes con encabezados («Fuerza · de a dos»); los días de una rutina, en filas sueltas con «en superserie». Emparejarlas cuando las rutinas pasen al molde.
-- **Tu nivel** (PR3): `K.dia.armar` ya acepta `nivelDesde` y `dadas`; falta la pantalla, el perfil y el respaldo (acta 028, «Para el PR3»).
+- ~~**Tu nivel** (PR3)~~: hecho en la vuelta 29 (acta 029): pantalla, perfil, respaldo y las dadas en tu cosmos. *Espera el OK de Fer al tablero.*
 
 ## Ideas (necesitan brief y OK)
 
