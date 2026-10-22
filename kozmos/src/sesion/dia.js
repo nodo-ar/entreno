@@ -175,12 +175,12 @@ K.dia = (() => {
       if (id){ abdomen = {...deEscalera("fu", id, {series: escalones[id].paso.tipo === "segundos" ? 2 : SERIES, descanso: 60, ctx: {...ctx, descarga: descarga || volviste}}), molde: "abdomen"}; usar(abdomen); }
     }
 
-    /* 4 · cierre: lo de rango o motor de tu rumbo (lo que hace más que no tocás); si no, bici suave si tenés bici; si no, posturas */
+    /* 4 · cierre: lo de rango o motor de tu rumbo (lo que hace más que no tocás); si no, 5 min de bici suave si tenés bici (así el abdomen entra en la hora); si no, posturas */
     let cierre = null;
     const oc = otrasOrden.find(c => !hab.some(h => h.constelaciones.includes(c.id)));
     if (oc){ const b = abiertas.has(oc.id) ? K.plan.prueba(oc) : K.plan.bloque(oc, true, volviste); if (b && !choca(b)) cierre = {...b, molde: "cierre", constelaciones: [oc.id]}; }
     if (!cierre && equipo && equipo.includes("bici") && !usadosEj.has("bici"))
-      cierre = {clase: "tramos", familia: "mo", nombre: ej.bici?.nombre || "Bici", molde: "cierre", tramos: [{clase: "suave", seg: 600, ejercicio: "bici", nota: "Suave, que puedas hablar"}], series: 1};
+      cierre = {clase: "tramos", familia: "mo", nombre: ej.bici?.nombre || "Bici", molde: "cierre", tramos: [{clase: "suave", seg: 300, ejercicio: "bici", nota: "Suave, que puedas hablar"}], series: 1};
     if (!cierre){
       const pats = [...hab, ...fuerza, ...(abdomen ? [abdomen] : [])].flatMap(b => patronesDe(b, ej));
       const xs = [];

@@ -1491,6 +1491,9 @@ prueba("dia-equilibrio", () => {
   ok(!deMolde(armarDia(["bandera"], {equipo: ["poste"]}).bloques, "abdomen").length, "con bandera, abdomen de más");
   ok(deMolde(p.bloques, "abdomen").length === 1, "sin abdomen");
   ok(!deMolde(armarDia(["draco"], {equipo: []}).bloques, "abdomen").length, "con draco, abdomen de más");
+  /* con bici y sin meta de rango o motor, el cierre es de 5 min de bici y el abdomen queda */
+  const bc = armarDia(["front-lever", "planche"], {equipo: ["barra", "paralelas", "bici"]}), ci = deMolde(bc.bloques, "cierre")[0];
+  ok(ci && ci.tramos?.[0]?.ejercicio === "bici" && ci.tramos[0].seg === 300 && deMolde(bc.bloques, "abdomen").length === 1 && bc.minutos <= 60, "bici de 5 min con abdomen: " + bc.bloques.map(b => b.molde) + " · " + bc.minutos + " min");
   /* empate en series: el que menos hiciste esta semana */
   const tiro = {id: "t", fecha: "2026-10-18", bloques: [{familia: "fu", series: Array(6).fill({ejercicio: "dominada", tipo: "repeticiones", valor: 6})}]};
   const v = armarDia([], {equipo: ["barra"], ss: [tiro]});
@@ -1569,7 +1572,7 @@ prueba("dia-equipo", () => {
   /* el cierre: rango o motor de tu rumbo; si no, bici suave con bici; si no, posturas */
   ok(deMolde(armarDia(["planche", "puente"], {equipo: []}).bloques, "cierre")[0].constelaciones.join() === "puente", "el cierre con puente");
   const cb = deMolde(armarDia(["planche"], {equipo: ["bici"]}).bloques, "cierre")[0];
-  ok(cb.clase === "tramos" && cb.tramos[0].ejercicio === "bici" && cb.tramos[0].seg === 600, "con bici, 10 min suaves");
+  ok(cb.clase === "tramos" && cb.tramos[0].ejercicio === "bici" && cb.tramos[0].seg === 300, "con bici, 5 min suaves");
   const cp = deMolde(armarDia(["planche"], {equipo: []}).bloques, "cierre")[0];
   ok(cp.clase === "tramos" && cp.tramos.length === 3 && cp.tramos.every(t => t.clase === "postura" && t.seg === 40 && ej[t.ejercicio]), "sin bici, tres posturas: " + JSON.stringify(cp.tramos));
   ok(cp.tramos[0].ejercicio === "codos-atras", "la primera postura, por lo que empujó el día: " + cp.tramos[0].ejercicio);
