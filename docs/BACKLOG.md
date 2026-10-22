@@ -39,6 +39,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Probar la sesión en un Android real** (la ingeniera de campo, el soberano): vibración, campana con pantalla bloqueada, wake lock, y guardar y traer el respaldo desde la app instalada.
 - **Respaldo más estricto** (Casandra): validar `familia` y `encendio` de cada registro. Traducir ids a nombres para quien lo lea (el soberano).
 - ~~**El deshacer dura lo que dura el aviso** (Casandra).~~ Hecho en la vuelta 23, misma causa que «Aviso y deshacer a la vez»: el deshacer ya no muere con el aviso que lo tapa. Si se quiere más que 5 s, es diseño: lo decide Fer.
+- ~~**Deshacer en cada elección** (Fer, 2026-10-22): el deshacer aparecía al elegir rumbo, equipo, días, tema, avisos, peso o la persona.~~ Hecho en la vuelta 25: solo aparece al borrar, terminar o reemplazar. *Espera el OK de Fer al tablero.*
 - **Atajos entre pestañas** (la cartógrafa): Tu equipo abierto desde Hoy o el cielo vuelve a Vos, no a donde estabas.
 - **Progreso en horizontal** (la cartógrafa): al borrar la sesión abierta se muestra la siguiente sin avisar; «Tus sesiones» queda abajo en la columna izquierda; el ⋯ no deja claro a qué lado pertenece.
 - **`AVISOS` definido en dos lugares** (la tijera).
