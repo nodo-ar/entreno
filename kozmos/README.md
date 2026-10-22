@@ -10,7 +10,7 @@ El modelo, la arquitectura y las seis etapas están en el documento «Kozmos · 
 | --- | --- |
 | `src/base/` | Letra, tokens de la dirección B «Luz de día», íconos, preferencias y tema |
 | `src/piezas/` | Lo rescatado de Entreno: barra flotante, encabezado que se achica, menús, deshacer, isla, ajustes y horizontal |
-| `src/pantallas/` | Hoy, Planes (hazañas y rutinas, en `rutinas.js`), Cielo (con Constelación y Anotar), Progreso y Vos |
+| `src/pantallas/` | Hoy (con Tu rumbo y el primer día), Planes (hazañas y rutinas, en `rutinas.js`), Cosmos (en `cielo.js`, con Constelación y Anotar), Progreso y Vos (con Tu equipo) |
 | `src/cielo/` | Las reglas del cielo (funciones puras) y su dibujo |
 | `src/diario/` | Lo que hacés, guardado en IndexedDB, y el respaldo (armar y leer el archivo) |
 | `src/sesion/` | El plan del día, las rutinas, hazañas y tus días, y las calorías (funciones puras), y el motor de la sesión |

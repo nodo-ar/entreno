@@ -5,6 +5,10 @@
   nav.barra button{flex:none; width:52px; height:52px; padding:0}
   nav.barra button .nm{display:none}
   body.sin-barra nav.barra{translate:calc(-100% - 40px) 0}
+  /* sin el riel, lo de elegir va a la izquierda y su botón abajo a la derecha, al alcance del pulgar, sin tapar la lista */
+  body.sin-barra #app{padding-left:max(20px,env(safe-area-inset-left,0px)); padding-bottom:0}
+  body.sin-barra main.view>:not(.pie-fijo){width:min(560px,100% - 264px)}
+  body.sin-barra .pie-fijo{align-self:flex-end; width:240px; margin:auto 0 0; padding:12px 0 calc(16px + env(safe-area-inset-bottom,0px)); background:none}
   #app{max-width:none; padding-left:calc(92px + env(safe-area-inset-left,0px)); padding-right:max(20px,env(safe-area-inset-right,0px)); padding-bottom:24px}
   .utoast{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   #tbt{width:min(100% - 220px,400px)}

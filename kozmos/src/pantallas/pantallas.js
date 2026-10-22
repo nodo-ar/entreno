@@ -7,8 +7,8 @@ K.vacio = (dibujo, titulo, texto, cls = "") => `<section class="cd vacio ${cls}"
 /* el equipo que pide alguna estrella o rutina del catálogo */
 K.EQUIPOS = [["barra", "Barra"], ["paralelas", "Paralelas"], ["pared", "Pared libre"], ["poste", "Poste"], ["lastre", "Lastre"], ["mancuernas", "Mancuernas"], ["kettlebell", "Kettlebell"], ["bici", "Bici"], ["soga", "Soga"]];
 K.equipoNombre = id => (K.EQUIPOS.find(x => x[0] === id) || [id, id])[1];
-/* sin elegir todavía, cuenta como que tenés todo: nada se esconde hasta que lo digas */
-K.equipo = () => K.diario.perfil.equipo || K.EQUIPOS.map(x => x[0]);
+/* lo que marcaste. Sin elegir todavía (null) no se ve nada marcado; el cielo, en cambio, muestra todo hasta que lo digas (ver cielo.js) */
+K.equipo = () => K.diario.perfil.equipo || [];
 /* 70.5 → «70,5» */
 K.kg = v => String(v).replace(".", ",");
 
@@ -67,7 +67,7 @@ const AVISOS = [["todo", "Vibración y sonido"], ["vibra", "Solo vibración"], [
 K.avisosNombre = (v = K.prefs.get("avisos", "todo")) => (AVISOS.find(x => x[0] === v) || AVISOS[0])[1];
 const resumenEquipo = () => {
   const q = K.diario.perfil.equipo;
-  if (!q) return "Todo";
+  if (!q) return "Sin elegir";
   if (!q.length) return "Nada";
   const ns = K.EQUIPOS.filter(x => q.includes(x[0])).map(x => x[1]);
   return ns.length > 2 ? `${ns.length} cosas` : ns.join(" y ");
@@ -112,12 +112,20 @@ K.P.acerca = () => K.enc({titulo: "Acerca de Kozmos", sub: "Ajustes", volver: "#
    <section class="cd fuentes small"><p><b>Calorías.</b> Ainsworth BE y otros (2011). 2011 Compendium of Physical Activities: a second update of codes and MET values. <i>Medicine &amp; Science in Sports &amp; Exercise</i>, 43(8), 1575-1581.</p></section>
    <p class="pie small mute">Letra: Mona Sans y Geist Mono, con licencia SIL Open Font License.</p>`;
 
-/* tu equipo: cada toque queda guardado y se ve en la fila; otro toque lo vuelve atrás */
-K.P.equipo = () => {
-  const q = K.equipo();
-  return K.enc({titulo: "Tu equipo", sub: "Ajustes", volver: "#/vos", raiz: true, det: true}) +
-    `<p class="ayuda">Marcá lo que tenés. Lo que pide otra cosa no aparece en tu cielo ni en lo que toca hoy.</p>
-    <section class="aj">${K.EQUIPOS.map(([id, n]) => `<button type="button" class="ajr rumbo-fila" data-equipo="${id}" aria-pressed="${q.includes(id)}"><span class="tile">${K.ic(id === "lastre" ? "peso" : id)}</span><span>${n}</span><em></em>${q.includes(id) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</section>`;
+/* tu equipo: cada toque queda guardado y se ve en la fila; otro toque lo vuelve atrás.
+   Desde Vos es un ajuste (en horizontal, lo abierto a la derecha, con la barra); desde Hoy, el primer día, el primer paso de «Que Kozmos arme tu día». */
+K.P.equipo = (desde = "vos") => {
+  const q = K.equipo(), hoy = desde === "hoy", paso = hoy && K.primerDia() && K.pasoArmar("equipo"), panel = !hoy && K.horizontal();
+  const boton = paso ? `<button type="button" class="btn" id="eq-seguir" data-sigue="${paso.sigue}">Seguir</button>`
+    : `<button type="button" class="btn" data-volver="${hoy ? "#/hoy" : "#/vos"}">Listo</button>`;
+  return K.enc({titulo: "Tu equipo", sub: paso ? "Para empezar" : hoy ? "Hoy" : "Ajustes", volver: hoy ? (paso ? paso.antes : "#/hoy") : "#/vos", raiz: !hoy, det: true, sinNav: !panel}) + (paso ? paso.pasos : "") +
+    `<p class="ayuda">${paso ? "Marcá lo que tenés. Sin nada también se entrena." : "Marcá lo que tenés. Lo que pide otra cosa no aparece en tu cosmos ni en lo que toca hoy."}</p>
+    <section class="aj">${K.EQUIPOS.map(([id, n]) => `<button type="button" class="ajr rumbo-fila" data-equipo="${id}" aria-pressed="${q.includes(id)}"><span class="tile">${K.ic(id === "lastre" ? "peso" : id)}</span><span>${n}</span><em></em>${q.includes(id) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</section>` + (panel ? "" : K.pie(boton));
+};
+/* «Seguir» del primer día: sin marcar nada, queda dicho que no tenés equipo */
+K.equipoSeguir = async b => {
+  if (!K.diario.perfil.equipo) try { await K.diario.lote({perfil: {equipo: []}}); } catch (e) { K.diario.perfil = {...K.diario.perfil, equipo: []}; }
+  K.ir(b.dataset.sigue);
 };
 K.equipoTocar = async id => {
   const q = K.equipo(), n = q.includes(id) ? q.filter(x => x !== id) : [...q, id];

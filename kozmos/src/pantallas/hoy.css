@@ -23,7 +23,6 @@ body:has(.utoast:not(.out)) :is(.hoy-b,.rut,.hzn)>.btn{bottom:calc(144px + env(s
 .rumbo-fila[aria-pressed="true"]{background:var(--s2)}
 .rumbo-fila[aria-pressed="true"] .tile{background:var(--s1)}
 .rumbo-fila .ck{width:18px; height:18px}
-.rumbo-listo{position:sticky; bottom:calc(84px + env(safe-area-inset-bottom,0px)); margin-top:4px; box-shadow:var(--shadow)}
 .rumbo-fila .ck{width:24px; height:24px; padding:4px; border-radius:50%; background:var(--ink); color:var(--bg); stroke-width:3}
 .si-no{display:grid; grid-template-columns:1fr 1fr; gap:8px}
 .si-no .btn[aria-pressed="true"]{background:var(--solid); color:var(--on-solid); border-color:var(--solid)}
@@ -110,7 +109,7 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .hoy-origen .ajr{min-height:60px}
 
 /* ===== El primer día: tres pasos ===== */
-.pasos{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; margin:0; padding:0; list-style:none}
+.pasos{display:grid; grid-template-columns:repeat(var(--n,3),minmax(0,1fr)); gap:6px; margin:0; padding:0; list-style:none}
 .pasos li{display:flex; align-items:center; gap:6px; min-width:0; padding:8px 0 0; border-top:3px solid var(--s2); color:var(--ink-3); font-size:var(--t-sm); font-weight:700}
 .pasos li span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .pasos li i{display:grid; place-items:center; flex:none; width:20px; height:20px; border-radius:50%; background:var(--s2); font-style:normal; font-size:var(--t-2xs)}

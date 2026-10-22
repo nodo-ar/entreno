@@ -64,8 +64,9 @@ prueba("arranca-sin-errores", async () => {
 prueba("cinco-pestanas", async () => {
   const {ctx, p} = await pagina();
   await ir(p, "");
-  ok(JSON.stringify(await p.$$eval("nav.barra button", bs => bs.map(b => b.dataset.tab))) === '["hoy","planes","cielo","progreso","vos"]', "la barra no es Hoy, Planes, Cielo, Progreso, Vos");
-  for (const [tab, titulo] of [["planes", "Planes"], ["cielo", "Cielo"], ["progreso", "Progreso"], ["vos", "Vos"], ["hoy", "Hoy"]]){
+  ok(JSON.stringify(await p.$$eval("nav.barra button", bs => bs.map(b => b.dataset.tab))) === '["hoy","planes","cielo","progreso","vos"]', "la barra no es Hoy, Planes, Cosmos, Progreso, Vos");
+  ok(JSON.stringify(await p.$$eval("nav.barra button", bs => bs.map(b => b.getAttribute("aria-label")))) === '["Hoy","Planes","Cosmos","Progreso","Vos"]', "la barra no dice Cosmos");
+  for (const [tab, titulo] of [["planes", "Planes"], ["cielo", "Tu cosmos"], ["progreso", "Progreso"], ["vos", "Vos"], ["hoy", "Hoy"]]){
     await p.click(`nav.barra button[data-tab="${tab}"]`);
     await p.waitForSelector(`main.view[data-tab="${tab}"]`);
     const h = await p.$$eval(".enc-tit h1", hs => hs.filter(h => h.offsetParent).map(h => h.textContent));
@@ -100,7 +101,7 @@ prueba("encabezado-compacto", async () => {
   await ir(p, "#/cielo");
   ok(!(await p.evaluate(() => document.body.classList.contains("compacto"))), "arranca compacto");
   await p.mouse.wheel(0, 260); await p.waitForFunction(() => document.body.classList.contains("compacto"));
-  ok(await p.textContent("#tbt") === "Cielo", "la barra compacta no dice Cielo");
+  ok(await p.textContent("#tbt") === "Tu cosmos", "la barra compacta no dice Tu cosmos");
   await p.mouse.wheel(0, -600); await p.waitForFunction(() => !document.body.classList.contains("compacto"));
   /* las acciones del encabezado (acá, volver) siguen a la vista al desplazar */
   await p.setViewportSize({width: 390, height: 300});
@@ -237,7 +238,7 @@ prueba("rutas-raras", async () => {
   ok(await p.textContent(".enc-tit h1") === "Hoy", "una ruta desconocida no cae en Hoy");
   ok(!(await p.evaluate(() => document.body.innerText)).includes("undefined"), "aparece «undefined»");
   const h1 = () => p.evaluate(() => [...document.querySelectorAll(".enc-tit h1")].find(h => h.offsetParent).textContent);
-  await ir(p, "#/cielo/xyz"); ok(await h1() === "Cielo", "#/cielo/xyz no cae en Cielo");
+  await ir(p, "#/cielo/xyz"); ok(await h1() === "Tu cosmos", "#/cielo/xyz no cae en Tu cosmos");
   await ir(p, "#/cielo/front-lever/otra"); ok(await h1() === "Front lever", "#/cielo/front-lever/otra no cae en la constelación");
   await ir(p, "#/cielo/front-lever/anotar/99"); ok(await h1() === "Anotar una marca", "una estrella que no existe no abre anotar");
   ok(await p.textContent("#f-estrella em") === "Colgado con hombros firmes 60 s", "con una estrella que no existe no arranca en la próxima");
@@ -313,7 +314,7 @@ prueba("anotar-enciende-y-queda", async () => {
   ok(await p.$(".cons-svg .es.nace"), "la estrella nueva no se anima");
   /* guardar vuelve con el botón atrás: no quedan pasos de más */
   ok(await p.evaluate(() => location.hash) === "#/cielo/front-lever", "no volvió a la constelación");
-  await p.goBack(); await esperarTitulo(p, "Cielo");
+  await p.goBack(); await esperarTitulo(p, "Tu cosmos");
   ok(await p.textContent(".enc-tit small") === "1 de 95 estrellas", "Cielo no cuenta la estrella: " + await p.textContent(".enc-tit small"));
   ok(await p.textContent('.cons-fila[data-ir="#/cielo/front-lever"] em') === "1 de 8", "la fila no cuenta la estrella");
   ok(await p.evaluate(() => { const m = K.diario.mediciones[0]; return m.ejercicio === "colgado-activo" && m.tipo === "segundos" && m.catalogo === K.CATALOGO.version; }), "la marca no guarda qué midió");
@@ -368,7 +369,7 @@ prueba("anotar-tipos", async () => {
   ok(await p.evaluate(() => K.diario.mediciones.filter(m => m.estrella === "soga.100").length) === 1, "el doble toque guardó dos marcas");
   /* tocar la pestaña en la que estás vuelve a su raíz sin apilar */
   await ir(p, "#/cielo/soga/anotar/1"); const hl = await p.evaluate(() => history.length);
-  await p.click('nav.barra button[data-tab="cielo"]'); await esperarTitulo(p, "Cielo");
+  await p.click('nav.barra button[data-tab="cielo"]'); await esperarTitulo(p, "Tu cosmos");
   ok(await p.evaluate(() => history.length) === hl, "la pestaña sumó un paso");
   await ir(p, "#/cielo/front-lever/anotar/1");
   /* − y + */
@@ -429,14 +430,14 @@ prueba("volver-sin-pasos-de-mas", async () => {
   await ir(p, "#/cielo");
   const h0 = await p.evaluate(() => history.length);
   await p.click('.cons-fila[data-ir="#/cielo/draco"]'); await esperarTitulo(p, "Draco");
-  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Cielo");
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Tu cosmos");
   await p.click('.cons-fila[data-ir="#/cielo/draco"]'); await esperarTitulo(p, "Draco");
   ok(await p.evaluate(() => history.length) === h0 + 1, "volver sumó pasos al historial");
   /* entrar directo a una constelación (por ejemplo, desde un enlace): volver lleva al cielo igual */
   await ir(p, "#/cielo/draco/anotar");
   await p.reload(); await p.waitForSelector("main.view");
   await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Draco");
-  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Cielo");
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Tu cosmos");
   await ctx.close();
 });
 
@@ -470,7 +471,9 @@ prueba("sesion-entera", async () => {
   await ir(p, "#/hoy");
   /* el primer día, sin rumbo, Hoy ofrece que Kozmos arme el día (paso 1 de 3) */
   ok((await p.textContent(".como-op .t1")) === "Que Kozmos arme tu día", "sin rumbo no ofrece elegirlo");
-  await p.click('.como-op[data-ir="#/hoy/rumbo"]'); await esperarTitulo(p, "Tu rumbo");
+  await p.click('.como-op[data-ir="#/hoy/equipo"]'); await esperarTitulo(p, "Tu equipo");
+  await p.click('[data-equipo="barra"]'); await p.waitForSelector('[data-equipo="barra"][aria-pressed="true"]');
+  await p.click("#eq-seguir"); await esperarTitulo(p, "Tu rumbo");
   await p.click('[data-rumbo="front-lever"]');
   await p.waitForSelector('[data-rumbo="front-lever"][aria-pressed="true"]', {timeout: 3000}).catch(() => { throw new Error("no marca la elegida"); });
   await p.click(".rumbo-listo"); await esperarTitulo(p, "Hoy");
@@ -617,7 +620,7 @@ prueba("sesion-isla-y-pausa", async () => {
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
   await p.click("#s-empezar"); await tick(p, 10000); await p.click("#s-listo");
   /* salís a mirar el cielo: el descanso sigue arriba, en la isla */
-  await p.click("#s-mas"); await p.click('.pmi[data-id="cielo"]'); await esperarTitulo(p, "Cielo");
+  await p.click("#s-mas"); await p.click('.pmi[data-id="cielo"]'); await esperarTitulo(p, "Tu cosmos");
   await tick(p, 2000);
   ok((await p.textContent("#isla")).trim() === "Descanso 1:28", "la isla: " + await p.textContent("#isla"));
   ok(await p.evaluate(() => getComputedStyle(document.querySelector("nav.barra")).display !== "none"), "afuera de la sesión la barra tiene que verse");
@@ -734,8 +737,13 @@ prueba("ventana-de-prueba", async () => {
 prueba("tu-equipo", async () => {
   const {ctx, p} = await pagina();
   await ir(p, "#/vos");
-  ok((await p.textContent('[data-ir="#/vos/equipo"] em')) === "Todo", "sin elegir, cuenta todo");
+  ok((await p.textContent('[data-ir="#/vos/equipo"] em')) === "Sin elegir", "sin elegir, la fila no lo dice");
   await p.click('[data-ir="#/vos/equipo"]'); await esperarTitulo(p, "Tu equipo");
+  /* sin elegir no se ve nada marcado, pero el cielo sigue mostrando todo hasta que lo digas */
+  ok(await p.$$eval('[data-equipo][aria-pressed="true"], [data-equipo] .ck', x => x.length) === 0, "sin elegir, se ve equipo marcado");
+  ok(await p.evaluate(() => K.diario.perfil.equipo == null && K.cieloActual().constelaciones.find(c => c.id === "soga").total > 0), "mirar tu equipo cambió lo que cuenta el cielo");
+  await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="true"] .ck');
+  ok(await p.evaluate(() => JSON.stringify(K.diario.perfil.equipo)) === '["soga"]', "marcar desde nada no guarda solo la soga");
   await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
   ok(!(await p.$('[data-equipo="soga"] .ck')), "la fila sigue con la marca de elegida");
   await p.waitForTimeout(300); ok(!(await p.$(".utoast")), "elegir equipo ofrece deshacer");
@@ -972,7 +980,7 @@ prueba("escalera-isla", async () => {
   ok((await p.textContent(".ses-tit .lb")).includes("▲ nuevo"), "la serie no dice que es nuevo: " + await p.textContent(".ses-tit .lb"));
   ok((await p.textContent(".ses-reloj")).includes("repeticiones"), "falta lo que toca");
   await tick(p, 4000);
-  await p.click("#s-mas"); await p.click('.pmi[data-id="cielo"]'); await esperarTitulo(p, "Cielo"); await tick(p, 500);
+  await p.click("#s-mas"); await p.click('.pmi[data-id="cielo"]'); await esperarTitulo(p, "Tu cosmos"); await tick(p, 500);
   ok((await p.textContent("#isla")).trim().startsWith("Dominada · ▲ nuevo "), "la isla: " + await p.textContent("#isla"));
   /* en la serie que sigue (sentadilla, mismo escalón) no hay marca */
   await p.click("#isla"); await p.waitForSelector(".ses.serie"); await p.click("#s-listo"); await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
@@ -1542,9 +1550,12 @@ prueba("primer-dia", async () => {
   await p.click('.como-op[data-ir="#/planes"]'); await esperarTitulo(p, "Planes");
   ok(await paso() === "2Elegí qué", "Planes no es el paso 2");
   await p.click('nav.barra button[data-tab="hoy"]'); await esperarTitulo(p, "Hoy");
-  /* que Kozmos arme el día: Tu rumbo es el paso 2 */
-  await p.click('.como-op[data-ir="#/hoy/rumbo"]'); await esperarTitulo(p, "Tu rumbo");
-  ok(await paso() === "2Elegí qué", "Tu rumbo no es el paso 2");
+  /* que Kozmos arme el día: primero Tu equipo, después Tu rumbo */
+  await p.click('.como-op[data-ir="#/hoy/equipo"]'); await esperarTitulo(p, "Tu equipo");
+  ok(await paso() === "1Tu equipo", "Tu equipo no es el paso 1: " + await paso());
+  await p.click('[data-equipo="barra"]'); await p.waitForSelector('[data-equipo="barra"][aria-pressed="true"]');
+  await p.click("#eq-seguir"); await esperarTitulo(p, "Tu rumbo");
+  ok(await paso() === "2Tu rumbo", "Tu rumbo no es el paso 2: " + await paso());
   await p.click('[data-rumbo="front-lever"]'); await p.click(".rumbo-listo"); await esperarTitulo(p, "Hoy");
   ok(await paso() === "3Empezá", "con rumbo, Hoy no es el paso 3: " + await paso());
   ok((await p.textContent(".hoy-origen")).includes("Front lever"), "el paso 3 no dice de dónde sale");
@@ -2111,10 +2122,10 @@ prueba("sin-deshacer-al-elegir", async () => {
   ok(await p.evaluate(() => K.rumbo().length === 0), "otro toque no lo sacó del rumbo");
   /* equipo */
   await ir(p, "#/vos/equipo");
-  await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
-  await sinDeshacer("sacar equipo");
   await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="true"] .ck');
   await sinDeshacer("sumar equipo");
+  await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
+  await sinDeshacer("sacar equipo");
   /* días */
   await ir(p, "#/vos/dias");
   await p.click('[data-dia="1"]'); await p.waitForSelector('[data-dia="1"][aria-pressed="true"] .ck');
@@ -2141,6 +2152,123 @@ prueba("sin-deshacer-al-elegir", async () => {
   await p.click(".utoast .utu"); await p.waitForSelector(".marca");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
+});
+
+/* ===== El primer día y Cosmos (vuelta 26) ===== */
+prueba("cosmos-nombre", async () => {
+  /* la pestaña se llama Cosmos y la pantalla, Tu cosmos; en ninguna pantalla queda «cielo» a la vista */
+  const {ctx, p} = await conReloj();
+  const sinCielo = async donde => {
+    const t = await p.evaluate(() => document.body.innerText + " " + [...document.querySelectorAll("[aria-label]")].map(x => x.getAttribute("aria-label")).join(" ") + " " + document.title);
+    const m = /.{0,30}cielo.{0,30}/i.exec(t); ok(!m, `${donde}: dice «${m && m[0]}»`);
+  };
+  await ir(p, "#/hoy"); await sinCielo("Hoy, el primer día");
+  await p.click('nav.barra button[data-tab="cielo"]'); await esperarTitulo(p, "Tu cosmos");
+  await p.waitForTimeout(500);
+  ok(await p.textContent('nav.barra [aria-current="page"] .nm') === "Cosmos", "la barra no dice Cosmos");
+  ok(await p.evaluate(() => document.title) === "Tu cosmos · Kozmos", "el título de la página: " + await p.evaluate(() => document.title));
+  await sinCielo("Tu cosmos vacío");
+  for (const h of ["#/cielo/front-lever", "#/cielo/front-lever/anotar", "#/planes", "#/progreso", "#/vos", "#/vos/equipo", "#/hoy/equipo", "#/hoy/rumbo"]){ await ir(p, h); await sinCielo(h); }
+  /* con historia: Hoy, la sesión con su menú, el resumen y Progreso */
+  await ir(p, "#/hoy"); await rumbo(p, ["espagat"]); await sinCielo("Hoy con rumbo");
+  await p.click("#s-empezar"); await p.waitForSelector(".ses.serie");
+  await p.click("#s-mas"); await p.waitForSelector('.pmi[data-id="cielo"]');
+  ok((await p.textContent('.pmi[data-id="cielo"]')).trim() === "Mirar tu cosmos", "el menú de la sesión: " + await p.textContent('.pmi[data-id="cielo"]'));
+  await sinCielo("el menú de la sesión");
+  await p.click('.pmi[data-id="cielo"]'); await esperarTitulo(p, "Tu cosmos"); await sinCielo("Tu cosmos con la isla");
+  await ir(p, "#/hoy/sesion"); await tick(p, 40000); await p.click("#s-listo"); await p.click("#s-cortar"); await p.waitForSelector(".res");
+  await p.evaluate(() => K.deshacer.cerrar(true)); await sinCielo("el resumen");
+  for (const h of ["#/hoy", "#/cielo", "#/progreso"]){ await ir(p, h); await sinCielo(h + " con historia"); }
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("primer-dia-equipo", async () => {
+  /* «Que Kozmos arme tu día»: Tu equipo (nada marcado) → Seguir → Tu rumbo → Listo → Hoy con lo que toca */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy");
+  ok(await p.evaluate(() => K.diario.perfil.equipo == null), "arranca con equipo elegido");
+  await p.click('.como-op[data-ir="#/hoy/equipo"]'); await esperarTitulo(p, "Tu equipo");
+  ok(await p.$$eval("[data-equipo]", x => x.length) === 9 && await p.$$eval('[data-equipo][aria-pressed="true"], [data-equipo] .ck', x => x.length) === 0, "el primer día hay equipo marcado de entrada");
+  ok((await p.textContent("main.view .ayuda")) === "Marcá lo que tenés. Sin nada también se entrena.", "la ayuda: " + await p.textContent("main.view .ayuda"));
+  ok((await p.textContent("main.view .enc-tit small")) === "Para empezar", "el paso no dice Para empezar");
+  ok(JSON.stringify(await p.$$eval(".pasos li span", x => x.map(y => y.textContent))) === '["Tu equipo","Tu rumbo"]', "los pasos no son Tu equipo y Tu rumbo");
+  /* volver desde el paso 1 vuelve a Hoy; seguir sin marcar nada guarda que no tenés equipo */
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Hoy");
+  ok(await p.evaluate(() => K.diario.perfil.equipo == null), "volver guardó equipo");
+  await p.click('.como-op[data-ir="#/hoy/equipo"]'); await esperarTitulo(p, "Tu equipo");
+  await p.click("#eq-seguir"); await esperarTitulo(p, "Tu rumbo");
+  ok(await p.evaluate(() => JSON.stringify(K.diario.perfil.equipo)) === "[]", "seguir sin marcar no guardó []");
+  /* volver desde Tu rumbo vuelve a Tu equipo; marcar la barra queda guardado */
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Tu equipo");
+  await p.click('[data-equipo="barra"]'); await p.waitForSelector('[data-equipo="barra"][aria-pressed="true"] .ck');
+  await p.click('[data-equipo="pared"]'); await p.waitForSelector('[data-equipo="pared"][aria-pressed="true"] .ck');
+  await p.click("#eq-seguir"); await esperarTitulo(p, "Tu rumbo");
+  ok(await p.evaluate(() => JSON.stringify(K.diario.perfil.equipo)) === '["barra","pared"]', "el equipo guardado: " + await p.evaluate(() => JSON.stringify(K.diario.perfil.equipo)));
+  ok(await p.$eval('.pasos [aria-current="step"]', x => x.textContent) === "2Tu rumbo" && await p.$(".pasos li.hecho"), "Tu rumbo no es el paso 2 con el 1 hecho");
+  await p.click('[data-rumbo="front-lever"]'); await p.waitForSelector('[data-rumbo="front-lever"][aria-pressed="true"]');
+  await p.click(".rumbo-listo"); await esperarTitulo(p, "Hoy");
+  ok(await p.$("#s-empezar") && await p.$$eval(".hoy-toca .toca", x => x.length) > 0, "Hoy no tiene plan");
+  ok(await p.$eval('.pasos [aria-current="step"]', x => x.textContent) === "3Empezá", "Hoy no está en Empezá");
+  /* «Listo» volvió a Hoy salteando los pasos: atrás no vuelve a Tu rumbo ni a Tu equipo */
+  ok(await p.evaluate(() => JSON.stringify(K._pila)) === '["#/hoy"]', "quedaron pasos en la pila: " + await p.evaluate(() => JSON.stringify(K._pila)));
+  /* fuera del primer día, Tu equipo de Vos sigue como siempre */
+  await ir(p, "#/vos/equipo"); await esperarTitulo(p, "Tu equipo");
+  const vos = await p.evaluate(() => [document.querySelector("main.view .abierto .enc-tit small")?.textContent, [...document.querySelectorAll(".pasos")].some(x => !x.closest("[inert]")), document.querySelector(".pie-fijo .btn")?.textContent]);
+  ok(JSON.stringify(vos) === '["Ajustes",false,"Listo"]', "Vos → Tu equipo cambió: " + JSON.stringify(vos));
+  await p.click(".pie-fijo .btn"); await esperarTitulo(p, "Vos");
+  ok((await p.textContent('[data-ir="#/vos/equipo"] em')) === "Barra y Pared libre", "la fila de Vos no dice lo marcado");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("sin-nav-al-elegir", async () => {
+  /* en Tu rumbo y Tu equipo no hay barra: su botón principal queda abajo, al alcance del pulgar; en Hoy la barra vuelve */
+  const medir = p => p.evaluate(() => {
+    const n = document.querySelector("nav.barra"), r = n.getBoundingClientRect(), b = document.querySelector(".pie-fijo .btn")?.getBoundingClientRect();
+    const v = r.bottom > 2 && r.top < innerHeight - 2 && r.right > 2 && r.left < innerWidth - 2;
+    return {nav: v && !n.inert, b: b && {top: b.top, bottom: b.bottom, left: b.left, right: b.right}, h: innerHeight, w: innerWidth};
+  });
+  const esperarNav = (p, si) => p.waitForFunction(si => { const n = document.querySelector("nav.barra"), r = n.getBoundingClientRect(); return (r.bottom > 2 && r.top < innerHeight - 2 && r.right > 2 && r.left < innerWidth - 2 && !n.inert) === si; }, si, {timeout: 3000});
+  for (const vp of [{width: 390, height: 844}, {width: 844, height: 390}]){
+    const {ctx, p} = await pagina(vp), donde = `${vp.width}×${vp.height}`;
+    const pulgar = async (que, texto) => {
+      await esperarNav(p, false).catch(() => { throw new Error(`${donde} · ${que}: la barra sigue a la vista`); });
+      const m = await medir(p);
+      ok(m.b && m.b.bottom <= m.h && m.h - m.b.bottom <= 120 && m.h - m.b.top <= 120, `${donde} · ${que}: el botón no queda abajo: ${JSON.stringify(m.b)}`);
+      ok((await p.textContent(".pie-fijo .btn")) === texto, `${donde} · ${que}: el botón dice ${await p.textContent(".pie-fijo .btn")}`);
+      /* lo último de la lista no queda tapado por el botón */
+      await p.evaluate(() => scrollTo(0, document.documentElement.scrollHeight)); await p.waitForTimeout(150);
+      const u = await p.evaluate(() => { const xs = [...document.querySelectorAll("main.view .ajr")]; const r = xs[xs.length - 1].getBoundingClientRect(); return {bottom: r.bottom, right: r.right}; });
+      const b = (await medir(p)).b;
+      ok(u.bottom <= b.top + 1 || u.right <= b.left + 1, `${donde} · ${que}: el botón tapa la última fila: ${JSON.stringify(u)} ${JSON.stringify(b)}`);
+      await p.evaluate(() => scrollTo(0, 0));
+    };
+    /* el primer día: Tu equipo (Seguir) y Tu rumbo (Listo) */
+    await ir(p, "#/hoy"); await esperarNav(p, true);
+    await p.click('.como-op[data-ir="#/hoy/equipo"]'); await esperarTitulo(p, "Tu equipo"); await pulgar("Tu equipo del primer día", "Seguir");
+    await p.click("#eq-seguir"); await esperarTitulo(p, "Tu rumbo"); await pulgar("Tu rumbo del primer día", "Listo");
+    ok(await p.$(".enc-acc [data-volver]"), `${donde}: volver no está arriba`);
+    await p.click('[data-rumbo="espagat"]'); await p.waitForSelector('[data-rumbo="espagat"][aria-pressed="true"]'); await p.click(".rumbo-listo"); await esperarTitulo(p, "Hoy");
+    await esperarNav(p, true).catch(() => { throw new Error(`${donde}: en Hoy la barra no volvió`); });
+    /* fuera del primer día: Tu rumbo desde Hoy */
+    await p.evaluate(() => K.diario.anotar({ejercicio: "colgado-activo", tipo: "segundos", estrella: "front-lever.colgado-60s", fecha: K.hoy(), valor: 45}));
+    await ir(p, "#/hoy"); await p.click(".hoy-origen .ajr"); await esperarTitulo(p, "Tu rumbo"); await pulgar("Tu rumbo desde Hoy", "Listo");
+    ok(!(await p.$(".pasos")), `${donde}: fuera del primer día Tu rumbo muestra los pasos`);
+    await p.click(".rumbo-listo"); await esperarTitulo(p, "Hoy"); await esperarNav(p, true);
+    if (vp.width < vp.height){
+      /* Vos → Tu equipo es su propia pantalla: sin barra y con «Listo» */
+      await ir(p, "#/vos"); await p.click('[data-ir="#/vos/equipo"]'); await esperarTitulo(p, "Tu equipo"); await pulgar("Tu equipo desde Vos", "Listo");
+      await p.click(".pie-fijo .btn"); await esperarTitulo(p, "Vos"); await esperarNav(p, true);
+    } else {
+      /* en horizontal, Tu equipo es lo abierto a la derecha de Vos: la lista y la barra quedan quietas */
+      await ir(p, "#/vos/equipo"); await p.waitForTimeout(300);
+      ok((await medir(p)).nav && !(await p.$(".pie-fijo")), `${donde}: en Vos la barra se fue o sobra el botón`);
+    }
+    ok(await p.evaluate(() => document.documentElement.scrollWidth) <= vp.width, `${donde}: desborda`);
+    ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+    await ctx.close();
+  }
 });
 
 const elegidas = process.argv.slice(2);
