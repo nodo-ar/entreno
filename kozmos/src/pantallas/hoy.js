@@ -241,13 +241,12 @@ K.P.rumbo = () => {
     <button type="button" class="btn rumbo-listo" data-volver="#/hoy">Listo</button>`;
 };
 K.rumboTocar = async id => {
-  const r = K.rumbo(), antes = [...r];
+  /* elegir no ofrece deshacer: queda marcado en la fila y otro toque lo saca */
+  const r = K.rumbo();
   const n = r.includes(id) ? r.filter(x => x !== id) : [...r, id];
   if (n.length > 3){ K.aviso("Hasta 3. Sacá una para sumar otra."); return; }
   try { await K.diario.perfilPoner("rumbo", n); } catch (e) { K.diario.perfil = {...K.diario.perfil, rumbo: n}; } /* sin lugar para guardar, vale por esta apertura */
   K.refrescar();
-  const c = K.cons(id);
-  K.deshacer(`${n.length > antes.length ? "Sumaste" : "Sacaste"} ${c.nombre}`, async () => { try { await K.diario.perfilPoner("rumbo", antes); } catch (e) { K.diario.perfil = {...K.diario.perfil, rumbo: antes}; } K.refrescar(); });
 };
 
 /* ===== Sesión en curso: un solo reloj grande; en el descanso anotás lo que salió ===== */

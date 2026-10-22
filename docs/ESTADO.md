@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (nombres claros para las estrellas) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (el deshacer, solo al borrar) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -87,6 +87,11 @@
   - Hoy ya no repite la constelación cuando el ejercicio la nombra («Parada de manos contra la pared»).
   - Pruebas: 80 sin pantalla y 89 de pantallas, en verde. Nuevas: catalogo-nombres-claros (sin jerga y con los mismos ids que `main`) y hoy-sin-repetir-constelacion.
   - **Aprobado por Fer** (2026-10-22) con sus tres recomendaciones: quedan los textos, Hoy no repite y «Horizontal completo» queda. Se publica como versión 29.
+- **El deshacer, solo al borrar** (2026-10-22): vuelta 25 (acta `docs/actas/025-kozmos-deshacer-solo-al-borrar.md`), rama `claude/project-thread-985fzq`, sin PR. Fer pidió que el deshacer no aparezca en cada cosa que elegís o cambiás:
+  - Ahora aparece solo cuando la acción borra, termina o reemplaza algo que deja de verse donde tocaste: borrar una sesión o una marca, anotar una marca, salir o cortar la sesión, traer un respaldo, seguir o dejar una rutina.
+  - Elegir no lo ofrece: Tu rumbo, Tu equipo, Tus días, Tu peso, Avisos, Tema y la persona de los dibujos. Lo elegido queda a la vista en el control (tilde o valor en la fila) y otro toque lo vuelve atrás. Regla escrita en `docs/REGLAS.md`.
+  - Pruebas: 80 sin pantalla y 90 de pantallas, en verde. Nueva: sin-deshacer-al-elegir.
+  - **Esperando a Fer**: el OK al tablero (capturas `m15/antes` y `m15/despues` en claro y grafito) y tres decisiones del acta (anotar una marca, seguir una rutina, tu peso).
 
 ## Dónde quedó
 

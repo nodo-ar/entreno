@@ -124,22 +124,24 @@ prueba("menu-y-deshacer", async () => {
   await p.keyboard.press("Escape");
   await p.waitForFunction(() => !document.querySelector(".pop:not(.out)"));
   ok(await p.evaluate(() => document.activeElement.id) === "tema-menu", "el foco no vuelve a la fila");
-  /* elegir Oscuro: se aplica sin preguntar, el foco queda en la fila y se puede deshacer */
+  /* elegir Oscuro: se aplica sin preguntar, el foco queda en la fila y se ve en la fila; no ofrece deshacer */
   await p.click("#tema-menu"); await p.click('.pmi[data-id="dark"]');
   ok(await p.getAttribute("html", "data-theme") === "dark", "no pasó a oscuro");
   ok(await p.evaluate(() => document.activeElement.id) === "tema-menu", "después de elegir, el foco se pierde");
   ok((await p.textContent("#tema-menu em")) === "Oscuro", "la fila no muestra el tema nuevo");
-  await p.waitForSelector(".utoast");
-  ok((await p.textContent(".utoast .utx")).includes("oscuro"), "el aviso no dice qué cambió");
-  /* abrir y cerrar otro menú con Escape no se lleva el deshacer */
+  await p.waitForTimeout(300);
+  ok(!(await p.$(".utoast")), "cambiar el tema ofrece deshacer");
+  /* volver atrás es elegir otro */
+  await p.click("#tema-menu"); await p.click('.pmi[data-id="auto"]');
+  ok(await p.getAttribute("html", "data-theme") === null, "no volvió a automático");
+  ok(await p.evaluate(() => K.tema.actual()) === "auto", "no guardó automático");
+  /* abrir y cerrar un menú con Escape no se lleva un deshacer pendiente (el de borrar, por ejemplo) */
+  await p.evaluate(() => K.deshacer("Borraste una marca", () => {}));
   await p.click("#tema-menu"); await p.keyboard.press("Escape");
   ok(await p.$(".utoast:not(.out)"), "Escape en el menú borró el deshacer");
   await p.click(".utoast .utu");
-  ok(await p.getAttribute("html", "data-theme") === null, "deshacer no volvió a automático");
-  ok(await p.evaluate(() => K.tema.actual()) === "auto", "deshacer no guardó automático");
   /* el aviso se va solo, salvo mientras lo tenés en foco */
-  await p.evaluate(() => { K.DESHACER_MS = 400; });
-  await p.click("#tema-menu"); await p.click('.pmi[data-id="light"]');
+  await p.evaluate(() => { K.DESHACER_MS = 400; K.deshacer("Borraste una marca", () => {}); });
   await p.waitForSelector(".utoast:not(.out)"); await p.focus(".utoast:not(.out) .utu"); await p.waitForTimeout(700);
   ok(await p.$(".utoast:not(.out)"), "el deshacer se fue mientras estaba en foco");
   await p.focus("#tema-menu");
@@ -735,16 +737,17 @@ prueba("tu-equipo", async () => {
   ok((await p.textContent('[data-ir="#/vos/equipo"] em')) === "Todo", "sin elegir, cuenta todo");
   await p.click('[data-ir="#/vos/equipo"]'); await esperarTitulo(p, "Tu equipo");
   await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
-  ok((await p.textContent(".utoast .utx")) === "Sacaste soga", "no ofrece deshacer");
+  ok(!(await p.$('[data-equipo="soga"] .ck')), "la fila sigue con la marca de elegida");
+  await p.waitForTimeout(300); ok(!(await p.$(".utoast")), "elegir equipo ofrece deshacer");
   await ir(p, "#/cielo");
   ok(!(await p.$('.cielo-grilla [data-ir="#/cielo/soga"]')), "sin soga, Soga sigue en el cielo");
   await ir(p, "#/cielo/soga");
   ok((await p.textContent(".cons-estado .t1")) === "Pide soga.", "la constelación no dice qué pide");
   ok(await p.$$eval(".est-fila.sin-equipo", xs => xs.length) === 7 && await p.$$eval(".cons-svg .es.sin", xs => xs.length) === 7, "abierta, se ven todas, tenues");
   ok(!(await p.$("[data-probar]")) && await p.$('.dos-btn [data-ir="#/vos/equipo"]'), "sin soga, en vez de probar ofrece ir a tu equipo");
-  /* deshacer devuelve todo */
-  await ir(p, "#/vos/equipo"); await p.click('[data-equipo="soga"]'); await p.waitForSelector(".utoast"); await p.click(".utu");
-  await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
+  /* otro toque lo vuelve atrás */
+  await ir(p, "#/vos/equipo"); await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="true"] .ck');
+  ok(await p.evaluate(() => K.equipo().includes("soga")), "otro toque no devolvió la soga");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -1598,7 +1601,7 @@ prueba("logo-en-movimiento", async () => {
 });
 
 prueba("persona-de-los-dibujos", async () => {
-  /* en Vos se elige la persona de los dibujos: todo al azar de entrada, lo elegido manda en todos los ejercicios y se puede deshacer */
+  /* en Vos se elige la persona de los dibujos: todo al azar de entrada, lo elegido manda en todos los ejercicios y queda a la vista en la fila */
   const {ctx, p} = await pagina();
   await ir(p, "#/vos");
   ok((await p.$$eval("[data-rasgo] em", x => x.map(e => e.textContent))).every(t => t === "Al azar"), "de entrada no está todo al azar");
@@ -1616,8 +1619,12 @@ prueba("persona-de-los-dibujos", async () => {
   /* pasar a mujer devuelve al azar un peinado que no le va */
   await p.click("#rasgo-sexo"); await p.click('.pmi[data-id="mujer"]');
   ok(await p.evaluate(() => !K.prefs.get("persona", {}).pelo), "quedó un peinado de hombre para una mujer");
-  await p.waitForSelector(".utoast"); await p.click(".utoast .utu");
-  ok(await p.evaluate(() => K.prefs.get("persona", {}).sexo === "hombre" && K.prefs.get("persona", {}).pelo === "rulos"), "deshacer no volvió a lo de antes");
+  ok((await p.textContent("#rasgo-sexo em")) === "Mujer" && (await p.textContent("#rasgo-pelo em")) === "Al azar", "la fila no muestra lo elegido");
+  await p.waitForTimeout(300); ok(!(await p.$(".utoast")), "elegir la persona ofrece deshacer");
+  /* volver atrás es elegir de nuevo */
+  await p.click("#rasgo-sexo"); await p.click('.pmi[data-id="hombre"]');
+  await p.click("#rasgo-pelo"); await p.click('.pmi[data-id="rulos"]');
+  ok(await p.evaluate(() => K.prefs.get("persona", {}).sexo === "hombre" && K.prefs.get("persona", {}).pelo === "rulos"), "no volvió a lo de antes");
   /* sobrevive a cerrar y abrir */
   await p.reload(); await p.waitForSelector("main.view");
   ok(await p.evaluate(() => K.fig.persona("dominada", "fu").pelo === "rulos"), "al abrir de nuevo se perdió la persona elegida");
@@ -2043,14 +2050,16 @@ prueba("medianoche-sesion-sigue", async () => {
   await ctx.close();
 });
 prueba("aviso-y-deshacer", async () => {
-  /* un aviso de error no se lleva el deshacer: espera detrás, con el tiempo que le quedaba, y vuelve cuando el aviso se va */
+  /* un aviso de error no se lleva el deshacer: espera detrás, con el tiempo que le quedaba, y vuelve cuando el aviso se va.
+     El deshacer es el de borrar algo; el aviso, el de sumar una cuarta constelación al rumbo */
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy/rumbo");
   const ids = await p.evaluate(() => K.CATALOGO.constelaciones.slice(0, 4).map(c => c.id));
-  const nombre = await p.evaluate(id => K.cons(id).nombre, ids[2]);
   const deshacer = '.utoast:not(.solo):not(.out)', aviso = ".utoast.solo:not(.out)";
+  const borrar = (t = "Borraste una marca") => p.evaluate(t => { window.__deshecho = window.__deshecho || []; K.deshacer(t, () => window.__deshecho.push(t)); }, t);
   for (const id of ids.slice(0, 3)) await p.click(`[data-rumbo="${id}"]`);
-  await p.waitForFunction(t => document.querySelector(".utoast:not(.solo):not(.out) .utx")?.textContent === t, "Sumaste " + nombre);
+  ok(!(await p.$(".utoast")), "elegir el rumbo ofrece deshacer");
+  await borrar(); await p.waitForSelector(deshacer);
   /* la cuarta no entra: avisa, y otro aviso encima del primero tampoco se lo lleva */
   await p.click(`[data-rumbo="${ids[3]}"]`); await p.waitForSelector(aviso);
   ok((await p.textContent(aviso + " .utx")).startsWith("Hasta 3"), "no avisa que son hasta 3");
@@ -2060,11 +2069,12 @@ prueba("aviso-y-deshacer", async () => {
   await p.clock.runFor(5100);
   ok(!(await p.$(aviso)), "el aviso no se fue");
   ok(await p.$(deshacer), "el aviso de error se llevó el deshacer");
-  ok((await p.textContent(deshacer + " .utx")) === "Sumaste " + nombre, "volvió otro deshacer: " + await p.textContent(deshacer + " .utx"));
+  ok((await p.textContent(deshacer + " .utx")) === "Borraste una marca", "volvió otro deshacer: " + await p.textContent(deshacer + " .utx"));
   await p.click(deshacer + " .utu");
-  await p.waitForFunction(ids => JSON.stringify(K.rumbo()) === JSON.stringify(ids), ids.slice(0, 2), {timeout: 3000}).catch(() => { throw new Error("el deshacer que volvió no deshace"); });
-  /* vuelve con el tiempo que le quedaba, y el anillo donde había quedado */
-  await p.click(`[data-rumbo="${ids[2]}"]`); await p.waitForSelector(deshacer);
+  ok(await p.evaluate(() => JSON.stringify(window.__deshecho)) === '["Borraste una marca"]', "el deshacer que volvió no deshace");
+  /* vuelve con el tiempo que le quedaba, y el anillo donde había quedado (el puntero se aparta: encima, el tiempo se frena) */
+  await p.mouse.move(5, 5);
+  await borrar(); await p.waitForSelector(deshacer);
   await p.clock.runFor(3000);
   await p.click(`[data-rumbo="${ids[3]}"]`); await p.waitForSelector(aviso);
   await p.keyboard.press("Escape");
@@ -2075,13 +2085,58 @@ prueba("aviso-y-deshacer", async () => {
   await p.clock.runFor(900);
   ok(!(await p.$(deshacer)), "el deshacer que volvió dura de nuevo los 5 s");
   /* un deshacer nuevo reemplaza al que esperaba: nunca vuelve uno viejo */
-  await p.click(`[data-rumbo="${ids[2]}"]`); await p.waitForSelector(deshacer); await p.clock.runFor(300);
-  await p.click(`[data-rumbo="${ids[2]}"]`); await p.waitForFunction(() => document.querySelector(".utoast:not(.solo):not(.out) .utx")?.textContent.startsWith("Sumaste"));
+  await borrar("Borraste la sesión de hoy"); await p.waitForSelector(deshacer); await p.clock.runFor(300);
   await p.click(`[data-rumbo="${ids[3]}"]`); await p.waitForSelector(aviso);
-  await p.click(`[data-rumbo="${ids[0]}"]`); await p.waitForSelector(deshacer);
-  ok((await p.textContent(deshacer + " .utx")).startsWith("Sacaste"), "no muestra el deshacer nuevo");
+  await borrar(); await p.waitForSelector(deshacer);
+  ok((await p.textContent(deshacer + " .utx")) === "Borraste una marca", "no muestra el deshacer nuevo");
   await p.clock.runFor(5500);
   ok(!(await p.$(".utoast")), "volvió un deshacer viejo");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+
+prueba("sin-deshacer-al-elegir", async () => {
+  /* elegir o cambiar algo que queda a la vista en el control no ofrece deshacer; borrar sí */
+  const {ctx, p} = await pagina();
+  const sinDeshacer = async (que) => { await p.waitForTimeout(400); ok(!(await p.$(".utoast")), que + " ofrece deshacer"); };
+  /* rumbo: se marca la fila, otro toque la desmarca */
+  await ir(p, "#/hoy/rumbo");
+  const id = await p.evaluate(() => K.CATALOGO.constelaciones[0].id);
+  await p.click(`[data-rumbo="${id}"]`); await p.waitForSelector(`[data-rumbo="${id}"][aria-pressed="true"] .ck`);
+  await sinDeshacer("sumar al rumbo");
+  await p.click(`[data-rumbo="${id}"]`); await p.waitForSelector(`[data-rumbo="${id}"][aria-pressed="false"]`);
+  await sinDeshacer("sacar del rumbo");
+  ok(await p.evaluate(() => K.rumbo().length === 0), "otro toque no lo sacó del rumbo");
+  /* equipo */
+  await ir(p, "#/vos/equipo");
+  await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
+  await sinDeshacer("sacar equipo");
+  await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="true"] .ck');
+  await sinDeshacer("sumar equipo");
+  /* días */
+  await ir(p, "#/vos/dias");
+  await p.click('[data-dia="1"]'); await p.waitForSelector('[data-dia="1"][aria-pressed="true"] .ck');
+  await sinDeshacer("elegir un día");
+  /* tema */
+  await ir(p, "#/vos");
+  await p.click("#tema-menu"); await p.click('.pmi[data-id="light"]');
+  ok(await p.getAttribute("html", "data-theme") === "light" && (await p.textContent("#tema-menu em")) === "Claro", "el tema no se ve elegido");
+  await sinDeshacer("cambiar el tema");
+  /* avisos */
+  await p.click("#avisos-menu"); await p.click('.pmi[data-id="vibra"]');
+  ok((await p.textContent("#avisos-menu em")) === "Solo vibración", "los avisos no se ven elegidos");
+  await sinDeshacer("cambiar los avisos");
+  /* peso */
+  await ir(p, "#/vos/peso"); await p.fill("#v-peso", "72"); await p.click("#v-peso-listo"); await esperarTitulo(p, "Vos");
+  ok((await p.textContent('[data-ir="#/vos/peso"] em')) === "72 kg", "el peso no se ve en su fila");
+  await sinDeshacer("guardar el peso");
+  /* borrar una marca sigue ofreciendo deshacer */
+  await p.evaluate(() => K.diario.anotar({ejercicio: "colgado-activo", tipo: "segundos", estrella: "front-lever.colgado-60s", fecha: K.hoy(), valor: 45}));
+  await ir(p, "#/cielo/front-lever"); await p.waitForSelector(".marca");
+  await p.click(".marca [data-borrar]"); await p.waitForFunction(() => !document.querySelector(".marca"));
+  await p.waitForSelector(".utoast:not(.solo) .utu");
+  ok((await p.textContent(".utoast .utx")) === "Borraste una marca", "borrar una marca no ofrece deshacer");
+  await p.click(".utoast .utu"); await p.waitForSelector(".marca");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
