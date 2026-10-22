@@ -238,7 +238,7 @@ prueba("rutas-raras", async () => {
   await ir(p, "#/cielo/xyz"); ok(await h1() === "Cielo", "#/cielo/xyz no cae en Cielo");
   await ir(p, "#/cielo/front-lever/otra"); ok(await h1() === "Front lever", "#/cielo/front-lever/otra no cae en la constelación");
   await ir(p, "#/cielo/front-lever/anotar/99"); ok(await h1() === "Anotar una marca", "una estrella que no existe no abre anotar");
-  ok(await p.textContent("#f-estrella em") === "Colgado activo 60 s", "con una estrella que no existe no arranca en la próxima");
+  ok(await p.textContent("#f-estrella em") === "Colgado con hombros firmes 60 s", "con una estrella que no existe no arranca en la próxima");
   ok(!(await p.evaluate(() => document.body.innerText)).includes("undefined"), "aparece «undefined»");
   await ctx.close();
 });
@@ -333,7 +333,7 @@ prueba("anotar-deshacer-y-borrar", async () => {
   /* una marca que no enciende nada, y borrarla con deshacer */
   await ir(p, "#/cielo/front-lever/anotar/1");
   await p.fill("#f-valor", "45"); await p.click("#f-guardar"); await esperarTitulo(p, "Front lever");
-  ok((await p.textContent(".utoast .utx")) === "Anotaste 45 s en Colgado activo 60 s", "aviso: " + await p.textContent(".utoast .utx"));
+  ok((await p.textContent(".utoast .utx")) === "Anotaste 45 s en Colgado con hombros firmes 60 s", "aviso: " + await p.textContent(".utoast .utx"));
   ok((await p.textContent(".cons-estado .ln")).includes("45 s"), "no muestra la mejor marca");
   ok(await p.getAttribute(".cons-estado .bar", "aria-valuenow") === "75", "el avance no es 45 de 60");
   await p.click(".marca [data-borrar]");
@@ -348,9 +348,9 @@ prueba("anotar-deshacer-y-borrar", async () => {
 
 prueba("anotar-tipos", async () => {
   const {ctx, p} = await pagina();
-  /* el mismo ejercicio: 25 s en «Tuck 20 s» encienden también «Tuck 10 s» */
+  /* el mismo ejercicio: 25 s en «Horizontal con rodillas al pecho 20 s» encienden también la de 10 s */
   await ir(p, "#/cielo/front-lever/anotar/4");
-  ok(await p.textContent("#f-estrella em") === "Tuck 20 s", "no abre la estrella pedida");
+  ok(await p.textContent("#f-estrella em") === "Horizontal con rodillas al pecho 20 s", "no abre la estrella pedida");
   await p.fill("#f-valor", "25"); await p.click("#f-guardar"); await esperarTitulo(p, "Front lever");
   ok((await p.textContent(".utoast .utx")) === "Encendiste 2 estrellas en Front lever.", "aviso: " + await p.textContent(".utoast .utx"));
   ok(await estadosFL(p) === "p-ee----", "tuck 10 y 20: " + await estadosFL(p));
@@ -376,7 +376,7 @@ prueba("anotar-tipos", async () => {
   await ir(p, "#/cielo/espagat/anotar/5");
   ok(await p.textContent("#f-guardar") === "Lo logré" && !(await p.$("#f-valor")), "lo logrado pide un número");
   await p.click("#f-guardar"); await esperarTitulo(p, "Espagat");
-  ok(await p.$eval(".est-fila:nth-child(5)", f => f.classList.contains("encendida")), "«Lateral completo» no se encendió");
+  ok(await p.$eval(".est-fila:nth-child(5)", f => f.classList.contains("encendida")), "«Espagat abierto al costado» no se encendió");
   /* lastre: kilos y tu peso, y el peso queda para la próxima */
   await ir(p, "#/cielo/lastre/anotar/1");
   await p.fill("#f-peso", "80"); await p.fill("#f-lastre", "8");
@@ -473,7 +473,7 @@ prueba("sesion-entera", async () => {
   await p.waitForSelector('[data-rumbo="front-lever"][aria-pressed="true"]', {timeout: 3000}).catch(() => { throw new Error("no marca la elegida"); });
   await p.click(".rumbo-listo"); await esperarTitulo(p, "Hoy");
   const filas = await p.$$eval(".toca", fs => fs.map(f => f.textContent.replace(/\s+/g, " ").trim()));
-  ok(filas.length === 3 && filas[0].includes("Colgado activo") && filas[0].includes("4 × 30 s"), "hoy toca: " + filas.join(" | "));
+  ok(filas.length === 3 && filas[0].includes("Colgado con hombros firmes") && filas[0].includes("4 × 30 s"), "hoy toca: " + filas.join(" | "));
   await p.click("#s-empezar"); await p.waitForSelector(".ses.serie");
   ok(await p.evaluate(() => getComputedStyle(document.querySelector("nav.barra")).display === "none"), "la barra se ve en la sesión");
   /* 5 s para llegar a la barra; recién ahí corre el reloj */
@@ -686,7 +686,7 @@ prueba("prueba-de-estrella", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/cielo/front-lever");
   await p.click('[data-probar="front-lever"]'); await p.waitForSelector(".ses.prueba");
-  ok((await p.textContent(".ses-tit h1")) === "Colgado activo 60 s", "la prueba no dice qué estrella: " + await p.textContent(".ses-tit h1"));
+  ok((await p.textContent(".ses-tit h1")) === "Colgado con hombros firmes 60 s", "la prueba no dice qué estrella: " + await p.textContent(".ses-tit h1"));
   await tick(p, 2000);
   ok(await reloj(p, "fase") === "3" && await reloj(p, "fase-lb") === "Preparate", "falta la cuenta para prepararse");
   await p.click(".ses.prueba .ses-luego"); await tick(p, 100);
@@ -696,7 +696,7 @@ prueba("prueba-de-estrella", async () => {
   ok(await p.$(".prueba-anillo.listo"), "el anillo no se llena al llegar");
   ok((await p.evaluate(() => window.__V)).includes("[10,40,10]"), "no vibró al llegar a los 60 s");
   await p.click(".ses.prueba .ses-ind"); await p.waitForSelector(".res");
-  ok((await p.textContent(".res-tit")) === "Colgado activo 60 s, encendida.", "la prueba no encendió la estrella: " + await p.textContent(".res-tit"));
+  ok((await p.textContent(".res-tit")) === "Colgado con hombros firmes 60 s, encendida.", "la prueba no encendió la estrella: " + await p.textContent(".res-tit"));
   ok(await p.evaluate(() => K.diario.sesiones[0].bloques[0].prueba === true && K.diario.sesiones[0].bloques[0].series[0].valor === 61), "lo que corrió el reloj no quedó anotado");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
@@ -720,7 +720,7 @@ prueba("ventana-de-prueba", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
   await anotarMarca(p, {valor: 50, fecha: "2026-10-18"});
-  ok((await p.textContent(".hoy-ventana")).includes("probá Colgado activo 60 s"), "Hoy no avisa la ventana");
+  ok((await p.textContent(".hoy-ventana")).includes("probá Colgado con hombros firmes 60 s"), "Hoy no avisa la ventana");
   ok((await p.textContent(".toca.es-prueba")).includes("60 s"), "la prueba no va primera en lo que toca");
   await p.click("#s-empezar"); await p.waitForSelector(".ses.prueba");
   await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
@@ -779,7 +779,7 @@ prueba("progreso", async () => {
   await ir(p, "#/progreso");
   ok(await p.$(".semanas"), "no están las semanas");
   ok((await p.textContent(".prog-sem .ln.small .num")).startsWith("1 min"), "esta semana: " + await p.textContent(".prog-sem .ln.small .num"));
-  ok((await p.textContent(".prog-est b")) === "Colgado activo 60 s", "no lista la estrella encendida este mes");
+  ok((await p.textContent(".prog-est b")) === "Colgado con hombros firmes 60 s", "no lista la estrella encendida este mes");
   await p.click('.ajr[data-ir^="#/progreso/"]'); await p.waitForSelector(".res");
   ok(await titulo(p) === "Hoy", "la sesión abierta no dice su día: " + await titulo(p));
   /* borrar la sesión: sin preguntar, con deshacer */
@@ -1293,6 +1293,15 @@ prueba("hoy-filas-superserie", async () => {
 });
 /* cuatro sesiones de la Base con las mismas sentadillas: tres sin mejorar, la escalera de piernas se traba y toca más liviana */
 const HIST_TRABA = ["2026-10-06", "2026-10-08", "2026-10-10", "2026-10-13"].map((f, i) => sEsc("t" + i, f, i, [["tirar", "dominada-negativa", [3 + i, 3, 3], [3, 5], 3], ["piernas", "sentadilla", [9, 9, 9], [8, 12], 9]]));
+prueba("hoy-sin-repetir-constelacion", async () => {
+  /* si el ejercicio ya lleva el nombre de la constelación, la fila de Hoy no lo repite */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy");
+  const [a, b] = await p.evaluate(() => [K.filaToca({constelacion: "parada-de-manos", ejercicio: "vertical-pared", tipo: "segundos", objetivo: [30]})[0], K.filaToca({constelacion: "front-lever", ejercicio: "fl-bolita", tipo: "segundos", objetivo: [10]})[0]]);
+  ok(a === "Parada de manos contra la pared", "repite la constelación: " + a);
+  ok(b === "Front lever · Horizontal hecho bolita", "sacó la constelación de más: " + b);
+  await ctx.close();
+});
 prueba("hoy-mas-liviana", async () => {
   /* una escalera en descarga lo dice en Hoy y en el día de la rutina, como la serie en la sesión */
   const {ctx, p} = await conReloj();

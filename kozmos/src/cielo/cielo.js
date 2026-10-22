@@ -1,6 +1,6 @@
 /* ===== Cielo: funciones puras. Entra el catálogo, las mediciones y las sesiones; sale el cielo. Nada de esto se guarda. =====
    Una estrella se enciende con una medición que llega a su umbral y queda encendida para siempre.
-   Las mediciones cuentan por ejercicio: 25 s de tuck anotados en «Tuck 20 s» también encienden «Tuck 10 s». */
+   Las mediciones cuentan por ejercicio: 25 s anotados en «Horizontal con rodillas al pecho 20 s» también encienden la de 10 s. */
 K.cielo = (() => {
   const DIA = 864e5;
   const TIPOS = {

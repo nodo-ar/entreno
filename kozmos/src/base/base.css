@@ -1,7 +1,7 @@
 /* ===== Base: página, letra y piezas chicas que usan todas las pantallas ===== */
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%; background:var(--bg)}
-body{margin:0; min-height:100dvh; background:var(--bg); color:var(--ink); font:600 var(--t-md)/1.4 var(--f-ui); -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent; overscroll-behavior-y:none}
+body{margin:0; min-height:100dvh; background:var(--bg); color:var(--ink); font:600 var(--t-md)/1.4 var(--f-ui); -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent; overscroll-behavior-y:none; text-wrap:pretty}
 button{font:inherit; color:inherit}
 h1,h2,h3{margin:0; font-weight:800; font-stretch:125%; letter-spacing:-.02em; line-height:1.05; text-wrap:balance}
 p{margin:0}
@@ -16,6 +16,7 @@ p{margin:0}
 #app{max-width:560px; margin:0 auto; padding:0 16px calc(104px + env(safe-area-inset-bottom,0px)); padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
 /* las transiciones entran de costado: que nunca aparezca desplazamiento horizontal mientras tanto */
 html,body{overflow-x:clip}
+.nw{white-space:nowrap}
 .view{display:flex; flex-direction:column; gap:12px}
 .vt-fwd{animation:vin-r .34s var(--ease) backwards}
 .vt-back{animation:vin-l .34s var(--ease) backwards}

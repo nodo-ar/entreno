@@ -3,37 +3,37 @@
  "ejercicios": [
   {
    "id": "munecas-dorso",
-   "nombre": "Muñecas en el dorso",
+   "nombre": "Apoyo en el dorso de las manos",
    "indicacion": "Manos apoyadas al revés, dedos hacia vos. Llevá el peso de a poco."
   },
   {
    "id": "cuervo",
-   "nombre": "Cuervo",
+   "nombre": "Rodillas sobre los codos",
    "indicacion": "Rodillas sobre los codos, mirada adelante. Inclinate hasta despegar los pies."
   },
   {
    "id": "vertical-pared",
-   "nombre": "Vertical contra la pared",
+   "nombre": "Parada de manos contra la pared",
    "indicacion": "Panza a la pared, brazos rectos, hombros empujando hacia arriba."
   },
   {
    "id": "pike-elevado",
-   "nombre": "Pike con pies elevados",
+   "nombre": "Flexión de hombros con pies en alto",
    "indicacion": "Pies en un banco, cadera arriba. Bajá la cabeza entre las manos."
   },
   {
    "id": "vertical-libre",
-   "nombre": "Vertical libre",
+   "nombre": "Parada de manos libre",
    "indicacion": "Brazos rectos, cuerpo en línea. Corregí con los dedos."
   },
   {
    "id": "flexion-vertical-pared",
-   "nombre": "Flexión en vertical",
+   "nombre": "Flexión cabeza abajo contra la pared",
    "indicacion": "Contra la pared, bajá la cabeza al piso y empujá hasta bloquear."
   },
   {
    "id": "fondo-ruso",
-   "nombre": "Fondo ruso",
+   "nombre": "Fondo pasando por los antebrazos",
    "indicacion": "En paralelas, bajá hasta apoyar los antebrazos y volvé a subir."
   },
   {
@@ -46,7 +46,7 @@
   },
   {
    "id": "muscle-up-negativa",
-   "nombre": "Negativa de muscle-up",
+   "nombre": "Bajar lento desde arriba de la barra",
    "indicacion": "Arrancá arriba de la barra y bajá lento pasando la transición.",
    "equipo": [
     "barra"
@@ -54,7 +54,7 @@
   },
   {
    "id": "muscle-up-impulso",
-   "nombre": "Muscle-up con impulso",
+   "nombre": "Subir arriba de la barra con impulso",
    "indicacion": "Balanceo corto, tirón a la cadera y pasá el pecho arriba.",
    "equipo": [
     "barra"
@@ -62,7 +62,7 @@
   },
   {
    "id": "muscle-up",
-   "nombre": "Muscle-up",
+   "nombre": "Subir arriba de la barra sin impulso",
    "indicacion": "Sin balanceo: tirón al pecho, transición y fondo arriba.",
    "equipo": [
     "barra"
@@ -70,7 +70,7 @@
   },
   {
    "id": "colgado-activo",
-   "nombre": "Colgado activo",
+   "nombre": "Colgado con hombros firmes",
    "indicacion": "Brazos rectos, hombros lejos de las orejas.",
    "equipo": [
     "barra"
@@ -79,57 +79,57 @@
   },
   {
    "id": "fl-bolita",
-   "nombre": "Front lever en bolita",
+   "nombre": "Horizontal hecho bolita",
    "indicacion": "Rodillas al pecho, espalda redonda, brazos rectos."
   },
   {
    "id": "fl-tuck",
-   "nombre": "Tuck front lever",
+   "nombre": "Horizontal con rodillas al pecho",
    "indicacion": "Rodillas al pecho, espalda plana, brazos rectos."
   },
   {
    "id": "fl-tuck-avanzado",
-   "nombre": "Tuck avanzado",
+   "nombre": "Horizontal con rodillas a la cadera",
    "indicacion": "Cadera abierta a 90°, espalda plana, brazos rectos."
   },
   {
    "id": "fl-una-pierna",
-   "nombre": "Front lever a una pierna",
-   "indicacion": "Una pierna estirada y la otra en tuck. Cadera alineada."
+   "nombre": "Horizontal con una pierna estirada",
+   "indicacion": "Una pierna estirada y la otra con la rodilla al pecho. Cadera alineada."
   },
   {
    "id": "fl-straddle",
-   "nombre": "Front lever straddle",
+   "nombre": "Horizontal con piernas abiertas",
    "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal."
   },
   {
    "id": "front-lever",
-   "nombre": "Front lever",
+   "nombre": "Horizontal completo",
    "indicacion": "Cuerpo entero horizontal, piernas juntas, brazos rectos."
   },
   {
    "id": "planche-lean",
-   "nombre": "Planche lean",
+   "nombre": "Inclinado adelante sobre las manos",
    "indicacion": "En plancha, llevá los hombros por delante de las manos."
   },
   {
    "id": "flexion-pseudo-planche",
-   "nombre": "Flexión pseudo planche",
+   "nombre": "Flexión con manos a la cintura",
    "indicacion": "Manos a la altura de la cadera, dedos hacia afuera."
   },
   {
    "id": "planche-tuck",
-   "nombre": "Tuck planche",
+   "nombre": "En el aire con rodillas al pecho",
    "indicacion": "Rodillas al pecho, pies en el aire, brazos rectos."
   },
   {
    "id": "planche-tuck-avanzado",
-   "nombre": "Tuck planche avanzado",
+   "nombre": "En el aire con rodillas a la cadera",
    "indicacion": "Espalda plana, cadera a la altura de los hombros."
   },
   {
    "id": "planche-straddle",
-   "nombre": "Planche straddle",
+   "nombre": "En el aire con piernas abiertas",
    "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal."
   },
   {
@@ -139,13 +139,13 @@
   },
   {
    "id": "flexion-arquera",
-   "nombre": "Flexión arquera",
+   "nombre": "Flexión cargando un brazo",
    "indicacion": "Un brazo hace la fuerza, el otro estirado al costado.",
    "lado": true
   },
   {
    "id": "dominada-arquera",
-   "nombre": "Dominada arquera",
+   "nombre": "Dominada cargando un brazo",
    "indicacion": "Tirá hacia una mano, el otro brazo estirado sobre la barra.",
    "equipo": [
     "barra"
@@ -153,7 +153,7 @@
   },
   {
    "id": "dominada-un-brazo-negativa",
-   "nombre": "Negativa a un brazo",
+   "nombre": "Bajar lento con un brazo",
    "indicacion": "Arrancá arriba y bajá lo más lento que puedas.",
    "equipo": [
     "barra"
@@ -174,17 +174,17 @@
   },
   {
    "id": "bandera-rodillas",
-   "nombre": "Bandera con rodillas",
+   "nombre": "Bandera con rodillas recogidas",
    "indicacion": "Brazo de abajo empuja, el de arriba tira. Rodillas al pecho."
   },
   {
    "id": "bandera-abierta",
-   "nombre": "Bandera abierta",
+   "nombre": "Bandera con piernas abiertas",
    "indicacion": "Piernas abiertas, cuerpo de costado en el aire."
   },
   {
    "id": "bandera",
-   "nombre": "Bandera humana",
+   "nombre": "Bandera completa",
    "indicacion": "Cuerpo recto y horizontal, piernas juntas."
   },
   {
@@ -195,53 +195,53 @@
   },
   {
    "id": "dragon-flag-bolita",
-   "nombre": "Dragon flag en bolita",
+   "nombre": "Bandera acostada con rodillas recogidas",
    "indicacion": "Apoyado en los hombros, bajá con las rodillas al pecho."
   },
   {
    "id": "l-sit-alto",
-   "nombre": "L-sit con pies arriba",
+   "nombre": "L-sit con pies en alto",
    "indicacion": "Como el L-sit, con los pies por encima de la cadera."
   },
   {
    "id": "dragon-flag-una-pierna",
-   "nombre": "Dragon flag a una pierna",
+   "nombre": "Bandera acostada con una pierna",
    "indicacion": "Una pierna estirada, cuerpo recto de hombros a pie."
   },
   {
    "id": "v-sit",
-   "nombre": "V-sit",
+   "nombre": "Piernas en V en el aire",
    "indicacion": "Piernas arriba, cerca de la cara, brazos empujando atrás."
   },
   {
    "id": "dragon-flag",
-   "nombre": "Dragon flag",
+   "nombre": "Bandera acostada completa",
    "indicacion": "Cuerpo recto de hombros a pies, bajá lento."
   },
   {
    "id": "pistol-silla",
-   "nombre": "Pistol a una silla",
+   "nombre": "Sentadilla a una pierna hasta una silla",
    "indicacion": "Bajá en una pierna hasta tocar la silla y subí sin impulso."
   },
   {
    "id": "shrimp",
-   "nombre": "Shrimp",
+   "nombre": "Sentadilla a una pierna, rodilla atrás",
    "indicacion": "Agarrá el pie de atrás y bajá hasta apoyar la rodilla.",
    "lado": true
   },
   {
    "id": "pistol",
-   "nombre": "Pistol",
+   "nombre": "Sentadilla a una pierna",
    "indicacion": "Una pierna al frente, bajá hasta abajo y subí."
   },
   {
    "id": "nordico-negativa",
-   "nombre": "Nórdico, negativa lenta",
+   "nombre": "De rodillas, caer lento hacia adelante",
    "indicacion": "Pies trabados, cadera estirada, bajá lo más lento posible."
   },
   {
    "id": "nordico",
-   "nombre": "Nórdico",
+   "nombre": "De rodillas, bajar y volver a subir",
    "indicacion": "Pies trabados, bajá y volvé a subir con los isquios."
   },
   {
@@ -270,22 +270,22 @@
   },
   {
    "id": "cosaca",
-   "nombre": "Cosaca",
+   "nombre": "Sentadilla de costado",
    "indicacion": "Una pierna estirada al costado, bajá sobre la otra."
   },
   {
    "id": "espagat-lateral-90",
-   "nombre": "Espagat lateral a 90°",
+   "nombre": "Piernas abiertas a 90°",
    "indicacion": "Piernas abiertas a 90°, cadera adelante, espalda recta."
   },
   {
    "id": "espagat-lateral",
-   "nombre": "Espagat lateral",
+   "nombre": "Espagat abierto al costado",
    "indicacion": "Piernas abiertas al costado hasta el piso."
   },
   {
    "id": "espagat-frontal",
-   "nombre": "Espagat frontal",
+   "nombre": "Espagat con una pierna adelante",
    "indicacion": "Una pierna adelante y otra atrás, cadera cuadrada."
   },
   {
@@ -305,7 +305,7 @@
   },
   {
    "id": "pike-pecho",
-   "nombre": "Pike",
+   "nombre": "Sentado, pecho a las piernas",
    "indicacion": "Sentado con piernas juntas, pecho a las rodillas."
   },
   {
@@ -315,7 +315,7 @@
   },
   {
    "id": "pancake",
-   "nombre": "Pancake",
+   "nombre": "Piernas abiertas, pecho al piso",
    "indicacion": "Piernas abiertas, pecho hacia el piso desde la cadera."
   },
   {
@@ -351,12 +351,12 @@
   },
   {
    "id": "double-under",
-   "nombre": "Double under",
+   "nombre": "Doble vuelta de soga",
    "indicacion": "Dos vueltas de soga por salto."
   },
   {
    "id": "criss-cross",
-   "nombre": "Criss-cross",
+   "nombre": "Saltos cruzando los brazos",
    "indicacion": "Cruzá los brazos en el aire y descruzá al salto siguiente."
   },
   {
@@ -522,8 +522,8 @@
   },
   {
    "id": "remo-fl-tuck",
-   "nombre": "Remo en front lever tuck",
-   "indicacion": "Desde el tuck front lever, tirá la barra al ombligo sin perder la línea.",
+   "nombre": "Remo en horizontal con rodillas al pecho",
+   "indicacion": "Horizontal con rodillas al pecho: tirá la barra al ombligo sin perder la línea.",
    "equipo": [
     "barra"
    ]
@@ -548,7 +548,7 @@
   },
   {
    "id": "dragon-flag-negativa",
-   "nombre": "Dragon flag negativa",
+   "nombre": "Bandera acostada, bajar lento",
    "indicacion": "Agarrado atrás de la cabeza, cuerpo recto como tabla, bajá en 5 segundos."
   },
   {
@@ -999,7 +999,7 @@
   },
   {
    "id": "pike-alcance",
-   "nombre": "Alcance en pike",
+   "nombre": "Sentado, manos más allá de los pies",
    "indicacion": "Sentado, piernas estiradas: medí cuánto pasan tus dedos la punta de los pies."
   },
   {

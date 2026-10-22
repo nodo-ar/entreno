@@ -1,6 +1,7 @@
 /* ===== Isla (de Entreno): lo que corre mientras mirás otra cosa, arriba y al centro, en negro como la del teléfono ===== */
 #isla{position:fixed; left:50%; top:calc(10px + env(safe-area-inset-top,0px)); z-index:60; height:40px; padding:0 14px 0 6px; display:flex; align-items:center; gap:10px; border:0; border-radius:20px; background:var(--isla); color:var(--on-isla); box-shadow:0 8px 24px -8px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08); font:500 var(--t-md) var(--f-mono); font-variant-numeric:tabular-nums; white-space:nowrap; cursor:pointer; transform:translateX(-50%); animation:islain .38s var(--ease) both}
 #isla[hidden]{display:none}
+#isla{max-width:calc(100vw - 32px)} #isla .tx{min-width:0; overflow:hidden; text-overflow:ellipsis} #isla .rl{flex:none}
 @keyframes islain{from{opacity:0; transform:translateX(-50%) scale(.8)}}
 #isla .ir{width:28px; height:28px; flex:none; border-radius:50%; background:conic-gradient(var(--c) calc(var(--p,0)*360deg),rgba(255,255,255,.18) 0); display:grid; place-items:center}
 #isla .ir::before{content:""; width:21px; height:21px; border-radius:50%; background:var(--isla)}

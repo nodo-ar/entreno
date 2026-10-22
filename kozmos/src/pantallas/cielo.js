@@ -42,7 +42,7 @@ K.P.constelacion = c => {
   K._recien = null;
   let estado = "";
   if (c.completa) estado = `<section class="cd cons-estado"><span class="lb" style="color:var(--${c.familia})">Constelación completa</span><b class="t1">${K.esc(c.nombre)}, completa.</b><p class="mute">Ya es parte de tu cielo.</p></section>`;
-  else if (p) estado = `<section class="cd cons-estado"><span class="lb">Próxima estrella · m${p.magnitud}</span><b class="t1">${K.esc(p.nombre)}</b>
+  else if (p) estado = `<section class="cd cons-estado"><span class="lb">Próxima estrella · m${p.magnitud}</span><b class="t1">${K.nw(p.nombre)}</b>
       <div class="bar" style="--c:var(--${c.familia})" role="progressbar" aria-label="Avance hacia ${K.esc(p.nombre)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(c.avance * 100)}"><i style="width:${(c.avance * 100).toFixed(1)}%"></i></div>
       <span class="ln mute"><span>Tu mejor marca</span>${p.mejor === null ? "<span>Todavía ninguna</span>" : `<span class="num">${K.esc(K.cielo.corto(p.prueba, p.mejor))}</span>`}</span></section>`;
   else if (c.pide.length) estado = `<section class="cd cons-estado"><span class="lb">Lo que sigue</span><b class="t1">Pide ${K.esc(K.pide(c.pide))}.</b><p class="mute">Si lo tenés, marcalo en tu equipo.</p></section>`;
@@ -51,7 +51,7 @@ K.P.constelacion = c => {
   /* lo que pide equipo que no marcaste se ve igual acá, tenue y diciendo qué pide */
   const ESTADO = {encendida: "encendida", proxima: "próxima", "por-delante": "por delante", "sin-equipo": "pide equipo que no marcaste"};
   const filas = c.estrellas.map(e => `<button type="button" class="est-fila ${e.estado}" data-ir="#/cielo/${c.id}/anotar/${e.orden}" style="--c:var(--${c.familia})">
-      <span class="st" aria-hidden="true"></span><span class="nom">${K.esc(e.nombre)}<span class="vh">, ${ESTADO[e.estado]}</span></span>
+      <span class="st" aria-hidden="true"></span><span class="nom">${K.nw(e.nombre)}<span class="vh">, ${ESTADO[e.estado]}</span></span>
       <span class="num mg">${e.estado === "sin-equipo" ? K.esc("Pide " + K.pide(e.falta))
         : e.mejor !== null && e.estado !== "encendida" ? K.esc(K.cielo.corto(e.prueba, e.mejor)) : "m" + e.magnitud}</span></button>`).join("");
   /* probar la próxima es lo principal; anotar algo hecho por tu cuenta queda al lado */
@@ -67,7 +67,7 @@ K.P.constelacion = c => {
     /* lo anotado a mano se borra acá; lo de una sesión es parte de la sesión */
     const fin = m.origen === "serie" ? `<span class="marca-ses lb" title="En una sesión">${K.ic("play")}</span>`
       : `<button type="button" class="ib chico" data-borrar="${K.esc(m.id)}" aria-label="Borrar la marca de ${K.esc(e.nombre)}">${K.ic("x")}</button>`;
-    return `<div class="marca"><span class="num mute">${K.esc(K.fechaCorta(m.fecha))}</span><span>${K.esc(e.nombre)}</span><span class="num">${K.esc(K.cielo.corto({tipo: m.tipo || e.prueba.tipo}, m.valor))}</span>${fin}</div>`;
+    return `<div class="marca"><span class="num mute">${K.esc(K.fechaCorta(m.fecha))}</span><span>${K.nw(e.nombre)}</span><span class="num">${K.esc(K.cielo.corto({tipo: m.tipo || e.prueba.tipo}, m.valor))}</span>${fin}</div>`;
   }).join("");
   /* arriba, la figura en su anillo (como la medalla de una prueba) y, de fondo y tenue, las estrellas de la constelación */
   const nuevas = recien.filter(id => c.estrellas.some(e => e.id === id)).length;

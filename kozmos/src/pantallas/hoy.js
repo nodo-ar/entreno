@@ -83,7 +83,11 @@ const corto = (tipo, o) => o === "max" ? "máx" : tipo === "segundos" ? `${o} s`
 K.filaToca = b => {
   if (b.hazana){ const h = K.hzDe(b.hazana); return [`Prueba · ${h ? h.nombre : b.nombre}`, b.formato === "escalera" ? "una más por minuto" : b.formato === "tiempo" ? "por tiempo" : b.reloj ? `${Math.round(b.reloj / 60)} min` : "máx"]; }
   if (b.prueba) return [`Prueba · ${K.estrella(b.estrella).nombre}`, K.cielo.corto(b, b.umbral)];
-  if (b.constelacion) return [`${K.cons(b.constelacion).nombre} · ${K.ej(b.ejercicio).nombre}`, K.queToca(b)];
+  if (b.constelacion){
+    // Si el ejercicio ya lleva el nombre de la constelación, no se repite.
+    const c = K.cons(b.constelacion).nombre, e = K.ej(b.ejercicio).nombre;
+    return [e.toLowerCase().startsWith(c.toLowerCase()) ? e : `${c} · ${e}`, K.queToca(b)];
+  }
   if (b.clase === "tramos") return [b.nombre || "", `${Math.round(b.tramos.reduce((a, x) => a + x.seg, 0) / 60)} min`];
   if (b.clase === "circuito") return [b.nombre, b.formato === "amrap" ? `${b.minutos} min` : `${b.rondas} ${b.rondas === 1 ? "vuelta" : "vueltas"}`];
   const ejs = [...new Set(b.pasos.map(p => p.ejercicio))], os = [...new Set(b.pasos.map(p => p.objetivo))];
@@ -153,7 +157,7 @@ K.P.hoyInicio = () => {
   const c = cielo.constelaciones.find(x => x.id === prin.constelacion), p = c.proxima;
   /* la próxima estrella: su constelación en su anillo, como la próxima prueba en Planes */
   const proxima = `<section class="cd hoy-prox" style="--c:var(--${c.familia})"><div class="pl-prox-cab"><span class="pl-prox-fig">${K.icono.constelacion(c, 64)}</span><div class="pl-prox-tx">
-      <span class="lb">Próxima estrella · ${K.esc(c.nombre)}</span><b class="t1">${K.esc(p.nombre)}</b></div></div>
+      <span class="lb">Próxima estrella · ${K.esc(c.nombre)}</span><b class="t1">${K.nw(p.nombre)}</b></div></div>
       <div class="bar" style="--c:var(--${c.familia})" role="progressbar" aria-label="Avance hacia ${K.esc(p.nombre)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(c.avance * 100)}"><i style="width:${(c.avance * 100).toFixed(1)}%"></i></div>
       <span class="ln mute"><span>Tu mejor marca</span>${p.mejor === null ? "<span>Todavía ninguna</span>" : `<span class="num">${K.esc(K.cielo.corto(p.prueba, p.mejor))}</span>`}</span></section>`;
   const filas = filasToca(plan.bloques);
@@ -252,6 +256,8 @@ const arco = (q, tot) => `${(Math.max(0, q) / tot * ANILLO).toFixed(1)} ${ANILLO
 const quedaTx = (q, tot) => !tot ? "Sin descanso" : q <= 0 ? "Ya podés seguir" : `de ${K.reloj(tot)}`;
 /* la persona que muestra el ejercicio; «chica» cuando comparte el centro con un anillo */
 const figura = (id, fam, chica) => id && K.POSES[id] ? `<div class="ses-fig${chica ? " con-anillo" : ""}">${K.fig.grande(id, fam)}</div>` : "";
+/* la figura con su número o su anillo al lado: en horizontal van juntos y la figura usa el alto que queda (un nombre largo ya no la empuja afuera) */
+const conFig = (id, fam, chica, resto) => { const f = figura(id, fam, chica); return f ? `<div class="ses-cuerpo">${f}${resto}</div>` : resto; };
 /* el número grande de una serie: la cuenta para prepararse, el reloj que corre o lo que toca */
 const grandeSerie = b => {
   const pr = K.sesion.prep();
@@ -297,7 +303,7 @@ K.P.sesion = () => {
       : `<span class="lb">De punta a punta, sin ayuda</span>`;
     const sig = K.sesion.ultima() ? "Es la última" : b.series > S.s + 1 ? (b.descanso ? `Después: descanso de ${K.reloj(b.descanso)}` : `Después: ${K.sesion.proxima()}`) : `Después: ${K.sesion.nombreBloque(S.plan.bloques[S.b + 1])}`;
     return acc + `<div class="ses serie"><div class="ses-a">${pasos}<div class="enc-tit ses-tit">${nom}<h1>${K.esc(e.nombre)}</h1></div>
-        <p class="mute ses-ind">${K.esc(hzB ? hzB.como : e.indicacion)}</p>${pausa}${figura(e.id, b.familia)}<div class="ses-reloj">${grande}</div>${escalaSes}</div>
+        <p class="mute ses-ind">${K.esc(hzB ? hzB.como : e.indicacion)}</p>${pausa}${conFig(e.id, b.familia, false, `<div class="ses-reloj">${grande}</div>`)}${escalaSes}</div>
       <div class="ses-b"><p class="ln ses-sig"><span class="mute">${K.esc(sig)}</span><span class="reloj num" data-r="total">${K.reloj(K.sesion.total())}</span></p>
         <button type="button" class="btn" id="s-listo">${K.ic("check")}Listo</button></div></div>`;
   }
@@ -342,9 +348,9 @@ K.P.tramo = (S, b) => {
       <div class="bar tramo-bar" style="--c:var(--${b.familia})" aria-hidden="true"><i data-r="tbar" style="width:${(avanceBloque(S, b) * 100).toFixed(1)}%"></i></div>
       <div class="enc-tit ses-tit"><span class="lb">${K.esc(x.ejercicio ? CLASE[x.clase] : b.nombre || "")} · ${S.s + 1} de ${b.tramos.length}</span><h1>${K.esc(tramoTx(x))}</h1></div>
       ${x.nota || (x.ejercicio && K.ej(x.ejercicio).indicacion) ? `<p class="mute ses-ind">${K.esc(x.nota || K.ej(x.ejercicio).indicacion)}</p>` : ""}${pausa}
-      ${figura(x.ejercicio, b.familia, true)}<div class="anillo-desc" data-r="anillo">
+      ${conFig(x.ejercicio, b.familia, true, `<div class="anillo-desc" data-r="anillo">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" class="pista"/><circle cx="100" cy="100" r="88" class="arco" data-r="arco" stroke-dasharray="${arco(q, x.seg)}" transform="rotate(-90 100 100)"/></svg>
-        <div class="anillo-tx"><span class="reloj num" data-r="queda" role="timer" aria-live="off">${K.reloj(Math.max(0, Math.ceil(q)))}</span><span class="lb">${K.esc(tramoLb(x))}</span></div></div>
+        <div class="anillo-tx"><span class="reloj num" data-r="queda" role="timer" aria-live="off">${K.reloj(Math.max(0, Math.ceil(q)))}</span><span class="lb">${K.esc(tramoLb(x))}</span></div></div>`)}
       <p class="ses-luego mute">${sig ? `Sigue: ${K.esc(tramoTx(sig))} · ${K.reloj(sig.seg)}` : S.b < S.plan.bloques.length - 1 ? `Después: ${K.esc(K.sesion.nombreBloque(S.plan.bloques[S.b + 1]))}` : "Es el último"}</p></div>
     <div class="ses-b"><p class="ln ses-sig"><span class="mute">Toda la sesión</span><span class="reloj num" data-r="total">${K.reloj(K.sesion.total())}</span></p>
       <button type="button" class="btn${S.pausa !== null ? "" : " sec"}" id="s-pausa">${K.ic(S.pausa !== null ? "play" : "pause")}${S.pausa !== null ? "Seguir" : "Pausa"}</button></div></div>`;
@@ -398,18 +404,18 @@ const pruebaGrande = b => {
 };
 K.P.prueba = (S, b, e, pausa) => {
   const est = K.estrella(b.estrella) || {nombre: e.nombre, magnitud: 5}, c = K.cons(b.constelacion), mide = MIDE.includes(b.tipo);
-  const tit = `<div class="enc-tit ses-tit"><span class="lb">${K.esc(c.nombre)} · m${est.magnitud}</span><h1>${K.esc(est.nombre)}</h1></div>`;
+  const tit = `<div class="enc-tit ses-tit"><span class="lb">${K.esc(c.nombre)} · m${est.magnitud}</span><h1>${K.nw(est.nombre)}</h1></div>`;
   if (!mide){
     const grande = b.tipo === "repeticiones" ? `<span class="reloj big num">${b.umbral}</span><span class="lb">repeticiones</span>`
       : b.tipo === "porcentaje" ? `<span class="reloj big num">+${b.umbral} %</span><span class="lb">de tu peso</span>` : `<span class="lb">De punta a punta, sin ayuda</span>`;
-    return `<div class="ses serie"><div class="ses-a">${tit}<p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}${figura(e.id, b.familia)}<div class="ses-reloj">${grande}</div></div>
+    return `<div class="ses serie"><div class="ses-a">${tit}<p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}${conFig(e.id, b.familia, false, `<div class="ses-reloj">${grande}</div>`)}</div>
       <div class="ses-b"><button type="button" class="btn" id="s-listo">${K.ic("check")}Listo</button></div></div>`;
   }
   const [n, l] = pruebaGrande(b), p = Math.min(1, K.sesion.prep() > 0 ? 0 : K.sesion.enFase() / umbralSeg(b));
   return `<div class="ses serie prueba${K.sesion.prep() > 0 ? " prep" : ""}" style="--c:var(--${b.familia})" data-r="ses"><div class="ses-a">${tit}<p class="mute ses-ind">${K.esc(e.indicacion)}</p>${pausa}
-      ${figura(e.id, b.familia, true)}<div class="anillo-desc prueba-anillo${p >= 1 ? " listo" : ""}${p <= 0 ? " vacio" : ""}" data-r="anillo">
+      ${conFig(e.id, b.familia, true, `<div class="anillo-desc prueba-anillo${p >= 1 ? " listo" : ""}${p <= 0 ? " vacio" : ""}" data-r="anillo">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" class="pista"/><circle cx="100" cy="100" r="88" class="arco" data-r="arco" stroke-dasharray="${(p * ANILLO).toFixed(1)} ${ANILLO.toFixed(1)}" transform="rotate(-90 100 100)"/></svg>
-        <div class="anillo-tx"><span class="reloj num" data-r="fase" role="timer" aria-live="off">${n}</span><span class="lb" data-r="fase-lb">${l}</span></div></div>
+        <div class="anillo-tx"><span class="reloj num" data-r="fase" role="timer" aria-live="off">${n}</span><span class="lb" data-r="fase-lb">${l}</span></div></div>`)}
       <p class="ses-luego mute">Te aviso con una vibración al llegar. Al soltar, tocá en cualquier lado.</p></div>
     <div class="ses-b"><button type="button" class="btn" id="s-listo">${K.ic("check")}Listo</button></div></div>`;
 };
@@ -587,8 +593,8 @@ K.P.resumen = (id, desde = "hoy") => {
       <p class="mute">${n ? `${n === 1 ? "Encendiste una estrella" : `Encendiste ${n} estrellas`}${porCons.length > 1 ? ` en ${porCons.length} constelaciones` : ` en ${K.esc(porCons[0].c.nombre)}`}.` : prs.length === 1 && p0.desde ? `${K.esc(p0.desde)}.` : prs.length === 1 && !p0.antes ? "Tu primera vez: ya tenés tu escala." : "Lo que sacaste fija dónde arranca lo que sigue."}</p>`;
   } else if (prim){
     tx = `<span class="lb" style="color:var(--${c.familia})">${enc.length > 1 ? `${enc.length} estrellas nuevas` : `Estrella nueva · m${prim.e.magnitud}`}</span>
-      <h1 class="t1 res-tit">${K.esc(prim.e.nombre)}, encendida.</h1>
-      <p class="mute">${c.completa ? `${K.esc(c.nombre)}, completa. Ya es parte de tu cielo.` : `${K.esc(c.nombre)}: ${c.encendidas} de ${c.total}.${c.proxima ? ` La que sigue es ${K.esc(c.proxima.nombre)}.` : c.pide.length ? ` Lo que sigue pide ${K.esc(K.pide(c.pide))}.` : ""}`}</p>`;
+      <h1 class="t1 res-tit">${K.nw(prim.e.nombre)}, encendida.</h1>
+      <p class="mute">${c.completa ? `${K.esc(c.nombre)}, completa. Ya es parte de tu cielo.` : `${K.esc(c.nombre)}: ${c.encendidas} de ${c.total}.${c.proxima ? ` La que sigue es ${K.nw(c.proxima.nombre)}.` : c.pide.length ? ` Lo que sigue pide ${K.esc(K.pide(c.pide))}.` : ""}`}</p>`;
   } else if (x.bloques.length === 1 && x.bloques[0].prueba){
     /* una prueba que no llegó: cuánto faltó, sin drama */
     const bp = x.bloques.find(b => b.prueba), e = K.estrella(bp.estrella), sp = bp.series[0];

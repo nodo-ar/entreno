@@ -32,7 +32,9 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Dejar escrita la letra de Kozmos** (Mona Sans y Geist Mono en lugar de la tipografía Nodo): viene de la dirección de arte B.
 - ~~**Aviso y deshacer a la vez** (Casandra): un aviso de error cierra el deshacer que estaba pendiente.~~ Hecho en la vuelta 23: el deshacer espera detrás del aviso y vuelve con el tiempo que le quedaba.
 - ~~**La fecha de Anotar pasada la medianoche** (Casandra): con la app abierta, «Hoy» queda en ayer.~~ Hecho en la vuelta 23: a la medianoche y al volver a la app, Hoy y el día sin elegir de Anotar pasan al día nuevo.
-- **Qué es cada estrella** (la persona): «Bolita», «Tuck» o «Draco» no se entienden solos. Una línea de explicación en el menú de Estrella cuando llegue el catálogo de ejercicios (etapa 5).
+- **Qué es cada estrella** (la persona): «Bolita», «Tuck» o «Draco» no se entienden solos. Una línea de explicación en el menú de Estrella cuando llegue el catálogo de ejercicios (etapa 5). *Vuelta 24: las estrellas y sus ejercicios ya dicen qué hacés; mirar con Fer si la línea todavía hace falta.*
+- **La fila de Hoy repite la constelación** (coherencia, vuelta 24): «Parada de manos · Parada de manos contra la pared». Sacar la constelación cuando el nombre del ejercicio ya la dice; lo decide Fer.
+- **«Horizontal completo» fuera del Cielo** (la persona, vuelta 24): en una rutina no dice que es colgado de la barra. Si Fer lo ve raro, «Horizontal colgado completo».
 - **Tu peso como dato fijo en Lastre** (la persona): hoy se ve como otro selector, aunque queda guardado.
 - **Probar la sesión en un Android real** (la ingeniera de campo, el soberano): vibración, campana con pantalla bloqueada, wake lock, y guardar y traer el respaldo desde la app instalada.
 - **Respaldo más estricto** (Casandra): validar `familia` y `encendio` de cada registro. Traducir ids a nombres para quien lo lea (el soberano).
