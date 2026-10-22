@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (el deshacer, solo al borrar) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (el primer día y Cosmos) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -92,6 +92,13 @@
   - Elegir no lo ofrece: Tu rumbo, Tu equipo, Tus días, Tu peso, Avisos, Tema y la persona de los dibujos. Lo elegido queda a la vista en el control (tilde o valor en la fila) y otro toque lo vuelve atrás. Regla escrita en `docs/REGLAS.md`.
   - Pruebas: 80 sin pantalla y 90 de pantallas, en verde. Nueva: sin-deshacer-al-elegir.
   - **Esperando a Fer**: el OK al tablero (capturas `m15/antes` y `m15/despues` en claro y grafito) y tres decisiones del acta (anotar una marca, seguir una rutina, tu peso).
+- **El primer día y Cosmos** (2026-10-22): vuelta 26 (acta `docs/actas/026-kozmos-primer-dia-y-cosmos.md`), rama `claude/project-thread-985fzq`, sin PR. Lo que Fer aprobó del boceto del motor (secciones 04 y 05):
+  - **Cosmos**: la pestaña se llama Cosmos y la pantalla, Tu cosmos. Todos los «cielo» a la vista pasan a «tu cosmos» (Hoy, la sesión, el resumen, Tu equipo). Rutas, ids y lo guardado no cambian.
+  - **El primer día**: «Que Kozmos arme tu día» va a Tu equipo (nada marcado; «Seguir» sin marcar guarda que no tenés equipo) y después a Tu rumbo, con los pasos «Tu equipo · Tu rumbo». Los pasos salen de `K.ARMAR` en `hoy.js`: Tu nivel se suma en el medio con una fila. En Vos, quien nunca contestó ve Tu equipo sin nada marcado y la fila dice «Sin elegir»; el motor sigue tratando `null` como «todavía no dijiste».
+  - **Sin barra al elegir**: en Tu rumbo y Tu equipo la barra baja y queda el botón principal abajo («Seguir» o «Listo»), con `sinNav` en `K.enc` y `K.pie`. En horizontal, el botón abajo a la derecha; en Vos horizontal, Tu equipo sigue como panel de Ajustes, con la barra.
+  - Pruebas: 80 sin pantalla y 93 de pantallas, en verde. Nuevas: cosmos-nombre, primer-dia-equipo y sin-nav-al-elegir.
+  - **Esperando a Fer**: el OK al tablero (capturas `m16/antes` y `m16/despues` en claro y grafito) y tres decisiones del acta (dos guías el primer día, «0 de 0» en Tu rumbo con equipo que no marcaste, «Sin elegir» en Vos).
+  - **Próximo**: el paso Tu nivel y el motor B (molde del día), según el boceto del motor.
 
 ## Dónde quedó
 

@@ -40,6 +40,10 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Respaldo más estricto** (Casandra): validar `familia` y `encendio` de cada registro. Traducir ids a nombres para quien lo lea (el soberano).
 - ~~**El deshacer dura lo que dura el aviso** (Casandra).~~ Hecho en la vuelta 23, misma causa que «Aviso y deshacer a la vez»: el deshacer ya no muere con el aviso que lo tapa. Si se quiere más que 5 s, es diseño: lo decide Fer.
 - ~~**Deshacer en cada elección** (Fer, 2026-10-22): el deshacer aparecía al elegir rumbo, equipo, días, tema, avisos, peso o la persona.~~ Hecho en la vuelta 25: solo aparece al borrar, terminar o reemplazar. *Espera el OK de Fer al tablero.*
+- **Tu rumbo con equipo que no marcaste** (Casandra, vuelta 26): las constelaciones que piden algo que no tenés dicen «0 de 0» y, si elegís una, Hoy dice «Lo que sigue pide…». Marcarlas en la fila («Pide barra»); lo decide Fer (acta 026).
+- **Dos guías el primer día** (coherencia, vuelta 26): Hoy dice «Elegí cómo · Elegí qué · Empezá» y «Que Kozmos arme tu día», «Tu equipo · Tu rumbo». Mirarlo con Fer cuando llegue Tu nivel.
+- **Tu nivel en el primer día** (Fer, boceto del motor): el paso del medio entre Tu equipo y Tu rumbo; se suma en `K.ARMAR`.
+- **Horizontal de Tu rumbo y Tu equipo** (la persona, vuelta 26): la columna derecha queda vacía arriba del botón.
 - **Atajos entre pestañas** (la cartógrafa): Tu equipo abierto desde Hoy o el cielo vuelve a Vos, no a donde estabas.
 - **Progreso en horizontal** (la cartógrafa): al borrar la sesión abierta se muestra la siguiente sin avisar; «Tus sesiones» queda abajo en la columna izquierda; el ⋯ no deja claro a qué lado pertenece.
 - **`AVISOS` definido en dos lugares** (la tijera).
