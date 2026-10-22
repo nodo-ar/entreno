@@ -87,10 +87,11 @@ K.filaToca = b => {
   const ejs = [...new Set(b.pasos.map(p => p.ejercicio))], os = [...new Set(b.pasos.map(p => p.objetivo))];
   return [ejs.map(e => K.ej(e).nombre).join(" + "), ejs.length > 1 ? `${b.series} series` : os.length === 1 ? `${b.series} × ${corto(b.tipo, os[0])}` : b.pasos.map(p => corto(p.tipo, p.objetivo)).join("·")];
 };
-const filasToca = bs => bs.map(b => { const [q, n] = K.filaToca(b);
-  return `<div class="ln toca${b.prueba || b.hazana ? " es-prueba" : ""}"><span class="tg"><i class="dot" style="--c:var(--${b.familia})"></i>${K.esc(q)}</span><span class="num">${K.esc(n)}</span></div>`; }).join("");
+/* una fila de lo que toca: el punto de su familia, qué y cuánto. La misma en Hoy y en los días de una rutina */
+K.filaLn = (q, n, fam, prueba = false) => `<div class="ln toca${prueba ? " es-prueba" : ""}"><span class="tg"><i class="dot" style="--c:var(--${fam})"></i>${K.esc(q)}</span><span class="num">${K.esc(n)}</span></div>`;
+const filasToca = bs => bs.map(b => { const [q, n] = K.filaToca(b); return K.filaLn(q, n, b.familia, !!(b.prueba || b.hazana)); }).join("");
 /* la semana de prueba se dice arriba de lo que toca: cuántas pruebas y cuántas estrellas pueden encender */
-const pruebaLn = plan => {
+const pruebaLn = K.pruebaLn = plan => {
   const sp = plan.semanaPrueba; if (!sp) return "";
   const n = sp.pruebas, e = plan.pruebas ? plan.pruebas.encienden.length : 0;
   return `<p class="hoy-ventana hoy-sp small"><b>Semana de prueba</b>${n ? ` · ${n} ${n === 1 ? "prueba" : "pruebas"}${e ? ` · ${n === 1 ? "enciende" : "encienden"} hasta ${e} ${e === 1 ? "estrella" : "estrellas"}` : ""}` : " · más liviana, para llegar descansado"}</p>`;

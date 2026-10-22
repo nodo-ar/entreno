@@ -1031,6 +1031,73 @@ prueba("escalera-diario-viejo", async () => {
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
+/* ===== Los días de una rutina: qué toca cada día, sin «Día 1 · Día 1» ===== */
+prueba("rutina-dias-nombres", async () => {
+  /* en las 26 rutinas: un día por tarjeta, sin el nombre repetido, y cada día dice qué se hace */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/planes");
+  const rs = await p.evaluate(() => K.RUTINAS.map(r => [r.id, r.dias]));
+  ok(rs.length === 26, "no están las 26 rutinas");
+  for (const [id, dias] of rs){
+    await ir(p, `#/planes/rutinas/${id}`); await p.waitForSelector(".rut-dia");
+    const ds = await p.$$eval(".rut-dia", xs => xs.map(x => ({t: x.querySelector(".lb, span")?.textContent || "", filas: x.querySelectorAll(".ln.toca").length})));
+    ok(ds.length === dias, `${id}: ${ds.length} días, esperaba ${dias}`);
+    for (const d of ds){
+      ok(!/d[ií]a\s+\S+\s*·\s*d[ií]a\s/i.test(d.t), `${id}: el día dice «${d.t}»`);
+      ok(d.filas > 0, `${id}: «${d.t}» no dice qué se hace`);
+    }
+  }
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("rutina-dias-te-toca", async () => {
+  /* la rutina que seguís: lo hecho de la semana, «Te toca» igual que Hoy, cada escalera con tu escalón y series × rango */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-toca");
+  const hoy = await p.$$eval(".hoy-toca .ln.toca .tg", xs => xs.flatMap(x => x.textContent.split(" + ").map(y => y.trim())));
+  await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia.te-toca");
+  ok(await p.$$eval(".rut-dia.hecho", x => x.length) === 2, "no marca los dos días hechos de la semana");
+  const toca = await p.$eval(".rut-dia.te-toca", x => ({t: x.querySelector(".lb").textContent, filas: [...x.querySelectorAll(".ln.toca")].map(y => [y.querySelector(".tg").textContent, y.querySelector(".num").textContent])}));
+  ok(toca.t === "Te toca · Día C", "el día que toca dice: " + toca.t);
+  ok(hoy.every(q => toca.filas.some(([n]) => n === q)), `«Te toca» no es lo de Hoy: ${hoy} / ${toca.filas.map(f => f[0])}`);
+  const tirar = await p.evaluate(() => K.ej(K.rutina.escalerasDe(K.rutinaDe("base_cali"), K.ctxRutina()).find(x => x.id === "tirar").paso.ejercicio).nombre);
+  ok(toca.filas.some(([n, v]) => n === tirar && /^\d+ × \d+–\d+$/.test(v)), `la escalera de tirar no dice ${tirar} con series × rango: ` + JSON.stringify(toca.filas));
+  ok(await p.evaluate(() => [...document.querySelectorAll(".rut-dia .ln.toca")].every(x => x.scrollWidth <= x.clientWidth + 1) && document.documentElement.scrollWidth <= innerWidth), "una fila de los días se desborda");
+  /* otra semana, con el menú: la de prueba lo dice y no hay «Te toca»; elegir no guarda nada ni suma pasos */
+  const h0 = await p.evaluate(() => history.length);
+  await p.click("#rut-sem"); await p.click('.pmi[data-id="4"]'); await p.waitForSelector(".rut-dias ~ *, .hoy-sp");
+  ok((await p.textContent(".rut .hoy-sp")).includes("Semana 4: prueba"), "la semana de prueba no lo dice");
+  ok(!(await p.$(".rut-dia.te-toca")) && (await p.textContent("#rut-sem")).includes("Semana 4"), "el menú no cambió de semana");
+  ok(await p.evaluate(() => history.length) === h0, "elegir la semana suma pasos al botón atrás");
+  /* una rutina que no seguís: los días con tus escalones, como si la empezaras hoy */
+  await ir(p, "#/planes/rutinas/gimnasta"); await p.waitForSelector(".rut-dia");
+  ok(!(await p.$(".rut-dia.te-toca")) && (await p.textContent(".rut-dias-tx")).includes("Si la empezás hoy"), "una rutina ajena no dice que es con tus escalones");
+  const tirarG = await p.evaluate(() => K.ej(K.rutina.escalerasDe(K.rutinaDe("gimnasta"), K.ctxRutina()).find(x => x.id === "tirar").paso.ejercicio).nombre);
+  ok((await p.textContent(".rut-dia")).includes(tirarG), "el día A de Gimnasta no arranca en tu escalón de tirar: " + tirarG);
+  /* motor: qué es y cuánto; y en Hoy el bloque ya no se llama como el día */
+  await ir(p, "#/planes/rutinas/c0a5"); await p.waitForSelector(".rut-dia");
+  ok(/Trote\s*8 × 1 min · 1:30 suave/.test(await p.textContent(".rut-dia")), "De 0 a 5 km no dice el trote: " + await p.textContent(".rut-dia"));
+  await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
+  ok(!/^D[ií]a/.test(await p.textContent(".hoy-toca .ln.toca .tg")), "en Hoy el bloque de motor se llama como el día");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("rutina-dias-horizontal", async () => {
+  /* en horizontal, los días van en la rutina abierta a la derecha, como Ajustes, sin desbordar */
+  const {ctx, p} = await conReloj({width: 844, height: 390});
+  await ir(p, "#/hoy"); await sembrarEsc(p);
+  await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".split>.abierto .rut-dia.te-toca");
+  /* la pantalla entra girando: se mide cuando quedó quieta */
+  await p.waitForFunction(() => !document.getAnimations().some(a => a.playState === "running"), null, {timeout: 3000}).catch(() => {});
+  const r = await p.evaluate(() => { const a = document.querySelector(".split>.lado").getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect(), d = document.querySelector(".split>.abierto .rut-dias").getBoundingClientRect();
+    return {lado: b.left >= a.right - 1 && d.left >= b.left - 1 && d.right <= b.right + 1, r: [a.left, a.right, b.left, b.right, d.left, d.right].map(Math.round), ancho: document.documentElement.scrollWidth <= innerWidth,
+      filas: [...document.querySelectorAll(".rut-dia .ln.toca")].every(x => x.scrollWidth <= x.clientWidth + 1)}; });
+  ok(r.lado && r.ancho && r.filas, "los días en horizontal: " + JSON.stringify(r));
+  await p.click(".split>.abierto #rut-sem"); await p.click('.pmi[data-id="3"]'); await p.waitForFunction(() => document.querySelector("#rut-sem")?.textContent.includes("Semana 3"));
+  ok(await p.$(".split>.abierto .rut-dias") && await p.$('.split>.lado .ajr[data-sel], .split>.lado .pl-rut[data-sel]'), "al cambiar de semana se pierde lo abierto");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
 prueba("escalera-horizontal", async () => {
   /* en horizontal los tres botones entran en la columna de la derecha, con Seguir a la vista; el resumen y Hoy también */
   const {ctx, p} = await conReloj({width: 844, height: 390});

@@ -3,12 +3,16 @@
 .rut .res-dato .lb{font-size:var(--t-xs)}
 .rut-sigo{font-weight:600; padding:0 2px}
 .rut-sigo .num{color:var(--ink-2)}
-.rut-semana{gap:0; padding:4px 16px}
-.rut-dia{padding:12px 0; font-size:var(--t-sm); font-weight:600}
-.rut-dia+.rut-dia{border-top:1px solid var(--line)}
-.rut-dia.hoy{color:var(--ink)}
-.rut-dia.hoy span:first-child::before{content:""; display:inline-block; width:8px; height:8px; margin-right:8px; border-radius:50%; background:var(--ink); vertical-align:1px}
-.rut-dia:not(.hoy){color:var(--ink-2)}
+/* los días de la rutina: una tarjeta por día con las filas de «Hoy toca»; la que te toca, con borde en tinta */
+.rut-dias-tit{display:flex; padding-right:2px}
+.rut-dias-tit>.lb.pie{padding-bottom:0}
+.rut-dias{display:grid; gap:8px}
+.rut-dia.te-toca{border:2px solid var(--ink); padding:15px}
+.rut-dia.te-toca>.ln:first-child .lb:first-child{color:var(--ink)}
+.rut-dia.hecho{padding-top:12px; padding-bottom:12px}
+.rut-dia.hecho .tg .ic{width:14px; height:14px}
+.rut-dia>p.small{margin:0}
+.rut-dias-tx{padding:0 4px; margin:0}
 /* el botón principal queda al alcance del pulgar, encima de la barra, como «Listo» en Tu rumbo */
 .rut>.btn,.hzn>.btn{position:sticky; bottom:calc(84px + env(safe-area-inset-bottom,0px)); z-index:2; box-shadow:var(--shadow)}
 .ajr .ses-fila small{display:block; font-weight:600; font-size:var(--t-xs); margin-top:2px}
