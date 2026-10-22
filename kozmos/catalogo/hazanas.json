@@ -3,8 +3,8 @@
  "hazanas": [
   {
    "id": "perseo",
-   "nombre": "Perseo",
-   "prueba": "Tirón",
+   "nombre": "Dominadas al máximo",
+   "prueba": "Cuántas dominadas estrictas seguidas",
    "familia": "fu",
    "texto": "Dominadas estrictas, todas las que salgan.",
    "como": "Colgado con los brazos rectos. Cuenta cada una con el pecho a la barra y bajando hasta estirar, sin hamacarte.",
@@ -44,8 +44,8 @@
   },
   {
    "id": "hercules",
-   "nombre": "Hércules",
-   "prueba": "Empuje",
+   "nombre": "Flexiones a ritmo",
+   "prueba": "Una cada dos segundos, hasta que no llegás",
    "familia": "fu",
    "texto": "Flexiones a ritmo parejo, todas las que salgan.",
    "como": "Una por cada dos segundos: bajás, tocás el puño con el pecho y subís. Cuando no podés seguir el ritmo, se termina.",
@@ -89,8 +89,8 @@
   },
   {
    "id": "sagitario",
-   "nombre": "Sagitario",
-   "prueba": "Del piso",
+   "nombre": "Sentarte y pararte",
+   "prueba": "Del 0 al 10: cuánto te apoyás para bajar y subir del piso",
    "familia": "fu",
    "texto": "Sentarte y pararte sin manos, de 0 a 10.",
    "como": "Descalzo, sentate en el piso con las piernas cruzadas y volvé a pararte. Empezás con 10: cada apoyo resta 1 y cada desequilibrio, medio.",
@@ -143,8 +143,8 @@
   },
   {
    "id": "andromeda",
-   "nombre": "Andrómeda",
-   "prueba": "Escalera de minutos",
+   "nombre": "Dominadas minuto a minuto",
+   "prueba": "Cada minuto, una más, hasta que no llegás",
    "familia": "fu",
    "texto": "Cada minuto, una dominada más, hasta que no llegues.",
    "como": "En el minuto 1 hacés 1, en el 2 hacés 2, y así. Descansás lo que sobra del minuto. Cuando no llegás a completar uno, tocás «No llegué»: cuenta el último completo.",
@@ -180,8 +180,8 @@
   },
   {
    "id": "casiopea",
-   "nombre": "Casiopea",
-   "prueba": "Compresión",
+   "nombre": "Alcance de piernas",
+   "prueba": "Sentado, piernas estiradas: cuántos centímetros pasás los pies",
    "familia": "ra",
    "texto": "Cuánto pasan tus dedos los pies, sentado en pike.",
    "como": "Entrá en calor antes. Sentado, piernas juntas y estiradas, plantas contra un escalón. Bajá despacio desde la cadera, sostené dos segundos y medí.",
@@ -223,8 +223,8 @@
   },
   {
    "id": "pegaso",
-   "nombre": "Pegaso",
-   "prueba": "Motor 12",
+   "nombre": "12 minutos en bici",
+   "prueba": "Kilómetros en 12 minutos a fondo",
    "familia": "mo",
    "texto": "Doce minutos en la bici fija: los km de su pantalla.",
    "como": "Cinco minutos suaves antes. Después, doce minutos lo más fuerte que puedas sostener parejo. Al terminar, anotá los km.",
@@ -274,8 +274,8 @@
   },
   {
    "id": "orion",
-   "nombre": "Orión",
-   "prueba": "Mil saltos",
+   "nombre": "1000 saltos de soga",
+   "prueba": "Cuánto tardás",
    "familia": "mo",
    "texto": "Mil saltos de soga, por tiempo.",
    "como": "Saltos bajos, en la punta de los pies. Si la soga se traba, seguís contando desde donde ibas. Tocás «Terminé» en el salto mil.",
@@ -330,8 +330,8 @@
   },
   {
    "id": "draco",
-   "nombre": "Draco",
-   "prueba": "Escuadra",
+   "nombre": "L-sit sostenido",
+   "prueba": "Cuántos segundos aguantás",
    "familia": "fu",
    "texto": "L-sit en el piso o en paralelas, al máximo.",
    "como": "Brazos rectos, hombros abajo y las piernas estiradas a la altura de la cadera. El reloj corre hasta que tocás.",

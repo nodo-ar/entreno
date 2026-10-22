@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-21 (pruebas, Modelo B) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (los días de una rutina) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -26,23 +26,32 @@
   - **Esperando a Fer**: el OK al tablero (capturas antes y después en claro y grafito).
   - **Próximo**: la investigación y el rediseño de Planes, rutinas y hazañas con progresión real.
 - **Escaleras de progresión, Modelo A pasos 0 a 2** (2026-10-21): Fer eligió el Modelo A de la investigación de progresión. Vuelta 17 (acta `docs/actas/017-kozmos-escaleras.md`), en la rama `claude/project-thread-985fzq`, sin PR:
-  - Paso 0: textos honestos en Lastre, Base y Primera dominada; Perseo Intermedio 4 · 8 · 12; ninguna estrella de «Entrena para» queda sin medir; siete ejercicios de barra ahora dicen que piden barra.
+  - Paso 0: textos honestos en Lastre, Base y Primera dominada; Dominadas al máximo, nivel Intermedio, 4 · 8 · 12; ninguna estrella de «Entrena para» queda sin medir; siete ejercicios de barra ahora dicen que piden barra.
   - Paso 1: `catalogo/escaleras.json` con 10 escaleras y el motor en `src/sesion/rutina.js` (subir, sumar por serie, bajar, descarga al trabarse, sostenes de 60 s, lastre de a 2,5 kg). El escalón sale del diario, sin estado guardado. Dos ejercicios nuevos con dibujo: dominada asistida y flexión con pausa.
   - Paso 2: «Sobró · Justo · No llegué» opcional en el descanso, «▲ nuevo» en la serie y la isla, «Tus escalones» con ▲ = ▼ en el resumen, y cada escalera como una escalerita en «Tu avance» de Hoy y en la rutina de Planes.
   - Las sesiones viejas cargan y cuentan; la serie suma campos opcionales (`escalera`, `rango`, `n`, `descarga`, `sensacion`) y el respaldo los lleva. Formato en `docs/kozmos-rutinas.md`.
   - Pruebas: 59 sin pantalla y 66 de pantallas, en verde.
   - **Esperando a Fer**: el OK al tablero; si «trabado» = tres sesiones sin mejorar le cierra; si la escalerita de «Tu avance» le gusta o prefiere filas con el ejercicio.
   - **Hecho después**: el Modelo B (abajo). Siguen los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
-- **Versiones publicadas**: kozmos-21 (Planes, PR #23) y kozmos-22 (escaleras, PR #24, la última). Registros en `docs/versiones/`.
+- **Versiones publicadas**: kozmos-21 (Planes, PR #23), kozmos-22 (escaleras, PR #24) y kozmos-23 (pruebas con escala y semana de prueba, PR #25, la última). Registros en `docs/versiones/`.
 - **Pruebas con escala y semana de prueba, Modelo B** (2026-10-21): vuelta 18 (acta `docs/actas/018-kozmos-pruebas.md`), en la rama `claude/project-thread-985fzq`, sin PR:
-  - Las 8 hazañas son pruebas que miden algo (`hazanas.json` versión 2): escala de magnitud 5 a 1, las estrellas que encienden y cada 42 días. Pegaso, Sagitario, Draco y Casiopea ahora miden km, puntos, segundos y centímetros.
-  - El Cielo lee las pruebas como marcas; nueve estrellas nuevas medidas con pruebas; Motor 12 reemplaza las estrellas de 8 y 12 sesiones de intervalos.
+  - Las 8 hazañas son pruebas que miden algo (`hazanas.json` versión 2): escala de magnitud 5 a 1, las estrellas que encienden y cada 42 días. 12 minutos en bici, Sentarte y pararte, L-sit sostenido y Alcance de piernas ahora miden km, puntos, segundos y centímetros.
+  - El Cielo lee las pruebas como marcas; nueve estrellas nuevas medidas con pruebas; «12 minutos en bici» reemplaza las estrellas de 8 y 12 sesiones de intervalos.
   - Las rutinas tienen `bloque` (carga + 1 de prueba). La semana de prueba es una descarga con las pruebas adelante, y la marca fija dónde arranca cada escalera.
   - Planes nuevo según el boceto (próxima prueba, pruebas y rutinas con menú de familia, tu rutina con «Prueba en la semana N»), la prueba abierta, la línea del escalón debajo de «Seguir esta rutina», Hoy con «Semana de prueba · N pruebas · encienden hasta M estrellas» y el resumen de una prueba.
   - Lo guardado sigue cargando: las hazañas por niveles se ven como «versión anterior». El respaldo pasa a formato 2 y lee el 1. Formato en `docs/kozmos-rutinas.md` y `docs/kozmos-respaldo.md`.
   - Pruebas: 67 sin pantalla y 71 de pantallas, en verde.
-  - **Esperando a Fer**: el OK al tablero; si los nombres mitológicos quedan con la prueba al lado; si Draco como «Escuadra» (L-sit) le cierra.
+  - **Decidido por Fer (2026-10-22)**: las pruebas pasan a nombres que dicen lo que miden (vuelta 19).
   - **Próximo**: los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
+- **Los días de una rutina** (2026-10-22): Fer pidió saber qué toca cada día de una rutina y que no diga «Día 1 · Día 1». Vuelta 19 (acta `docs/actas/019-kozmos-dias-de-rutina.md`), en la rama `claude/project-thread-985fzq`, sin PR:
+  - La causa: la pantalla anteponía «Día N ·» a nombres que ya decían el día (17 de 26 rutinas). Ahora `rutina.nombreDia` usa el del catálogo o «Día 1 · Máximas».
+  - La rutina muestra una tarjeta por día con las filas de «Hoy toca»: tu escalón con series × rango, lo de motor con su forma y duración, los minutos y la nota. «Te toca» en el que sigue (igual que Hoy), lo hecho marcado y un menú de semanas que dice cuál es de prueba. En una rutina que no seguís, los días con tus escalones.
+  - Un bloque de motor sin nombre se llama por lo que se hace (Trote, Bici…), también en Hoy y en la sesión. Sin barra, Cinco días de dominadas y Primera dominada ya no rompen el motor.
+  - **Nombres más claros (aprobados por Fer)**: las 8 pruebas se llaman por lo que miden (Dominadas al máximo, Flexiones a ritmo, Sentarte y pararte, Dominadas minuto a minuto, Alcance de piernas, 12 minutos en bici, 1000 saltos de soga, L-sit sostenido), con una línea que dice cómo; 16 rutinas cambian de nombre (por ejemplo, Correr tus primeros 5 km, Intervalos de 4 minutos, Abdomen firme); «abdomen» en lugar de «tronco». Los ids no cambian: lo guardado sigue contando. Las constelaciones del Cielo quedan como estaban.
+  - Registro de la versión 23 en `docs/versiones/kozmos-23.md`.
+  - Pruebas: 69 sin pantalla y 74 de pantallas, en verde.
+  - **Esperando a Fer**: el OK al tablero; si Hoy pasa a una fila por ejercicio como los días; qué hacer con las rutinas cuya última semana es de prueba (los 10 km, los 1000 saltos y las 100 flexiones caen en la descarga).
+  - **Sin subir**: la rama remota tiene historia vieja y el push necesita unirla con `-s ours`; esa unión quedó frenada por los permisos de la sesión. Los commits están locales.
 
 ## Dónde quedó
 

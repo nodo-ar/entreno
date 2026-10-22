@@ -178,5 +178,5 @@ K.plan = (() => {
     const medio = ts.slice(i0, i1), n = Math.ceil(medio.length / 2), nuevo = [...ts.slice(0, i0), ...medio.slice(0, n % 2 && medio.length > 1 ? n + 1 : n), ...ts.slice(i1)];
     return {...b, tramos: nuevo, series: nuevo.length, descarga: true};
   }
-  return {armar, objetivo, vezPasada, prueba, sePrueba, soloPrueba, hazanaDe, semanaDePrueba, pruebasDeLaSemana, deSemanaDePrueba, ENTRE_BLOQUES};
+  return {armar, objetivo, vezPasada, prueba, sePrueba, soloPrueba, hazanaDe, semanaDePrueba, pruebasDeLaSemana, deSemanaDePrueba, mitadTramos, ENTRE_BLOQUES};
 })();

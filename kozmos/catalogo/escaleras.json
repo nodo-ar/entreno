@@ -85,7 +85,7 @@
    "id": "lsit",
    "nombre": "L-sit",
    "familia": "fu",
-   "texto": "Sostenes del tronco, de la plancha a la V.",
+   "texto": "Sostenes de abdominales, de la plancha a la V.",
    "pasos": [
     {"ejercicio": "plancha", "tipo": "segundos", "meta": 60},
     {"ejercicio": "hollow", "tipo": "segundos", "meta": 45},
@@ -98,7 +98,7 @@
    "id": "dragon",
    "nombre": "Dragon flag",
    "familia": "fu",
-   "texto": "El tronco en movimiento, de los hollow rocks al dragon flag.",
+   "texto": "Los abdominales en movimiento, de los hollow rocks al dragon flag.",
    "pasos": [
     {"ejercicio": "hollow-rock", "tipo": "repeticiones", "rango": [12, 20]},
     {"ejercicio": "dragon-flag-negativa", "tipo": "repeticiones", "rango": [3, 6]},

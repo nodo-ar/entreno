@@ -69,7 +69,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - ~~**Rediseño de Planes, rutinas y hazañas con progresión real**~~: Modelo A (escaleras), pasos 0 a 2, hecho en la vuelta 17 (acta 017).
 - ~~**Modelo B de progresión: ciclos con semana de prueba**~~: hecho en la vuelta 18 (acta 018).
 - **Íconos nuevos** (vuelta 17): Fer aprobó asterismo en grande y pictograma del maniquí en chico. **Es lo próximo.**
-- **Dibujos propios para las pruebas nuevas** (vuelta 18): Del piso, el alcance en pike, Motor 12 y Mil saltos usan el dibujo de sentadilla profunda, pike, bici y soga.
+- **Dibujos propios para las pruebas nuevas** (vuelta 18): Sentarte y pararte, Alcance de piernas, 12 minutos en bici y 1000 saltos de soga usan el dibujo de sentadilla profunda, pike, bici y soga.
 - **La semana de prueba es larga** (Casandra, vuelta 18): hasta 3 estrellas y 2 hazañas antes de la descarga. Mirar con Fer si conviene repartir las pruebas en los días de esa semana.
 - **Hazañas de antes sin escala** (el historiador, vuelta 18): las sesiones por niveles no guardaron qué midieron; se ven como «versión anterior» y no encienden.
 - **Compresión según el largo de la pierna** (vuelta 18): hoy la escala es fija desde la punta de los pies.
@@ -78,7 +78,11 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Pirámides viejas sin evaluar** (el historiador, vuelta 17): las sesiones guardadas antes de las escaleras con objetivos distintos por serie ubican el escalón pero no suben ni bajan.
 - **Color de la estrella de Planes** (vuelta 16): va en tinta, como Vos, porque naranja, aqua y lima ya son de Hoy, Cielo y Progreso. Preguntar a Fer si quiere otro.
 - **Ícono de rutina y de Vos** (la abuela, vuelta 16): las tres lunas de la rutina y los tres puntos de Vos se parecen un poco a 20 px; mirarlo en el teléfono.
-- **Planes vive en `rutinas.js`** (la tijera): renombrar a `planes.js` cuando llegue el rediseño. Sigue ahí después de la vuelta 18.
+- **Superseries: Hoy las junta, la rutina no** (coherencia, vuelta 19): «Hoy toca» dice «Dominada + Sentadilla · 5 series»; los días de la rutina, una fila por ejercicio con series × rango. Resolverlo igual en los dos lados; ojo con que «Empezar» siga a la vista en Hoy.
+- **La última semana es de prueba** (Casandra, vuelta 19): en 24 de 26 rutinas. En las que terminan en un desafío (100 flexiones, Soga hasta 1000 saltos, Arranques con kettlebell, Intervalos de 1 minuto en bici, Correr de 5 a 10 km) el desafío cae en la descarga. Decidir con Fer: alargar el bloque, correr la prueba o dejar la última semana sin descarga.
+- **Notas del catálogo que no cierran** (vuelta 19): Intervalos de 4 minutos, día 2, dice «45 min suaves» y el tramo suave es de 40 (48 con la entrada y la vuelta); Bici: 20 s fuerte, 10 s suave dice «si llegás a más de 9, subí un nivel» sin decir de qué; el desafío de Soga hasta 1000 saltos estima 5 min para 1000 saltos (el motor cuenta 45 s por serie).
+- **Marca de descarga en los días** (vuelta 19): si una escalera está trabada, Hoy y los días muestran menos series sin decir «más liviana» en la fila.
+- **Planes vive en `rutinas.js`** (la tijera): renombrar a `planes.js` cuando llegue el rediseño. Sigue ahí después de la vuelta 19.
 
 ## Ideas (necesitan brief y OK)
 

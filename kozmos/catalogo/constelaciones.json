@@ -748,7 +748,7 @@
    "id": "draco",
    "nombre": "Draco",
    "familia": "fu",
-   "meta": "V-sit y dragon flag: el tronco de un gimnasta.",
+   "meta": "V-sit y dragon flag: los abdominales de un gimnasta.",
    "estrellas": [
     {
      "id": "draco.lsit-10s",
@@ -882,7 +882,7 @@
     },
     {
      "id": "una-pierna.del-piso-8",
-     "nombre": "Del piso: 8 puntos",
+     "nombre": "Sentarte y pararte: 8 puntos",
      "magnitud": 5,
      "orden": 2,
      "prueba": {
@@ -1134,7 +1134,7 @@
     },
     {
      "id": "espagat.del-piso-9",
-     "nombre": "Del piso: 9 puntos",
+     "nombre": "Sentarte y pararte: 9 puntos",
      "magnitud": 4,
      "orden": 3,
      "prueba": {
@@ -1427,7 +1427,7 @@
     },
     {
      "id": "motor.m12-10",
-     "nombre": "Motor 12: +10 % sobre tu primera vez",
+     "nombre": "12 minutos en bici: +10 % sobre tu primera vez",
      "magnitud": 3,
      "orden": 4,
      "prueba": {
@@ -1461,7 +1461,7 @@
     },
     {
      "id": "motor.m12-20",
-     "nombre": "Motor 12: +20 % sobre tu primera vez",
+     "nombre": "12 minutos en bici: +20 % sobre tu primera vez",
      "magnitud": 1,
      "orden": 6,
      "prueba": {
@@ -1482,7 +1482,7 @@
    "id": "soga",
    "nombre": "Soga",
    "familia": "mo",
-   "meta": "Mil saltos y el criss-cross.",
+   "meta": "1000 saltos y el criss-cross.",
    "estrellas": [
     {
      "id": "soga.100",
@@ -1518,7 +1518,7 @@
     },
     {
      "id": "soga.mil-12",
-     "nombre": "Mil saltos en 12 min",
+     "nombre": "1000 saltos de soga en 12 min",
      "magnitud": 4,
      "orden": 3,
      "prueba": {

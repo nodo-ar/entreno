@@ -425,7 +425,7 @@ prueba("catalogo-hazanas", () => {
   ok(["hercules", "pegaso", "sagitario", "orion", "andromeda", "draco", "perseo", "casiopea"].every(id => HAZANAS.hazanas.some(h => h.id === id)), "se perdió una hazaña de antes");
   for (const h of HAZANAS.hazanas){
     ok(FORMATOS.includes(h.formato) && h.nombre && h.prueba && h.texto && h.como, `${h.id}: formato, nombre, prueba o texto`);
-    ok(!nombres.has(h.nombre) && /^[A-ZÁÉÍÓÚ]/.test(h.nombre), `${h.id}: el nombre es propio y no se repite`); nombres.add(h.nombre);
+    ok(!nombres.has(h.nombre) && /^[A-ZÁÉÍÓÚ0-9]/.test(h.nombre), `${h.id}: el nombre empieza en mayúscula o número y no se repite`); nombres.add(h.nombre);
     ok(ej[h.mide.ejercicio] && cielo.TIPOS[h.mide.tipo] && h.mide.tipo !== "mejora", `${h.id}: mide algo que no existe`);
     const u = Array.isArray(h.escala) ? h.escala : h.escala.propia, menos = cielo.TIPOS[h.mide.tipo].mejor === "menos" && Array.isArray(h.escala);
     ok(u.length === 5 && u.every(Number.isFinite) && u.every((x, i) => !i || (menos ? x < u[i - 1] : x > u[i - 1])), `${h.id}: la escala no va de la magnitud 5 a la 1`);
@@ -920,6 +920,39 @@ prueba("plan-solo-con-prueba", () => {
   const p = plan.armar(ci, ["una-pierna"], [], "2026-10-21"), b = p.bloques.find(x => x.constelacion === "una-pierna");
   ok(b && b.ejercicio === "sentadilla-profunda" && b.entrena === "sagitario" && !b.estrella && !b.prueba, "el día no entrena lo de Sagitario: " + JSON.stringify(b));
   ok(!plan.sePrueba(ci.constelaciones.find(c => c.id === "una-pierna")), "una estrella de prueba no abre la ventana suelta");
+});
+
+/* ===== Los días de una rutina ===== */
+prueba("rutina-nombre-dia", () => {
+  /* nunca «Día 1 · Día 1»: si el catálogo ya dice el día, va solo; si no, su lugar y su nombre */
+  for (const [f, r] of RUTINAS) r.sesiones.forEach((s, i) => {
+    const n = rutina.nombreDia(r, i);
+    ok(n && !/d[ií]a\s+\S+\s*·\s*d[ií]a\s/i.test(n), `${f}: día ${i}: «${n}»`);
+    ok(/^Día \S+/.test(n), `${f}: día ${i} no empieza con «Día»: «${n}»`);
+  });
+  const r = RUTINAS.find(([f]) => f === "armstrong.json")[1], b = RUTINAS.find(([f]) => f === "base_cali.json")[1];
+  ok(rutina.nombreDia(r, 6) === "Día 2 · Pirámide" && rutina.nombreDia(b, 4) === "Día B", "nombres: " + rutina.nombreDia(r, 6) + " / " + rutina.nombreDia(b, 4));
+  ok(rutina.esSemanaDePrueba(b, 4) && !rutina.esSemanaDePrueba(b, 5) && rutina.esSemanaDePrueba(b, 8), "la semana de prueba de la Base es la 4 y la 8");
+});
+prueba("rutina-dias-filas", () => {
+  /* cada día de cada rutina, con y sin equipo, en semana común y de prueba, dice qué se hace y cuánto */
+  const ej = Object.fromEntries(EJ.ejercicios.map(e => [e.id, e]));
+  for (const equipo of [null, ["barra", "paralelas", "bici", "soga", "mancuernas", "kettlebell", "lastre", "pared"], []]) for (const [f, r] of RUTINAS) for (let w = 1; w <= r.semanas; w++) for (let k = 0; k < r.dias; k++){
+    const i = (w - 1) * r.dias + k, d = rutina.dia(r, i, {ej, equipo, descarga: rutina.esSemanaDePrueba(r, w)});
+    ok(d && d.minutos >= 5 && d.filas.length, `${f}: día ${i} vacío`);
+    for (const x of d.filas){
+      ok(!x.otro && x.q && x.n && !/undefined|NaN|null/.test(x.q + x.n), `${f}: día ${i}: fila rara ${JSON.stringify(x)}`);
+      ok(!/^d[ií]a\s/i.test(x.q), `${f}: día ${i}: un bloque se llama como el día («${x.q}»)`);
+    }
+  }
+  const base = RUTINAS.find(([f]) => f === "base_cali.json")[1], c0 = RUTINAS.find(([f]) => f === "c0a5.json")[1];
+  const a = rutina.dia(base, 0, {ej, equipo: ["barra"]});
+  ok(a.nombre === "Día A" && a.filas.some(x => x.q === "Dominada negativa" && x.n === "3 × 3–5" && x.escalera === "tirar"), "la Base no dice la escalera con series × rango: " + JSON.stringify(a.filas));
+  /* en la semana de prueba, la mitad de las series */
+  ok(rutina.dia(base, 9, {ej, equipo: ["barra"], descarga: true}).filas.some(x => x.q === "Dominada negativa" && x.n === "2 × 3–5"), "la semana de prueba no va a la mitad");
+  ok(JSON.stringify(rutina.dia(c0, 0, {ej}).filas.map(x => [x.q, x.n])) === '[["Trote","8 × 1 min · 1:30 suave"]]', "el trote: " + JSON.stringify(rutina.dia(c0, 0, {ej}).filas));
+  /* el bloque de motor se llama por lo que se hace, también en la sesión */
+  ok(rutina.deRutina(c0, 0, {ej}).bloques[0].nombre === "Trote", "el bloque de trote se llama " + rutina.deRutina(c0, 0, {ej}).bloques[0].nombre);
 });
 
 let fallas = 0;

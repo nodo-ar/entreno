@@ -40,7 +40,9 @@ K.rutina = (() => {
     return xs.find(e => e.pasos.some(p => puede(p.ejercicio, ej, equipo))) || xs[xs.length - 1] || null; };
   /* la escalera que podés hacer: solo los escalones que tu equipo permite, con su lugar en la escalera entera */
   function defEscalera(esc, ej = {}, equipo = null, desde, rango){
-    const pasos = esc.pasos.map((p, k) => ({...p, k})).filter(p => puede(p.ejercicio, ej, equipo));
+    const todos = esc.pasos.map((p, k) => ({...p, k})), deTuEquipo = todos.filter(p => puede(p.ejercicio, ej, equipo));
+    /* si tu equipo no permite ningún escalón, la escalera entera: la rutina ya avisa lo que pide */
+    const pasos = deTuEquipo.length ? deTuEquipo : todos;
     const indice = Object.fromEntries(esc.pasos.map((p, k) => [p.ejercicio, k]));
     const d = desde === undefined ? 0 : indice[desde] ?? 0;
     return {id: esc.id, real: true, nombre: esc.nombre, pasos, indice, rango, desde: Math.max(0, pasos.reduce((j, p, i) => p.k <= d ? i : j, 0))};
@@ -238,7 +240,9 @@ K.rutina = (() => {
   function deRutina(r, i, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false} = {}){
     const s = r.sesiones[i]; if (!s) return null;
     const crudos = s.bloques.map(cb => {
-      if (cb.tramos) return {clase: "tramos", familia: r.familia, nombre: cb.nombre || s.nombre, tramos: tramos(cb.tramos, ej, equipo), ...(cb.mide ? {mide: cb.mide} : {}), grupo: null};
+      if (cb.tramos){ const ts = tramos(cb.tramos, ej, equipo);
+        /* sin nombre en el catálogo, el bloque se llama por lo que se hace («Trote», «Bici», «Posturas»), no por el día */
+        return {clase: "tramos", familia: r.familia, nombre: cb.nombre || nombreTramos(ts, {mide: cb.mide, equipo: r.equipo, sesion: s.nombre}, ej), tramos: ts, ...(cb.mide ? {mide: cb.mide} : {}), grupo: null}; }
       return bloqueSeries(r, cb, {ej, equipo, sesiones, marcas, descarga});
     });
     const bloques = [];
@@ -251,6 +255,86 @@ K.rutina = (() => {
       k = j;
     }
     return {bloques, minutos: minutos(bloques), rutina: {id: r.id, sesion: i}, nombre: s.nombre, ...(s.nota ? {nota: s.nota} : {})};
+  }
+
+  /* ===== Los días de una rutina, para saber qué toca antes de empezar =====
+     El nombre de un día: el del catálogo si ya dice «Día A» o «Día 1»; si no, su lugar en la semana y su nombre
+     («Día 1 · Máximas»). Nunca «Día 1 · Día 1». */
+  const DIA = /^d[ií]a\s/i;
+  function nombreDia(r, i){
+    const s = r.sesiones[i]; if (!s) return "";
+    const k = i % (r.dias || 1) + 1;
+    return !s.nombre ? `Día ${k}` : DIA.test(s.nombre) ? s.nombre : `Día ${k} · ${s.nombre}`;
+  }
+  /* ¿la semana w (desde 1) es de prueba? Cada bloque son «carga» semanas y después la de prueba */
+  const esSemanaDePrueba = (r, w) => { const bl = r.bloque || {carga: 4, prueba: 1}; return (w - 1) % (bl.carga + bl.prueba) >= bl.carga; };
+  /* 45 → «45 s», 240 → «4 min», 90 → «1:30» */
+  const dur = seg => seg < 60 ? `${seg} s` : seg % 60 ? `${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, "0")}` : `${seg / 60} min`;
+  const TRABAJO = ["fuerte", "trabajo", "postura"];
+  /* lo que se hace en un bloque de tramos: lo fuerte, el trabajo o las posturas; si no hay, lo suave (una salida en zona 2) */
+  const trabajo = ts => { const w = ts.filter(t => TRABAJO.includes(t.clase)); return w.length ? w : ts.filter(t => t.clase === "suave"); };
+  /* sin ejercicios en los tramos: trote, bici, soga o, si no, el nombre del día cuando dice algo («Cruzado») */
+  function actividad({mide, equipo = [], sesion = ""} = {}, ej = {}){
+    if (mide && mide.ejercicio === "trote") return ej.trote?.nombre || "Trote";
+    if ((equipo || []).includes("bici") || mide?.ejercicio === "bici") return "Bici";
+    if ((equipo || []).includes("soga")) return "Soga";
+    return sesion && !DIA.test(sesion) ? sesion : "Intervalos";
+  }
+  function nombreTramos(ts, o = {}, ej = {}){
+    if (ts.every(t => t.clase === "entrada")) return "Entrada en calor";
+    if (ts.every(t => t.clase === "vuelta")) return "Vuelta a la calma";
+    const w = trabajo(ts), es = [...new Set(w.filter(t => t.ejercicio).map(t => t.ejercicio))];
+    if (es.length === 1) return ej[es[0]]?.nombre || es[0];
+    if (es.length > 1) return w.every(t => t.clase === "postura") ? "Posturas" : "Circuito";
+    return actividad(o, ej);
+  }
+  /* las filas de un bloque de tramos: la entrada en calor en una fila; si no, cada ejercicio con cuántas veces y cuánto,
+     o, sin ejercicios, lo que se hace y su forma («8 × 1 min · 1:30 suave») */
+  function filasTramos(b, ej = {}){
+    const ts = b.tramos, total = ts.reduce((t, x) => t + x.seg, 0), fam = b.familia;
+    if (ts.every(t => t.clase === "entrada") || ts.every(t => t.clase === "vuelta")) return [{q: b.nombre, n: `${Math.max(1, Math.round(total / 60))} min`, familia: fam}];
+    const w = trabajo(ts), con = w.filter(t => t.ejercicio);
+    if (con.length) return [...new Set(con.map(t => t.ejercicio))].map(e => {
+      const xs = con.filter(t => t.ejercicio === e), n = xs.length;
+      const una = xs[0].reps && xs.every(t => t.reps === xs[0].reps) ? String(xs[0].reps) : xs.every(t => t.seg === xs[0].seg) ? dur(xs[0].seg) : null;
+      return {q: ej[e]?.nombre || e, n: una ? (n > 1 ? `${n} × ${una}` : una) : dur(xs.reduce((t, x) => t + x.seg, 0)), familia: fam};
+    });
+    if (!w.length) return [{q: b.nombre, n: `${Math.max(1, Math.round(total / 60))} min`, familia: fam}];
+    let n = dur(w.reduce((t, x) => t + x.seg, 0));
+    if (w.length > 1 && !w.every(t => t.seg === w[0].seg)) n += ` en ${w.length} tramos`;
+    else if (w.length > 1){
+      const i = ts.indexOf(w[0]), entre = ts.slice(i + 1, ts.indexOf(w[w.length - 1])).find(t => !TRABAJO.includes(t.clase) && t.clase !== w[0].clase);
+      n = `${w.length} × ${dur(w[0].seg)}${entre ? ` · ${dur(entre.seg)} ${entre.clase === "pausa" ? "de pausa" : "suave"}` : ""}`;
+      /* lo suave largo antes de lo fuerte también es parte del día: «30 min suave + 4 × 20 s» */
+      const antes = ts.slice(0, i).filter(t => t.clase === "suave").reduce((t, x) => t + x.seg, 0);
+      if (antes >= 300) n = `${dur(antes)} suave + ${n}`;
+    }
+    return [{q: b.nombre, n, familia: fam}];
+  }
+  /* las filas de un bloque de series: una por ejercicio (una superserie da dos), con series × rango; sin rango, lo que se pide */
+  const cortoV = (tipo, o) => o === "max" ? "máx" : tipo === "segundos" ? `${o} s` : String(o);
+  function filasSeries(b, ej = {}){
+    return [...new Set(b.pasos.map(p => p.ejercicio))].map(e => {
+      const ps = b.pasos.filter(p => p.ejercicio === e), p = ps[0], n = ps.length;
+      let v;
+      const veces = x => n > 1 ? `${n} × ${x}` : x, os = [...new Set(ps.map(x => x.objetivo))];
+      if (p.tipo === "logrado") v = `${n} ${n === 1 ? "intento" : "intentos"}`;
+      else if (p.rango && p.tipo !== "segundos") v = veces(p.rango[0] === p.rango[1] ? String(p.rango[0]) : `${p.rango[0]}–${p.rango[1]}`);
+      else if (os.length === 1) v = veces(cortoV(p.tipo, os[0]));
+      /* una pirámide larga no entra en una fila: «11 series, de 1 a máx» */
+      else v = n > 5 ? `${n} series, de ${cortoV(p.tipo, ps[0].objetivo)} a ${cortoV(p.tipo, ps[n - 1].objetivo)}` : ps.map(x => cortoV(p.tipo, x.objetivo)).join(" · ");
+      if (p.kg) v += ` · ${String(p.kg).replace(".", ",")} kg`;
+      return {q: ej[e]?.nombre || e, n: v, familia: b.familia, ...(p.escalera ? {escalera: p.escalera} : {}), ...(p.nuevo ? {nuevo: p.nuevo} : {}), ...(p.descarga ? {descarga: true} : {})};
+    });
+  }
+  /* las filas de una sesión armada; lo que no es de la rutina (una prueba) va como {otro: bloque} y lo dibuja la pantalla */
+  const filas = (bs, ej = {}) => bs.flatMap(b => b.prueba || b.hazana || b.constelacion ? [{otro: b}] : b.clase === "tramos" ? filasTramos(b, ej) : b.pasos ? filasSeries(b, ej) : [{otro: b}]);
+  /* un día de la rutina como lo harías hoy: tus escalones de ahora, con su nombre, los minutos y la nota */
+  function dia(r, i, ctx = {}){
+    const p = deRutina(r, i, ctx); if (!p) return null;
+    /* en la semana de prueba lo de motor también va a la mitad, como lo arma la sesión */
+    const bs = ctx.descarga && K.plan?.mitadTramos ? p.bloques.map(b => b.clase === "tramos" ? K.plan.mitadTramos(b) : b) : p.bloques;
+    return {nombre: nombreDia(r, i), minutos: ctx.descarga ? minutos(bs) : p.minutos, filas: filas(bs, ctx.ej), nota: p.nota || ""};
   }
 
   /* ===== Hazañas: pruebas estandarizadas con escala (Modelo B) =====
@@ -342,7 +426,7 @@ K.rutina = (() => {
   /* el próximo día de entrenamiento después de hoy, como número de días que faltan (1 = mañana) */
   const faltan = (dias, f) => { if (!dias || !dias.length) return 1; const h = diaSemana(f); for (let k = 1; k <= 7; k++) if (dias.includes((h + k) % 7)) return k; return 1; };
 
-  return {NIVELES, SENS, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
+  return {NIVELES, SENS, nombreDia, esSemanaDePrueba, nombreTramos, filasTramos, filasSeries, filas, dia, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
     escalera, escaleras, elegirEscalera, defEscalera, defSuelto, escalon, metas, arranque, inferir, sensDe, escalerasDe, cambios,
     veces, anteriores, umbrales, magnitud, cuando, proximaPrueba, hazanasDe, supera, CADA};
 })();

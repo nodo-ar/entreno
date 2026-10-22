@@ -1012,7 +1012,7 @@
   },
   {
    "id": "mil-saltos",
-   "nombre": "Mil saltos de soga",
+   "nombre": "1000 saltos de soga",
    "indicacion": "Lo más rápido que puedas. Si la soga se traba, seguís desde donde ibas.",
    "equipo": [
     "soga"
