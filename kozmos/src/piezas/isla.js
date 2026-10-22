@@ -11,7 +11,9 @@ K.isla = {
     }
     b.hidden = false; b.dataset.ir = ir;
     b.style.setProperty("--c", `var(--${familia})`); b.style.setProperty("--p", Math.max(0, Math.min(1, p)));
-    b.innerHTML = `<span class="ir" aria-hidden="true"></span><span>${K.esc(texto)}</span>`;
+    /* un nombre largo se corta con «…»; el reloj del final queda siempre entero */
+    const m = /^(.*\S)\s+(\d+:\d\d)$/.exec(texto);
+    b.innerHTML = `<span class="ir" aria-hidden="true"></span>` + (m ? `<span class="tx">${K.esc(m[1])}</span> <span class="rl">${K.esc(m[2])}</span>` : `<span class="tx">${K.esc(texto)}</span>`);
     b.setAttribute("aria-label", texto);
     document.body.classList.add("con-isla");
     /* recién salido de la sesión: el anillo del descanso se achica hasta el aro de la isla y la isla se estira desde ahí */

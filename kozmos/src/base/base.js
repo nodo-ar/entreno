@@ -82,3 +82,5 @@ K.$ = (s, el = document) => el.querySelector(s);
 K.$$ = (s, el = document) => [...el.querySelectorAll(s)];
 K.reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 K.esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+/* un nombre con su medida al final («… 30 s», «… ×8», «+25 %»): la medida no se corta de su número al partir la línea */
+K.nw = s => K.esc(s).replace(/(\S+) (s|min|cm|km|%|×\d+)(?=$|[\s,.;:])/g, '<span class="nw">$1 $2</span>');

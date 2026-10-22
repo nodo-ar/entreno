@@ -22,6 +22,8 @@
 .fig.chica .barra{stroke-width:9}
 .fig.chica .par,.fig.chica .silla,.fig.chica .soga,.fig.chica .cuadro,.fig.chica .rueda{stroke-width:6}
 /* en la serie: el centro de la pantalla, entre la indicación y el número */
+/* en vertical el envoltorio no existe para el diseño: la figura y el número siguen siendo hijos de la columna */
+.ses-cuerpo{display:contents}
 .ses-fig{width:min(260px,64vw); margin:auto auto 0}
 .ses-fig + .ses-reloj{margin-top:0; padding-top:4px}
 /* con un anillo (tramos, pruebas de estrella) la figura va arriba y el anillo se achica para que entren los dos */
@@ -41,9 +43,11 @@
 .circ-items .ln .fig-chica + span{flex:1}
 @media (orientation:landscape) and (max-height:520px){
   /* en horizontal la figura va al lado del número, no arriba: así entra todo sin desplazar */
-  .ses-a:has(>.ses-fig){display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:16px; align-content:start}
-  .ses-a:has(>.ses-fig)>*{grid-column:1/-1}
-  .ses .ses-a>.ses-fig{grid-column:1; width:auto; height:min(184px,47vh); margin:0 0 6px}
-  .ses .ses-a>.ses-fig .fig{height:100%; width:auto}
-  .ses .ses-a>.ses-fig + .ses-reloj,.ses .ses-a>.ses-fig + .anillo-desc{grid-column:2; margin:auto 0}
+  /* la figura usa el alto que queda debajo del título (hasta 184 px): un nombre de dos renglones la achica, no la saca de la pantalla */
+  .ses:has(>.ses-a>.ses-cuerpo){height:calc(100dvh - 84px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
+  .ses>.ses-a:has(>.ses-cuerpo){align-self:stretch; min-height:0}
+  .ses-cuerpo{display:flex; align-items:center; gap:16px; flex:1 1 0; min-height:0; max-height:min(184px,47vh); margin-bottom:6px}
+  .ses .ses-cuerpo>.ses-fig{flex:none; width:auto; height:100%; margin:0}
+  .ses .ses-cuerpo>.ses-fig .fig{height:100%; width:auto}
+  .ses .ses-cuerpo>.ses-fig + .ses-reloj,.ses .ses-cuerpo>.ses-fig + .anillo-desc{flex:1; min-width:0; margin:auto 0}
 }
