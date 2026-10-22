@@ -712,8 +712,8 @@ prueba("hoy-molde", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await sembrarMolde(p, {rumbo: ["front-lever", "planche"], equipo: ["barra", "bici"]}); await p.waitForSelector("#s-empezar");
   /* el día por partes, siempre en el mismo orden */
-  /* con la bici, el cierre es bici y el día llega a la hora: el abdomen es lo primero que se va (con planche y front lever ya hay core de sobra) */
-  ok(JSON.stringify(await partes(p)) === JSON.stringify(["Entrada en calor", "Habilidad · descansado", "Fuerza · de a dos", "Cierre"]), "las partes: " + await partes(p));
+  /* con la bici, el cierre son 5 min de bici y el abdomen entra en la hora */
+  ok(JSON.stringify(await partes(p)) === JSON.stringify(["Entrada en calor", "Habilidad · descansado", "Fuerza · de a dos", "Abdomen", "Cierre"]), "las partes: " + await partes(p));
   ok(await p.evaluate(() => K.hoyPlan().minutos <= 60), "el día pasa la hora");
   const marcas = await p.$$eval(".hoy-toca .toca-marca", xs => xs.map(x => x.textContent));
   ok(marcas[0] === "Para Front lever" && /^Camino a .+ · para Planche$/.test(marcas[1]), "las habilidades no dicen para qué meta son: " + marcas);
