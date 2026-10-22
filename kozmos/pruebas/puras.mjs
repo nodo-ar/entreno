@@ -955,6 +955,118 @@ prueba("rutina-dias-filas", () => {
   ok(rutina.deRutina(c0, 0, {ej}).bloques[0].nombre === "Trote", "el bloque de trote se llama " + rutina.deRutina(c0, 0, {ej}).bloques[0].nombre);
 });
 
+/* ===== Filas de Hoy y la meta (vuelta 20) ===== */
+/* las rutinas que terminan en un desafío o en una prueba de lo que buscan: decidido caso por caso (acta 020) */
+const CON_META = ["c0a5", "c5a10", "cien", "gibala", "gimnasta", "kb1515", "soga"];
+prueba("rutina-meta-en-el-catalogo", () => {
+  const ej = Object.fromEntries(EJ.ejercicios.map(e => [e.id, e]));
+  ok(JSON.stringify(RUTINAS.filter(([, r]) => r.bloque.meta).map(([, r]) => r.id).sort()) === JSON.stringify(CON_META), "las rutinas con meta: " + RUTINAS.filter(([, r]) => r.bloque.meta).map(([, r]) => r.id));
+  for (const [f, r] of RUTINAS){
+    const xs = rutina.semanas(r), L = r.bloque.carga + r.bloque.prueba, N = r.semanas;
+    ok(xs.length === N && xs.every((x, k) => x.n === k + 1 && ["carga", "prueba", "meta"].includes(x.tipo)), `${f}: semanas ${JSON.stringify(xs)}`);
+    ok(xs.some(x => x.tipo === "prueba"), `${f}: ninguna semana de prueba`);
+    /* nunca dos semanas livianas seguidas, ni una prueba pegada a otra */
+    xs.forEach((x, k) => ok(x.tipo !== "prueba" || k === 0 || xs[k - 1].tipo === "carga", `${f}: la semana ${x.n} de prueba sigue a otra que no es de carga`));
+    if (!r.bloque.meta){
+      /* sin meta, el ciclo de siempre: «carga» semanas y una de prueba */
+      ok(xs.every(x => (x.tipo === "prueba") === ((x.n - 1) % L >= r.bloque.carga)), `${f}: sin meta cambió el ciclo`);
+      continue;
+    }
+    ok(r.bloque.meta === true || (typeof r.bloque.meta === "string" && r.bloque.meta.length && r.bloque.meta.length <= 30), `${f}: la meta se dice corta: ${r.bloque.meta}`);
+    /* la última semana es la meta, completa: ni descarga ni «más liviana» */
+    ok(xs[N - 1].tipo === "meta" && rutina.esMeta(r, N) && !rutina.esSemanaDePrueba(r, N) && xs.filter(x => x.tipo === "meta").length === 1, `${f}: la última semana no es la meta`);
+    for (let k = 0; k < r.dias; k++){
+      const d = rutina.dia(r, (N - 1) * r.dias + k, {ej, equipo: null, descarga: rutina.esSemanaDePrueba(r, N)});
+      ok(d.filas.every(x => !x.descarga), `${f}: la meta tiene una fila más liviana: ${JSON.stringify(d.filas)}`);
+    }
+    /* si la semana de prueba caía en la última, pasó a la anterior y cierra ese bloque */
+    if ((N - 1) % L >= r.bloque.carga) ok(xs[N - 2].tipo === "prueba" && xs[N - 2].bloque === xs[N - 1].bloque, `${f}: la semana de prueba no pasó a la ${N - 1}`);
+  }
+  /* los casos que se ven: 100 flexiones prueba en la 5 y la meta en la 6; De 5 a 10 km, pruebas en la 4 y la 7 */
+  const tipos = id => rutina.semanas(RUTINAS.find(([, r]) => r.id === id)[1]).map(x => x.tipo[0]).join("");
+  ok(tipos("cien") === "ccccpm" && tipos("c5a10") === "cccpccpm" && tipos("soga") === "ccpm" && tipos("c0a5") === "cccpcccpm" && tipos("base_cali") === "cccpcccp", "semanas: " + ["cien", "c5a10", "soga", "c0a5", "base_cali"].map(tipos));
+});
+/* 100 flexiones chica: 6 semanas de a 2 días, bloques de 2 + 1, con meta: prueba en la 3 y la 5, la 6 es la meta */
+const RM = {...RP, id: "rm", bloque: {carga: 2, prueba: 1, meta: "la meta"}};
+const deRm = (i, fecha, extra = {}) => ({...deRut(i, fecha, extra), rutina: {id: "rm", sesion: i}});
+prueba("semana-de-prueba-y-meta", () => {
+  const perfil = {rutina: {id: "rm", desde: "2026-09-01"}}, op = {rutinas: [RM]};
+  const ses = n => Array.from({length: n}, (_, i) => deRm(i, `2026-10-${String(i + 1).padStart(2, "0")}`));
+  const en = n => plan.semanaDePrueba(perfil, ses(n), `2026-10-${String(n + 1).padStart(2, "0")}`, op);
+  ok(JSON.stringify(rutina.semanas(RM).map(x => x.tipo + x.bloque)) === '["carga1","carga1","prueba1","carga2","prueba2","meta2"]', "las semanas: " + JSON.stringify(rutina.semanas(RM)));
+  const a = en(6);
+  ok(!a.toca && a.semana === 4 && a.proxima === 5 && a.bloque === 2 && a.semanaMeta === 6, "semana 4: la prueba se adelanta a la 5: " + JSON.stringify(a));
+  const b = en(8);
+  ok(b.toca && b.conPruebas && b.semana === 5 && b.bloque === 2 && !b.meta, "semana 5: la prueba movida: " + JSON.stringify(b));
+  const c = en(10);
+  ok(!c.toca && c.meta && c.semana === 6 && c.proxima === null && c.semanaMeta === 6, "semana 6: la meta, sin prueba: " + JSON.stringify(c));
+  /* sin meta, la misma rutina prueba en la 6 */
+  ok(plan.semanaDePrueba({rutina: {id: "rp", desde: "2026-09-01"}}, ses(10).map(s => ({...s, rutina: {id: "rp", sesion: s.rutina.sesion}})), "2026-10-11", {rutinas: [RP]}).toca, "sin meta, la semana 6 dejó de ser de prueba");
+  /* la sesión de la meta va completa: la de la semana de prueba, a la mitad */
+  const ej = EJM(), equipo = ["barra"];
+  const lleno = rutina.deRutina(RM, 10, {ej, equipo, sesiones: ses(10)}), liv = rutina.deRutina(RM, 8, {ej, equipo, sesiones: ses(8), descarga: true});
+  ok(lleno.bloques.every(x => !x.pasos || x.pasos.every(p => !p.descarga)) && lleno.bloques[0].pasos.length === 3 && liv.bloques[0].pasos.length === 2, "la meta no va completa o la prueba no va liviana");
+});
+prueba("rutina-filas-superserie", () => {
+  /* Hoy y los días: una fila por ejercicio; los de una superserie llevan el mismo «par» y cuántos son */
+  const ej = Object.fromEntries(EJ.ejercicios.map(e => [e.id, e])), base = RUTINAS.find(([f]) => f === "base_cali.json")[1];
+  const p = rutina.deRutina(base, 0, {ej, equipo: ["barra", "paralelas"]}), fs = rutina.filas(p.bloques, ej);
+  const pares = fs.filter(x => x.par !== undefined);
+  ok(pares.length >= 4 && pares.every(x => x.de === 2), "la Base no junta sus superseries: " + JSON.stringify(fs.map(x => [x.q, x.par, x.de])));
+  /* los dos de un par van seguidos y son de un mismo bloque de la sesión, que los alterna serie a serie */
+  for (const k of new Set(pares.map(x => x.par))){
+    const i = fs.findIndex(x => x.par === k);
+    ok(fs[i + 1] && fs[i + 1].par === k, "un par separado: " + k);
+    const b = p.bloques[k], es = [...new Set(b.pasos.map(x => x.ejercicio))];
+    ok(es.length === 2 && b.pasos[0].ejercicio !== b.pasos[1].ejercicio, "la sesión ya no alterna el par " + k);
+  }
+  ok(fs.filter(x => x.par === undefined && !x.otro).every(x => x.q), "una fila suelta rara");
+  /* lo que no es superserie no se junta: 100 flexiones, una fila por bloque */
+  const cien = RUTINAS.find(([f]) => f === "cien.json")[1];
+  ok(rutina.filas(rutina.deRutina(cien, 2, {ej}).bloques, ej).every(x => x.par === undefined), "100 flexiones junta lo que no es superserie");
+  /* una triserie (Gimnasta, día B) dice que son tres */
+  const g = RUTINAS.find(([f]) => f === "gimnasta.json")[1], fg = rutina.filas(rutina.deRutina(g, 1, {ej, equipo: ["barra", "paralelas"]}).bloques, ej);
+  ok(fg.some(x => x.de === 3), "la triserie de Gimnasta: " + JSON.stringify(fg.map(x => [x.q, x.de])));
+});
+prueba("rutina-filas-mas-liviana", () => {
+  /* en la semana de prueba y en una escalera trabada, la fila dice «más liviana», como la serie en la sesión */
+  const ej = EJM(), equipo = ["barra"];
+  const liv = rutina.filas(rutina.deRutina(RP, 6, {ej, equipo, descarga: true}).bloques, ej);
+  ok(liv.length === 2 && liv.every(x => x.descarga), "la semana de prueba: " + JSON.stringify(liv));
+  ok(rutina.filas(rutina.deRutina(RP, 0, {ej, equipo}).bloques, ej).every(x => !x.descarga), "una semana común dice más liviana");
+  /* trabado: tres sesiones sin mejorar en tirar; sentadilla no tiene escalera y queda igual */
+  const tr = Array.from({length: 4}, (_, i) => ({id: "t" + i, fecha: `2026-10-0${i + 1}`, rutina: {id: "rp", sesion: i}, bloques: [{series: [5, 5, 5].map(v => ({ejercicio: "dominada", tipo: "repeticiones", valor: v, objetivo: 5, escalera: "tirar", rango: [5, 8], n: 3}))}]}));
+  const fs = rutina.filas(rutina.deRutina(RP, 4, {ej, equipo, sesiones: tr}).bloques, ej);
+  ok(fs.find(x => x.escalera === "tirar")?.descarga && !fs.find(x => !x.escalera).descarga, "trabado: " + JSON.stringify(fs));
+  /* lo de motor partido a la mitad también; una sola salida larga no se parte y no se dice */
+  const ej2 = Object.fromEntries(EJ.ejercicios.map(e => [e.id, e])), soga = RUTINAS.find(([f]) => f === "soga.json")[1], c0 = RUTINAS.find(([f]) => f === "c0a5.json")[1];
+  ok(rutina.dia(soga, 0, {ej: ej2, descarga: true}).filas.some(x => x.q === "Soga" && x.descarga), "la soga partida no dice más liviana");
+  ok(rutina.dia(c0, 24, {ej: ej2, descarga: true}).filas.every(x => !x.descarga), "una salida que no se parte dice más liviana");
+});
+prueba("catalogo-rarezas-019", () => {
+  /* las notas dicen los minutos de lo suave o del día entero, nunca otros */
+  const flat = ts => ts.flatMap(t => t.repetir ? Array.from({length: t.repetir}, () => flat(t.tramos)).flat() : [t]);
+  for (const [f, r] of RUTINAS) r.sesiones.forEach((s, i) => {
+    const m = (s.nota || "").match(/^(\d+) min\s/); if (!m) return;
+    const ts = flat(s.bloques.flatMap(b => b.tramos || [])), suave = ts.filter(t => t.clase === "suave").reduce((a, t) => a + t.seg, 0) / 60, total = ts.reduce((a, t) => a + t.seg, 0) / 60;
+    ok(Math.abs(m[1] - suave) <= 1 || Math.abs(m[1] - total) <= 1, `${f}: día ${i + 1}: la nota dice ${m[1]} min y hay ${suave} suaves de ${total}`);
+  });
+  /* Tabata: lo que hay que sumar se entiende solo («más de 9» ¿de qué?) */
+  const tab = RUTINAS.find(([f]) => f === "tabata.json")[1];
+  ok(tab.sesiones.every(s => !/más de 9/.test(s.nota || "")) && tab.sesiones.some(s => /Si terminás los \d+ con aire para otro, subí un nivel de resistencia\./.test(s.nota || "")), "la nota de Tabata");
+  /* los 1000 saltos llevan unos 10 minutos: el día no puede decir 5 */
+  const soga = RUTINAS.find(([f]) => f === "soga.json")[1], ej = Object.fromEntries(EJ.ejercicios.map(e => [e.id, e]));
+  ok(rutina.dia(soga, 11, {ej}).minutos >= 10, "el desafío de la soga dura " + rutina.dia(soga, 11, {ej}).minutos + " min");
+});
+
+prueba("cien-pide-las-100", () => {
+  /* la semana de la meta de 100 flexiones cierra con el intento de las 100 seguidas */
+  const cien = RUTINAS.find(([f]) => f === "cien.json")[1], fin = cien.sesiones.at(-1);
+  ok(fin.bloques.some(b => b.ejercicio === "flexion" && b.objetivo === 100 && b.series === 1), "el último día no pide 100 seguidas");
+  ok(/100 flexiones seguidas/.test(fin.nota || ""), "el último día no lo dice");
+  ok(cien.sesiones.slice(0, -1).every(s => s.bloques.every(b => b.objetivo !== 100)), "las 100 aparecen antes del último día");
+});
+
 let fallas = 0;
 for (const [n, fn] of PRUEBAS){
   try { fn(); console.log("ok    ", n); } catch (e) { fallas++; console.log("FALLA ", n, "·", e.message); }

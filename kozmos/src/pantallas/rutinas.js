@@ -114,8 +114,18 @@ K.P.planes = r => {
     <div class="abierto">${abierto}</div></div>`;
 };
 /* «Prueba en la semana 5», «Esta semana: semana de prueba» */
-K.pruebaTx = (sp, r) => !sp ? "" : sp.toca ? "Esta semana es de prueba" : sp.aplazada ? "La prueba espera: volvé a agarrar ritmo"
-  : sp.proxima > r.semanas ? "La rutina termina antes de la próxima prueba" : `Prueba en la semana ${sp.proxima}`;
+K.pruebaTx = (sp, r) => !sp ? "" : sp.meta ? "Esta semana es la meta" : sp.toca ? "Esta semana es de prueba" : sp.aplazada ? "La prueba espera: volvé a agarrar ritmo"
+  : !sp.proxima || sp.proxima > r.semanas ? (sp.semanaMeta ? `La meta, en la semana ${sp.semanaMeta}` : "La rutina termina antes de la próxima prueba") : `Prueba en la semana ${sp.proxima}`;
+/* «Semana 4: prueba», «Semana 6: la meta» */
+K.semanaTx = (r, w) => { const t = K.rutina.tipoSemana(r, w).tipo; return `Semana ${w}${t === "prueba" ? ": prueba" : t === "meta" ? ": la meta" : ""}`; };
+/* cómo se arman sus semanas: «Bloques de 4 semanas: 3 de carga y 1 de prueba»; con meta, cuándo son las pruebas y la meta */
+K.bloqueTx = r => {
+  const bl = r.bloque || {carga: 4, prueba: 1}, xs = K.rutina.semanas(r), meta = xs.find(x => x.tipo === "meta");
+  if (!meta) return `Bloques de ${bl.carga + bl.prueba} semanas: ${bl.carga} de carga y ${bl.prueba} de prueba`;
+  const ps = xs.filter(x => x.tipo === "prueba").map(x => x.n);
+  const pr = !ps.length ? "" : ps.length === 1 ? `Prueba en la semana ${ps[0]}` : `Pruebas en las semanas ${ps.slice(0, -1).join(", ")} y ${ps[ps.length - 1]}`;
+  return `${pr ? pr + "; la " : "La "}${meta.n}, la meta`;
+};
 
 /* una rutina: qué es, hacia qué estrellas lleva, cómo es una semana y la fuente al pie */
 K.P.rutina = id => {
@@ -132,8 +142,8 @@ K.P.rutina = id => {
   const es = K.rutina.escalerasDe(r, K.ctxRutina());
   const escaleras = es.length ? `<span class="lb pie">${sigo ? "Tus escalones" : "Sus escaleras"}</span><section class="cd rut-esc">${K.escalerasMini(es, r.familia)}</section>` : "";
   /* el bloque: semanas de carga y una de prueba */
-  const bl = r.bloque || {carga: 4, prueba: 1}, sp = sigo && !ru.cur.terminada ? K.plan.semanaDePrueba(K.diario.perfil, K.diario.sesiones, K.hoy()) : null;
-  const bloque = `<p class="ln small rut-bloque"><span>Bloques de ${bl.carga + bl.prueba} semanas: ${bl.carga} de carga y ${bl.prueba} de prueba</span>${sp ? `<span class="num">${K.esc(K.pruebaTx(sp, r))}</span>` : ""}</p>`;
+  const sp = sigo && !ru.cur.terminada ? K.plan.semanaDePrueba(K.diario.perfil, K.diario.sesiones, K.hoy()) : null;
+  const bloque = `<p class="ln small rut-bloque"><span>${K.esc(K.bloqueTx(r))}</span>${sp ? `<span class="num">${K.esc(K.pruebaTx(sp, r))}</span>` : ""}</p>`;
   const estado = sigo ? `<p class="ln small rut-sigo"><span>${ru.cur.terminada ? "La terminaste" : `La seguís · semana ${ru.cur.semana} de ${r.semanas}`}</span><span class="num">${ru.cur.i} de ${ru.cur.total}</span></p>` : "";
   const boton = sigo ? `<button type="button" class="btn" data-ir="#/hoy">${ru.cur.terminada ? "Volver a Hoy" : "Ir a Hoy"}</button>`
     : `<button type="button" class="btn" id="rut-seguir" data-rutina="${r.id}">Seguir esta rutina</button>`;
@@ -152,8 +162,7 @@ K._semRut = null; /* la semana elegida en el menú, por rutina; sin elegir, la t
 const semanaVista = (r, actual) => { const x = K._semRut; return x && x.id === r.id && x.n >= 1 && x.n <= r.semanas ? x.n : actual || 1; };
 K.rutinaDias = (r, cur) => {
   const ctx = K.ctxRutina(), actual = cur && !cur.terminada ? cur.semana : 0, n = semanaVista(r, actual);
-  const prueba = K.rutina.esSemanaDePrueba(r, n), conEsc = r.sesiones.some(s => s.bloques.some(b => b.escalera));
-  const fila = f => f.otro ? K.filaLn(...K.filaToca(f.otro), f.otro.familia, !!(f.otro.prueba || f.otro.hazana)) : K.filaLn(f.q, f.n, f.familia);
+  const prueba = K.rutina.esSemanaDePrueba(r, n), meta = K.rutina.esMeta(r, n), conEsc = r.sesiones.some(s => s.bloques.some(b => b.escalera));
   const cards = Array.from({length: r.dias}, (_, k) => {
     const i = (n - 1) * r.dias + k; if (!r.sesiones[i]) return "";
     const toca = actual === n && i === cur.i, hecho = actual === n && i < cur.i, nombre = K.rutina.nombreDia(r, i);
@@ -162,13 +171,13 @@ K.rutinaDias = (r, cur) => {
     const pl = toca ? K.hoyPlan() : null;
     const d = pl ? {minutos: pl.minutos, filas: K.rutina.filas(pl.bloques, K.EJ), nota: pl.nota || ""} : K.rutina.dia(r, i, {...ctx, descarga: prueba});
     return `<section class="cd hoy-toca rut-dia${toca ? " te-toca" : ""}"><div class="ln"><span class="lb">${toca ? "Te toca · " : ""}${K.esc(nombre)}</span><span class="num lb">${d.minutos} min</span></div>
-      ${pl ? K.pruebaLn(pl) : ""}${d.filas.map(fila).join("")}${d.nota ? `<p class="mute small">${K.esc(d.nota)}</p>` : ""}</section>`;
+      ${pl ? K.pruebaLn(pl) : ""}${K.filasHtml(d.filas)}${d.nota ? `<p class="mute small">${K.esc(d.nota)}</p>` : ""}</section>`;
   }).join("");
   /* lo que hay que saber de esa semana: si es de prueba, cuándo es la próxima y que los escalones son los tuyos */
   const tuyos = conEsc ? (actual ? "Con tus escalones de hoy." : "Si la empezás hoy, con tus escalones.") : "";
   const tx = prueba && actual !== n ? `<p class="hoy-ventana hoy-sp small"><b>Semana ${n}: prueba</b> · más liviana, con las pruebas el primer día</p>`
-    : tuyos ? `<p class="small mute rut-dias-tx">${K.esc(tuyos)}</p>` : "";
-  const boton = r.semanas > 1 ? `<button type="button" class="pl-fam" id="rut-sem" data-rutina="${r.id}" aria-haspopup="menu" aria-expanded="false" aria-label="${K.esc(`Semana ${n} de ${r.semanas}`)}"><span>Semana ${n}${prueba ? ": prueba" : actual === n ? " · la tuya" : ""}</span>${K.ic("chevd")}</button>` : "";
+    : meta && actual !== n ? K.metaLn(r, n) : tuyos ? `<p class="small mute rut-dias-tx">${K.esc(tuyos)}</p>` : "";
+  const boton = r.semanas > 1 ? `<button type="button" class="pl-fam" id="rut-sem" data-rutina="${r.id}" aria-haspopup="menu" aria-expanded="false" aria-label="${K.esc(`Semana ${n} de ${r.semanas}`)}"><span>${K.esc(K.semanaTx(r, n))}${!prueba && !meta && actual === n ? " · la tuya" : ""}</span>${K.ic("chevd")}</button>` : "";
   return `<div class="pl-fila rut-dias-tit"><span class="lb pie">Cada día</span>${boton}</div>${tx}<div class="rut-dias">${cards}</div>`;
 };
 /* el menú de semanas: la tuya y las de prueba se dicen; elegir una no guarda nada */
@@ -176,7 +185,7 @@ K.rutinaSemana = btn => {
   const r = K.rutinaDe(btn.dataset.rutina); if (!r) return;
   const ru = K.rutinaActual(), actual = ru && ru.r.id === r.id && !ru.cur.terminada ? ru.cur.semana : 0, n = semanaVista(r, actual);
   K.menu.abrir(btn, {titulo: "Semana", items: Array.from({length: r.semanas}, (_, k) => k + 1).map(w => ({id: String(w), elegido: w === n,
-      texto: `Semana ${w}${K.rutina.esSemanaDePrueba(r, w) ? ": prueba" : ""}${w === actual ? " · la tuya" : ""}`})),
+      texto: `${K.semanaTx(r, w)}${w === actual ? " · la tuya" : ""}`})),
     elegir: id => { const ab = K.$(".split>.abierto"), y = ab ? ab.scrollTop : 0; K._semRut = {id: r.id, n: Number(id)}; K.refrescar(); const ab2 = K.$(".split>.abierto"); if (ab2) ab2.scrollTop = y; }});
 };
 

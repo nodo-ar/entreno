@@ -74,7 +74,8 @@ Las reglas, en `src/sesion/rutina.js`:
 - `elegir` (solo 100 flexiones): `{"umbrales": [5, 10], "columnas": [[…], […], […]]}`. Tu mejor serie de ese ejercicio elige la columna de `porSerie`.
 - `carga` (con lastre): kilos que se suman cuando completás el rango dos veces seguidas, en vez de subir de escalón. La sesión pide repeticiones y kilos.
 - `descanso`: segundos después de cada serie.
-- `grupo`: dos bloques seguidos con el mismo grupo se alternan serie a serie (superserie).
+- `grupo`: dos bloques seguidos con el mismo grupo se alternan serie a serie (superserie). En Hoy y en los días de la rutina van en una fila cada uno, juntos, con «en superserie» (tres: «en triserie»).
+- `dura` (opcional): los segundos que lleva una serie larga (los 1000 saltos), para que los minutos del día no mientan. Sin esto, una serie de repeticiones cuenta 45 s.
 
 **Tramos** (cardio, intervalos, cada minuto, movilidad):
 
@@ -130,6 +131,10 @@ Cada rutina trae `"bloque": {"carga": 3, "prueba": 1}`: tantas semanas de carga 
 - Las demás sesiones de esa semana son solo la descarga.
 - Lo que sacás en una prueba fija dónde arranca el bloque siguiente en cada escalera: se trabaja al 75 % de tu máximo; si eso ya llega al tope del rango, el escalón de arriba; si no llega al mínimo, el de abajo.
 - Si volvés después de 3 semanas sin entrenar, la prueba espera.
+
+**La meta** (`"bloque": {"carga": 5, "prueba": 1, "meta": "100 flexiones seguidas"}`): en una rutina que termina en un desafío o en una prueba de lo que busca, la última semana es la meta: completa, sin descarga y sin pruebas sueltas. Si la semana de prueba caía ahí, pasa a la anterior y cierra ese bloque (100 flexiones: prueba en la 5, meta en la 6). `meta` es `true` o lo que se busca, en corto (hasta 30 letras); la app lo dice como «Semana 6: la meta · 100 flexiones seguidas». El motor no conoce ninguna rutina: todo sale de `K.rutina.semanas`. Hoy tienen meta: Correr tus primeros 5 km, Correr de 5 a 10 km, 100 flexiones, Intervalos de 1 minuto en bici, Abdomen de gimnasta, Arranques con kettlebell y Soga hasta 1000 saltos (acta 020).
+
+En la semana de prueba y en una escalera trabada, cada fila de Hoy y de los días dice «más liviana», como la serie en la sesión.
 
 Sin rutina, con tu rumbo, cuenta semanas de calendario con alguna sesión: después de 4, la semana de prueba. La ventana de prueba del 80 % sigue como prueba suelta entre bloques.
 

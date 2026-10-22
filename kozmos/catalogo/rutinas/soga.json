@@ -8,7 +8,8 @@
  "minutos": 20,
  "bloque": {
   "carga": 3,
-  "prueba": 1
+  "prueba": 1,
+  "meta": "1000 saltos seguidos"
  },
  "equipo": [
   "soga"
@@ -421,7 +422,8 @@
      "tipo": "repeticiones",
      "series": 1,
      "objetivo": 1000,
-     "descanso": 0
+     "descanso": 0,
+     "dura": 600
     },
     {
      "tramos": [

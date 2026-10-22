@@ -1257,6 +1257,100 @@ prueba("rutina-linea-escalon", async () => {
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
+/* ===== Filas de Hoy y la meta (vuelta 20) ===== */
+/* «Empezar» al alcance del pulgar: entero en la pantalla, en la mitad de abajo y sin tapar la barra */
+const alPulgar = p => p.evaluate(() => { const b = document.querySelector("#s-empezar").getBoundingClientRect(), n = document.querySelector("nav.barra")?.getBoundingClientRect();
+  const sobreBarra = !n || n.width < n.height || b.bottom <= n.top + 1; return {ok: b.top >= innerHeight * .5 && b.bottom <= innerHeight && sobreBarra, r: [b.top, b.bottom, innerHeight].map(Math.round)}; });
+prueba("hoy-filas-superserie", async () => {
+  /* Hoy dice lo mismo que el día de la rutina: una fila por ejercicio con series × rango; la superserie, junta y dicha */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-toca .toca-par");
+  const hoy = await p.$$eval(".hoy-toca .ln.toca", xs => xs.map(y => [y.querySelector(".tg").textContent, y.querySelector(".num").textContent]));
+  ok(hoy.every(([q]) => !q.includes(" + ")), "Hoy sigue juntando la superserie en una fila: " + JSON.stringify(hoy));
+  const pares = await p.$$eval(".hoy-toca .toca-par", xs => xs.map(x => [x.querySelectorAll(".ln.toca").length, x.querySelector(".toca-par-tx")?.textContent]));
+  ok(pares.length >= 1 && pares.every(([n, t]) => n === 2 && t === "en superserie"), "la superserie no va junta: " + JSON.stringify(pares));
+  ok(await p.evaluate(() => !document.querySelector(".hoy-toca .chip, .hoy-toca .pill")), "Hoy usa chips");
+  /* al pulgar arriba de todo, sin desplazar */
+  const a = await alPulgar(p); ok(a.ok, "«Empezar» no queda al alcance del pulgar: " + JSON.stringify(a.r));
+  await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia.te-toca");
+  const dia = await p.$eval(".rut-dia.te-toca", x => [...x.querySelectorAll(".ln.toca")].map(y => [y.querySelector(".tg").textContent, y.querySelector(".num").textContent]));
+  ok(JSON.stringify(dia) === JSON.stringify(hoy), `Hoy y el día de la rutina no dicen lo mismo: ${JSON.stringify(hoy)} / ${JSON.stringify(dia)}`);
+  ok(await p.$$eval(".rut-dia.te-toca .toca-par", x => x.length) === pares.length, "el día de la rutina no junta la superserie igual que Hoy");
+  /* la sesión sigue alternando la superserie */
+  await ir(p, "#/hoy"); await aLaSerie(p);
+  const ejs = [await p.evaluate(() => K.sesion.paso().ejercicio)];
+  await p.click("#s-listo"); await p.waitForSelector(".ses.descanso"); await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
+  ejs.push(await p.evaluate(() => K.sesion.paso().ejercicio));
+  ok(ejs[0] !== ejs[1], "la sesión dejó de alternar la superserie: " + ejs);
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+  /* en horizontal, igual: «Empezar» entero y a mano */
+  const h = await conReloj({width: 844, height: 390});
+  await ir(h.p, "#/hoy"); await sembrarEsc(h.p); await h.p.waitForSelector(".hoy-toca .toca-par");
+  const b = await alPulgar(h.p); ok(b.ok, "en horizontal, «Empezar» no queda a mano: " + JSON.stringify(b.r));
+  ok(await h.p.evaluate(() => document.documentElement.scrollWidth <= innerWidth && [...document.querySelectorAll(".hoy-toca .ln.toca")].every(x => x.scrollWidth <= x.clientWidth + 1)), "Hoy desborda en horizontal");
+  ok(h.p._errores.length === 0, "errores: " + h.p._errores.join(" | "));
+  await h.ctx.close();
+});
+/* cuatro sesiones de la Base con las mismas sentadillas: tres sin mejorar, la escalera de piernas se traba y toca más liviana */
+const HIST_TRABA = ["2026-10-06", "2026-10-08", "2026-10-10", "2026-10-13"].map((f, i) => sEsc("t" + i, f, i, [["tirar", "dominada-negativa", [3 + i, 3, 3], [3, 5], 3], ["piernas", "sentadilla", [9, 9, 9], [8, 12], 9]]));
+prueba("hoy-mas-liviana", async () => {
+  /* una escalera en descarga lo dice en Hoy y en el día de la rutina, como la serie en la sesión */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarEsc(p, HIST_TRABA); await p.waitForSelector(".hoy-toca .toca-marca");
+  const filas = await p.$$eval(".hoy-toca .ln.toca", xs => xs.map(y => [y.querySelector(".tg").textContent, y.querySelector(".toca-marca")?.textContent || ""]));
+  ok(filas.some(([q, m]) => q === "Sentadilla" && m === "más liviana"), "la sentadilla trabada no dice más liviana: " + JSON.stringify(filas));
+  ok(filas.filter(([, m]) => m).every(([q]) => q === "Sentadilla"), "dice más liviana lo que no lo es: " + JSON.stringify(filas));
+  await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia.te-toca");
+  ok(await p.$eval(".rut-dia.te-toca", x => [...x.querySelectorAll(".ln.toca")].some(y => y.querySelector(".tg").textContent === "Sentadilla" && y.querySelector(".toca-marca")?.textContent === "más liviana")), "el día de la rutina no dice más liviana");
+  /* la semana de prueba de la rutina: cada fila de la descarga lo dice */
+  await p.click("#rut-sem"); await p.click('.pmi[data-id="4"]'); await p.waitForSelector(".rut .hoy-sp");
+  ok(await p.$$eval(".rut-dia", xs => xs.every(x => [...x.querySelectorAll(".ln.toca")].filter(y => !/Entrada|Vuelta/.test(y.textContent)).every(y => y.querySelector(".toca-marca")))), "en la semana de prueba una fila no dice más liviana");
+  /* y en la sesión, la serie también */
+  await ir(p, "#/hoy");
+  await p.click("#s-empezar"); await tick(p, 1000);
+  const enSentadilla = () => p.evaluate(() => K.sesion.activa() && !K.sesion.bloque().clase && K.sesion.paso().ejercicio === "sentadilla" && !!document.querySelector(".ses.serie"));
+  for (let k = 0; k < 12 && !(await enSentadilla()); k++){
+    if (await p.$("#s-seguir")){ await p.click("#s-seguir"); await tick(p, 300); continue; }
+    if (await p.evaluate(() => K.sesion.activa() && !K.sesion.bloque().clase)){ await p.click("#s-listo"); await tick(p, 300); continue; }
+    await p.click("#s-mas"); await p.click('.pmi[data-id="saltear"]'); await tick(p, 300);
+  }
+  ok((await p.textContent(".ses-marca")) === "más liviana", "la sesión no dice más liviana en la sentadilla");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+/* sesiones hechas de una rutina de motor, para llegar a una semana */
+const sRut = (rid, n, fechas) => fechas.slice(0, n).map((f, i) => ({id: rid + i, fecha: f, inicio: `${f}T18:00:00.000Z`, fin: `${f}T18:20:00.000Z`, duracion: 1200, cortada: false, catalogo: 1, rutina: {id: rid, sesion: i},
+  bloques: [{orden: 1, familia: "mo", clase: "tramos", nombre: "Soga", series: [{ejercicio: null, tipo: "tramos", valor: 600}]}]}));
+prueba("rutina-meta", async () => {
+  /* 100 flexiones: la semana 5 es de prueba y la 6, la meta, completa */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/planes/rutinas/cien"); await p.waitForSelector(".rut-dia");
+  ok((await p.textContent(".rut-bloque")).includes("Prueba en la semana 5; la 6, la meta"), "el bloque no dice dónde está la meta: " + await p.textContent(".rut-bloque"));
+  await p.click("#rut-sem"); await p.waitForSelector(".pmi");
+  const items = await p.$$eval(".pmi", xs => xs.map(x => x.textContent.trim()));
+  ok(items.includes("Semana 5: prueba") && items.includes("Semana 6: la meta") && !items.includes("Semana 6: prueba"), "el menú de semanas: " + items);
+  await p.click('.pmi[data-id="6"]'); await p.waitForSelector(".rut .hoy-meta");
+  ok((await p.textContent(".rut .hoy-meta")).trim() === "Semana 6: la meta · 100 flexiones seguidas", "la meta no se dice: " + await p.textContent(".rut .hoy-meta"));
+  ok(!(await p.$(".rut-dia .toca-marca")) && (await p.textContent("#rut-sem")).includes("Semana 6: la meta"), "la meta va más liviana");
+  await p.click("#rut-sem"); await p.click('.pmi[data-id="5"]'); await p.waitForSelector(".rut .hoy-sp:not(.hoy-meta)");
+  ok((await p.textContent(".rut .hoy-sp")).includes("Semana 5: prueba") && await p.$(".rut-dia .toca-marca"), "la semana 5 no es la de prueba");
+  /* siguiendo Soga hasta 1000 saltos: la semana 3 es de prueba y la 4, la meta, sin pruebas ni descarga */
+  await ir(p, "#/hoy");
+  const sembrarSoga = n => p.evaluate(async ss => { await K.diario.perfilPoner("equipo", ["soga"]); for (const s of ss) await K.diario.guardarSesion(s);
+    await K.diario.perfilPoner("rutina", {id: "soga", desde: "2026-09-21"}); K.refrescar(); }, sRut("soga", n, DIAS_B));
+  await sembrarSoga(6); await p.waitForSelector(".hoy-toca");
+  ok((await p.textContent(".hoy-sp")).startsWith("Semana de prueba"), "la semana 3 de Soga no es de prueba");
+  await p.evaluate(async ss => { for (const s of ss) await K.diario.guardarSesion(s); K.refrescar(); }, sRut("soga", 9, DIAS_B).slice(6));
+  await p.waitForSelector(".hoy-meta"); await p.waitForFunction(() => document.querySelectorAll(".hoy-toca").length === 1);
+  ok((await p.textContent(".hoy-meta")).trim() === "Semana 4: la meta · 1000 saltos seguidos", "Hoy no dice la meta: " + await p.textContent(".hoy-meta"));
+  ok(!(await p.$(".hoy-toca .es-prueba")) && !(await p.$(".hoy-toca .toca-marca")), "la meta trae pruebas o va más liviana: " + await p.textContent(".hoy-toca"));
+  ok((await p.textContent(".hoy-origen")).includes("sem 4 de 4"), "la meta no es la semana 4");
+  await ir(p, "#/planes"); await p.waitForSelector(".pl-rut");
+  ok((await p.textContent(".pl-rut")).includes("Esta semana es la meta"), "Tu rutina en Planes no dice la meta: " + await p.textContent(".pl-rut"));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
 /* nueve sesiones de la Base: tres semanas de carga, y hoy toca la semana de prueba */
 const DIAS_B = ["2026-09-21", "2026-09-23", "2026-09-25", "2026-09-28", "2026-09-30", "2026-10-02", "2026-10-12", "2026-10-14", "2026-10-16"];
 prueba("semana-de-prueba-hoy", async () => {

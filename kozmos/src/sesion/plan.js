@@ -106,6 +106,8 @@ K.plan = (() => {
      series) más las pruebas: las próximas estrellas de lo que entrenás y una o dos hazañas. Lo que sacás enciende
      estrellas y fija dónde arranca el bloque siguiente en cada escalera (eso lo lee rutina.escalon del diario).
      Con rutina, las semanas son las de la rutina (las sesiones hechas, de a «dias» por semana): «Prueba en la semana 5».
+     Una rutina que termina en un desafío (100 flexiones, los 10 km) tiene su última semana como meta: completa, sin descarga,
+     y su semana de prueba pasa a la anterior (K.rutina.semanas).
      Sin rutina, cuentan las semanas del calendario en que entrenaste desde la última prueba.
      Al volver de 3 semanas o más no hay prueba: primero se recupera, como en la ventana del 80 %. */
   const BLOQUE = {carga: 4, prueba: 1};
@@ -116,12 +118,16 @@ K.plan = (() => {
     const x = perfil.rutina, r = x && rutinas.find(y => y.id === x.id);
     if (r){
       const cur = K.rutina.enCurso(r, x.desde, sesiones); if (cur.terminada) return null;
-      const bl = r.bloque || BLOQUE, L = bl.carga + bl.prueba, w = Math.floor(cur.i / (r.dias || 1)), en = w % L, b = Math.floor(w / L);
-      const toca = en >= bl.carga && !volviste;
-      const proxima = en >= bl.carga ? w + 1 : w - en + bl.carga + 1; /* la semana (desde 1) de la próxima prueba, o esta */
+      /* las semanas las dice la rutina (K.rutina.semanas): carga, prueba y, si termina en un desafío, la meta */
+      const bl = r.bloque || BLOQUE, w = Math.floor(cur.i / (r.dias || 1)), xs = K.rutina.semanas(r), sem = K.rutina.tipoSemana(r, w + 1), b = sem.bloque - 1;
+      const esPrueba = sem.tipo === "prueba", toca = esPrueba && !volviste;
+      const enBloque = xs.filter(y => y.bloque === sem.bloque && y.n <= w + 1).length;
+      /* la semana (desde 1) de la próxima prueba, o esta; null si la rutina no tiene otra */
+      const proxima = (xs.find(y => y.n >= w + 1 && y.tipo === "prueba") || {}).n ?? null;
+      const meta = xs.find(y => y.tipo === "meta");
       const deEsta = sesiones.filter(s => s.semanaPrueba && s.semanaPrueba.rutina === r.id && s.semanaPrueba.bloque === b + 1 && (!x.desde || s.fecha >= x.desde));
-      return {toca, aplazada: en >= bl.carga && volviste, rutina: r.id, semana: w + 1, bloque: b + 1, carga: bl.carga, prueba: bl.prueba, enBloque: en + 1,
-        proxima, conPruebas: toca && !deEsta.some(s => s.semanaPrueba.pruebas)};
+      return {toca, aplazada: esPrueba && volviste, rutina: r.id, semana: w + 1, bloque: b + 1, carga: bl.carga, prueba: bl.prueba, enBloque,
+        proxima, conPruebas: toca && !deEsta.some(s => s.semanaPrueba.pruebas), meta: sem.tipo === "meta", ...(meta ? {semanaMeta: meta.n} : {})};
     }
     /* sin rutina: semanas de calendario con alguna sesión desde la última semana de prueba */
     if (!sesiones.length) return null;
@@ -176,7 +182,8 @@ K.plan = (() => {
     const ts = b.tramos, i0 = ts.findIndex(t => t.clase !== "entrada"), i1 = ts.length - [...ts].reverse().findIndex(t => t.clase !== "vuelta");
     if (i0 < 0 || i1 <= i0) return b;
     const medio = ts.slice(i0, i1), n = Math.ceil(medio.length / 2), nuevo = [...ts.slice(0, i0), ...medio.slice(0, n % 2 && medio.length > 1 ? n + 1 : n), ...ts.slice(i1)];
-    return {...b, tramos: nuevo, series: nuevo.length, descarga: true};
+    /* lo que no se pudo partir (una sola salida larga) queda igual y no se dice «más liviana» */
+    return nuevo.length < ts.length ? {...b, tramos: nuevo, series: nuevo.length, descarga: true} : b;
   }
   return {armar, objetivo, vezPasada, prueba, sePrueba, soloPrueba, hazanaDe, semanaDePrueba, pruebasDeLaSemana, deSemanaDePrueba, mitadTramos, ENTRE_BLOQUES};
 })();

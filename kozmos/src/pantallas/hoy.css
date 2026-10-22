@@ -9,6 +9,16 @@
 .hoy-toca{gap:10px}
 .toca{font-weight:600}
 .toca .num{font-size:var(--t-sm); font-weight:700; color:var(--ink-2); white-space:nowrap}
+/* lo que la sesión dice en la serie («más liviana»), debajo del nombre, como en la sesión: en el color de la familia */
+.toca-q{display:flex; flex-direction:column; gap:2px; min-width:0}
+.toca-marca{padding-left:16px; font-size:var(--t-s); font-weight:700; color:var(--c)}
+/* una superserie: sus filas juntas sobre un fondo apenas distinto, con la nota al pie */
+.toca-par{display:flex; flex-direction:column; gap:10px; margin:0 -10px; padding:10px; border-radius:var(--r-sm); background:var(--s2)}
+.toca-par-tx{padding-left:16px; margin-top:-4px; font-size:var(--t-s); font-weight:700; color:var(--ink-2)}
+/* «Empezar» siempre al alcance del pulgar, aunque lo de hoy sea largo (como «Seguir esta rutina») */
+.hoy-b>.btn{position:sticky; bottom:calc(84px + env(safe-area-inset-bottom,0px)); z-index:2; box-shadow:var(--shadow)}
+/* con el aviso de deshacer abierto, el botón fijo sube y queda encima del aviso, nunca tapado */
+body:has(.utoast:not(.out)) :is(.hoy-b,.rut,.hzn)>.btn{bottom:calc(144px + env(safe-area-inset-bottom,0px)); transition:bottom .2s var(--ease)}
 .btn .ic{width:18px; height:18px}
 .rumbo-vacio{gap:8px}
 .rumbo-vacio .cons-svg{display:block; width:100%; height:auto; max-height:120px; margin:-6px 0 4px}
@@ -86,6 +96,8 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 /* horizontal: lo que no cambia queda a la izquierda, lo que tocás a la derecha */
 @media (orientation:landscape) and (max-height:520px){
   .hoy,.res{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; align-items:start}
+  .hoy-b>.btn{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  body:has(.utoast:not(.out)) :is(.hoy-b,.rut,.hzn)>.btn{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   .hoy-cielo .cons-svg{max-height:120px}
   body.en-sesion #app{padding-left:max(20px,env(safe-area-inset-left,0px))}
   .ses{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; min-height:0; align-items:center}

@@ -8,7 +8,8 @@
  "minutos": 25,
  "bloque": {
   "carga": 5,
-  "prueba": 1
+  "prueba": 1,
+  "meta": "12 minutos fuertes"
  },
  "equipo": [
   "bici"

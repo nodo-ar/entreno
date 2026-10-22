@@ -8,7 +8,8 @@
  "minutos": 15,
  "bloque": {
   "carga": 5,
-  "prueba": 1
+  "prueba": 1,
+  "meta": "100 flexiones seguidas"
  },
  "equipo": [],
  "alimenta": [
@@ -1510,6 +1511,7 @@
   },
   {
    "nombre": "Día 3",
+   "nota": "El desafío: 100 flexiones seguidas.",
    "bloques": [
     {
      "nombre": "Entrada en calor",
@@ -1552,64 +1554,11 @@
      ]
     },
     {
-     "ejercicio": [
-      "flexion",
-      "flexion-inclinada"
-     ],
+     "ejercicio": "flexion",
      "tipo": "repeticiones",
-     "series": 9,
-     "elegir": {
-      "umbrales": [
-       51,
-       61
-      ],
-      "columnas": [
-       [
-        13,
-        13,
-        17,
-        17,
-        16,
-        16,
-        14,
-        14,
-        "max"
-       ],
-       [
-        22,
-        22,
-        30,
-        30,
-        25,
-        25,
-        18,
-        18,
-        "max"
-       ],
-       [
-        26,
-        26,
-        33,
-        33,
-        26,
-        26,
-        22,
-        22,
-        "max"
-       ]
-      ]
-     },
-     "descanso": 45
-    },
-    {
-     "escalera": "empujar",
-     "series": 2,
-     "rango": [
-      3,
-      6
-     ],
-     "descanso": 90,
-     "desde": "flexion-declinada"
+     "series": 1,
+     "objetivo": 100,
+     "descanso": 0
     }
    ]
   }
