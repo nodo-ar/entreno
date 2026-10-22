@@ -1,5 +1,5 @@
 /* ===== Barra flotante ===== */
-K.PESTANAS = [["hoy", "Hoy"], ["planes", "Planes"], ["cielo", "Cielo"], ["progreso", "Progreso"], ["vos", "Vos"]];
+K.PESTANAS = [["hoy", "Hoy"], ["planes", "Planes"], ["cielo", "Cosmos"], ["progreso", "Progreso"], ["vos", "Vos"]];
 K.nav = {
   armar(){
     const n = document.createElement("nav");
@@ -34,6 +34,15 @@ K.nav = {
     else { i.style.transform = `translateX(${f.x}px)`; i.style.height = ""; i.style.width = f.w + "px"; }
     n.classList.add("lista");
     if (sinAnim){ i.offsetWidth; i.style.transition = ""; }
+  },
+  /* sin barra: baja y deja de tomar toques y foco; vuelve subiendo (con movimiento reducido, sin animar) */
+  ocultar(si){
+    const n = K.$("nav.barra"); if (!n) return;
+    /* al abrir la app ya en una de esas pantallas, la barra no se ve bajar: ya está abajo */
+    if (!K._ultima) n.style.transition = "none";
+    document.body.classList.toggle("sin-barra", si);
+    n.inert = si;
+    if (!K._ultima){ n.offsetWidth; n.style.transition = ""; }
   },
   indicador(){
     const n = K.$("nav.barra"), b = n && K.$('button[aria-current="page"]', n);

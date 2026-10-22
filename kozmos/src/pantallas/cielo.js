@@ -22,12 +22,12 @@ K.P.cielo = r => {
     <div class="aj">${cielo.constelaciones.filter(c => c.familia === f.id).map(c => `<button type="button" class="ajr cons-fila" data-ir="#/cielo/${c.id}" data-quieto="1"${c.id === sel ? " data-sel" : ""}>
       <span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span><span>${K.esc(c.nombre)}</span><em class="num">${c.encendidas} de ${c.total}</em>${K.ic("chev", "chev")}</button>`).join("")}</div></section>`).join("");
   /* el cielo entero: cada constelación, su figura adentro del anillo de avance. Lo que pide equipo que no marcaste no aparece */
-  const grilla = `<section class="cielo-grilla solo-vertical" aria-label="Tu cielo">${cielo.constelaciones.filter(c => c.total > 0).map(c =>
+  const grilla = `<section class="cielo-grilla solo-vertical" aria-label="Tu cosmos">${cielo.constelaciones.filter(c => c.total > 0).map(c =>
     `<button type="button" class="cd cons-tile" data-ir="#/cielo/${c.id}" data-quieto="1" aria-label="${K.esc(`${c.nombre}, ${c.encendidas} de ${c.total} estrellas`)}">${K.icono.constelacion(c, 76)}
       <b>${K.esc(c.nombre)}</b><span class="num">${c.encendidas} de ${c.total}</span></button>`).join("")}</section>`;
   /* los anillos se cierran y el satélite llega orbitando la primera vez que abrís el Cielo; después quedan quietos */
   const llega = !K.cieloVisto; K.cieloVisto = true;
-  const lado = K.enc({titulo: "Cielo", sub}) +
+  const lado = K.enc({titulo: "Tu cosmos", sub}) +
     (cielo.encendidas ? "" : `<p class="ayuda">Cada constelación es una habilidad. Tocá una y anotá tu primera marca.</p>`) + grilla + lista;
   const c = sel && cielo.constelaciones.find(x => x.id === sel);
   const abierto = !c ? "" : r.sub2 === "anotar" ? K.P.anotar(c, r.sub3) : K.P.constelacion(c);
@@ -41,7 +41,7 @@ K.P.constelacion = c => {
   const fam = K.familia(c.familia), p = c.proxima, recien = K._recien || [];
   K._recien = null;
   let estado = "";
-  if (c.completa) estado = `<section class="cd cons-estado"><span class="lb" style="color:var(--${c.familia})">Constelación completa</span><b class="t1">${K.esc(c.nombre)}, completa.</b><p class="mute">Ya es parte de tu cielo.</p></section>`;
+  if (c.completa) estado = `<section class="cd cons-estado"><span class="lb" style="color:var(--${c.familia})">Constelación completa</span><b class="t1">${K.esc(c.nombre)}, completa.</b><p class="mute">Ya es parte de tu cosmos.</p></section>`;
   else if (p) estado = `<section class="cd cons-estado"><span class="lb">Próxima estrella · m${p.magnitud}</span><b class="t1">${K.nw(p.nombre)}</b>
       <div class="bar" style="--c:var(--${c.familia})" role="progressbar" aria-label="Avance hacia ${K.esc(p.nombre)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(c.avance * 100)}"><i style="width:${(c.avance * 100).toFixed(1)}%"></i></div>
       <span class="ln mute"><span>Tu mejor marca</span>${p.mejor === null ? "<span>Todavía ninguna</span>" : `<span class="num">${K.esc(K.cielo.corto(p.prueba, p.mejor))}</span>`}</span></section>`;
@@ -172,7 +172,7 @@ K.anotar = {
     const nuevas = K.cielo.nuevas(cat, antes, K.diario.mediciones, K.hoy());
     delete K._forms[c.id]; K._form = null; K._recien = nuevas.map(x => x.estrella.id);
     K.volver(`#/cielo/${c.id}`);
-    const txt = nuevas.length ? (nuevas.some(x => x.constelacion.completa) ? `${c.nombre}, completa. Ya es parte de tu cielo.` : `Encendiste ${nuevas.length > 1 ? nuevas.length + " estrellas" : "una estrella"} en ${c.nombre}.`)
+    const txt = nuevas.length ? (nuevas.some(x => x.constelacion.completa) ? `${c.nombre}, completa. Ya es parte de tu cosmos.` : `Encendiste ${nuevas.length > 1 ? nuevas.length + " estrellas" : "una estrella"} en ${c.nombre}.`)
       : `Anotaste ${K.cielo.corto(pr, m.valor)} en ${e.nombre}`;
     K.deshacer(txt, async () => { try { await K.diario.borrar(n.id); } catch (err) { K.aviso("No se pudo deshacer."); } K.refrescar(); });
   },
