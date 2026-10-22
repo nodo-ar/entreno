@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (filas de Hoy y la meta) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (los íconos) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -42,7 +42,7 @@
   - Lo guardado sigue cargando: las hazañas por niveles se ven como «versión anterior». El respaldo pasa a formato 2 y lee el 1. Formato en `docs/kozmos-rutinas.md` y `docs/kozmos-respaldo.md`.
   - Pruebas: 67 sin pantalla y 71 de pantallas, en verde.
   - **Decidido por Fer (2026-10-22)**: las pruebas pasan a nombres que dicen lo que miden (vuelta 19).
-  - **Próximo**: los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
+  - **Próximo**: los íconos que Fer ya aprobó (hechos en la vuelta 21).
 - **Los días de una rutina** (2026-10-22): Fer pidió saber qué toca cada día de una rutina y que no diga «Día 1 · Día 1». Vuelta 19 (acta `docs/actas/019-kozmos-dias-de-rutina.md`), en la rama `claude/project-thread-985fzq`, sin PR:
   - La causa: la pantalla anteponía «Día N ·» a nombres que ya decían el día (17 de 26 rutinas). Ahora `rutina.nombreDia` usa el del catálogo o «Día 1 · Máximas».
   - La rutina muestra una tarjeta por día con las filas de «Hoy toca»: tu escalón con series × rango, lo de motor con su forma y duración, los minutos y la nota. «Te toca» en el que sigue (igual que Hoy), lo hecho marcado y un menú de semanas que dice cuál es de prueba. En una rutina que no seguís, los días con tus escalones.
@@ -59,7 +59,15 @@
   - Catálogo: 40 min suaves en Intervalos de 4 minutos, la nota de Tabata que se entiende y los 1000 saltos que cuentan 10 min.
   - Pruebas: 75 sin pantalla y 77 de pantallas, en verde.
   - **Esperando a Fer**: el OK al tablero; si 100 flexiones suma el intento de las 100; si «más liviana» va en cada fila o una vez arriba.
-  - **Próximo**: los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
+  - **Próximo**: los íconos que Fer ya aprobó (hechos en la vuelta 21).
+- **Los íconos** (2026-10-22): vuelta 21 (acta `docs/actas/021-kozmos-iconos.md`), en la rama `claude/project-thread-985fzq`, sin PR. Lo que Fer aprobó en la vuelta 17:
+  - En grande, el asterismo de la habilidad: las estrellas en las articulaciones de la pose final, unidas por líneas del color de la familia, con la figura tenue detrás. En el Cielo, la constelación abierta, la próxima prueba, la prueba y la rutina abiertas (cabecera nueva) y el resumen de una prueba.
+  - En chico (40 px), el pictograma del maniquí en su marco: el anillo de avance (constelaciones), la forma de medir (pruebas: círculo, hexágono, cuadrado) y la vuelta de su semana (rutinas: un tramo por día, lo fuerte grueso). En Planes, Hoy, la constelación, el Cielo, Tu rumbo y Progreso.
+  - Todo sale de los datos (`src/piezas/iconos.js`): la estrella final, lo que mide la prueba, lo que más trabaja la rutina. Las 48 son distintas. Las pruebas perdieron `figura` en el catálogo.
+  - «Enciende» muestra la persona, como «Entrena para».
+  - Pruebas: 78 sin pantalla y 80 de pantallas, en verde.
+  - **Esperando a Fer**: el OK al tablero; si la vuelta de la semana le cierra para las rutinas; si los marcos de las pruebas se quedan; si las tres rutinas de dominadas pueden compartir figura.
+  - **Próximo**: lo que Fer pida del tablero.
 
 ## Dónde quedó
 

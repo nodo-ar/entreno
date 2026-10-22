@@ -68,7 +68,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Biblioteca en la barra**: los bocetos de miniaturas la mostraban; el prototipo tiene Progreso y Vos. Definir con Fer cuando haya ejercicios.
 - ~~**Rediseño de Planes, rutinas y hazañas con progresión real**~~: Modelo A (escaleras), pasos 0 a 2, hecho en la vuelta 17 (acta 017).
 - ~~**Modelo B de progresión: ciclos con semana de prueba**~~: hecho en la vuelta 18 (acta 018).
-- **Íconos nuevos** (vuelta 17): Fer aprobó asterismo en grande y pictograma del maniquí en chico. **Es lo próximo.**
+- ~~**Íconos nuevos**~~ (vuelta 17): hecho en la vuelta 21 (acta 021). Asterismo en grande, pictograma del maniquí en chico, todo sacado de los datos (`src/piezas/iconos.js`).
 - **Dibujos propios para las pruebas nuevas** (vuelta 18): Sentarte y pararte, Alcance de piernas, 12 minutos en bici y 1000 saltos de soga usan el dibujo de sentadilla profunda, pike, bici y soga.
 - **La semana de prueba es larga** (Casandra, vuelta 18): hasta 3 estrellas y 2 hazañas antes de la descarga. Mirar con Fer si conviene repartir las pruebas en los días de esa semana.
 - **Hazañas de antes sin escala** (el historiador, vuelta 18): las sesiones por niveles no guardaron qué midieron; se ven como «versión anterior» y no encienden.
@@ -86,6 +86,12 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **«▲ nuevo» en las filas** (coherencia, vuelta 20): la sesión dice «▲ nuevo» en el escalón nuevo; las filas de Hoy y de los días solo dicen «más liviana».
 - ~~**Notas del catálogo que no cierran**~~: arregladas en la vuelta 20 (40 min suaves; «si terminás los 8 con aire para otro, subí un nivel de resistencia»; los 1000 saltos cuentan 10 min con `dura`).
 - ~~**Marca de descarga en los días**~~: hecho en la vuelta 20; la fila dice «más liviana».
+- **Constelaciones con un punto de color** (coherencia, vuelta 21): «Estrellas nuevas» del resumen y «Lo que se apaga» de Progreso nombran constelaciones con un punto; el Cielo y Tu rumbo, con su pictograma en el anillo. Elegir uno.
+- **«Sale de tu rumbo»** (vuelta 21): con una a tres constelaciones queda la estrella polar; mirar si conviene el pictograma de la primera.
+- **«0 de 0» en el Cielo** (Casandra, vuelta 21): Bandera humana y Lastre dicen «0 de 0» cuando no marcaste poste ni lastre. Decir «Pide poste» como en la constelación abierta.
+- **Rutinas con la misma figura** (vuelta 21): Cinco días de dominadas, Base de calistenia y Primera dominada muestran la dominada arquera (su escalón de «Entrena para»); las seis de bici, las dos de trote y las dos de L-sit comparten figura. Se distinguen por la vuelta de la semana; si Fer quiere, la figura puede salir del escalón donde arrancás.
+- **Poses verticales finas en grande** (la directora de arte, vuelta 21): dominada, soga y trote se ven angostas en la cabecera; el disco las sostiene. Revisar en el teléfono.
+- **El ícono «ruta»** (la tijera, vuelta 21): quedó solo como respaldo si una rutina no tuviera pose. Sacarlo cuando la prueba de íconos lo garantice siempre.
 - **Planes vive en `rutinas.js`** (la tijera): renombrar a `planes.js` cuando llegue el rediseño. Sigue ahí después de la vuelta 19.
 
 ## Ideas (necesitan brief y OK)
