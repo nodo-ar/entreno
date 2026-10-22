@@ -115,6 +115,7 @@ Desde el Modelo B, cada hazaña es una **prueba estandarizada**: mide un ejercic
   - `reloj`: un tiempo fijo (`minutos`) y al final anotás lo que hiciste (Motor 12: los km).
   - `escalera`: cada minuto una más; con «No llegué» cuenta el último minuto completo.
   - `tiempo`: lo que dicen los `items`, lo más rápido posible (Mil saltos).
+- El ícono en Planes no se escribe: es una medalla con la persona haciendo `mide.ejercicio` (`src/piezas/iconos.js`); el de una rutina, la persona haciendo lo que más series lleva. `figura` (la constelación dibujada a mano) la usan todavía Hoy, Progreso y el resumen.
 - `escala`: cinco umbrales, de la magnitud 5 a la 1. Con `{"propia": [0, 5, 10, 15, 20]}` es por persona: el % de mejora contra tu primera vez.
 - `estrellas`: las que puede encender. Puede ser más de una constelación a la vez.
 - `cada`: cada cuántos días toca repetirla (42 si falta).

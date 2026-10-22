@@ -68,7 +68,13 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Biblioteca en la barra**: los bocetos de miniaturas la mostraban; el prototipo tiene Progreso y Vos. Definir con Fer cuando haya ejercicios.
 - ~~**Rediseño de Planes, rutinas y hazañas con progresión real**~~: Modelo A (escaleras), pasos 0 a 2, hecho en la vuelta 17 (acta 017).
 - ~~**Modelo B de progresión: ciclos con semana de prueba**~~: hecho en la vuelta 18 (acta 018).
-- **Íconos nuevos** (vuelta 17): Fer aprobó asterismo en grande y pictograma del maniquí en chico. **Es lo próximo.**
+- **Íconos, opción B** (vuelta 21): Fer no aprobó el asterismo y eligió B. Hecho solo en Planes (acta 021). **Lo próximo, con el OK de Fer al verlo en el teléfono**:
+  1. El Cielo y Tu rumbo: la figura adentro de un anillo de avance que se cierra como los de Actividad, el satélite en la punta y, completa, el anillo cerrado con el satélite arriba a la derecha (el logo). La constelación abierta puede guardar las estrellas sobre el cuerpo como fondo tenue.
+  2. Hoy («¿Solo por hoy?», «Sale de tu rutina»), Progreso y el resumen de una prueba con las mismas medallas y figuras. Ahí se puede sacar `figura` de `hazanas.json` y `K.dibujo.figura`.
+  3. «Enciende» y «Entrena para» (hoy con el maniquí sombreado) y «Rutinas que llevan acá» con la figura de B.
+- **Dos formas de dibujar una prueba** (coherencia, vuelta 21): mientras dure la prueba en Planes, la prueba es medalla en Planes y constelación dibujada en Hoy, Progreso y el resumen. Se cierra con el punto anterior.
+- **La parada de manos a 40 px** (la directora de arte, vuelta 21): de frente con brazos abiertos y piso se reconoce, pero la cabeza queda chica por lo alta que es. Revisar en el Cielo.
+- **La tarjeta «Tu rutina» sin ícono** (coherencia, vuelta 21): las otras rutinas de Planes tienen su figura; la tuya, no. Mirar con Fer si la lleva.
 - **Dibujos propios para las pruebas nuevas** (vuelta 18): Sentarte y pararte, Alcance de piernas, 12 minutos en bici y 1000 saltos de soga usan el dibujo de sentadilla profunda, pike, bici y soga.
 - **La semana de prueba es larga** (Casandra, vuelta 18): hasta 3 estrellas y 2 hazañas antes de la descarga. Mirar con Fer si conviene repartir las pruebas en los días de esa semana.
 - **Hazañas de antes sin escala** (el historiador, vuelta 18): las sesiones por niveles no guardaron qué midieron; se ven como «versión anterior» y no encienden.

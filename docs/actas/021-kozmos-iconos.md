@@ -1,61 +1,61 @@
-# Acta · Kozmos · vuelta 21 · los íconos · Pensar → Investigar → Construir → Probar
+# Acta · Kozmos · vuelta 21 · los íconos, opción B en Planes · Pensar → Investigar → Construir → Probar
 
-Fer aprobó la dirección del boceto de la vuelta 17 (backlog «Íconos nuevos»): en grande, el asterismo de la habilidad; en chico, el pictograma del maniquí. Hasta ahora las 26 rutinas compartían un punto de color, las constelaciones salían de un sorteo con su nombre y las pruebas dibujaban constelaciones reales que no decían nada del desafío.
+Rama `claude/project-thread-985fzq` (PR #28). Esta acta reemplaza la de la primera versión de la vuelta.
 
-Rama `claude/project-thread-985fzq`, sin PR.
+**Equipo**: la persona · Casandra · la tijera · la directora de arte (elegida: es oficio visual) · la tesorera (azar) · ayudantes: el fiscal (cada ícono contra los datos, en pruebas puras), el comparador (antes y después en claro y grafito) y el estrangulador (cuánto tarda en armarse Planes).
 
-**Equipo**: la persona · Casandra · la tijera · la directora de arte (elegida: es un cambio de oficio visual en casi todas las pantallas) · la tesorera (azar, `node tools/elegir-equipo.mjs entreno 21 directora-de-arte`) · ayudantes: el fiscal (cada ícono contra los datos, en pruebas puras), el comparador (antes y después en claro y grafito) y el estrangulador (cuánto tarda en armarse todo).
+## Lo que pasó con la primera versión
+- La primera versión (asterismo en grande: estrellas en las articulaciones unidas por líneas; maniquí de línea en marcos distintos en las filas) llegó a todas las pantallas.
+- **Fer no la aprobó: no se entendía.** Pidió íconos que la gente reconozca a primera vista, siguiendo los patrones que ya existen, y que lo de Kozmos quede en los detalles (el color de cada familia, el puntito del logo, el movimiento), como en la barra, las transiciones y los menús.
 
 ## Pensar
-- **La persona**: en Planes, «¿cuál era la de bici con intervalos cortos?». Hoy todas las filas tienen el mismo punto: hay que leer los 26 nombres. Con la figura haciendo lo suyo y la forma de su semana, se encuentra de un vistazo.
-- **Directora de arte**: tres cosas. (1) La figura en una sola tinta y el color de la familia en el marco: así el ícono no compite con el texto. (2) El asterismo en grande sobre un disco apenas más claro, como una medalla; sin disco, una pose vertical (dominada, soga) queda como un palito suelto en la cabecera. (3) La columna del ícono en las filas crece con él: el nombre no se pega (ya pasaba con la persona de «Entrena para»).
-- **Casandra**: el riesgo es que dos cosas se vean iguales. Seis rutinas son de bici, dos de trote y tres van a la dominada: con la pose sola no alcanza. Y que se calcule todo en cada pantalla en un Android de gama media.
-- **La tijera**: fuera de esta vuelta: dibujos nuevos de ejercicios, cambiar nombres, animar los íconos en las filas, tocar el Cielo más allá del dibujo de cada constelación.
-- **Tesorera**: nada que mantener a mano. Si cada ícono sale de los datos, una rutina nueva trae su ícono sin que nadie lo dibuje: cero horas por mes. Lo caro sería una lista de poses por id.
+- **La persona**: en Planes busca «la de bici» o «la de dominadas». Una persona haciendo eso se reconoce sin leer; una constelación o un marco con significado propio hay que aprenderlos.
+- **La directora de arte**: lo que la gente ya conoce de Apple Fitness, Salud, Strava, Garmin y los símbolos de Apple y Google: la figura llena haciendo la actividad, el aparato cuando manda, los logros como medallas y el avance como anillo.
+- **Casandra**: hay seis rutinas de bici y tres de dominadas; con la figura sola se ven iguales.
+- **La tijera**: esta vuelta cambia solo Planes. El Cielo, Hoy, Progreso y el resumen quedan como en `main` hasta que Fer lo vea en el teléfono.
 
-## Investigar · de dónde sale cada ícono (sin nombrar ningún id en el código)
-| Qué | Pose | Marco (chico) | Estrellas (grande) |
-| --- | --- | --- | --- |
-| Constelación | la de su estrella final | el anillo de avance que ya tenía la fila del Cielo | una por estrella, con su estado (encendida, próxima, por delante) |
-| Prueba | la de lo que mide (`mide.ejercicio`) | por cómo se mide: círculo (al máximo), hexágono (cada minuto), cuadrado redondeado (contra el reloj) | cinco, una por magnitud; encendidas hasta la tuya |
-| Rutina | lo que más series lleva; de una escalera, el escalón de la estrella más difícil que alimenta («Entrena para»), si no el último. Sin series (motor), lo que más tiempo se hace: el ejercicio del tramo, o bici, trote o soga | la vuelta de su semana típica (la de carga del medio): un tramo por día; lo fuerte grueso en el color de la familia, lo suave fino, las pausas vacías | una por semana; si la seguís, encendidas las que hiciste |
+## Investigar: tres opciones en un boceto (no se publica)
+- **A · Pictograma clásico**: la figura llena sobre un círculo del color de su familia. Se entiende de una, pero el avance queda solo en el texto.
+- **B · Pictograma con anillo**: la misma figura; las constelaciones adentro de un anillo que se cierra como los de Actividad, con el puntito del logo en la punta; las pruebas como medallas; las rutinas, la figura sola.
+- **C · Por equipamiento**: el dibujo de la barra, la bici o la soga. Lo más nítido en chico, pero muchas cosas usan lo mismo.
 
-- **Cámara**: el asterismo usa la vista del ejercicio; si de perfil se juntan tantas articulaciones que no alcanzan para las estrellas, gira a tres cuartos o de frente. Lo decide la pose, no una lista.
-- **Lo que quedó**: 14 poses distintas para las constelaciones; las 8 pruebas distintas por pose o marco (Dominadas al máximo y Dominadas minuto a minuto: la misma pose, círculo y hexágono); las 26 rutinas distintas por pose y semana. Comparten pose y se distinguen por la vuelta: las tres de dominadas (Cinco días, Base, Primera dominada), las seis de bici, las dos de trote y las dos de L-sit (Abdomen firme y Abdomen de gimnasta).
+**Fer eligió B** y aceptó las tres recomendaciones:
+1. Se arma primero en Planes, para probarlo en el teléfono antes de cambiar lo demás.
+2. Después, el Cielo también pasa al pictograma con anillo (la constelación abierta puede guardar las estrellas sobre el cuerpo como fondo tenue).
+3. Las rutinas que comparten figura (seis de bici, tres de dominadas) se distinguen por el nombre y el dato de la derecha, no por el ícono.
 
 ## Construir
-- `src/piezas/iconos.js` (`K.icono`): de qué pose sale cada cosa, el asterismo (articulaciones que se juntan, huesos que se parten si faltan estrellas, orden desde el apoyo), el pictograma y la vuelta de la semana. Todo queda guardado en memoria: se calcula una vez por apertura.
-- `K.fig.muestra(id)`: la pose que más dice de un ejercicio (la del maniquí chico).
-- **Grande**: el Cielo y la constelación abierta dibujan el asterismo con la figura tenue detrás y las líneas en el color de la familia (la leyenda de estados no cambia); la próxima prueba en Planes, la prueba abierta, la rutina abierta (nueva cabecera, igual a la de la prueba) y el resumen de una prueba (las estrellas logradas se prenden de a una, desde el apoyo).
-- **Chico (40 px)**: las filas de pruebas y rutinas de Planes, «Sale de tu rutina» y «¿Solo por hoy?» en Hoy, «Rutinas que llevan acá» en la constelación, las filas del Cielo y de Tu rumbo (el pictograma adentro del anillo de avance) y las sesiones de Progreso.
-- **Coherencia**: «Enciende» (la prueba) ahora muestra la persona como «Entrena para» (la rutina): son las mismas filas de estrellas. La columna del ícono crece a 40 px en las filas con figura.
-- **Catálogo**: las pruebas pierden `figura` (la constelación dibujada a mano); `docs/kozmos-rutinas.md` dice de dónde sale el ícono. Ids, clave de guardado y respaldo, sin tocar.
+- **Todo lo demás vuelve a `main`**: Hoy, el Cielo, la constelación, Progreso, el resumen y el catálogo (las pruebas conservan su `figura`, que todavía usan Hoy, Progreso y el resumen).
+- **`src/piezas/iconos.js` (`K.icono`), nuevo**: el pictograma sale del maniquí (`K.fig`): trazos gruesos y redondos, la cabeza aparte y un hueco fino donde un miembro pasa por delante de otro. Lleva lo que se usa: la barra, la bici, la soga, la kettlebell, las mancuernas, las paralelas y la pared.
+  - **Prueba**: una medalla con la figura de lo que mide. A color cuando ya tenés una magnitud, con el satélite del logo; en gris cuando todavía no.
+  - **Rutina**: la figura sola sobre un círculo del color suave de su familia. La figura es lo que más series lleva (de una escalera, el escalón hacia el que entrena); sin series, lo que más tiempo se hace (bici, trote, soga).
+  - **El encuadre**: una tabla corta, por pose, para lo que de perfil y a 40 px no se lee: las dominadas de frente y colgadas (la ancha), la parada de manos de frente con los brazos abiertos y el piso, el planche y lo que se apoya en el piso con su línea, el alcance de piernas sentado, y el momento justo de la kettlebell, las mancuernas y los fondos. Ningún ícono se elige por el id de una prueba o una rutina.
+  - Cada ícono se calcula una vez por apertura y queda guardado.
+- **En Planes**: las filas de pruebas y de rutinas (40 px), la tarjeta de la próxima prueba (64 px) y la cabecera de la prueba abierta (88 px), que en horizontal se ve al lado de la lista.
+- **El movimiento**: la primera vez que abrís Planes, el satélite de cada medalla ganada llega orbitando, como el puntito del logo; después queda quieto. Con movimiento reducido, nunca se mueve.
+- **Colores**: solo los tokens (`--fu`, `--mo`, `--ra`, sus versiones suaves, `--off`, `--s1`, `--s2`).
+- `K.fig.muestra(id, u)` da la pose de un ejercicio en un momento del movimiento.
 
 ## Probar
-- Sin pantalla: 78 (antes 75). Se va hazanas-figura (la figura dibujada a mano ya no existe). Nuevas: iconos-salen-de-una-pose (cada pose contra los datos, y que `iconos.js` no nombre ningún id), iconos-distintos (las 48 firmas y los 48 íconos chicos dibujados), iconos-asterismo (n estrellas dentro de la caja, sin pisarse y todas unidas) e iconos-ritmo-de-la-semana. Las cuatro fallan con el código de antes.
-- De pantallas: 80 (antes 77). Nuevas: iconos-en-las-filas (32 filas de Planes con pictograma, todos distintos y sin pegarse al nombre; el mismo ícono en Hoy, en la constelación, en el Cielo y en Progreso) e iconos-asterismo-grande (Cielo, constelación, prueba y rutina abiertas; horizontal sin desbordar), que fallan con el código de antes; iconos-rapidos (Planes y Cielo enteros por primera vez en menos de 400 ms, y la segunda sale de la memoria) es una guarda que también pasa con el código de antes.
-- Tablero antes y después, claro y grafito: Planes (pruebas y rutinas), la prueba, la rutina, Cielo, Cielo abajo, la constelación arriba y abajo, Progreso, el resumen de una prueba, Hoy, la sesión, el descanso, la isla, el resumen y, en horizontal (844 × 390), Planes, la rutina y la constelación.
+- Sin pantalla: 78 (antes 75). Nuevas, que fallan con `main` porque el módulo no existe: **iconos-b-poses** (cada figura contra los datos; el encuadre solo nombra poses que existen y solo cambia la manera de mirar), **iconos-b-dibujo** (medallas a color o en gris, rutinas en su familia, solo tokens, nada fuera de la caja) e **iconos-b-legibles-40px** (front lever, parada de manos, planche, dominada, flexión, bici, L-sit y soga llenan su círculo y a 40 px el trazo y la cabeza se ven).
+- De pantallas: 80 (antes 77). Nuevas: **planes-iconos-b** (cada fila de Planes con su medalla o su figura a 40 px, ganada a color con satélite y el resto en gris, la familia en cada rutina, la próxima a 64 px, la prueba abierta a 88 px, Hoy, el Cielo y Progreso sin cambios, horizontal sin desbordar) y **planes-iconos-satelite** (orbita la primera vez, después no; con movimiento reducido, nunca), que fallan con `main`; **planes-iconos-rapidos** (Planes por primera vez en menos de 250 ms y después sale de la memoria) es una guarda que también pasa con `main`. **planes-proxima-prueba** ahora pide la medalla en la tarjeta.
+- Se fueron las pruebas de la primera versión (asterismo, marcos, vuelta de la semana).
+- Tablero antes (`main`) y después, claro y grafito: Planes con las pruebas, con las rutinas y abajo de todo, la prueba abierta, Hoy, la sesión, el descanso, la isla, el resumen y, en horizontal (844 × 390), Planes y Planes con una prueba abierta.
 
 ## Objeciones que cambiaron algo
-- Casandra a la directora de arte: con la pose sola, seis rutinas de bici son el mismo ícono → la vuelta de la semana alrededor de la figura (y la prueba prueba que las 26 son distintas).
-- La directora de arte a la persona: la vuelta de un solo día se lee igual en la bici suave y en Mucho suave, poco fuerte → la semana entera, un tramo por día.
-- La tesorera al boceto: la vista de la cámara y la pose de cada constelación estaban en una lista a mano → salen de los datos y la prueba falla si el módulo nombra un id.
+- La persona al boceto: la dominada arquera no dice «dominada» → las dominadas se ven de frente, colgadas de una barra ancha.
+- La directora de arte: front lever, parada de manos y planche no se leían a 40 px → parada de frente con los brazos abiertos y el piso; planche con el piso; la barra del front lever corta para que no se confunda con el cuerpo.
+- Casandra: la kettlebell, las mancuernas y los fondos eran una persona parada → el aparato en la mano y el momento que más dice.
+- La tesorera: el satélite girando cada vez que cambiás de familia cansa → solo la primera vez.
 
 ## Casandra
-1. **Tres rutinas de dominadas con la misma figura**: se distinguen por la vuelta (cinco días, tres días con muchas series, tres días con pocas). Si Fer quiere, la pose puede salir del escalón donde arrancás.
-2. **Las poses verticales se ven finas** en la cabecera (dominada, soga, trote): es la forma del cuerpo. El disco las sostiene.
-3. **Bandera humana y Lastre dicen «0 de 0»** en el Cielo cuando no marcaste poste ni lastre: ya pasaba antes. Anotado en el backlog.
-4. Sin probar en un teléfono real; la guarda de tiempo corre en la computadora.
+1. **Front lever, parada de manos y planche** no están en Planes: se ven en el Cielo, en la vuelta que sigue. Ya pasan la prueba de 40 px, pero la parada (tan alta) queda con la cabeza chica.
+2. **Las medallas sin ganar en grafito** son oscuras sobre la tarjeta: se leen, pero bajito. Mirarlo en el teléfono.
+3. **Coherencia por un tiempo**: Planes usa medallas y la persona nueva; Hoy, Progreso y el resumen siguen con la constelación dibujada de la prueba. Se resuelve cuando Fer apruebe Planes.
+4. Sin probar en un teléfono real.
 
 ## La tijera
-- Una sola pieza para los íconos (`K.icono`) y una sola forma de mostrar una estrella en una fila (`estrellaTile`). `K.dibujo.figura` y los `figura` del catálogo se fueron.
-- Quedan con un punto de color: «Estrellas nuevas» del resumen y «Lo que se apaga» de Progreso. Anotado en el backlog.
+- Fuera: el anillo de las constelaciones (va con el Cielo), la tarjeta «Tu rutina» (sin ícono, como en `main`) y las filas «Enciende» y «Entrena para».
 
 ## Bandera roja
 Ninguna.
-
-## Ajuste antes del tablero
-
-- **Cabecera (prueba, rutina, próxima prueba)**: el asterismo ahora llena el disco (caja de la pose al 76 % del disco, sin deformar), con estrellas más grandes que las líneas. Si la pose queda como columna (de pie o colgado), se prueba la vista a tres cuartos o de frente; si igual sigue angosta, se abre un poco el eje corto y no se dibuja la figura de fondo.
-- **Cielo**: la grilla muestra solo estrellas y líneas, sin la figura gris detrás. En la vista de una constelación la figura queda, mucho más tenue.
-- Prueba nueva en la suite: el asterismo de la cabecera mide al menos 75 de largo y 18 de ancho (sobre 100).

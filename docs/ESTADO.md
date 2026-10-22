@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (filas de Hoy y la meta) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (íconos B en Planes) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -59,7 +59,14 @@
   - Catálogo: 40 min suaves en Intervalos de 4 minutos, la nota de Tabata que se entiende y los 1000 saltos que cuentan 10 min.
   - Pruebas: 75 sin pantalla y 77 de pantallas, en verde.
   - **Esperando a Fer**: el OK al tablero; si 100 flexiones suma el intento de las 100; si «más liviana» va en cada fila o una vez arriba.
-  - **Próximo**: los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
+  - Salió como **kozmos-25** (registro en `docs/versiones/kozmos-25.md`).
+- **Los íconos** (2026-10-22): vuelta 21 (acta `docs/actas/021-kozmos-iconos.md`), rama `claude/project-thread-985fzq`, PR #28.
+  - La primera versión (asterismo en grande, maniquí de línea en las filas) **no la aprobó Fer**: no se entendía. Pidió íconos que se reconozcan de una, con lo de Kozmos solo en los detalles.
+  - Boceto con tres opciones (A pictograma clásico, B pictograma con anillo, C por equipamiento). **Fer eligió B** y aceptó: primero solo en Planes; después el Cielo con el anillo (la constelación abierta puede guardar las estrellas como fondo tenue); las rutinas con la misma figura se distinguen por el nombre y el dato de la derecha.
+  - Hecho: todo lo demás volvió a como está en `main`. En Planes, las pruebas son medallas con la persona haciendo lo que miden (a color con el satélite del logo cuando tenés una magnitud, en gris si no) y las rutinas, la persona sobre un círculo del color suave de su familia. También la tarjeta de la próxima prueba y la cabecera de la prueba abierta. El satélite llega orbitando la primera vez que abrís Planes. Código en `kozmos/src/piezas/iconos.js`.
+  - Pruebas: 78 sin pantalla y 80 de pantallas, en verde.
+  - **Esperando a Fer**: que pruebe Planes en el teléfono y dé el OK al tablero.
+  - **Próximo**: con su OK, el Cielo (anillo de avance con la figura adentro) y después Hoy, Progreso y el resumen.
 
 ## Dónde quedó
 
