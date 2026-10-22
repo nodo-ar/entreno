@@ -1,12 +1,10 @@
-/* ===== Plan del día: funciones puras. Entra tu rumbo, tu cielo y tus sesiones; sale lo que toca hoy. =====
-   Cada constelación de tu rumbo aporta un bloque que entrena su próxima estrella con su mismo ejercicio.
-   Siempre hay algo de motor y de rango, aunque no estén en tu rumbo, porque un cielo de una sola familia se rompe. */
+/* ===== Plan: las piezas del día (funciones puras). El día entero lo arma K.dia (src/sesion/dia.js, motor B);
+   acá queda cómo se entrena una estrella (bloque, objetivo, prueba), la ventana del 80 % y la semana de prueba. */
 K.plan = (() => {
   /* cuántas series y cuánto descanso según cómo se mide */
   const SERIES = {segundos: 4, repeticiones: 4, porcentaje: 4, logrado: 3, minutos: 1, "menos-minutos": 1, sesiones: 1};
   const DESCANSO = {segundos: 90, repeticiones: 120, porcentaje: 150, logrado: 90, minutos: 0, "menos-minutos": 0, sesiones: 0};
   const ENTRE_BLOQUES = 120;
-  const MOTOR = "motor", RANGO = "espagat"; /* los de siempre, si nunca practicaste otro de esa familia */
 
   /* a qué apunta cada serie: tu mejor marca un poco más; cerca del umbral (80 %), el umbral mismo */
   function objetivo(p, mejor){
@@ -57,41 +55,6 @@ K.plan = (() => {
     return {constelacion: c.id, familia: c.familia, estrella: p.id, ejercicio: pr.ejercicio, tipo: pr.tipo, umbral: pr.umbral, objetivo: pr.umbral, series: 1, descanso: 0, extra: false, prueba: true};
   }
 
-  /* armar(cielo, rumbo, sesiones, hoy) → {bloques, minutos, volviste, ventana} */
-  function armar(cielo, rumbo, sesiones, hoy){
-    const cs = cielo.constelaciones, por = id => cs.find(c => c.id === id);
-    const elegidas = (rumbo || []).map(por).filter(c => c && c.proxima);
-    const ultima = sesiones.length ? sesiones[sesiones.length - 1] : null;
-    const volviste = !!ultima && K.cielo.dia(hoy) - K.cielo.dia(ultima.fecha) >= 21;
-    /* sin repetir la misma constelación de fuerza dos días seguidos, si hay otra para hacer */
-    const ayer = new Set(sesiones.filter(s => K.cielo.dia(hoy) - K.cielo.dia(s.fecha) === 1).flatMap(s => (s.bloques || []).map(b => b.constelacion)));
-    let fuerza = elegidas.filter(c => c.familia === "fu");
-    const descansada = fuerza.filter(c => !ayer.has(c.id));
-    if (descansada.length) fuerza = descansada;
-    const usadas = [...fuerza, ...elegidas.filter(c => c.familia !== "fu")];
-    const bloques = usadas.map(c => bloque(c, false, volviste)).filter(Boolean);
-    /* la de esa familia que practicaste último, o la de siempre */
-    const sumar = (fam, def) => {
-      if (usadas.some(c => c.familia === fam)) return;
-      /* si la de siempre pide equipo que no tenés, la primera de esa familia que sí puedas hacer */
-      const c = cs.filter(x => x.familia === fam && x.proxima && x.ultima).sort((a, b) => b.ultima.localeCompare(a.ultima))[0]
-        || (por(def)?.proxima ? por(def) : cs.find(x => x.familia === fam && x.proxima));
-      if (c && c.proxima){ const b = bloque(c, true, volviste); if (b) bloques.push(b); }
-    };
-    sumar("ra", RANGO); sumar("mo", MOTOR);
-    /* orden: fuerza primero, después rango, el motor al final */
-    const pos = {fu: 0, ra: 1, mo: 2};
-    bloques.sort((a, b) => pos[a.familia] - pos[b.familia]);
-    /* ventana de prueba: con tu mejor marca al 80 % de la próxima estrella, la sesión empieza probándola, descansado.
-       Al volver de 3 semanas o más no se abre: primero se recupera. */
-    const ventana = volviste ? [] : usadas.filter(c => sePrueba(c) && c.proxima.mejor !== null && c.avance >= .8);
-    /* lo que se hace en una sola serie (una salida de bici, un trote) no se repite: la prueba ya es el entrenamiento del día */
-    const solas = new Set(ventana.filter(c => SERIES[c.proxima.prueba.tipo] === 1).map(c => c.id));
-    for (let i = bloques.length - 1; i >= 0; i--) if (solas.has(bloques[i].constelacion)) bloques.splice(i, 1);
-    bloques.unshift(...ventana.map(prueba));
-    const seg = bloques.reduce((t, b) => t + duracion(b), 0) + Math.max(0, bloques.length - 1) * ENTRE_BLOQUES;
-    return {bloques, minutos: Math.max(5, Math.round(seg / 300) * 5), volviste, ventana: ventana.map(c => c.id)};
-  }
   /* la vez pasada: tu mejor serie de ese ejercicio en la última sesión que lo tuvo */
   function vezPasada(sesiones, ejercicio, tipo){
     for (let i = sesiones.length - 1; i >= 0; i--){
@@ -185,5 +148,5 @@ K.plan = (() => {
     /* lo que no se pudo partir (una sola salida larga) queda igual y no se dice «más liviana» */
     return nuevo.length < ts.length ? {...b, tramos: nuevo, series: nuevo.length, descarga: true} : b;
   }
-  return {armar, objetivo, vezPasada, prueba, sePrueba, soloPrueba, hazanaDe, semanaDePrueba, pruebasDeLaSemana, deSemanaDePrueba, mitadTramos, ENTRE_BLOQUES};
+  return {objetivo, duracion, bloque, vezPasada, prueba, sePrueba, soloPrueba, hazanaDe, semanaDePrueba, pruebasDeLaSemana, deSemanaDePrueba, mitadTramos, ENTRE_BLOQUES};
 })();

@@ -497,7 +497,7 @@ K.rutina = (() => {
   /* el próximo día de entrenamiento después de hoy, como número de días que faltan (1 = mañana) */
   const faltan = (dias, f) => { if (!dias || !dias.length) return 1; const h = diaSemana(f); for (let k = 1; k <= 7; k++) if (dias.includes((h + k) % 7)) return k; return 1; };
 
-  return {NIVELES, SENS, nombreDia, semanas, tipoSemana, esSemanaDePrueba, esMeta, metaDe, nombreTramos, filasTramos, filasSeries, filas, dia, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
+  return {NIVELES, SENS, duracion, minutos, nombreDia, semanas, tipoSemana, esSemanaDePrueba, esMeta, metaDe, nombreTramos, filasTramos, filasSeries, filas, dia, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
     escalera, escaleras, elegirEscalera, defEscalera, defSuelto, escalon, idsPaso, variante, armarBloques, escalonDe, escalonesTodos, metas, arranque, inferir, sensDe, escalerasDe, cambios,
     veces, anteriores, umbrales, magnitud, cuando, proximaPrueba, hazanasDe, supera, CADA};
 })();

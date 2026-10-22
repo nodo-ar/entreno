@@ -29,13 +29,15 @@ K.respaldo = (() => {
   const hazana = h => obj(h) && txt(h.id) && (h.v === 2 ? (h.ejercicio === undefined || txt(h.ejercicio)) && (h.tipo === undefined || tipo(h.tipo)) && valor(h.valor, h.tipo) : entero(h.nivel, 2) && num(h.valor, 1e6));
   const entero = (v, max) => Number.isInteger(v) && v >= 0 && v <= max;
   const sesion = x => obj(x) && txt(x.id, 80) && fecha(x.fecha) && num(x.duracion, 864000) && Array.isArray(x.bloques)
-    && x.bloques.every(b => obj(b) && (b.constelacion === undefined || txt(b.constelacion)) && Array.isArray(b.series) && b.series.every(serie))
+    && x.bloques.every(b => obj(b) && (b.constelacion === undefined || txt(b.constelacion)) && (b.constelaciones === undefined || Array.isArray(b.constelaciones) && b.constelaciones.length <= 64 && b.constelaciones.every(c => txt(c)))
+      && (b.molde === undefined || txt(b.molde, 20)) && Array.isArray(b.series) && b.series.every(serie))
     && (x.rutina === undefined || obj(x.rutina) && txt(x.rutina.id) && entero(x.rutina.sesion, 1000))
     && (x.hazana === undefined || hazana(x.hazana))
     && (x.semanaPrueba === undefined || obj(x.semanaPrueba) && entero(x.semanaPrueba.bloque, 1000));
   const PERFIL = {
     peso: v => num(v, 400) && v >= 20,
-    rumbo: v => Array.isArray(v) && v.length <= 3 && v.every(x => txt(x)),
+    /* sin tope de metas (motor B): hasta todas las constelaciones del catálogo */
+    rumbo: v => Array.isArray(v) && v.length <= ((K.CATALOGO && K.CATALOGO.constelaciones.length) || 64) && new Set(v).size === v.length && v.every(x => txt(x)),
     equipo: v => Array.isArray(v) && v.every(x => txt(x, 40)),
     rutina: v => obj(v) && txt(v.id) && fecha(v.desde),
     dias: v => Array.isArray(v) && v.length <= 7 && v.every(d => entero(d, 6)) && new Set(v).size === v.length
