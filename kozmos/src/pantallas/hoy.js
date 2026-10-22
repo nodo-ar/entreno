@@ -20,7 +20,8 @@ K.queToca = b => {
   const v = K.cielo.corto(b, b.objetivo);
   if (b.tipo === "logrado") return `${b.series} ${b.series === 1 ? "intento" : "intentos"}`;
   if (b.tipo === "sesiones") return "1 sesión";
-  return b.series > 1 ? `${b.series} × ${v}` : v;
+  /* «4 × 5», no «4 × ×5»: con series, las repeticiones van sin su × */
+  return b.series > 1 ? `${b.series} × ${b.tipo === "repeticiones" ? b.objetivo : v}` : v;
 };
 const PREGUNTA = {segundos: "¿Cuántos segundos?", repeticiones: "¿Cuántas salieron?", minutos: "¿Cuántos minutos?", "menos-minutos": "¿En cuántos minutos?", porcentaje: "¿Cuánto lastre?", logrado: "¿Salió?", sesiones: "¿La hiciste?",
   puntos: "¿Cuántos puntos?", cm: "¿Cuántos centímetros?", km: "¿Cuántos km?"};
