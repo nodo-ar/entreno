@@ -1,5 +1,7 @@
 /* ===== Deshacer ===== */
-/* K.deshacer("Tema oscuro", () => volver()) muestra el aviso; si se toca, corre volver(). Uno por vez. */
+/* K.deshacer("Borraste una marca", () => volver()) muestra el aviso; si se toca, corre volver(). Uno por vez.
+   Solo para lo que borra, termina o reemplaza algo que deja de verse donde tocaste. Elegir o cambiar algo
+   que queda a la vista en el control (rumbo, equipo, días, tema, avisos, la persona, el peso) no lo ofrece. */
 K.DESHACER_MS = 5000;
 K.deshacer = (texto, volver) => {
   /* un deshacer nuevo reemplaza al anterior, aunque estuviera esperando detrás de un aviso */

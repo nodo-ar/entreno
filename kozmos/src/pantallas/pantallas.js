@@ -112,7 +112,7 @@ K.P.acerca = () => K.enc({titulo: "Acerca de Kozmos", sub: "Ajustes", volver: "#
    <section class="cd fuentes small"><p><b>Calorías.</b> Ainsworth BE y otros (2011). 2011 Compendium of Physical Activities: a second update of codes and MET values. <i>Medicine &amp; Science in Sports &amp; Exercise</i>, 43(8), 1575-1581.</p></section>
    <p class="pie small mute">Letra: Mona Sans y Geist Mono, con licencia SIL Open Font License.</p>`;
 
-/* tu equipo: cada toque queda guardado, con deshacer */
+/* tu equipo: cada toque queda guardado y se ve en la fila; otro toque lo vuelve atrás */
 K.P.equipo = () => {
   const q = K.equipo();
   return K.enc({titulo: "Tu equipo", sub: "Ajustes", volver: "#/vos", raiz: true, det: true}) +
@@ -120,10 +120,8 @@ K.P.equipo = () => {
     <section class="aj">${K.EQUIPOS.map(([id, n]) => `<button type="button" class="ajr rumbo-fila" data-equipo="${id}" aria-pressed="${q.includes(id)}"><span class="tile">${K.ic(id === "lastre" ? "peso" : id)}</span><span>${n}</span><em></em>${q.includes(id) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</section>`;
 };
 K.equipoTocar = async id => {
-  const antes = K.diario.perfil.equipo, q = K.equipo(), n = q.includes(id) ? q.filter(x => x !== id) : [...q, id];
-  const poner = async v => { try { await K.diario.lote({perfil: {equipo: v}}); return true; } catch (e) { K.aviso("No se pudo guardar en este teléfono."); return false; } finally { K.refrescar(); } };
-  if (!await poner(n)) return;
-  K.deshacer(`${n.length > q.length ? "Sumaste" : "Sacaste"} ${K.equipoNombre(id).toLowerCase()}`, () => poner(antes));
+  const q = K.equipo(), n = q.includes(id) ? q.filter(x => x !== id) : [...q, id];
+  try { await K.diario.lote({perfil: {equipo: n}}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); } finally { K.refrescar(); }
 };
 
 /* tus días: los que entrenás. Los demás, Hoy te deja descansar. Sin elegir, todos. */
@@ -134,10 +132,8 @@ K.P.dias = () => {
     <section class="aj">${K.DIAS.map((n, i) => `<button type="button" class="ajr rumbo-fila" data-dia="${i}" aria-pressed="${d.includes(i)}"><span class="tile num">${CORTOS[i][0].toUpperCase()}</span><span>${n[0].toUpperCase() + n.slice(1)}</span><em></em>${d.includes(i) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</section>`;
 };
 K.diaTocar = async i => {
-  const antes = K.diario.perfil.dias, d = antes || [], n = (d.includes(i) ? d.filter(x => x !== i) : [...d, i]).sort();
-  const poner = async v => { try { await K.diario.lote({perfil: {dias: v && v.length ? v : undefined}}); return true; } catch (e) { K.aviso("No se pudo guardar en este teléfono."); return false; } finally { K.refrescar(); } };
-  if (!await poner(n)) return;
-  K.deshacer(`${n.length > d.length ? "Sumaste" : "Sacaste"} el ${K.DIAS[i]}`, () => poner(antes));
+  const d = K.diario.perfil.dias || [], n = (d.includes(i) ? d.filter(x => x !== i) : [...d, i]).sort();
+  try { await K.diario.lote({perfil: {dias: n.length ? n : undefined}}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); } finally { K.refrescar(); }
 };
 
 /* tu peso: para las calorías y para Lastre. Se guarda al tocar Listo; vacío lo saca. */
@@ -155,12 +151,11 @@ K.pesoPaso = d => {
   el.value = K.kg(K._peso);
 };
 K.pesoListo = async () => {
-  const txt = String(K.$("#v-peso").value).trim(), v = Number(txt.replace(",", ".")), antes = K.diario.perfil.peso;
+  const txt = String(K.$("#v-peso").value).trim(), v = Number(txt.replace(",", "."));
   if (txt && !(v >= 20 && v <= 400)){ K.aviso("Tiene que estar entre 20 y 400 kg."); K.$("#v-peso").focus(); return; }
   const n = txt ? Math.round(v * 2) / 2 : undefined;
   try { await K.diario.lote({perfil: {peso: n}}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); return; }
-  K._peso = null; K.volver("#/vos");
-  if (n !== antes) K.deshacer(n ? `Tu peso: ${K.kg(n)} kg` : "Sacaste tu peso", async () => { try { await K.diario.lote({perfil: {peso: antes}}); } catch (e) {} K.refrescar(); });
+  K._peso = null; K.volver("#/vos"); /* el peso nuevo queda a la vista en su fila de Vos */
 };
 
 /* respaldo: guardar todo en un archivo y traerlo de vuelta (suma, no borra nada) */
@@ -231,19 +226,16 @@ K.menuRasgo = btn => { const k = btn.dataset.rasgo, r = RASGOS[k];
       /* si cambiás a mujer u hombre, un peinado que no le va vuelve al azar */
       if (k === "sexo" && nuevo.pelo && nuevo.sexo && !K.fig.ESTILOS[nuevo.sexo].includes(nuevo.pelo)) delete nuevo.pelo;
       if (JSON.stringify(nuevo) === JSON.stringify(antes)) return;
-      K.personaPoner(nuevo); K.refrescar();
-      K.deshacer(`${r.nombre}: ${id === "azar" ? "al azar" : valor(k).toLowerCase()}`, () => { K.personaPoner(antes); K.refrescar(); }); }}); };
+      K.personaPoner(nuevo); K.refrescar(); }}); };
 K.menuTema = btn => K.menu.abrir(btn, {titulo: "Tema",
   items: K.TEMAS.map(([v, n, ic]) => ({id: v, texto: n, ic, elegido: K.tema.actual() === v})),
   elegir: id => K.cambiarTema(id)});
 K.menuAvisos = btn => K.menu.abrir(btn, {titulo: "Avisos",
   items: AVISOS.map(([v, n]) => ({id: v, texto: n, elegido: K.prefs.get("avisos", "todo") === v})),
-  elegir: id => { const antes = K.prefs.get("avisos", "todo"); if (id === antes) return; K.prefs.set("avisos", id); K.refrescar();
-    K.deshacer(`Avisos: ${K.avisosNombre(id).toLowerCase()}`, () => { K.prefs.set("avisos", antes); K.refrescar(); }); }});
+  elegir: id => { if (id === K.prefs.get("avisos", "todo")) return; K.prefs.set("avisos", id); K.refrescar(); }});
 
-/* cambiar el tema siempre se puede deshacer */
+/* cambiar el tema: se ve al instante en toda la pantalla y en su fila; elegir otro lo vuelve atrás */
 K.cambiarTema = t => {
-  const antes = K.tema.actual(); if (t === antes) return;
+  if (t === K.tema.actual()) return;
   K.tema.poner(t); K.refrescar();
-  K.deshacer(`Tema ${K.tema.nombre(t).toLowerCase()}`, () => { K.tema.poner(antes); K.refrescar(); });
 };
