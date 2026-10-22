@@ -213,7 +213,11 @@
      ],
      "equipo": [
       "barra"
-     ]
+     ],
+     "camino": {
+      "escalera": "fondos",
+      "hasta": "fondo"
+     }
     },
     {
      "id": "muscle-up.explosiva-3",
@@ -595,9 +599,6 @@
      },
      "requiere": [
       "un-brazo.colgado-15s"
-     ],
-     "equipo": [
-      "barra"
      ]
     },
     {
@@ -646,9 +647,6 @@
      },
      "requiere": [
       "un-brazo.negativa-3"
-     ],
-     "equipo": [
-      "barra"
      ]
     },
     {
@@ -666,7 +664,11 @@
      ],
      "equipo": [
       "barra"
-     ]
+     ],
+     "camino": {
+      "escalera": "tirar",
+      "hasta": "dominada-un-brazo-negativa"
+     }
     }
    ]
   },
@@ -1001,7 +1003,11 @@
       "barra",
       "paralelas",
       "lastre"
-     ]
+     ],
+     "camino": {
+      "escalera": "tirar",
+      "hasta": "dominada"
+     }
     },
     {
      "id": "lastre.fondo-25",
@@ -1020,7 +1026,11 @@
       "barra",
       "paralelas",
       "lastre"
-     ]
+     ],
+     "camino": {
+      "escalera": "fondos",
+      "hasta": "fondo"
+     }
     },
     {
      "id": "lastre.dominada-25",

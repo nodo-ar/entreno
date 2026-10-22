@@ -9,32 +9,60 @@
   {
    "id": "cuervo",
    "nombre": "Rodillas sobre los codos",
-   "indicacion": "Rodillas sobre los codos, mirada adelante. Inclinate hasta despegar los pies."
+   "indicacion": "Rodillas sobre los codos, mirada adelante. Inclinate hasta despegar los pies.",
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "vertical-pared",
    "nombre": "Parada de manos contra la pared",
-   "indicacion": "Panza a la pared, brazos rectos, hombros empujando hacia arriba."
+   "indicacion": "Panza a la pared, brazos rectos, hombros empujando hacia arriba.",
+   "equipo": [
+    "pared"
+   ],
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "pike-elevado",
    "nombre": "Flexión de hombros con pies en alto",
-   "indicacion": "Pies en un banco, cadera arriba. Bajá la cabeza entre las manos."
+   "indicacion": "Pies en un banco, cadera arriba. Bajá la cabeza entre las manos.",
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "vertical-libre",
    "nombre": "Parada de manos libre",
-   "indicacion": "Brazos rectos, cuerpo en línea. Corregí con los dedos."
+   "indicacion": "Brazos rectos, cuerpo en línea. Corregí con los dedos.",
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "flexion-vertical-pared",
    "nombre": "Flexión cabeza abajo contra la pared",
-   "indicacion": "Contra la pared, bajá la cabeza al piso y empujá hasta bloquear."
+   "indicacion": "Contra la pared, bajá la cabeza al piso y empujá hasta bloquear.",
+   "equipo": [
+    "pared"
+   ],
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "fondo-ruso",
    "nombre": "Fondo pasando por los antebrazos",
-   "indicacion": "En paralelas, bajá hasta apoyar los antebrazos y volvé a subir."
+   "indicacion": "En paralelas, bajá hasta apoyar los antebrazos y volvé a subir.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar",
+    "empujar"
+   ]
   },
   {
    "id": "dominada-explosiva",
@@ -50,6 +78,10 @@
    "indicacion": "Arrancá arriba de la barra y bajá lento pasando la transición.",
    "equipo": [
     "barra"
+   ],
+   "patron": [
+    "tirar",
+    "empujar"
    ]
   },
   {
@@ -58,6 +90,10 @@
    "indicacion": "Balanceo corto, tirón a la cadera y pasá el pecho arriba.",
    "equipo": [
     "barra"
+   ],
+   "patron": [
+    "tirar",
+    "empujar"
    ]
   },
   {
@@ -66,6 +102,10 @@
    "indicacion": "Sin balanceo: tirón al pecho, transición y fondo arriba.",
    "equipo": [
     "barra"
+   ],
+   "patron": [
+    "tirar",
+    "empujar"
    ]
   },
   {
@@ -80,37 +120,76 @@
   {
    "id": "fl-bolita",
    "nombre": "Horizontal hecho bolita",
-   "indicacion": "Rodillas al pecho, espalda redonda, brazos rectos."
+   "indicacion": "Rodillas al pecho, espalda redonda, brazos rectos.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
   },
   {
    "id": "fl-tuck",
    "nombre": "Horizontal con rodillas al pecho",
-   "indicacion": "Rodillas al pecho, espalda plana, brazos rectos."
+   "indicacion": "Rodillas al pecho, espalda plana, brazos rectos.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
   },
   {
    "id": "fl-tuck-avanzado",
    "nombre": "Horizontal con rodillas a la cadera",
-   "indicacion": "Cadera abierta a 90°, espalda plana, brazos rectos."
+   "indicacion": "Cadera abierta a 90°, espalda plana, brazos rectos.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
   },
   {
    "id": "fl-una-pierna",
    "nombre": "Horizontal con una pierna estirada",
-   "indicacion": "Una pierna estirada y la otra con la rodilla al pecho. Cadera alineada."
+   "indicacion": "Una pierna estirada y la otra con la rodilla al pecho. Cadera alineada.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
   },
   {
    "id": "fl-straddle",
    "nombre": "Horizontal con piernas abiertas",
-   "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal."
+   "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
   },
   {
    "id": "front-lever",
    "nombre": "Horizontal completo",
-   "indicacion": "Cuerpo entero horizontal, piernas juntas, brazos rectos."
+   "indicacion": "Cuerpo entero horizontal, piernas juntas, brazos rectos.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
   },
   {
    "id": "planche-lean",
    "nombre": "Inclinado adelante sobre las manos",
-   "indicacion": "En plancha, llevá los hombros por delante de las manos."
+   "indicacion": "En plancha, llevá los hombros por delante de las manos.",
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "flexion-pseudo-planche",
@@ -120,22 +199,37 @@
   {
    "id": "planche-tuck",
    "nombre": "En el aire con rodillas al pecho",
-   "indicacion": "Rodillas al pecho, pies en el aire, brazos rectos."
+   "indicacion": "Rodillas al pecho, pies en el aire, brazos rectos.",
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "planche-tuck-avanzado",
    "nombre": "En el aire con rodillas a la cadera",
-   "indicacion": "Espalda plana, cadera a la altura de los hombros."
+   "indicacion": "Espalda plana, cadera a la altura de los hombros.",
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "planche-straddle",
    "nombre": "En el aire con piernas abiertas",
-   "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal."
+   "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal.",
+   "patron": [
+    "empujar"
+   ]
   },
   {
    "id": "colgado-un-brazo",
    "nombre": "Colgado a un brazo",
-   "indicacion": "Hombro activo, el otro brazo suelto al costado."
+   "indicacion": "Hombro activo, el otro brazo suelto al costado.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
   },
   {
    "id": "flexion-arquera",
@@ -170,22 +264,49 @@
    "indicacion": "Desde colgado, tirá hasta pasar el mentón.",
    "equipo": [
     "barra"
+   ],
+   "patron": [
+    "tirar"
    ]
   },
   {
    "id": "bandera-rodillas",
    "nombre": "Bandera con rodillas recogidas",
-   "indicacion": "Brazo de abajo empuja, el de arriba tira. Rodillas al pecho."
+   "indicacion": "Brazo de abajo empuja, el de arriba tira. Rodillas al pecho.",
+   "equipo": [
+    "poste"
+   ],
+   "patron": [
+    "abdomen",
+    "empujar",
+    "tirar"
+   ]
   },
   {
    "id": "bandera-abierta",
    "nombre": "Bandera con piernas abiertas",
-   "indicacion": "Piernas abiertas, cuerpo de costado en el aire."
+   "indicacion": "Piernas abiertas, cuerpo de costado en el aire.",
+   "equipo": [
+    "poste"
+   ],
+   "patron": [
+    "abdomen",
+    "empujar",
+    "tirar"
+   ]
   },
   {
    "id": "bandera",
    "nombre": "Bandera completa",
-   "indicacion": "Cuerpo recto y horizontal, piernas juntas."
+   "indicacion": "Cuerpo recto y horizontal, piernas juntas.",
+   "equipo": [
+    "poste"
+   ],
+   "patron": [
+    "abdomen",
+    "empujar",
+    "tirar"
+   ]
   },
   {
    "id": "l-sit",
@@ -251,6 +372,9 @@
    "equipo": [
     "barra",
     "lastre"
+   ],
+   "patron": [
+    "tirar"
    ]
   },
   {
@@ -260,6 +384,9 @@
    "equipo": [
     "paralelas",
     "lastre"
+   ],
+   "patron": [
+    "empujar"
    ]
   },
   {
@@ -352,12 +479,18 @@
   {
    "id": "double-under",
    "nombre": "Doble vuelta de soga",
-   "indicacion": "Dos vueltas de soga por salto."
+   "indicacion": "Dos vueltas de soga por salto.",
+   "equipo": [
+    "soga"
+   ]
   },
   {
    "id": "criss-cross",
    "nombre": "Saltos cruzando los brazos",
-   "indicacion": "Cruzá los brazos en el aire y descruzá al salto siguiente."
+   "indicacion": "Cruzá los brazos en el aire y descruzá al salto siguiente.",
+   "equipo": [
+    "soga"
+   ]
   },
   {
    "id": "dominada-negativa",
@@ -408,6 +541,22 @@
    "id": "remo-poste",
    "nombre": "Remo agarrado de un poste",
    "indicacion": "Agarrate de un poste o marco firme, inclinate atrás y tirá el pecho hacia él."
+  },
+  {
+   "id": "remo-toalla-puerta",
+   "nombre": "Remo con toalla en la puerta",
+   "indicacion": "Toalla en el picaporte, la puerta cerrada para el otro lado. Tirá el pecho hacia ella.",
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "remo-mesa",
+   "nombre": "Remo debajo de la mesa",
+   "indicacion": "Acostado bajo una mesa firme, agarrá el borde y subí el pecho con el cuerpo recto.",
+   "patron": [
+    "tirar"
+   ]
   },
   {
    "id": "flexion-inclinada",
@@ -502,6 +651,9 @@
    "indicacion": "Colgado con brazos rectos, subí solo con los omóplatos.",
    "equipo": [
     "barra"
+   ],
+   "patron": [
+    "tirar"
    ]
   },
   {
@@ -510,6 +662,9 @@
    "indicacion": "Manos al ancho de hombros. Más brazo.",
    "equipo": [
     "barra"
+   ],
+   "patron": [
+    "tirar"
    ]
   },
   {
@@ -518,6 +673,9 @@
    "indicacion": "Manos bien más anchas que los hombros, palmas hacia adelante. Pecho a la barra.",
    "equipo": [
     "barra"
+   ],
+   "patron": [
+    "tirar"
    ]
   },
   {
@@ -995,12 +1153,18 @@
   {
    "id": "del-piso",
    "nombre": "Sentarte y pararte del piso",
-   "indicacion": "Piernas cruzadas, sentate en el piso y parate sin apoyos. Cada apoyo resta 1 de 10."
+   "indicacion": "Piernas cruzadas, sentate en el piso y parate sin apoyos. Cada apoyo resta 1 de 10.",
+   "patron": [
+    "movilidad"
+   ]
   },
   {
    "id": "pike-alcance",
    "nombre": "Sentado, manos más allá de los pies",
-   "indicacion": "Sentado, piernas estiradas: medí cuánto pasan tus dedos la punta de los pies."
+   "indicacion": "Sentado, piernas estiradas: medí cuánto pasan tus dedos la punta de los pies.",
+   "patron": [
+    "movilidad"
+   ]
   },
   {
    "id": "bici-12",

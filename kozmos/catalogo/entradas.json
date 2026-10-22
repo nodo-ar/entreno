@@ -1,0 +1,20 @@
+{
+ "version": 1,
+ "piezas": [
+  {"id": "bici-suave", "nota": "Bici suave · 2 min, sin apurarte", "seg": 120, "para": ["general"], "pulso": true, "equipo": ["bici"], "ejercicio": "bici"},
+  {"id": "saltos-tijera", "nota": "Saltos de tijera · 30, sueltos", "seg": 45, "para": ["general"], "pulso": true, "ejercicio": "saltos-tijera"},
+  {"id": "circulos-brazos", "nota": "Círculos de brazos · 30 s cada lado", "seg": 60, "para": ["general", "barra", "manos"]},
+  {"id": "gato-vaca", "nota": "Gato y vaca · 8, lento", "seg": 45, "para": ["general"]},
+  {"id": "bicho-muerto", "nota": "Bicho muerto · 6 por lado, lento", "seg": 60, "para": ["general"]},
+  {"id": "estiramiento-mundo", "nota": "Estiramiento del mundo · 5 por lado", "seg": 60, "para": ["general", "piernas"]},
+  {"id": "colgarse", "nota": "Colgarse · 20 s, hombros sueltos", "seg": 20, "para": ["barra"], "equipo": ["barra"]},
+  {"id": "encogerse-colgado", "nota": "Encogerse colgado · 8, codos rectos", "seg": 45, "para": ["barra"], "equipo": ["barra"]},
+  {"id": "flexiones-apoyado", "nota": "Flexiones apoyado · 10, en la mesa", "seg": 45, "para": ["manos"]},
+  {"id": "munecas", "nota": "Muñecas en cuatro patas · 10 adelante y atrás", "seg": 45, "para": ["manos"]},
+  {"id": "sentadillas", "nota": "Sentadillas sin peso · 12, bien abajo", "seg": 45, "para": ["piernas"]},
+  {"id": "circulos-cadera", "nota": "Círculos de cadera · 8 por lado", "seg": 60, "para": ["piernas"]},
+  {"id": "zancadas", "nota": "Zancadas caminando · 8 por pierna", "seg": 60, "para": ["piernas"]},
+  {"id": "puente-gluteo", "nota": "Puente de glúteo · 12, apretando arriba", "seg": 45, "para": ["piernas"]},
+  {"id": "primer-suave", "nota": "Primer ejercicio suave · 5, sin cargar", "seg": 45, "para": ["general"], "ultima": true}
+ ]
+}
