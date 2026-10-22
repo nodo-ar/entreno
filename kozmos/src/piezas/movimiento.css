@@ -22,18 +22,10 @@
 .res-orbita{padding:18px}
 .res-orbita .lb{text-align:center}
 
-/* hazañas: la figura de su constelación */
-.tile.fig{background:transparent}
+/* pruebas y constelaciones en grande (la medalla o el anillo): en la prueba abierta y en el resumen */
 .hz-fig{display:grid; place-items:center; padding:8px 0 0}
-.hz-fig .figura{width:min(150px,40vw); height:auto}
 .res-fig{display:grid; place-items:center; padding:20px}
-.res-fig .figura{width:min(190px,50vw); height:auto}
-.res-fig.logro .figura circle{animation:prende .5s var(--ease) both}
-.res-fig.logro .figura circle:nth-of-type(2){animation-delay:.08s} .res-fig.logro .figura circle:nth-of-type(3){animation-delay:.16s}
-.res-fig.logro .figura circle:nth-of-type(4){animation-delay:.24s} .res-fig.logro .figura circle:nth-of-type(5){animation-delay:.32s}
-.res-fig.logro .figura circle:nth-of-type(n+6){animation-delay:.4s}
-@keyframes prende{from{transform:scale(0); opacity:0}}
-.res-fig .figura circle{transform-box:fill-box; transform-origin:center}
+.res-fig .ico{width:min(150px,40vw); height:auto; aspect-ratio:1}
 
 /* la barra: cada pestaña tiene su estrella, que existe solo en la elegida; apagado, el ícono está entero */
 .ic .orb{opacity:0; transition:opacity .18s}
@@ -49,7 +41,7 @@ nav.barra button[aria-current="page"] .base{transform:none}
 nav.barra button[aria-current="page"] .v1{fill:var(--fu)} nav.barra button[aria-current="page"] .v2{fill:var(--mo)} nav.barra button[aria-current="page"] .v3{fill:var(--ra)}
 
 @media (prefers-reduced-motion:reduce){
-  .logo-mov .orb,.logo-mov.orbita .traza,.logo-mov.orbita .est,.res-fig.logro .figura circle{animation:none!important}
+  .logo-mov .orb,.logo-mov.orbita .traza,.logo-mov.orbita .est{animation:none!important}
   .ic .orb,.ic .ph,.ic .base,.ic .v1,.ic .v2,.ic .v3{transition:none}
   .logo-mov.orbita .est{fill:var(--ink)}
 }

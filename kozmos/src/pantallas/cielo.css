@@ -7,29 +7,28 @@
 .bar{height:6px; border-radius:6px; background:var(--s2); overflow:hidden}
 .bar i{display:block; height:100%; border-radius:6px; background:var(--c,var(--ink)); transition:width .5s var(--ease)}
 
-/* el cielo entero */
-.cielo-grande{padding:6px; overflow:hidden}
-.cielo-svg{display:block; width:100%; height:auto}
-.cielo-svg .cons{cursor:pointer; outline:none}
-.cielo-svg .cons rect{transition:fill .2s}
-.cielo-svg .cons:active rect,.cielo-svg .cons:focus-visible rect{fill:var(--s2)}
-.cielo-svg .cons:focus-visible rect{stroke:var(--ink); stroke-width:1.5}
-.cons-nom{font:700 10.5px var(--f-mono); letter-spacing:.06em; fill:var(--ink-2)}
+/* el cielo entero: una baldosa por constelación, su figura en el anillo de avance */
+.cielo-grilla{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
+.cons-tile{display:flex; flex-direction:column; align-items:center; gap:2px; padding:12px 6px 10px; border:0; color:var(--ink); font:inherit; text-align:center; cursor:pointer; min-width:0}
+.cons-tile .ico{width:76px; height:76px; margin-bottom:6px}
+.cons-tile b{font-size:var(--t-sm); font-weight:700; line-height:1.2; max-width:100%; overflow-wrap:anywhere}
+.cons-tile .num{font-size:var(--t-xs); font-weight:700; color:var(--ink-2)}
+.cons-tile:active{background:var(--s2)} .cons-tile:active{--ico-fondo:var(--s2)}
+.cons-tile:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
 .ayuda{padding:0 4px; margin-top:-4px; color:var(--ink-2); max-width:38ch}
-.leyenda{display:flex; gap:14px; flex-wrap:wrap; padding:4px 10px 10px; font-size:var(--t-xs); font-weight:700; color:var(--ink-2)}
-.leyenda span{display:inline-flex; align-items:center; gap:6px}
-.ly{width:10px; height:10px; border-radius:50%; display:inline-block; border:1.5px solid var(--off)}
-.ly.on{background:var(--ink); border-color:var(--ink)}
-.ly.nx{border:2px solid var(--fu); background:radial-gradient(var(--fu) 0 2px,transparent 2.5px)}
 .es.tenue{opacity:.4}
 .fam{display:flex; flex-direction:column; gap:8px; margin-top:6px}
 .fam>.lb{padding:0 4px}
-.cons-fila .tile.anillo{background:transparent}
 .cons-fila em{font-weight:700}
 
 /* una constelación */
+/* la cabecera: la figura en su anillo y lo que es; de fondo, tenues, las estrellas */
 .cons-meta{padding:0 2px; margin-top:-4px}
-.cons-cielo{padding:0; overflow:hidden}
+.cons-cab{position:relative; overflow:hidden; display:grid; place-items:center; min-height:136px; padding:20px}
+.cons-fondo{position:absolute; inset:0; opacity:.32; pointer-events:none}
+.cons-fondo .cons-svg{width:100%; height:100%}
+.cons-ico{position:relative; width:96px; height:96px; border-radius:50%; background:var(--s1)}
+.cons-ico .ico{width:96px; height:96px}
 .cons-svg{display:block; width:100%; height:auto}
 .es.nace{transform-box:fill-box; transform-origin:center; animation:nace .9s var(--ease) both}
 @keyframes nace{0%{transform:scale(.2); opacity:0} 55%{transform:scale(1.9); opacity:1} 100%{transform:scale(1)}}
@@ -68,5 +67,5 @@
 /* en horizontal la lista no lleva el cielo grande: el cielo es lo abierto a la derecha */
 @media (orientation:landscape) and (max-height:520px){
   .solo-vertical{display:none}
-  .split>.abierto .cons-cielo .cons-svg{max-height:150px}
+  .split>.abierto .cons-cab{min-height:120px; padding:12px}
 }

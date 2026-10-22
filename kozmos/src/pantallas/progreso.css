@@ -23,7 +23,7 @@
 .anillo-desc.vacio .arco{opacity:0}
 @media (orientation:landscape) and (max-height:520px){
   .split .res{display:flex}
-  .split .res .cons-svg{max-height:150px}
+  .split .res .res-fig .ico{width:120px; height:120px}
 }
 .semanas-eje{margin-top:-6px; color:var(--ink-3)}
 .prog-est{display:grid; grid-template-columns:10px 1fr; column-gap:10px; align-items:center}

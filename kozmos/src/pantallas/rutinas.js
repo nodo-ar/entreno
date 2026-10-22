@@ -10,6 +10,11 @@ const hzMejor = h => K.cielo.TIPOS[h.mide.tipo].mejor;
 K.hzMarca = (h, v) => K.cielo.corto(h.mide, v);
 const hzCorta = (h, v) => h.mide.tipo === "tiempo" ? K.reloj(v) : h.mide.tipo === "cm" ? `${v > 0 ? "+" : v < 0 ? "−" : ""}${K.cielo.coma(Math.abs(v))}` : K.cielo.coma(v);
 K.hzVeces = h => K.rutina.veces(h, K.diario.sesiones);
+/* la medalla de una prueba donde sea que aparezca: a color si tu última vez ya tiene magnitud, en gris si no */
+K.hzIcono = (h, px, lb) => { const vs = K.hzVeces(h), u = vs[vs.length - 1]; return K.icono.medalla(h, !!u && K.rutina.magnitud(h, u.valor, vs) !== null, px, lb); };
+/* una estrella en una fila («Entrena para», «Enciende»): su constelación en su anillo */
+const estFila = (c, e, sub, em) => `<button type="button" class="ajr" data-ir="#/cielo/${c.id}"><span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span>
+      <span class="ses-fila">${K.esc(e.nombre)}<small class="mute">${K.esc(sub)}</small></span><em>${em}</em>${K.ic("chev", "chev")}</button>`;
 const mesDe = f => { const [a, m] = f.split("-").map(Number); return new Date(a, m - 1, 1).toLocaleDateString("es-AR", {month: "long"}); };
 /* contra tu vez anterior: «+3 desde agosto», «0:40 menos desde agosto» */
 K.hzDesde = (h, vs) => {
@@ -97,7 +102,7 @@ K.P.planes = r => {
     const sp = K.plan.semanaDePrueba(K.diario.perfil, K.diario.sesiones, K.hoy()), es = K.rutina.escalerasDe(ru.r, K.ctxRutina());
     tuya = `<div class="pl-tit"><h2>Tu rutina</h2></div><section class="cd pl-rut"${abreR === ru.r.id ? " data-sel" : ""}>
       <button type="button" class="pl-ir" data-ir="#/planes/rutinas/${ru.r.id}" data-quieto="1" aria-label="${K.esc(ru.r.nombre)}"></button>
-      <span class="ln"><b>${K.esc(ru.r.nombre)}</b>${K.ic("chev", "chev")}</span><span class="mute small">Semana ${ru.cur.semana} de ${ru.r.semanas}${sp ? ` · bloque ${sp.bloque}` : ""}</span>
+      <div class="pl-rut-cab"><span class="tile ico-tile">${K.icono.rutina(ru.r, 40)}</span><span class="ses-fila"><b>${K.esc(ru.r.nombre)}</b><small class="mute">Semana ${ru.cur.semana} de ${ru.r.semanas}${sp ? ` · bloque ${sp.bloque}` : ""}</small></span>${K.ic("chev", "chev")}</div>
       ${es.length ? K.escalerasMini(es, ru.r.familia) : ""}<span class="small pl-rut-prueba">${K.esc(K.pruebaTx(sp, ru.r))}</span></section>`;
   }
   const fr = famDe("planes.rutinas");
@@ -136,8 +141,7 @@ K.P.rutina = id => {
   const enc = K.enc({titulo: r.nombre, sub: "Planes", volver: "#/planes", raiz: true, det: true, acciones: sigo ? K.mas("rut-mas", "Opciones de la rutina") : ""});
   const dato = (n, t) => `<div class="cd res-dato"><span class="num">${K.esc(n)}</span><span class="lb">${t}</span></div>`;
   const est = r.alimenta.map(eid => { const c = cielo.constelaciones.find(k => k.estrellas.some(y => y.id === eid)); return c && {c, e: c.estrellas.find(y => y.id === eid)}; }).filter(Boolean);
-  const lleva = est.length ? `<span class="lb pie">Entrena para</span><section class="aj">${est.map(({c, e}) => `<button type="button" class="ajr" data-ir="#/cielo/${c.id}">${K.POSES[e.prueba.ejercicio] ? `<span class="tile fig-tile">${K.fig.chica(e.prueba.ejercicio, c.familia)}</span>` : `<span class="tile"><i class="dot" style="--c:var(--${c.familia})"></i></span>`}
-      <span class="ses-fila">${K.esc(e.nombre)}<small class="mute">${K.esc(c.nombre)}</small></span><em>${e.encendida ? "Encendida" : e.estado === "proxima" ? "La próxima" : ""}</em>${K.ic("chev", "chev")}</button>`).join("")}</section>` : "";
+  const lleva = est.length ? `<span class="lb pie">Entrena para</span><section class="aj">${est.map(({c, e}) => estFila(c, e, c.nombre, e.encendida ? "Encendida" : e.estado === "proxima" ? "La próxima" : "")).join("")}</section>` : "";
   /* cada día de una semana: lo que harías en cada uno con tus escalones de ahora, cuánto dura y cuál te toca */
   const dias = K.rutinaDias(r, sigo ? ru.cur : null);
   /* sus escaleras: por dónde vas en cada una (sin haberla empezado, por dónde arrancarías), igual que en Hoy */
@@ -216,8 +220,7 @@ K.P.hazana = id => {
   /* las estrellas que puede encender, en todo el cielo */
   const cielo = K.cieloActual();
   const est = (h.estrellas || []).map(eid => { const c = cielo.constelaciones.find(k => k.estrellas.some(y => y.id === eid)); return c && {c, e: c.estrellas.find(y => y.id === eid)}; }).filter(Boolean);
-  const enciende = est.length ? `<span class="lb pie">Enciende</span><section class="aj">${est.map(({c, e}) => `<button type="button" class="ajr" data-ir="#/cielo/${c.id}"><span class="tile"><i class="dot" style="--c:var(--${c.familia})"></i></span>
-      <span class="ses-fila">${K.esc(e.nombre)}<small class="mute">${K.esc(c.nombre)} · m${e.magnitud}</small></span><em>${e.encendida ? "Encendida" : ""}</em>${K.ic("chev", "chev")}</button>`).join("")}</section>` : "";
+  const enciende = est.length ? `<span class="lb pie">Enciende</span><section class="aj">${est.map(({c, e}) => estFila(c, e, `${c.nombre} · m${e.magnitud}`, e.encendida ? "Encendida" : "")).join("")}</section>` : "";
   /* tus veces, la última arriba; las de la versión anterior (por niveles) quedan al final, con su nivel */
   const filas = [...vs].reverse().map(x => { const g = K.rutina.magnitud(h, x.valor, vs);
     return `<div class="ln"><span>${K.esc(K.fechaCorta(x.fecha))}</span><span class="num">${K.esc(K.hzMarca(h, x.valor))}${g ? ` <small class="mute">m${g}</small>` : ""}</span></div>`; }).join("")

@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (íconos B en Planes) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (íconos B en todas las pantallas) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -67,6 +67,14 @@
   - Pruebas: 78 sin pantalla y 80 de pantallas, en verde.
   - **Esperando a Fer**: que pruebe Planes en el teléfono y dé el OK al tablero.
   - **Próximo**: con su OK, el Cielo (anillo de avance con la figura adentro) y después Hoy, Progreso y el resumen.
+  - Salió como **kozmos-26** (registro en `docs/versiones/kozmos-26.md`).
+- **Los íconos B en el resto** (2026-10-22): vuelta 22 (acta `docs/actas/022-kozmos-iconos-b-resto.md`), rama `claude/project-thread-985fzq`, sin PR. Lo que Fer aprobó:
+  - El Cielo es una grilla de constelaciones: la figura de su última estrella adentro de un anillo de avance (pista suave, arco del color de la familia, satélite en la punta; completa, cerrado con el satélite arriba a la derecha). La lista, con el anillo a 40 px. La constelación abierta, el anillo sobre sus estrellas tenues. Los arcos se cierran la primera vez que abrís el Cielo.
+  - Lo mismo se dibuja igual en todas partes: Hoy (próxima estrella, «Sale de tu rutina / rumbo», primer día, «¿Solo por hoy?»), Tu rumbo, «Entrena para», «Enciende», «Rutinas que llevan acá», Progreso y el resumen usan la medalla, el anillo o el círculo de la rutina. La tarjeta «Tu rutina» lleva su círculo.
+  - Se fueron el cielo de estrellas, la figura dibujada de las pruebas y `figura` de `hazanas.json`.
+  - Pruebas: 79 sin pantalla y 84 de pantallas, en verde.
+  - **Esperando a Fer**: el OK al tablero (capturas antes y después en claro y grafito).
+  - **Próximo**: con su OK, PR y versión 27.
 
 ## Dónde quedó
 

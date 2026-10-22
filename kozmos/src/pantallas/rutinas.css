@@ -71,11 +71,13 @@
 .pl-prox-tx{display:flex; flex-direction:column; gap:3px; min-width:0; flex:1}
 .pl-prox-tx .lb{color:var(--c)}
 .pl-rut{gap:8px}
-.pl-rut .ln b{font-size:var(--t-md)}
+.pl-rut-cab{display:grid; grid-template-columns:40px 1fr 14px; gap:14px; align-items:center}
+.pl-rut-cab .tile.ico-tile{width:40px; height:40px; background:transparent; border-radius:0}
+.pl-rut-cab .tile.ico-tile .ico{width:40px; height:40px}
+.pl-rut-cab b{font-size:var(--t-md)}
 .pl-rut .chev{width:14px; height:14px; color:var(--ink-3)}
 .pl-rut-prueba{color:var(--ink)}
 .ajr em.toca{color:var(--ink)}
-.ajr .tile.fig .figura{width:26px; height:26px}
 .rut-bloque{color:var(--ink-2); padding:0 2px}
 .rut-bloque .num{color:var(--ink); white-space:nowrap}
 .rut-escalon{text-align:center; padding:0 12px; margin-top:-4px}
@@ -101,7 +103,6 @@
 /* una prueba abierta */
 .hz-cab{display:flex; align-items:center; gap:14px}
 .hz-cab .hz-fig{flex:none; width:88px; height:88px; display:grid; place-items:center}
-.hz-cab .hz-fig .figura{width:88px; height:88px}
 .hz-cab .ayuda{margin:0}
 .hz-escala{gap:6px}
 .hz-escala>.ln:last-child{font-size:var(--t-sm)}
@@ -119,8 +120,7 @@
 /* el resumen de una prueba: varias constelaciones a la vez, tu escala y las estrellas nuevas */
 .res-varias{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:8px}
 .res-una{display:grid; gap:4px; justify-items:center; min-width:0}
-.res-una-dib{width:100%; border-radius:var(--r-md); overflow:hidden; background:var(--s2)}
-.res-una-dib .cons-svg{display:block; width:100%; height:auto}
+.res-una .ico{width:64px; height:64px}
 .res-una .lb{max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .res-pruebas{gap:12px}
 .res-prueba{display:grid; gap:4px}

@@ -281,16 +281,15 @@ prueba("cielo-catalogo", async () => {
   const {ctx, p} = await pagina();
   await ir(p, "#/cielo");
   ok(await p.$$eval(".cons-fila", x => x.length) === 14, "no hay 14 constelaciones en la lista");
-  ok(await p.$$eval(".cielo-svg .cons", x => x.length) === 14, "no hay 14 constelaciones en el cielo");
+  ok(await p.$$eval(".cielo-grilla .cons-tile svg.ico-cons", x => x.length) === 14, "no hay 14 constelaciones en el cielo");
   ok(await p.textContent(".enc-tit small") === "Todavía sin estrellas", "el cielo vacío dice otra cosa");
-  ok(await p.$$eval(".cielo-svg .es.on", x => x.length) === 0, "hay estrellas encendidas sin marcas");
-  ok(await p.$$eval(".cielo-svg .es.nx", x => x.length) === 14, "cada constelación tiene que mostrar su próxima");
+  ok(await p.$$eval(".cielo-grilla .ico-arco, .cielo-grilla .ico-sat", x => x.length) === 0, "hay anillos con avance sin marcas");
   await p.click('.cons-fila[data-ir="#/cielo/front-lever"]');
   await esperarTitulo(p, "Front lever");
   ok(await estadosFL(p) === "p-------", "Front lever vacía: " + await estadosFL(p));
   /* el cielo también se abre tocando la constelación, o con el teclado */
   await ir(p, "#/cielo");
-  await p.focus('.cielo-svg .cons[data-ir="#/cielo/soga"]'); await p.keyboard.press("Enter");
+  await p.focus('.cielo-grilla .cons-tile[data-ir="#/cielo/soga"]'); await p.keyboard.press("Enter");
   await esperarTitulo(p, "Soga");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
@@ -505,7 +504,7 @@ prueba("sesion-entera", async () => {
   ok(await fase(p) === "cierre", "no llegó a la última serie");
   await p.click("#s-terminar"); await p.waitForSelector(".res");
   ok((await p.textContent(".res-tit")) === "Sentadilla profunda libre 30 s, encendida.", "el resumen no muestra la estrella nueva: " + await p.textContent(".res-tit"));
-  ok(await p.$(".res .es.nace"), "la estrella nueva no se enciende en su constelación");
+  ok(await p.$(".res svg.ico-cons.crece"), "el anillo de la constelación no crece con la estrella nueva");
   const datos = await p.$$eval(".res-dato .num", xs => xs.map(x => x.textContent));
   ok(datos[1] === "7" && datos[2] === "1", "series y estrellas: " + datos);
   /* queda guardada: al abrir de nuevo, Hoy lo dice y el cielo la tiene */
@@ -738,7 +737,7 @@ prueba("tu-equipo", async () => {
   await p.click('[data-equipo="soga"]'); await p.waitForSelector('[data-equipo="soga"][aria-pressed="false"]');
   ok((await p.textContent(".utoast .utx")) === "Sacaste soga", "no ofrece deshacer");
   await ir(p, "#/cielo");
-  ok(!(await p.$('.cielo-svg [data-ir="#/cielo/soga"]')), "sin soga, Soga sigue en el cielo");
+  ok(!(await p.$('.cielo-grilla [data-ir="#/cielo/soga"]')), "sin soga, Soga sigue en el cielo");
   await ir(p, "#/cielo/soga");
   ok((await p.textContent(".cons-estado .t1")) === "Pide soga.", "la constelación no dice qué pide");
   ok(await p.$$eval(".est-fila.sin-equipo", xs => xs.length) === 7 && await p.$$eval(".cons-svg .es.sin", xs => xs.length) === 7, "abierta, se ven todas, tenues");
@@ -1621,9 +1620,9 @@ prueba("maniqui", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
   await p.evaluate(() => K.diario.perfilPoner("equipo", ["barra"]));
-  /* en la rutina, cada estrella de «Entrena para» muestra a su persona en un círculo */
+  /* en la rutina, cada estrella de «Entrena para» muestra su constelación: la persona en su anillo (vuelta 22) */
   await ir(p, "#/planes/rutinas/base_cali");
-  const filas = await p.$$eval(".ajr[data-ir^='#/cielo/']", fs => fs.map(f => !!f.querySelector(".fig-chica svg.fig")));
+  const filas = await p.$$eval(".ajr[data-ir^='#/cielo/']", fs => fs.map(f => !!f.querySelector(".tile svg.ico-cons")));
   ok(filas.length && filas.every(Boolean), "una estrella de la rutina sin dibujo: " + filas);
   await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
   await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo");
@@ -1848,9 +1847,9 @@ prueba("planes-iconos-b", async () => {
   ok(await p.$eval(".pl-prox svg.ico-medalla", x => Math.round(x.getBoundingClientRect().width)) === 64, "la tarjeta de la próxima prueba sin su medalla");
   await ir(p, "#/planes/hazanas/hercules");
   ok(await p.$eval(".hz-fig svg.ico-medalla.ganada", x => Math.round(x.getBoundingClientRect().width)).catch(() => 0) === 88, "la prueba abierta sin su medalla");
-  /* por ahora es solo Planes: Hoy, el Cielo y Progreso siguen como estaban */
-  for (const h of ["#/hoy", "#/cielo", "#/cielo/front-lever", "#/progreso"]){ await ir(p, h); const donde = await p.$$eval("#app svg.ico-medalla, #app svg.ico-rutina", xs => xs.map(x => x.closest("[class]:not(svg):not(.tile)")?.className || "?"));
-    ok(!donde.length, h + ": ya cambió, y era solo Planes: " + donde.join(", ")); }
+  /* la tarjeta «Tu rutina» lleva el mismo círculo que las filas de rutinas */
+  await ir(p, "#/planes/rutinas/tabata"); await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy"); await ir(p, "#/planes");
+  ok(await p.$eval(".pl-rut svg.ico-rutina", x => x.clientWidth).catch(() => 0) === 40, "la tarjeta «Tu rutina» sin su ícono");
   /* en horizontal, la lista y lo abierto entran sin desplazar de costado */
   await p.setViewportSize({width: 844, height: 390});
   for (const h of ["#/planes", "#/planes/hazanas/orion", "#/planes/rutinas/tabata"]){ await ir(p, h);
@@ -1882,6 +1881,93 @@ prueba("planes-iconos-rapidos", async () => {
     const primera = m(() => K.P.planes({tab: "planes"})); const otra = m(() => { for (let i = 0; i < 5; i++) K.P.planes({tab: "planes"}); }) / 5; return {primera, otra}; });
   ok(t.primera < 250, "la primera vez tarda " + JSON.stringify(t));
   ok(t.otra < Math.max(25, t.primera / 2), "los íconos no se guardan: " + JSON.stringify(t));
+  await ctx.close();
+});
+
+/* ===== Los íconos B en el resto (vuelta 22): el Cielo con anillos y la misma figura en todas partes ===== */
+const anotarMarcas = (p, ms) => p.evaluate(async ms => { for (const [estrella, ejercicio, tipo, valor, fecha] of ms) await K.diario.anotar({estrella, ejercicio, tipo, valor, fecha, catalogo: 1}); K.refrescar(); }, ms);
+const icos = (p, sel) => p.$$eval(sel, xs => xs.map(x => ({cls: x.getAttribute("class"), w: x.clientWidth, arco: !!x.querySelector(".ico-arco"), sat: !!x.querySelector(".ico-sat"), html: x.outerHTML})));
+prueba("iconos-b-cielo", async () => {
+  /* cada constelación es su figura adentro de un anillo de avance: en la grilla (76 px), en la lista (40 px) y abierta (96 px) */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy");
+  await anotarMarcas(p, [["front-lever.colgado-60s", "colgado-activo", "segundos", 62, "2026-09-10"], ["diez-km.60min", "trote", "minutos", 62, "2026-08-01"], ["diez-km.sub-50", "10km", "menos-minutos", 48, "2026-09-01"]]);
+  await ir(p, "#/cielo");
+  const g = await icos(p, ".cielo-grilla .cons-tile svg.ico-cons"), l = await icos(p, ".cons-fila .tile svg.ico-cons");
+  ok(g.length === 14 && g.every(x => x.w === 76), "la grilla no tiene sus 14 anillos de 76 px: " + g.map(x => x.w));
+  ok(l.length === 14 && l.every(x => x.w === 40), "la lista no tiene sus anillos de 40 px");
+  ok(!(await p.$(".cielo-svg, .leyenda")), "quedó el cielo de estrellas");
+  const tile = async id => (await icos(p, `.cons-tile[data-ir="#/cielo/${id}"] svg.ico-cons`))[0];
+  const fl = await tile("front-lever"), km = await tile("diez-km"), pl = await tile("planche");
+  ok(fl.arco && fl.sat && !/completa/.test(fl.cls) && fl.html.includes("var(--fu)") && fl.html.includes("var(--fu-soft)"), "Front lever no muestra su avance con el satélite en la punta");
+  ok(/completa/.test(km.cls) && km.sat && km.html.includes('stroke-dasharray="100 0"'), "10 km completa no cierra el anillo con el satélite");
+  ok(!pl.arco && !pl.sat && pl.html.includes("var(--fu-soft)"), "Planche sin estrellas no queda en la pista sola");
+  ok(g.every(x => !/#[0-9a-f]{3,8}\b|rgb\(|NaN|undefined/i.test(x.html)), "un anillo con un color suelto o un número roto");
+  /* abierta: la figura en su anillo y, de fondo y tenue, las estrellas */
+  await ir(p, "#/cielo/front-lever");
+  ok((await icos(p, ".cons-cab .cons-ico svg.ico-cons"))[0]?.w === 96, "la constelación abierta sin su anillo");
+  ok(await p.$eval(".cons-fondo", x => +getComputedStyle(x).opacity).catch(() => 1) < .5 && await p.$(".cons-fondo .cons-svg"), "las estrellas no quedan de fondo y tenues");
+  ok((await icos(p, ".cons-fondo ~ * svg.ico-cons, .ajr svg.ico-rutina")).length >= 2, "las rutinas que llevan acá sin su ícono");
+  /* en horizontal: la lista con sus anillos y la abierta al lado, sin desplazar de costado */
+  await p.setViewportSize({width: 844, height: 390}); await ir(p, "#/cielo/parada-de-manos");
+  ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844 && (await icos(p, ".lado .cons-fila svg.ico-cons")).length === 14 && await p.$(".abierto .cons-cab svg.ico-cons"), "el Cielo en horizontal");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("iconos-b-en-todas", async () => {
+  /* lo mismo se dibuja igual en todas partes: la prueba es su medalla, la constelación su anillo y la rutina su círculo */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy");
+  /* el primer día: tres anillos para el rumbo y la medalla para «¿Solo por hoy?» */
+  ok((await icos(p, ".como-dib .ico-trio svg.ico-cons")).length === 3, "el primer día no muestra los anillos del rumbo");
+  ok((await icos(p, '.ajr[data-ir^="#/planes/hazanas/"] .tile svg.ico-medalla')).length === 1, "«¿Solo por hoy?» sin su medalla");
+  await sembrarSes(p, [hzSes("t1", "2026-09-01", "hercules", "flexion", "repeticiones", 22)]);
+  await rumbo(p, ["front-lever", "parada-de-manos"]); await ir(p, "#/hoy");
+  ok((await icos(p, ".hoy-origen .tile svg.ico-cons"))[0]?.w === 40 && (await icos(p, ".hoy-prox svg.ico-cons"))[0]?.w === 64, "Hoy con rumbo: la fila y la próxima estrella sin su anillo");
+  await ir(p, "#/hoy/rumbo");
+  ok((await icos(p, ".rumbo-fila .tile svg.ico-cons")).length === 14, "Tu rumbo sin anillos");
+  /* en una rutina: «Entrena para» y en una prueba: «Enciende», con el anillo de la constelación */
+  await ir(p, "#/planes/rutinas/base_cali");
+  ok((await icos(p, '.rut .ajr[data-ir^="#/cielo/"] .tile svg.ico-cons')).length >= 3, "«Entrena para» sin anillos");
+  await ir(p, "#/planes/hazanas/perseo");
+  ok((await icos(p, '.hzn .ajr[data-ir^="#/cielo/"] .tile svg.ico-cons')).length >= 2, "«Enciende» sin anillos");
+  /* seguir una rutina: Hoy dice de dónde sale con su círculo */
+  await ir(p, "#/planes/rutinas/base_cali"); await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
+  ok((await icos(p, ".hoy-origen .tile svg.ico-rutina"))[0]?.w === 40, "«Sale de tu rutina» sin su círculo");
+  /* Progreso: la prueba con su medalla a color */
+  await ir(p, "#/progreso");
+  const pr = await icos(p, '.ajr[data-ir="#/progreso/t1"] .tile svg');
+  ok(pr[0] && /ico-medalla ganada/.test(pr[0].cls), "Progreso: la prueba sin su medalla");
+  /* nada del dibujo viejo en ninguna pantalla */
+  for (const h of ["#/hoy", "#/cielo", "#/cielo/front-lever", "#/progreso", "#/planes", "#/planes/rutinas/base_cali", "#/planes/hazanas/perseo", "#/progreso/t1"]){ await ir(p, h);
+    ok(!(await p.$("#app svg.figura, #app .cielo-svg, #app .fig-tile, #app .tile.anillo")), h + ": queda un dibujo viejo"); }
+  ok(await p.$(".res-fig svg.ico-medalla.ganada"), "el resumen de la prueba sin su medalla");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("iconos-b-cielo-llega", async () => {
+  /* la primera vez que abrís el Cielo los anillos se cierran y el satélite los acompaña; después, quietos; con movimiento reducido, nunca */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await anotarMarcas(p, [["front-lever.colgado-60s", "colgado-activo", "segundos", 62, "2026-09-10"]]);
+  await p.evaluate(() => K.ir("#/cielo")); await p.waitForSelector(".cons-tile .ico-arco");
+  ok(await p.$eval(".cons-tile .ico-arco", x => getComputedStyle(x).animationName) === "ico-arco" && await p.$eval(".cons-tile .ico-sat", x => getComputedStyle(x).animationName) === "ico-gira", "el anillo no se cierra la primera vez");
+  await p.evaluate(() => K.ir("#/hoy")); await p.waitForTimeout(150); await p.evaluate(() => K.ir("#/cielo")); await p.waitForSelector(".cons-tile .ico-arco");
+  ok(await p.$eval(".cons-tile .ico-arco", x => getComputedStyle(x).animationName) === "none", "el anillo se anima cada vez");
+  await ctx.close();
+  const r = await pagina(undefined, {reducedMotion: "reduce"});
+  await ir(r.p, "#/hoy"); await anotarMarcas(r.p, [["front-lever.colgado-60s", "colgado-activo", "segundos", 62, "2026-09-10"]]);
+  await r.p.evaluate(() => K.ir("#/cielo")); await r.p.waitForSelector(".cons-tile .ico-arco");
+  ok(await r.p.$eval(".cons-tile .ico-arco", x => getComputedStyle(x).animationName) === "none", "con movimiento reducido el anillo se mueve");
+  await r.ctx.close();
+});
+prueba("iconos-b-cielo-rapido", async () => {
+  /* el Cielo arma sus 28 anillos rápido la primera vez y después salen de la memoria */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/hoy");
+  const t = await p.evaluate(() => { const m = f => { const a = performance.now(); f(); return performance.now() - a; };
+    const primera = m(() => K.P.cielo({tab: "cielo"})); const otra = m(() => { for (let i = 0; i < 5; i++) K.P.cielo({tab: "cielo"}); }) / 5; return {primera, otra}; });
+  ok(t.primera < 250, "la primera vez tarda " + JSON.stringify(t));
+  ok(t.otra < Math.max(30, t.primera / 2), "los anillos no se guardan: " + JSON.stringify(t));
   await ctx.close();
 });
 

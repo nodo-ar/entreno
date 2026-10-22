@@ -1,4 +1,5 @@
-/* ===== Dibujo del cielo: cada constelación tiene una forma fija (sale de su id) y cada estrella un punto =====
+/* ===== Dibujo de una constelación: tiene una forma fija (sale de su id) y cada estrella un punto =====
+   Desde la vuelta 22 se ve solo de fondo, tenue, en la constelación abierta: el ícono de cada constelación es su figura en un anillo (iconos.js).
    Encendida: punto lleno en tinta, más grande cuanto menor la magnitud. Próxima: anillo del color de la familia.
    Por delante: anillo gris. Lo que no se practica hace 8 semanas se ve atenuado, nunca apagado. */
 K.dibujo = (() => {
@@ -43,35 +44,10 @@ K.dibujo = (() => {
     return g;
   };
   const etiqueta = c => `${c.nombre}, ${c.encendidas} de ${c.total} estrellas`;
-  /* el cielo entero: dos columnas en zigzag, cada constelación se toca para abrirla */
-  const grande = cielo => {
-    const W = 360, CH = 96, cs = cielo.constelaciones.filter(c => c.total > 0), H = Math.ceil(cs.length / 2) * CH + 24;
-    let g = fondo(7, W, H);
-    cs.forEach((c, i) => {
-      const fila = Math.floor(i / 2), col = i % 2, r = azar(semilla(c.id + "#"));
-      const x = col * 180 + r() * 6, y = 10 + fila * CH + r() * 6;
-      const pts = caber(forma(c.id, c.estrellas.length), x + 18, y + 30, 140, 44);
-      g += `<g class="cons" data-ir="#/cielo/${c.id}" data-quieto="1" role="link" tabindex="0" aria-label="${K.esc(etiqueta(c))}">
-        <rect x="${f1(x + 2)}" y="${f1(y)}" width="172" height="${CH - 8}" rx="14" fill="transparent"/>
-        <text x="${f1(x + 14)}" y="${f1(y + 15)}" class="cons-nom">${K.esc(c.nombre.toUpperCase())}</text>${estrellas(c, pts, 1, [], true)}</g>`;
-    });
-    return `<svg class="cielo-svg" viewBox="0 0 ${W} ${H}" role="group" aria-label="Tu cielo">${g}</svg>`;
-  };
   /* una sola constelación, grande */
   const una = (c, recien) => {
     const W = 340, H = 150, pts = caber(forma(c.id, c.estrellas.length), 28, 22, W - 56, H - 44);
     return `<svg class="cons-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${K.esc(etiqueta(c))}">${fondo(semilla(c.id) % 997, W, H, 700)}${estrellas(c, pts, 1.6, recien)}</svg>`;
   };
-  /* anillo de avance: cuánto de la constelación está encendido */
-  const anillo = (c, px = 32) => {
-    const C = 2 * Math.PI * 13, p = c.total ? c.encendidas / c.total : 0;
-    return `<svg width="${px}" height="${px}" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="var(--line)" stroke-width="4"/>${p ? `<circle cx="16" cy="16" r="13" fill="none" stroke="var(--${c.familia})" stroke-width="4" stroke-linecap="round" stroke-dasharray="${f1(p * C)} ${f1(C)}" transform="rotate(-90 16 16)"/>` : ""}</svg>`;
-  };
-  /* una hazaña con la figura de su constelación real: la primera estrella, en el color de la familia; logro: todas encendidas */
-  const figura = (h, px = 32, logro = false) => {
-    const f = h.figura; if (!f) return K.ic("hazana");
-    const e = f.estrellas, grueso = px >= 48 ? 2.4 : 4;
-    return `<svg class="figura" width="${px}" height="${px}" viewBox="-8 -8 116 116" aria-hidden="true">${f.lineas.map(([a, b]) => `<line x1="${e[a][0]}" y1="${e[a][1]}" x2="${e[b][0]}" y2="${e[b][1]}" stroke="var(--ink)" stroke-opacity="${logro ? .5 : .28}" stroke-width="${grueso}" stroke-linecap="round"/>`).join("")}${e.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${(i ? 5 : 7) * (px >= 48 ? 1 : 1.5)}" fill="${i === 0 ? `var(--${h.familia})` : "var(--ink)"}"/>`).join("")}</svg>`;
-  };
-  return {forma, grande, una, anillo, figura};
+  return {forma, una};
 })();
