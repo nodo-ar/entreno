@@ -744,6 +744,85 @@ prueba("hazanas-figura", () => {
   }
 });
 
+/* ===== Los íconos, opción B (vuelta 21): medallas y pictogramas que salen del maniquí ===== */
+let ICX = null;
+const icx = () => ICX || (ICX = (() => {
+  const fx = {K: {reduce: () => true, esc: s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c])),
+    CATALOGO: CAT, HAZANAS, ESCALERAS: ESC, RUTINAS: RUTINAS.map(([, r]) => r)}, document: {}}; vm.createContext(fx);
+  for (const f of ["piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/vistas.js", "poses/pruebas.js", "piezas/iconos.js"])
+    vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", f), "utf8"), fx);
+  return fx.K;
+})());
+/* lo que hace una rutina, en todos sus bloques: ejercicios, escalones de sus escaleras, lo de sus tramos y su equipo */
+const loQueHace = r => { const xs = new Set(), plano = ts => ts.flatMap(t => t.repetir ? plano(t.tramos) : [t]);
+  for (const s of r.sesiones) for (const b of s.bloques){
+    for (const e of [].concat(b.ejercicio || [])) xs.add(e);
+    for (const id of [].concat(b.escalera || [])) for (const q of (ESC.escaleras.find(x => x.id === id)?.pasos || [])) xs.add(q.ejercicio);
+    for (const t of plano(b.tramos || [])) for (const e of [].concat(t.ejercicio || [])) xs.add(e);
+    if (b.mide) xs.add(b.mide.ejercicio);
+  }
+  for (const q of r.equipo || []) xs.add(q);
+  return xs; };
+prueba("iconos-b-poses", () => {
+  const {icono, POSES} = icx();
+  /* la prueba: la pose de lo que mide */
+  for (const h of HAZANAS.hazanas) ok(icono.poseHazana(h) === h.mide.ejercicio && POSES[h.mide.ejercicio], `${h.id}: el ícono no sale de lo que mide`);
+  /* la rutina: algo que la rutina hace de verdad (o su actividad: bici, trote, soga) */
+  for (const [f, r] of RUTINAS){ const q = icono.poseRutina(r), hace = loQueHace(r);
+    ok(q && POSES[q], `${f}: sin pose`);
+    ok(hace.has(q) || (q === "trote" && [...hace].some(x => /trote|10km/.test(x))) || (q === "bici" && hace.has("bici")), `${f}: la pose ${q} no es algo que la rutina hace`); }
+  const R = id => RUTINAS.find(([, r]) => r.id === id)[1];
+  ok(icono.poseRutina(R("tronco")) === "l-sit" && icono.poseRutina(R("cien")) === "flexion" && icono.poseRutina(R("z2")) === "bici" && icono.poseRutina(R("c0a5")) === "trote", "las rutinas no muestran lo que entrenan");
+  /* el encuadre: solo poses que existen, y lo que se cambia es la manera de mirar (no qué ejercicio es) */
+  for (const [id, o] of Object.entries(icono.ENCUADRE)){
+    ok(POSES[id], `encuadre de una pose que no está: ${id}`);
+    ok(!o.pose || POSES[o.pose], `${id}: se mira como ${o.pose}, que no está`);
+    ok(Object.keys(o).every(k => ["pose", "vista", "abrir", "piso", "junta", "u"].includes(k)), `${id}: un ajuste desconocido`); }
+  /* las dominadas se ven de frente, colgadas de la barra (todas igual: las distingue el nombre) */
+  for (const id of ["dominada", "dominada-arquera"]) ok(icono.encuadre(id).pose === "dominada-ancha", `${id}: no se ve de frente`);
+  /* nada se elige por id de prueba o rutina en el código */
+  const src = fs.readFileSync(path.join(RAIZ, "src", "piezas", "iconos.js"), "utf8");
+  const ids = [...HAZANAS.hazanas.map(h => h.id), ...RUTINAS.map(([, r]) => r.id)].filter(id => id.length > 3 && !POSES[id]);
+  ok(!ids.some(id => new RegExp(`["']${id}["']`).test(src)), "el módulo nombra una prueba o una rutina: " + ids.filter(id => new RegExp(`["']${id}["']`).test(src)).join(", "));
+});
+/* los números de un SVG: puntos, centros y radios */
+const numeros = sv => [...sv.matchAll(/(?:points|cx|cy|r|stroke-width)="([^"]+)"/g)].flatMap(m => m[1].match(/-?\d+(\.\d+)?/g) || []).map(Number);
+prueba("iconos-b-dibujo", () => {
+  const {icono} = icx();
+  for (const h of HAZANAS.hazanas){
+    const si = icono.medalla(h, true, 40), no = icono.medalla(h, false, 40);
+    for (const sv of [si, no]){ ok(sv.startsWith("<svg") && !/NaN|undefined|null/.test(sv), `${h.id}: la medalla no se dibuja`);
+      ok(!/#[0-9a-f]{3,8}\b|rgb\(/i.test(sv), `${h.id}: un color suelto`);
+      ok(numeros(sv).every(n => n >= -2 && n <= 102), `${h.id}: algo se sale de la caja`); }
+    /* ganada: a color con el satélite; sin ganar: gris, sin satélite */
+    ok(si.includes(`var(--${h.familia})`) && si.includes("ico-sat") && /class="ico ico-medalla ganada"/.test(si), `${h.id}: la ganada no va a color con su satélite`);
+    ok(!no.includes("ico-sat") && no.includes("var(--off)") && !/var\(--(fu|mo|ra)\)/.test(no), `${h.id}: la que falta no va en gris`);
+  }
+  for (const [f, r] of RUTINAS){ const sv = icono.rutina(r, 40);
+    ok(sv.startsWith("<svg") && !/NaN|undefined|null/.test(sv) && !/#[0-9a-f]{3,8}\b|rgb\(/i.test(sv), `${f}: el ícono no se dibuja limpio`);
+    ok(sv.includes(`fill="var(--${r.familia}-soft)"`) && sv.includes(`stroke="var(--${r.familia})"`), `${f}: no va en el color de su familia`);
+    ok(numeros(sv).every(n => n >= -2 && n <= 102), `${f}: algo se sale del círculo`); }
+  /* se guarda: la segunda vez es el mismo texto */
+  ok(icono.rutina(RUTINAS[0][1], 40) === icono.rutina(RUTINAS[0][1], 40), "el ícono cambia de una vez a otra");
+});
+prueba("iconos-b-legibles-40px", () => {
+  /* a 40 px, la figura llena su círculo y los trazos se ven: lo que en el boceto costaba (front lever, parada de manos, planche) también */
+  const {icono} = icx();
+  const medir = (id, d) => { const sv = icono.picto(id, {d}), xs = [], ys = [];
+    for (const m of sv.matchAll(/points="([^"]+)"/g)) for (const q of m[1].split(" ")){ const [x, y] = q.split(",").map(Number); xs.push(x); ys.push(y); }
+    for (const m of sv.matchAll(/cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"/g)){ const [x, y, r] = m.slice(1).map(Number); xs.push(x - r, x + r); ys.push(y - r, y + r); }
+    const anchos = [...sv.matchAll(/<polyline[^>]*stroke="currentColor" stroke-width="([\d.]+)"/g)].map(m => +m[1]), cab = [...sv.matchAll(/<circle[^>]*r="([\d.]+)" fill="currentColor"/g)].map(m => +m[1]);
+    return {largo: Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)), trazo: Math.max(...anchos), cabeza: cab[cab.length - 1]}; };
+  const px = 40 / 100;
+  for (const id of ["front-lever", "vertical-libre", "planche-straddle", "dominada", "flexion", "bici", "l-sit", "mil-saltos"]){
+    const m = medir(id, 62);
+    ok(m.largo >= 62 * .7, `${id}: la figura no llena su círculo (${m.largo.toFixed(1)} de 62)`);
+    ok(m.trazo * px >= 1.5 && m.cabeza * px >= 1.1, `${id}: a 40 px el trazo (${(m.trazo * px).toFixed(2)} px) o la cabeza (${(m.cabeza * px).toFixed(2)} px) no se ven`); }
+  /* la parada de manos se ve de frente, con los brazos abiertos y el piso; el planche, con el piso */
+  const pm = icono.encuadre("vertical-libre"), pl = icono.encuadre("planche-straddle");
+  ok(pm.vista === 90 && pm.abrir > 0 && pm.piso && pl.piso, "la parada de manos o el planche sin su encuadre");
+});
+
 /* ===== El maniquí: cada ejercicio tiene su persona, y cada pose es posible ===== */
 prueba("poses-de-cada-ejercicio", () => {
   const fx = {K: {reduce: () => true}, document: {}}; vm.createContext(fx);
