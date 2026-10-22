@@ -22,7 +22,7 @@
    "id": "parada-de-manos",
    "nombre": "Parada de manos",
    "familia": "fu",
-   "meta": "Treinta segundos libre y la flexión en vertical.",
+   "meta": "Treinta segundos libre y la flexión cabeza abajo.",
    "estrellas": [
     {
      "id": "parada-de-manos.munecas-15s",
@@ -748,7 +748,7 @@
    "id": "draco",
    "nombre": "Draco",
    "familia": "fu",
-   "meta": "V-sit y dragon flag: los abdominales de un gimnasta.",
+   "meta": "Piernas en V y bandera acostada: los abdominales de un gimnasta.",
    "estrellas": [
     {
      "id": "draco.lsit-10s",
@@ -866,7 +866,7 @@
    "id": "una-pierna",
    "nombre": "Una pierna",
    "familia": "fu",
-   "meta": "Pistol, shrimp y nórdico completos.",
+   "meta": "Sentadilla a una pierna y bajar de rodillas sin caerte.",
    "estrellas": [
     {
      "id": "una-pierna.pistol-silla-5",
@@ -1104,7 +1104,7 @@
    "id": "espagat",
    "nombre": "Espagat",
    "familia": "ra",
-   "meta": "Lateral y frontal, al piso.",
+   "meta": "Abierto al costado y con una pierna adelante, hasta el piso.",
    "estrellas": [
     {
      "id": "espagat.sentadilla-30s",
@@ -1482,7 +1482,7 @@
    "id": "soga",
    "nombre": "Soga",
    "familia": "mo",
-   "meta": "1000 saltos y el criss-cross.",
+   "meta": "1000 saltos y saltos cruzando los brazos.",
    "estrellas": [
     {
      "id": "soga.100",

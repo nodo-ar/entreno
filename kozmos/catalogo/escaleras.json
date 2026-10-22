@@ -20,7 +20,7 @@
    "id": "remo",
    "nombre": "Remo",
    "familia": "fu",
-   "texto": "Tirar hacia el pecho, del poste a la barra baja y al remo en tuck.",
+   "texto": "Tirar hacia el pecho, del poste a la barra baja y al remo en horizontal.",
    "pasos": [
     {"ejercicio": "remo-poste", "tipo": "repeticiones", "rango": [8, 12]},
     {"ejercicio": "remo-mancuerna", "tipo": "repeticiones", "rango": [8, 12]},
@@ -58,7 +58,7 @@
    "id": "piernas",
    "nombre": "Piernas",
    "familia": "fu",
-   "texto": "De la sentadilla a la pistol, de a una pierna.",
+   "texto": "De la sentadilla común a la de una pierna.",
    "pasos": [
     {"ejercicio": "sentadilla", "tipo": "repeticiones", "rango": [8, 12]},
     {"ejercicio": "zancada", "tipo": "repeticiones", "rango": [6, 10]},
@@ -98,7 +98,7 @@
    "id": "dragon",
    "nombre": "Bandera acostada",
    "familia": "fu",
-   "texto": "Los abdominales en movimiento, de los hollow rocks al dragon flag.",
+   "texto": "Los abdominales en movimiento, de los hollow rocks a la bandera acostada.",
    "pasos": [
     {"ejercicio": "hollow-rock", "tipo": "repeticiones", "rango": [12, 20]},
     {"ejercicio": "dragon-flag-negativa", "tipo": "repeticiones", "rango": [3, 6]},
@@ -111,7 +111,7 @@
    "id": "cadera",
    "nombre": "Cadera",
    "familia": "ra",
-   "texto": "Fuerza al final del recorrido: sentadilla profunda, cosaca y espagat a 90°.",
+   "texto": "Fuerza al final del recorrido: sentadilla profunda, de costado y piernas abiertas a 90°.",
    "pasos": [
     {"ejercicio": "sentadilla-profunda", "tipo": "segundos", "meta": 60},
     {"ejercicio": "cosaca", "tipo": "segundos", "meta": 30},
