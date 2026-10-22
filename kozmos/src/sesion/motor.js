@@ -162,9 +162,14 @@ K.sesion = (() => {
     if (b.tipo === "minutos" || b.tipo === "menos-minutos") return Math.max(1, Math.round(t / 60));
     if (b.tipo === "logrado") return 0;
     if (b.tipo === "sesiones") return 1;
-    /* con lastre (escalón de carga): las repeticiones y los kilos, que arrancan en los de la serie anterior */
+    /* con carga: las repeticiones y los kilos, que arrancan en los de la serie anterior del mismo ejercicio (en una superserie
+       el otro ejercicio lleva sus propios kilos). Con mancuernas, los kilos por mano y sin tu peso: no son % de tu peso */
+    if (b.carga && b.mano){
+      const antes = [...S.hechos].reverse().find(h => h.b === S.b && h.ejercicio === b.ejercicio && h.kg !== undefined);
+      return {valor: b.objetivo, kg: antes ? antes.kg : b.kg ?? ""};
+    }
     if (b.carga){
-      const antes = [...S.hechos].reverse().find(h => h.b === S.b && h.lastreKg !== undefined);
+      const antes = [...S.hechos].reverse().find(h => h.b === S.b && h.ejercicio === b.ejercicio && h.lastreKg !== undefined);
       return {valor: b.objetivo, lastre: antes ? antes.lastreKg : b.kg ?? "", peso: K.diario.perfil.peso || ""};
     }
     if (b.tipo === "porcentaje"){
@@ -224,6 +229,12 @@ K.sesion = (() => {
     const marca = {ejercicio: b.ejercicio, tipo: b.tipo, objetivo: b.objetivo, ...(b.escalera ? {escalera: b.escalera} : {}), ...(b.hazana ? {hazana: b.hazana} : {}),
       ...(b.rango ? {rango: b.rango, n: b.n} : {}), ...(b.descarga ? {descarga: true} : {}), ...(sens ? {sensacion: sens} : {})};
     if (v === null || v === undefined) return;
+    if (b.carga && b.mano){
+      const n = numero(v.valor), k = numero(v.kg);
+      if (!(n > 0 && n <= 100000)) return;
+      S.hechos.push({b: S.b, s: S.s, ...marca, valor: n, ...(k >= 0 && k <= 200 ? {kg: k} : {})});
+      return;
+    }
     if (b.carga){
       const n = numero(v.valor), l = numero(v.lastre), pk = numero(v.peso);
       if (!(n > 0 && n <= 100000)) return;
@@ -295,7 +306,7 @@ K.sesion = (() => {
       bloques: pl.bloques.map((b, i) => ({orden: i, ...(b.constelacion ? {constelacion: b.constelacion} : {}), familia: b.familia, ...(b.estrella ? {estrella: b.estrella} : {}),
         objetivo: b.objetivo, ...(b.prueba ? {prueba: true} : {}), ...(b.clase ? {clase: b.clase, nombre: b.nombre} : {}), ...(b.hazana ? {hazana: b.hazana} : {}),
         series: S.hechos.filter(h => h.b === i).map(h => ({ejercicio: "ejercicio" in h ? h.ejercicio : b.ejercicio, tipo: h.tipo ?? b.tipo, ...(b.estrella ? {estrella: b.estrella} : {}), objetivo: h.objetivo ?? b.objetivo, valor: h.valor,
-          ...(h.seg !== undefined ? {seg: Math.round(h.seg)} : {}), ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, ...(h.pesoKg !== undefined ? {pesoKg: h.pesoKg} : {})} : {}),
+          ...(h.seg !== undefined ? {seg: Math.round(h.seg)} : {}), ...(h.kg !== undefined ? {kg: h.kg} : {}), ...(h.lastreKg !== undefined ? {lastreKg: h.lastreKg, ...(h.pesoKg !== undefined ? {pesoKg: h.pesoKg} : {})} : {}),
           ...(h.escalera ? {escalera: h.escalera} : {}), ...(h.rango ? {rango: h.rango, n: h.n} : {}), ...(h.descarga ? {descarga: true} : {}), ...(h.sensacion ? {sensacion: h.sensacion} : {}),
           ...(h.hazana ? {hazana: h.hazana, ...(h.completa === false ? {completa: false} : {})} : {})}))})).filter(b => b.series.length)};
   };

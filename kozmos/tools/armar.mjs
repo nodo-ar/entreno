@@ -17,7 +17,7 @@ const D = path.resolve(ARGS.find(a => !a.startsWith("--")) || path.join(RAIZ, "a
 const CSS = ["base/letra.css", "base/tokens.css", "base/base.css", "piezas/nav.css", "piezas/encabezado.css", "piezas/menu.css",
   "piezas/deshacer.css", "piezas/isla.css", "piezas/movimiento.css", "piezas/figura.css", "piezas/iconos.css", "piezas/ajustes.css", "piezas/horizontal.css", "pantallas/pantallas.css", "pantallas/cielo.css", "pantallas/hoy.css", "pantallas/progreso.css", "pantallas/rutinas.css"];
 const JS = ["base/base.js", "piezas/nav.js", "piezas/encabezado.js", "piezas/menu.js", "piezas/deshacer.js", "piezas/isla.js", "piezas/movimiento.js", "piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/vistas.js", "poses/pruebas.js", "piezas/iconos.js",
-  "cielo/cielo.js", "cielo/dibujo.js", "diario/diario.js", "diario/respaldo.js", "sesion/plan.js", "sesion/rutina.js", "sesion/calorias.js", "sesion/motor.js",
+  "cielo/cielo.js", "cielo/dibujo.js", "diario/diario.js", "diario/respaldo.js", "sesion/plan.js", "sesion/rutina.js", "sesion/caminos.js", "sesion/calorias.js", "sesion/motor.js",
   "pantallas/pantallas.js", "pantallas/cielo.js", "pantallas/hoy.js", "pantallas/rutinas.js", "base/android.js", "app.js"];
 
 /* versión: «k-abc1234» por commit (o «k-abc1234+cambios»); KOZMOS_V la fuerza a mano */
@@ -42,7 +42,8 @@ const ORDEN = {fu: 0, ra: 1, mo: 2};
 rutinas.sort((a, b) => (ORDEN[a.familia] ?? 9) - (ORDEN[b.familia] ?? 9) || a.nombre.localeCompare(b.nombre, "es"));
 const hz = fs.existsSync(path.join(RAIZ, "catalogo", "hazanas.json")) ? cat("hazanas.json") : '{"version":1,"hazanas":[]}';
 const esc = fs.existsSync(path.join(RAIZ, "catalogo", "escaleras.json")) ? cat("escaleras.json") : '{"version":1,"escaleras":[]}';
-const js2 = js.replace('K.VERSION = ', () => `K.CATALOGO = ${cat("constelaciones.json")};\nK.EJERCICIOS = ${cat("ejercicios.json")};\nK.RUTINAS = ${JSON.stringify(rutinas).replace(/</g, "\\u003c")};\nK.HAZANAS = ${hz};\nK.ESCALERAS = ${esc};\nK.VERSION = `);
+const ent = fs.existsSync(path.join(RAIZ, "catalogo", "entradas.json")) ? cat("entradas.json") : '{"version":1,"piezas":[]}';
+const js2 = js.replace('K.VERSION = ', () => `K.CATALOGO = ${cat("constelaciones.json")};\nK.EJERCICIOS = ${cat("ejercicios.json")};\nK.RUTINAS = ${JSON.stringify(rutinas).replace(/</g, "\\u003c")};\nK.HAZANAS = ${hz};\nK.ESCALERAS = ${esc};\nK.ENTRADAS = ${ent};\nK.VERSION = `);
 let html = leer("plantilla.html").replace("/*CSS*/", () => css).replace("/*JS*/", () => js2);
 /* en la APK: el puente de Capacitor va antes que la app y se sacan el manifiesto y los íconos de la web */
 if (APK){

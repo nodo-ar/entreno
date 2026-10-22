@@ -1123,6 +1123,54 @@ prueba("escalera-horizontal", async () => {
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
+/* ===== Kilos con mancuernas (vuelta 27): el escalón con carga pide los kilos de cada mancuerna, nunca tu peso ===== */
+/* dos sesiones de la Base con el remo con mancuerna en el tope y 6 kg: la próxima, 8 kg */
+const sKg = (id, fecha, i) => ({id, fecha, inicio: `${fecha}T18:00:00.000Z`, fin: `${fecha}T18:45:00.000Z`, duracion: 2700, cortada: false, catalogo: 1, rutina: {id: "base_cali", sesion: i},
+  bloques: [{orden: 1, familia: "fu", objetivo: 12, series: [12, 12, 12].map(v => ({ejercicio: "remo-mancuerna", tipo: "repeticiones", objetivo: 12, valor: v, escalera: "remo", rango: [8, 12], n: 3, kg: 6}))}]});
+const sembrarKg = p => p.evaluate(async ss => {
+  await K.diario.perfilPoner("rumbo", ["front-lever"]); await K.diario.perfilPoner("equipo", ["mancuernas"]); await K.diario.perfilPoner("peso", 72);
+  for (const s of ss) await K.diario.guardarSesion(s);
+  await K.diario.perfilPoner("rutina", {id: "base_cali", desde: "2026-10-01"}); K.refrescar();
+}, [sKg("k1", "2026-10-14", 0), sKg("k2", "2026-10-16", 1)]);
+prueba("serie-con-kilos", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarKg(p); await p.waitForSelector("#s-empezar");
+  /* Hoy y el día de la rutina dicen los kilos en la fila */
+  const fila = async (sel, q) => p.$$eval(sel + " .ln.toca", (ls, q) => ls.map(l => l.textContent).find(t => t.startsWith(q)) || "", q);
+  ok((await fila("main", "Remo unilateral con mancuerna")).endsWith("3 × 8–12 · 8 kg"), "Hoy: " + await fila("main", "Remo unilateral con mancuerna"));
+  ok((await fila("main", "Sentadilla con mancuernas")).endsWith("· 4 kg"), "la sentadilla con mancuernas: " + await fila("main", "Sentadilla con mancuernas"));
+  /* la serie: los kilos de la mancuerna y que es más peso */
+  await aLaSerie(p);
+  ok(await p.evaluate(() => K.sesion.paso().ejercicio) === "remo-mancuerna", "la primera serie: " + await p.evaluate(() => K.sesion.paso().ejercicio));
+  ok((await p.textContent(".ses-reloj")).includes("con 8 kg por mano") && (await p.textContent(".ses-tit .lb")).includes("▲ más peso"), "la serie: " + await p.textContent(".ses-reloj") + " · " + await p.textContent(".ses-tit .lb"));
+  /* el descanso pide los kilos por mano, con los de la serie puestos; tu peso no */
+  await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+  ok(await p.getAttribute("#s-kg", "aria-label") === "Kilos por mano" && await p.inputValue("#s-kg") === "8" && !(await p.$("#s-peso")) && !(await p.$("#s-lastre")), "el descanso no pide los kilos por mano");
+  ok((await p.textContent(".ses-anota")).includes("kg por mano"), "falta «kg por mano»");
+  await p.click('[data-spaso="1"][data-campo="kg"]'); ok(await p.inputValue("#s-kg") === "9", "el + de los kilos no suma de a uno");
+  await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
+  /* en la superserie, la sentadilla lleva sus propios kilos, no los del remo */
+  ok(await p.evaluate(() => K.sesion.paso().ejercicio) === "sentadilla-mancuernas", "no alterna con la sentadilla");
+  await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+  ok(await p.inputValue("#s-kg") === "4", "la sentadilla arranca con los kilos del remo: " + await p.inputValue("#s-kg"));
+  await p.click("#s-seguir"); await p.waitForSelector(".ses.serie"); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso");
+  ok(await p.inputValue("#s-kg") === "9", "el remo no sigue con lo que pusiste en su serie anterior: " + await p.inputValue("#s-kg"));
+  await p.click("#s-seguir"); await p.waitForSelector(".ses.serie");
+  /* lo guardado: «kg» en la serie, sin lastre ni tu peso; no hace marcas de % de tu peso; el respaldo lo lleva */
+  await p.click("#s-cortar"); await p.waitForSelector(".res");
+  const r = await p.evaluate(() => { const xs = K.diario.sesiones.at(-1).bloques.flatMap(b => b.series).filter(x => x.ejercicio === "remo-mancuerna"), b = K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, K.CATALOGO.version)));
+    return {kg: xs.map(x => x.kg), raro: xs.some(x => "lastreKg" in x || "pesoKg" in x), d: b.descartadas, err: b.error, pct: K.cieloActual().constelaciones.flatMap(c => c.marcas || []).filter(m => /mancuerna/.test(m.ejercicio || "")).length}; });
+  ok(r.kg.join() === "9,9" && !r.raro && !r.err && r.d === 0 && r.pct === 0, "lo guardado: " + JSON.stringify(r));
+  /* el resumen de la segunda sesión sembrada: ▲ más peso, +2 kg */
+  await ir(p, "#/progreso/k2"); await p.waitForSelector(".res-esc");
+  const li = await p.$$eval(".res-esc li", ls => ls.map(l => [l.className, l.querySelector(".res-signo").textContent, l.querySelector(".ses-fila").textContent.trim()]));
+  ok(li.some(([c, g, t]) => c === "sube" && g === "▲" && t.startsWith("Remo") && t.includes("+2 kg · ahora 8 kg")), "el resumen: " + JSON.stringify(li));
+  /* la rutina en Planes: los días dicen los kilos, los últimos que pusiste (9, aunque la sesión se cortó) */
+  await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia");
+  ok((await fila(".rut-dia", "Remo unilateral con mancuerna")).endsWith("· 9 kg"), "Planes: " + await fila(".rut-dia", "Remo unilateral con mancuerna"));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
 /* ===== Pruebas (Modelo B): las hazañas miden algo, tienen escala y encienden estrellas en el Cielo ===== */
 const hzSes = (id, fecha, hz, ej, tipo, v) => ({id, fecha, inicio: `${fecha}T19:00:00.000Z`, fin: `${fecha}T19:05:00.000Z`, duracion: 300, cortada: false, catalogo: 1, encendio: [],
   hazana: {id: hz, v: 2, valor: v, completa: true, ejercicio: ej, tipo},
