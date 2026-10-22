@@ -106,6 +106,16 @@
   const posteAtras = {torso: 200, head: 194, armN: [85, 90], armF: [83, 88], legN: [20, 20], legF: [21, 21], pies: [-20, -21]};
   const posteMedio = {torso: 191, head: 185, armN: [30, 130], armF: [28, 128], legN: [11, 11], legF: [12, 12], pies: [-11, -12]};
   const postePegado = {torso: 183, head: 178, armN: [355, 135], armF: [353, 133], legN: [3, 3], legF: [4, 4], pies: [-3, -4]};
+  /* toalla en la puerta: el cuerpo recto gira sobre los tobillos, más inclinado que en el poste; la toalla queda tensa
+     (las manos se mueven en un círculo alrededor del picaporte) y los codos van atrás, pegados al cuerpo */
+  const toAtras = {torso: 210, head: 204, armN: [52, 76], armF: [50, 74], legN: [30, 30], legF: [31, 31], pies: [-30, -31]};
+  const toMedio = {torso: 202, head: 197, armN: [15, 94], armF: [13, 92], legN: [22, 22], legF: [23, 23], pies: [-22, -23]};
+  const toPegado = {torso: 194, head: 190, armN: [352, 100], armF: [350, 98], legN: [14, 14], legF: [15, 15], pies: [-14, -15]};
+  /* debajo de la mesa: acostado boca arriba, talones en el piso y el cuerpo en tabla; las manos no se mueven del borde
+     y el pecho sube hasta la mesa */
+  const meAbajo = {torso: 262.6, head: 262, armN: [146.5, 183.6], armF: [144.5, 181.6], legN: [82.6, 82.6], legF: [83.6, 83.6], pies: [-3, -4]};
+  const meMedio = {torso: 256.5, head: 254, armN: [118.6, 211.8], armF: [116.6, 209.8], legN: [76.5, 76.5], legF: [77.5, 77.5], pies: [3, 2]};
+  const meArriba = {torso: 250.4, head: 246, armN: [102.6, 232.4], armF: [100.6, 230.4], legN: [70.4, 70.4], legF: [71.4, 71.4], pies: [9, 8]};
   Object.assign(K.POSES, {
     /* correr: la cadera a una altura fija (sube y baja con «alto»), los pies tocan de a uno */
     "trote": {fijo: "hip", en: [150, 186], ciclo: true, k: trote, ritmo: [.76]},
@@ -126,6 +136,8 @@
     "peso-muerto-rumano": {con: "mancuernas", fijo: "fN", en: [150, T], k: [rmParado, rumano], ritmo: [2, .3, 1.4, .4]},
     "remo-mancuerna": {con: "mancuerna", silla: [228, 221, "der"], fijo: "fF", en: [170, T], k: [rmBase, rmArriba], ritmo: [1, .5, 1.5, .4]},
     "remo-poste": {poste: 151, fijo: "fN", en: [140, T], k: [posteAtras, posteMedio, postePegado], ritmo: [1, .5, 1.5, .4], muestra: 0},
+    "remo-toalla-puerta": {puerta: [166, 174], fijo: "fN", en: [150, T], k: [toAtras, toMedio, toPegado], ritmo: [1, .5, 1.5, .4], muestra: 0},
+    "remo-mesa": {mesa: [172, 108, 193], fijo: "fN", en: [294, T], k: [meAbajo, meMedio, meArriba], ritmo: [1, .5, 1.5, .5], muestra: 2},
     /* caminar con peso de un lado */
     "paseo-maleta": {con: "mancuerna", fijo: "hip", en: [150, 180], ciclo: true, k: marchaM, ritmo: [1.1]},
     "paseo-maleta-kettlebell": {con: "pesa", unaMano: true, fijo: "hip", en: [150, 180], ciclo: true, k: marchaK, ritmo: [1.1]}

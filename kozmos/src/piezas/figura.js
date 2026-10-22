@@ -387,6 +387,11 @@ K.fig = (() => {
     const tope = (px, y) => !d ? y : Math.max(y, d[1] - Math.sqrt(Math.max(d[2] ** 2 - (px - d[0]) ** 2, 0)) + 6);
     if (f.pared !== undefined){ const y0 = tope(f.pared + 20, PISO - 230); o.push(`<rect x="${f.pared}" y="${n1(y0)}" width="40" height="${n1(PISO - y0)}" class="pared"/>`); }
     if (f.poste !== undefined) o.push(ln(f.poste, tope(f.poste, PISO - 200), f.poste, PISO, "palo"));
+    /* la puerta de canto, con su picaporte: «puerta» es [x de la hoja, alto del picaporte] */
+    if (f.puerta){ const [px, py] = f.puerta, y0 = tope(px + 4, PISO - 205);
+      o.push(`<rect x="${n1(px)}" y="${n1(y0)}" width="8" height="${n1(PISO - y0)}" rx="1.5" class="puerta"/>`, ln(px, py, px - 7, py, "pica")); }
+    /* la mesa: la tapa a la altura del borde que se agarra y sus dos patas; «mesa» es [x del borde, x del otro lado, alto] */
+    if (f.mesa){ const [x0, x1, my] = f.mesa; o.push(ln(x0 - 3, my + 4, x0 - 3, PISO, "pata"), ln(x1 + 3, my + 4, x1 + 3, PISO, "pata"), `<rect x="${n1(Math.min(x0, x1) - 3)}" y="${n1(my - 4)}" width="${n1(Math.abs(x1 - x0) + 6)}" height="8" rx="2" class="mesa"/>`); }
     if (f.banco) o.push(`<rect x="${n1(f.banco[0] - 30)}" y="${n1(f.banco[1])}" width="60" height="${n1(PISO - f.banco[1])}" rx="4" class="banco"/>`);
     /* las paralelas de perfil: una barra larga a la altura de las manos, con sus dos patas */
     if (c === "paralelas") o.push(`<path class="par" d="M${x - 70} ${y}H${x + 70}M${x - 54} ${y}V${PISO}M${x + 54} ${y}V${PISO}"/>`);
@@ -410,6 +415,8 @@ K.fig = (() => {
        en la doble da dos vueltas por salto. Sin «u» (la miniatura) queda abajo */
     if (c === "soga" && J.plano){ const [s] = soga(f, J, u); o.push(s); }
     if (c === "soga" && !J.plano){ const [s, atras] = soga(f, J, u); if (!atras) o.push(s); }
+    /* la toalla del picaporte a las manos: tensa, sigue a las manos */
+    if (f.puerta){ const [px, py] = f.puerta, a = [px - 7, py]; for (const s of ["F", "N"]) o.push(`<path d="M${n1(a[0])} ${n1(a[1])}L${n1(J["h" + s][0])} ${n1(J["h" + s][1])}" class="tela"${s === "F" ? ' opacity=".6"' : ""}/>`); }
     if (f.toalla) o.push(`<rect x="${n1(J.fN[0] - 9)}" y="${PISO - 3}" width="26" height="4" rx="2" class="toalla"/>`);
     return o.length ? `<g class="fig-el">${o.join("")}</g>` : "";
   }
@@ -480,6 +487,8 @@ K.fig = (() => {
     const Js = poses.map(P => ubicar(f, P)), p = Js.flatMap(puntos), xs = p.map(q => q[0]), ys = p.map(q => q[1]), arriba = !!Js[0]?.alz;
     /* con la cámara girada el poste entra en el cuadro (de perfil queda como hoy) */
     if (f.poste !== undefined && (f.vista || f.alzada)) xs.push(f.poste - 30, f.poste + 30);
+    /* la mesa entra entera: el cuerpo queda debajo de la tapa */
+    if (f.mesa && !chica){ xs.push(Math.min(f.mesa[0], f.mesa[1]) - 4); ys.push(f.mesa[2] - 6); }
     const bx0 = Math.min(...xs) - 10, bx1 = Math.max(...xs) + 10, by0 = Math.min(...ys) - 12, by1 = Math.max(...ys) + 8;
     const cx = (bx0 + bx1) / 2, cy = (by0 + by1) / 2;
     /* la miniatura: el cuerpo llena el círculo, sin el resto de la escena */
@@ -487,13 +496,16 @@ K.fig = (() => {
     /* acostado, el disco no crece con todo el largo del cuerpo: los pies y la cabeza pueden asomar, y la figura se ve más grande */
     const r = Math.max((bx1 - bx0) * .4, (by1 - by0) / 2) + 12;
     /* si el cuerpo no llega al piso (colgado de la barra) el piso queda fuera del cuadro y la figura se ve más grande */
-    const suelo = !arriba && by1 > PISO - 40 || f.con === "bici" || f.banco || f.silla || f.pared !== undefined || f.poste !== undefined;
+    const suelo = !arriba && by1 > PISO - 40 || f.con === "bici" || f.banco || f.silla || f.pared !== undefined || f.poste !== undefined || !!f.puerta || !!f.mesa;
     let x0 = Math.min(bx0, cx - r) - 6, x1 = Math.max(bx1, cx + r) + 6, y0 = Math.min(by0, cy - r) - 6, y1 = suelo ? PISO + 6 : arriba ? Math.max(by1, cy + r) + 6 : Math.min(PISO + 6, Math.max(by1, cy + r) + 6);
     if (f.con === "barra" || f.con === "paralelas") y0 = Math.min(y0, f.en[1] - 14);
     if (f.con === "bici"){ x0 = Math.min(x0, f.en[0] - 70); x1 = Math.max(x1, f.en[0] + 106); }
     /* la silla y el banco entran enteros */
     if (f.silla){ x0 = Math.min(x0, f.silla[0] - 28); x1 = Math.max(x1, f.silla[0] + 28); y0 = Math.min(y0, f.silla[1] - 56); }
     if (f.banco){ x0 = Math.min(x0, f.banco[0] - 34); x1 = Math.max(x1, f.banco[0] + 34); }
+    /* la puerta entra entera de ancho */
+    if (f.puerta){ x1 = Math.max(x1, f.puerta[0] + 14); y0 = Math.min(y0, PISO - 212); }
+
     let w = x1 - x0; const h = y1 - y0;
     if (w < h * .86){ x0 -= (h * .86 - w) / 2; w = h * .86; }
     return {vb: [x0, y0, w, h], disco: [cx, cy, r], arriba};

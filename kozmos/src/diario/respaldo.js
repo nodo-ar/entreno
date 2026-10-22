@@ -24,7 +24,7 @@ K.respaldo = (() => {
   /* los centímetros de una prueba pueden ser negativos: no llegaste a la punta de los pies */
   const valor = (v, t) => t === "cm" ? typeof v === "number" && Number.isFinite(v) && v >= -100 && v <= 300 : num(v, 1e6);
   const serie = x => obj(x) && (txt(x.ejercicio) || (x.tipo === "tramos" && x.ejercicio == null)) && tipoSerie(x.tipo) && x.tipo !== undefined && valor(x.valor, x.tipo)
-    && (x.hazana === undefined || txt(x.hazana));
+    && (x.hazana === undefined || txt(x.hazana)) && (x.kg === undefined || num(x.kg, 200));
   /* una hazaña de antes (con su nivel) o una prueba (v 2), con lo que midió */
   const hazana = h => obj(h) && txt(h.id) && (h.v === 2 ? (h.ejercicio === undefined || txt(h.ejercicio)) && (h.tipo === undefined || tipo(h.tipo)) && valor(h.valor, h.tipo) : entero(h.nivel, 2) && num(h.valor, 1e6));
   const entero = (v, max) => Number.isInteger(v) && v >= 0 && v <= max;

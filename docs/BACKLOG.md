@@ -99,6 +99,11 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - ~~**Notas del catálogo que no cierran**~~: arregladas en la vuelta 20 (40 min suaves; «si terminás los 8 con aire para otro, subí un nivel de resistencia»; los 1000 saltos cuentan 10 min con `dura`).
 - ~~**Marca de descarga en los días**~~: hecho en la vuelta 20; la fila dice «más liviana».
 - **Planes vive en `rutinas.js`** (la tijera): renombrar a `planes.js` cuando llegue el rediseño. Sigue ahí después de la vuelta 19.
+- **Dos bloques de la misma escalera en un día** (Casandra, vuelta 27): Base de calistenia sin barra tiene `[tirar, remo]` y `remo` el mismo día, y los dos caen en el mismo escalón de remo. El molde del motor B no tiene que repetirlo.
+- **«La vez pasada» con kilos** (la persona, vuelta 27): en el descanso de una serie con mancuernas dice solo las repeticiones, no los kilos.
+- **La entrada en calor con bici cuenta como bici** (la ingeniera de campo, vuelta 27): las calorías toman todo el bloque de tramos como bici, aunque solo la primera pieza lo sea. Mirarlo cuando la entrada llegue a la pantalla (PR2).
+- **Filas largas con kilos a 390 px** (el pulgar, vuelta 27): las filas de remo con «· 8 kg» al final van en dos renglones.
+- **Decisiones de la vuelta 27** (acta 027): los remos nuevos como variantes de la escalera de Remo; con mancuernas, el primer escalón de Piernas e Isquios con peso; la indicación del fondo ruso («En paralelas») contra su estrella, que pide barra.
 
 ## Ideas (necesitan brief y OK)
 

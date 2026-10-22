@@ -5,6 +5,7 @@
    "id": "tirar",
    "nombre": "Tirar",
    "familia": "fu",
+   "patron": "tirar",
    "texto": "De colgarte a la negativa a un brazo, pasando por tu primera dominada.",
    "pasos": [
     {"ejercicio": "colgado-activo", "tipo": "segundos", "meta": 60},
@@ -20,11 +21,12 @@
    "id": "remo",
    "nombre": "Remo",
    "familia": "fu",
+   "patron": "tirar",
    "texto": "Tirar hacia el pecho, del poste a la barra baja y al remo en horizontal.",
    "pasos": [
     {"ejercicio": "remo-poste", "tipo": "repeticiones", "rango": [8, 12]},
-    {"ejercicio": "remo-mancuerna", "tipo": "repeticiones", "rango": [8, 12]},
-    {"ejercicio": "remo-invertido", "tipo": "repeticiones"},
+    {"ejercicio": "remo-mancuerna", "tipo": "repeticiones", "rango": [8, 12], "carga": 2, "kgInicial": 6, "hastaKg": 16, "tambien": ["remo-toalla-puerta"]},
+    {"ejercicio": "remo-invertido", "tipo": "repeticiones", "tambien": ["remo-mesa"]},
     {"ejercicio": "remo-fl-tuck", "tipo": "repeticiones", "rango": [3, 6]}
    ]
   },
@@ -32,6 +34,7 @@
    "id": "empujar",
    "nombre": "Empujar",
    "familia": "fu",
+   "patron": "empujar",
    "texto": "De la flexión en la mesa a la flexión a un brazo.",
    "pasos": [
     {"ejercicio": "flexion-inclinada", "tipo": "repeticiones", "rango": [6, 10]},
@@ -47,6 +50,7 @@
    "id": "fondos",
    "nombre": "Fondos",
    "familia": "fu",
+   "patron": "empujar",
    "texto": "Empujar hacia abajo: del banco a las paralelas.",
    "pasos": [
     {"ejercicio": "flexion-cerrada", "tipo": "repeticiones"},
@@ -58,11 +62,12 @@
    "id": "piernas",
    "nombre": "Piernas",
    "familia": "fu",
+   "patron": "piernas",
    "texto": "De la sentadilla común a la de una pierna.",
    "pasos": [
-    {"ejercicio": "sentadilla", "tipo": "repeticiones", "rango": [8, 12]},
+    {"ejercicio": "sentadilla", "tipo": "repeticiones", "rango": [8, 12], "conPeso": {"ejercicio": "sentadilla-mancuernas", "carga": 2, "kgInicial": 4, "hastaKg": 16}},
     {"ejercicio": "zancada", "tipo": "repeticiones", "rango": [6, 10]},
-    {"ejercicio": "sentadilla-bulgara", "tipo": "repeticiones"},
+    {"ejercicio": "sentadilla-bulgara", "tipo": "repeticiones", "carga": 2, "kgInicial": 6, "hastaKg": 14},
     {"ejercicio": "pistol-silla", "tipo": "repeticiones"},
     {"ejercicio": "shrimp", "tipo": "repeticiones", "rango": [3, 6]},
     {"ejercicio": "pistol", "tipo": "repeticiones", "rango": [3, 6]}
@@ -72,10 +77,11 @@
    "id": "isquios",
    "nombre": "Isquios",
    "familia": "fu",
+   "patron": "bisagra",
    "texto": "La parte de atrás de la pierna, del puente al nórdico.",
    "pasos": [
-    {"ejercicio": "puente-gluteo", "tipo": "repeticiones", "rango": [8, 12]},
-    {"ejercicio": "peso-muerto-una-pierna", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "puente-gluteo", "tipo": "repeticiones", "rango": [8, 12], "conPeso": {"ejercicio": "peso-muerto-rumano", "carga": 2, "kgInicial": 6, "hastaKg": 20}},
+    {"ejercicio": "peso-muerto-una-pierna", "tipo": "repeticiones", "rango": [6, 10], "carga": 2, "kgInicial": 8, "hastaKg": 16},
     {"ejercicio": "curl-femoral-deslizante", "tipo": "repeticiones", "rango": [6, 10]},
     {"ejercicio": "nordico-negativa", "tipo": "repeticiones", "rango": [3, 5]},
     {"ejercicio": "nordico", "tipo": "repeticiones", "rango": [1, 3]}
@@ -85,6 +91,7 @@
    "id": "lsit",
    "nombre": "L-sit",
    "familia": "fu",
+   "patron": "abdomen",
    "texto": "Sostenes de abdominales, de la plancha a la V.",
    "pasos": [
     {"ejercicio": "plancha", "tipo": "segundos", "meta": 60},
@@ -98,6 +105,7 @@
    "id": "dragon",
    "nombre": "Bandera acostada",
    "familia": "fu",
+   "patron": "abdomen",
    "texto": "Los abdominales en movimiento, de los hollow rocks a la bandera acostada.",
    "pasos": [
     {"ejercicio": "hollow-rock", "tipo": "repeticiones", "rango": [12, 20]},
@@ -111,6 +119,7 @@
    "id": "cadera",
    "nombre": "Cadera",
    "familia": "ra",
+   "patron": "movilidad",
    "texto": "Fuerza al final del recorrido: sentadilla profunda, de costado y piernas abiertas a 90°.",
    "pasos": [
     {"ejercicio": "sentadilla-profunda", "tipo": "segundos", "meta": 60},
@@ -122,6 +131,7 @@
    "id": "puente",
    "nombre": "Puente",
    "familia": "ra",
+   "patron": "movilidad",
    "texto": "Muñecas, hombros y espalda, hasta el puente completo.",
    "pasos": [
     {"ejercicio": "munecas-dorso", "tipo": "segundos", "meta": 30},

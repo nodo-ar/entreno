@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (el primer día y Cosmos) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (los cimientos del motor) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -99,6 +99,14 @@
   - Pruebas: 80 sin pantalla y 93 de pantallas, en verde. Nuevas: cosmos-nombre, primer-dia-equipo y sin-nav-al-elegir.
   - **Esperando a Fer**: el OK al tablero (capturas `m16/antes` y `m16/despues` en claro y grafito) y tres decisiones del acta (dos guías el primer día, «0 de 0» en Tu rumbo con equipo que no marcaste, «Sin elegir» en Vos).
   - **Próximo**: el paso Tu nivel y el motor B (molde del día), según el boceto del motor.
+- **Los cimientos del motor** (2026-10-22): vuelta 27 (acta `docs/actas/027-kozmos-cimientos-del-motor.md`), rama `claude/project-thread-985fzq`, sin PR. Fer aprobó el motor B «un molde para cada día» con D1 a D6; esta vuelta es el primero de tres PR. Hoy (`K.plan.armar`) no cambia. Lo nuevo:
+  - Catálogo: `patron` en cada escalera y en las habilidades sueltas, equipo coherente (front lever, bandera, pared, soga), las dos flexiones de Un brazo sin barra, «Remo debajo de la mesa» y «Remo con toalla en la puerta» con dibujo (mesa y puerta en la figura), caminos explícitos en cuatro estrellas y `catalogo/entradas.json` (15 piezas de entrada en calor).
+  - Kilos con mancuernas: remo con mancuerna, búlgara y peso muerto a una pierna progresan de a 2 kg entre `kgInicial` y `hastaKg`; con mancuernas, Piernas e Isquios arrancan con peso (`conPeso`). La serie guarda `kg` (nunca `lastreKg`); el descanso pide «Kilos por mano»; Hoy, los días y el resumen dicen los kilos.
+  - Funciones puras para el PR2: `K.rutina.armarBloques` (lo de `deRutina`, igual byte a byte contra `main`), `escalonDe`, `escalonesTodos`, y `K.caminos` (`patronDe`, `caminoDe`, `entrada`).
+  - El respaldo acepta `kg` (0 a 200), formato 2.
+  - Pruebas: 91 sin pantalla y 94 de pantallas, en verde. Nuevas: 11 sin pantalla y serie-con-kilos.
+  - **Esperando a Fer**: el OK al tablero (capturas `m17/antes` y `m17/despues` en claro y grafito) y tres decisiones del acta (los remos nuevos dentro de la escalera de Remo, Piernas e Isquios con peso desde el primer escalón, la indicación del fondo ruso).
+  - **Próximo**: el PR2, el día del motor B (molde, entrada en calor y caminos en Hoy).
 
 ## Dónde quedó
 
