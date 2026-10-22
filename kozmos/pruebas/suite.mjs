@@ -452,10 +452,10 @@ prueba("sin-lugar-para-guardar", async () => {
 });
 
 /* ===== Etapa 3: la sesión, con reloj falso ===== */
-async function conReloj(vp){
+async function conReloj(vp, hora = "2026-10-20T10:00:00"){
   const r = await pagina(vp);
   await r.ctx.addInitScript(() => { window.__V = []; Object.defineProperty(navigator, "vibrate", {value: x => { window.__V.push(JSON.stringify(x)); return true; }, configurable: true}); });
-  await r.p.clock.install({time: new Date("2026-10-20T10:00:00")});
+  await r.p.clock.install({time: new Date(hora)});
   return r;
 }
 const rumbo = async (p, ids) => { await p.evaluate(ids => K.diario.perfilPoner("rumbo", ids).then(() => K.refrescar()), ids); await p.waitForSelector("#s-empezar"); };
@@ -1968,6 +1968,112 @@ prueba("iconos-b-cielo-rapido", async () => {
     const primera = m(() => K.P.cielo({tab: "cielo"})); const otra = m(() => { for (let i = 0; i < 5; i++) K.P.cielo({tab: "cielo"}); }) / 5; return {primera, otra}; });
   ok(t.primera < 250, "la primera vez tarda " + JSON.stringify(t));
   ok(t.otra < Math.max(30, t.primera / 2), "los anillos no se guardan: " + JSON.stringify(t));
+  await ctx.close();
+});
+
+/* ===== Vuelta 23: la medianoche y el deshacer que espera detrás de un aviso ===== */
+/* el teléfono durmió: la hora salta sin que corra ningún reloj, y al volver a la app llega «visibilitychange» */
+const despertar = async (p, hora) => { await p.clock.setSystemTime(new Date(hora)); await p.evaluate(() => document.dispatchEvent(new Event("visibilitychange"))); await p.waitForTimeout(120); };
+prueba("medianoche-anotar", async () => {
+  /* empezaste a anotar a las 23:58 y guardás pasada la medianoche: el día que no elegiste es el de hoy, no el de ayer */
+  const {ctx, p} = await conReloj(undefined, "2026-10-20T23:58:00");
+  await ir(p, "#/cielo/front-lever/anotar");
+  ok(await p.textContent("#f-fecha em") === "Hoy", "el día no arranca en hoy");
+  await p.fill("#f-valor", "45");
+  await p.clock.runFor(3 * 60e3);
+  ok(await p.evaluate(() => K._form.fecha) === "2026-10-21", "pasada la medianoche, Anotar sigue en ayer: " + await p.evaluate(() => K._form.fecha));
+  ok(await p.textContent("#f-fecha em") === "Hoy", "la fila del día no dice hoy: " + await p.textContent("#f-fecha em"));
+  ok(await p.inputValue("#f-valor") === "45", "se perdió lo escrito");
+  await p.click("#f-guardar"); await p.waitForFunction(() => K.diario.mediciones.length === 1);
+  ok(await p.evaluate(() => K.diario.mediciones.at(-1).fecha) === "2026-10-21", "la marca se guardó con la fecha de ayer");
+  /* lo mismo si el teléfono durmió y no corrió ningún reloj: al guardar vale el día de hoy */
+  await ir(p, "#/cielo/espagat/anotar"); await p.fill("#f-valor", "30");
+  await p.clock.setSystemTime(new Date("2026-10-22T00:10:00"));
+  await p.click("#f-guardar"); await p.waitForFunction(() => K.diario.mediciones.length === 2);
+  ok(await p.evaluate(() => K.diario.mediciones.at(-1).fecha) === "2026-10-22", "sin relojes, la marca se guardó con la fecha de ayer");
+  /* el día que elegiste a mano se respeta */
+  await ir(p, "#/cielo/front-lever/anotar"); await p.click("#f-fecha"); await p.click('.pmi[data-id="2026-10-21"]');
+  await despertar(p, "2026-10-23T08:00:00");
+  ok(await p.evaluate(() => K._form.fecha) === "2026-10-21", "pisó el día que elegiste");
+  ok(await p.textContent("#f-fecha em") === "Anteayer", "la fila del día no se redibujó: " + await p.textContent("#f-fecha em"));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("medianoche-hoy", async () => {
+  /* entrenaste a la noche y dejaste la app abierta: a la mañana, Hoy es otro día */
+  const {ctx, p} = await conReloj(undefined, "2026-10-20T23:50:00");
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await p.evaluate(s => K.diario.guardarSesion(s).then(() => K.refrescar()), sEsc("n1", "2026-10-20", 0, [[null, "sentadilla", [9, 9, 9], null, 9]]));
+  await p.waitForFunction(() => document.querySelector(".hoy").textContent.includes("Hoy ya entrenaste"));
+  await despertar(p, "2026-10-21T07:30:00");
+  ok(!(await p.textContent(".hoy")).includes("Hoy ya entrenaste"), "a la mañana, Hoy sigue en ayer");
+  ok(await p.$("#s-empezar"), "no ofrece empezar el día nuevo");
+  /* con la app a la vista, a la medianoche también cambia */
+  await p.evaluate(s => K.diario.guardarSesion(s).then(() => K.refrescar()), sEsc("n2", "2026-10-21", 1, [[null, "sentadilla", [9, 9, 9], null, 9]]));
+  await p.waitForFunction(() => document.querySelector(".hoy").textContent.includes("Hoy ya entrenaste"));
+  await p.clock.runFor(17 * 3600e3);
+  ok(!(await p.textContent(".hoy")).includes("Hoy ya entrenaste"), "a la medianoche, Hoy sigue en ayer");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("medianoche-sesion-sigue", async () => {
+  /* una sesión que cruza la medianoche sigue tal cual: mismo paso, lo anotado y la fecha de su inicio */
+  const {ctx, p} = await conReloj(undefined, "2026-10-20T23:59:00");
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
+  await p.click("#s-empezar"); await p.waitForSelector(".ses.serie");
+  await tick(p, 30000); await p.click("#s-listo"); await p.waitForSelector(".ses.descanso"); await p.fill("#s-valor", "22");
+  const antes = await p.evaluate(() => [K.sesion.estado().id, K.sesion.estado().b, K.sesion.estado().s]);
+  await tick(p, 40000);
+  ok(await p.evaluate(() => new Date().getDate()) === 21, "la prueba no cruzó la medianoche");
+  ok(await p.$(".ses.descanso"), "la sesión cambió de paso");
+  ok(await p.inputValue("#s-valor") === "22", "se perdió lo anotado");
+  const ahora = await p.evaluate(() => [K.sesion.estado().id, K.sesion.estado().b, K.sesion.estado().s]);
+  ok(JSON.stringify(ahora) === JSON.stringify(antes), "la sesión no es la misma: " + ahora + " · " + antes);
+  ok(await p.evaluate(() => K.sesion.estado().fecha) === "2026-10-20", "la sesión cambió su fecha de inicio");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("aviso-y-deshacer", async () => {
+  /* un aviso de error no se lleva el deshacer: espera detrás, con el tiempo que le quedaba, y vuelve cuando el aviso se va */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy/rumbo");
+  const ids = await p.evaluate(() => K.CATALOGO.constelaciones.slice(0, 4).map(c => c.id));
+  const nombre = await p.evaluate(id => K.cons(id).nombre, ids[2]);
+  const deshacer = '.utoast:not(.solo):not(.out)', aviso = ".utoast.solo:not(.out)";
+  for (const id of ids.slice(0, 3)) await p.click(`[data-rumbo="${id}"]`);
+  await p.waitForFunction(t => document.querySelector(".utoast:not(.solo):not(.out) .utx")?.textContent === t, "Sumaste " + nombre);
+  /* la cuarta no entra: avisa, y otro aviso encima del primero tampoco se lo lleva */
+  await p.click(`[data-rumbo="${ids[3]}"]`); await p.waitForSelector(aviso);
+  ok((await p.textContent(aviso + " .utx")).startsWith("Hasta 3"), "no avisa que son hasta 3");
+  ok(!(await p.$(deshacer)), "el deshacer queda tapado debajo del aviso");
+  await p.clock.runFor(1000); await p.click(`[data-rumbo="${ids[3]}"]`);
+  ok(await p.$$eval(".utoast:not(.out)", x => x.length) === 1, "quedan dos avisos a la vez");
+  await p.clock.runFor(5100);
+  ok(!(await p.$(aviso)), "el aviso no se fue");
+  ok(await p.$(deshacer), "el aviso de error se llevó el deshacer");
+  ok((await p.textContent(deshacer + " .utx")) === "Sumaste " + nombre, "volvió otro deshacer: " + await p.textContent(deshacer + " .utx"));
+  await p.click(deshacer + " .utu");
+  await p.waitForFunction(ids => JSON.stringify(K.rumbo()) === JSON.stringify(ids), ids.slice(0, 2), {timeout: 3000}).catch(() => { throw new Error("el deshacer que volvió no deshace"); });
+  /* vuelve con el tiempo que le quedaba, y el anillo donde había quedado */
+  await p.click(`[data-rumbo="${ids[2]}"]`); await p.waitForSelector(deshacer);
+  await p.clock.runFor(3000);
+  await p.click(`[data-rumbo="${ids[3]}"]`); await p.waitForSelector(aviso);
+  await p.keyboard.press("Escape");
+  ok(!(await p.$(aviso)) && await p.$(deshacer), "Escape en el aviso no devuelve el deshacer");
+  { const dl = await p.$eval(deshacer + " .utr circle:not(.f)", c => getComputedStyle(c).animationDelay); ok(parseFloat(dl) <= -2.9 && parseFloat(dl) >= -3.5, "el anillo vuelve lleno: " + dl); }
+  await p.clock.runFor(1500);
+  ok(await p.$(deshacer), "el deshacer que volvió se fue antes de tiempo");
+  await p.clock.runFor(900);
+  ok(!(await p.$(deshacer)), "el deshacer que volvió dura de nuevo los 5 s");
+  /* un deshacer nuevo reemplaza al que esperaba: nunca vuelve uno viejo */
+  await p.click(`[data-rumbo="${ids[2]}"]`); await p.waitForSelector(deshacer); await p.clock.runFor(300);
+  await p.click(`[data-rumbo="${ids[2]}"]`); await p.waitForFunction(() => document.querySelector(".utoast:not(.solo):not(.out) .utx")?.textContent.startsWith("Sumaste"));
+  await p.click(`[data-rumbo="${ids[3]}"]`); await p.waitForSelector(aviso);
+  await p.click(`[data-rumbo="${ids[0]}"]`); await p.waitForSelector(deshacer);
+  ok((await p.textContent(deshacer + " .utx")).startsWith("Sacaste"), "no muestra el deshacer nuevo");
+  await p.clock.runFor(5500);
+  ok(!(await p.$(".utoast")), "volvió un deshacer viejo");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
 

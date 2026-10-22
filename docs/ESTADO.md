@@ -1,6 +1,6 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (íconos B en todas las pantallas) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-22 (arreglos: la medianoche y el deshacer) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
@@ -75,6 +75,11 @@
   - Pruebas: 79 sin pantalla y 84 de pantallas, en verde.
   - **Esperando a Fer**: el OK al tablero (capturas antes y después en claro y grafito).
   - **Próximo**: con su OK, PR y versión 27.
+- **La medianoche y el deshacer** (2026-10-22): vuelta 23, corta (acta `docs/actas/023-kozmos-arreglos-medianoche-y-deshacer.md`), rama `claude/project-thread-985fzq`, sin PR. Arreglos sin cambio visible:
+  - Con la app abierta pasada la medianoche, Hoy y el día de Anotar quedaban en ayer. Ahora cambian a la medianoche y al volver a la app; el día que elegiste a mano en Anotar se respeta y la sesión en curso sigue igual.
+  - Un aviso de error se llevaba el deshacer pendiente. Ahora el deshacer espera detrás del aviso y vuelve con el tiempo que le quedaba (cierra también «El deshacer dura lo que dura el aviso»).
+  - Pruebas: 79 sin pantalla y 88 de pantallas, en verde.
+  - **Esperando a Fer**: nada nuevo; publicar va con la próxima versión.
 
 ## Dónde quedó
 

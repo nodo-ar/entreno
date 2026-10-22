@@ -132,7 +132,7 @@ K.anotar = {
   },
   menuFecha(btn){
     K.menu.abrir(btn, {titulo: "Día", items: K.ultimosDias(7).map(d => ({id: d, texto: K.fechaCorta(d), elegido: d === K._form.fecha})),
-      elegir: d => { K._form.fecha = d; K.refrescar(); }});
+      elegir: d => { K._form.fecha = d; K._form.fechaElegida = d !== K.hoy(); K.refrescar(); }});
   },
   paso(campo, s){
     const f = K._form, e = K.estrella(f.estrella), {inc, min, max} = K.pasoDe(e ? e.prueba.tipo : "repeticiones", campo);
@@ -146,6 +146,7 @@ K.anotar = {
     try { await K.anotar._guardar(); } finally { K.anotar._guardando = false; const b2 = K.$("#f-guardar"); if (b2) b2.disabled = false; }
   },
   async _guardar(){
+    K.alDia(); /* si pasó la medianoche sin que nadie mirara, el día sin elegir es el de hoy */
     const f = K._form, cat = K.CATALOGO, c = cat.constelaciones.find(x => x.id === f.c), e = c.estrellas.find(x => x.id === f.estrella), pr = e.prueba;
     /* cada marca guarda qué midió: si un día el catálogo cambia, la marca se sigue leyendo igual */
     let m = {estrella: e.id, ejercicio: pr.ejercicio, tipo: pr.tipo, catalogo: cat.version, fecha: f.fecha};
