@@ -1,6 +1,9 @@
 /* ===== Cielo y Constelación (etapa 2): el catálogo, tu cielo calculado y las marcas anotadas a mano ===== */
 K.hoy = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
-K.cieloActual = () => K.cielo.calcular(K.CATALOGO, K.diario.mediciones, K.hoy(), K.diario.sesiones, K.diario.perfil.equipo || null);
+/* tu cosmos con lo que tu nivel da por hecho: esas estrellas se ven dadas (sin encender) y la próxima es la que sigue */
+K.cieloActual = () => K.nivel.aplicar(K.cielo.calcular(K.CATALOGO, K.diario.mediciones, K.hoy(), K.diario.sesiones, K.diario.perfil.equipo || null), K.dadasDeTuNivel(), {fecha: K.diario.perfil.nivel?.fecha});
+K.dadasDeTuNivel = () => K.nivel.dadas(K.diario.perfil.nivel, K.diario.perfil.equipo || null);
+K.desdeTuNivel = () => K.nivel.desde(K.diario.perfil.nivel, K.diario.perfil.equipo || null);
 K.familia = id => K.CATALOGO.familias.find(f => f.id === id);
 /* la que se abre sola en horizontal: la última que practicaste, o la primera */
 K.destacada = cielo => (cielo.constelaciones.filter(c => c.ultima).sort((a, b) => b.ultima.localeCompare(a.ultima))[0] || cielo.constelaciones[0]).id;
@@ -49,10 +52,10 @@ K.P.constelacion = c => {
   const tenue = c.volverAProbar ? `<p class="aviso-tenue">Hace más de 16 semanas sin práctica. Probala de nuevo cuando quieras.</p>`
     : c.atenuada ? `<p class="aviso-tenue">${K.esc(c.nombre)} se está apagando: hace más de 8 semanas sin práctica.</p>` : "";
   /* lo que pide equipo que no marcaste se ve igual acá, tenue y diciendo qué pide */
-  const ESTADO = {encendida: "encendida", proxima: "próxima", "por-delante": "por delante", "sin-equipo": "pide equipo que no marcaste"};
+  const ESTADO = {encendida: "encendida", proxima: "próxima", "por-delante": "por delante", "sin-equipo": "pide equipo que no marcaste", dada: "dada por hecha por tu nivel"};
   const filas = c.estrellas.map(e => `<button type="button" class="est-fila ${e.estado}" data-ir="#/cielo/${c.id}/anotar/${e.orden}" style="--c:var(--${c.familia})">
       <span class="st" aria-hidden="true"></span><span class="nom">${K.nw(e.nombre)}<span class="vh">, ${ESTADO[e.estado]}</span></span>
-      <span class="num mg">${e.estado === "sin-equipo" ? K.esc("Pide " + K.pide(e.falta))
+      <span class="num mg">${e.estado === "sin-equipo" ? K.esc("Pide " + K.pide(e.falta)) : e.estado === "dada" ? "Dada"
         : e.mejor !== null && e.estado !== "encendida" ? K.esc(K.cielo.corto(e.prueba, e.mejor)) : "m" + e.magnitud}</span></button>`).join("");
   /* probar la próxima es lo principal; anotar algo hecho por tu cuenta queda al lado */
   const probar = p && K.plan.sePrueba(c);
@@ -76,9 +79,12 @@ K.P.constelacion = c => {
     <section class="cd cons-cab"><div class="cons-fondo" aria-hidden="true">${K.dibujo.una(c, recien)}</div>
       <span class="cons-ico">${K.icono.constelacion(c, 96, `${c.nombre}, ${c.encendidas} de ${c.total} estrellas`, nuevas ? {desde: c.encendidas - nuevas} : {})}</span></section>${tenue}${estado}
     ${botones}
-    <section class="cd est-lista" aria-label="Estrellas de ${K.esc(c.nombre)}">${filas}</section>
+    ${dadasLn(c)}<section class="cd est-lista" aria-label="Estrellas de ${K.esc(c.nombre)}">${filas}</section>
     ${marcas ? `<span class="lb pie">Tus marcas</span><section class="cd marcas">${marcas}</section>` : ""}${rutinasDe(c)}`;
 };
+/* lo que tu nivel da por hecho: punteado y sin encender, hasta que lo hagas */
+const dadasLn = c => !c.dadas ? "" : `<p class="cons-dadas" style="--c:var(--${c.familia})"><i class="st" aria-hidden="true"></i><span><b>${c.dadas} ${c.dadas === 1 ? "estrella dada por hecha" : "estrellas dadas por hechas"}</b>
+  <small class="mute">Por tu nivel. ${c.dadas === 1 ? "Se enciende cuando la hacés." : "Se encienden cuando las hacés."}</small></span></p>`;
 /* las rutinas que llevan a alguna estrella de esta constelación */
 const rutinasDe = c => {
   const ids = new Set(c.estrellas.map(e => e.id)), rs = K.RUTINAS.filter(r => r.alimenta.some(id => ids.has(id)));

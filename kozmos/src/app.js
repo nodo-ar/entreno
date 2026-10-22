@@ -1,7 +1,7 @@
 /* ===== App: rutas, transiciones y arranque ===== */
-/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/equipo (el primer paso de «Que Kozmos arme tu día») · #/hoy/sesion · #/hoy/resumen/<sesión> · #/planes · #/planes/rutinas/<rutina> · #/planes/hazanas/<hazaña>
+/* Rutas: #/hoy · #/hoy/rumbo · #/hoy/equipo y #/hoy/nivel (los primeros pasos de «Que Kozmos arme tu día») · #/hoy/sesion · #/hoy/resumen/<sesión> · #/planes · #/planes/rutinas/<rutina> · #/planes/hazanas/<hazaña>
    · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>] · #/progreso · #/progreso/<sesión>
-   · #/vos · #/vos/equipo · #/vos/dias · #/vos/peso · #/vos/respaldo · #/vos/acerca
+   · #/vos · #/vos/equipo · #/vos/nivel · #/vos/dias · #/vos/peso · #/vos/respaldo · #/vos/acerca
    Lo que no existe cae en el lugar más cercano que sí. */
 /* las rutas de antes: rutinas y hazañas vivían adentro de Hoy (enlaces guardados, una sesión que quedó abierta) */
 K.rutaNueva = h => { const m = /^#\/hoy\/(rutinas|hazanas)(?:\/([^/]+))?/.exec(h || ""); return m ? (m[2] ? `#/planes/${m[1]}/${m[2]}` : "#/planes") : null; };
@@ -15,13 +15,13 @@ K.ruta = () => {
     return {tab, sub: "", hondo: 0};
   }
   if (tab === "hoy"){
-    if (a === "rumbo" || a === "equipo") return {tab, sub: a, hondo: 1};
+    if (a === "rumbo" || a === "equipo" || a === "nivel") return {tab, sub: a, hondo: 1};
     /* la sesión existe solo mientras corre; el resumen, si la sesión está guardada */
     if (a === "sesion" && K.sesion.activa()) return {tab, sub: a, hondo: 1};
     if (a === "resumen" && K.diario.sesiones.some(s => s.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
     return {tab, sub: "", hondo: 0};
   }
-  if (tab === "vos") return ["acerca", "equipo", "dias", "peso", "respaldo"].includes(a) ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
+  if (tab === "vos") return ["acerca", "equipo", "nivel", "dias", "peso", "respaldo"].includes(a) ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
   if (tab === "progreso") return K.diario.sesiones.some(s => s.id === a) ? {tab, sub: a, hondo: 1} : {tab, sub: "", hondo: 0};
   if (tab === "cielo"){
     const c = K.CATALOGO.constelaciones.find(x => x.id === a);
@@ -54,7 +54,7 @@ K.mostrar = (anim = "") => {
   if (viejo){ const i = t => K.PESTANAS.findIndex(x => x[0] === t); K.mov.girar(viejo, rv, v, i(tab) >= i(K._ultima.tab) ? 1 : -1); }
   /* en la sesión y su resumen no hay barra: la pantalla es toda tuya */
   document.body.classList.toggle("en-sesion", tab === "hoy" && (sub === "sesion" || sub === "resumen"));
-  /* en las pantallas para elegir (Tu rumbo, Tu equipo) la barra se va abajo y queda su botón principal */
+  /* en las pantallas para elegir (Tu rumbo, Tu equipo, Tu nivel) la barra se va abajo y queda su botón principal */
   K.nav.ocultar(!!K.$("[data-sin-nav]", v));
   K.sesion.alLatir();
   K.fig.animar();
@@ -98,16 +98,17 @@ document.addEventListener("click", e => {
   if (e.target.closest(".ses.prueba.serie") && !e.target.closest("button, a, input")){ K.ses.listo(); return; }
   const ra = e.target.closest("[data-rasgo]");
   if (ra){ K.menuRasgo(ra); return; }
-  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-empezar, #pl-probar, #pl-fam-pruebas, #pl-fam-rutinas, #rut-sem, #eq-seguir, [data-probar], [data-equipo], [data-ppaso], [data-dia]");
+  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-empezar, #pl-probar, #pl-fam-pruebas, #pl-fam-rutinas, #rut-sem, #eq-seguir, #nv-seguir, [data-probar], [data-equipo], [data-nivel], [data-ppaso], [data-dia]");
   if (m){
     if (m.dataset.probar) K.ses.probar(m.dataset.probar, m);
     else if (m.dataset.equipo) K.equipoTocar(m.dataset.equipo);
+    else if (m.dataset.nivel) K.menuNivel(m);
     else if (m.dataset.ppaso) K.pesoPaso(Number(m.dataset.ppaso));
     else if (m.dataset.dia) K.diaTocar(Number(m.dataset.dia));
     else ({"tema-menu": () => K.menuTema(m), "avisos-menu": () => K.menuAvisos(m), "res-mas": () => K.resumenMenu(m),
       "rs-guardar": () => K.mov.girando(m, K.resp.guardar), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo(),
       "hoy-igual": () => { K._igual = K.hoy(); K.refrescar(); }, "rut-seguir": () => K.rutinaSeguir(m.dataset.rutina), "rut-mas": () => K.rutinaMenu(m),
-      "hz-empezar": () => K.ses.hazana(m.dataset.hazana, m), "pl-probar": () => K.ses.hazana(m.dataset.hazana, m), "pl-fam-pruebas": () => K.planesFamilia(m), "pl-fam-rutinas": () => K.planesFamilia(m), "rut-sem": () => K.rutinaSemana(m), "eq-seguir": () => K.equipoSeguir(m)})[m.id]();
+      "hz-empezar": () => K.ses.hazana(m.dataset.hazana, m), "pl-probar": () => K.ses.hazana(m.dataset.hazana, m), "pl-fam-pruebas": () => K.planesFamilia(m), "pl-fam-rutinas": () => K.planesFamilia(m), "rut-sem": () => K.rutinaSemana(m), "eq-seguir": () => K.equipoSeguir(m), "nv-seguir": () => K.ir(m.dataset.sigue)})[m.id]();
     return;
   }
   const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #s-pausa, #s-vuelta, #s-vuelta-menos, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio], [data-sens]");
