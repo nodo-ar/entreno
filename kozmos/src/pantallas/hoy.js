@@ -83,7 +83,11 @@ const corto = (tipo, o) => o === "max" ? "máx" : tipo === "segundos" ? `${o} s`
 K.filaToca = b => {
   if (b.hazana){ const h = K.hzDe(b.hazana); return [`Prueba · ${h ? h.nombre : b.nombre}`, b.formato === "escalera" ? "una más por minuto" : b.formato === "tiempo" ? "por tiempo" : b.reloj ? `${Math.round(b.reloj / 60)} min` : "máx"]; }
   if (b.prueba) return [`Prueba · ${K.estrella(b.estrella).nombre}`, K.cielo.corto(b, b.umbral)];
-  if (b.constelacion) return [`${K.cons(b.constelacion).nombre} · ${K.ej(b.ejercicio).nombre}`, K.queToca(b)];
+  if (b.constelacion){
+    // Si el ejercicio ya lleva el nombre de la constelación, no se repite.
+    const c = K.cons(b.constelacion).nombre, e = K.ej(b.ejercicio).nombre;
+    return [e.toLowerCase().startsWith(c.toLowerCase()) ? e : `${c} · ${e}`, K.queToca(b)];
+  }
   if (b.clase === "tramos") return [b.nombre || "", `${Math.round(b.tramos.reduce((a, x) => a + x.seg, 0) / 60)} min`];
   if (b.clase === "circuito") return [b.nombre, b.formato === "amrap" ? `${b.minutos} min` : `${b.rondas} ${b.rondas === 1 ? "vuelta" : "vueltas"}`];
   const ejs = [...new Set(b.pasos.map(p => p.ejercicio))], os = [...new Set(b.pasos.map(p => p.objetivo))];

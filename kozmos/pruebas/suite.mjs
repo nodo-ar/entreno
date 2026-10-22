@@ -1293,6 +1293,15 @@ prueba("hoy-filas-superserie", async () => {
 });
 /* cuatro sesiones de la Base con las mismas sentadillas: tres sin mejorar, la escalera de piernas se traba y toca más liviana */
 const HIST_TRABA = ["2026-10-06", "2026-10-08", "2026-10-10", "2026-10-13"].map((f, i) => sEsc("t" + i, f, i, [["tirar", "dominada-negativa", [3 + i, 3, 3], [3, 5], 3], ["piernas", "sentadilla", [9, 9, 9], [8, 12], 9]]));
+prueba("hoy-sin-repetir-constelacion", async () => {
+  /* si el ejercicio ya lleva el nombre de la constelación, la fila de Hoy no lo repite */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy");
+  const [a, b] = await p.evaluate(() => [K.filaToca({constelacion: "parada-de-manos", ejercicio: "vertical-pared", tipo: "segundos", objetivo: [30]})[0], K.filaToca({constelacion: "front-lever", ejercicio: "fl-bolita", tipo: "segundos", objetivo: [10]})[0]]);
+  ok(a === "Parada de manos contra la pared", "repite la constelación: " + a);
+  ok(b === "Front lever · Horizontal hecho bolita", "sacó la constelación de más: " + b);
+  await ctx.close();
+});
 prueba("hoy-mas-liviana", async () => {
   /* una escalera en descarga lo dice en Hoy y en el día de la rutina, como la serie en la sesión */
   const {ctx, p} = await conReloj();

@@ -80,12 +80,13 @@
   - Un aviso de error se llevaba el deshacer pendiente. Ahora el deshacer espera detrás del aviso y vuelve con el tiempo que le quedaba (cierra también «El deshacer dura lo que dura el aviso»).
   - Pruebas: 79 sin pantalla y 88 de pantallas, en verde.
   - **Esperando a Fer**: nada nuevo; publicar va con la próxima versión.
-- **Nombres claros para las estrellas** (2026-10-22): vuelta 24 (acta `docs/actas/024-kozmos-nombres-claros-estrellas.md`), rama `claude/project-thread-985fzq`, sin PR. Fer aprobó la lista de nombres y que cada ejercicio se llame igual que su estrella:
+- **Nombres claros para las estrellas** (2026-10-22): vuelta 24 (acta `docs/actas/024-kozmos-nombres-claros-estrellas.md`), PR #31. Fer aprobó la lista de nombres y que cada ejercicio se llame igual que su estrella:
   - 64 estrellas y 49 ejercicios con nombres que dicen qué hacés («Rodillas sobre los codos», «Horizontal con rodillas al pecho», «Sentadilla a una pierna», «Bandera acostada completa»…). Las constelaciones y «L-sit» quedan. **Ningún id cambió**: lo guardado sigue contando.
   - En un commit aparte, los textos que nombraban la jerga (metas de cinco constelaciones, la escalera «Dragon flag» → «Bandera acostada», textos de escaleras, de una prueba y de una rutina).
   - Con nombres largos: el número queda pegado a su medida, el último renglón no queda con una palabra sola, la isla corta el nombre con «…» sin salirse de la pantalla (antes se salía con un nombre largo) y con el reloj entero, y en la serie en horizontal la figura usa el alto que queda (antes un título de dos renglones la sacaba de la pantalla, ya con 32 ejercicios).
-  - Pruebas: 80 sin pantalla y 88 de pantallas, en verde. Nueva: catalogo-nombres-claros (sin jerga y con los mismos ids que `main`).
-  - **Esperando a Fer**: el OK al tablero (capturas antes y después en claro y grafito); si quedan los textos del commit aparte; si Hoy deja de repetir la constelación cuando el ejercicio ya la nombra.
+  - Hoy ya no repite la constelación cuando el ejercicio la nombra («Parada de manos contra la pared»).
+  - Pruebas: 80 sin pantalla y 89 de pantallas, en verde. Nuevas: catalogo-nombres-claros (sin jerga y con los mismos ids que `main`) y hoy-sin-repetir-constelacion.
+  - **Aprobado por Fer** (2026-10-22) con sus tres recomendaciones: quedan los textos, Hoy no repite y «Horizontal completo» queda. Se publica como versión 29.
 
 ## Dónde quedó
 

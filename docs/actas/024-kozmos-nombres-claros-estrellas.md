@@ -38,6 +38,8 @@ Rama `claude/project-thread-985fzq`, sin PR.
 2. **«Parada de manos · Parada de manos contra la pared»** en Hoy: la fila antepone la constelación y el nombre nuevo ya la dice. Se puede sacar la constelación cuando el nombre ya la incluye.
 3. **«Horizontal completo»** como nombre del ejercicio del front lever: afuera de la constelación no dice que es colgado. Si se lee raro en una rutina, «Horizontal colgado completo».
 
+## Lo que decidió Fer (2026-10-22)
+OK al tablero y a las tres recomendaciones: los textos del commit aparte quedan; Hoy ya no repite la constelación cuando el ejercicio la nombra («Parada de manos contra la pared», prueba hoy-sin-repetir-constelacion); «Horizontal completo» queda así.
+
 ## Al backlog
-- La fila de Hoy repite la constelación cuando el ejercicio ya la nombra (decisión 2).
 - «Qué es cada estrella»: con los nombres nuevos se entiende solo; queda abierto si hace falta la línea de explicación en el menú de Estrella.
