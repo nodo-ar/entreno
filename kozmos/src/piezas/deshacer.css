@@ -7,7 +7,7 @@
 .utoast .utu:active{transform:scale(.96)}
 /* el anillo que se vacía: cuánto queda para deshacer */
 .utoast .utr{position:absolute; left:10px; top:8px; width:24px; height:24px; transform:rotate(-90deg)}
-.utoast .utr circle{fill:none; stroke:currentColor; stroke-width:2.4; stroke-dasharray:62.8; animation:utring var(--dur,5s) linear forwards}
+.utoast .utr circle{fill:none; stroke:currentColor; stroke-width:2.4; stroke-dasharray:62.8; animation:utring var(--dur,5s) linear var(--ya,0ms) forwards}
 .utoast .utr circle.f{stroke-opacity:.25; animation:none}
 @keyframes utring{to{stroke-dashoffset:62.8}}
 .utoast.quieto .utr circle{animation-play-state:paused}

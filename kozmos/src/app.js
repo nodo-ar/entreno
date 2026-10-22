@@ -164,7 +164,21 @@ matchMedia("(orientation: landscape) and (max-height: 520px)").addEventListener?
 });
 addEventListener("keydown", e => { if (e.key === "Escape") K.deshacer.cerrar(); });
 /* al volver a la pestaña, lo que otra anotó aparece: el diario se relee y, si cambió, se redibuja */
-document.addEventListener("visibilitychange", () => { if (!document.hidden) K.diario.releer().then(c => { if (c) K.refrescar(); }).catch(() => {}); });
+document.addEventListener("visibilitychange", () => { if (!document.hidden){ K.alDia(); K.diario.releer().then(c => { if (c) K.refrescar(); }).catch(() => {}); } });
+/* pasada la medianoche, «hoy» es otro día: lo que se ve se redibuja y el día de Anotar que no elegiste pasa al nuevo.
+   Se mira a la medianoche (si la app está a la vista) y al volver a ella (el teléfono dormido no corre relojes). La sesión en curso no se toca: su fecha es la del inicio. */
+K._dia = K.hoy();
+K.alDia = () => {
+  clearTimeout(K._tDia);
+  const d = new Date(), m = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+  K._tDia = setTimeout(K.alDia, m - d + 50);
+  const h = K.hoy(), ayer = K._dia; if (h === ayer) return false;
+  K._dia = h;
+  for (const f of Object.values(K._forms || {})) if (f.fecha === ayer && !f.fechaElegida) f.fecha = h;
+  if (K._ultima) K.refrescar();
+  return true;
+};
+K.alDia();
 
 /* arranque: primero se lee el diario, después se dibuja */
 K.encabezado.armar();
