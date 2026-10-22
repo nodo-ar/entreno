@@ -52,12 +52,12 @@
   - Pruebas: 69 sin pantalla y 74 de pantallas, en verde.
   - **Esperando a Fer**: el OK al tablero; si Hoy pasa a una fila por ejercicio como los días; qué hacer con las rutinas cuya última semana es de prueba (los 10 km, los 1000 saltos y las 100 flexiones caen en la descarga).
   - ~~Sin subir~~: resuelto; la rama quedó unida a `main` y subida. Fer aprobó la vuelta 19; salió como **kozmos-24** (PR #26, registro en `docs/versiones/kozmos-24.md`).
-- **Filas de Hoy y la meta** (2026-10-22): vuelta 20 (acta `docs/actas/020-kozmos-filas-y-meta.md`), en la rama `claude/project-thread-985fzq`, sin PR. Lo que Fer aprobó de la vuelta 19:
+- **Filas de Hoy y la meta** (2026-10-22): vuelta 20 (acta `docs/actas/020-kozmos-filas-y-meta.md`), PR #27, tablero aprobado por Fer el 2026-10-22 con sus tres recomendaciones (el último día de 100 flexiones es el intento de las 100; «más liviana» en cada fila; la superserie con fondo). Lo que Fer aprobó de la vuelta 19:
   - Hoy usa las mismas filas que los días de la rutina: una por ejercicio con series × rango. La superserie va junta, sobre un fondo apenas distinto, con «en superserie». La sesión sigue alternando. «Empezar» queda fijo al alcance del pulgar (también en horizontal).
   - La última semana de una rutina que termina en un desafío es la meta, completa: 100 flexiones, Soga hasta 1000 saltos, Arranques con kettlebell, Intervalos de 1 minuto en bici, Correr de 5 a 10 km, Correr tus primeros 5 km y Abdomen de gimnasta. La semana de prueba que caía ahí pasa a la anterior. Sale del catálogo (`bloque.meta`), no del motor. Hoy y la rutina dicen «Semana 6: la meta · 100 flexiones seguidas».
   - «más liviana» en las filas de Hoy y de los días cuando una escalera está trabada o es semana de prueba.
   - Catálogo: 40 min suaves en Intervalos de 4 minutos, la nota de Tabata que se entiende y los 1000 saltos que cuentan 10 min.
-  - Pruebas: 74 sin pantalla y 77 de pantallas, en verde.
+  - Pruebas: 75 sin pantalla y 77 de pantallas, en verde.
   - **Esperando a Fer**: el OK al tablero; si 100 flexiones suma el intento de las 100; si «más liviana» va en cada fila o una vez arriba.
   - **Próximo**: los íconos que Fer ya aprobó: asterismo en grande, pictograma del maniquí en chico.
 

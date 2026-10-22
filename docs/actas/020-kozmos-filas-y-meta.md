@@ -49,7 +49,8 @@ El criterio: tiene meta si el catálogo pone en su última semana el desafío o 
 - Una sola forma de dibujar filas para Hoy y los días (`K.filasHtml`); una sola forma de decir la semana (`K.semanaTx`) y el bloque (`K.bloqueTx`).
 - Encontrado: las notas cuentan los minutos de dos maneras (lo suave o el día entero). Anotado en el backlog.
 
-## Esperando a Fer
-- El OK al tablero.
-- Si 100 flexiones suma el intento de las 100 en el último día.
-- Si «más liviana» va en cada fila de la semana de prueba o una sola vez arriba.
+## Lo que decidió Fer (2026-10-22)
+- OK al tablero (PR #27), con las tres recomendaciones.
+- 100 flexiones cierra con el intento de las 100: el último día es la entrada en calor y una serie de 100 flexiones seguidas, con la nota «El desafío: 100 flexiones seguidas.» (prueba cien-pide-las-100; sin pantalla: 75).
+- «más liviana» queda en cada fila, como en la sesión.
+- La superserie queda con el fondo apenas distinto.

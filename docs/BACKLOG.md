@@ -80,7 +80,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Ícono de rutina y de Vos** (la abuela, vuelta 16): las tres lunas de la rutina y los tres puntos de Vos se parecen un poco a 20 px; mirarlo en el teléfono.
 - ~~**Superseries: Hoy las junta, la rutina no**~~: hecho en la vuelta 20 (acta 020). Una fila por ejercicio en los dos lados, la superserie junta con «en superserie», y «Empezar» fijo al alcance del pulgar.
 - ~~**La última semana es de prueba**~~: hecho en la vuelta 20. Siete rutinas terminan en su meta, completa; la prueba pasa a la semana anterior (`bloque.meta`).
-- **100 flexiones no pide las 100** (la persona, vuelta 20): la semana 6 es la meta, pero ningún día dice «hacé 100 seguidas»; la última serie es «máx». Sumar el intento, como el día 3 de Soga, si Fer quiere.
+- ~~**100 flexiones no pide las 100**~~: hecho en la vuelta 20 con el OK de Fer. El último día es el intento de las 100 seguidas.
 - **Dos maneras de contar los minutos en las notas** (coherencia, vuelta 20): Bici suave y larga dice los minutos de lo suave («55 min en zona 2», fila «Bici 55 min»); Mucho suave, poco fuerte y el cruzado de Correr de 5 a 10 km, los del día entero («50 min suaves», fila «Bici 42 min»). Elegir una y emparejar las notas.
 - **Mucho suave, poco fuerte termina con dos semanas livianas** (vuelta 20): la 8 es de prueba (descarga) y la 9 ya es liviana en el catálogo («Semana liviana»).
 - **«▲ nuevo» en las filas** (coherencia, vuelta 20): la sesión dice «▲ nuevo» en el escalón nuevo; las filas de Hoy y de los días solo dicen «más liviana».

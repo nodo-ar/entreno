@@ -1059,6 +1059,14 @@ prueba("catalogo-rarezas-019", () => {
   ok(rutina.dia(soga, 11, {ej}).minutos >= 10, "el desafío de la soga dura " + rutina.dia(soga, 11, {ej}).minutos + " min");
 });
 
+prueba("cien-pide-las-100", () => {
+  /* la semana de la meta de 100 flexiones cierra con el intento de las 100 seguidas */
+  const cien = RUTINAS.find(([f]) => f === "cien.json")[1], fin = cien.sesiones.at(-1);
+  ok(fin.bloques.some(b => b.ejercicio === "flexion" && b.objetivo === 100 && b.series === 1), "el último día no pide 100 seguidas");
+  ok(/100 flexiones seguidas/.test(fin.nota || ""), "el último día no lo dice");
+  ok(cien.sesiones.slice(0, -1).every(s => s.bloques.every(b => b.objetivo !== 100)), "las 100 aparecen antes del último día");
+});
+
 let fallas = 0;
 for (const [n, fn] of PRUEBAS){
   try { fn(); console.log("ok    ", n); } catch (e) { fallas++; console.log("FALLA ", n, "·", e.message); }
