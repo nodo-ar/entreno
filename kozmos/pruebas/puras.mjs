@@ -734,14 +734,11 @@ prueba("escalera-en-la-rutina", () => {
   ok(pi && pi.evento === "igual" && pi.proxima.join() === "10,10,10", "el resumen no dice lo que sigue en piernas: " + JSON.stringify(pi));
 });
 
-prueba("hazanas-figura", () => {
-  /* cada hazaña se dibuja con su constelación: estrellas dentro de la caja y líneas entre estrellas que existen */
-  for (const h of HAZANAS.hazanas){
-    const f = h.figura;
-    ok(f && Array.isArray(f.estrellas) && f.estrellas.length >= 2, h.id + ": sin figura");
-    ok(f.estrellas.every(e => e.length === 2 && e.every(v => Number.isFinite(v) && v >= 0 && v <= 100)), h.id + ": una estrella fuera de la caja");
-    ok(Array.isArray(f.lineas) && f.lineas.every(([a, b]) => a !== b && f.estrellas[a] && f.estrellas[b]), h.id + ": una línea a una estrella que no está");
-  }
+prueba("hazanas-sin-figura", () => {
+  /* desde la vuelta 22 una prueba se dibuja de lo que mide (su medalla): la constelación dibujada a mano ya no viaja en el catálogo */
+  for (const h of HAZANAS.hazanas) ok(!("figura" in h), h.id + ": todavía lleva su figura dibujada a mano");
+  const src = ["cielo/dibujo.js", "pantallas/hoy.js", "pantallas/pantallas.js", "pantallas/rutinas.js", "pantallas/cielo.js"].map(f => fs.readFileSync(path.join(RAIZ, "src", f), "utf8")).join("\n");
+  ok(!/dibujo\.(figura|anillo|grande)\b|\.figura\b/.test(src), "queda un dibujo viejo de prueba o de constelación");
 });
 
 /* ===== Los íconos, opción B (vuelta 21): medallas y pictogramas que salen del maniquí ===== */
@@ -821,6 +818,45 @@ prueba("iconos-b-legibles-40px", () => {
   /* la parada de manos se ve de frente, con los brazos abiertos y el piso; el planche, con el piso */
   const pm = icono.encuadre("vertical-libre"), pl = icono.encuadre("planche-straddle");
   ok(pm.vista === 90 && pm.abrir > 0 && pm.piso && pl.piso, "la parada de manos o el planche sin su encuadre");
+});
+
+prueba("iconos-b-constelacion", () => {
+  /* el Cielo: la figura de la última estrella (la meta) adentro de un anillo de avance, como los de Actividad */
+  const {icono, POSES} = icx();
+  for (const c of CAT.constelaciones){
+    const id = icono.poseConstelacion(c), ult = [...c.estrellas].reverse().find(e => POSES[e.prueba.ejercicio]);
+    ok(id && id === ult.prueba.ejercicio, `${c.id}: la figura no es la de su última estrella`);
+    const n = c.estrellas.length;
+    for (const k of [0, 1, Math.ceil(n / 2), n]){ const sv = icono.constelacion({...c, total: n, encendidas: k}, 40);
+      ok(sv.startsWith("<svg") && !/NaN|undefined|null/.test(sv) && !/#[0-9a-f]{3,8}\b|rgb\(/i.test(sv), `${c.id} ${k}/${n}: no se dibuja limpio`);
+      ok(numeros(sv).every(v => v >= -2 && v <= 102), `${c.id} ${k}/${n}: algo se sale de la caja`);
+      ok(sv.includes(`stroke="var(--${c.familia}-soft)"`), `${c.id}: la pista no va en el color suave de su familia`);
+      ok(k ? sv.includes("ico-arco") && sv.includes(`stroke="var(--${c.familia})"`) && sv.includes("ico-sat") : !sv.includes("ico-arco") && !sv.includes("ico-sat"), `${c.id} ${k}/${n}: el arco o el satélite no siguen al avance`);
+      if (k === n){ const m = sv.match(/class="ico-sat"[^>]*><circle cx="([\d.]+)" cy="([\d.]+)"/); ok(/ico-cons completa/.test(sv) && sv.includes('stroke-dasharray="100 0"') && m && +m[1] > 75 && +m[2] < 25, `${c.id}: completa no cierra el anillo con el satélite arriba a la derecha, como el logo`); }
+    }
+    /* la figura entra en el anillo sin tocarlo */
+    const sv = icono.constelacion({...c, total: n, encendidas: 0}, 40), pts = [];
+    for (const m of sv.matchAll(/<polyline points="([^"]+)"[^>]*stroke-width="([\d.]+)"/g)) for (const q of m[1].split(" ")){ const [x, y] = q.split(",").map(Number); pts.push([x, y, +m[2] / 2]); }
+    for (const m of sv.matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)" fill="var\(--ink\)"/g)) pts.push([+m[1], +m[2], +m[3]]);
+    ok(pts.length && pts.every(([x, y, r]) => Math.hypot(x - 50, y - 50) + r <= 44 - 4), `${c.id}: la figura toca el anillo`);
+  }
+  /* al encender, el arco crece desde lo que había: --p es lo nuevo */
+  const fl = CAT.constelaciones.find(c => c.estrellas.length === 8), sv = icono.constelacion({...fl, total: 8, encendidas: 3}, 150, "", {desde: 1});
+  ok(/ico-cons crece/.test(sv) && sv.includes("--p:25") && sv.includes("--a:90deg"), "el arco no crece solo lo nuevo");
+  ok(!/crece/.test(icono.constelacion({...fl, total: 8, encendidas: 3}, 150)), "crece sin estrellas nuevas");
+  /* las metas que más costaban se leen a 40 px: front lever, parada de manos y planche llenan el anillo con trazo y cabeza visibles */
+  for (const id of ["front-lever", "vertical-libre", "planche-straddle", "bandera", "dragon-flag", "muscle-up"]){
+    const s2 = icono.picto(id, {d: 70}), xs = [], ys = [];
+    for (const m of s2.matchAll(/points="([^"]+)"/g)) for (const q of m[1].split(" ")){ const [x, y] = q.split(",").map(Number); xs.push(x); ys.push(y); }
+    for (const m of s2.matchAll(/cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"/g)){ const [x, y, r] = m.slice(1).map(Number); xs.push(x - r, x + r); ys.push(y - r, y + r); }
+    const largo = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)), trazo = Math.max(...[...s2.matchAll(/stroke="currentColor" stroke-width="([\d.]+)"/g)].map(m => +m[1]));
+    ok(largo >= 70 * .7 && trazo * .4 >= 1.5, `${id}: a 40 px no se lee (largo ${largo.toFixed(1)}, trazo ${(trazo * .4).toFixed(2)} px)`); }
+  /* la bandera lleva su poste y el dragon flag, su banco: sin eso son una persona acostada */
+  ok(icono.esqueleto("bandera").poste !== undefined && icono.esqueleto("dragon-flag").banco, "la bandera o el dragon flag sin lo que los sostiene");
+  /* ningún ícono se elige por el id de una constelación */
+  const src = fs.readFileSync(path.join(RAIZ, "src", "piezas", "iconos.js"), "utf8");
+  const ids = CAT.constelaciones.map(c => c.id).filter(id => !POSES[id]);
+  ok(!ids.some(id => new RegExp(`["']${id}["']`).test(src)), "el módulo nombra una constelación");
 });
 
 /* ===== El maniquí: cada ejercicio tiene su persona, y cada pose es posible ===== */

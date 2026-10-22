@@ -2,10 +2,8 @@
 .small{font-size:var(--t-sm)}
 .hoy{display:flex; flex-direction:column; gap:12px}
 .hoy-a,.hoy-b{display:flex; flex-direction:column; gap:12px}
-.hoy-prox{padding:0; overflow:hidden; gap:0}
-.hoy-cielo .cons-svg{display:block; width:100%; height:auto; max-height:150px}
-.hoy-prox-tx{display:grid; gap:8px; padding:12px 16px 16px; border-top:1px solid var(--line)}
-.hoy-prox-tx .ln{font-size:var(--t-sm)}
+.hoy-prox{gap:12px}
+.hoy-prox .ln{font-size:var(--t-sm)}
 .hoy-toca{gap:10px}
 .toca{font-weight:600}
 .toca .num{font-size:var(--t-sm); font-weight:700; color:var(--ink-2); white-space:nowrap}
@@ -21,7 +19,7 @@
 body:has(.utoast:not(.out)) :is(.hoy-b,.rut,.hzn)>.btn{bottom:calc(144px + env(safe-area-inset-bottom,0px)); transition:bottom .2s var(--ease)}
 .btn .ic{width:18px; height:18px}
 .rumbo-vacio{gap:8px}
-.rumbo-vacio .cons-svg{display:block; width:100%; height:auto; max-height:120px; margin:-6px 0 4px}
+.rumbo-vacio .ico-trio{margin:2px 0 6px}
 .rumbo-fila[aria-pressed="true"]{background:var(--s2)}
 .rumbo-fila[aria-pressed="true"] .tile{background:var(--s1)}
 .rumbo-fila .ck{width:18px; height:18px}
@@ -98,7 +96,6 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   .hoy,.res{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; align-items:start}
   .hoy-b>.btn{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
   body:has(.utoast:not(.out)) :is(.hoy-b,.rut,.hzn)>.btn{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
-  .hoy-cielo .cons-svg{max-height:120px}
   body.en-sesion #app{padding-left:max(20px,env(safe-area-inset-left,0px))}
   .ses{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; min-height:0; align-items:center}
   .ses-b{margin-top:0}
@@ -106,7 +103,6 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   .reloj.big{font-size:64px}
   .anillo-desc{width:min(170px,40vh)}
   .anillo-tx .reloj{font-size:52px}
-  .res-a .cons-svg{max-height:220px}
 }
 
 /* ===== De dónde sale lo de hoy: una fila, a un toque de cambiarlo ===== */
@@ -125,7 +121,7 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .como{display:flex; flex-direction:column; gap:10px}
 .como-op{position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:4px; padding:0 44px 16px 16px; overflow:hidden; text-align:left; color:var(--ink); font:inherit; cursor:pointer}
 .como-dib{display:flex; align-items:center; height:104px; width:calc(100% + 60px); margin:0 -44px 8px -16px; border-bottom:1px solid var(--line); overflow:hidden}
-.como-dib .cons-svg{display:block; width:100%; height:auto; max-height:104px}
+.como-dib .ico-trio{margin:0 16px}
 .como-dib .dib-sem{display:block; width:150px; height:auto; margin:0 16px}
 .como-op small{font-size:var(--t-sm); font-weight:700; color:var(--ink-2)}
 .como-op .como-ir{position:absolute; right:16px; bottom:18px; width:16px; height:16px; color:var(--ink-3)}

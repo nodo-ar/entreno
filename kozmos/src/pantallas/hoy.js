@@ -135,7 +135,7 @@ K.P.hoyInicio = () => {
   }
   if (ru) return enc + K.hoyRutina(ru, sin);
   if (!rumbo.length && K.primerDia()) return enc + K.hoyComo() + sin;
-  if (!rumbo.length) return enc + `<section class="cd rumbo-vacio">${K.dibujo.una(K.cieloActual().constelaciones.find(c => c.id === "front-lever"), [])}
+  if (!rumbo.length) return enc + `<section class="cd rumbo-vacio">${K.cieloTrio(64)}
     <span class="lb">Tu rumbo</span><b class="t1">Elegí tu rumbo.</b><p class="mute">De 1 a 3 constelaciones. Kozmos arma cada día lo que toca para llegar.</p></section>${sin}
     <button type="button" class="btn" data-ir="#/hoy/rumbo">Elegir</button>`;
   const cielo = K.cieloActual(), ses = K.diario.sesiones, base = K.plan.armar(cielo, rumbo, ses, K.hoy()), plan = K.hoyPlan();
@@ -151,10 +151,11 @@ K.P.hoyInicio = () => {
   if (!prin || base.bloques.every(b => b.extra) && delRumbo.every(c => c.completa)) return enc + hecho + `<section class="cd"><span class="lb">Tu rumbo, completo</span><b class="t1">Llegaste.</b><p class="mute">¿Cuál sigue?</p></section>
     <button type="button" class="btn" data-ir="#/hoy/rumbo">Elegir la que sigue</button>`;
   const c = cielo.constelaciones.find(x => x.id === prin.constelacion), p = c.proxima;
-  const proxima = `<section class="cd hoy-prox"><div class="hoy-cielo">${K.dibujo.una(c, [])}</div><div class="hoy-prox-tx">
-      <span class="lb">Próxima estrella · ${K.esc(c.nombre)}</span><b class="t1">${K.esc(p.nombre)}</b>
+  /* la próxima estrella: su constelación en su anillo, como la próxima prueba en Planes */
+  const proxima = `<section class="cd hoy-prox" style="--c:var(--${c.familia})"><div class="pl-prox-cab"><span class="pl-prox-fig">${K.icono.constelacion(c, 64)}</span><div class="pl-prox-tx">
+      <span class="lb">Próxima estrella · ${K.esc(c.nombre)}</span><b class="t1">${K.esc(p.nombre)}</b></div></div>
       <div class="bar" style="--c:var(--${c.familia})" role="progressbar" aria-label="Avance hacia ${K.esc(p.nombre)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(c.avance * 100)}"><i style="width:${(c.avance * 100).toFixed(1)}%"></i></div>
-      <span class="ln mute"><span>Tu mejor marca</span>${p.mejor === null ? "<span>Todavía ninguna</span>" : `<span class="num">${K.esc(K.cielo.corto(p.prueba, p.mejor))}</span>`}</span></div></section>`;
+      <span class="ln mute"><span>Tu mejor marca</span>${p.mejor === null ? "<span>Todavía ninguna</span>" : `<span class="num">${K.esc(K.cielo.corto(p.prueba, p.mejor))}</span>`}</span></section>`;
   const filas = filasToca(plan.bloques);
   /* la ventana abierta se dice con la estrella que toca probar */
   const ventana = plan.ventana.length ? `<p class="hoy-ventana small"><b>Ventana abierta:</b> probá ${plan.ventana.map(id => K.esc(cielo.constelaciones.find(c => c.id === id).proxima.nombre)).join(" y ")}.</p>` : "";
@@ -201,11 +202,11 @@ K.hoyMenu = btn => {
 
 /* ===== De dónde sale lo de hoy: tu rutina o tu rumbo, siempre a la vista y a un toque de cambiarlo ===== */
 K.hoyOrigen = () => {
-  const ru = K.rutinaActual(), fila = (ir, ic, lb, tx, em = "") => `<section class="aj hoy-origen"><button type="button" class="ajr" data-ir="${ir}"><span class="tile">${K.ic(ic)}</span>
+  const ru = K.rutinaActual(), fila = (ir, ico, lb, tx, em = "") => `<section class="aj hoy-origen"><button type="button" class="ajr" data-ir="${ir}"><span class="tile ico-tile">${ico}</span>
     <span class="ses-fila"><small class="lb">${lb}</small>${tx}</span><em class="num">${em}</em>${K.ic("chev", "chev")}</button></section>`;
-  if (ru && !ru.cur.terminada) return fila(`#/planes/rutinas/${ru.r.id}`, "ruta", "Sale de tu rutina", K.esc(ru.r.nombre), `sem ${ru.cur.semana} de ${ru.r.semanas}`);
-  const cs = K.rumbo().map(K.cons).filter(Boolean);
-  return cs.length ? fila("#/hoy/rumbo", "rumbo", "Sale de tu rumbo", cs.map(c => K.esc(c.nombre)).join(" · ")) : "";
+  if (ru && !ru.cur.terminada) return fila(`#/planes/rutinas/${ru.r.id}`, K.icono.rutina(ru.r, 40), "Sale de tu rutina", K.esc(ru.r.nombre), `sem ${ru.cur.semana} de ${ru.r.semanas}`);
+  const cs = K.rumbo().map(K.cons).filter(Boolean), cielo = cs.length && K.cieloActual(), c0 = cs.length && cielo.constelaciones.find(c => c.id === cs[0].id);
+  return cs.length ? fila("#/hoy/rumbo", c0 ? K.icono.constelacion(c0, 40) : K.ic("rumbo"), "Sale de tu rumbo", cs.map(c => K.esc(c.nombre)).join(" · ")) : "";
 };
 
 /* ===== El primer día: Hoy guía en tres pasos (elegí cómo, elegí qué, empezá). Se va solo con la primera sesión o la primera marca. ===== */
@@ -217,11 +218,11 @@ const pasoEmpeza = () => K.primerDia() && !K.sesion.activa() ? K.pasos(3) : "";
 const dibSemanas = (hechas, col) => `<svg class="dib-sem" viewBox="0 0 86 34" aria-hidden="true">${Array.from({length: 21}, (_, i) =>
   `<circle cx="${5 + i % 7 * 12.6}" cy="${5 + Math.floor(i / 7) * 12}" r="4" fill="${i < hechas ? `var(--${col})` : "var(--s2)"}"/>`).join("")}</svg>`;
 K.hoyComo = () => {
-  const fl = K.cieloActual().constelaciones.find(c => c.id === "front-lever"), hz = K.HAZANAS.hazanas[0];
+  const hz = K.HAZANAS.hazanas[0];
   const op = (ir, dib, t, tx) => `<button type="button" class="cd como-op" data-ir="${ir}"><span class="como-dib">${dib}</span><b class="t1">${t}</b><small>${tx}</small>${K.ic("chev", "como-ir")}</button>`;
-  return `${K.pasos(1)}<div class="como">${op("#/hoy/rumbo", fl ? K.dibujo.una(fl, []) : "", "Que Kozmos arme tu día", "Elegí de 1 a 3 constelaciones. Cada día te da lo que toca.")}
+  return `${K.pasos(1)}<div class="como">${op("#/hoy/rumbo", K.cieloTrio(64), "Que Kozmos arme tu día", "Elegí de 1 a 3 constelaciones. Cada día te da lo que toca.")}
     ${op("#/planes", dibSemanas(5, "fu"), "Seguí una rutina", "Un plan fijo de semanas. Hoy te da cada sesión.")}</div>
-    ${hz ? `<section class="aj"><button type="button" class="ajr" data-ir="#/planes/hazanas/${hz.id}"><span class="tile fig">${K.dibujo.figura(hz, 26)}</span><span class="ses-fila">¿Solo por hoy?<small class="mute">Probá una hazaña: un desafío, un día</small></span><em></em>${K.ic("chev", "chev")}</button></section>` : ""}
+    ${hz ? `<section class="aj"><button type="button" class="ajr" data-ir="#/planes/hazanas/${hz.id}"><span class="tile ico-tile">${K.hzIcono(hz, 40)}</span><span class="ses-fila">¿Solo por hoy?<small class="mute">Probá una hazaña: un desafío, un día</small></span><em></em>${K.ic("chev", "chev")}</button></section>` : ""}
     <p class="como-cielo small mute">${K.ic("cielo")}<span>Lo que hagas enciende estrellas en tu cielo.</span></p>`;
 };
 
@@ -230,7 +231,7 @@ K.P.rumbo = () => {
   const r = K.rumbo(), cielo = K.cieloActual();
   const lista = K.CATALOGO.familias.map(f => `<section class="fam"><span class="lb tg"><i class="dot" style="--c:var(--${f.id})"></i>${K.esc(f.nombre)}</span>
     <div class="aj">${cielo.constelaciones.filter(c => c.familia === f.id).map(c => `<button type="button" class="ajr rumbo-fila" data-rumbo="${c.id}" aria-pressed="${r.includes(c.id)}">
-      <span class="tile anillo">${K.dibujo.anillo(c)}</span><span>${K.esc(c.nombre)}</span><em class="num">${c.encendidas} de ${c.total}</em>${r.includes(c.id) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</div></section>`).join("");
+      <span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span><span>${K.esc(c.nombre)}</span><em class="num">${c.encendidas} de ${c.total}</em>${r.includes(c.id) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</div></section>`).join("");
   return K.enc({titulo: "Tu rumbo", sub: "Hoy", volver: "#/hoy", det: true}) +
     (K.primerDia() ? K.pasos(2) : "") + `<p class="ayuda">Elegí de 1 a 3 constelaciones. Lo podés cambiar cuando quieras.</p>${lista}
     <button type="button" class="btn rumbo-listo" data-volver="#/hoy">Listo</button>`;
@@ -605,12 +606,13 @@ K.P.resumen = (id, desde = "hoy") => {
   }
   /* arriba va lo que la sesión dibujó: la figura de la hazaña, la vuelta entera de una rutina terminada o la constelación */
   const hzOk = hz && x.hazana.completa !== false && !x.cortada && x.hazana.valor > 0, rutFin = ruR && !x.cortada && !ruR.sesiones[x.rutina.sesion + 1];
-  const arte = prs.length ? (porCons.length > 1 ? `<section class="cd res-varias">${porCons.slice(0, 4).map(k => `<div class="res-una"><div class="res-una-dib">${K.dibujo.una(k.c, k.es.map(e => e.id))}</div><span class="lb" style="color:var(--${k.c.familia})">${K.esc(k.c.nombre)}</span></div>`).join("")}</section>`
-      : porCons.length ? `<section class="cd cons-cielo">${K.dibujo.una(porCons[0].c, porCons[0].es.map(e => e.id))}</section>`
-      : `<section class="cd res-fig">${K.dibujo.figura(prs[0].h, 190, prs[0].m !== null)}</section>`)
-    : hz ? `<section class="cd res-fig${hzOk ? " logro" : ""}">${K.dibujo.figura(hz.h, 190, hzOk)}</section>`
+  /* la constelación en su anillo; con estrellas nuevas, el arco crece desde lo que tenía antes de esta sesión */
+  const anillo = (k, n, px) => K.icono.constelacion(k, px, `${k.nombre}, ${k.encendidas} de ${k.total} estrellas`, n ? {desde: k.encendidas - n} : {});
+  const arte = prs.length ? `<section class="cd res-fig${prs[0].m !== null ? " logro" : ""}">${K.icono.medalla(prs[0].h, prs[0].m !== null, 150, prs[0].h.nombre)}</section>`
+      + (porCons.length ? `<section class="cd res-varias">${porCons.slice(0, 4).map(k => `<div class="res-una">${anillo(k.c, k.es.length, 64)}<span class="lb" style="color:var(--${k.c.familia})">${K.esc(k.c.nombre)}</span></div>`).join("")}</section>` : "")
+    : hz ? `<section class="cd res-fig${hzOk ? " logro" : ""}">${K.icono.medalla(hz.h, hzOk, 150, hz.h.nombre)}</section>`
     : rutFin && !prim ? `<section class="cd res-orbita">${K.mov.orbita(170)}<p class="lb">Rutina completa</p></section>`
-    : c ? `<section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>` : "";
+    : c ? `<section class="cd res-fig res-cons">${anillo(c, recien.length, 150)}</section>` : "";
   const kcal = K.calorias.deSesion(x, K.diario.perfil.peso);
   /* lo que pasó en cada escalera: ▲ subiste, = seguís (y lo que toca la próxima), ▼ bajás */
   const cs = x.rutina || prs.length ? K.rutina.cambios(x, ses, {...ctxRutina(), rutina: ruR}) : [];

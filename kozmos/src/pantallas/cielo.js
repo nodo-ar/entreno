@@ -20,15 +20,22 @@ K.P.cielo = r => {
   const sub = cielo.encendidas ? `${cielo.encendidas} de ${cielo.total} estrellas` : "Todavía sin estrellas";
   const lista = K.CATALOGO.familias.map(f => `<section class="fam"><span class="lb tg"><i class="dot" style="--c:var(--${f.id})"></i>${K.esc(f.nombre)}</span>
     <div class="aj">${cielo.constelaciones.filter(c => c.familia === f.id).map(c => `<button type="button" class="ajr cons-fila" data-ir="#/cielo/${c.id}" data-quieto="1"${c.id === sel ? " data-sel" : ""}>
-      <span class="tile anillo">${K.dibujo.anillo(c)}</span><span>${K.esc(c.nombre)}</span><em class="num">${c.encendidas} de ${c.total}</em>${K.ic("chev", "chev")}</button>`).join("")}</div></section>`).join("");
+      <span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span><span>${K.esc(c.nombre)}</span><em class="num">${c.encendidas} de ${c.total}</em>${K.ic("chev", "chev")}</button>`).join("")}</div></section>`).join("");
+  /* el cielo entero: cada constelación, su figura adentro del anillo de avance. Lo que pide equipo que no marcaste no aparece */
+  const grilla = `<section class="cielo-grilla solo-vertical" aria-label="Tu cielo">${cielo.constelaciones.filter(c => c.total > 0).map(c =>
+    `<button type="button" class="cd cons-tile" data-ir="#/cielo/${c.id}" data-quieto="1" aria-label="${K.esc(`${c.nombre}, ${c.encendidas} de ${c.total} estrellas`)}">${K.icono.constelacion(c, 76)}
+      <b>${K.esc(c.nombre)}</b><span class="num">${c.encendidas} de ${c.total}</span></button>`).join("")}</section>`;
+  /* los anillos se cierran y el satélite llega orbitando la primera vez que abrís el Cielo; después quedan quietos */
+  const llega = !K.cieloVisto; K.cieloVisto = true;
   const lado = K.enc({titulo: "Cielo", sub}) +
-    (cielo.encendidas ? "" : `<p class="ayuda">Cada constelación es una habilidad. Tocá una y anotá tu primera marca.</p>`) +
-    `<section class="cd cielo-grande solo-vertical">${K.dibujo.grande(cielo)}
-      <p class="leyenda" aria-hidden="true"><span><i class="ly nx"></i>Próxima</span><span><i class="ly on"></i>Encendida</span><span><i class="ly off"></i>Por delante</span></p></section>` + lista;
+    (cielo.encendidas ? "" : `<p class="ayuda">Cada constelación es una habilidad. Tocá una y anotá tu primera marca.</p>`) + grilla + lista;
   const c = sel && cielo.constelaciones.find(x => x.id === sel);
   const abierto = !c ? "" : r.sub2 === "anotar" ? K.P.anotar(c, r.sub3) : K.P.constelacion(c);
-  return `<div class="split${r.sub ? " en-detalle" : ""}"><div class="lado">${lado}</div><div class="abierto">${abierto}</div></div>`;
+  return `<div class="split${r.sub ? " en-detalle" : ""}${llega ? " ico-llega" : ""}"><div class="lado">${lado}</div><div class="abierto">${abierto}</div></div>`;
 };
+/* tres constelaciones, una por familia (la primera de cada una): la puerta de entrada al rumbo */
+K.cieloTrio = (px = 64) => { const cs = K.cieloActual().constelaciones;
+  return `<span class="ico-trio" aria-hidden="true">${K.CATALOGO.familias.map(f => cs.find(c => c.familia === f.id && c.total > 0)).filter(Boolean).slice(0, 3).map(c => K.icono.constelacion(c, px)).join("")}</span>`; };
 
 K.P.constelacion = c => {
   const fam = K.familia(c.familia), p = c.proxima, recien = K._recien || [];
@@ -62,9 +69,12 @@ K.P.constelacion = c => {
       : `<button type="button" class="ib chico" data-borrar="${K.esc(m.id)}" aria-label="Borrar la marca de ${K.esc(e.nombre)}">${K.ic("x")}</button>`;
     return `<div class="marca"><span class="num mute">${K.esc(K.fechaCorta(m.fecha))}</span><span>${K.esc(e.nombre)}</span><span class="num">${K.esc(K.cielo.corto({tipo: m.tipo || e.prueba.tipo}, m.valor))}</span>${fin}</div>`;
   }).join("");
+  /* arriba, la figura en su anillo (como la medalla de una prueba) y, de fondo y tenue, las estrellas de la constelación */
+  const nuevas = recien.filter(id => c.estrellas.some(e => e.id === id)).length;
   return K.enc({titulo: c.nombre, sub: fam.nombre, volver: "#/cielo", raiz: true, det: true}) +
     `<p class="cons-meta mute">${K.esc(c.meta)}</p>
-    <section class="cd cons-cielo">${K.dibujo.una(c, recien)}</section>${tenue}${estado}
+    <section class="cd cons-cab"><div class="cons-fondo" aria-hidden="true">${K.dibujo.una(c, recien)}</div>
+      <span class="cons-ico">${K.icono.constelacion(c, 96, `${c.nombre}, ${c.encendidas} de ${c.total} estrellas`, nuevas ? {desde: c.encendidas - nuevas} : {})}</span></section>${tenue}${estado}
     ${botones}
     <section class="cd est-lista" aria-label="Estrellas de ${K.esc(c.nombre)}">${filas}</section>
     ${marcas ? `<span class="lb pie">Tus marcas</span><section class="cd marcas">${marcas}</section>` : ""}${rutinasDe(c)}`;
@@ -72,7 +82,7 @@ K.P.constelacion = c => {
 /* las rutinas que llevan a alguna estrella de esta constelación */
 const rutinasDe = c => {
   const ids = new Set(c.estrellas.map(e => e.id)), rs = K.RUTINAS.filter(r => r.alimenta.some(id => ids.has(id)));
-  return rs.length ? `<span class="lb pie">Rutinas que llevan acá</span><section class="aj">${rs.map(r => `<button type="button" class="ajr" data-ir="#/planes/rutinas/${r.id}"><span class="tile">${K.ic("ruta")}</span>
+  return rs.length ? `<span class="lb pie">Rutinas que llevan acá</span><section class="aj">${rs.map(r => `<button type="button" class="ajr" data-ir="#/planes/rutinas/${r.id}"><span class="tile ico-tile">${K.icono.rutina(r, 40)}</span>
     <span>${K.esc(r.nombre)}</span><em class="num">${r.semanas} sem</em>${K.ic("chev", "chev")}</button>`).join("")}</section>` : "";
 };
 

@@ -1,9 +1,11 @@
-/* ===== Íconos de pruebas y rutinas: la persona haciendo lo suyo, como en los íconos de entrenamiento que la gente ya conoce =====
+/* ===== Íconos de pruebas, rutinas y constelaciones: la persona haciendo lo suyo, como en los íconos de entrenamiento que la gente ya conoce =====
+   Son los mismos en todas las pantallas (Planes, Cielo, Hoy, Progreso y el resumen): lo mismo se dibuja igual en todas partes.
    El pictograma sale del maniquí (K.fig): trazos gruesos y redondos, la cabeza aparte y un hueco fino donde un miembro pasa por
    delante de otro. Lo de Kozmos va en los detalles: el color de la familia y el puntito del logo (el satélite).
    · Prueba: una medalla. En color cuando ya tenés una magnitud, en gris cuando todavía no; la ganada lleva el satélite.
    · Rutina: el pictograma solo, sobre un círculo del color suave de su familia. Las que comparten figura (las de bici, las de
      dominadas) se distinguen por el nombre y el dato de la derecha, no por el ícono.
+   · Constelación: la figura de su última estrella adentro de un anillo de avance (más abajo).
    Todo se dibuja en una caja de 100 × 100 y se guarda: cada ícono se calcula una vez por sesión de la app. ===== */
 K.icono = (() => {
   const f1 = n => (Math.round(n * 10) / 10).toString();
@@ -30,7 +32,14 @@ K.icono = (() => {
     "flexion": {piso: true},
     "l-sit": {piso: true},
     "del-piso": {piso: true},
-    "pike-alcance": {pose: "isquios-sentado", piso: true}
+    "pike-alcance": {pose: "isquios-sentado", piso: true},
+    /* las metas del Cielo: el momento que dice qué es, y de frente lo que de perfil se confunde */
+    "muscle-up": {u: .75},
+    "dominada-un-brazo": {vista: 90, u: .15},
+    "dragon-flag": {u: 0},
+    "pancake": {vista: 0, piso: true},
+    "nordico": {piso: true},
+    "espagat-frontal": {piso: true}
   };
   const encuadre = id => { const o = ENCUADRE[id] || {}, pose = hay(o.pose) ? o.pose : id; return {...(pose !== id ? ENCUADRE[pose] : {}), ...o, pose}; };
 
@@ -71,20 +80,21 @@ K.icono = (() => {
   });
 
   /* ===== El esqueleto de una pose, en las coordenadas del maniquí ===== */
-  function esqueleto(id, vista = 0, u){
+  function esqueleto(id, vista, u){
     return guardado("e" + id + ":" + vista + ":" + u, () => {
       const f = K.POSES[id]; if (!f) return null;
-      const P0 = K.fig.muestra(id, u), J = K.fig.esqueleto(vista ? {...f, vista} : f, P0), p = {};
+      const P0 = K.fig.muestra(id, u), J = K.fig.esqueleto(vista !== undefined ? {...f, vista} : f, P0), p = {};
       for (const k of ["hd", "sh", "hip", "sN", "sF", "eN", "eF", "hN", "hF", "pN", "pF", "kN", "kF", "fN", "fF", "tN", "tF"]) p[k] = J[k] || (k[0] === "s" ? J.sh : J.hip);
       const barra = ["barra", "barra-baja"].includes(f.con), ruedas = f.con === "bici" ? [[f.en[0] - 34, K.fig.PISO - 30], [f.en[0] + 70, K.fig.PISO - 30]] : null;
-      return {f, p, barra, ruedas, soga: f.con === "soga", pesa: f.con === "pesa", mancuernas: /^mancuerna/.test(f.con || ""), pared: f.pared, paralelas: f.con === "paralelas"};
+      return {f, p, barra, ruedas, soga: f.con === "soga", pesa: f.con === "pesa", mancuernas: /^mancuerna/.test(f.con || ""), pared: f.pared, paralelas: f.con === "paralelas", poste: f.poste, banco: f.banco};
     });
   }
 
   /* ===== El pictograma: la figura llena, encajada en un círculo de diámetro d con centro (cx, cy) =====
      color: la tinta de la figura · fondo: lo que hay detrás (el hueco entre miembros se pinta de ese color) */
-  function picto(id0, {d = 74, cx = 50, cy = 50, color = "currentColor", fondo = "var(--s1)"} = {}){
-    const o = encuadre(id0), e = esqueleto(o.pose, o.vista || 0, o.u); if (!e) return "";
+  const picto = (id0, {d = 74, cx = 50, cy = 50, color = "currentColor", fondo = "var(--s1)"} = {}) => guardado(["p", id0, JSON.stringify(encuadre(id0)), d, cx, cy, color, fondo].join("|"), () => pictoNuevo(id0, d, cx, cy, color, fondo));
+  function pictoNuevo(id0, d, cx, cy, color, fondo){
+    const o = encuadre(id0), e = esqueleto(o.pose, o.vista, o.u); if (!e) return "";
     const p = {...e.p}, W = 13, TW = W * 1.4, HR = W * .98, GAP = W * .26;
     /* de frente, brazos que caen uno sobre otro se abren un poco */
     if (o.abrir){ const x = p.sh[0]; for (const [a, b, f] of [["eN", "eF", .8], ["hN", "hF", 1]]){ p[a] = [x - o.abrir * f, p[a][1]]; p[b] = [x + o.abrir * f, p[b][1]]; }
@@ -105,6 +115,9 @@ K.icono = (() => {
     if (e.mancuernas) for (const s of ["F", "N"]){ const d = ante(s), n = [-d[1], d[0]], q = add(p["h" + s], mul(d, 3)); eq.push({t: "l", pts: [add(q, mul(n, -14)), add(q, mul(n, 14))], w: 2.6}); }
     /* la pared en la que se apoya */
     if (e.pared !== undefined){ const y0 = Math.min(...cuerpoY) - 14; eq.push({t: "l", pts: [[e.pared, y0], [e.pared, K.fig.PISO]]}); extra.push([e.pared, y0], [e.pared, K.fig.PISO]); }
+    /* el poste de la bandera, de arriba hasta el piso; el banco del dragon flag, con su pata */
+    if (e.poste !== undefined){ const y0 = Math.min(...cuerpoY) - 16; eq.push({t: "l", pts: [[e.poste, y0], [e.poste, K.fig.PISO]], w: 1.2}); extra.push([e.poste, y0], [e.poste, K.fig.PISO]); }
+    if (e.banco){ const [x, y] = e.banco; eq.push({t: "l", pts: [[x - 30, y], [x + 30, y]], w: 1.3}, {t: "l", pts: [[x, y], [x, K.fig.PISO]]}); extra.push([x - 30, y], [x + 30, K.fig.PISO]); }
     if (e.ruedas){ const [R, F] = e.ruedas, r = 27; eq.push({t: "c", c: R, r}, {t: "c", c: F, r});
       const pedal = [(p.fN[0] + p.fF[0]) / 2 + 6, (p.fN[1] + p.fF[1]) / 2 + 2], asiento = [p.hip[0] + 2, p.hip[1] + 12], manubrio = [F[0] - 10, p.hN[1] + 14];
       eq.push({t: "l", pts: [R, pedal, asiento, R]}, {t: "l", pts: [asiento, manubrio, F]}, {t: "l", pts: [pedal, manubrio]}, {t: "l", pts: [manubrio, [p.hN[0] - 2, p.hN[1]]]});
@@ -147,5 +160,23 @@ K.icono = (() => {
   const rutina = (r, px, lb = "") => { const id = poseRutina(r); if (!id) return "";
     return svg(px, "ico-rutina", lb, `<circle cx="50" cy="50" r="50" fill="var(--${r.familia}-soft)"/>` + picto(id, {d: 76, color: `var(--${r.familia})`, fondo: `var(--${r.familia}-soft)`})); };
 
-  return {poseHazana, poseRutina, encuadre, esqueleto, picto, medalla, rutina, ENCUADRE};
+  /* ===== Constelación: la figura de su última estrella (la meta) adentro de un anillo de avance, como los de Actividad =====
+     La pista va en el color suave de la familia y el arco, en el de la familia; en la punta del arco va el satélite del logo.
+     Completa: el anillo cerrado con el satélite arriba a la derecha, como el logo de Kozmos. Sin estrellas: la pista sola.
+     desde: lo que ya tenía encendido antes (el arco crece de ahí hasta ahora; se usa en el resumen y al anotar) */
+  const poseConstelacion = c => { const es = (c && c.estrellas) || []; for (let i = es.length - 1; i >= 0; i--){ const e = es[i].prueba && es[i].prueba.ejercicio; if (hay(e)) return e; } return null; };
+  const AR = 44;
+  const constelacion = (c, px, lb = "", {desde} = {}) => { const id = poseConstelacion(c); if (!id) return "";
+    const fam = c.familia, n = c.total || 0, p = n ? Math.min(1, c.encendidas / n) : 0, sw = px && px <= 48 ? 8 : px && px >= 120 ? 5 : 6.5;
+    const p0 = desde === undefined ? null : Math.max(0, Math.min(p, n ? desde / n : 0)), crece = p0 !== null && p > p0;
+    const ang = p >= 1 ? Math.PI / 4 : p * 2 * Math.PI, sx = 50 + AR * Math.sin(ang), sy = 50 - AR * Math.cos(ang);
+    /* el arco: un círculo de largo 100 que arranca arriba; --p es cuánto recorre al llegar (todo, o lo nuevo) y --a, cuánto gira el satélite */
+    const viaje = crece ? p - p0 : p, var_ = `--p:${f1(viaje * 100)};--a:${f1(viaje * 360)}deg`;
+    const arco = p ? `<circle class="ico-arco" cx="50" cy="50" r="${AR}" fill="none" stroke="var(--${fam})" stroke-width="${sw}" stroke-linecap="round" pathLength="100" stroke-dasharray="${p >= 1 ? "100 0" : `${f1(p * 100)} 100`}" transform="rotate(-90 50 50)"/>` : "";
+    const g = `<circle cx="50" cy="50" r="${AR}" fill="none" stroke="var(--${fam}-soft)" stroke-width="${sw}"/>${arco}`
+      + picto(id, {d: 70, color: "var(--ink)", fondo: "var(--ico-fondo, var(--s1))"}) + (p ? satelite(sx, sy, fam, 50, 50, Math.max(sw * .78, 5)) : "");
+    return svg(px, `ico-cons${p >= 1 ? " completa" : ""}${crece ? " crece" : ""}`, lb, g).replace("<svg ", `<svg style="${var_}" `);
+  };
+
+  return {poseHazana, poseRutina, poseConstelacion, encuadre, esqueleto, picto, medalla, rutina, constelacion, ENCUADRE};
 })();
