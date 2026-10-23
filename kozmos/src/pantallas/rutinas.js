@@ -110,11 +110,9 @@ K.P.planes = r => {
     return `<button type="button" class="ajr" data-ir="#/planes/rutinas/${x.id}" data-quieto="1"${abreR === x.id ? " data-sel" : ""}><span class="tile ico-tile">${K.icono.rutina(x, 40)}</span>
       <span class="ses-fila">${K.esc(x.nombre)}${falta.length ? `<small class="mute">${K.esc(pideTx(falta))}</small>` : ""}</span><em class="num">${x.semanas} sem · ${x.dias} días</em>${K.ic("chev", "chev")}</button>`; };
   const otras = K.RUTINAS.filter(x => !(sigo && x.id === ru.r.id) && (fr === "todas" || x.familia === fr)).map(fila).join("");
-  /* el primer día, Planes es el paso 2 si venís a elegir una rutina */
-  const paso = K.primerDia() && !ru && !K.rumbo().length ? K.pasos(K.GUIA, 2) : "";
   /* el satélite de las medallas ganadas llega orbitando la primera vez que abrís Planes; después queda quieto */
   const llega = !K.planesVisto; K.planesVisto = true;
-  return `<div class="split${r.sub2 ? " en-detalle" : ""}${llega ? " ico-llega" : ""}"><div class="lado">${K.enc({titulo: "Planes", sub: "Pruebas y rutinas"})}${paso}${tarjeta}
+  return `<div class="split${r.sub2 ? " en-detalle" : ""}${llega ? " ico-llega" : ""}"><div class="lado">${K.enc({titulo: "Planes", sub: "Pruebas y rutinas"})}${tarjeta}
     <div class="pl-tit pl-fila" id="pl-hazanas"><h2>Pruebas</h2>${famBoton("pl-fam-pruebas", "planes.pruebas")}</div>${pruebas ? `<section class="aj">${pruebas}</section>` : `<p class="mute small pl-nada">Nada más en esta familia.</p>`}
     ${tuya}<div class="pl-tit pl-fila" id="pl-rutinas"><h2>${sigo ? "Otras rutinas" : "Rutinas"}</h2>${famBoton("pl-fam-rutinas", "planes.rutinas")}</div>
     ${otras ? `<section class="aj">${otras}</section>` : `<p class="mute small pl-nada">Nada más en esta familia.</p>`}</div>

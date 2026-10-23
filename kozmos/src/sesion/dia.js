@@ -50,13 +50,8 @@ K.dia = (() => {
     return ds ? Math.max(1, Math.round(ds / 4)) : 3;
   }
 
-  /* la próxima estrella contando las que tu nivel da por hechas (PR3): la primera sin encender ni dar, con lo que pide hecho */
-  function conDadas(c, dadas){
-    if (!dadas || !dadas.length || !c.proxima || !dadas.includes(c.proxima.id)) return c;
-    const listo = new Set([...c.estrellas.filter(e => e.encendida).map(e => e.id), ...dadas]);
-    const p = c.estrellas.find(e => !listo.has(e.id) && !e.sinEquipo && e.requiere.every(r => listo.has(r)));
-    return p ? {...c, proxima: p, avance: K.cielo.avance(p.prueba, p.mejor)} : {...c, proxima: null};
-  }
+  /* la próxima estrella contando las que tu nivel da por hechas: la regla vive en K.nivel.efectiva (una sola para Hoy y tu cosmos) */
+  const conDadas = (c, dadas) => K.nivel.efectiva(c, dadas);
 
   const puede = (id, ej, equipo) => !equipo || (ej[id]?.equipo || []).every(e => equipo.includes(e));
   const sePuedeEscalera = (id, ej, equipo) => { const esc = K.rutina.escalera(id); return !!esc && esc.pasos.some(p => K.rutina.idsPaso(p).some(e => puede(e, ej, equipo))); };

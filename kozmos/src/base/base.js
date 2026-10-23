@@ -43,6 +43,10 @@ K.I = {
   /* tu rumbo: la estrella polar, la que marca hacia dónde vas */
   rumbo:'<path d="M12 2.5l2.3 7.2 7.2 2.3-7.2 2.3L12 21.5l-2.3-7.2L2.5 12l7.2-2.3z"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>',
   dias:'<path d="M3.5 16a9 9 0 0 1 17 0" stroke-opacity=".35"/><circle cx="3.5" cy="16.0" r="1.9" fill="currentColor" stroke="none"/><circle cx="4.6" cy="12.2" r="1" fill="currentColor" stroke="none"/><circle cx="7.7" cy="9.4" r="1.9" fill="currentColor" stroke="none"/><circle cx="12.0" cy="8.3" r="1" fill="currentColor" stroke="none"/><circle cx="16.2" cy="9.4" r="1.9" fill="currentColor" stroke="none"/><circle cx="19.4" cy="12.2" r="1" fill="currentColor" stroke="none"/><circle cx="20.5" cy="16.0" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="16" r="1.6" fill="currentColor" stroke="none"/>',
+  /* tu nivel: el escalón donde arrancás */
+  nivel:'<path d="M3.5 20h5v-5h5v-5h5V4.5"/><circle cx="18.5" cy="4.5" r="1.6" fill="currentColor" stroke="none"/>',
+  flexion:'<circle cx="18.6" cy="8.4" r="1.9"/><path d="M3 16.5 16.4 10.6M15 11.4l.6 7.6M2.5 19.5h19"/>',
+  unapierna:'<circle cx="12" cy="4.4" r="1.9"/><path d="M12 7.4v7M12 14.4 11 21M12 14.4l6 .2M7.6 10.4h8.8"/>',
   persona:'<circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/>',
   pelo:'<circle cx="12" cy="13.5" r="5.5"/><path d="M5.5 13C5.5 7.5 8.4 4.5 12 4.5s6.5 3 6.5 8.5M7 9.6c3.4.2 7-1 9.4-3.6"/>',
   azar:'<path d="M4 7h3c5 0 5 10 10 10h3M4 17h3c1.6 0 2.7-.9 3.6-2.2M13.4 9.2C14.3 7.9 15.4 7 17 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/>',

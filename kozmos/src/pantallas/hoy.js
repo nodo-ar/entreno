@@ -32,7 +32,7 @@ const UNI = {segundos: "segundos", repeticiones: "repeticiones", minutos: "minut
    los kilos de las mancuernas, de a uno */
 K.pasoDe = (tipo, campo = "valor") => campo === "kg" ? {inc: 1, min: 0, max: 200} : campo !== "valor" ? {inc: .5, min: 0, max: 1e5} : ({puntos: {inc: .5, min: 0, max: 10}, cm: {inc: 1, min: -50, max: 100}, km: {inc: .1, min: 0, max: 1e3}})[tipo] || {inc: 1, min: 0, max: 1e5};
 
-K.P.hoy = r => r.sub === "rumbo" ? K.P.rumbo() : r.sub === "equipo" ? K.P.equipo("hoy") : r.sub === "sesion" ? K.P.sesion() : r.sub === "resumen" ? K.P.resumen(r.sub2) : K.P.hoyInicio();
+K.P.hoy = r => r.sub === "rumbo" ? K.P.rumbo() : r.sub === "equipo" ? K.P.equipo("hoy") : r.sub === "nivel" ? K.P.nivel("hoy") : r.sub === "sesion" ? K.P.sesion() : r.sub === "resumen" ? K.P.resumen(r.sub2) : K.P.hoyInicio();
 
 /* la rutina que seguís, si sigue en el catálogo, y por dónde vas */
 K.rutinaDe = id => K.RUTINAS.find(r => r.id === id);
@@ -70,7 +70,9 @@ K.hoyPlan = () => {
   const cielo = K.cieloActual(), ses = K.diario.sesiones, hoy = K.hoy(), ctx = ctxRutina(), ru = K.rutinaActual();
   const sp = K.plan.semanaDePrueba(K.diario.perfil, ses, hoy), pc = {cielo, sesiones: ses, equipo: ctx.equipo, ej: K.EJ, hoy};
   if (!ru || ru.cur.terminada){
-    const dia = K.dia.armar(cielo, K.rumbo(), ses, hoy, {ej: K.EJ, equipo: ctx.equipo, marcas: ctx.marcas, descarga: !!(sp && sp.toca)});
+    /* tu nivel: el escalón de arranque de cada escalera y lo que da por hecho (el cosmos ya lo trae; K.dia.armar lo vuelve a mirar) */
+    const dadas = K.nivel.activas(cielo, K.dadasDeTuNivel(), {fecha: K.diario.perfil.nivel?.fecha});
+    const dia = K.dia.armar(cielo, K.rumbo(), ses, hoy, {ej: K.EJ, equipo: ctx.equipo, marcas: ctx.marcas, nivelDesde: K.desdeTuNivel(), dadas, descarga: !!(sp && sp.toca)});
     return sp && sp.toca && dia.bloques.length ? K.dia.deSemanaDePrueba(dia, sp, {...pc, cons: K.rumbo(), ejs: []}) : dia;
   }
   if (sp && sp.toca){
@@ -193,7 +195,7 @@ K.P.hoyInicio = () => {
   const pide = plan.pide && plan.pide.length ? `<button type="button" class="ln hoy-pide small" data-ir="#/vos/equipo"><span>${plan.pide.map(x => `${K.esc(x.nombre)} pide ${K.esc(K.pide(x.pide))}`).join(" · ")}</span><span class="hoy-pide-ir">Tu equipo${K.ic("chev", "chev")}</span></button>` : "";
   const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${plan.bloques.length} ${plan.bloques.length === 1 ? "bloque" : "bloques"}</span></div>${pruebaLn(plan)}${ventana}${filas}
     ${plan.volviste ? `<p class="mute small">Tu cosmos te esperó. Hoy arrancás más suave.</p>` : ""}${pie}${pide}</section>`;
-  return enc + `<div class="hoy"><div class="hoy-a">${hecho}${pasoEmpeza()}${K.hoyOrigen()}${proxima}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
+  return enc + `<div class="hoy"><div class="hoy-a">${hecho}${K.hoyOrigen()}${proxima}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
 };
 const ctaHoy = () => K.sesion.activa() ? `<button type="button" class="btn" data-ir="#/hoy/sesion">Volver a la sesión</button>`
   : `<button type="button" class="btn" id="s-empezar">${K.ic("play")}Empezar</button>`;
@@ -222,7 +224,7 @@ K.hoyRutina = ({r, cur}, sin) => {
   const ventana = plan.ventana.length ? `<p class="hoy-ventana small"><b>Ventana abierta:</b> probá ${plan.ventana.map(id => K.esc(cielo.constelaciones.find(c => c.id === id).proxima.nombre)).join(" y ")}.</p>` : "";
   const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca · ${plan.minutos} min</span><span class="num lb">${K.esc(s.nombre)}</span></div>${pruebaLn(plan)}${ventana}${filasToca(plan.bloques)}
     ${s.nota ? `<p class="mute small">${K.esc(s.nota)}</p>` : ""}</section>`;
-  return `<div class="hoy"><div class="hoy-a">${hecho}${pasoEmpeza()}${K.hoyOrigen()}${top}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
+  return `<div class="hoy"><div class="hoy-a">${hecho}${K.hoyOrigen()}${top}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
 };
 
 /* el ⋯ de Hoy: lo de hoy. Rutinas y hazañas tienen su pestaña, Planes. */
@@ -243,28 +245,27 @@ K.hoyOrigen = () => {
   return cs.length ? fila("#/hoy/rumbo", c0 ? K.icono.constelacion(c0, 40) : K.ic("rumbo"), "Sale de tu rumbo", tx) : "";
 };
 
-/* ===== El primer día: Hoy guía en tres pasos (elegí cómo, elegí qué, empezá). Se va solo con la primera sesión o la primera marca. ===== */
+/* ===== El primer día: Hoy ofrece cómo empezar; «Que Kozmos arme tu día» guía en tres pasos (tu equipo, tu nivel, tu rumbo).
+   Una sola guía: se va sola con la primera sesión o la primera marca. ===== */
 K.primerDia = () => !K.diario.sesiones.length && !K.diario.mediciones.length;
 /* los pasos de una guía: etapas es la lista de nombres y n el paso en el que estás (desde 1) */
 K.pasos = (etapas, n) => `<ol class="pasos" style="--n:${etapas.length}" aria-label="Paso ${n} de ${etapas.length}">${etapas.map((t, i) =>
   `<li class="${i + 1 < n ? "hecho" : i + 1 === n ? "ahora" : ""}"${i + 1 === n ? ' aria-current="step"' : ""}><i class="num">${i + 1 < n ? K.ic("check") : i + 1}</i><span>${t}</span></li>`).join("")}</ol>`;
-K.GUIA = ["Elegí cómo", "Elegí qué", "Empezá"];
-/* «Que Kozmos arme tu día», el primer día: primero tu equipo, después tu rumbo. Cada pantalla pide su paso por id,
-   así que sumar uno en el medio (tu nivel) es sumar una fila acá: los números, volver y «Seguir» salen solos. */
-K.ARMAR = [{id: "equipo", nombre: "Tu equipo", ir: "#/hoy/equipo"}, {id: "rumbo", nombre: "Tu rumbo", ir: "#/hoy/rumbo"}];
+/* «Que Kozmos arme tu día», el primer día: tu equipo, tu nivel y tu rumbo. Cada pantalla pide su paso por id:
+   los números, volver y «Seguir» salen de esta lista. */
+K.ARMAR = [{id: "equipo", nombre: "Tu equipo", ir: "#/hoy/equipo"}, {id: "nivel", nombre: "Tu nivel", ir: "#/hoy/nivel"}, {id: "rumbo", nombre: "Tu rumbo", ir: "#/hoy/rumbo"}];
 K.pasoArmar = id => {
   const i = K.ARMAR.findIndex(x => x.id === id), prev = K.ARMAR[i - 1], P = K._pila || [];
   /* volver va al paso anterior si venías de ahí; si no (por ejemplo, desde el ⋯ de Hoy), a Hoy */
   return {pasos: K.pasos(K.ARMAR.map(x => x.nombre), i + 1), antes: prev && P[P.length - 2] === prev.ir ? prev.ir : "#/hoy", sigue: K.ARMAR[i + 1]?.ir || ""};
 };
-const pasoEmpeza = () => K.primerDia() && !K.sesion.activa() ? K.pasos(K.GUIA, 3) : "";
 /* las semanas de una rutina, en puntos: lo hecho lleno */
 const dibSemanas = (hechas, col) => `<svg class="dib-sem" viewBox="0 0 86 34" aria-hidden="true">${Array.from({length: 21}, (_, i) =>
   `<circle cx="${5 + i % 7 * 12.6}" cy="${5 + Math.floor(i / 7) * 12}" r="4" fill="${i < hechas ? `var(--${col})` : "var(--s2)"}"/>`).join("")}</svg>`;
 K.hoyComo = () => {
   const hz = K.HAZANAS.hazanas[0];
   const op = (ir, dib, t, tx) => `<button type="button" class="cd como-op" data-ir="${ir}"><span class="como-dib">${dib}</span><b class="t1">${t}</b><small>${tx}</small>${K.ic("chev", "como-ir")}</button>`;
-  return `${K.pasos(K.GUIA, 1)}<div class="como">${op(K.ARMAR[0].ir, K.cieloTrio(64), "Que Kozmos arme tu día", "Marcá tu equipo y elegí tus constelaciones. Cada día te da lo que toca.")}
+  return `<div class="como">${op(K.ARMAR[0].ir, K.cieloTrio(64), "Que Kozmos arme tu día", "Tu equipo, tu nivel y tus constelaciones. Cada día te da lo que toca.")}
     ${op("#/planes", dibSemanas(5, "fu"), "Seguí una rutina", "Un plan fijo de semanas. Hoy te da cada sesión.")}</div>
     ${hz ? `<section class="aj"><button type="button" class="ajr" data-ir="#/planes/hazanas/${hz.id}"><span class="tile ico-tile">${K.hzIcono(hz, 40)}</span><span class="ses-fila">¿Solo por hoy?<small class="mute">Probá una hazaña: un desafío, un día</small></span><em></em>${K.ic("chev", "chev")}</button></section>` : ""}
     <p class="como-cielo small mute">${K.ic("cielo")}<span>Lo que hagas enciende estrellas en tu cosmos.</span></p>`;
@@ -274,9 +275,12 @@ K.hoyComo = () => {
    Debajo, cuántas elegiste y cada cuánto toca cada una: dos habilidades por día, repartidas entre tus días. ===== */
 K.P.rumbo = () => {
   const r = K.rumbo(), cielo = K.cieloActual();
+  /* dónde arranca cada una que elegiste y todavía no empezaste: con tu nivel, más arriba */
+  const escalones = K.rutina.escalonesTodos({...ctxRutina(), desde: K.desdeTuNivel()});
+  const arranca = c => { const a = r.includes(c.id) && !c.marcas.length && K.nivel.arrancasEn(c, {escalones, ej: K.EJ}); return a ? `<small class="mute rumbo-arranca">${K.esc(a.texto)}</small>` : ""; };
   const lista = K.CATALOGO.familias.map(f => `<section class="fam"><span class="lb tg"><i class="dot" style="--c:var(--${f.id})"></i>${K.esc(f.nombre)}</span>
     <div class="aj">${cielo.constelaciones.filter(c => c.familia === f.id).map(c => `<button type="button" class="ajr rumbo-fila" data-rumbo="${c.id}" aria-pressed="${r.includes(c.id)}">
-      <span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span><span>${K.esc(c.nombre)}</span><em class="num${!c.proxima && !c.completa && c.pide.length ? " pide" : ""}">${K.esc(K.cuentaCons(c))}</em>${r.includes(c.id) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</div></section>`).join("");
+      <span class="tile ico-tile">${K.icono.constelacion(c, 40)}</span><span class="ses-fila">${K.esc(c.nombre)}${arranca(c)}</span><em class="num${!c.proxima && !c.completa && c.pide.length ? " pide" : ""}">${K.esc(K.cuentaCons(c))}</em>${r.includes(c.id) ? K.ic("check", "ck") : "<span></span>"}</button>`).join("")}</div></section>`).join("");
   /* el primer día es el último paso de «Que Kozmos arme tu día»; «Listo» vuelve a Hoy, salteando los pasos */
   const paso = K.primerDia() && K.pasoArmar("rumbo");
   return K.enc({titulo: "Tu rumbo", sub: paso ? "Para empezar" : "Hoy", volver: paso ? paso.antes : "#/hoy", det: true, sinNav: true}) +

@@ -16,8 +16,9 @@ vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "calorias.js"),
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "diario", "respaldo.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "rutina.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "caminos.js"), "utf8"), ctx);
+vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "nivel.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "dia.js"), "utf8"), ctx);
-const {cielo, plan, calorias, respaldo, rutina, caminos, dia: molde} = ctx.K;
+const {cielo, plan, calorias, respaldo, rutina, caminos, nivel, dia: molde} = ctx.K;
 const RUT_DIR = path.join(RAIZ, "catalogo", "rutinas");
 const RUTINAS = fs.readdirSync(RUT_DIR).filter(f => f.endsWith(".json")).map(f => [f, JSON.parse(fs.readFileSync(path.join(RUT_DIR, f), "utf8"))]);
 const HAZANAS = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "hazanas.json"), "utf8"));
@@ -1633,6 +1634,138 @@ prueba("dia-serie-escalera", () => {
   ok(deMolde(d0.bloques, "habilidad")[0].pasos[0].ejercicio === "dominada-asistida", "arranca en la asistida");
   ss = [hechaDia("a", "2026-10-20", d0, {tope: true}), hechaDia("b", "2026-10-22", d0, {tope: true})];
   ok(cam().pasos[0].ejercicio === "dominada-negativa" && cam().pasos[0].nuevo === "sube", "no subió: " + cam().pasos[0].ejercicio);
+});
+
+/* ===== Tu nivel (PR3): cuatro preguntas, dónde arrancás y lo que se da por hecho ===== */
+const TODO_EQ = ["barra", "paralelas", "pared", "poste", "lastre", "mancuernas", "kettlebell", "bici", "soga"];
+prueba("nivel-desde", () => {
+  /* la tabla conservadora (D1): cada respuesta, el escalón de arranque de sus escaleras */
+  const d = n => nivel.desde(n, TODO_EQ);
+  ok(JSON.stringify(d({dominadas: "0"})) === '{"tirar":"dominada-negativa","remo":"remo-poste"}', "dominadas 0: " + JSON.stringify(d({dominadas: "0"})));
+  ok(d({dominadas: "1-4"}).tirar === "dominada" && d({dominadas: "5-9"}).tirar === "dominada" && d({dominadas: "5-9"}).remo === "remo-invertido", "de 1 a 9, la dominada y el remo invertido");
+  ok(d({dominadas: "10-14"}).tirar === "dominada-explosiva" && d({dominadas: "15+"}).tirar === "dominada-arquera", "10 o más");
+  ok(JSON.stringify(d({flexiones: "0-9"})) === '{"empujar":"flexion-inclinada","fondos":"flexion-cerrada","lsit":"plancha"}', "flexiones 0-9");
+  ok(d({flexiones: "10-19"}).empujar === "flexion" && d({flexiones: "10-19"}).fondos === "fondo-banco", "flexiones 10-19");
+  ok(d({flexiones: "20-29"}).empujar === "flexion-pausa" && d({flexiones: "20-29"}).lsit === "hollow", "flexiones 20-29");
+  ok(d({flexiones: "30-39"}).empujar === "flexion-declinada" && d({flexiones: "30-39"}).fondos === "fondo" && d({flexiones: "30-39"}).lsit === "l-sit", "flexiones 30-39");
+  ok(d({flexiones: "40+"}).empujar === "flexion-arquera", "flexiones 40+");
+  ok(JSON.stringify(d({unaPierna: "no"})) === '{"piernas":"sentadilla","isquios":"puente-gluteo"}' && d({unaPierna: "silla"}).piernas === "pistol-silla" && d({unaPierna: "silla"}).isquios === "peso-muerto-una-pierna"
+    && d({unaPierna: "completa"}).piernas === "pistol" && d({unaPierna: "completa"}).isquios === "curl-femoral-deslizante", "una pierna");
+  /* todos los escalones existen en su escalera */
+  for (const q of nivel.PREGUNTAS) for (const [v] of q.opciones) for (const [esc, e] of Object.entries(d({[q.id]: v}))){
+    const x = ESC.escaleras.find(y => y.id === esc); ok(x && x.pasos.some(p => rutina.idsPaso(p).includes(e)), `${q.id} ${v}: ${esc}/${e} no existe`);
+  }
+  /* sin el equipo del escalón, la escalera usa el de abajo que sí: el fondo sin paralelas es el fondo en banco */
+  const ej = EJM();
+  ok(rutina.escalonesTodos({ej, equipo: [], desde: d({flexiones: "40+"})}).fondos.paso.ejercicio === "fondo-banco", "sin paralelas, el fondo en banco");
+  ok(rutina.escalonesTodos({ej, equipo: ["paralelas"], desde: d({flexiones: "40+"})}).fondos.paso.ejercicio === "fondo", "con paralelas, el fondo");
+  /* sin barra no se pregunta por dominadas, y lo que dijiste antes no cuenta */
+  ok(!nivel.preguntas([]).some(q => q.id === "dominadas") && !nivel.preguntas([]).some(q => q.id === "vertical") && nivel.preguntas(null).length === 4, "las preguntas con tu equipo");
+  ok(!nivel.desde({dominadas: "15+"}, []).tirar, "sin barra, las dominadas no mueven nada");
+});
+prueba("nivel-dadas", () => {
+  const dd = (n, eq = TODO_EQ) => nivel.dadas(n, eq);
+  ok(dd({dominadas: "1-4"}).length === 0, "de 1 a 4 no da nada");
+  ok(dd({dominadas: "5-9"}).join() === "front-lever.colgado-60s", "de 5 a 9: " + dd({dominadas: "5-9"}));
+  ok(dd({dominadas: "10-14"}).join() === "front-lever.colgado-60s,muscle-up.dominadas-10,front-lever.bolita-10s", "de 10 a 14: " + dd({dominadas: "10-14"}));
+  ok(dd({dominadas: "15+"}).includes("un-brazo.dominadas-15") && dd({dominadas: "15+"}).length === 4, "15 o más");
+  ok(dd({flexiones: "20-29"}).length === 0 && dd({flexiones: "30-39"}).join() === "planche.flexiones-30" && dd({flexiones: "40+"}).join() === "planche.flexiones-30,un-brazo.flexiones-40", "flexiones");
+  ok(dd({unaPierna: "silla"}).join() === "una-pierna.pistol-silla-5" && dd({unaPierna: "completa"}).join() === "una-pierna.pistol-silla-5,una-pierna.pistol-3", "una pierna");
+  ok(dd({vertical: "pared"}).length === 3 && dd({vertical: "libre"}).length === 4 && dd({vertical: "libre"}).includes("parada-de-manos.pared-60s"), "parada de manos");
+  /* todas existen en el catálogo; sin pared no se da nada de la parada de manos */
+  for (const q of nivel.PREGUNTAS) for (const [v] of q.opciones) for (const e of dd({[q.id]: v})) ok(ESTRELLAS.has(e), "no existe: " + e);
+  ok(dd({vertical: "libre"}, ["barra"]).length === 0, "sin pared, la parada de manos no da nada");
+  /* en tu cosmos se ven dadas, sin encender: lo encendido y los totales no cambian, la próxima es la que sigue */
+  const c0 = cielo.calcular(CAT, [], HOY, [], TODO_EQ), c1 = nivel.aplicar(c0, dd({dominadas: "10-14"}), {fecha: HOY});
+  const fl = c1.constelaciones.find(c => c.id === "front-lever");
+  ok(c1.encendidas === 0 && c1.total === c0.total && fl.encendidas === 0, "las dadas encendieron algo");
+  ok(fl.dadas === 2 && fl.estrellas.filter(e => e.estado === "dada").map(e => e.id).join() === "front-lever.colgado-60s,front-lever.bolita-10s" && fl.estrellas.every(e => !e.dada || !e.encendida), "las dadas del front lever");
+  ok(fl.proxima.id === "front-lever.tuck-10s" && fl.estrellas.find(e => e.id === "front-lever.tuck-10s").estado === "proxima", "la próxima: " + fl.proxima.id);
+  ok(nivel.aplicar(c0, []) === c0, "sin dadas, el cosmos es el mismo");
+  /* el día del motor usa la misma regla: K.dia.conDadas es K.nivel.efectiva */
+  ok(molde.conDadas(c0.constelaciones.find(c => c.id === "front-lever"), ["front-lever.colgado-60s"]).proxima.id === "front-lever.bolita-10s", "conDadas y efectiva dicen distinto");
+});
+prueba("nivel-no-se", () => {
+  /* «No sé» (o no contestar) es arrancar desde el principio: ni escalones ni dadas */
+  const nose = {dominadas: "nose", flexiones: "nose", unaPierna: "nose", vertical: "nose", fecha: HOY};
+  ok(JSON.stringify(nivel.desde(nose, TODO_EQ)) === "{}" && nivel.dadas(nose, TODO_EQ).length === 0, "No sé movió algo");
+  ok(JSON.stringify(nivel.desde(undefined, TODO_EQ)) === "{}" && nivel.dadas(null, TODO_EQ).length === 0, "sin nivel movió algo");
+  ok(nivel.PREGUNTAS.every(q => q.opciones[q.opciones.length - 1][0] === "nose" && q.opciones[q.opciones.length - 1][1] === "No sé"), "alguna pregunta no ofrece No sé al final");
+  /* una respuesta rara no cuenta y no se guarda */
+  ok(JSON.stringify(nivel.desde({dominadas: "99"}, TODO_EQ)) === "{}", "una respuesta rara cuenta");
+  ok(nivel.poner({}, "dominadas", "99", HOY).dominadas === undefined, "se guardó una respuesta rara");
+  const n = nivel.poner(nivel.poner({}, "dominadas", "5-9", "2026-10-01"), "flexiones", "nose", HOY);
+  ok(n.dominadas === "5-9" && n.flexiones === "nose" && n.fecha === HOY && nivel.respondidas(n) === 2, "poner: " + JSON.stringify(n));
+  /* el día sin nivel es el mismo que con todo en No sé */
+  const a = armarDia(["front-lever", "planche"], {equipo: ["barra"]}), b = armarDia(["front-lever", "planche"], {equipo: ["barra"], nivelDesde: nivel.desde(nose, ["barra"]), dadas: nivel.dadas(nose, ["barra"])});
+  ok(JSON.stringify(a.bloques) === JSON.stringify(b.bloques), "No sé cambió el día");
+});
+prueba("nivel-confirma", () => {
+  /* lo dado se confirma haciéndolo: si llegás, se enciende de verdad; un intento real que no llega le saca lo de dada */
+  const dd = nivel.dadas({dominadas: "10-14"}, TODO_EQ), muDe = ms => nivel.aplicar(cielo.calcular(CAT, ms, HOY, [], TODO_EQ), dd, {fecha: "2026-10-15"}).constelaciones.find(c => c.id === "muscle-up");
+  const mu = muDe([]);
+  ok(mu.estrellas[0].estado === "dada" && mu.proxima.id === "muscle-up.fondo-ruso", "dada: " + mu.proxima.id);
+  const m = (v, fecha = HOY) => ({id: "m" + v + fecha, estrella: "muscle-up.dominadas-10", ejercicio: "dominada", tipo: "repeticiones", valor: v, fecha, origen: "anotado"});
+  const llego = muDe([m(11)]);
+  ok(llego.encendidas === 1 && llego.estrellas[0].estado === "encendida" && !llego.dadas, "llegaste y no se encendió");
+  const corto = muDe([m(7)]);
+  ok(corto.encendidas === 0 && corto.estrellas[0].estado === "proxima" && corto.proxima.id === "muscle-up.dominadas-10" && !corto.dadas, "un intento corto no sacó lo de dada");
+  /* un intento de antes de decir tu nivel no cuenta; las series de entrenamiento (sin la estrella) tampoco */
+  ok(muDe([m(7, "2026-10-01")]).estrellas[0].estado === "dada", "un intento de antes sacó lo de dada");
+  const serie = {id: "s", fecha: HOY, duracion: 900, bloques: [{familia: "fu", series: [{ejercicio: "dominada", tipo: "repeticiones", valor: 6, escalera: "tirar", rango: [5, 8], n: 3}]}]};
+  const conSerie = nivel.aplicar(cielo.calcular(CAT, [], HOY, [serie], TODO_EQ), dd, {fecha: "2026-10-15"}).constelaciones.find(c => c.id === "muscle-up");
+  ok(conSerie.estrellas[0].estado === "dada", "una serie de 6 dominadas sacó lo de dada");
+  ok(JSON.stringify(nivel.activas(cielo.calcular(CAT, [m(7)], HOY, [], TODO_EQ), dd, {fecha: "2026-10-15"})) === '["front-lever.colgado-60s","front-lever.bolita-10s"]', "las activas");
+  /* la semana de prueba prueba la próxima de verdad: la dada no se vuelve a probar */
+  const c = nivel.aplicar(cielo.calcular(CAT, [], HOY, [], TODO_EQ), dd, {fecha: HOY});
+  const pr = plan.deSemanaDePrueba({bloques: [], minutos: 0}, {conPruebas: true, bloque: 1}, {cielo: c, cons: ["muscle-up"], sesiones: [], equipo: TODO_EQ, ej: EJM(), hoy: HOY});
+  ok(!pr.pruebas.estrellas.includes("muscle-up.dominadas-10"), "la semana de prueba prueba una dada: " + pr.pruebas.estrellas);
+});
+prueba("nivel-arrancas-en", () => {
+  const ej = EJM(), eq = ["barra"], esc = n => rutina.escalonesTodos({ej, equipo: eq, desde: nivel.desde(n, eq)});
+  const c0 = cielo.calcular(CAT, [], HOY, [], eq), mu = c0.constelaciones.find(c => c.id === "muscle-up");
+  /* sin nivel, muscle-up arranca abajo en la escalera de tirar */
+  const a = nivel.arrancasEn(mu, {escalones: esc(undefined), ej});
+  ok(a.camino && a.ejercicio === "colgado-activo" && a.texto === "Arrancás en " + ej["colgado-activo"].nombre, "sin nivel: " + JSON.stringify(a));
+  /* con 5 a 9 dominadas, ya estás en la dominada: arranca en la estrella */
+  const b = nivel.arrancasEn(mu, {escalones: esc({dominadas: "5-9"}), ej});
+  ok(!b.camino && b.estrella === "muscle-up.dominadas-10" && b.texto === "Arrancás en " + mu.proxima.nombre, "con 5 a 9: " + JSON.stringify(b));
+  /* con 10 a 14, la dada corre la estrella */
+  const c1 = nivel.aplicar(c0, nivel.dadas({dominadas: "10-14"}, eq), {fecha: HOY}), mu1 = c1.constelaciones.find(c => c.id === "muscle-up");
+  const d = nivel.arrancasEn(mu1, {escalones: esc({dominadas: "10-14"}), ej});
+  ok(mu1.proxima.id === "muscle-up.fondo-ruso" && d.texto === (d.camino ? "Arrancás en " + ej[d.ejercicio].nombre : "Arrancás en " + mu1.proxima.nombre), "con 10 a 14: " + JSON.stringify(d));
+  ok(!d.texto.includes("·"), "el texto lleva «·»");
+  /* lo que pide equipo que no marcaste no arranca en ningún lado */
+  ok(nivel.arrancasEn(cielo.calcular(CAT, [], HOY, [], []).constelaciones.find(c => c.id === "muscle-up"), {escalones: {}, ej}) === null, "sin barra, muscle-up arranca");
+});
+prueba("respaldo-nivel", () => {
+  /* tu nivel viaja en el respaldo; lo que no es una respuesta conocida queda afuera */
+  const arch = n => JSON.stringify({app: "kozmos", formato: 2, mediciones: [], sesiones: [], perfil: {nivel: n}});
+  const n = {dominadas: "5-9", flexiones: "nose", unaPierna: "silla", vertical: "pared", fecha: HOY};
+  ok(JSON.stringify(respaldo.leer(arch(n)).perfil.nivel) === JSON.stringify(n), "tu nivel no vuelve: " + JSON.stringify(respaldo.leer(arch(n)).perfil));
+  ok(JSON.stringify(respaldo.leer(arch({flexiones: "10-19"})).perfil.nivel) === '{"flexiones":"10-19"}', "una sola respuesta no vuelve");
+  ok(!respaldo.leer(arch({dominadas: "mil"})).perfil.nivel, "una respuesta rara vuelve");
+  ok(!respaldo.leer(arch({...n, otra: "x"})).perfil.nivel, "una pregunta que no existe vuelve");
+  ok(!respaldo.leer(arch({...n, fecha: "2026-13-40"})).perfil.nivel, "una fecha rota vuelve");
+  ok(!respaldo.leer(arch("5-9")).perfil.nivel && !respaldo.leer(arch(["5-9"])).perfil.nivel, "un nivel que no es un objeto vuelve");
+  /* traerlo no pisa el que ya tenés */
+  const l = respaldo.leer(arch(n));
+  ok(respaldo.sumar({mediciones: [], sesiones: [], perfil: {nivel: {flexiones: "0-9"}}}, l).cuenta.perfil === 0, "pisó tu nivel");
+});
+prueba("dia-con-nivel", () => {
+  /* el día con tu nivel: la fuerza arranca en tu escalón, el camino también, y las dadas corren la próxima */
+  const eq = ["barra", "paralelas"], n = {dominadas: "10-14", flexiones: "30-39", unaPierna: "silla", fecha: HOY};
+  const c0 = cielo.calcular(CAT, [], HOY, [], eq), dd = nivel.activas(c0, nivel.dadas(n, eq), {fecha: HOY});
+  const p = molde.armar(nivel.aplicar(c0, dd, {fecha: HOY}), ["muscle-up", "front-lever", "una-pierna"], [], HOY, {ej: EJM(), equipo: eq, marcas: [], nivelDesde: nivel.desde(n, eq), dadas: dd});
+  const hab = deMolde(p.bloques, "habilidad"), pasos = deMolde(p.bloques, "fuerza").flatMap(b => b.pasos);
+  const esc = id => pasos.find(x => x.escalera === id)?.ejercicio;
+  ok(!hab.some(b => (b.estrella || "").endsWith("dominadas-10") || b.estrella === "front-lever.colgado-60s" || b.estrella === "front-lever.bolita-10s"), "el día pide una dada: " + hab.map(b => b.estrella || b.nombre));
+  ok(hab.some(b => b.constelaciones.includes("muscle-up")) ? hab.find(b => b.constelaciones.includes("muscle-up")).estrella !== "muscle-up.dominadas-10" : true, "muscle-up pide la dada");
+  for (const [id, e] of [["fondos", "fondo"], ["empujar", "flexion-declinada"], ["piernas", "pistol-silla"], ["remo", "remo-invertido"], ["tirar", "dominada-explosiva"]])
+    if (esc(id)) ok(esc(id) === e, `${id} arranca en ${esc(id)}, no en ${e}`);
+  ok(pasos.length > 0 && ["fondos", "empujar", "remo", "tirar"].some(id => esc(id)), "sin fuerza de arriba");
+  /* todo sigue entrando en el molde: sin repetidos y en la hora */
+  ok(new Set(ejsDia(p.bloques)).size === ejsDia(p.bloques).length && p.minutos <= 60, "repetidos o más de una hora: " + p.minutos);
 });
 
 let fallas = 0;

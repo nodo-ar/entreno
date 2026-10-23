@@ -87,13 +87,13 @@ K.resumenDias = () => {
   return txt[0].toUpperCase() + txt.slice(1);
 };
 K.P.vos = r => {
-  const sub = ["acerca", "equipo", "peso", "respaldo", "dias"].includes(r.sub) ? r.sub : "", hz = K.horizontal();
+  const sub = ["acerca", "equipo", "nivel", "peso", "respaldo", "dias"].includes(r.sub) ? r.sub : "", hz = K.horizontal();
   if (sub !== "peso") K._peso = null; /* lo que escribiste y no guardaste no queda esperándote */
   const abre = sub || (hz ? "equipo" : "");
   const fila = (id, ic, nom, val) => `<button type="button" class="ajr" data-ir="#/vos/${id}" data-quieto="1"${abre === id ? " data-sel" : ""}><span class="tile">${K.ic(ic)}</span><span>${nom}</span><em>${K.esc(val)}</em>${K.ic("chev", "chev")}</button>`;
   const peso = K.diario.perfil.peso;
   return `<div class="split${sub ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Vos", sub: "Ajustes"})}
-    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("dias", "dias", "Tus días", K.resumenDias())}${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
+    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("nivel", "nivel", "Tu nivel", K.resumenNivel())}${fila("dias", "dias", "Tus días", K.resumenDias())}${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
       <button type="button" class="ajr" id="avisos-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("vibra")}</span><span>Avisos</span><em>${K.esc(K.avisosNombre())}</em>${K.ic("chevd", "chev")}</button></div>
     <span class="lb pie">La persona de los dibujos</span>
     <div class="aj">${K.personaFilas()}</div>
@@ -101,7 +101,7 @@ K.P.vos = r => {
       <button type="button" class="ajr" id="tema-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("auto")}</span><span>Tema</span><em>${K.esc(K.tema.nombre())}</em>${K.ic("chevd", "chev")}</button>
       ${fila("respaldo", "caja", "Respaldo", K.ultimoRespaldo())}${fila("acerca", "info", "Acerca de Kozmos", "")}
     </div></div>
-    <div class="abierto">${({acerca: K.P.acerca, equipo: K.P.equipo, dias: K.P.dias, peso: K.P.peso, respaldo: K.P.respaldo})[abre]?.() || ""}</div></div>`;
+    <div class="abierto">${({acerca: K.P.acerca, equipo: K.P.equipo, nivel: K.P.nivel, dias: K.P.dias, peso: K.P.peso, respaldo: K.P.respaldo})[abre]?.() || ""}</div></div>`;
 };
 K.P.acerca = () => K.enc({titulo: "Acerca de Kozmos", sub: "Ajustes", volver: "#/vos", raiz: true, det: true}) +
   `<section class="cd acerca">${K.logo(64)}<h2>Kozmos</h2>
@@ -130,6 +130,43 @@ K.equipoSeguir = async b => {
 K.equipoTocar = async id => {
   const q = K.equipo(), n = q.includes(id) ? q.filter(x => x !== id) : [...q, id];
   try { await K.diario.lote({perfil: {equipo: n}}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); } finally { K.refrescar(); }
+};
+
+/* ===== Tu nivel: cuatro preguntas, cada una un menú; «No sé» siempre está. Elegir queda guardado y se ve en la fila
+   (otro toque lo cambia: no ofrece deshacer). Con tu nivel, cada escalera arranca más arriba y lo de abajo se da por hecho.
+   Desde Vos es un ajuste; desde Hoy, el primer día, el segundo paso de «Que Kozmos arme tu día». ===== */
+const ICONO_NIVEL = {dominadas: "barra", flexiones: "flexion", unaPierna: "unapierna", vertical: "pared"};
+K.resumenNivel = () => {
+  const n = K.diario.perfil.nivel, qs = K.nivel.preguntas(K.diario.perfil.equipo || null), k = qs.filter(q => n && K.nivel.valida(q.id, n[q.id])).length;
+  return k ? `${k} de ${qs.length}` : "Sin decir";
+};
+/* las escaleras de fuerza que mueve tu nivel, en el orden del molde */
+const ESC_NIVEL = ["tirar", "remo", "empujar", "fondos", "piernas", "isquios", "lsit"];
+K.P.nivel = (desde = "vos") => {
+  const hoy = desde === "hoy", paso = hoy && K.primerDia() && K.pasoArmar("nivel"), panel = !hoy && K.horizontal();
+  const n = K.diario.perfil.nivel || {}, eq = K.diario.perfil.equipo || null;
+  const filas = K.nivel.preguntas(eq).map(q => { const o = q.opciones.find(x => x[0] === n[q.id]);
+    return `<button type="button" class="ajr" id="nv-${q.id}" data-nivel="${q.id}" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic(ICONO_NIVEL[q.id])}</span><span>${K.esc(q.nombre)}</span><em${o ? "" : ' class="nv-sin"'}>${K.esc(o ? o[1] : "Elegí")}</em>${K.ic("chevd", "chev")}</button>`; }).join("");
+  /* dónde arrancás con esto: el escalón de cada escalera que tu equipo permite (lo que ya hiciste manda) */
+  const puede = id => K.rutina.escalera(id)?.pasos.some(p => K.rutina.idsPaso(p).some(e => (K.EJ[e]?.equipo || []).every(x => !eq || eq.includes(x))));
+  const todos = K.rutina.escalonesTodos({...K.ctxRutina(), desde: K.desdeTuNivel()});
+  const es = ESC_NIVEL.filter(id => todos[id] && puede(id)).map(id => ({...todos[id], nombre: K.rutina.escalera(id).nombre, familia: "fu"}));
+  const arranca = es.length ? `<section class="cd nv-arranca"><span class="lb">Arrancás en</span>${K.escalerasMini(es, "fu")}</section>` : "";
+  const boton = paso ? `<button type="button" class="btn" id="nv-seguir" data-sigue="${paso.sigue}">Seguir</button>`
+    : `<button type="button" class="btn" data-volver="${hoy ? "#/hoy" : "#/vos"}">Listo</button>`;
+  return K.enc({titulo: "Tu nivel", sub: paso ? "Para empezar" : hoy ? "Hoy" : "Ajustes", volver: hoy ? (paso ? paso.antes : "#/hoy") : "#/vos", raiz: !hoy, det: true, sinNav: !panel}) + (paso ? paso.pasos : "") +
+    `<p class="ayuda">Lo que te sale hoy, sin forzar. Kozmos arranca desde ahí y lo de abajo lo da por hecho.</p>
+    <section class="aj">${filas}</section>${arranca}` + (panel ? "" : K.pie(boton));
+};
+K.menuNivel = btn => {
+  const q = K.nivel.PREGUNTAS.find(x => x.id === btn.dataset.nivel), n = K.diario.perfil.nivel || {};
+  K.menu.abrir(btn, {titulo: q.nombre, items: q.opciones.map(([v, t]) => ({id: v, texto: t, elegido: n[q.id] === v})),
+    elegir: async v => {
+      if (n[q.id] === v) return;
+      const nuevo = K.nivel.poner(n, q.id, v, K.hoy());
+      try { await K.diario.lote({perfil: {nivel: nuevo}}); } catch (e) { K.diario.perfil = {...K.diario.perfil, nivel: nuevo}; } /* sin lugar para guardar, vale por esta apertura */
+      K.refrescar();
+    }});
 };
 
 /* tus días: los que entrenás. Los demás, Hoy te deja descansar. Sin elegir, todos. */

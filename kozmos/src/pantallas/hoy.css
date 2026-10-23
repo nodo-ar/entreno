@@ -171,3 +171,8 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 @media (orientation:landscape) and (max-height:520px){
   .sens .btn{height:40px}
 }
+/* Tu nivel: la respuesta que falta, tenue; dónde arrancás, en escaleritas. En Tu rumbo, dónde arranca cada elegida */
+.nv-sin{color:var(--ink-3)}
+.nv-arranca{display:grid; gap:12px}
+.rumbo-fila .ses-fila{min-width:0}
+.rumbo-arranca{font-size:var(--t-xs); font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}

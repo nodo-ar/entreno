@@ -33,6 +33,8 @@ K.dibujo = (() => {
       const [x, y] = pts[i], r = radio(e.magnitud, esc) + (e.estado === "encendida" ? .8 * esc : 0);
       if (e.estado === "encendida") g += `<circle class="es on${c.atenuada ? " tenue" : ""}${recien.includes(e.id) ? " nace" : ""}" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" fill="var(--ink)" style="--fam:var(--${c.familia})"/>`;
       else if (e.estado === "proxima") g += `<circle class="es nx" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r + 3.6 * esc)}" fill="none" stroke="var(--${c.familia})" stroke-width="${f1(1.8 * esc)}"/><circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(1.9 * esc)}" fill="var(--${c.familia})"/>`;
+      /* lo que tu nivel da por hecho: punteado en el color de la familia, nunca encendido */
+      else if (e.estado === "dada") g += `<circle class="es dada" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" fill="none" stroke="var(--${c.familia})" stroke-width="${f1(1.1 * esc)}" stroke-dasharray="${f1(1.6 * esc)} ${f1(1.8 * esc)}"/>`;
       else if (e.estado === "sin-equipo") g += `<circle class="es sin" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" fill="none" stroke="var(--off)" stroke-width="${f1(1.1 * esc)}" stroke-dasharray="${f1(1.6 * esc)} ${f1(1.8 * esc)}"/>`;
       else g += `<circle class="es off" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" fill="none" stroke="var(--off)" stroke-width="${f1(1.3 * esc)}"/>`;
     });
