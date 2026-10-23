@@ -411,7 +411,8 @@ K.P.sesion = () => {
 
 /* ===== Tramos: cardio, intervalos, cada minuto y movilidad. Cada tramo corre solo y pasa al siguiente con un pitido. ===== */
 const CLASE = {entrada: "Entrada en calor", fuerte: "Fuerte", suave: "Suave", pausa: "Descanso", trabajo: "A trabajar", postura: "Postura", vuelta: "Vuelta a la calma"};
-const tramoTx = x => x.ejercicio ? K.ej(x.ejercicio).nombre : CLASE[x.clase] || "";
+/* en la entrada en calor, el título es la pieza («Bici suave»); «Entrada en calor» queda de etiqueta */
+const tramoTx = x => x.clase === "entrada" && x.nota ? x.nota : x.ejercicio ? K.ej(x.ejercicio).nombre : CLASE[x.clase] || "";
 const tramoLb = x => x.reps ? `×${x.reps}` : x.trabajo ? `${x.trabajo} s y descansás` : `de ${K.reloj(x.seg)}`;
 const avanceBloque = (S, b) => { const tot = b.tramos.reduce((a, x) => a + x.seg, 0), antes = b.tramos.slice(0, S.s).reduce((a, x) => a + x.seg, 0); return Math.min(1, (antes + K.sesion.enFase()) / tot); };
 K.P.tramo = (S, b) => {
@@ -420,7 +421,7 @@ K.P.tramo = (S, b) => {
   return `<div class="ses tramo${fuerte ? " fuerte" : ""}" style="--c:var(--${b.familia});--cs:var(--${b.familia}-soft)" data-r="ses"><div class="ses-a">
       <div class="bar tramo-bar" style="--c:var(--${b.familia})" aria-hidden="true"><i data-r="tbar" style="width:${(avanceBloque(S, b) * 100).toFixed(1)}%"></i></div>
       <div class="enc-tit ses-tit"><span class="lb ses-eti"><span>${K.esc(x.ejercicio ? CLASE[x.clase] : b.nombre || "")}</span> <span class="num ses-paso" aria-label="${S.s + 1} de ${b.tramos.length}">${S.s + 1}/${b.tramos.length}</span></span><h1>${K.esc(tramoTx(x))}</h1></div>
-      ${x.nota || (x.ejercicio && K.ej(x.ejercicio).indicacion) ? `<p class="mute ses-ind">${x.nota ? K.aparte(K.esc(x.nota), K.esc(x.dosis || "")) : K.esc(K.ej(x.ejercicio).indicacion)}</p>` : ""}${pausa}
+      ${x.nota || (x.ejercicio && K.ej(x.ejercicio).indicacion) ? `<p class="mute ses-ind">${x.nota ? (x.clase === "entrada" ? K.esc(x.dosis || "") : K.aparte(K.esc(x.nota), K.esc(x.dosis || ""))) : K.esc(K.ej(x.ejercicio).indicacion)}</p>` : ""}${pausa}
       ${conFig(x.ejercicio, b.familia, true, `<div class="anillo-desc" data-r="anillo">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" class="pista"/><circle cx="100" cy="100" r="88" class="arco" data-r="arco" stroke-dasharray="${arco(q, x.seg)}" transform="rotate(-90 100 100)"/></svg>
         <div class="anillo-tx"><span class="reloj num" data-r="queda" role="timer" aria-live="off">${K.reloj(Math.max(0, Math.ceil(q)))}</span><span class="lb">${K.esc(tramoLb(x))}</span></div></div>`)}
