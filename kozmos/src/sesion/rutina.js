@@ -272,6 +272,10 @@ K.rutina = (() => {
      con bloques como los de una rutina. «equipoRutina» y «dia» solo nombran un bloque de tramos sin nombre. */
   function armarBloques(familia, cbs, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false, nivelDesde, equipoRutina, dia} = {}){
     const r = {familia};
+    /* un bloque con alternativas («tirar» o, sin barra, «remo») que cae en una escalera que otro bloque del día ya hace se saltea:
+       la misma escalera dos veces en un día daría el mismo escalón dos veces */
+    const deEsc = cb => cb.escalera ? elegirEscalera(cb.escalera, ej, equipo)?.id : null;
+    cbs = cbs.filter((cb, k) => !(Array.isArray(cb.escalera) && cb.escalera.length > 1 && deEsc(cb) !== cb.escalera[0] && cbs.some((o, j) => j !== k && deEsc(o) === deEsc(cb))));
     const crudos = cbs.map(cb => {
       if (cb.tramos){ const ts = tramos(cb.tramos, ej, equipo);
         /* sin nombre en el catálogo, el bloque se llama por lo que se hace («Trote», «Bici», «Posturas»), no por el día */
