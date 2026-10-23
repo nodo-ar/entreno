@@ -7,3 +7,4 @@
 - Colores con significado: ember es fuerza, aqua es cardio, lime es movilidad, amber es récords.
 - Menos texto, más representación visual.
 - Las fuentes científicas van en un apartado de fuentes, no con nombres dentro de las explicaciones.
+- No se separa con «·»: jerarquía o representación. Lo que se puede dibujar se dibuja (un reloj al lado de los minutos, puntos para los bloques, la mancuerna con los kilos, el punto de la familia al lado de cada nombre); lo que queda se separa por jerarquía: lo que califica va después, separado por un espacio y un tono más suave. Las listas de nombres se dicen en prosa («Front lever, Muscle-up y 4 más») y lo que agrega una frase va en su propio renglón. La prueba `sin-punto-medio` lo revisa en el código y en el catálogo.

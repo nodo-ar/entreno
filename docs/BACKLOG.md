@@ -116,3 +116,10 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 14. **[idea] Héroes como desafíos.** Que la app proponga desafíos según el progreso o la rutina.
 15. **[idea] Respaldo entre los tuyos.** Una copia cifrada del historial en el teléfono de alguien de confianza, sin servidor (directo si están cerca, por relevos públicos cifrados si están lejos). Es la pieza base de la familia Nodo: arrancar por un boceto y una investigación de las opciones.
 16. **[idea] Sesión compartida en pantalla grande.** Varias personas en el mismo espacio, sin login ni base central, con una tele o tablet que muestra dónde está cada uno, si descansa o si la estación está libre. Pensado también para gimnasios y circuitos. Modo boceto.
+
+## Vuelta 30 · sin el «·»
+
+- **La entrada en calor: ¿la pieza como título?** (la persona, vuelta 30): arriba dice «Entrada en calor» y la pieza va abajo con su dosis. Lo decide Fer (acta 030, decisión 2).
+- **Lo suave en etiquetas chicas** (Casandra, vuelta 30): `.lb .q` usa `--ink-3`, con poco contraste en claro. Lo decide Fer (acta 030, decisión 3).
+- ~~**Filas largas con kilos a 390 px** (vuelta 27).~~ Hecho en la vuelta 30: los kilos van debajo de lo que toca, en la misma columna.
+- **rumbo-sin-tope depende del día** (vuelta 30): no fija la fecha; con martes, jueves y sábado sembrados (`dias: [1, 3, 5]`), un día que no toca Hoy dice «Hoy descansás» y no aparece «Muscle-up pide barra». Falla igual en `main`. Fijarle la fecha con `conReloj`.

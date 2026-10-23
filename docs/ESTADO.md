@@ -155,3 +155,10 @@
 ## Próximo paso
 
 Publicar el ítem 1 (verificar en producción y escribir el registro). En curso: el ítem 2 del backlog, la suite sin depender del día (vuelta 2, rama `claude/suite-sin-dia`).
+
+## Kozmos · vuelta 30 · sin el «·» (2026-10-22)
+
+- **Hecho, sin publicar**: Fer eligió en el boceto m19 la opción B (representación) con A (jerarquía) para lo que queda. Ya no queda ningún «·» a la vista: el reloj al lado de los minutos, los puntos de los bloques en la sesión, «▲ nuevo» a la derecha, «1/6» en la entrada en calor, la ficha de los kilos con la mancuerna (debajo de lo que toca, en la misma columna), «La próxima» con el punto de cada familia, Tu rumbo con la frecuencia a la derecha, listas en prosa y lo que agrega una frase en su renglón. Sin la línea de bloques debajo de «Hoy toca». En la isla, un nombre que no entra pasea de punta a punta (30 px/s, 1,8 s en cada punta; quieto con «reducir movimiento»). Las notas de la entrada en calor pasan a `nota` + `dosis` en el catálogo. Regla nueva en `docs/REGLAS.md`. Acta `docs/actas/030-kozmos-sin-el-punto.md`.
+- **Pruebas**: sin pantalla, 106 (nueva: sin-punto-medio); de pantallas, 99 (nueva: isla-pasea). Las que miraban textos con «·» pasaron a la forma nueva, sin aflojar (lista en el acta). Conocida: rumbo-sin-tope falla en los días que no tocan (no fija la fecha), igual en `main`.
+- **Tablero**: antes y después en el scratchpad (`m21/antes`, `m21/despues`), en grafito y en claro.
+- **Esperando a Fer**: el tablero y tres decisiones (acta 030): los kilos debajo de lo que toca, la pieza como título en la entrada en calor y el contraste de lo suave en las etiquetas chicas.
