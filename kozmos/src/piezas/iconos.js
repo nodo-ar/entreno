@@ -149,12 +149,17 @@ K.icono = (() => {
   /* ===== Prueba: una medalla. Ganada (ya tenés una magnitud): cinta y disco del color de la familia, la figura calada y el satélite.
      Sin ganar: la misma medalla en gris ===== */
   const MC = {x: 50, y: 59, r: 40};
-  const medalla = (h, ganada, px, lb = "") => { const id = poseHazana(h); if (!id) return "";
+  /* el nivel de la prueba (1 a 3, del catálogo) son los satélites en el borde, cada 30° desde arriba a la derecha:
+     con la medalla ganada, el primero es el satélite del logo y los otros, del color de la familia; sin ganar, apagados */
+  const medalla = (h, ganada, px, lb = "", nivel = h.nivel || 0) => { const id = poseHazana(h); if (!id) return "";
     const fam = h.familia, cinta = ganada ? `var(--${fam})` : "var(--off)", disco = ganada ? `var(--${fam})` : "var(--s2)", tinta = ganada ? "var(--s1)" : "var(--ink-3)";
     const a = Math.PI / 4, sx = MC.x + MC.r * Math.sin(a), sy = MC.y - MC.r * Math.cos(a);
+    const sats = nivel ? Array.from({length: nivel}, (_, k) => { const b = a + k * Math.PI / 6, x = MC.x + MC.r * Math.sin(b), y = MC.y - MC.r * Math.cos(b);
+      return ganada && !k ? satelite(x, y, fam, MC.x, MC.y, 6) : `<circle cx="${f1(x)}" cy="${f1(y)}" r="9" fill="var(--ico-fondo, var(--s1))"/><circle cx="${f1(x)}" cy="${f1(y)}" r="6" fill="${ganada ? `var(--${fam})` : "var(--off)"}"/>`; }).join("")
+      : ganada ? satelite(sx, sy, fam, MC.x, MC.y) : "";
     return svg(px, `ico-medalla${ganada ? " ganada" : ""}`, lb, `<path d="M30 2h15l9 26H39zM70 2H55l-9 26h15z" fill="${cinta}"${ganada ? ' fill-opacity=".55"' : ""}/>`
       + `<circle cx="${MC.x}" cy="${MC.y}" r="${MC.r}" fill="${disco}"/><circle cx="${MC.x}" cy="${MC.y}" r="${MC.r - 5.5}" fill="none" stroke="${ganada ? "var(--s1)" : "var(--off)"}" stroke-opacity="${ganada ? .35 : 1}" stroke-width="1.6"/>`
-      + picto(id, {d: 62, cx: MC.x, cy: MC.y, color: tinta, fondo: disco}) + (ganada ? satelite(sx, sy, fam, MC.x, MC.y) : ""));
+      + picto(id, {d: 62, cx: MC.x, cy: MC.y, color: tinta, fondo: disco}) + sats);
   };
   /* ===== Rutina: el pictograma sobre un círculo del color suave de su familia ===== */
   const rutina = (r, px, lb = "") => { const id = poseRutina(r); if (!id) return "";
@@ -178,5 +183,9 @@ K.icono = (() => {
     return svg(px, `ico-cons${p >= 1 ? " completa" : ""}${crece ? " crece" : ""}`, lb, g).replace("<svg ", `<svg style="${var_}" `);
   };
 
-  return {poseHazana, poseRutina, poseConstelacion, encuadre, esqueleto, picto, medalla, rutina, constelacion, ENCUADRE};
+  /* ===== Ejercicio: el pictograma sobre un círculo del color suave de su grupo, como la rutina (en la biblioteca y en las rutinas) ===== */
+  const ejercicio = (id, fam, px, lb = "") => svg(px, "ico-rutina ico-ej", lb, `<circle cx="50" cy="50" r="50" fill="var(--${fam}-soft)"/>`
+    + (hay(id) ? picto(id, {d: 76, color: `var(--${fam})`, fondo: `var(--${fam}-soft)`}) : ""));
+
+  return {poseHazana, poseRutina, poseConstelacion, encuadre, esqueleto, picto, medalla, rutina, constelacion, ejercicio, ENCUADRE};
 })();

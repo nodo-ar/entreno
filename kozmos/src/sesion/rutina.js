@@ -357,7 +357,7 @@ K.rutina = (() => {
     if (es.length > 1) return w.every(t => t.clase === "postura") ? "Posturas" : "Circuito";
     return actividad(o, ej);
   }
-  /* las filas de un bloque de tramos: la entrada en calor en una fila; si no, cada ejercicio con cuántas veces y cuánto,
+  /* las filas de un bloque de tramos: la entrada en calor en una fila; si no, cada ejercicio (ej: su id, para abrir su página) con cuántas veces y cuánto,
      o, sin ejercicios, lo que se hace y su forma: «8 × 1 min» y, aparte (nq, lo que la califica), «1:30 suave» */
   function filasTramos(b, ej = {}){
     const ts = b.tramos, total = ts.reduce((t, x) => t + x.seg, 0), fam = b.familia;
@@ -366,7 +366,7 @@ K.rutina = (() => {
     if (con.length) return [...new Set(con.map(t => t.ejercicio))].map(e => {
       const xs = con.filter(t => t.ejercicio === e), n = xs.length;
       const una = xs[0].reps && xs.every(t => t.reps === xs[0].reps) ? String(xs[0].reps) : xs.every(t => t.seg === xs[0].seg) ? dur(xs[0].seg) : null;
-      return {q: ej[e]?.nombre || e, n: una ? (n > 1 ? `${n} × ${una}` : una) : dur(xs.reduce((t, x) => t + x.seg, 0)), familia: fam};
+      return {q: ej[e]?.nombre || e, ej: e, n: una ? (n > 1 ? `${n} × ${una}` : una) : dur(xs.reduce((t, x) => t + x.seg, 0)), familia: fam};
     });
     if (!w.length) return [{q: b.nombre, n: `${Math.max(1, Math.round(total / 60))} min`, familia: fam}];
     let n = dur(w.reduce((t, x) => t + x.seg, 0)), nq = "";
@@ -399,7 +399,7 @@ K.rutina = (() => {
       else v = n > 5 ? `${n} series, de ${cortoV(p.tipo, ps[0].objetivo)} a ${cortoV(p.tipo, ps[n - 1].objetivo)}` : serie(ps.map(x => cortoV(p.tipo, x.objetivo)));
       const kg = p.kg ? `${String(p.kg).replace(".", ",")} kg` : "";
       /* una superserie (o una triserie) se alterna serie a serie: sus filas van juntas, con «par» y cuántos son */
-      return {q: ej[e]?.nombre || e, n: v, ...(kg ? {kg} : {}), familia: b.familia, ...(p.escalera ? {escalera: p.escalera} : {}), ...(p.nuevo ? {nuevo: p.nuevo} : {}), ...(p.descarga ? {descarga: true} : {}),
+      return {q: ej[e]?.nombre || e, ej: e, n: v, ...(kg ? {kg} : {}), familia: b.familia, ...(p.escalera ? {escalera: p.escalera} : {}), ...(p.nuevo ? {nuevo: p.nuevo} : {}), ...(p.descarga ? {descarga: true} : {}),
         ...(es.length > 1 && par !== null ? {par, de: es.length} : {})};
     });
   }

@@ -6,6 +6,8 @@
    "nombre": "Tirar",
    "familia": "fu",
    "patron": "tirar",
+   "zonas": ["espalda", "brazos"],
+   "apoyo": ["hombros", "abdomen"],
    "texto": "De colgarte a la negativa a un brazo, pasando por tu primera dominada.",
    "pasos": [
     {"ejercicio": "colgado-activo", "tipo": "segundos", "meta": 60},
@@ -22,6 +24,8 @@
    "nombre": "Remo",
    "familia": "fu",
    "patron": "tirar",
+   "zonas": ["espalda", "brazos"],
+   "apoyo": ["hombros"],
    "texto": "Tirar hacia el pecho, del poste a la barra baja y al remo en horizontal.",
    "pasos": [
     {"ejercicio": "remo-poste", "tipo": "repeticiones", "rango": [8, 12]},
@@ -35,6 +39,8 @@
    "nombre": "Empujar",
    "familia": "fu",
    "patron": "empujar",
+   "zonas": ["pecho", "brazos", "hombros"],
+   "apoyo": ["abdomen"],
    "texto": "De la flexión en la mesa a la flexión a un brazo.",
    "pasos": [
     {"ejercicio": "flexion-inclinada", "tipo": "repeticiones", "rango": [6, 10]},
@@ -51,6 +57,8 @@
    "nombre": "Fondos",
    "familia": "fu",
    "patron": "empujar",
+   "zonas": ["pecho", "brazos"],
+   "apoyo": ["hombros"],
    "texto": "Empujar hacia abajo: del banco a las paralelas.",
    "pasos": [
     {"ejercicio": "flexion-cerrada", "tipo": "repeticiones"},
@@ -63,6 +71,8 @@
    "nombre": "Piernas",
    "familia": "fu",
    "patron": "piernas",
+   "zonas": ["piernas", "gluteos"],
+   "apoyo": ["cadera"],
    "texto": "De la sentadilla común a la de una pierna.",
    "pasos": [
     {"ejercicio": "sentadilla", "tipo": "repeticiones", "rango": [8, 12], "conPeso": {"ejercicio": "sentadilla-mancuernas", "carga": 2, "kgInicial": 4, "hastaKg": 16}},
@@ -78,6 +88,8 @@
    "nombre": "Isquios",
    "familia": "fu",
    "patron": "bisagra",
+   "zonas": ["gluteos", "piernas"],
+   "apoyo": ["espalda"],
    "texto": "La parte de atrás de la pierna, del puente al nórdico.",
    "pasos": [
     {"ejercicio": "puente-gluteo", "tipo": "repeticiones", "rango": [8, 12], "conPeso": {"ejercicio": "peso-muerto-rumano", "carga": 2, "kgInicial": 6, "hastaKg": 20}},
@@ -92,6 +104,8 @@
    "nombre": "L-sit",
    "familia": "fu",
    "patron": "abdomen",
+   "zonas": ["abdomen"],
+   "apoyo": ["cadera", "brazos"],
    "texto": "Sostenes de abdominales, de la plancha a la V.",
    "pasos": [
     {"ejercicio": "plancha", "tipo": "segundos", "meta": 60},
@@ -106,6 +120,8 @@
    "nombre": "Bandera acostada",
    "familia": "fu",
    "patron": "abdomen",
+   "zonas": ["abdomen"],
+   "apoyo": ["espalda", "hombros"],
    "texto": "Los abdominales en movimiento, de los hollow rocks a la bandera acostada.",
    "pasos": [
     {"ejercicio": "hollow-rock", "tipo": "repeticiones", "rango": [12, 20]},
@@ -120,6 +136,8 @@
    "nombre": "Cadera",
    "familia": "ra",
    "patron": "movilidad",
+   "zonas": ["cadera"],
+   "apoyo": ["piernas", "gluteos"],
    "texto": "Fuerza al final del recorrido: sentadilla profunda, de costado y piernas abiertas a 90°.",
    "pasos": [
     {"ejercicio": "sentadilla-profunda", "tipo": "segundos", "meta": 60},
@@ -132,6 +150,8 @@
    "nombre": "Puente",
    "familia": "ra",
    "patron": "movilidad",
+   "zonas": ["hombros", "espalda"],
+   "apoyo": ["cadera"],
    "texto": "Muñecas, hombros y espalda, hasta el puente completo.",
    "pasos": [
     {"ejercicio": "munecas-dorso", "tipo": "segundos", "meta": 30},

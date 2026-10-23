@@ -127,4 +127,13 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 ## Vuelta 31 · rutinas con tu nivel
 
 - **Minutos de Base de calistenia** (Casandra): el catálogo dice 50 y el día armado da 65.
-- **[idea] Planes más visual** (Fer): rutinas y pruebas de un vistazo (ejercicios o músculos), medallas por nivel (inicial, intermedio, avanzado), más pruebas, y la biblioteca de ejercicios donde se llegue. Boceto en curso.
+- ~~**[idea] Planes más visual** (Fer)~~: hecho en la vuelta 32 (opción A, estantes). *Espera el OK de Fer al tablero.*
+
+## Vuelta 32 · Planes en estantes
+
+- **«Para vos» en horizontal** (el pulgar): las dos tarjetas van una debajo de la otra y ocupan la primera pantalla de la lista. Probar lado a lado, más bajas.
+- **Dos pruebas de sentarse** (la persona): «Sentarte y pararte» (del piso) y «Silla, un minuto» se parecen de nombre. Lo decide Fer.
+- **Pruebas nuevas que no encienden estrellas** (la tijera): cinco de las seis dan solo su medalla. Si Fer quiere, sumar estrellas que midan lo mismo (por ejemplo, una de plancha en Draco).
+- **El cuerpo de las rutinas de rango** (la directora de arte): marca cadera y piernas, pero no dice que es flexibilidad. Una marca de «estirar» en el cuerpo, si Fer lo pide.
+- **Coherencia**: los ejercicios de una rutina («Sus ejercicios», con su persona) y los de Hoy (filas con nombre) ahora abren la misma página, pero se ven distinto. Las miniaturas en «Hoy toca» siguen pendientes (ver «Miniaturas en "Hoy toca"»).
+- **Escaleras cortas** (vuelta 32, Fer): Remo (4) y Fondos (3) tienen menos escalones que Tirar o Empujar (7) porque al catálogo le faltan los pasos avanzados (por ejemplo, fondos con lastre, remo a un brazo). Alargarlas con pasos reales, no para emparejar.

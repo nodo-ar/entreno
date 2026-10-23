@@ -1,0 +1,124 @@
+/* ===== Planes en estantes (vuelta 32): para vos, tres estantes y la vitrina de medallas =====
+   Todo estante es igual: se desliza de costado, frena en cada tarjeta, la siguiente asoma y todas sus tarjetas tienen el mismo alto. */
+.pl>.lado{display:flex; flex-direction:column; gap:10px}
+.pl>.lado>.pl-tit{padding-top:10px}
+.pl-tit h2 .q{color:var(--ink-3); font-family:var(--f-mono); font-size:var(--t-md)}
+/* «Ver todos»: texto con su flecha, a la derecha del título, al alcance del pulgar */
+.pl-ver{display:inline-flex; align-items:center; gap:4px; min-height:44px; padding:0 4px 0 12px; border:0; background:none; color:var(--ink); font:inherit; font-size:var(--t-sm); font-weight:700; cursor:pointer}
+.pl-ver .ic{width:14px; height:14px; color:var(--ink-3)}
+
+/* ===== El estante ===== */
+.estante{display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:16px; margin:0 -16px; padding:2px 16px 6px;
+  scrollbar-width:none; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch}
+.estante::-webkit-scrollbar{display:none}
+.est-item{flex:none; display:flex; scroll-snap-align:start}
+.est-item>*{flex:1}
+
+/* ===== El nivel: el disco con sus satélites y su nombre ===== */
+.nv{display:inline-flex; align-items:center; gap:5px; font:700 var(--t-2xs)/1 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2)}
+.nv-ic{width:16px; height:16px; flex:none; overflow:visible}
+.nv .nv-ic{--c:var(--ink)}
+
+/* ===== El cuerpo: lo que no trabaja, apagado; el aro del corazón, del color de lo que tiene detrás ===== */
+/* la silueta en el gris de la tarjeta, los músculos sin trabajar un poco más hondos y las líneas entre ellos, del color de la tarjeta */
+.cuerpo{display:block; width:auto; flex:none; --cu-base:var(--s2); --cu-off:color-mix(in oklab,var(--off) 55%,var(--s2)); --cu-linea:var(--s1); --cu-fondo:var(--s1)}
+[data-sel] .cuerpo,.ru-card:active .cuerpo{--cu-base:color-mix(in oklab,var(--off) 45%,var(--s2)); --cu-off:var(--off); --cu-linea:var(--s2); --cu-fondo:var(--s2)}
+.zonas-tx{display:flex; flex-direction:column; gap:3px; font-size:var(--t-md)}
+.zonas-tx b{font-weight:600; line-height:1.3}
+.zonas-tx>span{margin-top:4px; font-size:var(--t-sm); font-weight:700; line-height:1.3; color:var(--ink-2)}
+
+/* ===== La tarjeta de una rutina: tres franjas de alto fijo (todas las tarjetas, iguales); el nombre guarda dos renglones, así arranca a la misma altura en todas ===== */
+.ru-card{width:272px; display:grid; grid-template-rows:92px 58px 36px; gap:12px; padding:14px; border:1px solid var(--line); border-radius:var(--r-lg);
+  background:var(--s1); color:var(--ink); text-align:left; font:inherit; cursor:pointer; --nv-fondo:var(--s1)}
+.ru-card:active,.ru-card[data-sel]{background:var(--s2); --nv-fondo:var(--s2); --ico-fondo:var(--s2)}
+.ru-card[data-sel]{border-color:var(--ink)}
+.ru-top{display:flex; gap:12px; align-items:center; min-width:0}
+.ru-tx{display:flex; flex-direction:column; gap:5px; min-width:0}
+.ru-nom{min-height:2.4em; font-size:var(--t-md); font-weight:600; line-height:1.2; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.ru-min{font-size:var(--t-sm); font-weight:700; color:var(--ink-2)}
+.ru-mid{display:flex; align-items:center; gap:12px; padding-top:10px; border-top:1px solid var(--line); min-width:0}
+.ru-sem{display:flex; flex-direction:column; gap:4px; font-weight:700; color:var(--ink-2); min-width:0}
+.ru-sem .aparte{display:flex; flex-direction:column; gap:2px}
+.ru-pide{color:var(--ink)}
+.ru-pie{display:flex; align-items:center}
+.sem-pts{flex:none; display:block}
+/* los ejercicios con su persona: uno al lado del otro y cuántos más */
+.ej-caras{display:inline-flex; align-items:center; gap:4px; min-width:0}
+.ej-caras>.ico{flex:none; width:34px; height:34px}
+.ej-mas{font-size:var(--t-sm); font-weight:700; color:var(--ink-2); padding-left:4px}
+
+/* ===== Para vos: tu rutina y la próxima prueba, lado a lado y del mismo alto ===== */
+.pv-fila{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+.pv-fila.sola{grid-template-columns:1fr}
+.pv{display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:14px; text-align:left; font:inherit; color:var(--ink); cursor:pointer}
+.pv:active,.pv[data-sel]{background:var(--s2); --ico-fondo:var(--s2)}
+.pv[data-sel]{border-color:var(--ink)}
+.pv>.lb{color:var(--c)}
+.pv-nom{font-size:var(--t-md); font-weight:600; line-height:1.2}
+.pv-med{display:flex; align-items:center; gap:10px}
+.pv-med .ico{flex:none; width:52px; height:52px}
+.pv-pie{margin-top:auto; display:flex; flex-direction:column; gap:3px; font-size:var(--t-sm); font-weight:700; line-height:1.3; color:var(--ink-2)}
+.pv-pie .num{color:var(--ink)}
+
+/* ===== Las puertas de los ejercicios ===== */
+.ej-puerta{width:104px; display:grid; grid-template-rows:64px 2.4em 14px; justify-items:center; align-items:center; gap:6px; padding:14px 8px 12px;
+  border:1px solid var(--line); border-radius:var(--r-lg); background:var(--s1); color:var(--ink); font:inherit; cursor:pointer}
+.ej-puerta:active{background:var(--s2)}
+.ej-puerta .ico{width:64px; height:64px}
+.ej-puerta b{font-size:var(--t-sm); font-weight:700; text-align:center; line-height:1.2}
+.ej-puerta small{font:700 var(--t-xs)/1 var(--f-mono); color:var(--ink-2)}
+.ej-todos{width:64px; height:64px; border-radius:50%; display:grid; place-items:center; background:var(--s2); color:var(--ink)}
+.ej-todos .ic{width:24px; height:24px}
+
+/* ===== La vitrina: los niveles arriba, un tema por fila ===== */
+.vt-cd{padding:12px 12px 6px; gap:0}
+.vt{--vt-col:84px}
+.vt-cab,.vt-fila{display:grid; grid-template-columns:var(--vt-col) repeat(3,minmax(0,1fr)); align-items:center}
+.vt-cab{padding:0 0 8px}
+.vt-nv{display:grid; justify-items:center; gap:4px}
+.vt-nv .nv-ic{--c:var(--ink)}
+.vt-fila{border-top:1px solid var(--line)}
+.vt-tema{display:flex; align-items:center; gap:6px; color:var(--ink); min-width:0}
+.vt-tema .dot{width:7px; height:7px; border-radius:50%; background:var(--c); flex:none}
+.vt-m{display:grid; grid-template-rows:46px 12px; justify-items:center; align-content:center; gap:3px; min-height:72px; padding:6px 2px; border:0; border-radius:var(--r-md);
+  background:none; color:var(--ink); font:inherit; cursor:pointer}
+.vt-m .ico{width:46px; height:46px}
+.vt-m:active,.vt-m[data-sel]{background:var(--s2); --ico-fondo:var(--s2)}
+.vt-m small{font:700 var(--t-2xs)/1.2 var(--f-mono); color:var(--ink-2)}
+.vt-m.prox small{color:var(--ink)}
+.vt-m.vacia{cursor:default}
+/* la grande: el tema arriba de su fila; cada medalla con su nombre (dos renglones siempre) y tu marca */
+.vt-cd.grande{padding:8px 10px 4px}
+.vt.grande{--vt-col:0}
+.vt.grande .vt-cab{grid-template-columns:repeat(3,minmax(0,1fr)); position:sticky; top:0; z-index:2; background:var(--s1); padding:8px 0}
+.vt.grande .vt-fila{grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:auto auto; padding-top:10px}
+.vt.grande .vt-tema{grid-column:1 / -1; padding:0 4px 2px}
+.vt.grande .vt-m{grid-template-rows:64px auto 14px; min-height:0; align-content:start; padding:8px 4px 12px}
+.vt.grande .vt-m .ico{width:64px; height:64px}
+.vt.grande .vt-m b{height:2.4em; font-size:var(--t-sm); font-weight:700; line-height:1.2; text-align:center; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.vt-ayuda{margin:0; padding:0 4px}
+
+/* ===== La rutina de un vistazo, arriba de su página (y el ejercicio, con el mismo cuerpo) ===== */
+.ru-vista{gap:14px}
+.ru-v-top{display:flex; gap:18px; align-items:center}
+.ru-v-tx{display:flex; flex-direction:column; gap:10px; min-width:0}
+.ru-v-sem{display:grid; gap:8px; padding-top:12px; border-top:1px solid var(--line)}
+.ru-v-sem .sem-pts{max-width:100%; height:auto}
+.ru-v-ley{display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-size:var(--t-sm); font-weight:700}
+.ru-v-ley i{width:9px; height:9px; border-radius:50%; margin-left:8px; flex:none}
+.ru-v-ley i:first-child{margin-left:0}
+.ru-v-ley .l-c{background:var(--off)}
+.ru-v-ley .l-p{border:1.6px solid var(--c)}
+.ru-v-ley .l-h{background:var(--c)}
+.ru-v-ejs{display:grid; gap:8px; padding-top:12px; border-top:1px solid var(--line)}
+.ru-v-ejs .ej-caras{display:flex; flex-wrap:wrap; gap:8px 4px}
+.ej-cara{flex:none; width:64px; display:grid; justify-items:center; align-content:start; gap:4px; min-height:44px; padding:0; border:0; background:none; color:var(--ink); font:inherit; cursor:pointer}
+.ej-cara .ico{width:48px; height:48px}
+.ej-cara small{font-size:var(--t-2xs); font-weight:700; line-height:1.15; text-align:center; color:var(--ink-2); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+
+@media (orientation:landscape) and (max-height:520px){
+  /* en horizontal la lista es una columna angosta: los estantes van dentro de ella, sin salir al borde */
+  .pl .estante{margin:0; padding:2px 0 6px; scroll-padding-inline:0}
+  .ru-card{width:248px}
+  .pv-fila{grid-template-columns:1fr}
+}

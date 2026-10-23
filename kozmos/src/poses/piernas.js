@@ -36,6 +36,9 @@
   const plancha = {torso: 108, head: 104, armN: [0, 0], armF: [2, 2], legN: [288, 288], legF: [289, 289]};
   Object.assign(K.POSES, {
     "sentadilla": {fijo: "fN", en: [150, T], k: [paradoBrazos, abajo], ritmo: [1.6, .3, 1.1, .4]},
+    /* sentarte y pararte de una silla (la prueba de un minuto): brazos cruzados sobre el pecho, de parado a sentado y otra vez arriba */
+    "silla-minuto": {fijo: "fN", en: [150, T], silla: [106, 232], k: [{...parado, armN: [24, 158], armF: [20, 154], pies: [0, 0]},
+      plano({torso: 160, head: 166, armN: [44, 176], armF: [40, 172], legN: [88, 2], legF: [86, 0]})], ritmo: [.7, .2, .7, .2]},
     "shrimp": {fijo: "fN", en: [160, T], k: [shrimpArriba, shrimpAbajo], ritmo: [2, .3, 1.5, .4]},
     "nordico-negativa": {fijo: "kN", en: [120, K.fig.PISO - 6], muestra: .5, k: [rodillas,
       {torso: 112, head: 114, armN: [339, 66], armF: [335, 62], legN: [292, 270], legF: [290, 270], pies: [-90, -90]}], ritmo: [4.5, .4, 1, .8]},

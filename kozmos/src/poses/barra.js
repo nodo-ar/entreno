@@ -76,6 +76,8 @@
     "dominada-un-brazo": {...U, k: [unoCol, unoMedio, unoArr], ritmo: [1.6, .5, 2, .6]},
     /* colgarse */
     "colgado-activo": {...B, k: [activo, respira(activo)], ritmo: RESP},
+    /* el mentón sobre la barra, quieto (la prueba de colgado con brazos flexionados) */
+    "colgado-arriba": {...B, k: [arriba, respira(arriba)], ritmo: RESP},
     "colgado-un-brazo": {...U, k: [unoCol, respira(unoCol)], ritmo: RESP},
     "retraccion-escapular": {...B, k: [pasivo, activo], ritmo: [1, 1, 1.2, .8]},
     /* muscle-up */

@@ -1,0 +1,27 @@
+/* ===== Ejercicios: la lista por lo que trabaja y cada ejercicio con su persona ===== */
+.ej-filtros{display:flex; gap:8px; justify-content:flex-start; flex-wrap:wrap; padding:0 2px 2px}
+.ej-grupo>.lb .q{color:var(--ink-3)}
+.ej{display:flex; flex-direction:column; gap:12px}
+/* la persona haciéndolo, grande y moviéndose, como en la serie */
+.ej-fig{display:grid; place-items:center; padding:4px 0}
+.ej-fig .fig{width:min(240px,60vw)}
+.ej-vista .ru-v-tx>.lb{color:var(--c)}
+.ej-como p{margin:0; font-size:var(--t-lg); font-weight:600; line-height:1.35}
+.ej-como .ln{border-top:1px solid var(--line); padding-top:8px}
+.ej-como .ln>span:last-child{font-weight:700}
+.ej-marca{gap:6px}
+.ej-marca p{margin:0}
+.ej-mejor{font-size:var(--t-xl); font-weight:600}
+/* la escalera: el de esta página, quieto y marcado */
+.ej-esc .ej-este{background:var(--s2); --ico-fondo:var(--s2)}
+.ej-esc .ej-este em{color:var(--ink)}
+.ajr>em.nv-em{display:grid; place-items:center}
+.ajr>em.nv-em .nv-ic{--c:var(--ink-2)}
+/* el nombre de un ejercicio en una fila de lo que toca: abre su página; se ve como texto, con un subrayado suave */
+.ej-ln{display:inline; padding:0; margin:0; border:0; background:none; color:inherit; font:inherit; text-align:left; cursor:pointer;
+  text-decoration:underline; text-decoration-color:var(--off); text-decoration-thickness:1.5px; text-underline-offset:3px}
+.ej-ln:active{color:var(--c)}
+.ej-ln:focus-visible{outline:2px solid var(--ink); outline-offset:2px; border-radius:4px}
+@media (orientation:landscape) and (max-height:520px){
+  .ej-fig .fig{width:auto; height:min(170px,42vh)}
+}

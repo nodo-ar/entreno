@@ -4,7 +4,10 @@
   {
    "id": "munecas-dorso",
    "nombre": "Apoyo en el dorso de las manos",
-   "indicacion": "Manos apoyadas al revés, dedos hacia vos. Llevá el peso de a poco."
+   "indicacion": "Manos apoyadas al revés, dedos hacia vos. Llevá el peso de a poco.",
+   "zonas": [
+    "brazos"
+   ]
   },
   {
    "id": "cuervo",
@@ -12,6 +15,13 @@
    "indicacion": "Rodillas sobre los codos, mirada adelante. Inclinate hasta despegar los pies.",
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
    ]
   },
   {
@@ -23,6 +33,13 @@
    ],
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
    ]
   },
   {
@@ -31,6 +48,13 @@
    "indicacion": "Pies en un banco, cadera arriba. Bajá la cabeza entre las manos.",
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "brazos"
+   ],
+   "apoyo": [
+    "pecho"
    ]
   },
   {
@@ -39,6 +63,13 @@
    "indicacion": "Brazos rectos, cuerpo en línea. Corregí con los dedos.",
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
    ]
   },
   {
@@ -50,6 +81,10 @@
    ],
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "brazos"
    ]
   },
   {
@@ -62,6 +97,14 @@
    "patron": [
     "tirar",
     "empujar"
+   ],
+   "zonas": [
+    "pecho",
+    "brazos",
+    "espalda"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -82,6 +125,15 @@
    "patron": [
     "tirar",
     "empujar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos",
+    "pecho"
+   ],
+   "apoyo": [
+    "hombros",
+    "abdomen"
    ]
   },
   {
@@ -94,6 +146,15 @@
    "patron": [
     "tirar",
     "empujar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos",
+    "pecho"
+   ],
+   "apoyo": [
+    "hombros",
+    "abdomen"
    ]
   },
   {
@@ -106,6 +167,15 @@
    "patron": [
     "tirar",
     "empujar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos",
+    "pecho"
+   ],
+   "apoyo": [
+    "hombros",
+    "abdomen"
    ]
   },
   {
@@ -126,6 +196,14 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros"
    ]
   },
   {
@@ -137,6 +215,14 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros"
    ]
   },
   {
@@ -148,6 +234,14 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros"
    ]
   },
   {
@@ -159,6 +253,14 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros"
    ]
   },
   {
@@ -170,6 +272,14 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros"
    ]
   },
   {
@@ -181,6 +291,14 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros"
    ]
   },
   {
@@ -189,6 +307,14 @@
    "indicacion": "En plancha, llevá los hombros por delante de las manos.",
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
    ]
   },
   {
@@ -202,6 +328,14 @@
    "indicacion": "Rodillas al pecho, pies en el aire, brazos rectos.",
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
    ]
   },
   {
@@ -210,6 +344,14 @@
    "indicacion": "Espalda plana, cadera a la altura de los hombros.",
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
    ]
   },
   {
@@ -218,6 +360,14 @@
    "indicacion": "Piernas abiertas y estiradas, cuerpo horizontal.",
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
    ]
   },
   {
@@ -229,6 +379,13 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "brazos",
+    "espalda"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -267,6 +424,14 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros",
+    "abdomen"
    ]
   },
   {
@@ -280,6 +445,14 @@
     "abdomen",
     "empujar",
     "tirar"
+   ],
+   "zonas": [
+    "abdomen",
+    "hombros",
+    "espalda"
+   ],
+   "apoyo": [
+    "brazos"
    ]
   },
   {
@@ -293,6 +466,14 @@
     "abdomen",
     "empujar",
     "tirar"
+   ],
+   "zonas": [
+    "abdomen",
+    "hombros",
+    "espalda"
+   ],
+   "apoyo": [
+    "brazos"
    ]
   },
   {
@@ -306,6 +487,14 @@
     "abdomen",
     "empujar",
     "tirar"
+   ],
+   "zonas": [
+    "abdomen",
+    "hombros",
+    "espalda"
+   ],
+   "apoyo": [
+    "brazos"
    ]
   },
   {
@@ -375,6 +564,13 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -387,6 +583,13 @@
    ],
    "patron": [
     "empujar"
+   ],
+   "zonas": [
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -408,22 +611,46 @@
   {
    "id": "espagat-lateral",
    "nombre": "Espagat abierto al costado",
-   "indicacion": "Piernas abiertas al costado hasta el piso."
+   "indicacion": "Piernas abiertas al costado hasta el piso.",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera",
+    "piernas"
+   ]
   },
   {
    "id": "espagat-frontal",
    "nombre": "Espagat con una pierna adelante",
-   "indicacion": "Una pierna adelante y otra atrás, cadera cuadrada."
+   "indicacion": "Una pierna adelante y otra atrás, cadera cuadrada.",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera",
+    "piernas"
+   ]
   },
   {
    "id": "manos-atras",
    "nombre": "Manos juntas atrás",
-   "indicacion": "Una mano por arriba y otra por abajo, se juntan en la espalda."
+   "indicacion": "Una mano por arriba y otra por abajo, se juntan en la espalda.",
+   "grupo": "movilidad",
+   "zonas": [
+    "hombros"
+   ],
+   "apoyo": [
+    "pecho"
+   ]
   },
   {
    "id": "dedos-al-piso",
    "nombre": "Dedos al piso",
-   "indicacion": "Piernas estiradas, bajá desde la cadera."
+   "indicacion": "Piernas estiradas, bajá desde la cadera.",
+   "grupo": "movilidad",
+   "zonas": [
+    "piernas"
+   ],
+   "apoyo": [
+    "espalda"
+   ]
   },
   {
    "id": "hombros-pared",
@@ -433,7 +660,15 @@
   {
    "id": "pike-pecho",
    "nombre": "Sentado, pecho a las piernas",
-   "indicacion": "Sentado con piernas juntas, pecho a las rodillas."
+   "indicacion": "Sentado con piernas juntas, pecho a las rodillas.",
+   "grupo": "movilidad",
+   "zonas": [
+    "piernas"
+   ],
+   "apoyo": [
+    "espalda",
+    "cadera"
+   ]
   },
   {
    "id": "puente",
@@ -443,17 +678,41 @@
   {
    "id": "pancake",
    "nombre": "Piernas abiertas, pecho al piso",
-   "indicacion": "Piernas abiertas, pecho hacia el piso desde la cadera."
+   "indicacion": "Piernas abiertas, pecho hacia el piso desde la cadera.",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera",
+    "piernas"
+   ],
+   "apoyo": [
+    "espalda"
+   ]
   },
   {
    "id": "trote",
    "nombre": "Trote",
-   "indicacion": "A un ritmo en el que puedas hablar."
+   "indicacion": "A un ritmo en el que puedas hablar.",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "gluteos"
+   ]
   },
   {
    "id": "10km",
    "nombre": "10 km",
-   "indicacion": "Un ritmo parejo. Anotá el tiempo total."
+   "indicacion": "Un ritmo parejo. Anotá el tiempo total.",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "gluteos"
+   ]
   },
   {
    "id": "bici",
@@ -461,12 +720,25 @@
    "indicacion": "Un ritmo en el que puedas hablar en frases cortas.",
    "equipo": [
     "bici"
+   ],
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
    ]
   },
   {
    "id": "intervalos",
    "nombre": "Intervalos 4×4",
-   "indicacion": "Cuatro de 4 minutos fuerte con 3 suaves entre medio."
+   "indicacion": "Cuatro de 4 minutos fuerte con 3 suaves entre medio.",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "gluteos"
+   ]
   },
   {
    "id": "soga",
@@ -474,6 +746,14 @@
    "indicacion": "Saltos bajos, muñecas sueltas, en la punta de los pies.",
    "equipo": [
     "soga"
+   ],
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -482,6 +762,15 @@
    "indicacion": "Dos vueltas de soga por salto.",
    "equipo": [
     "soga"
+   ],
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "hombros",
+    "brazos"
    ]
   },
   {
@@ -490,6 +779,15 @@
    "indicacion": "Cruzá los brazos en el aire y descruzá al salto siguiente.",
    "equipo": [
     "soga"
+   ],
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "hombros",
+    "brazos"
    ]
   },
   {
@@ -590,13 +888,30 @@
    "nombre": "Plancha lateral",
    "indicacion": "Codo bajo el hombro, cadera arriba, cuerpo en línea.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "hombros",
+    "cadera"
+   ]
   },
   {
    "id": "escaladores",
    "nombre": "Escaladores",
    "indicacion": "Manos bajo los hombros, cadera baja. Rodillas al pecho rápido.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "abdomen"
+   ],
+   "apoyo": [
+    "hombros",
+    "piernas"
+   ]
   },
   {
    "id": "dominada",
@@ -654,6 +969,12 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -665,6 +986,13 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -676,6 +1004,13 @@
    ],
    "patron": [
     "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -697,12 +1032,27 @@
    "indicacion": "Desde la barra. Pelvis adelante para que trabaje el abdomen.",
    "equipo": [
     "barra"
+   ],
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "cadera"
    ]
   },
   {
    "id": "crunch-inverso",
    "nombre": "Crunch inverso",
-   "indicacion": "Acostado, llevá las rodillas al pecho despegando la cola del piso."
+   "indicacion": "Acostado, llevá las rodillas al pecho despegando la cola del piso.",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "cadera"
+   ]
   },
   {
    "id": "dragon-flag-negativa",
@@ -719,20 +1069,43 @@
    "nombre": "Plancha lateral con pierna arriba",
    "indicacion": "En plancha lateral, levantá la pierna de arriba y sostené sin que baje la cadera.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen",
+    "cadera"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
   },
   {
    "id": "plancha-dos-apoyos",
    "nombre": "Plancha a dos apoyos",
    "indicacion": "Desde plancha alta, levantá un brazo y la pierna contraria y sostené con la cadera quieta.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "espalda",
+    "gluteos"
+   ]
   },
   {
    "id": "superman",
    "nombre": "Superman",
    "indicacion": "Boca abajo, brazos y piernas estirados y despegados del piso.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "espalda"
+   ],
+   "apoyo": [
+    "gluteos"
+   ]
   },
   {
    "id": "pies-a-la-barra",
@@ -740,6 +1113,15 @@
    "indicacion": "Si no llegás, subí hasta donde puedas con las piernas rectas.",
    "equipo": [
     "barra"
+   ],
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "espalda",
+    "cadera"
    ]
   },
   {
@@ -748,6 +1130,14 @@
    "indicacion": "Hasta la cadera. Si se hamaca, menos rango.",
    "equipo": [
     "barra"
+   ],
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen",
+    "cadera"
+   ],
+   "apoyo": [
+    "brazos"
    ]
   },
   {
@@ -758,7 +1148,16 @@
     "mancuernas"
    ],
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros",
+    "piernas"
+   ]
   },
   {
    "id": "paseo-maleta-kettlebell",
@@ -768,276 +1167,520 @@
     "kettlebell"
    ],
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros",
+    "piernas"
+   ]
   },
   {
    "id": "gato-camello",
    "nombre": "Gato y camello",
    "indicacion": "En cuatro patas, redondeá y arqueá la espalda despacio, sin forzar los extremos.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "espalda"
+   ]
   },
   {
    "id": "curl-up",
    "nombre": "Curl-up",
    "indicacion": "Manos bajo la lumbar, una pierna doblada. Despegá apenas la cabeza y los hombros.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ]
   },
   {
    "id": "plancha-lateral-rodillas",
    "nombre": "Plancha lateral de rodillas",
    "indicacion": "Codo bajo el hombro, rodillas dobladas, cadera arriba en línea con el tronco.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "hombros",
+    "cadera"
+   ]
   },
   {
    "id": "perro-de-caza-sostenido",
    "nombre": "Perro de caza sostenido",
    "indicacion": "En cuatro patas, estirá un brazo y la pierna contraria y sostené sin que la cadera gire.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen",
+    "espalda"
+   ],
+   "apoyo": [
+    "gluteos"
+   ]
   },
   {
    "id": "respiracion-90-90",
    "nombre": "Respiración 90/90",
    "indicacion": "Pies en la pared, rodillas y cadera a 90°. Exhalá largo hasta que bajen las costillas.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "cadera"
+   ]
   },
   {
    "id": "bicho-muerto-sostenido",
    "nombre": "Bicho muerto sostenido",
    "indicacion": "Lumbar apoyada, estirá un brazo y la pierna contraria cerca del piso y sostené.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ]
   },
   {
    "id": "mariposa-acostado",
    "nombre": "Mariposa acostado",
    "indicacion": "Plantas de los pies juntas, rodillas caen a los costados.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera"
+   ]
   },
   {
    "id": "gluteo-tobillo-rodilla",
    "nombre": "Glúteo con tobillo sobre la rodilla",
    "indicacion": "Acostado, cruzá el tobillo sobre la rodilla y traé la pierna al pecho.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "gluteos",
+    "cadera"
+   ]
   },
   {
    "id": "isquios-sentado",
    "nombre": "Isquios sentado",
    "indicacion": "Piernas juntas, espalda larga, bajá desde la cadera. No fuerces con la espalda.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "piernas"
+   ]
   },
   {
    "id": "aductores-acostado",
    "nombre": "Aductores acostado",
    "indicacion": "Acostado, plantas juntas y rodillas caídas a los costados.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera",
+    "piernas"
+   ]
   },
   {
    "id": "rodilla-cruzada",
    "nombre": "Rodilla cruzada acostado",
    "indicacion": "Acostado, llevá la rodilla hacia el hombro contrario.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "gluteos",
+    "cadera"
+   ],
+   "apoyo": [
+    "espalda"
+   ]
   },
   {
    "id": "estiramiento-corredor",
    "nombre": "Estiramiento del corredor",
    "indicacion": "Pierna adelante estirada, bajá el pecho hacia ella con la espalda larga.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera",
+    "piernas"
+   ]
   },
   {
    "id": "rodilla-al-pecho",
    "nombre": "Rodilla al pecho",
    "indicacion": "Acostado, abrazá una rodilla contra el pecho con la otra pierna estirada.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "gluteos",
+    "cadera"
+   ]
   },
   {
    "id": "gluteo-banda-it",
    "nombre": "Glúteo y banda IT",
    "indicacion": "Acostado, cruzá la pierna y tirala hacia el hombro contrario.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "gluteos",
+    "piernas"
+   ]
   },
   {
    "id": "piernas-abiertas",
    "nombre": "Piernas abiertas al frente",
    "indicacion": "Sentado, piernas bien abiertas, pecho hacia el piso. Base del pancake.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera",
+    "piernas"
+   ]
   },
   {
    "id": "isquios-90-90",
    "nombre": "Isquios 90-90",
    "indicacion": "Acostado, muslo vertical sostenido con las manos, estirá la rodilla de a poco.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "piernas"
+   ],
+   "apoyo": [
+    "cadera"
+   ]
   },
   {
    "id": "groiners",
    "nombre": "Groiners",
    "indicacion": "Desde plancha, llevá un pie al lado de la mano y alterná sin apuro.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera",
+    "piernas"
+   ]
   },
   {
    "id": "flexor-cadera-arrodillado",
    "nombre": "Flexor de cadera arrodillado",
    "indicacion": "Rodilla en el piso, glúteo apretado, cadera adelante. Clave después de la bici.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera"
+   ],
+   "apoyo": [
+    "piernas"
+   ]
   },
   {
    "id": "cuadriceps-costado",
    "nombre": "Cuádriceps de costado",
    "indicacion": "Acostado de lado, talón al glúteo, cadera hacia adelante.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "piernas"
+   ]
   },
   {
    "id": "flexor-cadera-de-pie",
    "nombre": "Flexores de cadera de pie",
    "indicacion": "Estocada corta, apretá el glúteo de atrás y llevá la cadera adelante.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera"
+   ],
+   "apoyo": [
+    "piernas"
+   ]
   },
   {
    "id": "codos-atras",
    "nombre": "Codos atrás",
    "indicacion": "Manos en la cintura, juntá los codos atrás. Desarma el hombro cerrado.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "pecho",
+    "hombros"
+   ]
   },
   {
    "id": "dorsal-arriba",
    "nombre": "Dorsal arriba",
    "indicacion": "Un brazo arriba, agarrado, inclinate al lado contrario.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "espalda"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
   },
   {
    "id": "pecho-pared",
    "nombre": "Pecho contra la pared",
    "indicacion": "Antebrazo en la pared, girá el cuerpo hacia afuera.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "pecho"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
   },
   {
    "id": "munecas-cuatro-patas",
    "nombre": "Muñecas en cuatro patas",
    "indicacion": "Dedos hacia las rodillas, palmas en el piso, sentate atrás de a poco.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "brazos"
+   ]
   },
   {
    "id": "postura-nino",
    "nombre": "Postura del niño",
    "indicacion": "Cola a los talones, brazos largos adelante.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "espalda"
+   ],
+   "apoyo": [
+    "cadera"
+   ]
   },
   {
    "id": "manos-atras-sentado",
    "nombre": "Manos atrás sentado",
    "indicacion": "Manos apoyadas atrás, dedos hacia atrás, caminá la cola hacia adelante.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "hombros",
+    "pecho"
+   ]
   },
   {
    "id": "triceps-sobre-cabeza",
    "nombre": "Extensión de tríceps sobre la cabeza",
    "indicacion": "Codo al techo, mano a la espalda, empujá el codo con la otra mano.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
   },
   {
    "id": "circulos-muneca",
    "nombre": "Círculos de muñeca",
    "indicacion": "Lento, grande, para los dos lados. Antes de parada de manos o planche.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "brazos"
+   ]
   },
   {
    "id": "hombro-cruzado",
    "nombre": "Hombro cruzado",
    "indicacion": "Cruzá un brazo por delante del pecho y apretalo con el otro.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "hombros"
+   ]
   },
   {
    "id": "dorsal-de-costado",
    "nombre": "Dorsal acostado de lado",
    "indicacion": "De lado, brazo de arriba estirado por encima de la cabeza.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "espalda"
+   ]
   },
   {
    "id": "biceps-pared",
    "nombre": "Bíceps en la pared",
    "indicacion": "Palma en la pared a la altura del hombro, girá el cuerpo hacia afuera.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "brazos"
+   ],
+   "apoyo": [
+    "pecho"
+   ]
   },
   {
    "id": "muneca-costado",
    "nombre": "Muñeca de costado",
    "indicacion": "Agarrá la muñeca y tirá de costado hasta sentir el antebrazo.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "brazos"
+   ]
   },
   {
    "id": "pecho-manos-nuca",
    "nombre": "Pecho con manos atrás de la cabeza",
    "indicacion": "Codos bien atrás, pecho abierto. Ayuda que alguien empuje suave.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "pecho"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
   },
   {
    "id": "brazos-al-techo",
    "nombre": "Brazos al techo",
    "indicacion": "Dedos cruzados, palmas al techo, hombros lejos de las orejas.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "hombros"
+   ],
+   "apoyo": [
+    "espalda"
+   ]
   },
   {
    "id": "pecho-marco-puerta",
    "nombre": "Pecho en el marco de la puerta",
    "indicacion": "Antebrazo en el marco, avanzá un paso hasta sentir el pecho.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "pecho"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
   },
   {
    "id": "isquios-pierna-arriba",
    "nombre": "Isquios acostado con la pierna arriba",
    "indicacion": "Acostado, una pierna al techo, agarrada con las manos o una toalla.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "piernas"
+   ]
   },
   {
    "id": "flexor-cuadriceps-estocada",
    "nombre": "Flexor y cuádriceps en estocada",
    "indicacion": "Rodilla atrás en el piso, agarrá ese pie y llevá la cadera adelante.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "cadera",
+    "piernas"
+   ]
   },
   {
    "id": "cuadriceps-pie-elevado",
    "nombre": "Cuádriceps con pie elevado",
    "indicacion": "Empeine sobre una silla detrás, bajá la rodilla y llevá la cadera adelante.",
    "lado": true,
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "piernas"
+   ],
+   "apoyo": [
+    "cadera"
+   ]
   },
   {
    "id": "hombros-silla",
    "nombre": "Hombros en silla",
    "indicacion": "Manos en el respaldo, alejate y bajá el pecho con los brazos estirados.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "hombros"
+   ],
+   "apoyo": [
+    "espalda"
+   ]
   },
   {
    "id": "tocar-los-pies",
    "nombre": "Tocar los pies de pie",
    "indicacion": "Rodillas apenas flojas, dejá colgar la cabeza.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "movilidad",
+   "zonas": [
+    "piernas"
+   ],
+   "apoyo": [
+    "espalda"
+   ]
   },
   {
    "id": "puente-gluteo-sostenido",
    "nombre": "Puente de glúteo sostenido",
    "indicacion": "Subí la cadera despacio, vértebra por vértebra. Antes del puente completo.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "bisagra",
+   "zonas": [
+    "gluteos"
+   ],
+   "apoyo": [
+    "piernas",
+    "espalda"
+   ]
   },
   {
    "id": "swing-kettlebell",
@@ -1045,6 +1688,15 @@
    "indicacion": "La cadera empuja, los brazos acompañan.",
    "equipo": [
     "kettlebell"
+   ],
+   "grupo": "bisagra",
+   "zonas": [
+    "gluteos",
+    "piernas"
+   ],
+   "apoyo": [
+    "espalda",
+    "corazon"
    ]
   },
   {
@@ -1053,6 +1705,15 @@
    "indicacion": "Mancuerna entre las piernas, empujá con la cadera hasta arriba de la cabeza.",
    "equipo": [
     "mancuernas"
+   ],
+   "grupo": "bisagra",
+   "zonas": [
+    "gluteos",
+    "piernas"
+   ],
+   "apoyo": [
+    "espalda",
+    "corazon"
    ]
   },
   {
@@ -1062,23 +1723,60 @@
    "equipo": [
     "kettlebell"
    ],
-   "lado": true
+   "lado": true,
+   "grupo": "bisagra",
+   "zonas": [
+    "gluteos",
+    "hombros"
+   ],
+   "apoyo": [
+    "piernas",
+    "espalda",
+    "corazon"
+   ]
   },
   {
    "id": "saltos-tijera",
    "nombre": "Saltos de tijera",
    "indicacion": "Saltá abriendo piernas y brazos a la vez y cerrá. Aterrizá suave.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
   },
   {
    "id": "sentadilla-salto",
    "nombre": "Sentadilla con salto",
-   "indicacion": "Bajá, saltá explosivo y caé suave, ya bajando."
+   "indicacion": "Bajá, saltá explosivo y caé suave, ya bajando.",
+   "grupo": "motor",
+   "zonas": [
+    "piernas",
+    "corazon"
+   ],
+   "apoyo": [
+    "gluteos"
+   ]
   },
   {
    "id": "burpee",
    "nombre": "Burpee",
-   "indicacion": "Manos al piso, pies atrás a la plancha, pies adelante y saltá."
+   "indicacion": "Manos al piso, pies atrás a la plancha, pies adelante y saltá.",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas",
+    "pecho"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros",
+    "abdomen"
+   ]
   },
   {
    "id": "zancada",
@@ -1090,7 +1788,15 @@
    "id": "rodillas-arriba",
    "nombre": "Rodillas arriba en el lugar",
    "indicacion": "Trote en el lugar subiendo las rodillas a la altura de la cadera.",
-   "mide": "segundos"
+   "mide": "segundos",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "abdomen"
+   ]
   },
   {
    "id": "rodillas-paralelas",
@@ -1098,17 +1804,45 @@
    "indicacion": "Sin hamacarte. Frená un segundo arriba.",
    "equipo": [
     "paralelas"
+   ],
+   "grupo": "abdomen",
+   "zonas": [
+    "abdomen"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros",
+    "cadera"
    ]
   },
   {
    "id": "estocada-salto",
    "nombre": "Estocada con salto",
-   "indicacion": "Desde estocada saltá y cambiá de pierna en el aire."
+   "indicacion": "Desde estocada saltá y cambiá de pierna en el aire.",
+   "grupo": "motor",
+   "zonas": [
+    "piernas",
+    "corazon"
+   ],
+   "apoyo": [
+    "gluteos"
+   ]
   },
   {
    "id": "burpee-flexion",
    "nombre": "Burpee con flexión",
-   "indicacion": "Como el burpee, con el pecho al piso en la plancha."
+   "indicacion": "Como el burpee, con el pecho al piso en la plancha.",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "pecho",
+    "piernas"
+   ],
+   "apoyo": [
+    "brazos",
+    "hombros",
+    "abdomen"
+   ]
   },
   {
    "id": "remo-al-menton",
@@ -1116,6 +1850,14 @@
    "indicacion": "Mancuernas pegadas al cuerpo, subí los codos hasta la altura del pecho.",
    "equipo": [
     "mancuernas"
+   ],
+   "grupo": "tirar",
+   "zonas": [
+    "hombros",
+    "brazos"
+   ],
+   "apoyo": [
+    "espalda"
    ]
   },
   {
@@ -1124,6 +1866,14 @@
    "indicacion": "De pie, panza dura, sin arquear.",
    "equipo": [
     "mancuernas"
+   ],
+   "grupo": "empujar",
+   "zonas": [
+    "hombros",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
    ]
   },
   {
@@ -1140,6 +1890,14 @@
    "indicacion": "Torso inclinado, espalda larga. Llevá los codos hacia la cadera.",
    "equipo": [
     "mancuernas"
+   ],
+   "grupo": "tirar",
+   "zonas": [
+    "espalda",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
    ]
   },
   {
@@ -1156,6 +1914,14 @@
    "indicacion": "Piernas cruzadas, sentate en el piso y parate sin apoyos. Cada apoyo resta 1 de 10.",
    "patron": [
     "movilidad"
+   ],
+   "zonas": [
+    "piernas",
+    "cadera"
+   ],
+   "apoyo": [
+    "gluteos",
+    "abdomen"
    ]
   },
   {
@@ -1164,6 +1930,13 @@
    "indicacion": "Sentado, piernas estiradas: medí cuánto pasan tus dedos la punta de los pies.",
    "patron": [
     "movilidad"
+   ],
+   "zonas": [
+    "piernas",
+    "cadera"
+   ],
+   "apoyo": [
+    "espalda"
    ]
   },
   {
@@ -1172,6 +1945,11 @@
    "indicacion": "Lo más fuerte que puedas sostener parejo. Al final, los km de la pantalla.",
    "equipo": [
     "bici"
+   ],
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
    ]
   },
   {
@@ -1180,6 +1958,57 @@
    "indicacion": "Lo más rápido que puedas. Si la soga se traba, seguís desde donde ibas.",
    "equipo": [
     "soga"
+   ],
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
+  },
+  {
+   "id": "colgado-arriba",
+   "nombre": "Colgado con el mentón sobre la barra",
+   "indicacion": "Mentón arriba de la barra y codos doblados. Aguantá sin apoyar el mentón.",
+   "equipo": [
+    "barra"
+   ],
+   "mide": "segundos",
+   "grupo": "tirar",
+   "zonas": [
+    "brazos",
+    "espalda"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
+  },
+  {
+   "id": "silla-minuto",
+   "nombre": "Sentarte y pararte de una silla",
+   "indicacion": "Brazos cruzados. Te parás derecho del todo y volvés a sentarte, sin manos.",
+   "grupo": "piernas",
+   "zonas": [
+    "piernas",
+    "gluteos"
+   ],
+   "apoyo": [
+    "corazon"
+   ]
+  },
+  {
+   "id": "cooper",
+   "nombre": "12 minutos corriendo",
+   "indicacion": "Corré lo más que puedas en 12 minutos, en llano. Si hace falta, caminá y seguí.",
+   "grupo": "motor",
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "apoyo": [
+    "gluteos"
    ]
   }
  ]

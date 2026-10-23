@@ -6,6 +6,7 @@
  "semanas": 4,
  "dias": 4,
  "minutos": 20,
+ "nivel": 1,
  "bloque": {
   "carga": 3,
   "prueba": 1
