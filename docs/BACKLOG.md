@@ -136,3 +136,4 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Pruebas nuevas que no encienden estrellas** (la tijera): cinco de las seis dan solo su medalla. Si Fer quiere, sumar estrellas que midan lo mismo (por ejemplo, una de plancha en Draco).
 - **El cuerpo de las rutinas de rango** (la directora de arte): marca cadera y piernas, pero no dice que es flexibilidad. Una marca de «estirar» en el cuerpo, si Fer lo pide.
 - **Coherencia**: los ejercicios de una rutina («Sus ejercicios», con su persona) y los de Hoy (filas con nombre) ahora abren la misma página, pero se ven distinto. Las miniaturas en «Hoy toca» siguen pendientes (ver «Miniaturas en "Hoy toca"»).
+- **Escaleras cortas** (vuelta 32, Fer): Remo (4) y Fondos (3) tienen menos escalones que Tirar o Empujar (7) porque al catálogo le faltan los pasos avanzados (por ejemplo, fondos con lastre, remo a un brazo). Alargarlas con pasos reales, no para emparejar.
