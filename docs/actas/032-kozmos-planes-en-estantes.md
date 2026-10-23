@@ -95,6 +95,9 @@ Cada escala se revisó contra su norma publicada, de la magnitud 5 a la 1.
   - `sin-desborde-360`: suma la vitrina, una prueba nueva, la biblioteca y un ejercicio.
   - `horizontal` y `cielo-horizontal`: «abrir un ajuste o una constelación no mueve la lista» se mide ahora con la fila ya a la vista, como la toca una persona. Antes la lista volvía arriba en cada redibujo y la prueba medía desde arriba; ahora queda donde estaba. Por lo mismo, «los dos títulos se alinean» se mide con la lista arriba de todo.
 
+- **Resultado**: `puras.mjs`, 120 en verde. Suite completa, en verde: 108 de pantalla en 1049 s.
+- `hoy-sin-repetir-constelacion` compara el nombre sin el enlace y mira el enlace aparte. `planes-vitrina`, `biblioteca-ejercicios` y `ejercicio-enlaces` tocan el volver que se ve, porque la lista de atrás también tiene el suyo, escondido.
+
 ## 5 · Lo que queda
 - Las tarjetas «para vos» en horizontal van una debajo de la otra: ocupan la primera pantalla de la lista.
 - «Sentarte y pararte» (del piso) y «Silla, un minuto» se parecen de nombre: mirar con Fer si «Del piso y arriba» se entiende mejor.
