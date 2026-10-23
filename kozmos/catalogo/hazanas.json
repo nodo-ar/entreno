@@ -52,12 +52,12 @@
   },
   {
    "id": "sagitario",
-   "nombre": "Sentarte y pararte",
+   "nombre": "Del piso y arriba",
    "prueba": "Del 0 al 10: cuánto te apoyás para bajar y subir del piso",
    "familia": "fu",
    "tema": "piernas",
    "nivel": 2,
-   "texto": "Sentarte y pararte sin manos, de 0 a 10.",
+   "texto": "Del piso a parado y de vuelta, sin manos, de 0 a 10.",
    "como": "Descalzo, sentate en el piso con las piernas cruzadas y volvé a pararte. Empezás con 10: cada apoyo resta 1 y cada desequilibrio, medio.",
    "formato": "maximo",
    "mide": {

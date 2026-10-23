@@ -25,7 +25,8 @@ K.ejMejor = vs => {
   return {...m, txt: K.cielo.corto({tipo}, m.valor), dias: new Set(vs.map(v => v.fecha)).size, ultima: vs.map(v => v.fecha).sort().pop()};
 };
 
-/* ===== Los menús: qué trabaja y con qué (lo elegido queda para la próxima vez) ===== */
+/* ===== Los menús: qué trabaja y con qué (lo elegido queda para la próxima vez).
+   «Todo» va sin marca en los dos; cada equipo lleva su ícono, el mismo de Tu equipo; sin nada, la persona sola. ===== */
 const ejQue = () => { const v = K.prefs.get("ejercicios.que", "todo"); return K.biblio.grupo(v) ? v : "todo"; };
 const ejCon = () => { const v = K.prefs.get("ejercicios.con", "todo"), tengo = !!K.diario.perfil.equipo;
   return v === "tuyo" ? (tengo ? v : "todo") : v === "nada" || v === "todo" || K.EQUIPOS.some(e => e[0] === v) ? v : "todo"; };
@@ -40,8 +41,8 @@ K.ejMenu = btn => {
       elegir: id => { K.prefs.set("ejercicios.que", id); volverArriba(); }});
     return; }
   const v = ejCon(), tengo = !!K.diario.perfil.equipo;
-  K.menu.abrir(btn, {titulo: "Con qué", items: [{id: "todo", texto: conTx("todo"), elegido: v === "todo"}, ...(tengo ? [{id: "tuyo", texto: conTx("tuyo"), elegido: v === "tuyo"}] : []),
-      {id: "nada", texto: conTx("nada"), elegido: v === "nada"}, ...K.EQUIPOS.map(([id]) => ({id, texto: conTx(id), elegido: v === id}))],
+  K.menu.abrir(btn, {titulo: "Con qué", items: [{id: "todo", texto: conTx("todo"), elegido: v === "todo"}, ...(tengo ? [{id: "tuyo", texto: conTx("tuyo"), ic: "caja", elegido: v === "tuyo"}] : []),
+      {id: "nada", texto: conTx("nada"), ic: "persona", elegido: v === "nada"}, ...K.EQUIPOS.map(([id]) => ({id, texto: conTx(id), ic: id === "lastre" ? "peso" : id, elegido: v === id}))],
     elegir: id => { K.prefs.set("ejercicios.con", id); volverArriba(); }});
 };
 const pasa = (x, que, con) => {

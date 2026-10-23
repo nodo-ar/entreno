@@ -884,7 +884,7 @@
     },
     {
      "id": "una-pierna.del-piso-8",
-     "nombre": "Sentarte y pararte: 8 puntos",
+     "nombre": "Del piso y arriba: 8 puntos",
      "magnitud": 5,
      "orden": 2,
      "prueba": {
@@ -1144,7 +1144,7 @@
     },
     {
      "id": "espagat.del-piso-9",
-     "nombre": "Sentarte y pararte: 9 puntos",
+     "nombre": "Del piso y arriba: 9 puntos",
      "magnitud": 4,
      "orden": 3,
      "prueba": {

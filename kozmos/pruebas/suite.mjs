@@ -1402,7 +1402,7 @@ prueba("hazana-escalera-y-reloj", async () => {
   }
   const mj = await p.evaluate(() => K.cielo.deSesiones(K.diario.sesiones).filter(m => m.tipo === "mejora").map(m => m.valor));
   ok(mj.length === 2 && mj[0] === 0 && Math.abs(mj[1] - 11.3) < .05, "la mejora contra tu primera vez no se calcula: " + mj);
-  /* Sentarte y pararte (sagitario): de medio punto, de 0 a 10; Alcance de piernas (casiopea): los centímetros bajan de cero */
+  /* Del piso y arriba (sagitario): de medio punto, de 0 a 10; Alcance de piernas (casiopea): los centímetros bajan de cero */
   await ir(p, "#/planes/hazanas/sagitario"); await p.click("#hz-empezar"); await p.waitForSelector(".ses.serie"); await p.click("#s-listo"); await p.waitForSelector(".ses.cierre");
   await escribir(p, 9.5); await p.click('[data-spaso="1"]'); await p.click('[data-spaso="1"]');
   ok(await p.inputValue("#s-valor") === "10", "los puntos pasan de 10: " + await p.inputValue("#s-valor"));
