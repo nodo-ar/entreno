@@ -744,7 +744,8 @@ prueba("hoy-molde", async () => {
   await ctx.close();
 });
 prueba("rumbo-sin-tope", async () => {
-  const {ctx, p} = await pagina();
+  /* un martes fijo: lo que Hoy arma depende del día de la semana (un viernes, con días 1, 3 y 5, toca otra cosa) */
+  const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await sembrarMolde(p, {rumbo: [], equipo: ["barra", "paralelas", "pared", "poste"], dias: [1, 3, 5]});
   await ir(p, "#/hoy/rumbo");
   ok((await p.textContent(".ayuda")) === "Elegí las que quieras. Kozmos rota lo que toca cada día.", "el texto de Tu rumbo: " + await p.textContent(".ayuda"));
