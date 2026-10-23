@@ -67,7 +67,7 @@ Cada escala se revisó contra su norma publicada, de la magnitud 5 a la 1.
 
 - **Quedaron afuera**, por no tener una norma creíble para escalarlas: colgado al máximo, flexiones inclinadas, flexiones arqueras, pistol y pistol a la silla, fondos, sentadilla contra la pared, salto en largo, rascado de espalda, sentadilla profunda y sostén del puente.
 - **10 km**: lo reemplaza Cooper.
-- Las pruebas nuevas van al final del catálogo, así la semana de prueba y «la próxima» eligen igual que antes.
+- Las pruebas nuevas van al final del catálogo: entre dos que tocan igual, gana la de antes. Una prueba que nunca hiciste toca ya, así que quien ya hizo las 8 de antes ve primero las nuevas.
 - Solo «Flexiones seguidas» enciende estrellas; las otras cinco dan solo su medalla.
 
 ## 4 · Pruebas
@@ -80,6 +80,7 @@ Cada escala se revisó contra su norma publicada, de la magnitud 5 a la 1.
     - La escala, tus veces y «Probar ahora» pasan de la tarjeta a la prueba abierta.
     - La próxima ya no se saca de la lista: la vitrina la marca.
     - «hace 10 días» pasa a ser la marca en la vitrina grande.
+    - Siembra también las seis pruebas nuevas: sin hacer, tocan ya y serían la próxima.
   - `planes-familia`: las pruebas ya no tienen menú de familia (van por tema y nivel); el de rutinas queda.
   - `rutina-linea-escalon`: «Tu rutina» muestra sus semanas en puntos (`.sem-pts`) en lugar de la escalerita (`.esc-mini`).
   - `planes-horizontal`: «nombres cortados en las filas» pasa a «los estantes entran en la lista y sus tarjetas miden lo mismo». La rutina marcada es la tarjeta, que queda a la vista en su estante.
@@ -92,6 +93,7 @@ Cada escala se revisó contra su norma publicada, de la magnitud 5 a la 1.
     - La próxima prueba mide 52 px y «Tu rutina» muestra sus semanas.
   - `rutina-cardio-entera` y `hazana-prueba-maximo`: 26 rutinas en tarjetas y 14 pruebas.
   - `sin-desborde-360`: suma la vitrina, una prueba nueva, la biblioteca y un ejercicio.
+  - `horizontal` y `cielo-horizontal`: «abrir un ajuste o una constelación no mueve la lista» se mide ahora con la fila ya a la vista, como la toca una persona. Antes la lista volvía arriba en cada redibujo y la prueba medía desde arriba; ahora queda donde estaba. Por lo mismo, «los dos títulos se alinean» se mide con la lista arriba de todo.
 
 ## 5 · Lo que queda
 - Las tarjetas «para vos» en horizontal van una debajo de la otra: ocupan la primera pantalla de la lista.

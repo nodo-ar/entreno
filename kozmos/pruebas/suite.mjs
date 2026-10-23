@@ -176,7 +176,8 @@ prueba("horizontal", async () => {
   ok(await p.evaluate(() => getComputedStyle(document.querySelector("nav.barra")).flexDirection) === "column", "la barra no pasa a riel");
   const vis = () => p.evaluate(() => ["lado", "abierto"].map(c => !!document.querySelector(".split>." + c).offsetParent));
   ok((await vis()).every(Boolean), "Vos no muestra lista y ajuste juntos");
-  /* abrir otro ajuste no mueve la lista ni anima la pantalla */
+  /* abrir otro ajuste no mueve la lista ni anima la pantalla (la fila se toca donde se ve: la lista ya no vuelve arriba al redibujarse) */
+  await p.evaluate(() => document.querySelector('.ajr[data-ir="#/vos/acerca"]').scrollIntoView({block: "nearest"}));
   const antes = await p.evaluate(() => document.querySelector(".split>.lado .aj").getBoundingClientRect().top);
   const pasos = await p.evaluate(() => history.length);
   await p.click('.ajr[data-ir="#/vos/acerca"]');
@@ -187,7 +188,7 @@ prueba("horizontal", async () => {
   ok(Math.abs(desp - antes) < 1, "la lista se movió");
   ok(await p.evaluate(() => history.length) === pasos, "abrir un ajuste en horizontal sumó un paso al botón atrás");
   /* los dos títulos quedan alineados */
-  const tops = await p.evaluate(() => [...document.querySelectorAll(".split h1")].map(h => Math.round(h.getBoundingClientRect().top)));
+  const tops = await p.evaluate(() => { document.querySelector(".split>.lado").scrollTop = 0; return [...document.querySelectorAll(".split h1")].map(h => Math.round(h.getBoundingClientRect().top)); });
   ok(tops.length === 2 && Math.abs(tops[0] - tops[1]) <= 1, "los títulos de los dos paneles no se alinean: " + tops);
   ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, "desborde en horizontal");
   /* girar: vertical en un ajuste → horizontal muestra los dos paneles */
@@ -412,6 +413,8 @@ prueba("cielo-horizontal", async () => {
   ok((await vis()).every(Boolean), "Cielo no muestra lista y constelación juntas");
   ok(await p.evaluate(() => document.querySelector(".split>.abierto h1").textContent) === "Parada de manos", "no abre la primera constelación");
   ok(await p.$(".cons-fila[data-sel]") && await p.getAttribute(".cons-fila[data-sel]", "data-ir") === "#/cielo/parada-de-manos", "la fila abierta no se marca");
+  /* la fila se toca donde se ve: la lista ya no vuelve arriba al redibujarse (vuelta 32), así que se mide con la fila a la vista */
+  await p.evaluate(() => document.querySelector('.cons-fila[data-ir="#/cielo/motor"]').scrollIntoView({block: "nearest"}));
   const antes = await p.evaluate(() => [document.querySelector(".split>.lado .aj").getBoundingClientRect().top, history.length]);
   await p.click('.cons-fila[data-ir="#/cielo/motor"]');
   await p.waitForFunction(() => document.querySelector(".split>.abierto h1")?.textContent === "Motor");
@@ -426,7 +429,7 @@ prueba("cielo-horizontal", async () => {
   await p.fill("#f-valor", "25"); await p.click("#f-guardar");
   await p.waitForFunction(() => document.querySelector(".split>.abierto h1")?.textContent === "Motor");
   ok(await p.textContent('.cons-fila[data-ir="#/cielo/motor"] em') === "1 de 6", "la lista no se actualizó");
-  const tops = await p.evaluate(() => [...document.querySelectorAll(".split h1")].map(h => Math.round(h.getBoundingClientRect().top)));
+  const tops = await p.evaluate(() => { document.querySelector(".split>.lado").scrollTop = 0; return [...document.querySelectorAll(".split h1")].map(h => Math.round(h.getBoundingClientRect().top)); });
   ok(Math.abs(tops[0] - tops[1]) <= 1, "los títulos de los dos paneles no se alinean: " + tops);
   ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, "desborde en horizontal");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
@@ -1440,7 +1443,10 @@ prueba("planes-proxima-prueba", async () => {
   /* arriba de Planes, para vos: la próxima prueba (la que toca antes) con su medalla y tu última; la escala, tus veces y «Probar ahora», al abrirla (vuelta 32) */
   const {ctx, p} = await conReloj();
   const otras = [["hercules", "flexion", "repeticiones", 22], ["sagitario", "del-piso", "puntos", 7], ["andromeda", "dominada", "repeticiones", 5], ["casiopea", "pike-alcance", "cm", 2],
-    ["pegaso", "bici-12", "km", 6], ["orion", "mil-saltos", "tiempo", 700], ["draco", "l-sit", "segundos", 12]].map(([h, e, t, v], k) => hzSes("o" + k, "2026-10-10", h, e, t, v));
+    ["pegaso", "bici-12", "km", 6], ["orion", "mil-saltos", "tiempo", 700], ["draco", "l-sit", "segundos", 12],
+    /* las seis de la vuelta 32: una prueba que nunca hiciste toca ya, así que también se siembran */
+    ["lira", "colgado-arriba", "segundos", 30], ["cefeo", "flexion", "repeticiones", 12], ["tauro", "silla-minuto", "repeticiones", 34], ["fenix", "plancha", "segundos", 70],
+    ["cisne", "plancha-lateral", "segundos", 40], ["centauro", "cooper", "km", 2]].map(([h, e, t, v], k) => hzSes("o" + k, "2026-10-10", h, e, t, v));
   await ir(p, "#/hoy"); await sembrarSes(p, [hzSes("t1", "2026-08-12", "perseo", "dominada", "repeticiones", 9), hzSes("t2", "2026-09-01", "perseo", "dominada", "repeticiones", 12), ...otras]);
   await ir(p, "#/planes"); await p.waitForSelector(".pl-prox");
   const t = await p.textContent(".pl-prox");
@@ -1535,9 +1541,11 @@ prueba("hoy-sin-repetir-constelacion", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy");
   const [a, b] = await p.evaluate(() => [K.filaToca({constelacion: "parada-de-manos", ejercicio: "vertical-pared", tipo: "segundos", objetivo: [30]})[0], K.filaToca({constelacion: "front-lever", ejercicio: "fl-bolita", tipo: "segundos", objetivo: [10]})[0]]);
-  ok(a === "Parada de manos contra la pared", "repite la constelación: " + a);
+  /* el nombre del ejercicio abre su página (vuelta 32): se compara el texto sin el enlace, y el enlace aparte */
+  const sinLink = s => s.replace(/<button type="button" class="ej-ln" data-ir="[^"]*">([^<]*)<\/button>/g, "$1");
+  ok(sinLink(a) === "Parada de manos contra la pared" && a.includes('data-ir="#/planes/ejercicios/vertical-pared"'), "repite la constelación: " + a);
   /* la constelación, un tono más suave; el ejercicio, en tinta */
-  ok(b === '<span class="q">Front lever</span> Horizontal hecho bolita', "sacó la constelación de más: " + b);
+  ok(sinLink(b) === '<span class="q">Front lever</span> Horizontal hecho bolita' && b.includes('data-ir="#/planes/ejercicios/fl-bolita"'), "sacó la constelación de más: " + b);
   const q = await p.evaluate(() => [K.queToca({tipo: "repeticiones", series: 4, objetivo: 5}), K.queToca({tipo: "repeticiones", series: 1, objetivo: 5}), K.queToca({tipo: "segundos", series: 4, objetivo: 10})]);
   ok(q.join("|") === "4 × 5|×5|4 × 10 s", "las repeticiones en Hoy: " + q.join("|"));
   await ctx.close();
@@ -2194,7 +2202,7 @@ prueba("planes-vitrina", async () => {
   const t = await p.evaluate(() => [...document.querySelectorAll(".enc-sub, .enc-tit .lb, .enc-tit small")].map(x => x.textContent).join("|") + "||" + document.querySelector(".hzn").textContent);
   ok(t.includes("Motor, intermedio") && t.includes("Fuente: Cooper (1968)"), "la prueba nueva no dice su tema, su nivel o su fuente: " + t.slice(0, 200));
   ok((await p.$$eval(".hz-fig svg circle[r='6']", x => x.length)) === 2, "la medalla no lleva los dos satélites de intermedio");
-  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Pruebas");
+  await p.click(".enc-acc [data-volver]:visible"); await esperarTitulo(p, "Pruebas");
   /* en horizontal: la vitrina a la izquierda, la abierta a la derecha */
   await p.setViewportSize({width: 844, height: 390}); await ir(p, "#/planes/pruebas/tauro");
   ok(await p.evaluate(() => { const a = document.querySelector(".split>.lado").getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect(); return b.left >= a.right - 1 && document.querySelector(".split>.abierto .enc-tit h1").textContent === "Silla, un minuto" && !!document.querySelector('.lado .vt-m[data-sel][data-ir="#/planes/pruebas/tauro"]'); }), "la vitrina en horizontal no sigue el patrón de Ajustes");
@@ -2229,7 +2237,7 @@ prueba("biblioteca-ejercicios", async () => {
   const k = esc.findIndex(x => x[1].startsWith("Este"));
   ok(k > 0 && esc[k - 1][1] === "Más fácil" && esc[k + 1][1].match(/Más difícil|El tuyo/), "la escalera: " + JSON.stringify(esc));
   await p.click('.ej-esc .ajr[data-ir="#/planes/ejercicios/dominada-negativa"]'); await esperarTitulo(p, "Dominada negativa");
-  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Dominada");
+  await p.click(".enc-acc [data-volver]:visible"); await esperarTitulo(p, "Dominada");
   /* en horizontal, la lista y el abierto; la fila abierta queda a la vista en la lista */
   await p.setViewportSize({width: 844, height: 390}); await ir(p, "#/planes/ejercicios/pistol-silla");
   ok(await p.evaluate(() => { const l = document.querySelector(".split>.lado").getBoundingClientRect(), s = document.querySelector('.split>.lado .ajr[data-sel][data-ir="#/planes/ejercicios/pistol-silla"]')?.getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect();
@@ -2244,8 +2252,8 @@ prueba("ejercicio-enlaces", async () => {
   /* en Hoy y en los días de una rutina, el nombre de cada ejercicio abre su página; volver vuelve de donde viniste. El resto de la fila no cambia */
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever", "planche"]);
-  const ls = await p.$$eval(".hoy-toca .ej-ln", xs => xs.map(x => [x.textContent, x.dataset.ir]));
-  ok(ls.length >= 3 && ls.every(([t, h]) => h.startsWith("#/planes/ejercicios/") && t === K.EJ[h.split("/").pop()].nombre), "Hoy sin nombres que abran su ejercicio: " + JSON.stringify(ls));
+  const ls = await p.$$eval(".hoy-toca .ej-ln", xs => xs.map(x => [x.textContent, x.dataset.ir, K.EJ[x.dataset.ir.split("/").pop()]?.nombre]));
+  ok(ls.length >= 3 && ls.every(([t, h, n]) => h.startsWith("#/planes/ejercicios/") && t === n), "Hoy sin nombres que abran su ejercicio: " + JSON.stringify(ls));
   /* la fila sigue igual: el nombre a la izquierda y lo que toca a la derecha, en la misma línea */
   ok(await p.$$eval(".hoy-toca .ln.toca", xs => xs.every(x => { const q = x.querySelector(".toca-q").getBoundingClientRect(), n = x.querySelector(".toca-n").getBoundingClientRect(); return n.left >= q.right - 1 && Math.abs(n.top - q.top) < 8; })), "las filas cambiaron de forma");
   await p.click(".hoy-toca .toca-n >> nth=0"); await p.waitForTimeout(200);
@@ -2253,12 +2261,12 @@ prueba("ejercicio-enlaces", async () => {
   const [nom, h] = ls[0];
   await p.click(`.hoy-toca .ej-ln[data-ir="${h}"] >> nth=0`); await esperarTitulo(p, nom);
   ok(await p.evaluate(() => location.hash) === h && await p.getAttribute('nav.barra button[data-tab="planes"]', "aria-current") === "page", "el ejercicio no se abre en Planes");
-  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Hoy");
+  await p.click(".enc-acc [data-volver]:visible"); await esperarTitulo(p, "Hoy");
   /* lo mismo en los días de una rutina */
   await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia .ej-ln");
   const r = await p.$eval(".rut-dia .ej-ln", x => [x.textContent, x.dataset.ir]);
   await p.click(".rut-dia .ej-ln >> nth=0"); await esperarTitulo(p, r[0]);
-  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Base de calistenia");
+  await p.click(".enc-acc [data-volver]:visible"); await esperarTitulo(p, "Base de calistenia");
   /* y en la rutina, sus ejercicios con su persona */
   ok(await p.$$eval('.ru-vista .ej-cara[data-ir^="#/planes/ejercicios/"]', x => x.length) >= 6, "la rutina no muestra sus ejercicios");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
