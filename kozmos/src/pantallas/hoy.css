@@ -7,6 +7,12 @@
 .hoy-toca{gap:10px}
 .toca{font-weight:600}
 .toca .num{font-size:var(--t-sm); font-weight:700; color:var(--ink-2); white-space:nowrap}
+/* lo que toca, a la derecha, en la línea del nombre (con nombres de dos renglones, en el primero): todas las filas igual.
+   Los kilos, debajo, en la misma columna, como su propia ficha */
+.ln.toca{align-items:baseline}
+.toca .tg{align-items:baseline} .toca .tg .dot{align-self:center}
+.toca-n{display:flex; flex-direction:column; align-items:flex-end; gap:3px}
+.toca-n .kg{font-size:var(--t-sm)}
 /* lo que la sesión dice en la serie («más liviana»), debajo del nombre, como en la sesión: en el color de la familia */
 .toca-q{display:flex; flex-direction:column; gap:2px; min-width:0}
 .toca-marca{padding-left:16px; font-size:var(--t-s); font-weight:700; color:var(--c)}
@@ -16,13 +22,20 @@
 /* el día del motor por partes (entrada, habilidad, fuerza, abdomen, cierre): un título chico con una línea arriba */
 .toca-sec{margin:4px 0 -2px; padding-top:10px; border-top:1px solid var(--line)}
 .toca-sec.ln{display:flex; justify-content:space-between; align-items:baseline}
-/* lo que viene en la rotación y lo de tu rumbo que pide equipo, al pie de lo que toca */
-.hoy-pie{margin:2px 0 0}
+/* lo que viene en la rotación y lo de tu rumbo que pide equipo, al pie de lo que toca.
+   «La próxima»: la etiqueta a la izquierda y las que siguen, una debajo de la otra, con el punto de su familia */
+.hoy-pie{margin:2px 0 0; padding-top:10px; border-top:1px solid var(--line); align-items:flex-start}
+.hoy-pie-n{display:flex; flex-direction:column; align-items:flex-end; gap:6px}
+.hoy-pie-n .tg{flex-direction:row-reverse; color:var(--ink)}
+.hoy-pide-tx{display:flex; flex-direction:column; gap:2px; min-width:0}
 .hoy-pide{display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; margin:0; padding:10px; border:0; border-radius:var(--r-sm); background:var(--s2); color:var(--ink); font:inherit; font-weight:600; text-align:left; cursor:pointer}
 .hoy-pide-ir{display:flex; align-items:center; gap:2px; flex:none; font-weight:700; color:var(--ink-2)}
 .hoy-pide-ir .chev{width:16px; height:16px}
 /* Tu rumbo: cuántas elegiste y cada cuánto toca, arriba de «Listo»; lo que pide equipo, en vez de «0 de 0» */
-.rumbo-cuanto{margin:0 4px 10px; text-align:center}
+.rumbo-cuanto{margin:0 4px 10px; display:flex; justify-content:space-between; align-items:center; gap:12px}
+.rumbo-frec{display:flex; align-items:center; gap:8px; min-width:0; text-align:right}
+.rumbo-frec .frec{display:inline-flex; align-items:center; gap:6px; color:var(--ink); white-space:nowrap}
+.rumbo-frec .frec .ic{width:15px; height:15px}
 .pie-fijo:has(.rumbo-cuanto){background:linear-gradient(to bottom,transparent,var(--bg) 12px)}
 .rumbo-cuanto b{color:var(--ink)}
 .num.pide{color:var(--ink-2); font-family:var(--f-ui); font-weight:700}
@@ -45,7 +58,13 @@ body:has(.utoast:not(.out)) :is(.hoy-b,.rut,.hzn)>.btn{bottom:calc(144px + env(s
 body.en-sesion nav.barra{display:none}
 body.en-sesion #tbar{display:none}
 body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
-.ses-acc .ses-donde{flex:1; text-align:center}
+.ses-acc .ses-donde{flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; color:var(--ink)}
+.ses-donde-tx{max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+/* dónde estás en la sesión: un punto por bloque, los hechos en gris, el de ahora estirado y en tinta */
+.pdots{display:flex; gap:4px; align-items:center}
+.pdots i{width:5px; height:5px; border-radius:3px; background:var(--off)}
+.pdots i.d{background:var(--ink-3)}
+.pdots i.n{width:14px; background:var(--ink)}
 .ses{isolation:isolate; display:flex; flex-direction:column; gap:14px; min-height:calc(100dvh - 84px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
 /* la ✕ y el ⋯ de la sesión, más grandes: manos transpiradas o con tiza */
 .ses-acc .ib{width:48px; height:48px; flex-basis:48px}
@@ -58,6 +77,10 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .stp i.n{background:var(--c)}
 .ses-tit{padding:6px 0 0}
 .ses-tit .lb{display:block; margin-bottom:6px}
+/* la serie (o el paso de la entrada en calor) a la izquierda; lo nuevo, o «1/6», a la derecha */
+.ses-tit .lb.ses-eti{display:flex; justify-content:space-between; align-items:baseline; gap:12px}
+.ses-eti .ses-paso{color:var(--ink-3)}
+.ses-luego .dur{vertical-align:-2px; margin-left:4px; color:var(--ink)}
 .ses-tit h1{font-size:var(--t-3xl); line-height:1.05}
 .ses-ind{max-width:36ch; font-size:var(--t-sm)}
 .ses-pausa{color:var(--ink)}

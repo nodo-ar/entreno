@@ -37,3 +37,16 @@ html,body{overflow-x:clip}
 .vacio .ilus svg{display:block; width:140px; height:56px; margin-bottom:8px}
 .vacio b{font-size:var(--t-xl); font-weight:800; font-stretch:125%; letter-spacing:-.01em; line-height:1.15}
 .vacio p{max-width:34ch; color:var(--ink-2)}
+/* ===== Sin «·»: jerarquía y representación (vuelta 30) =====
+   .q: lo que califica, un tono más suave (en lo que ya es suave, otro más); .aparte: lo que agrega una frase, en su renglón;
+   .dur: una duración con su reloj; .kg: el peso como ficha propia, en el color de la familia */
+.q{color:var(--ink-2)}
+:is(.mute,small,.small) .q{color:var(--ink-3)}
+/* en las etiquetas chicas, un paso más legible que --ink-3, sin tocar el token */
+.lb .q{color:color-mix(in oklab,var(--ink-2) 50%,var(--ink-3))}
+.aparte{display:inline-flex; flex-direction:column; gap:2px; vertical-align:top}
+.dur,.kg{display:inline-flex; align-items:center; gap:4px; white-space:nowrap}
+.dur .ic{width:13px; height:13px; stroke-width:2.2}
+.lb .dur .ic{width:12px; height:12px}
+.kg{color:var(--c, var(--ink))}
+.kg .ic{width:15px; height:15px}

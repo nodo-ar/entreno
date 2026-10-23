@@ -4,6 +4,9 @@ K.VERSION = "dev"; /* la pone tools/armar.mjs al armar */
 
 /* íconos de trazo, 24 × 24 (los mismos del prototipo aprobado) */
 K.I = {
+  /* el reloj de una duración («60 min») y la estrella de lo encendido, chicos, al lado de su número */
+  reloj:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  estrella:'<path d="M12 3.5l2.2 6.3 6.3 2.2-6.3 2.2L12 20.5l-2.2-6.3L3.5 12l6.3-2.2z" fill="currentColor" stroke="none"/>',
   hoy:'<circle cx="12" cy="12.5" r="5.6"/><circle cx="12" cy="12.5" r="2" fill="currentColor" stroke="none"/><g class="orb"><circle cx="18.6" cy="5.9" r="2.4" fill="var(--fu)"/></g>',
   cielo:'<path d="M7.4 7.8 10.8 12M13.4 12.2 15.8 6.6M13.2 14.2 17.8 17"/><circle cx="6" cy="7" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="18" r="1.6" fill="currentColor" stroke="none"/><circle class="ph" cx="16.6" cy="5.2" r="1.6" fill="currentColor" stroke="none"/><g class="orb"><circle cx="16.6" cy="5.2" r="2.6" fill="var(--mo)"/></g>',
   progreso:'<path d="M4 20A16 16 0 0 1 20 4" stroke-dasharray="1 3.2"/><circle cx="4" cy="20" r="1.6" fill="currentColor" stroke="none"/><circle class="ph" cx="20" cy="4" r="1.4" fill="currentColor" stroke="none"/><g class="orb"><circle cx="20" cy="4" r="2.7" fill="var(--ra)"/></g>',
@@ -87,4 +90,18 @@ K.$$ = (s, el = document) => [...el.querySelectorAll(s)];
 K.reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 K.esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 /* un nombre con su medida al final («… 30 s», «… ×8», «+25 %»): la medida no se corta de su número al partir la línea */
+/* ===== Sin «·» (vuelta 30): lo que se puede dibujar se dibuja; lo demás se separa por jerarquía, nunca con un punto =====
+   Todo recibe HTML ya escapado.
+   K.jer(a, ...q): lo principal y, después de un espacio, lo que lo califica en un tono más suave
+   K.cat(c, x): una categoría y su ítem: la categoría suave, el ítem en tinta
+   K.yLista(xs): «Front lever, Muscle-up y Planche»
+   K.aparte(a, b): una frase y lo que agrega, en su propio renglón
+   K.pesa(tx, ic): el peso como su propia ficha, en el color de la familia, con su mancuerna (o su lastre)
+   K.dur(tx): una duración con su reloj («60 min») */
+K.jer = (a, ...qs) => a + qs.filter(Boolean).map(q => ` <span class="q">${q}</span>`).join("");
+K.cat = (c, x) => `<span class="q">${c}</span> ${x}`;
+K.yLista = xs => xs.length > 1 ? `${xs.slice(0, -1).join(", ")} y ${xs[xs.length - 1]}` : xs.join("");
+K.aparte = (a, b) => b ? `<span class="aparte"><span>${a}</span> <span>${b}</span></span>` : a;
+K.pesa = (tx, ic = "mancuernas") => `<span class="kg">${K.ic(ic)}<span>${tx}</span></span>`;
+K.dur = tx => `<span class="dur">${K.ic("reloj")}<span>${tx}</span></span>`;
 K.nw = s => K.esc(s).replace(/(\S+) (s|min|cm|km|%|×\d+)(?=$|[\s,.;:])/g, '<span class="nw">$1 $2</span>');

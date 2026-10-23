@@ -194,9 +194,10 @@ K.dia = (() => {
 
     const rotacion = orden.map(c => c.id), hoyVan = new Set(hab.flatMap(b => b.constelaciones));
     const despues = orden.filter(c => !hoyVan.has(c.id)).slice(0, 2);
-    const pie = despues.length ? `La próxima: ${despues.map(c => c.nombre).join(" · ")}` : "";
+    /* «La próxima»: las dos que siguen en la rotación (sus ids; la pantalla las dibuja con el punto de su familia) */
+    const proxima = despues.map(c => c.id);
     return {bloques, minutos: minutosDe(bloques), volviste, ventana: hab.filter(b => b.prueba).flatMap(b => b.constelaciones).concat(cierre.prueba ? cierre.constelaciones : []),
-      rotacion, pide, pie, molde: true};
+      rotacion, pide, proxima, molde: true};
   }
 
   /* la semana de prueba sobre el día (K.plan.deSemanaDePrueba, igual que con rutina) con la entrada en calor siempre adelante */

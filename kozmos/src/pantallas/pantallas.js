@@ -39,7 +39,7 @@ K.P.progreso = r => {
   /* lo encendido este mes, lo más nuevo arriba */
   const mes = hoy.slice(0, 7), nuevas = cielo.constelaciones.flatMap(c => c.estrellas.filter(e => e.desde && e.desde.startsWith(mes)).map(e => ({c, e}))).sort((a, b) => b.e.desde.localeCompare(a.e.desde));
   const encendidas = `<section class="cd prog-lista"><span class="lb">Estrellas encendidas este mes</span>${nuevas.length ? nuevas.slice(0, 8).map(({c, e}) =>
-    `<div class="prog-est"><i class="dot" style="--c:var(--${c.familia})"></i><b>${K.esc(e.nombre)}</b><span class="mute small">${K.esc(c.nombre)} · ${K.esc(K.fechaCorta(e.desde))}</span></div>`).join("") : `<p class="mute small">Todavía ninguna este mes.</p>`}</section>`;
+    `<div class="prog-est"><i class="dot" style="--c:var(--${c.familia})"></i><b>${K.esc(e.nombre)}</b><span class="mute small">${K.jer(K.esc(c.nombre), K.esc(K.fechaCorta(e.desde)))}</span></div>`).join("") : `<p class="mute small">Todavía ninguna este mes.</p>`}</section>`;
   /* lo que se apaga: más de 8 semanas sin práctica (nunca se pierde) */
   const tenues = cielo.constelaciones.filter(c => c.atenuada && c.encendidas).sort((a, b) => a.ultima.localeCompare(b.ultima));
   const apaga = tenues.length ? `<section class="cd prog-lista"><span class="lb">Lo que se apaga</span>${tenues.map(c =>
@@ -54,9 +54,11 @@ K.P.progreso = r => {
     const pc = pr ? cielo.constelaciones.find(k => k.estrellas.some(e => e.id === pr.id)) : !hz && !ru ? cielo.constelaciones.find(k => s.bloques.some(b => b.constelacion === k.id)) : null;
     const ico = hz && s.hazana.v === 2 ? K.icono.medalla(hz, s.hazana.completa !== false && s.hazana.valor > 0 && K.rutina.magnitud(hz, s.hazana.valor, K.hzVeces(hz)) !== null, 40)
       : pc ? K.icono.constelacion(pc, 40) : ru ? K.icono.rutina(ru, 40) : hz ? K.icono.medalla(hz, false, 40) : "";
-    const que = [pr ? `Prueba · ${pr.nombre}` : hz ? (s.hazana.v === 2 ? hz.nombre : `${hz.nombre} · ${K.rutina.NIVELES[s.hazana.nivel] || ""}`) : s.semanaPrueba ? `Semana de prueba${ru ? ` · ${ru.nombre}` : ""}` : ru ? ru.nombre : "", s.cortada ? "Cortada" : ""].filter(Boolean).join(" · ");
+    /* qué fue (la categoría suave, el nombre en tinta) y, si se cortó, «cortada» un tono más suave */
+    const fue = pr ? K.cat("Prueba", K.esc(pr.nombre)) : hz ? (s.hazana.v === 2 ? K.esc(hz.nombre) : K.jer(K.esc(hz.nombre), K.esc(K.rutina.NIVELES[s.hazana.nivel] || ""))) : s.semanaPrueba ? (ru ? K.cat("Semana de prueba", K.esc(ru.nombre)) : "Semana de prueba") : ru ? K.esc(ru.nombre) : "";
+    const que = fue ? K.jer(fue, s.cortada ? "cortada" : "") : s.cortada ? "Cortada" : "";
     return `<button type="button" class="ajr" data-ir="#/progreso/${K.esc(s.id)}" data-quieto="1"${s.id === sel ? " data-sel" : ""}><span class="tile${ico ? " ico-tile" : ""}">${ico || K.ic("play")}</span>
-      <span class="ses-fila">${K.esc(K.fechaCorta(s.fecha))}${que ? `<small class="mute">${K.esc(que)}</small>` : ""}</span><em class="num">${est ? `${est} ${est === 1 ? "estrella" : "estrellas"} · ` : ""}${Math.max(1, Math.round(s.duracion / 60))} min</em>${K.ic("chev", "chev")}</button>`;
+      <span class="ses-fila">${K.esc(K.fechaCorta(s.fecha))}${que ? `<small class="mute">${que}</small>` : ""}</span><em class="num ses-cuanto">${est ? `<span class="est" role="img" aria-label="${est} ${est === 1 ? "estrella" : "estrellas"}">${K.ic("estrella")}${est}</span>` : ""}<span>${Math.max(1, Math.round(s.duracion / 60))} min</span></em>${K.ic("chev", "chev")}</button>`;
   }).join("")}</section>` : "";
   const abierto = sel && ses.some(s => s.id === sel) ? K.P.resumen(sel, "progreso") : "";
   return `<div class="split${r.sub ? " en-detalle" : ""}"><div class="lado">${enc}${semanas}${encendidas}${apaga}${filas}</div><div class="abierto">${abierto}</div></div>`;
@@ -242,7 +244,7 @@ K.resp = {
     try { await K.diario.lote(s.cambios); } catch (e) { K.aviso("No hay lugar en el teléfono para este respaldo. No se trajo nada."); return; }
     K.refrescar();
     const partes = [c.sesiones && `${c.sesiones} ${c.sesiones === 1 ? "sesión" : "sesiones"}`, c.mediciones && `${c.mediciones} ${c.mediciones === 1 ? "marca" : "marcas"}`].filter(Boolean);
-    K.deshacer(`${partes.length ? "Trajiste " + partes.join(" y ") : "Trajiste tus ajustes"}${c.descartadas ? ` · ${c.descartadas} con datos rotos, afuera` : ""}`, async () => {
+    K.deshacer(`${partes.length ? "Trajiste " + partes.join(" y ") : "Trajiste tus ajustes"}${c.descartadas ? `. ${c.descartadas} con datos rotos quedaron afuera` : ""}`, async () => {
       try { await K.diario.lote(s.deshacer); } catch (e) { K.aviso("No se pudo deshacer."); } K.refrescar(); });
   }
 };

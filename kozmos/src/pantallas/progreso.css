@@ -32,3 +32,7 @@
 .ses-fila{display:grid}
 .ses-fila small{font-size:var(--t-s); font-weight:700}
 .ses.prueba.prep #s-listo{visibility:hidden}
+/* tus sesiones: las estrellas encendidas se dibujan (la estrella y cuántas) al lado de los minutos */
+.ses-cuanto{display:inline-flex; align-items:center; gap:10px}
+.ses-cuanto .est{display:inline-flex; align-items:center; gap:3px; color:var(--ink)}
+.ses-cuanto .est .ic{width:13px; height:13px}

@@ -1,5 +1,6 @@
 /* ===== Menú flotante =====
-   K.menu.abrir(boton, {titulo, items:[{id, texto, ic | color, elegido}|"-"], elegir(id)})
+   K.menu.abrir(boton, {titulo, items:[{id, texto, nota, ic | color, elegido}|"-"], elegir(id)})
+   «nota»: lo que califica la opción («la tuya»), un tono más suave
    Es la forma de elegir entre opciones en toda la app: nada de filas de chips. */
 K.menu = {
   abrir(btn, {titulo = "", items, elegir}){
@@ -9,7 +10,7 @@ K.menu = {
     const m = document.createElement("div"); m.className = "pop"; m.setAttribute("role", "menu");
     if (titulo) m.setAttribute("aria-label", titulo);
     m.innerHTML = (titulo ? `<span class="lb pt">${K.esc(titulo)}</span>` : "") + items.map(it => it === "-" ? `<div class="psep" role="separator"></div>` :
-      `<button type="button" class="pmi" role="${radio && "elegido" in it ? "menuitemradio" : "menuitem"}" data-id="${it.id}"${"elegido" in it ? ` aria-checked="${!!it.elegido}"` : ""}>${it.ic ? K.ic(it.ic) : it.color ? `<i class="dot sw" style="--c:${it.color}"></i>` : "<span></span>"}<span>${K.esc(it.texto)}</span>${"elegido" in it ? K.ic("check", "ck") : "<span></span>"}</button>`).join("");
+      `<button type="button" class="pmi" role="${radio && "elegido" in it ? "menuitemradio" : "menuitem"}" data-id="${it.id}"${"elegido" in it ? ` aria-checked="${!!it.elegido}"` : ""}>${it.ic ? K.ic(it.ic) : it.color ? `<i class="dot sw" style="--c:${it.color}"></i>` : "<span></span>"}<span>${K.esc(it.texto)}${it.nota ? ` <span class="q">${K.esc(it.nota)}</span>` : ""}</span>${"elegido" in it ? K.ic("check", "ck") : "<span></span>"}</button>`).join("");
     document.body.append(sc, m);
     /* lugar: debajo del botón, alineado a su borde derecho si está a la derecha; crece desde la esquina del botón */
     const r = btn.getBoundingClientRect(), W = m.offsetWidth, H = m.offsetHeight, vw = innerWidth, vh = innerHeight;
