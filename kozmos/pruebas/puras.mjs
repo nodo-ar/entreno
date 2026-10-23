@@ -16,9 +16,10 @@ vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "calorias.js"),
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "diario", "respaldo.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "rutina.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "caminos.js"), "utf8"), ctx);
+vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "biblioteca.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "nivel.js"), "utf8"), ctx);
 vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", "sesion", "dia.js"), "utf8"), ctx);
-const {cielo, plan, calorias, respaldo, rutina, caminos, nivel, dia: molde} = ctx.K;
+const {cielo, plan, calorias, respaldo, rutina, caminos, nivel, dia: molde, biblio} = ctx.K;
 const RUT_DIR = path.join(RAIZ, "catalogo", "rutinas");
 const RUTINAS = fs.readdirSync(RUT_DIR).filter(f => f.endsWith(".json")).map(f => [f, JSON.parse(fs.readFileSync(path.join(RUT_DIR, f), "utf8"))]);
 const HAZANAS = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "hazanas.json"), "utf8"));
@@ -453,9 +454,12 @@ prueba("catalogo-rutinas", () => {
 prueba("catalogo-hazanas", () => {
   /* hazañas v2: pruebas estandarizadas. Miden un ejercicio, tienen escala de cinco (magnitud 5 a 1), estrellas que encienden y cada cuánto */
   const ej = EJM(), FORMATOS = ["maximo", "reloj", "escalera", "tiempo"], nombres = new Set();
-  ok(HAZANAS.version === 2 && HAZANAS.hazanas.length === 8, "esperaba las 8 hazañas, en la versión 2");
-  /* las ocho de antes siguen (sus marcas guardadas las nombran) */
-  ok(["hercules", "pegaso", "sagitario", "orion", "andromeda", "draco", "perseo", "casiopea"].every(id => HAZANAS.hazanas.some(h => h.id === id)), "se perdió una hazaña de antes");
+  /* vuelta 32: a las 8 de antes se suman 6, con su escala de normas publicadas (y su fuente) */
+  const VIEJAS = ["hercules", "pegaso", "sagitario", "orion", "andromeda", "draco", "perseo", "casiopea"];
+  ok(HAZANAS.version === 2 && HAZANAS.hazanas.length === 14, "esperaba las 14 pruebas, en la versión 2");
+  /* las ocho de antes siguen (sus marcas guardadas las nombran), primero y en su orden: la semana de prueba elige igual que antes */
+  ok(HAZANAS.hazanas.slice(0, 8).every(h => VIEJAS.includes(h.id)), "se perdió una hazaña de antes o cambió de lugar");
+  for (const h of HAZANAS.hazanas.slice(8)) ok(h.fuente && !h.antes, `${h.id}: una prueba nueva lleva su fuente y no tiene formato de antes`);
   for (const h of HAZANAS.hazanas){
     ok(FORMATOS.includes(h.formato) && h.nombre && h.prueba && h.texto && h.como, `${h.id}: formato, nombre, prueba o texto`);
     ok(!nombres.has(h.nombre) && /^[A-ZÁÉÍÓÚ0-9]/.test(h.nombre), `${h.id}: el nombre empieza en mayúscula o número y no se repite`); nombres.add(h.nombre);
@@ -463,14 +467,15 @@ prueba("catalogo-hazanas", () => {
     const u = Array.isArray(h.escala) ? h.escala : h.escala.propia, menos = cielo.TIPOS[h.mide.tipo].mejor === "menos" && Array.isArray(h.escala);
     ok(u.length === 5 && u.every(Number.isFinite) && u.every((x, i) => !i || (menos ? x < u[i - 1] : x > u[i - 1])), `${h.id}: la escala no va de la magnitud 5 a la 1`);
     ok(Number.isInteger(h.cada) && h.cada >= 28 && h.cada <= 84, `${h.id}: cada ${h.cada} días`);
-    ok(h.estrellas.length >= 1, `${h.id}: no enciende nada`);
+    /* las de antes encienden estrellas; una nueva puede dar solo su medalla */
+    ok(h.estrellas.length >= 1 || !VIEJAS.includes(h.id), `${h.id}: no enciende nada`);
     for (const id of h.estrellas){
       const e = ESTRELLA.get(id); ok(e, `${h.id}: la estrella ${id} no existe`);
       const tipo = Array.isArray(h.escala) ? h.mide.tipo : "mejora";
       ok(e.prueba.ejercicio === h.mide.ejercicio && e.prueba.tipo === tipo, `${h.id}: ${id} se mide con otra cosa (${e.prueba.ejercicio} ${e.prueba.tipo})`);
     }
     ok(!h.entrena || (ej[h.entrena.ejercicio] && cielo.TIPOS[h.entrena.tipo] && h.entrena.objetivo > 0 && h.entrena.series > 0), `${h.id}: lo que entrena entre pruebas`);
-    ok(h.antes && h.antes.formato, `${h.id}: sin el formato de antes (las marcas viejas se leen con él)`);
+    ok(!VIEJAS.includes(h.id) || (h.antes && h.antes.formato), `${h.id}: sin el formato de antes (las marcas viejas se leen con él)`);
     const p = rutina.deHazana(h, {ej});
     ok(p && p.bloques.length === 1 && p.hazana.v === 2 && p.bloques[0].hazana === h.id && p.minutos >= 5, `${h.id}: no arma nada`);
   }
@@ -1790,6 +1795,85 @@ prueba("dia-con-nivel", () => {
 
 /* ===== Sin «·» (vuelta 30): nada de lo que se ve separa con un punto medio; se separa con jerarquía o con un dibujo =====
    Revisa el código de la app (sin sus comentarios) y todos los textos del catálogo. */
+/* ===== Vuelta 32: zonas, grupos y niveles en el catálogo (Planes en estantes) ===== */
+prueba("catalogo-zonas", () => {
+  const Z = new Set(biblio.ZONAS.map(z => z[0])), ej = EJM(), val = (xs, q) => Array.isArray(xs) && xs.every(z => Z.has(z)) && new Set(xs).size === xs.length || `${q}`;
+  ok(biblio.ZONAS.map(z => z[0]).join() === "espalda,pecho,hombros,brazos,abdomen,cadera,gluteos,piernas,corazon", "las nueve zonas, con corazón");
+  for (const e of ESC.escaleras){
+    ok(Array.isArray(e.zonas) && e.zonas.length && val(e.zonas) === true && val(e.apoyo || []) === true, `${e.id}: zonas o apoyo raros`);
+    ok(!(e.apoyo || []).some(z => e.zonas.includes(z)), `${e.id}: una zona de lleno y de apoyo a la vez`);
+  }
+  for (const x of EJ.ejercicios){
+    const z = biblio.zonasDe(x.id, ej);
+    ok(z.zonas.length >= 1, `${x.id}: no dice qué trabaja (ni su escalera)`);
+    ok(z.zonas.every(k => Z.has(k)) && z.apoyo.every(k => Z.has(k)), `${x.id}: una zona que no existe`);
+    ok(!z.apoyo.some(k => z.zonas.includes(k)), `${x.id}: una zona de lleno y de apoyo a la vez`);
+    ok(!x.apoyo || x.zonas, `${x.id}: apoyo sin zonas propias`);
+    /* lo de una escalera lo dice la escalera: un ejercicio repite sus zonas solo si son otras */
+    const en = caminos.enEscaleras(x.id)[0];
+    ok(!(x.zonas && en && JSON.stringify(x.zonas) === JSON.stringify(en.e.zonas)), `${x.id}: repite las zonas de su escalera`);
+  }
+  /* lo de motor trabaja el corazón; lo de estirar no */
+  for (const x of EJ.ejercicios) if (biblio.grupoDe(x.id, ej) === "motor") ok(biblio.zonasDe(x.id, ej).zonas.includes("corazon"), `${x.id}: motor sin corazón`);
+  ok(!biblio.zonasDe("isquios-sentado", ej).zonas.includes("corazon") && biblio.zonasDe("dominada", ej).zonas.join() === "espalda,brazos", "las zonas de siempre");
+  ok(biblio.zonasDe("munecas-dorso", ej).zonas.join() === "brazos", "un ejercicio dice lo suyo sobre lo de su escalera");
+});
+prueba("catalogo-grupos", () => {
+  const G = new Set(biblio.GRUPOS.map(g => g[0])), ej = EJM();
+  for (const x of EJ.ejercicios){
+    ok(G.has(biblio.grupoDe(x.id, ej)), `${x.id}: sin grupo en la biblioteca`);
+    ok(!x.grupo || G.has(x.grupo), `${x.id}: grupo raro ${x.grupo}`);
+    /* el grupo se escribe solo donde el patrón no lo dice */
+    ok(!x.grupo || !caminos.patronDe(x.id, ej).length, `${x.id}: dice su grupo y también su patrón`);
+  }
+  for (const [g] of biblio.GRUPOS) ok(EJ.ejercicios.filter(x => biblio.grupoDe(x.id, ej) === g).length >= 4, `${g}: casi vacío`);
+});
+prueba("catalogo-niveles", () => {
+  for (const [f, r] of RUTINAS) ok([1, 2, 3].includes(r.nivel), `${f}: sin nivel de 1 a 3`);
+  for (const n of [1, 2, 3]) ok(RUTINAS.filter(([, r]) => r.nivel === n).length >= 3, `pocas rutinas de nivel ${n}`);
+  /* el nivel dice desde dónde conviene empezarla: lo de cero es inicial, lo de lastre y gimnasta, avanzado */
+  const N = id => RUTINAS.find(([, r]) => r.id === id)[1].nivel;
+  ok(N("prim_dom") === 1 && N("c0a5") === 1 && N("base_cali") === 1 && N("lastre") === 3 && N("gimnasta") === 3 && N("cien") === 2, "niveles al revés");
+  const G = new Set(biblio.GRUPOS.map(g => g[0])), celdas = new Set();
+  for (const h of HAZANAS.hazanas){
+    ok([1, 2, 3].includes(h.nivel) && G.has(h.tema), `${h.id}: nivel o tema raros`);
+    ok(!celdas.has(h.tema + h.nivel), `${h.id}: dos pruebas en el mismo lugar de la vitrina`); celdas.add(h.tema + h.nivel);
+  }
+  /* cada tema arranca en inicial; la vitrina no deja huecos a la izquierda */
+  for (const t of biblio.vitrina(HAZANAS.hazanas)) ok(t.pruebas[0], `${t.id}: no tiene prueba inicial`);
+  ok(biblio.vitrina(HAZANAS.hazanas).map(t => t.id).join() === "tirar,empujar,piernas,abdomen,movilidad,motor", "los temas de la vitrina");
+});
+prueba("hazanas-nuevas-escalas", () => {
+  const H = id => HAZANAS.hazanas.find(h => h.id === id), mg = (id, vs) => vs.map(v => rutina.magnitud(H(id), v)).join();
+  /* colgado con brazos flexionados (de 15 a 70 s), flexiones (ACSM), silla en un minuto, plancha, plancha de costado y 12 minutos corriendo */
+  ok(mg("lira", [10, 15, 40, 70, 90]) === ",5,3,1,1", "mentón sobre la barra");
+  ok(mg("cefeo", [4, 5, 17, 29]) === ",5,3,1", "flexiones seguidas");
+  ok(mg("tauro", [24, 25, 40, 50, 60]) === ",5,3,2,1", "silla, un minuto");
+  ok(mg("fenix", [20, 60, 125, 200]) === ",4,2,1", "plancha");
+  ok(mg("cisne", [29, 45, 90]) === ",4,2", "plancha de costado");
+  ok(mg("centauro", [1.5, 1.6, 2.2, 2.9]) === ",5,3,1", "12 minutos corriendo");
+  const t = rutina.deHazana(H("tauro"), {ej: EJM()}).bloques[0];
+  ok(t.ejercicio === "silla-minuto" && t.tipo === "repeticiones" && t.reloj === 60, "la silla: un minuto de reloj y anotás cuántas");
+  const c = rutina.deHazana(H("centauro"), {ej: EJM()}).bloques[0];
+  ok(c.tipo === "km" && c.reloj === 720, "Cooper: 12 minutos y anotás los km");
+  /* ninguna se elige antes que las de siempre en la semana de prueba sin rumbo: las nuevas van al final del catálogo */
+  ok(HAZANAS.hazanas.findIndex(h => h.id === "lira") > HAZANAS.hazanas.findIndex(h => h.id === "draco"), "las nuevas, al final");
+});
+prueba("biblio-rutina-hace", () => {
+  const ej = EJM(), R = id => RUTINAS.find(([, r]) => r.id === id)[1], h = id => biblio.hace(R(id), {ej});
+  ok(["espalda", "pecho", "brazos", "piernas"].every(z => h("base_cali").zonas[z] === 2), "Base: cuerpo entero, de lleno: " + JSON.stringify(h("base_cali").zonas));
+  ok(h("c0a5").zonas.corazon === 2 && h("c0a5").zonas.piernas === 2 && !h("c0a5").zonas.pecho, "correr: corazón y piernas");
+  ok(h("cadera").fuertes.includes("cadera") && !h("cadera").zonas.corazon, "cadera: la cadera");
+  ok(h("tronco").fuertes.join() === "abdomen" || h("tronco").fuertes.includes("abdomen"), "abdomen firme: el abdomen");
+  ok(h("cien").fuertes.includes("pecho") && h("prim_dom").fuertes.includes("espalda"), "flexiones y dominadas");
+  for (const [f, r] of RUTINAS){ const x = biblio.hace(r, {ej});
+    ok(x.fuertes.length >= 1 && x.ejs.length >= 1 && x.ejs.every(id => ej[id]), `${f}: no dice qué trabaja o un ejercicio no existe`); }
+  /* en una escalera cuenta tu escalón: desde tu nivel, la dominada y no la negativa */
+  const d = biblio.hace(R("base_cali"), {ej, nivelDesde: {tirar: "dominada"}});
+  ok(d.ejs.includes("dominada") && !d.ejs.includes("dominada-negativa"), "no usa tu escalón: " + d.ejs.join());
+  ok(JSON.stringify(biblio.pesoDe("dominada", ej)) === '{"hombros":1,"abdomen":1,"espalda":2,"brazos":2}', "el peso de un ejercicio");
+});
+
 prueba("sin-punto-medio", () => {
   const SRC = path.join(RAIZ, "src"), malos = [];
   const todos = d => fs.readdirSync(d, {withFileTypes: true}).flatMap(x => x.isDirectory() ? todos(path.join(d, x.name)) : [path.join(d, x.name)]);

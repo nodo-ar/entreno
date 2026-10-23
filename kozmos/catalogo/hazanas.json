@@ -6,6 +6,8 @@
    "nombre": "Dominadas al máximo",
    "prueba": "Cuántas dominadas estrictas seguidas",
    "familia": "fu",
+   "tema": "tirar",
+   "nivel": 2,
    "texto": "Dominadas estrictas, todas las que salgan.",
    "como": "Colgado con los brazos rectos. Cuenta cada una con el pecho a la barra y bajando hasta estirar, sin hamacarte.",
    "formato": "maximo",
@@ -28,6 +30,8 @@
    "nombre": "Flexiones a ritmo",
    "prueba": "Una cada dos segundos, hasta que no llegás",
    "familia": "fu",
+   "tema": "empujar",
+   "nivel": 2,
    "texto": "Flexiones a ritmo parejo, todas las que salgan.",
    "como": "Una por cada dos segundos: bajás, tocás el puño con el pecho y subís. Cuando no podés seguir el ritmo, se termina.",
    "formato": "maximo",
@@ -51,6 +55,8 @@
    "nombre": "Sentarte y pararte",
    "prueba": "Del 0 al 10: cuánto te apoyás para bajar y subir del piso",
    "familia": "fu",
+   "tema": "piernas",
+   "nivel": 2,
    "texto": "Sentarte y pararte sin manos, de 0 a 10.",
    "como": "Descalzo, sentate en el piso con las piernas cruzadas y volvé a pararte. Empezás con 10: cada apoyo resta 1 y cada desequilibrio, medio.",
    "formato": "maximo",
@@ -80,6 +86,8 @@
    "nombre": "Dominadas minuto a minuto",
    "prueba": "Cada minuto, una más, hasta que no llegás",
    "familia": "fu",
+   "tema": "tirar",
+   "nivel": 3,
    "texto": "Cada minuto, una dominada más, hasta que no llegues.",
    "como": "En el minuto 1 hacés 1, en el 2 hacés 2, y así. Descansás lo que sobra del minuto. Cuando no llegás a completar uno, tocás «No llegué»: cuenta el último completo.",
    "formato": "escalera",
@@ -102,6 +110,8 @@
    "nombre": "Alcance de piernas",
    "prueba": "Sentado, piernas estiradas: cuántos centímetros pasás los pies",
    "familia": "ra",
+   "tema": "movilidad",
+   "nivel": 1,
    "texto": "Cuánto pasan tus dedos los pies, sentado con las piernas estiradas.",
    "como": "Entrá en calor antes. Sentado, piernas juntas y estiradas, plantas contra un escalón. Bajá despacio desde la cadera, sostené dos segundos y medí.",
    "formato": "maximo",
@@ -130,6 +140,8 @@
    "nombre": "12 minutos en bici",
    "prueba": "Kilómetros en 12 minutos a fondo",
    "familia": "mo",
+   "tema": "motor",
+   "nivel": 1,
    "texto": "Doce minutos en la bici fija: los km de su pantalla.",
    "como": "Cinco minutos suaves antes. Después, doce minutos lo más fuerte que puedas sostener parejo. Al terminar, anotá los km.",
    "formato": "reloj",
@@ -161,6 +173,8 @@
    "nombre": "1000 saltos de soga",
    "prueba": "Cuánto tardás",
    "familia": "mo",
+   "tema": "motor",
+   "nivel": 3,
    "texto": "Mil saltos de soga, por tiempo.",
    "como": "Saltos bajos, en la punta de los pies. Si la soga se traba, seguís contando desde donde ibas. Tocás «Terminé» en el salto mil.",
    "formato": "tiempo",
@@ -194,6 +208,8 @@
    "nombre": "L-sit sostenido",
    "prueba": "Cuántos segundos aguantás",
    "familia": "fu",
+   "tema": "abdomen",
+   "nivel": 3,
    "texto": "L-sit en el piso o en paralelas, al máximo.",
    "como": "Brazos rectos, hombros abajo y las piernas estiradas a la altura de la cadera. El reloj corre hasta que tocás.",
    "formato": "maximo",
@@ -210,6 +226,125 @@
    "antes": {
     "formato": "emom"
    }
+  },
+  {
+   "id": "lira",
+   "nombre": "Mentón sobre la barra",
+   "prueba": "Cuántos segundos aguantás con el mentón arriba",
+   "familia": "fu",
+   "tema": "tirar",
+   "nivel": 1,
+   "texto": "Colgado con los codos doblados y el mentón arriba de la barra, todo lo que aguantes.",
+   "como": "Subí con ayuda de una silla, palmas hacia afuera. El reloj corre hasta que el mentón toca la barra o baja de ella.",
+   "formato": "maximo",
+   "mide": {
+    "ejercicio": "colgado-arriba",
+    "tipo": "segundos"
+   },
+   "escala": [15, 25, 40, 55, 70],
+   "estrellas": [],
+   "cada": 42,
+   "fuente": "Prueba física del Cuerpo de Marines de EE. UU., colgado con brazos flexionados (de 15 a 70 s)"
+  },
+  {
+   "id": "cefeo",
+   "nombre": "Flexiones seguidas",
+   "prueba": "Cuántas flexiones seguidas, sin parar",
+   "familia": "fu",
+   "tema": "empujar",
+   "nivel": 1,
+   "texto": "Flexiones a tu ritmo, todas las que salgan sin parar.",
+   "como": "Manos al ancho de los hombros y el cuerpo recto. Cuenta cada una con el pecho cerca del piso y los brazos rectos arriba. Si parás a descansar, se termina.",
+   "formato": "maximo",
+   "mide": {
+    "ejercicio": "flexion",
+    "tipo": "repeticiones"
+   },
+   "escala": [5, 10, 17, 22, 29],
+   "estrellas": [
+    "planche.flexiones-30",
+    "un-brazo.flexiones-40"
+   ],
+   "cada": 42,
+   "fuente": "Colegio Americano de Medicina del Deporte (ACSM), normas de flexiones de 20 a 29 años"
+  },
+  {
+   "id": "tauro",
+   "nombre": "Silla, un minuto",
+   "prueba": "Cuántas veces te parás de una silla en un minuto",
+   "familia": "fu",
+   "tema": "piernas",
+   "nivel": 1,
+   "texto": "Sentarte y pararte de una silla, todas las veces que puedas en un minuto.",
+   "como": "Silla firme contra la pared y los brazos cruzados sobre el pecho. Cuenta cada vez que quedás derecho del todo, sin usar las manos.",
+   "formato": "reloj",
+   "mide": {
+    "ejercicio": "silla-minuto",
+    "tipo": "repeticiones"
+   },
+   "escala": [25, 32, 40, 48, 56],
+   "estrellas": [],
+   "cada": 42,
+   "minutos": 1,
+   "fuente": "Strassmann y otros (2013), valores de referencia de sentarse y pararse en un minuto, International Journal of Public Health 58(6)"
+  },
+  {
+   "id": "fenix",
+   "nombre": "Plancha al máximo",
+   "prueba": "Cuántos segundos en plancha, con el cuerpo recto",
+   "familia": "fu",
+   "tema": "abdomen",
+   "nivel": 1,
+   "texto": "Plancha sobre los antebrazos, todo lo que aguantes.",
+   "como": "Codos debajo de los hombros y el cuerpo recto de la cabeza a los talones. El reloj corre hasta que la cadera sube o baja.",
+   "formato": "maximo",
+   "mide": {
+    "ejercicio": "plancha",
+    "tipo": "segundos"
+   },
+   "escala": [30, 60, 90, 120, 180],
+   "estrellas": [],
+   "cada": 42,
+   "fuente": "Strand y otros (2014), normas de la plancha, Journal of Human Kinetics 40"
+  },
+  {
+   "id": "cisne",
+   "nombre": "Plancha de costado",
+   "prueba": "Cuántos segundos de costado; vale el lado que menos",
+   "familia": "fu",
+   "tema": "abdomen",
+   "nivel": 2,
+   "texto": "Plancha de costado sobre un antebrazo, todo lo que aguantes.",
+   "como": "Codo debajo del hombro, un pie sobre el otro y la cadera arriba, en línea. Primero un lado y después el otro: anotás el que menos aguantó.",
+   "formato": "maximo",
+   "mide": {
+    "ejercicio": "plancha-lateral",
+    "tipo": "segundos"
+   },
+   "escala": [30, 45, 60, 90, 120],
+   "estrellas": [],
+   "cada": 42,
+   "fuente": "McGill, Childs y Liebenson (1999), resistencia del tronco, Archives of Physical Medicine and Rehabilitation 80(8)"
+  },
+  {
+   "id": "centauro",
+   "nombre": "12 minutos corriendo",
+   "prueba": "Kilómetros en 12 minutos",
+   "familia": "mo",
+   "tema": "motor",
+   "nivel": 2,
+   "texto": "Correr 12 minutos a fondo y contar los kilómetros.",
+   "como": "En llano o en una pista. Corré parejo, sin arrancar a fondo. Al terminar, anotás la distancia que marca tu reloj o tu teléfono.",
+   "formato": "reloj",
+   "mide": {
+    "ejercicio": "cooper",
+    "tipo": "km"
+   },
+   "escala": [1.6, 1.8, 2.2, 2.4, 2.8],
+   "estrellas": [],
+   "cada": 42,
+   "minutos": 12,
+   "fuente": "Cooper (1968), correr 12 minutos y el consumo de oxígeno, JAMA 203(3)"
   }
  ]
 }
