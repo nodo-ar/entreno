@@ -764,8 +764,8 @@ prueba("escalera-en-la-rutina", () => {
   ok(a.pasos[0].ejercicio === "dominada-negativa" && a.pasos[0].escalera === "tirar" && JSON.stringify(a.pasos[0].rango) === "[3,5]" && a.pasos[0].n === 3, "el primer bloque de la base: " + JSON.stringify(a.pasos[0]));
   ok(a.pasos[1].escalera === "piernas" && a.pasos[1].ejercicio === "sentadilla", "la superserie con piernas");
   /* sin barra, el bloque de tirar pasa a la escalera de remo */
-  ok(rutina.armarBloques(r.familia, [r.sesiones[0].bloques[1]], {ej, equipo: []})[0].pasos[0].escalera === "remo", "sin barra no cambia de escalera");
-  /* y como el día ya tiene su bloque de remo, el de tirar se saltea: la misma escalera no va dos veces en un día */
+  ok(rutina.deRutina(r, 0, {ej, equipo: []}).bloques.find(b => !b.clase).pasos[0].escalera === "remo", "sin barra no cambia de escalera");
+  /* y como el remo ya está en el primer bloque, el bloque de remo de más abajo se saltea: la misma escalera no va dos veces en un día */
   for (const eq of [[], ["mancuernas"], ["poste"]]) for (let i = 0; i < r.sesiones.length; i++){ const ps = rutina.deRutina(r, i, {ej, equipo: eq}).bloques.flatMap(b => b.pasos || []).filter(x => x.escalera === "remo");
     ok(ps.length === 3, `sin barra (${eq}), día ${i + 1}: ${ps.length} series de remo`); }
   /* con barra, los dos bloques siguen */
@@ -1437,7 +1437,7 @@ prueba("rutina-armar-bloques", () => {
       for (const [f, r] of RUTINAS) for (let i = 0; i < r.sesiones.length; i++) for (const equipo of equipos) for (const descarga of [false, true]) for (const sesiones of [[], hist]){
         const o = {ej: ejV, equipo, sesiones, marcas: [], descarga};
         const n = rutina.deRutina(r, i, o), v = cx.K.rutina.deRutina(r, i, o);
-        /* lo único que cambia a propósito: sin el equipo de su primera escalera, un bloque que caería en una escalera que el día ya hace se saltea (vuelta 33) */
+        /* lo único que cambia a propósito: sin el equipo de su primera escalera, la misma escalera no va dos veces en un día; la segunda se saltea (vuelta 33) */
         const escs = d => d.bloques.flatMap(b => b.pasos || []).map(x => x.escalera).filter(Boolean), salteado = JSON.stringify([...new Set(escs(n))].sort()) === JSON.stringify([...new Set(escs(v))].sort()) && escs(n).length < escs(v).length;
         ok(JSON.stringify(n) === JSON.stringify(v) || salteado, `${f} día ${i + 1} (${JSON.stringify(equipo)}, ${descarga ? "descarga" : "carga"}): cambió`);
       }

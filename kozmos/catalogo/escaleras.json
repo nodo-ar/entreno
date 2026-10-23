@@ -26,12 +26,13 @@
    "patron": "tirar",
    "zonas": ["espalda", "brazos"],
    "apoyo": ["hombros"],
-   "texto": "Tirar hacia el pecho, del poste a la barra baja y al remo en horizontal.",
+   "texto": "Tirar hacia el pecho, del poste a la barra baja, al remo en horizontal y a un brazo.",
    "pasos": [
     {"ejercicio": "remo-poste", "tipo": "repeticiones", "rango": [8, 12]},
     {"ejercicio": "remo-mancuerna", "tipo": "repeticiones", "rango": [8, 12], "carga": 2, "kgInicial": 6, "hastaKg": 16, "tambien": ["remo-toalla-puerta"]},
     {"ejercicio": "remo-invertido", "tipo": "repeticiones", "tambien": ["remo-mesa"]},
-    {"ejercicio": "remo-fl-tuck", "tipo": "repeticiones", "rango": [3, 6]}
+    {"ejercicio": "remo-fl-tuck", "tipo": "repeticiones", "rango": [3, 6]},
+    {"ejercicio": "remo-un-brazo", "tipo": "repeticiones", "rango": [3, 6]}
    ]
   },
   {

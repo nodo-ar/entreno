@@ -1022,6 +1022,14 @@
    ]
   },
   {
+   "id": "remo-un-brazo",
+   "nombre": "Remo invertido a un brazo",
+   "indicacion": "Un brazo en la barra y el otro al costado. Cuerpo recto, sin girar.",
+   "equipo": [
+    "barra"
+   ]
+  },
+  {
    "id": "curl-femoral-deslizante",
    "nombre": "Curl femoral deslizante",
    "indicacion": "Boca arriba, talones sobre trapos. Levantá la cola y traé los talones."
