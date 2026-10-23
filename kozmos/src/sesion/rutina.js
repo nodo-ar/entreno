@@ -184,12 +184,13 @@ K.rutina = (() => {
   }
 
   /* las escaleras de una rutina y por dónde vas en cada una, en el orden en que aparecen */
-  function escalerasDe(r, {ej = {}, equipo = null, sesiones = [], marcas = []} = {}){
+  /* «nivelDesde» (Tu nivel: el escalón de arranque de cada escalera) manda sobre el «desde» de la rutina; lo hecho, sobre los dos */
+  function escalerasDe(r, {ej = {}, equipo = null, sesiones = [], marcas = [], nivelDesde} = {}){
     const vistas = new Map();
     for (const s of r.sesiones || []) for (const b of s.bloques || []){
       if (!b.escalera) continue;
       const esc = elegirEscalera(b.escalera, ej, equipo); if (!esc || vistas.has(esc.id)) continue;
-      const def = defEscalera(esc, ej, equipo, b.desde, b.rango), st = escalon(def, sesiones, {marcas});
+      const def = defEscalera(esc, ej, equipo, nivelDesde?.[esc.id] ?? b.desde, b.rango), st = escalon(def, sesiones, {marcas});
       if (st) vistas.set(esc.id, {...st, nombre: esc.nombre, familia: esc.familia});
     }
     return [...vistas.values()];
@@ -241,13 +242,13 @@ K.rutina = (() => {
   const tramos = (ts, ej, equipo) => desplegar(ts).map(t => t.ejercicio ? {...t, ejercicio: elegir(t.ejercicio, ej, equipo)} : {...t});
 
   /* un bloque de series, listo para el motor: con escalera, el escalón que toca y sus objetivos; suelto, el ejercicio que tu equipo permite */
-  function bloqueSeries(r, cb, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false}){
+  function bloqueSeries(r, cb, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false, nivelDesde}){
     /* «dura»: los segundos que lleva una serie larga (1000 saltos), para que los minutos del día no mientan */
     const base = {tipo: cb.tipo, descanso: cb.descanso ?? 90, ...(cb.dura ? {dura: cb.dura} : {})};
     let e, tipo = cb.tipo, m, st = null, def = null, extra = {};
     if (cb.escalera){
       const esc = elegirEscalera(cb.escalera, ej, equipo);
-      def = defEscalera(esc, ej, equipo, cb.desde, cb.rango); st = escalon(def, sesiones, {marcas});
+      def = defEscalera(esc, ej, equipo, nivelDesde?.[esc.id] ?? cb.desde, cb.rango); st = escalon(def, sesiones, {marcas});
       if (descarga) st = {...st, descarga: true, retest: false};
       e = st.paso.ejercicio; tipo = st.paso.tipo; m = metas(def, st, cb);
       extra = {escalera: esc.id, ...(st.nuevo ? {nuevo: st.nuevo} : {})};
@@ -269,13 +270,13 @@ K.rutina = (() => {
   /* armarBloques(familia, bloques del catálogo, ctx) → los bloques listos para el motor: lo de tramos con su nombre, cada bloque
      de series con su escalón y los del mismo grupo alternados serie a serie. Lo usa la rutina y sirve para cualquier día armado
      con bloques como los de una rutina. «equipoRutina» y «dia» solo nombran un bloque de tramos sin nombre. */
-  function armarBloques(familia, cbs, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false, equipoRutina, dia} = {}){
+  function armarBloques(familia, cbs, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false, nivelDesde, equipoRutina, dia} = {}){
     const r = {familia};
     const crudos = cbs.map(cb => {
       if (cb.tramos){ const ts = tramos(cb.tramos, ej, equipo);
         /* sin nombre en el catálogo, el bloque se llama por lo que se hace («Trote», «Bici», «Posturas»), no por el día */
         return {clase: "tramos", familia: cb.familia || familia, nombre: cb.nombre || nombreTramos(ts, {mide: cb.mide, equipo: equipoRutina, sesion: dia}, ej), tramos: ts, ...(cb.mide ? {mide: cb.mide} : {}), grupo: null}; }
-      return bloqueSeries(r, cb, {ej, equipo, sesiones, marcas, descarga});
+      return bloqueSeries(r, cb, {ej, equipo, sesiones, marcas, descarga, nivelDesde});
     });
     const bloques = [];
     for (let k = 0; k < crudos.length;){

@@ -44,7 +44,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - ~~**Dos guías el primer día** (coherencia, vuelta 26)~~: hecho en la vuelta 29, una sola guía «Tu equipo · Tu nivel · Tu rumbo». *Espera el OK de Fer al tablero.*
 - ~~**Tu nivel en el primer día** (Fer, boceto del motor)~~: hecho en la vuelta 29. *Espera el OK de Fer al tablero.*
 - **Horizontal de Tu rumbo, Tu equipo y Tu nivel** (la persona, vuelta 26): la columna derecha queda vacía arriba del botón.
-- **Las rutinas no usan tu nivel** (vuelta 29): sus escaleras arrancan donde dice la rutina o donde estás.
+- ~~**Las rutinas no usan tu nivel**~~: hecho en la vuelta 31.
 - **Cambiar tu nivel renueva su fecha** (Casandra, vuelta 29): un intento que no llegó antes de cambiarlo vuelve a no contar para sacar una dada.
 - **Atajos entre pestañas** (la cartógrafa): Tu equipo abierto desde Hoy o el cielo vuelve a Vos, no a donde estabas.
 - **Progreso en horizontal** (la cartógrafa): al borrar la sesión abierta se muestra la siguiente sin avisar; «Tus sesiones» queda abajo en la columna izquierda; el ⋯ no deja claro a qué lado pertenece.
@@ -107,7 +107,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Filas largas con kilos a 390 px** (el pulgar, vuelta 27): las filas de remo con «· 8 kg» al final van en dos renglones.
 - ~~**Decisiones de la vuelta 27** (acta 027).~~ Decididas por Fer (2026-10-22): los remos nuevos en la escalera de Remo, Piernas e Isquios con peso desde el primer escalón y el fondo ruso como está.
 - **El cierre con bici se lleva el abdomen** (el entrenador, vuelta 28): con bici, el cierre de 10 minutos lleva el día a la hora y el abdomen se cae. Lo decide Fer (acta 028, decisión 1).
-- **Dos maneras de mostrar las partes de un día** (coherencia, vuelta 28): Hoy con el molde va por partes con encabezados («Fuerza · de a dos»); los días de una rutina, en filas sueltas con «en superserie». Emparejarlas cuando las rutinas pasen al molde.
+- ~~**Dos maneras de mostrar las partes de un día**~~ (hecho en la vuelta 31) (coherencia, vuelta 28): Hoy con el molde va por partes con encabezados («Fuerza · de a dos»); los días de una rutina, en filas sueltas con «en superserie». Emparejarlas cuando las rutinas pasen al molde.
 - ~~**Tu nivel** (PR3)~~: hecho en la vuelta 29 (acta 029): pantalla, perfil, respaldo y las dadas en tu cosmos. *Espera el OK de Fer al tablero.*
 
 ## Ideas (necesitan brief y OK)
@@ -122,4 +122,9 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **La entrada en calor: ¿la pieza como título?** (la persona, vuelta 30): arriba dice «Entrada en calor» y la pieza va abajo con su dosis. Lo decide Fer (acta 030, decisión 2).
 - **Lo suave en etiquetas chicas** (Casandra, vuelta 30): `.lb .q` usa `--ink-3`, con poco contraste en claro. Lo decide Fer (acta 030, decisión 3).
 - ~~**Filas largas con kilos a 390 px** (vuelta 27).~~ Hecho en la vuelta 30: los kilos van debajo de lo que toca, en la misma columna.
-- **rumbo-sin-tope depende del día** (vuelta 30): no fija la fecha; con martes, jueves y sábado sembrados (`dias: [1, 3, 5]`), un día que no toca Hoy dice «Hoy descansás» y no aparece «Muscle-up pide barra». Falla igual en `main`. Fijarle la fecha con `conReloj`.
+- ~~**rumbo-sin-tope depende del día**~~ (hecho, PR #40) (vuelta 30): no fija la fecha; con martes, jueves y sábado sembrados (`dias: [1, 3, 5]`), un día que no toca Hoy dice «Hoy descansás» y no aparece «Muscle-up pide barra». Falla igual en `main`. Fijarle la fecha con `conReloj`.
+
+## Vuelta 31 · rutinas con tu nivel
+
+- **Minutos de Base de calistenia** (Casandra): el catálogo dice 50 y el día armado da 65.
+- **[idea] Planes más visual** (Fer): rutinas y pruebas de un vistazo (ejercicios o músculos), medallas por nivel (inicial, intermedio, avanzado), más pruebas, y la biblioteca de ejercicios donde se llegue. Boceto en curso.

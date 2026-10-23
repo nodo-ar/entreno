@@ -100,6 +100,15 @@ Una estrella dada no se enciende ni escribe marcas: en tu cosmos se ve punteada 
 
 `K.nivel.arrancasEn(c, {escalones, ej})`: lo que dice Tu rumbo debajo de cada elegida que todavía no empezaste, «Arrancás en …»: el escalón del camino si estás abajo en la escalera, si no la próxima estrella.
 
+## Las rutinas en el molde (`K.dia.deRutina`)
+
+Una rutina que seguís conserva sus ejercicios, series, semanas, semana de prueba y meta; el molde le da la forma del día de Hoy (vuelta 31, opción A elegida por Fer). `K.dia.deRutina(r, i, ctx)` marca cada bloque con su parte (`entrada`, `fuerza`, `abdomen`, `cierre`, `motor` o `rango`):
+- **Tu nivel**: sus escaleras arrancan en `nivelDesde`; lo que ya hiciste manda sobre el nivel y sobre el `desde` de la rutina.
+- **Fuerza**: la entrada en calor del catálogo se cambia por la de Hoy (armada con tu equipo y el día) y se suma el cierre de Hoy: bici de 5 min si entra en la hora, si no posturas. Las superseries van bajo «Fuerza de a dos»; L-sit y dragon, bajo «Abdomen».
+- **Motor** (correr, intervalos): un solo bloque con tramos, como siempre; en pantalla se muestra en Entrada, Motor y Cierre («Vuelta a la calma»). La sesión no cambia.
+- **Rango**: sin entrada en calor ni cierre agregados.
+- **Semana de prueba y ventana**: las pruebas van después de la entrada en calor (`K.dia.deSemanaDePrueba`), nunca en frío.
+
 ## Rutinas (`catalogo/rutinas/<id>.json`, una por archivo)
 
 ```json

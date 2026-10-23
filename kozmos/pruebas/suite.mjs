@@ -1498,8 +1498,10 @@ prueba("hoy-filas-superserie", async () => {
   await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-toca .toca-par");
   const hoy = await p.$$eval(".hoy-toca .ln.toca", xs => xs.map(y => [y.querySelector(".tg").textContent, y.querySelector(".num").textContent]));
   ok(hoy.every(([q]) => !q.includes(" + ")), "Hoy sigue juntando la superserie en una fila: " + JSON.stringify(hoy));
-  const pares = await p.$$eval(".hoy-toca .toca-par", xs => xs.map(x => [x.querySelectorAll(".ln.toca").length, x.querySelector(".toca-par-tx")?.textContent]));
-  ok(pares.length >= 1 && pares.every(([n, t]) => n === 2 && t === "en superserie"), "la superserie no va junta: " + JSON.stringify(pares));
+  /* boceto m25: la rutina va en el molde: la superserie va junta bajo «Fuerza · de a dos», sin repetir «en superserie» */
+  const pares = await p.$$eval(".hoy-toca .toca-par", xs => xs.map(x => [x.querySelectorAll(".ln.toca").length, x.querySelector(".toca-par-tx")?.textContent || ""]));
+  ok(pares.length >= 1 && pares.every(([n, t]) => n === 2 && t === ""), "la superserie no va junta: " + JSON.stringify(pares));
+  ok((await p.textContent(".hoy-toca")).includes("Fuerzade a dos") || await p.$$eval(".hoy-toca .toca-sec", xs => xs.some(x => /Fuerza/.test(x.textContent) && /de a dos/.test(x.textContent))), "la rutina no dice «Fuerza · de a dos»");
   ok(await p.evaluate(() => !document.querySelector(".hoy-toca .chip, .hoy-toca .pill")), "Hoy usa chips");
   /* al pulgar arriba de todo, sin desplazar */
   const a = await alPulgar(p); ok(a.ok, "«Empezar» no queda al alcance del pulgar: " + JSON.stringify(a.r));
@@ -1548,7 +1550,8 @@ prueba("hoy-mas-liviana", async () => {
   ok(await p.$eval(".rut-dia.te-toca", x => [...x.querySelectorAll(".ln.toca")].some(y => y.querySelector(".tg").textContent === "Sentadilla" && y.querySelector(".toca-marca")?.textContent === "más liviana")), "el día de la rutina no dice más liviana");
   /* la semana de prueba de la rutina: cada fila de la descarga lo dice */
   await p.click("#rut-sem"); await p.click('.pmi[data-id="4"]'); await p.waitForSelector(".rut .hoy-sp");
-  ok(await p.$$eval(".rut-dia", xs => xs.every(x => [...x.querySelectorAll(".ln.toca")].filter(y => !/Entrada|Vuelta/.test(y.textContent)).every(y => y.querySelector(".toca-marca")))), "en la semana de prueba una fila no dice más liviana");
+  /* boceto m25: el cierre del molde (posturas o bici) no es de la rutina: no va más liviano */
+  ok(await p.$$eval(".rut-dia", xs => xs.every(x => { let parte = ""; return [...x.querySelectorAll(".toca-sec, .ln.toca")].filter(y => { if (y.classList.contains("toca-sec")){ parte = y.textContent; return false; } return !/Cierre/.test(parte) && !/Entrada|Vuelta/.test(y.textContent); }).every(y => y.querySelector(".toca-marca")); })), "en la semana de prueba una fila no dice más liviana");
   /* y en la sesión, la serie también */
   await ir(p, "#/hoy");
   await p.click("#s-empezar"); await tick(p, 1000);
