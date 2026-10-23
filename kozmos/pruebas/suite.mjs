@@ -1180,13 +1180,13 @@ prueba("escalera-hoy", async () => {
   /* Tu avance: el escalón de cada escalera, igual en Hoy y en Planes */
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await sembrarEsc(p); await p.waitForSelector(".hoy-rut .esc-mini");
-  const filas = async sel => p.$$eval(sel + " .esc-mini li", ls => ls.map(l => [l.querySelector(".em-nom").textContent, l.querySelector(".em-n").textContent, l.querySelector(".esc-sub").getAttribute("aria-label"), l.querySelectorAll(".esc-sub i").length]));
+  const filas = async sel => p.$$eval(sel + " .esc-mini li", ls => ls.map(l => [l.querySelector(".em-nom").textContent, l.querySelector(".em-n").textContent, l.querySelector(".esc-sub").getAttribute("aria-label"), l.querySelectorAll(".esc-sub rect").length]));
   const h = await filas(".hoy-rut");
   ok(h.map(f => f[0]).join() === "Tirar,Piernas,Fondos,Isquios,Remo,Empujar,L-sit", "las escaleras de Hoy: " + h.map(f => f[0]));
   ok(JSON.stringify(h[0]) === '["Tirar","4/7","Escalón 4 de 7: Dominada",7]', "tirar en Hoy: " + JSON.stringify(h[0]));
   ok(h[2][1] === "1/2" && h[2][2].endsWith("Flexión cerrada"), "fondos en Hoy (sin paralelas): " + JSON.stringify(h[2]));
   /* una escalerita: los escalones suben de alto, lo hecho en tinta y el de ahora en color */
-  ok(await p.$eval(".hoy-rut .esc-mini li .esc-sub", x => x.querySelectorAll("i.d").length === 3 && x.querySelector("i.n") === x.children[3] && x.children[0].offsetHeight < x.children[6].offsetHeight), "la escalerita de tirar no se dibuja bien");
+  ok(await p.$eval(".hoy-rut .esc-mini li .esc-sub", x => { const r = x.querySelectorAll("rect"); return x.querySelectorAll("rect.d").length === 3 && x.querySelector("rect.n") === r[3] && +r[0].getAttribute("height") < +r[6].getAttribute("height"); }), "la escalerita de tirar no se dibuja bien");
   ok(!(await p.textContent(".hoy-rut")).includes("de 24"), "Hoy sigue mostrando las semanas en vez de los escalones");
   await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-esc");
   ok(JSON.stringify(await filas(".rut-esc")) === JSON.stringify(h), "Planes no muestra lo mismo que Hoy");

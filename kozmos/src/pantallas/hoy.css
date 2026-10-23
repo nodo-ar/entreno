@@ -173,13 +173,11 @@ body.en-sesion #app{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .sens .btn.inf{border-color:var(--ink-3); border-style:dashed}
 .sens .btn[aria-pressed="true"]{background:var(--solid); color:var(--on-solid); border-color:var(--solid); font-weight:700}
 .ses-marca{color:var(--c, var(--ink)); font-weight:700}
-/* por dónde vas en cada escalera (Hoy y Planes): una escalerita por escalera, lo subido en tinta y el escalón de ahora en su color */
+/* por dónde vas en cada escalera (Hoy y Planes): una escalerita por escalera, lo subido en gris y el escalón de ahora en su color, con vos parado arriba */
 .esc-mini{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px 6px; margin:0; padding:0; list-style:none}
 .esc-mini li{display:grid; justify-items:center; gap:3px; min-width:36px}
-.esc-sub{display:flex; align-items:flex-end; gap:2px; justify-self:stretch; height:32px; margin-bottom:3px}
-.esc-sub i{flex:1; border-radius:2px 2px 0 0; background:var(--s2)}
-.esc-sub i.d{background:var(--ink-3)}
-.esc-sub i.n{background:var(--c)}
+.esc-sub{display:flex; justify-content:center; height:32px; margin:4px 0 3px}
+.esc-sub svg{display:block; overflow:visible}
 .em-nom{font-size:var(--t-xs); font-weight:700; white-space:nowrap}
 .em-n{font-size:var(--t-xs); font-weight:700; color:var(--ink-2)}
 /* el resumen: ▲ subiste, = seguís, ▼ bajás */

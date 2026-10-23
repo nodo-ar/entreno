@@ -45,8 +45,13 @@ const ctxRutina = K.ctxRutina = () => ({ej: K.EJ, equipo: K.diario.perfil.equipo
 const MARCA = {sube: "▲ nuevo", baja: "▼ más fácil", carga: "▲ más peso"};
 K.marcaPaso = b => b.descarga ? "más liviana" : MARCA[b.nuevo] || "";
 /* cada escalera dibujada como una escalerita, lo subido en tinta y el escalón de ahora en su color */
+/* la escalerita: un peldaño por escalón, cada uno más alto y pegado al anterior. Lo subido en gris, el de ahora en el color de su familia
+   con un punto parado arriba (vos), lo que falta apenas marcado */
+const escalera = (i, n) => { const w = 36 / n, f = z => z.toFixed(2), alto = k => 6 + 24 * (n > 1 ? k / (n - 1) : 1);
+  const peldanos = Array.from({length: n}, (_, k) => `<rect${k < i ? ' class="d"' : k === i ? ' class="n"' : ""} x="${f(2 + k * w)}" y="${f(30 - alto(k))}" width="${f(w + .3)}" height="${f(alto(k))}" fill="${k < i ? "var(--ink-3)" : k === i ? "var(--c)" : "var(--s2)"}"/>`).join("");
+  return `<svg viewBox="0 0 40 32" width="40" height="32" overflow="visible">${peldanos}<circle cx="${f(2 + (i + .5) * w)}" cy="${f(25 - alto(i))}" r="2.6" fill="var(--c)"/></svg>`; };
 K.escalerasMini = (es, fam) => `<ul class="esc-mini">${es.map(x => `<li style="--c:var(--${x.familia || fam})">
-    <span class="esc-sub" role="img" aria-label="${K.esc(`Escalón ${x.i + 1} de ${x.total}: ${K.ej(x.paso.ejercicio).nombre}${x.descarga ? ", más liviana" : ""}`)}">${x.pasos.map((_, k) => `<i class="${k < x.i ? "d" : k === x.i ? "n" : ""}" style="height:${(30 + 70 * (x.total > 1 ? k / (x.total - 1) : 1)).toFixed(0)}%"></i>`).join("")}</span>
+    <span class="esc-sub" role="img" aria-label="${K.esc(`Escalón ${x.i + 1} de ${x.total}: ${K.ej(x.paso.ejercicio).nombre}${x.descarga ? ", más liviana" : ""}`)}">${escalera(x.i, x.total)}</span>
     <b class="em-nom">${K.esc(x.nombre)}</b><small class="num em-n">${x.i + 1}/${x.total}</small></li>`).join("")}</ul>`;
 /* lo que cambió en cada escalera con una sesión, para el resumen: ▲ subiste, = seguís, ▼ bajás */
 const SIGNO = {sube: "▲", carga: "▲", baja: "▼", "menos-peso": "▼"};
