@@ -86,6 +86,15 @@ K.dia = (() => {
     return {...b, molde: "habilidad", constelaciones: [c.id]};
   }
 
+  /* el cierre sin rango ni motor: 5 min de bici suave si tenés bici; si no, tres posturas de 40 s según lo que entrenó el día */
+  function suave(bs, {ej = {}, equipo = null, usados = new Set()} = {}){
+    if (equipo && equipo.includes("bici") && !usados.has("bici"))
+      return {clase: "tramos", familia: "mo", nombre: ej.bici?.nombre || "Bici", molde: "cierre", tramos: [{clase: "suave", seg: 300, ejercicio: "bici", nota: "Suave, que puedas hablar"}], series: 1};
+    const pats = bs.flatMap(b => patronesDe(b, ej)), xs = [];
+    for (const e of [...pats.map(p => POSTURA[p]), ...POSTURAS]) if (e && !xs.includes(e) && !usados.has(e) && xs.length < 3) xs.push(e);
+    return {clase: "tramos", familia: "ra", nombre: "Posturas", molde: "cierre", tramos: xs.map(e => ({clase: "postura", seg: 40, ejercicio: e})), series: xs.length};
+  }
+
   const dur = b => b.pasos || b.clase ? K.rutina.duracion(b) : K.plan.duracion(b);
   const minutosDe = bs => Math.max(5, Math.round((bs.reduce((t, b) => t + dur(b), 0) + Math.max(0, bs.length - 1) * ENTRE) / 300) * 5);
 
@@ -174,14 +183,7 @@ K.dia = (() => {
     let cierre = null;
     const oc = otrasOrden.find(c => !hab.some(h => h.constelaciones.includes(c.id)));
     if (oc){ const b = abiertas.has(oc.id) ? K.plan.prueba(oc) : K.plan.bloque(oc, true, volviste); if (b && !choca(b)) cierre = {...b, molde: "cierre", constelaciones: [oc.id]}; }
-    if (!cierre && equipo && equipo.includes("bici") && !usadosEj.has("bici"))
-      cierre = {clase: "tramos", familia: "mo", nombre: ej.bici?.nombre || "Bici", molde: "cierre", tramos: [{clase: "suave", seg: 300, ejercicio: "bici", nota: "Suave, que puedas hablar"}], series: 1};
-    if (!cierre){
-      const pats = [...hab, ...fuerza, ...(abdomen ? [abdomen] : [])].flatMap(b => patronesDe(b, ej));
-      const xs = [];
-      for (const e of [...pats.map(p => POSTURA[p]), ...POSTURAS]) if (e && !xs.includes(e) && !usadosEj.has(e) && xs.length < 3) xs.push(e);
-      cierre = {clase: "tramos", familia: "ra", nombre: "Posturas", molde: "cierre", tramos: xs.map(e => ({clase: "postura", seg: 40, ejercicio: e})), series: xs.length};
-    }
+    if (!cierre) cierre = suave([...hab, ...fuerza, ...(abdomen ? [abdomen] : [])], {ej, equipo, usados: usadosEj});
     usar(cierre);
 
     /* 5 · la entrada en calor adelante, según lo que pide el día y tu equipo */
@@ -206,5 +208,36 @@ K.dia = (() => {
     return {...r, bloques: [...e, ...r.bloques.filter(b => b.molde !== "entrada")]};
   }
 
-  return {armar, rotar, frecuencia, diasSemana, ventana, deSemanaDePrueba, conDadas, tocadas, minutosDe, patronesDe, ejerciciosDe, escaleraDe, ESCALERAS, POSTURA};
+  /* ===== Un día de rutina en el mismo molde (boceto) =====
+     La rutina pone lo que se hace (sus bloques, sus series, su semana); el molde pone la forma, igual que Hoy:
+     · fuerza y rango: la entrada en calor de Hoy (según lo que pide el día y tu equipo) en lugar de la del catálogo,
+       sus superseries como «Fuerza · de a dos», L-sit y bandera acostada como «Abdomen» y el cierre de Hoy (bici o posturas).
+     · motor: su bloque ya trae la entrada y la vuelta a la calma adentro; se parte en las mismas partes solo al mostrarlo
+       (en la sesión sigue siendo uno, sin toques de más en medio del trote).
+     · Tu nivel: sus escaleras arrancan en tu escalón (nivelDesde manda sobre el «desde» de la rutina; lo hecho, sobre los dos). */
+  const soloEntrada = b => b.clase === "tramos" && b.tramos.every(t => t.clase === "entrada");
+  const ABD = new Set(["abdomen"]);
+  function parteDe(b, r, ej){
+    if (b.prueba || b.hazana) return undefined;
+    if (b.clase === "tramos") return b.tramos.every(t => t.clase === "vuelta") ? "cierre" : b.familia === "mo" ? "motor" : "rango";
+    if (r.familia === "ra") return "rango";
+    return patronesDe(b, ej).every(p => ABD.has(p)) ? "abdomen" : "fuerza";
+  }
+  function deRutina(r, i, ctx = {}){
+    const {ej = {}, equipo = null} = ctx, p = K.rutina.deRutina(r, i, ctx); if (!p) return null;
+    const cuerpo = p.bloques.filter(b => !soloEntrada(b)).map(b => ({...b, molde: parteDe(b, r, ej)}));
+    const motor = cuerpo.some(b => b.molde === "motor");
+    let bloques = cuerpo;
+    if (!motor){
+      const usados = new Set(cuerpo.flatMap(ejerciciosDe));
+      const entrada = r.familia === "ra" ? [] : [{...K.caminos.entrada(cuerpo, {equipo, ej, familia: r.familia}), molde: "entrada"}];
+      const cierre = cuerpo.some(b => b.molde === "cierre") || r.familia === "ra" ? [] : [suave(cuerpo, {ej, equipo, usados})];
+      bloques = [...entrada, ...cuerpo, ...cierre];
+      /* lo de la rutina no se toca: si con la bici el día pasa de la hora, el cierre son las posturas (dos minutos) */
+      if (cierre.length && cierre[0].familia === "mo" && minutosDe(bloques) > TOPE) bloques = [...entrada, ...cuerpo, suave(cuerpo, {ej, equipo: null, usados})];
+    }
+    return {...p, bloques, minutos: minutosDe(bloques), molde: true};
+  }
+
+  return {armar, deRutina, suave, rotar, frecuencia, diasSemana, ventana, deSemanaDePrueba, conDadas, tocadas, minutosDe, patronesDe, ejerciciosDe, escaleraDe, ESCALERAS, POSTURA};
 })();

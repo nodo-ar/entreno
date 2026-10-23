@@ -1754,6 +1754,24 @@ prueba("respaldo-nivel", () => {
   const l = respaldo.leer(arch(n));
   ok(respaldo.sumar({mediciones: [], sesiones: [], perfil: {nivel: {flexiones: "0-9"}}}, l).cuenta.perfil === 0, "pisó tu nivel");
 });
+/* boceto m25: un día de rutina en el molde de Hoy, con sus escaleras desde tu nivel */
+prueba("rutina-en-molde", () => {
+  const R = id => RUTINAS.find(([, x]) => x.id === id)[1], ej = EJM(), equipo = ["barra", "paralelas", "mancuernas"];
+  const nd = nivel.desde({dominadas: "5-9", unaPierna: "silla"}, equipo);
+  const sin = molde.deRutina(R("base_cali"), 0, {ej, equipo}), con = molde.deRutina(R("base_cali"), 0, {ej, equipo, nivelDesde: nd});
+  const tirar = d => d.bloques.flatMap(b => b.pasos || []).find(x => x.escalera === "tirar").ejercicio;
+  ok(tirar(sin) === "dominada-negativa" && tirar(con) === "dominada", "tu nivel no mueve el escalón de tirar de la rutina: " + tirar(sin) + " / " + tirar(con));
+  ok(con.molde && JSON.stringify([...new Set(con.bloques.map(b => b.molde))]) === JSON.stringify(["entrada", "fuerza", "abdomen", "cierre"]), "la Base no va en el molde: " + con.bloques.map(b => b.molde));
+  ok(con.bloques.filter(b => b.molde === "entrada").length === 1, "dos entradas en calor");
+  /* lo hecho manda sobre el nivel */
+  const s = [{id: "x", fecha: "2026-10-01", rutina: {id: "base_cali", sesion: 0}, bloques: [{series: [3, 3, 3].map(v => ({ejercicio: "dominada-negativa", tipo: "repeticiones", objetivo: 3, valor: v, escalera: "tirar", rango: [3, 5], n: 3}))}]}];
+  ok(tirar(molde.deRutina(R("base_cali"), 1, {ej, equipo, sesiones: s, nivelDesde: nd})) === "dominada-negativa", "tu nivel pisa lo que hiciste");
+  /* motor: un solo bloque (la sesión no cambia), en su parte */
+  const c = molde.deRutina(R("c0a5"), 0, {ej, equipo});
+  ok(c.bloques.length === 1 && c.bloques[0].molde === "motor" && c.minutos === rutina.deRutina(R("c0a5"), 0, {ej, equipo}).minutos, "Correr 5 km cambió su sesión");
+  /* todas las rutinas arman sus días en el molde, con cada bloque en una parte */
+  for (const [, r] of RUTINAS) for (let i = 0; i < r.sesiones.length; i++){ const d = molde.deRutina(r, i, {ej, equipo, nivelDesde: nd}); ok(d.bloques.every(b => b.molde), `${r.id} ${i}: un bloque sin parte`); }
+});
 prueba("dia-con-nivel", () => {
   /* el día con tu nivel: la fuerza arranca en tu escalón, el camino también, y las dadas corren la próxima */
   const eq = ["barra", "paralelas"], n = {dominadas: "10-14", flexiones: "30-39", unaPierna: "silla", fecha: HOY};
