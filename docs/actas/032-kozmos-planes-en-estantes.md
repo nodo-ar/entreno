@@ -102,3 +102,11 @@ Cada escala se revisó contra su norma publicada, de la magnitud 5 a la 1.
 - Las tarjetas «para vos» en horizontal van una debajo de la otra: ocupan la primera pantalla de la lista.
 - «Sentarte y pararte» (del piso) y «Silla, un minuto» se parecen de nombre: mirar con Fer si «Del piso y arriba» se entiende mejor.
 - El cuerpo de las rutinas de rango (movilidad) marca cadera y piernas: es correcto, pero dice poco de la flexibilidad.
+
+## Segunda pasada (después de la revisión de Fer)
+
+- Fer aceptó las dos recomendaciones: «Sentarte y pararte» pasa a «Del piso y arriba» (también en sus estrellas; el id `sagitario` no cambia) y, en horizontal, las tarjetas de «para vos» una arriba de la otra.
+- El menú «Con qué» de la biblioteca lleva el ícono de cada equipo (el mismo de Tu equipo); «Sin nada», la persona sola; «Con lo que tenés», los dos aros.
+- Los niveles quedan con los satélites: Fer se refería a las barras de las escaleras. Se mostraron bocetos (constelación, anillo, escalera y variantes) y eligió la **escalera de bloques con vos parado en el escalón de ahora**: en Hoy («Tu avance»), en la rutina («Tus escalones») y en Tu nivel («Arrancás en»).
+- La cantidad de escalones sale del catálogo; Remo y Fondos son cortas (anotado en el backlog).
+- Suite completa: 108 de 108 de pantalla y 120 de 120 sin pantalla. Publicada como versión 40 con el OK de Fer al tablero.
