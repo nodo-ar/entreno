@@ -765,6 +765,11 @@ prueba("escalera-en-la-rutina", () => {
   ok(a.pasos[1].escalera === "piernas" && a.pasos[1].ejercicio === "sentadilla", "la superserie con piernas");
   /* sin barra, el bloque de tirar pasa a la escalera de remo */
   ok(rutina.deRutina(r, 0, {ej, equipo: []}).bloques.find(b => !b.clase).pasos[0].escalera === "remo", "sin barra no cambia de escalera");
+  /* y como el remo ya está en el primer bloque, el bloque de remo de más abajo se saltea: la misma escalera no va dos veces en un día */
+  for (const eq of [[], ["mancuernas"], ["poste"]]) for (let i = 0; i < r.sesiones.length; i++){ const ps = rutina.deRutina(r, i, {ej, equipo: eq}).bloques.flatMap(b => b.pasos || []).filter(x => x.escalera === "remo");
+    ok(ps.length === 3, `sin barra (${eq}), día ${i + 1}: ${ps.length} series de remo`); }
+  /* con barra, los dos bloques siguen */
+  ok(rutina.deRutina(r, 0, {ej, equipo: ["barra"]}).bloques.flatMap(b => b.pasos || []).filter(x => x.escalera === "remo").length === 3, "con barra se perdió el remo");
   /* sus escaleras, en orden */
   const es = rutina.escalerasDe(r, {ej, equipo: ["barra"]});
   ok(es.map(x => x.id).join() === "tirar,piernas,fondos,isquios,remo,empujar,lsit" && es[0].i === 2 && es[0].total === 7, "las escaleras de la base: " + es.map(x => `${x.id} ${x.i + 1}/${x.total}`));
@@ -1431,7 +1436,10 @@ prueba("rutina-armar-bloques", () => {
     try {
       for (const [f, r] of RUTINAS) for (let i = 0; i < r.sesiones.length; i++) for (const equipo of equipos) for (const descarga of [false, true]) for (const sesiones of [[], hist]){
         const o = {ej: ejV, equipo, sesiones, marcas: [], descarga};
-        ok(JSON.stringify(rutina.deRutina(r, i, o)) === JSON.stringify(cx.K.rutina.deRutina(r, i, o)), `${f} día ${i + 1} (${JSON.stringify(equipo)}, ${descarga ? "descarga" : "carga"}): cambió`);
+        const n = rutina.deRutina(r, i, o), v = cx.K.rutina.deRutina(r, i, o);
+        /* lo único que cambia a propósito: sin el equipo de su primera escalera, la misma escalera no va dos veces en un día; la segunda se saltea (vuelta 33) */
+        const escs = d => d.bloques.flatMap(b => b.pasos || []).map(x => x.escalera).filter(Boolean), salteado = JSON.stringify([...new Set(escs(n))].sort()) === JSON.stringify([...new Set(escs(v))].sort()) && escs(n).length < escs(v).length;
+        ok(JSON.stringify(n) === JSON.stringify(v) || salteado, `${f} día ${i + 1} (${JSON.stringify(equipo)}, ${descarga ? "descarga" : "carga"}): cambió`);
       }
     } finally { ctx.K.ESCALERAS = antes; }
   }
@@ -1792,6 +1800,13 @@ prueba("rutina-en-molde", () => {
   ok(c.bloques.length === 1 && c.bloques[0].molde === "motor" && c.minutos === rutina.deRutina(R("c0a5"), 0, {ej, equipo}).minutos, "Correr 5 km cambió su sesión");
   /* todas las rutinas arman sus días en el molde, con cada bloque en una parte */
   for (const [, r] of RUTINAS) for (let i = 0; i < r.sesiones.length; i++){ const d = molde.deRutina(r, i, {ej, equipo, nivelDesde: nd}); ok(d.bloques.every(b => b.molde), `${r.id} ${i}: un bloque sin parte`); }
+});
+prueba("rutina-minutos", () => {
+  /* los minutos de la tarjeta de una rutina son los de sus días como los arma Hoy (con entrada en calor y cierre): a lo sumo 5 de diferencia
+     con la mediana, con todo el equipo y sin historia (vuelta 33: la Base decía 50 y sus días daban 65) */
+  const ej = EJM(), med = xs => { const s = [...xs].sort((a, b) => a - b); return s[Math.floor((s.length - 1) / 2)]; };
+  for (const [f, r] of RUTINAS){ const m = med(r.sesiones.map((_, i) => molde.deRutina(r, i, {ej, equipo: TODO}).minutos));
+    ok(Math.abs(r.minutos - m) <= 5, `${f}: dice ${r.minutos} min y sus días dan ${m}`); }
 });
 prueba("dia-con-nivel", () => {
   /* el día con tu nivel: la fuerza arranca en tu escalón, el camino también, y las dadas corren la próxima */

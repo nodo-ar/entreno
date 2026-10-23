@@ -101,7 +101,7 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - ~~**Notas del catálogo que no cierran**~~: arregladas en la vuelta 20 (40 min suaves; «si terminás los 8 con aire para otro, subí un nivel de resistencia»; los 1000 saltos cuentan 10 min con `dura`).
 - ~~**Marca de descarga en los días**~~: hecho en la vuelta 20; la fila dice «más liviana».
 - **Planes vive en `rutinas.js`** (la tijera): renombrar a `planes.js` cuando llegue el rediseño. Sigue ahí después de la vuelta 19.
-- **Dos bloques de la misma escalera en un día** (Casandra, vuelta 27): Base de calistenia sin barra tiene `[tirar, remo]` y `remo` el mismo día, y los dos caen en el mismo escalón de remo. El molde del motor B no lo repite (vuelta 28: la fuerza nunca repite una escalera del día), pero la rutina sí: está en sus datos. Arreglarlo en el catálogo, con su prueba.
+- ~~**Dos bloques de la misma escalera en un día** (Casandra, vuelta 27)~~ Resuelto en la vuelta 33 (sin barra queda el primer remo; el de más abajo se saltea): Base de calistenia sin barra tiene `[tirar, remo]` y `remo` el mismo día, y los dos caen en el mismo escalón de remo. El molde del motor B no lo repite (vuelta 28: la fuerza nunca repite una escalera del día), pero la rutina sí: está en sus datos. Arreglarlo en el catálogo, con su prueba.
 - **«La vez pasada» con kilos** (la persona, vuelta 27): en el descanso de una serie con mancuernas dice solo las repeticiones, no los kilos.
 - ~~**La entrada en calor con bici cuenta como bici** (la ingeniera de campo, vuelta 27).~~ Hecho en la vuelta 28: el bloque de la entrada se guarda sin ejercicio y cuenta por su familia, no como bici.
 - **Filas largas con kilos a 390 px** (el pulgar, vuelta 27): las filas de remo con «· 8 kg» al final van en dos renglones.
@@ -136,4 +136,8 @@ Orden de prioridad. Cada ítem nuevo pasa por el método (`docs/metodo/FASES.md`
 - **Pruebas nuevas que no encienden estrellas** (la tijera): cinco de las seis dan solo su medalla. Si Fer quiere, sumar estrellas que midan lo mismo (por ejemplo, una de plancha en Draco).
 - **El cuerpo de las rutinas de rango** (la directora de arte): marca cadera y piernas, pero no dice que es flexibilidad. Una marca de «estirar» en el cuerpo, si Fer lo pide.
 - **Coherencia**: los ejercicios de una rutina («Sus ejercicios», con su persona) y los de Hoy (filas con nombre) ahora abren la misma página, pero se ven distinto. Las miniaturas en «Hoy toca» siguen pendientes (ver «Miniaturas en "Hoy toca"»).
-- **Escaleras cortas** (vuelta 32, Fer): Remo (4) y Fondos (3) tienen menos escalones que Tirar o Empujar (7) porque al catálogo le faltan los pasos avanzados (por ejemplo, fondos con lastre, remo a un brazo). Alargarlas con pasos reales, no para emparejar.
+- **Escaleras cortas** (vuelta 32, Fer; vuelta 33: Remo suma «a un brazo» y queda en 5; Fondos sigue en 3 porque lo que sigue es con lastre, que va por el plan de Lastre; falta un fondo en barra recta con dibujo propio): Remo (4) y Fondos (3) tienen menos escalones que Tirar o Empujar (7) porque al catálogo le faltan los pasos avanzados (por ejemplo, fondos con lastre, remo a un brazo). Alargarlas con pasos reales, no para emparejar.
+
+## Vuelta 33 · la Base sin barra, los minutos y el remo
+- **Minutos de las rutinas**: cada rutina dice la mediana de lo que arma Hoy (con entrada en calor y cierre); la prueba `rutina-minutos` lo vigila con 5 de tolerancia. Si se quiere mostrar un rango (5 a 20 min) en las que crecen mucho, es una idea para Fer.
+- **El remo a un brazo** se ve de perfil: el brazo libre queda detrás del cuerpo. Si se ve igual que el remo de dos brazos, darle vista de tres cuartos.

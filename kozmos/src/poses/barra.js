@@ -56,6 +56,7 @@
   const remoAbajo = {torso: 250, head: 248, armN: [135, 135], armF: [133, 133], legN: [70, 70], legF: [71, 71]};
   const remoMedio = {torso: 242, head: 241, armN: [78, 176], armF: [76, 174], legN: [62, 62], legF: [63, 63]};
   const remoArriba = {torso: 233, head: 233, armN: [39, 178], armF: [37, 176], legN: [53, 53], legF: [54, 54]};
+  const unBrazo = p => ({...p, armF: [p.torso - 178, p.torso - 160]});
 
   /* elevaciones colgado: al subir las piernas la cadera se va atrás para equilibrar */
   const rodillas = {torso: 169, head: 172, armN: [172, 172], armF: [169, 170], legN: [116, 16], legF: [118, 19], pies: [-40, -36]};
@@ -94,6 +95,8 @@
     "remo-fl-tuck": {...FL, k: [tuck, tuckRemo], ritmo: [1, .4, 1.4, .5]},
     /* remo invertido en la barra baja */
     "remo-invertido": {con: "barra-baja", fijo: "hN", en: [170, 174], barraAtras: true, k: [remoAbajo, remoMedio, remoArriba], ritmo: [1, .5, 1.5, .5]},
+    /* a un brazo: tira el de adelante y el de atrás va al costado, a lo largo del cuerpo */
+    "remo-un-brazo": {con: "barra-baja", fijo: "hN", en: [170, 174], barraAtras: true, k: [unBrazo(remoAbajo), unBrazo(remoMedio), unBrazo(remoArriba)], ritmo: [1, .5, 1.8, .5]},
     /* elevaciones colgado */
     "rodillas-colgado": {...B, k: [colgado, rodillas], ritmo: [1, .4, 1.6, .5]},
     "piernas-colgado": {...B, k: [piernasCol, piernas], ritmo: [1.2, .4, 1.8, .5]},
