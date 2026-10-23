@@ -88,7 +88,7 @@ prueba("cinco-pestanas", async () => {
 
 prueba("sin-desborde-360", async () => {
   const {ctx, p} = await pagina({width: 360, height: 740});
-  for (const h of ["#/hoy", "#/cielo", "#/cielo/front-lever", "#/cielo/parada-de-manos/anotar", "#/cielo/lastre/anotar/1", "#/cielo/espagat/anotar/4", "#/progreso", "#/vos", "#/vos/acerca", "#/vos/dias", "#/planes", "#/planes/rutinas/base_cali", "#/planes/hazanas/orion", "#/hoy/rutinas", "#/vos/constructor", "#/xyz"]){
+  for (const h of ["#/hoy", "#/cielo", "#/cielo/front-lever", "#/cielo/parada-de-manos/anotar", "#/cielo/lastre/anotar/1", "#/cielo/espagat/anotar/4", "#/progreso", "#/vos", "#/vos/acerca", "#/vos/dias", "#/planes", "#/planes/rutinas/base_cali", "#/planes/hazanas/orion", "#/planes/pruebas", "#/planes/pruebas/centauro", "#/planes/ejercicios", "#/planes/ejercicios/dominada", "#/hoy/rutinas", "#/vos/constructor", "#/xyz"]){
     await ir(p, h);
     const w = await p.evaluate(() => document.documentElement.scrollWidth);
     ok(w <= 360, `${h}: ancho ${w}`);
@@ -1003,7 +1003,7 @@ prueba("rutina-cardio-entera", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["motor"]);
   await aPlanes(p);
-  ok(await p.$$eval('.lado .ajr[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "no están las 26 rutinas");
+  ok(await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "no están las 26 rutinas");
   await p.click('[data-ir="#/planes/rutinas/c0a5"]'); await esperarTitulo(p, "Correr tus primeros 5 km");
   ok(await p.$$eval(".rut-dia", x => x.length) === 3, "la semana no tiene 3 días");
   await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
@@ -1355,7 +1355,7 @@ prueba("hazana-prueba-maximo", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["front-lever"]);
   await aPlanes(p);
-  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 8, "no están las 8 pruebas");
+  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 14, "no están las 14 pruebas");
   await ir(p, "#/planes/hazanas/perseo"); await esperarTitulo(p, "Dominadas al máximo");
   ok(!(await p.$("#hz-nivel")), "quedó el menú de niveles");
   ok((await p.textContent(".hz-escala")).includes("Todavía no la hiciste") && await p.$$eval(".hz-escala .esc-pie span", x => x.length) === 5, "la escala no tiene sus cinco magnitudes");
@@ -1437,39 +1437,42 @@ prueba("hazana-datos-viejos", async () => {
   await ctx.close();
 });
 prueba("planes-proxima-prueba", async () => {
-  /* arriba de Planes, la próxima prueba: la que toca antes, con su escala, tus veces y «Probar ahora» */
+  /* arriba de Planes, para vos: la próxima prueba (la que toca antes) con su medalla y tu última; la escala, tus veces y «Probar ahora», al abrirla (vuelta 32) */
   const {ctx, p} = await conReloj();
   const otras = [["hercules", "flexion", "repeticiones", 22], ["sagitario", "del-piso", "puntos", 7], ["andromeda", "dominada", "repeticiones", 5], ["casiopea", "pike-alcance", "cm", 2],
     ["pegaso", "bici-12", "km", 6], ["orion", "mil-saltos", "tiempo", 700], ["draco", "l-sit", "segundos", 12]].map(([h, e, t, v], k) => hzSes("o" + k, "2026-10-10", h, e, t, v));
   await ir(p, "#/hoy"); await sembrarSes(p, [hzSes("t1", "2026-08-12", "perseo", "dominada", "repeticiones", 9), hzSes("t2", "2026-09-01", "perseo", "dominada", "repeticiones", 12), ...otras]);
   await ir(p, "#/planes"); await p.waitForSelector(".pl-prox");
   const t = await p.textContent(".pl-prox");
-  ok(t.includes("Dominadas al máximo") && t.includes("toca ya") && t.includes("×12") && t.includes("m3"), "la próxima prueba no es Dominadas al máximo con tu última: " + t);
-  ok(await p.$(".pl-prox svg.ico-medalla.ganada") && await p.$(".pl-prox .escala .esc-yo") && await p.$(".pl-prox .escala .esc-antes") && await p.$(".pl-prox .hz-linea"), "a la tarjeta le falta la figura, la escala o tus veces");
-  ok(!(await p.$('.lado .ajr[data-ir="#/planes/hazanas/perseo"]')), "la próxima se repite en la lista");
-  ok((await p.textContent('.ajr[data-ir="#/planes/hazanas/hercules"]')).includes("hace 10 días"), "la lista no dice cuándo la hiciste");
+  ok(t.includes("Dominadas al máximo") && t.includes("Toca ya") && t.includes("×12") && t.includes("m3"), "la próxima prueba no es Dominadas al máximo con tu última: " + t);
+  ok(await p.$(".pl-prox svg.ico-medalla.ganada"), "a la tarjeta le falta la medalla");
+  /* en la vitrina, la próxima va marcada; las demás dicen su magnitud */
+  ok(await p.$$eval(".vt-m.prox", x => x.map(y => y.dataset.ir).join()) === "#/planes/hazanas/perseo", "la vitrina no marca la próxima");
+  ok((await p.textContent('.vt-m[data-ir="#/planes/hazanas/hercules"]')).includes("m"), "la vitrina no dice la magnitud de Flexiones a ritmo");
+  await ir(p, "#/planes/pruebas");
+  ok((await p.textContent('.vt-m[data-ir="#/planes/pruebas/hercules"]')).includes("×22"), "la vitrina entera no dice tu marca");
   await ir(p, "#/planes/hazanas/perseo");
   ok((await p.textContent(".hz-escala")).includes("+3 desde agosto"), "no se compara con la vez anterior: " + await p.textContent(".hz-escala"));
-  await ir(p, "#/planes"); await p.click("#pl-probar"); await p.waitForSelector(".ses.serie");
+  ok(await p.$(".hz-escala .escala .esc-yo") && await p.$(".hz-escala .escala .esc-antes"), "la prueba abierta sin su escala");
+  await ir(p, "#/planes"); await p.click(".pl-prox"); await esperarTitulo(p, "Dominadas al máximo");
+  await p.click("#hz-empezar"); await p.waitForSelector(".ses.serie");
   ok(await p.evaluate(() => K.sesion.bloque().hazana === "perseo"), "«Probar ahora» no arranca la próxima prueba");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
 prueba("planes-familia", async () => {
-  /* las pruebas y las rutinas se filtran por familia con un menú desplegable, no con chips; la elección queda */
+  /* las rutinas se filtran por familia con un menú desplegable, no con chips; la elección queda. Las pruebas van en la vitrina, por tema y nivel (vuelta 32) */
   const {ctx, p} = await pagina();
   await ir(p, "#/planes");
   ok(!(await p.$(".chip, .chips")), "hay chips en Planes");
-  await p.click("#pl-fam-pruebas"); await p.waitForSelector(".pop");
+  ok(!(await p.$("#pl-fam-pruebas")), "las pruebas todavía tienen menú de familia");
+  await p.click("#pl-fam-rutinas"); await p.waitForSelector(".pop");
   ok(await p.$$eval('.pop .pmi[role="menuitemradio"]', x => x.length) === 4, "el menú no tiene Todas y las tres familias");
-  await p.click('.pmi[data-id="mo"]'); await p.waitForFunction(() => document.querySelector("#pl-fam-pruebas").textContent.includes("Motor"));
-  const fams = await p.$$eval('.lado .aj .ajr[data-ir^="#/planes/hazanas/"]', xs => xs.map(x => x.dataset.ir.split("/").pop()));
-  ok(fams.length && fams.every(id => ["pegaso", "orion"].includes(id)), "el filtro de pruebas: " + fams);
-  await p.click("#pl-fam-rutinas"); await p.click('.pmi[data-id="ra"]'); await p.waitForFunction(() => document.querySelector("#pl-fam-rutinas").textContent.includes("Rango"));
-  const rs = await p.evaluate(() => [...document.querySelectorAll('.lado .ajr[data-ir^="#/planes/rutinas/"]')].map(x => K.rutinaDe(x.dataset.ir.split("/").pop()).familia));
+  await p.click('.pmi[data-id="ra"]'); await p.waitForFunction(() => document.querySelector("#pl-fam-rutinas").textContent.includes("Rango"));
+  const rs = await p.evaluate(() => [...document.querySelectorAll('.lado .ru-card[data-ir^="#/planes/rutinas/"]')].map(x => K.rutinaDe(x.dataset.ir.split("/").pop()).familia));
   ok(rs.length && rs.every(f => f === "ra"), "el filtro de rutinas: " + rs);
-  await p.reload(); await p.waitForSelector("#pl-fam-pruebas");
-  ok((await p.textContent("#pl-fam-pruebas")).includes("Motor") && (await p.textContent("#pl-fam-rutinas")).includes("Rango"), "la familia elegida no queda");
+  await p.reload(); await p.waitForSelector("#pl-fam-rutinas");
+  ok((await p.textContent("#pl-fam-rutinas")).includes("Rango"), "la familia elegida no queda");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -1484,7 +1487,7 @@ prueba("rutina-linea-escalon", async () => {
   await ir(p, "#/planes/rutinas/prim_dom");
   ok(!(await p.$(".rut-escalon")) && /Prueba en la semana \d/.test(await p.textContent(".rut-bloque")), "siguiéndola no dice cuándo es la prueba: " + await p.textContent(".rut-bloque"));
   await ir(p, "#/planes");
-  ok(/Prueba en la semana \d/.test(await p.textContent(".pl-rut")) && await p.$(".pl-rut .esc-mini"), "Tu rutina en Planes no muestra escalones y prueba");
+  ok(/Prueba en la semana \d/.test(await p.textContent(".pl-rut")) && await p.$(".pl-rut .sem-pts"), "Tu rutina en Planes no muestra sus semanas y la prueba");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -1668,12 +1671,14 @@ prueba("planes-horizontal", async () => {
   await ir(p, "#/planes");
   ok(await p.evaluate(() => { const a = document.querySelector(".split>.lado").getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect(); return b.left >= a.right - 1 && b.width > 200; }), "Planes en horizontal no va en dos columnas");
   ok(await p.$(".split>.abierto #hz-empezar"), "a la derecha no está la próxima prueba abierta");
-  /* los nombres de las pruebas entran enteros, también el más largo */
-  const cortados = await p.$$eval(".lado .ajr .ses-fila", xs => xs.filter(x => x.scrollWidth > x.clientWidth + 1).map(x => x.textContent));
-  ok(!cortados.length, "nombres cortados en horizontal: " + cortados);
+  /* los estantes entran en la lista, sin salirse de su columna, y sus tarjetas miden lo mismo */
+  ok(await p.evaluate(() => { const a = document.querySelector(".split>.lado").getBoundingClientRect(); return [...document.querySelectorAll(".lado .estante")].every(e => { const r = e.getBoundingClientRect(); return r.left >= a.left - 1 && r.right <= a.right + 1; }); }), "un estante se sale de la lista");
+  ok(await p.$$eval(".lado .ru-card", xs => new Set(xs.map(x => Math.round(x.getBoundingClientRect().height))).size) === 1, "las tarjetas de rutinas no miden lo mismo en horizontal");
   await p.click('[data-ir="#/planes/rutinas/z2"]'); await p.waitForFunction(() => document.querySelector(".split>.abierto .enc-tit h1")?.textContent === "Bici suave y larga", null, {timeout: 3000}).catch(() => { throw new Error("no abre la elegida a la derecha"); });
   ok(await p.evaluate(() => history.length) === 2, "en horizontal, abrir una rutina no suma pasos al botón atrás");
-  ok(await p.$('.split>.lado .ajr[data-sel][data-ir="#/planes/rutinas/z2"]'), "la rutina abierta no queda marcada en la lista");
+  ok(await p.$('.split>.lado .ru-card[data-sel][data-ir="#/planes/rutinas/z2"]'), "la rutina abierta no queda marcada en la lista");
+  /* la elegida queda a la vista en su estante */
+  ok(await p.evaluate(() => { const c = document.querySelector('.ru-card[data-sel]').getBoundingClientRect(), e = document.querySelector(".ru-est").getBoundingClientRect(); return c.left >= e.left - 1 && c.right <= e.right + 1; }), "la rutina elegida queda fuera de su estante");
   await p.click('[data-ir="#/planes/hazanas/andromeda"]'); await p.waitForFunction(() => document.querySelector(".split>.abierto .enc-tit h1")?.textContent === "Dominadas minuto a minuto", null, {timeout: 3000}).catch(() => { throw new Error("no abre la hazaña a la derecha"); });
   ok(await p.$(".split>.abierto #hz-empezar"), "a la derecha no está la hazaña abierta");
   /* siguiendo una rutina, Planes abre la tuya */
@@ -1709,10 +1714,10 @@ prueba("planes-pestana", async () => {
   ok(ics.planes && !ics.otros.includes(ics.planes), "Planes no tiene su ícono");
   await aPlanes(p);
   ok(await p.evaluate(() => location.hash) === "#/planes", "la ruta de Planes no es #/planes");
-  /* pruebas arriba, rutinas abajo */
-  const [yh, yr] = await p.evaluate(() => ["#pl-hazanas", "#pl-rutinas"].map(s => document.querySelector(s).getBoundingClientRect().top));
-  ok(yh < yr, "las hazañas no van arriba de las rutinas");
-  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 8 && await p.$$eval('.lado .ajr[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "Planes no tiene las 8 pruebas y las 26 rutinas");
+  /* para vos arriba; después rutinas, ejercicios y pruebas (vuelta 32) */
+  const [yv, yr, ye, yh] = await p.evaluate(() => [".pv-fila", "#pl-rutinas", "#pl-ejercicios", "#pl-hazanas"].map(s => document.querySelector(s).getBoundingClientRect().top));
+  ok(yv < yr && yr < ye && ye < yh, "el orden de Planes no es para vos, rutinas, ejercicios y pruebas");
+  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 14 && await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "Planes no tiene las 14 pruebas y las 26 rutinas");
   /* abrir una hazaña y volver a Planes */
   await p.click('[data-ir="#/planes/hazanas/orion"]'); await esperarTitulo(p, "1000 saltos de soga");
   ok(await p.evaluate(() => location.hash) === "#/planes/hazanas/orion", "la hazaña no vive en Planes");
@@ -2079,39 +2084,37 @@ prueba("apk-sesion", async () => {
 
 /* ===== Los íconos, opción B (vuelta 21): primero solo en Planes ===== */
 prueba("planes-iconos-b", async () => {
-  /* las pruebas son medallas (a color si ya tenés una magnitud, en gris si no) y las rutinas, la persona sobre un círculo del color de su familia */
+  /* las pruebas son medallas (a color si ya tenés una magnitud, en gris si no) con los satélites de su nivel; las rutinas, el cuerpo con lo que trabajan
+     y sus ejercicios, cada uno con su persona sobre un círculo del color de su familia (vuelta 32) */
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await sembrarSes(p, [hzSes("t1", "2026-09-01", "hercules", "flexion", "repeticiones", 22)]);
-  await ir(p, "#/planes"); await p.evaluate(() => { K.prefs.set("planes.pruebas", "todas"); K.prefs.set("planes.rutinas", "todas"); K.refrescar(); }); await p.waitForTimeout(150);
-  const filas = await p.$$eval('.lado .ajr[data-ir^="#/planes/"]', bs => bs.map(b => { const t = b.querySelector(".tile"), sv = t && t.querySelector("svg.ico"), tx = b.querySelector(".ses-fila"), r = sv ? sv.getBoundingClientRect() : null;
-    return {ir: b.dataset.ir, cls: sv ? sv.getAttribute("class") : "", sat: !!(sv && sv.querySelector(".ico-sat")), w: r ? r.width : 0, h: r ? r.height : 0, html: sv ? sv.outerHTML : "",
-      sola: t && tx ? t.getBoundingClientRect().right <= tx.getBoundingClientRect().left + .5 : false, fondo: t ? getComputedStyle(t).backgroundColor : ""}; }));
-  const hz = filas.filter(f => f.ir.includes("/hazanas/")), ru = filas.filter(f => f.ir.includes("/rutinas/"));
-  const n = await p.evaluate(() => [K.HAZANAS.hazanas.length - 1, K.RUTINAS.length]);
-  ok(hz.length === n[0] && ru.length === n[1], `filas: ${hz.length} pruebas y ${ru.length} rutinas, esperaba ${n}`);
-  ok(hz.every(f => /ico-medalla/.test(f.cls)) && ru.every(f => /ico-rutina/.test(f.cls)), "una fila sin su medalla o su pictograma: " + filas.filter(f => !/ico-(medalla|rutina)/.test(f.cls)).map(f => f.ir).join(", "));
-  ok(filas.every(f => Math.abs(f.w - 40) < 1 && Math.abs(f.h - 40) < 1 && f.sola && f.fondo === "rgba(0, 0, 0, 0)"), "un ícono que no mide 40 px, se pega al nombre o lleva baldosa");
+  await ir(p, "#/planes"); await p.evaluate(() => { K.prefs.set("planes.rutinas", "todas"); K.refrescar(); }); await p.waitForTimeout(150);
+  const med = await p.$$eval(".vt-m:not(.vacia)", bs => bs.map(b => { const sv = b.querySelector("svg.ico-medalla"), r = sv ? sv.getBoundingClientRect() : null;
+    return {ir: b.dataset.ir, cls: sv ? sv.getAttribute("class") : "", sat: !!(sv && sv.querySelector(".ico-sat")), w: r ? r.width : 0, html: sv ? sv.outerHTML : ""}; }));
+  ok(med.length === await p.evaluate(() => K.HAZANAS.hazanas.length) && med.every(f => /ico-medalla/.test(f.cls) && Math.abs(f.w - 46) < 1), "la vitrina sin sus medallas de 46 px: " + med.length);
   /* ganada: a color y con el satélite; sin ganar: gris y sin satélite */
-  const fl = hz.find(f => f.ir.endsWith("/hercules")), sin = hz.filter(f => !f.ir.endsWith("/hercules"));
+  const fl = med.find(f => f.ir.endsWith("/hercules")), sin = med.filter(f => !f.ir.endsWith("/hercules"));
   ok(fl && /ganada/.test(fl.cls) && fl.sat && fl.html.includes("var(--fu)"), "la prueba ganada no es una medalla a color con su satélite");
   ok(sin.every(f => !/ganada/.test(f.cls) && !f.sat && f.html.includes("var(--off)") && !/var\(--(fu|mo|ra)\)/.test(f.html)), "una prueba sin hacer no está en gris");
-  /* la rutina: el círculo en el color suave de su familia y la figura en el de la familia */
+  /* la rutina: el cuerpo con lo que trabaja en el color de su familia y sus ejercicios en su círculo */
   const R = await p.evaluate(() => K.RUTINAS.map(r => [r.id, r.familia]));
-  for (const [id, fam] of R){ const f = ru.find(x => x.ir.endsWith("/" + id)); ok(f && f.html.includes(`var(--${fam}-soft)`) && f.html.includes(`var(--${fam})`), id + ": la rutina no va en el color de su familia"); }
+  for (const [id, fam] of R){ const c = await p.$eval(`.ru-card[data-ir="#/planes/rutinas/${id}"]`, x => ({cu: x.querySelector("svg.cuerpo")?.outerHTML || "", ej: [...x.querySelectorAll(".ej-caras svg.ico-ej")].map(y => y.outerHTML)}));
+    ok(c.cu.includes(`var(--${fam})`) && c.ej.length && c.ej.every(h => h.includes(`var(--${fam}-soft)`)), id + ": la tarjeta no va en el color de su familia"); }
   /* solo con los colores de la app: nada de colores sueltos */
-  ok(filas.every(f => !/#[0-9a-f]{3,8}\b|rgb\(/i.test(f.html) && !/NaN|undefined/.test(f.html)), "un ícono con un color suelto o un número roto");
-  /* la próxima prueba (64 px) y la prueba abierta (88 px), con la misma medalla */
-  ok(await p.$eval(".pl-prox svg.ico-medalla", x => Math.round(x.getBoundingClientRect().width)) === 64, "la tarjeta de la próxima prueba sin su medalla");
+  const htmls = [...med.map(f => f.html), ...await p.$$eval(".ru-card svg", xs => xs.map(x => x.outerHTML))];
+  ok(htmls.every(h => !/#[0-9a-f]{3,8}\b|rgb\(/i.test(h) && !/NaN|undefined/.test(h)), "un ícono con un color suelto o un número roto");
+  /* la próxima prueba (52 px) y la prueba abierta (88 px), con la misma medalla */
+  ok(await p.$eval(".pl-prox svg.ico-medalla", x => Math.round(x.getBoundingClientRect().width)) === 52, "la tarjeta de la próxima prueba sin su medalla");
   await ir(p, "#/planes/hazanas/hercules");
   ok(await p.$eval(".hz-fig svg.ico-medalla.ganada", x => Math.round(x.getBoundingClientRect().width)).catch(() => 0) === 88, "la prueba abierta sin su medalla");
-  /* la tarjeta «Tu rutina» lleva el mismo círculo que las filas de rutinas */
+  /* la tarjeta «Tu rutina» lleva sus semanas en puntos, como la tarjeta de su estante */
   await ir(p, "#/planes/rutinas/tabata"); await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy"); await ir(p, "#/planes");
-  ok(await p.$eval(".pl-rut svg.ico-rutina", x => x.clientWidth).catch(() => 0) === 40, "la tarjeta «Tu rutina» sin su ícono");
+  ok(await p.$(".pl-rut svg.sem-pts") && await p.$('.ru-card[data-ir="#/planes/rutinas/tabata"] svg.sem-pts'), "la tarjeta «Tu rutina» sin sus semanas");
   /* en horizontal, la lista y lo abierto entran sin desplazar de costado */
   await p.setViewportSize({width: 844, height: 390});
   for (const h of ["#/planes", "#/planes/hazanas/orion", "#/planes/rutinas/tabata"]){ await ir(p, h);
     ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, h + ": desborda");
-    ok(await p.$$eval(".lado svg.ico-medalla, .lado svg.ico-rutina", x => x.length) >= 30, h + ": la lista sin íconos"); }
+    ok(await p.$$eval(".lado svg.ico-medalla", x => x.length) >= 14 && await p.$$eval(".lado svg.cuerpo", x => x.length) >= 26, h + ": la lista sin íconos"); }
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -2143,6 +2146,124 @@ prueba("planes-iconos-rapidos", async () => {
 
 /* ===== Los íconos B en el resto (vuelta 22): el Cielo con anillos y la misma figura en todas partes ===== */
 const anotarMarcas = (p, ms) => p.evaluate(async ms => { for (const [estrella, ejercicio, tipo, valor, fecha] of ms) await K.diario.anotar({estrella, ejercicio, tipo, valor, fecha, catalogo: 1}); K.refrescar(); }, ms);
+/* ===== Planes en estantes (vuelta 32): estantes iguales, la vitrina, la biblioteca y los nombres que abren cada ejercicio ===== */
+prueba("planes-estantes", async () => {
+  /* todo estante es igual: se desliza de costado, frena en cada tarjeta, la siguiente asoma y sus tarjetas miden lo mismo */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/planes");
+  const e = await p.evaluate(() => [...document.querySelectorAll(".estante")].map(x => { const cs = getComputedStyle(x), its = [...x.children].map(y => y.firstElementChild.getBoundingClientRect());
+    return {cls: x.className, snap: cs.scrollSnapType, sobra: x.scrollWidth > x.clientWidth, altos: new Set(its.map(r => Math.round(r.height))).size, asoma: its.some(r => r.left < innerWidth && r.right > innerWidth),
+      frena: [...x.children].every(y => getComputedStyle(y).scrollSnapAlign.includes("start"))}; }));
+  ok(e.length === 2 && e.map(x => x.cls).join() === "estante ru-est,estante ej-est", "Planes no tiene el estante de rutinas y el de ejercicios: " + e.map(x => x.cls));
+  for (const x of e) ok(/x/.test(x.snap) && /mandatory/.test(x.snap) && x.frena && x.sobra && x.altos === 1 && x.asoma, x.cls + ": " + JSON.stringify(x));
+  /* en la tarjeta: el nombre empieza a la misma altura en todas, y el cuerpo, el nivel, sus semanas y sus ejercicios */
+  ok(await p.$$eval(".ru-card .ru-nom", xs => new Set(xs.map(x => Math.round(x.getBoundingClientRect().top - x.closest(".ru-card").getBoundingClientRect().top))).size) === 1, "los nombres de las rutinas no arrancan a la misma altura");
+  ok(await p.$$eval(".ru-card", xs => xs.every(x => x.querySelector("svg.cuerpo") && x.querySelector(".nv .nv-ic") && x.querySelector("svg.sem-pts") && x.querySelector(".ej-caras svg"))), "una tarjeta sin el cuerpo, el nivel, las semanas o los ejercicios");
+  /* de inicial a avanzado: los satélites del nivel dicen lo mismo que el catálogo */
+  const nv = await p.$$eval(".ru-card", xs => xs.map(x => [K.rutinaDe(x.dataset.ir.split("/").pop()).nivel, x.querySelectorAll(".nv-ic circle").length]));
+  ok(nv.every(([n, c]) => c === 1 + 2 * n) && nv.every((x, i) => !i || nv[i - 1][0] <= x[0]), "el nivel de las rutinas: " + JSON.stringify(nv));
+  /* deslizar un estante no mueve la página; volver a Planes lo deja donde estaba */
+  await p.evaluate(() => { document.querySelector(".ru-est").scrollLeft = 600; }); await p.waitForTimeout(200);
+  const x0 = await p.evaluate(() => document.querySelector(".ru-est").scrollLeft);
+  ok(x0 > 300 && await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "el estante no se desliza solo");
+  await p.click("#pl-fam-rutinas"); await p.click('.pmi[data-id="todas"]'); await p.waitForTimeout(200);
+  ok(Math.abs(await p.evaluate(() => document.querySelector(".ru-est").scrollLeft) - x0) < 2, "redibujar Planes manda el estante al principio");
+  /* el cuerpo: lo que trabaja de lleno en el color de la familia y lo de apoyo, suave; con el corazón si trabaja */
+  const cu = await p.evaluate(() => { const r = K.rutinaDe("z2"), h = K.rutinaHace(r); return {z: h.zonas, sv: K.cuerpo(h.zonas, r.familia)}; });
+  ok(cu.z.corazon === 2 && cu.sv.includes("var(--mo)") && /aria-label="Trabaja [^"]*corazón/.test(cu.sv), "una rutina de bici no trabaja el corazón: " + JSON.stringify(cu.z));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("planes-vitrina", async () => {
+  /* las pruebas, en una vitrina: un tema por fila y un nivel por columna; la grande dice el nombre y tu marca, y abre cada una */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await sembrarSes(p, [hzSes("t1", "2026-09-01", "lira", "colgado-arriba", "segundos", 42)]);
+  await ir(p, "#/planes");
+  const v = await p.$$eval(".vt-cd:not(.grande) .vt-fila", fs => fs.map(f => [f.querySelector(".vt-tema").textContent.trim(), [...f.querySelectorAll(".vt-m")].map(m => m.classList.contains("vacia") ? "" : m.dataset.ir.split("/").pop())]));
+  const esperado = await p.evaluate(() => K.biblio.vitrina(K.HAZANAS.hazanas).map(t => [t.nombre, t.pruebas.map(h => h ? h.id : "")]));
+  ok(JSON.stringify(v) === JSON.stringify(esperado), "la vitrina: " + JSON.stringify(v));
+  ok(v.length === 6 && v.every(([, c]) => c.length === 3), "la vitrina no tiene seis temas de tres niveles");
+  ok(await p.$$eval(".vt-cd .vt-cab .vt-nv", xs => xs.map(x => x.textContent.trim()).join()) === "Inicial,Intermedio,Avanzado", "las columnas no son los tres niveles");
+  ok((await p.textContent(".pl-tit#pl-hazanas")).includes("1 de 14"), "el título no cuenta las medallas: " + await p.textContent(".pl-tit#pl-hazanas"));
+  /* «Ver todas»: la vitrina grande */
+  await p.click('#pl-hazanas .pl-ver'); await esperarTitulo(p, "Pruebas");
+  ok(await p.evaluate(() => location.hash) === "#/planes/pruebas" && await p.$$eval(".vt.grande .vt-m:not(.vacia) b", x => x.length) === 14, "la vitrina grande no nombra las 14 pruebas");
+  ok((await p.textContent('.vt-m[data-ir="#/planes/pruebas/lira"]')).includes("42 s"), "la vitrina grande no dice tu marca");
+  /* abrir una: su tema y su nivel arriba del nombre, la medalla con sus satélites y la fuente al pie */
+  await p.click('.vt-m[data-ir="#/planes/pruebas/centauro"]'); await esperarTitulo(p, "12 minutos corriendo");
+  const t = await p.evaluate(() => [...document.querySelectorAll(".enc-sub, .enc-tit .lb, .enc-tit small")].map(x => x.textContent).join("|") + "||" + document.querySelector(".hzn").textContent);
+  ok(t.includes("Motor, intermedio") && t.includes("Fuente: Cooper (1968)"), "la prueba nueva no dice su tema, su nivel o su fuente: " + t.slice(0, 200));
+  ok((await p.$$eval(".hz-fig svg circle[r='6']", x => x.length)) === 2, "la medalla no lleva los dos satélites de intermedio");
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Pruebas");
+  /* en horizontal: la vitrina a la izquierda, la abierta a la derecha */
+  await p.setViewportSize({width: 844, height: 390}); await ir(p, "#/planes/pruebas/tauro");
+  ok(await p.evaluate(() => { const a = document.querySelector(".split>.lado").getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect(); return b.left >= a.right - 1 && document.querySelector(".split>.abierto .enc-tit h1").textContent === "Silla, un minuto" && !!document.querySelector('.lado .vt-m[data-sel][data-ir="#/planes/pruebas/tauro"]'); }), "la vitrina en horizontal no sigue el patrón de Ajustes");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("biblioteca-ejercicios", async () => {
+  /* la biblioteca: las puertas de Planes abren la lista de lo que trabajan; dos menús (qué trabaja y con qué); cada ejercicio con su persona y su escalera */
+  const {ctx, p} = await pagina();
+  await ir(p, "#/planes");
+  const pu = await p.$$eval(".ej-puerta", xs => xs.map(x => x.dataset.ejque));
+  ok(pu.join() === "tirar,empujar,piernas,bisagra,abdomen,movilidad,motor,todo", "las puertas: " + pu);
+  await p.click('.ej-puerta[data-ejque="tirar"]'); await esperarTitulo(p, "Ejercicios");
+  ok(await p.evaluate(() => location.hash) === "#/planes/ejercicios" && (await p.textContent("#ej-que")).includes("Tirar"), "la puerta no abre la lista de Tirar");
+  ok(await p.$$eval(".ej-grupo", x => x.map(y => y.id).join()) === "ej-g-tirar", "la lista no es solo Tirar");
+  /* «Qué trabaja» y «Con qué», con menús */
+  await p.click("#ej-que"); await p.waitForSelector(".pop");
+  ok(await p.$$eval('.pop .pmi[role="menuitemradio"]', x => x.length) === 8, "el menú «Qué trabaja» no tiene Todo y los siete grupos");
+  await p.click('.pmi[data-id="todo"]'); await p.waitForFunction(() => document.querySelectorAll(".ej-grupo").length === 7);
+  await p.click("#ej-con"); await p.click('.pmi[data-id="nada"]'); await p.waitForFunction(() => document.querySelector("#ej-con").textContent.includes("Sin nada"));
+  ok(await p.$$eval('.ej-grupo .ajr', xs => xs.every(x => !(K.EJ[x.dataset.ir.split("/").pop()].equipo || []).length)), "«Sin nada» muestra ejercicios con equipo");
+  const n = await p.$$eval(".ej-grupo .ajr", x => x.length), todos = await p.evaluate(() => K.EJERCICIOS.ejercicios.length);
+  ok(n > 20 && n < todos && (await p.textContent(".enc-sub, .enc-tit")).includes(`${n} de ${todos}`), "la lista no dice cuántos muestra");
+  await p.reload(); await p.waitForSelector("#ej-con");
+  ok((await p.textContent("#ej-con")).includes("Sin nada"), "lo elegido en «Con qué» no queda");
+  await p.click("#ej-con"); await p.click('.pmi[data-id="todo"]'); await p.waitForFunction(() => document.querySelector("#ej-con").textContent.includes("cualquier"));
+  /* un ejercicio: la persona, el cuerpo, cómo se hace, tu marca, su escalera (más fácil y más difícil), la prueba que lo mide y las rutinas que lo usan */
+  await p.click('.ajr[data-ir="#/planes/ejercicios/dominada"]'); await esperarTitulo(p, "Dominada");
+  for (const s of [".ej-fig svg", ".ej-vista svg.cuerpo", ".ej-como", ".ej-marca", ".ej-esc .ej-este", '.ajr[data-ir="#/planes/pruebas/perseo"] svg.ico-medalla', '.ajr[data-ir^="#/planes/rutinas/"]'])
+    ok(await p.$(s), "al ejercicio le falta " + s);
+  const esc = await p.$$eval(".ej-esc .ajr", xs => xs.map(x => [x.querySelector(".ses-fila").firstChild.textContent, x.querySelector("em").textContent]));
+  const k = esc.findIndex(x => x[1].startsWith("Este"));
+  ok(k > 0 && esc[k - 1][1] === "Más fácil" && esc[k + 1][1].match(/Más difícil|El tuyo/), "la escalera: " + JSON.stringify(esc));
+  await p.click('.ej-esc .ajr[data-ir="#/planes/ejercicios/dominada-negativa"]'); await esperarTitulo(p, "Dominada negativa");
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Dominada");
+  /* en horizontal, la lista y el abierto; la fila abierta queda a la vista en la lista */
+  await p.setViewportSize({width: 844, height: 390}); await ir(p, "#/planes/ejercicios/pistol-silla");
+  ok(await p.evaluate(() => { const l = document.querySelector(".split>.lado").getBoundingClientRect(), s = document.querySelector('.split>.lado .ajr[data-sel][data-ir="#/planes/ejercicios/pistol-silla"]')?.getBoundingClientRect(), b = document.querySelector(".split>.abierto").getBoundingClientRect();
+    return s && s.top >= l.top - 1 && s.bottom <= l.bottom + 1 && b.left >= l.right - 1 && document.documentElement.scrollWidth <= innerWidth; }), "en horizontal, la fila abierta no queda a la vista o no va en dos columnas");
+  const h0 = await p.evaluate(() => history.length);
+  await p.click('.lado .ajr[data-ir="#/planes/ejercicios/sentadilla"]'); await p.waitForFunction(() => document.querySelector(".split>.abierto .enc-tit h1")?.textContent === "Sentadilla");
+  ok(await p.evaluate(() => history.length) === h0, "en horizontal, abrir un ejercicio suma pasos al botón atrás");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("ejercicio-enlaces", async () => {
+  /* en Hoy y en los días de una rutina, el nombre de cada ejercicio abre su página; volver vuelve de donde viniste. El resto de la fila no cambia */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await rumbo(p, ["front-lever", "planche"]);
+  const ls = await p.$$eval(".hoy-toca .ej-ln", xs => xs.map(x => [x.textContent, x.dataset.ir]));
+  ok(ls.length >= 3 && ls.every(([t, h]) => h.startsWith("#/planes/ejercicios/") && t === K.EJ[h.split("/").pop()].nombre), "Hoy sin nombres que abran su ejercicio: " + JSON.stringify(ls));
+  /* la fila sigue igual: el nombre a la izquierda y lo que toca a la derecha, en la misma línea */
+  ok(await p.$$eval(".hoy-toca .ln.toca", xs => xs.every(x => { const q = x.querySelector(".toca-q").getBoundingClientRect(), n = x.querySelector(".toca-n").getBoundingClientRect(); return n.left >= q.right - 1 && Math.abs(n.top - q.top) < 8; })), "las filas cambiaron de forma");
+  await p.click(".hoy-toca .toca-n >> nth=0"); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => location.hash) === "#/hoy", "tocar lo que toca abre algo");
+  const [nom, h] = ls[0];
+  await p.click(`.hoy-toca .ej-ln[data-ir="${h}"] >> nth=0`); await esperarTitulo(p, nom);
+  ok(await p.evaluate(() => location.hash) === h && await p.getAttribute('nav.barra button[data-tab="planes"]', "aria-current") === "page", "el ejercicio no se abre en Planes");
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Hoy");
+  /* lo mismo en los días de una rutina */
+  await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia .ej-ln");
+  const r = await p.$eval(".rut-dia .ej-ln", x => [x.textContent, x.dataset.ir]);
+  await p.click(".rut-dia .ej-ln >> nth=0"); await esperarTitulo(p, r[0]);
+  await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Base de calistenia");
+  /* y en la rutina, sus ejercicios con su persona */
+  ok(await p.$$eval('.ru-vista .ej-cara[data-ir^="#/planes/ejercicios/"]', x => x.length) >= 6, "la rutina no muestra sus ejercicios");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
 const icos = (p, sel) => p.$$eval(sel, xs => xs.map(x => ({cls: x.getAttribute("class"), w: x.clientWidth, arco: !!x.querySelector(".ico-arco"), sat: !!x.querySelector(".ico-sat"), html: x.outerHTML})));
 prueba("iconos-b-cielo", async () => {
   /* cada constelación es su figura adentro de un anillo de avance: en la grilla (76 px), en la lista (40 px) y abierta (96 px) */

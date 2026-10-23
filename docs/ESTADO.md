@@ -1,9 +1,13 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-22 (Tu nivel) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-23 (Planes en estantes) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
+- **Planes en estantes** (2026-10-23): vuelta 32 (acta `docs/actas/032-kozmos-planes-en-estantes.md`), rama local `planes-estantes` sobre `claude/project-thread-985fzq`, sin PR ni push.
+  - Lo que Fer eligió: opción A del boceto m28, más el corazón, el nivel en satélites, la biblioteca dentro de Planes, los nombres de Hoy que abren cada ejercicio y un cuerpo con la silueta del maniquí y sus músculos.
+  - Hecho: Planes con «para vos» y tres estantes (rutinas con el cuerpo, ejercicios y la vitrina de pruebas), la vitrina entera y la biblioteca de ejercicios (#/planes/ejercicios). El catálogo suma zonas, grupos, niveles y seis pruebas con fuente (14 en total).
+  - **Esperando a Fer**: el OK al tablero (capturas antes y después en `scratchpad/m29`) y las decisiones del acta 032.
 - Fer decidió empezar de cero una app nueva, Kozmos, en este mismo repo. Entreno sigue publicado sin cambios hasta que Fer apruebe el tablero de Kozmos.
 - **Etapa 1, el esqueleto**: en `kozmos/`, PR #12, aprobado por Fer y fusionado. Acta `docs/actas/006-kozmos-esqueleto.md`. Suite propia: `node kozmos/pruebas/suite.mjs` (13 pruebas en verde).
 - **Decidido por Fer (2026-10-20)**: barra en píldora con la etiqueta solo en la elegida; Kozmos se publica en un dominio propio (baja la bandera roja del mismo origen).

@@ -46,6 +46,32 @@ Las reglas, en `src/sesion/rutina.js`:
 
 Fuera de una rutina: `K.rutina.escalonDe(id, {ej, equipo, sesiones, marcas, desde})` dice dónde estás en una escalera (con `desde`, el escalón de arranque si todavía no la hiciste) y `K.rutina.escalonesTodos(ctx)` todas a la vez. Cuentan las series que dicen su `escalera`, vengan de una rutina o no. `K.rutina.armarBloques(familia, bloques, ctx)` arma bloques con el formato de los de una rutina (lo usa `deRutina`, y el día del motor B).
 
+## Zonas, grupos y niveles (vuelta 32, `src/sesion/biblioteca.js`)
+
+Lo que trabaja cada ejercicio, dónde va en la biblioteca y el nivel de rutinas y pruebas salen del catálogo; no hay tablas en el código.
+
+- **`zonas` y `apoyo`**: van en cada escalera y en cada ejercicio que no está en una. `zonas` es lo que trabaja de lleno y `apoyo`, lo que acompaña.
+  - Las zonas son: `espalda`, `pecho`, `hombros`, `brazos`, `abdomen`, `cadera`, `gluteos`, `piernas` y `corazon`. El corazón va en lo de motor.
+  - Un ejercicio de una escalera hereda las de la primera escalera en la que está, salvo que diga las suyas. Las muñecas, por ejemplo, dicen `brazos`.
+  - `K.biblio.zonasDe(id, ej)` → `{zonas, apoyo}`.
+  - `K.biblio.pesoDe(id, ej)` → `{zona: 2 | 1}`.
+- **`grupo`**: dónde va un ejercicio suelto en la biblioteca. Los grupos son `tirar`, `empujar`, `piernas`, `bisagra` (Isquios y glúteos), `abdomen`, `movilidad` y `motor`.
+  - Sin `grupo`, va el primer patrón (el suyo o el de su escalera).
+  - Va aparte de `patron` porque `patron` cambia cómo se arma el día y la entrada en calor.
+- **`nivel`** (1 inicial, 2 intermedio, 3 avanzado): en cada rutina, después de `minutos`, y en cada prueba.
+  - Cada prueba dice además su `tema`, la fila de la vitrina: un grupo de la biblioteca.
+  - En pantalla, el nivel son 1, 2 o 3 satélites alrededor del disco del logo (`K.nivelIc`). En una medalla son los satélites del borde.
+- **Lo que hace una rutina** (`K.biblio.hace(r, {ej, equipo, sesiones, marcas, nivelDesde})`):
+  - Cada serie suma 1 a sus zonas y 0,4 a su apoyo. En una escalera cuenta el ejercicio de tu escalón; cada minuto de un tramo suma lo mismo.
+  - Lo que llega al 45 % de la zona más trabajada va de lleno (2); lo que pasa del 12 % va suave (1).
+  - Devuelve `{zonas, ejs, fuertes, suaves}`, donde `ejs` son sus ejercicios, del que más series lleva al que menos.
+- **La vitrina** (`K.biblio.vitrina(hazanas)`): un tema por fila, en el orden de los grupos, con sus pruebas de nivel 1, 2 y 3; las celdas sin prueba quedan vacías.
+
+```json
+{"id": "tirar", "nombre": "Tirar", "patron": "tirar", "zonas": ["espalda", "brazos"], "apoyo": ["hombros", "abdomen"], "pasos": [ … ]}
+{"id": "cooper", "nombre": "12 minutos corriendo", "mide": "km", "grupo": "motor", "zonas": ["corazon", "piernas"], "apoyo": ["gluteos"]}
+```
+
 ## Entrada en calor (`catalogo/entradas.json`)
 
 Piezas para armar la entrada en calor de un día que no viene de una rutina: `{id, nota, seg, para, equipo?, ejercicio?, pulso?, ultima?}`. `para` dice para qué sirve (`general`, `barra`, `manos`, `piernas`); `pulso`, que sube el pulso (va primero); `ultima`, que cierra («Primer ejercicio suave · 5, sin cargar»). `K.caminos.entrada(bloques, {equipo, ej})` arma un bloque de tramos de 5 a 6 minutos: 2 min de bici si tenés bici (si no, saltos de tijera), una pieza por cada cosa que pide el día, lo general hasta completar y la última. Solo usa lo que tu equipo permite; sin decir tu equipo, lo que usan los ejercicios del día.
@@ -180,16 +206,19 @@ Desde el Modelo B, cada hazaña es una **prueba estandarizada**: mide un ejercic
   "escala": [1, 5, 10, 15, 20],
   "estrellas": ["muscle-up.dominadas-10", "un-brazo.dominadas-15"],
   "cada": 42,
+  "tema": "tirar", "nivel": 2,
   "antes": {"formato": "amrap"}
 }]}
 ```
+
+- `tema` y `nivel` (vuelta 32): la fila y la columna de la vitrina. Desde la vuelta 32 hay 14 pruebas: las 8 de antes, en su orden, y 6 nuevas al final, para que la semana de prueba y «la próxima» elijan igual que antes. Toda prueba nueva necesita una escala revisada contra una norma publicada y su `fuente`; puede no encender estrellas (`"estrellas": []`) y dar solo su medalla. Las nuevas son Mentón sobre la barra (`lira`), Flexiones seguidas (`cefeo`), Silla, un minuto (`tauro`, con `"formato": "reloj"` y `"minutos": 1`), Plancha al máximo (`fenix`), Plancha de costado (`cisne`) y 12 minutos corriendo (`centauro`, reloj de 12 minutos y km).
 
 - `formato`:
   - `maximo`: una serie, todas las que salgan (o el sostén más largo, o lo que anotás: puntos, centímetros).
   - `reloj`: un tiempo fijo (`minutos`) y al final anotás lo que hiciste (Motor 12: los km).
   - `escalera`: cada minuto una más; con «No llegué» cuenta el último minuto completo.
   - `tiempo`: lo que dicen los `items`, lo más rápido posible (Mil saltos).
-- El ícono no se escribe: una prueba es una medalla con la persona haciendo `mide.ejercicio` (`src/piezas/iconos.js`); una rutina, la persona haciendo lo que más series lleva; una constelación, la persona haciendo su última estrella adentro de un anillo de avance. Es el mismo en todas las pantallas. Desde la vuelta 22 ya no hay `figura` (la constelación dibujada a mano).
+- El ícono no se escribe: una prueba es una medalla con la persona haciendo `mide.ejercicio` y los satélites de su `nivel` (`src/piezas/iconos.js`); una rutina, la persona haciendo lo que más series lleva; una constelación, la persona haciendo su última estrella adentro de un anillo de avance. Es el mismo en todas las pantallas. Desde la vuelta 22 ya no hay `figura` (la constelación dibujada a mano).
 - `escala`: cinco umbrales, de la magnitud 5 a la 1. Con `{"propia": [0, 5, 10, 15, 20]}` es por persona: el % de mejora contra tu primera vez.
 - `estrellas`: las que puede encender. Puede ser más de una constelación a la vez.
 - `cada`: cada cuántos días toca repetirla (42 si falta).

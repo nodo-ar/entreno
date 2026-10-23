@@ -847,6 +847,22 @@ prueba("iconos-b-dibujo", () => {
   /* se guarda: la segunda vez es el mismo texto */
   ok(icono.rutina(RUTINAS[0][1], 40) === icono.rutina(RUTINAS[0][1], 40), "el ícono cambia de una vez a otra");
 });
+/* vuelta 32: el nivel de una prueba son los satélites de su medalla (1 a 3); ganada, el primero es el del logo; y cada ejercicio tiene su ícono */
+prueba("iconos-medalla-nivel", () => {
+  const {icono, POSES} = icx();
+  const sats = sv => (sv.match(/ r="6" fill="var\(--(off|fu|mo|ra)\)"/g) || []).length;
+  for (const h of HAZANAS.hazanas){
+    const si = icono.medalla(h, true, 40), no = icono.medalla(h, false, 40);
+    ok(sats(si) === h.nivel && sats(no) === h.nivel, `${h.id}: la medalla no lleva ${h.nivel} satélites (${sats(si)} y ${sats(no)})`);
+    ok((si.match(/class="ico-sat"/g) || []).length === 1 && !no.includes("ico-sat"), `${h.id}: el satélite del logo va solo en la ganada, y uno`);
+    ok(numeros(si).every(n => n >= -2 && n <= 102), `${h.id}: un satélite se sale de la caja`);
+  }
+  /* sin nivel (una medalla vieja que no lo dice), como antes: el satélite solo si está ganada */
+  const h0 = {...HAZANAS.hazanas[0]}; delete h0.nivel;
+  ok(sats(icono.medalla(h0, false, 40)) === 0 && icono.medalla(h0, true, 40).includes("ico-sat"), "sin nivel, la medalla cambió");
+  for (const x of EJ.ejercicios.filter(x => POSES[x.id])){ const sv = icono.ejercicio(x.id, "mo", 40);
+    ok(sv.startsWith("<svg") && !/NaN|undefined|null/.test(sv) && !/#[0-9a-f]{3,8}\b|rgb\(/i.test(sv) && sv.includes('fill="var(--mo-soft)"') && sv.includes('stroke="var(--mo)"'), `${x.id}: el ícono del ejercicio no se dibuja limpio`); }
+});
 prueba("iconos-b-legibles-40px", () => {
   /* a 40 px, la figura llena su círculo y los trazos se ven: lo que en el boceto costaba (front lever, parada de manos, planche) también */
   const {icono} = icx();

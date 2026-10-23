@@ -1,5 +1,6 @@
 /* ===== App: rutas, transiciones y arranque ===== */
 /* Rutas: #/hoy · #/hoy/rumbo · #/hoy/equipo y #/hoy/nivel (los primeros pasos de «Que Kozmos arme tu día») · #/hoy/sesion · #/hoy/resumen/<sesión> · #/planes · #/planes/rutinas/<rutina> · #/planes/hazanas/<hazaña>
+   · #/planes/pruebas[/<hazaña>] (la vitrina entera) · #/planes/ejercicios[/<ejercicio>] (la biblioteca)
    · #/cielo · #/cielo/<constelación> · #/cielo/<constelación>/anotar[/<orden>] · #/progreso · #/progreso/<sesión>
    · #/vos · #/vos/equipo · #/vos/nivel · #/vos/dias · #/vos/peso · #/vos/respaldo · #/vos/acerca
    Lo que no existe cae en el lugar más cercano que sí. */
@@ -8,10 +9,13 @@ K.rutaNueva = h => { const m = /^#\/hoy\/(rutinas|hazanas)(?:\/([^/]+))?/.exec(h
 K.ruta = () => {
   const [tab = "hoy", a = "", b = "", n = ""] = (K.rutaNueva(location.hash) || location.hash).replace(/^#\/?/, "").split("/");
   if (!K.PESTANAS.some(p => p[0] === tab)) return {tab: "hoy", sub: "", hondo: 0};
-  /* Planes: la lista (hazañas arriba, rutinas abajo) y la abierta un paso más adentro */
+  /* Planes: los estantes, y la rutina o la prueba abierta un paso más adentro. La vitrina entera y la biblioteca, un paso más
+     adentro; lo abierto en ellas, otro más */
   if (tab === "planes"){
     if (a === "rutinas" && K.RUTINAS.some(x => x.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
     if (a === "hazanas" && K.HAZANAS.hazanas.some(x => x.id === b)) return {tab, sub: a, sub2: b, hondo: 1};
+    if (a === "pruebas") return K.HAZANAS.hazanas.some(x => x.id === b) ? {tab, sub: a, sub2: b, hondo: 2} : {tab, sub: a, hondo: 1};
+    if (a === "ejercicios") return K.EJ[b] ? {tab, sub: a, sub2: b, hondo: 2} : {tab, sub: a, hondo: 1};
     return {tab, sub: "", hondo: 0};
   }
   if (tab === "hoy"){
@@ -43,6 +47,9 @@ K.mostrar = (anim = "") => {
   if (an){ const r = an.getBoundingClientRect(); if (r.width) K._anillo = {r, t: Date.now()}; }
   /* al cambiar de pestaña, la pantalla que se va gira hacia afuera (a la sesión se entra con el disco del logo, no girando) */
   const viejo = anim === "tab" && sub !== "sesion" && sub !== "resumen" && !K.reduce() && K._ultima && app.firstElementChild, rv = viejo && viejo.getBoundingClientRect();
+  /* la misma lista que se redibuja (en horizontal, o al elegir en un menú) queda donde estaba: su altura y lo deslizado de cada estante */
+  const titulo = x => x && K.$(".enc-tit h1", x)?.textContent, viejaV = app.firstElementChild, viejoLado = viejaV && K.$(".split>.lado", viejaV);
+  const antes = viejaV && K._ultima && K._ultima.tab === tab ? {y: viejoLado ? viejoLado.scrollTop : 0, t: titulo(viejoLado || viejaV), est: K.$$(".estante", viejaV).map(x => x.scrollLeft)} : null;
   const v = document.createElement("main");
   v.dataset.tab = tab;
   v.innerHTML = K.P[tab](r);
@@ -51,6 +58,9 @@ K.mostrar = (anim = "") => {
   v.className = "view" + (anim && anim !== "tab" && !K.reduce() && !panel ? " vt-" + anim : "");
   if (panel && !K.reduce()) panel.classList.add("vt-" + anim);
   app.replaceChildren(v);
+  const lado = K.$(".split>.lado", v);
+  if (antes && antes.t === titulo(lado || v)){ if (lado && K.horizontal()) lado.scrollTop = antes.y; K.$$(".estante", v).forEach((x, i) => { x.scrollLeft = antes.est[i] || 0; }); }
+  if (lado && K.horizontal()) K.verElegido(lado);
   if (viejo){ const i = t => K.PESTANAS.findIndex(x => x[0] === t); K.mov.girar(viejo, rv, v, i(tab) >= i(K._ultima.tab) ? 1 : -1); }
   /* en la sesión y su resumen no hay barra: la pantalla es toda tuya */
   document.body.classList.toggle("en-sesion", tab === "hoy" && (sub === "sesion" || sub === "resumen"));
@@ -66,6 +76,15 @@ K.mostrar = (anim = "") => {
   /* el título de la ventana: «Kozmos» en Hoy; en el resto, solo el nombre de la pantalla */
   document.title = tab === "hoy" || !h1 ? "Kozmos" : h1.textContent;
   K._ultima = {tab, sub, hondo};
+};
+/* en horizontal, lo elegido de la lista queda a la vista: en su estante, entero; en la lista, si quedó escondido, se desliza hasta ahí
+   (lo que ya se ve, aunque sea un poco, como lo que acabás de tocar, no mueve la lista) */
+K.verElegido = lado => {
+  const sel = K.$("[data-sel]", lado); if (!sel) return;
+  const est = sel.closest(".estante");
+  if (est){ const a = est.getBoundingClientRect(), b = sel.getBoundingClientRect(); if (b.left < a.left) est.scrollLeft -= a.left - b.left; else if (b.right > a.right) est.scrollLeft += b.right - a.right; }
+  const L = lado.getBoundingClientRect(), R = sel.getBoundingClientRect(), arriba = Math.max(L.top, 0), abajo = Math.min(L.bottom, innerHeight);
+  if (R.bottom <= arriba + 8 || R.top >= abajo - 8) lado.scrollTop += R.top - arriba - Math.max(0, (abajo - arriba - R.height) / 2);
 };
 /* volver a dibujar sin moverse (por ejemplo, al cambiar el tema) */
 K.refrescar = () => {
@@ -94,12 +113,13 @@ document.addEventListener("click", e => {
   if (v){ K.volver(v.dataset.volver); return; }
   const a = e.target.closest("[data-ir]");
   /* en horizontal, abrir un ajuste no suma pasos al botón atrás: la lista y lo abierto son una sola pantalla */
-  if (a){ K._quieto = !!a.dataset.quieto && K.horizontal(); K.ir(a.dataset.ir, K._quieto); return; }
+  /* las puertas de los ejercicios eligen qué trabaja antes de abrir la lista */
+  if (a){ if (a.dataset.ejque) K.ejElegirQue(a.dataset.ejque); K._quieto = !!a.dataset.quieto && K.horizontal(); K.ir(a.dataset.ir, K._quieto); return; }
   /* en una prueba de estrella, un toque en cualquier lado de la pantalla es «Listo»: las manos vienen de la barra */
   if (e.target.closest(".ses.prueba.serie") && !e.target.closest("button, a, input")){ K.ses.listo(); return; }
   const ra = e.target.closest("[data-rasgo]");
   if (ra){ K.menuRasgo(ra); return; }
-  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-empezar, #pl-probar, #pl-fam-pruebas, #pl-fam-rutinas, #rut-sem, #eq-seguir, #nv-seguir, [data-probar], [data-equipo], [data-nivel], [data-ppaso], [data-dia]");
+  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-empezar, #pl-probar, #ej-que, #ej-con, #pl-fam-rutinas, #rut-sem, #eq-seguir, #nv-seguir, [data-probar], [data-equipo], [data-nivel], [data-ppaso], [data-dia]");
   if (m){
     if (m.dataset.probar) K.ses.probar(m.dataset.probar, m);
     else if (m.dataset.equipo) K.equipoTocar(m.dataset.equipo);
@@ -109,7 +129,7 @@ document.addEventListener("click", e => {
     else ({"tema-menu": () => K.menuTema(m), "avisos-menu": () => K.menuAvisos(m), "res-mas": () => K.resumenMenu(m),
       "rs-guardar": () => K.mov.girando(m, K.resp.guardar), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo(),
       "hoy-igual": () => { K._igual = K.hoy(); K.refrescar(); }, "rut-seguir": () => K.rutinaSeguir(m.dataset.rutina), "rut-mas": () => K.rutinaMenu(m),
-      "hz-empezar": () => K.ses.hazana(m.dataset.hazana, m), "pl-probar": () => K.ses.hazana(m.dataset.hazana, m), "pl-fam-pruebas": () => K.planesFamilia(m), "pl-fam-rutinas": () => K.planesFamilia(m), "rut-sem": () => K.rutinaSemana(m), "eq-seguir": () => K.equipoSeguir(m), "nv-seguir": () => K.ir(m.dataset.sigue)})[m.id]();
+      "hz-empezar": () => K.ses.hazana(m.dataset.hazana, m), "pl-probar": () => K.ses.hazana(m.dataset.hazana, m), "ej-que": () => K.ejMenu(m), "ej-con": () => K.ejMenu(m), "pl-fam-rutinas": () => K.planesFamilia(m), "rut-sem": () => K.rutinaSemana(m), "eq-seguir": () => K.equipoSeguir(m), "nv-seguir": () => K.ir(m.dataset.sigue)})[m.id]();
     return;
   }
   const s = e.target.closest("#s-empezar, #s-listo, #s-seguir, #s-terminar, #s-cortar, #s-mas, #s-pausa, #s-vuelta, #s-vuelta-menos, #hoy-mas, [data-spaso], [data-rumbo], [data-desc], [data-salio], [data-sens]");

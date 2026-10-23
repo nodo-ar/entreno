@@ -101,7 +101,9 @@ K.filaToca = b => {
   if (b.constelacion){
     // Si el ejercicio ya lleva el nombre de la constelación, no se repite.
     const c = K.cons(b.constelacion).nombre, e = K.ej(b.ejercicio).nombre;
-    return [e.toLowerCase().startsWith(c.toLowerCase()) ? K.esc(e) : K.cat(K.esc(c), K.esc(e)), K.esc(K.queToca(b))];
+    /* el nombre del ejercicio abre su página en la biblioteca */
+    const ej = K.ejLink(b.ejercicio, K.esc(e));
+    return [e.toLowerCase().startsWith(c.toLowerCase()) ? ej : K.cat(K.esc(c), ej), K.esc(K.queToca(b))];
   }
   if (b.clase === "tramos") return [K.esc(b.nombre || ""), `${Math.round(b.tramos.reduce((a, x) => a + x.seg, 0) / 60)} min`];
   if (b.clase === "circuito") return [K.esc(b.nombre), b.formato === "amrap" ? `${b.minutos} min` : `${b.rondas} ${b.rondas === 1 ? "vuelta" : "vueltas"}`];
@@ -110,14 +112,16 @@ K.filaToca = b => {
 };
 /* una fila de lo que toca: el punto de su familia, qué y cuánto (en HTML). La misma en Hoy y en los días de una rutina.
    «marcas»: lo que la sesión dice en la serie («más liviana», «Para Planche»), debajo del nombre, cada una en su renglón y en el color de la familia.
-   «kg»: los kilos van debajo de lo que toca, en la misma columna, como su propia ficha con la mancuerna */
-K.filaLn = (q, n, fam, prueba = false, marcas = [], kg = "") => `<div class="ln toca${prueba ? " es-prueba" : ""}" style="--c:var(--${fam})"><span class="toca-q"><span class="tg"><i class="dot"></i>${q}</span>${marcas.filter(Boolean).map(m => ` <small class="toca-marca">${K.esc(m)}</small>`).join("")}</span><span class="num toca-n"><span>${n}</span>${kg ? " " + K.pesa(K.esc(kg)) : ""}</span></div>`;
+   «kg»: los kilos van debajo de lo que toca, en la misma columna, como su propia ficha con la mancuerna.
+   «ej»: el ejercicio de la fila; su nombre abre su página en la biblioteca (Planes, Ejercicios). El resto de la fila no cambia */
+K.ejLink = (id, q) => id && K.EJ[id] ? `<button type="button" class="ej-ln" data-ir="#/planes/ejercicios/${id}">${q}</button>` : q;
+K.filaLn = (q, n, fam, prueba = false, marcas = [], kg = "", ej = "") => `<div class="ln toca${prueba ? " es-prueba" : ""}" style="--c:var(--${fam})"><span class="toca-q"><span class="tg"><i class="dot"></i>${K.ejLink(ej, q)}</span>${marcas.filter(Boolean).map(m => ` <small class="toca-marca">${K.esc(m)}</small>`).join("")}</span><span class="num toca-n"><span>${n}</span>${kg ? " " + K.pesa(K.esc(kg)) : ""}</span></div>`;
 /* las filas de una sesión armada (K.rutina.filas): una por ejercicio. Los de una superserie van juntos, con su nota */
 const PAR = {2: "en superserie", 3: "en triserie"};
 K.filasHtml = (fs, {sinPar = false} = {}) => {
   const marca = (f, liv) => [...(f.marcas || []), liv ? "más liviana" : ""];
   const una = f => f.otro ? K.filaLn(...K.filaToca(f.otro), f.otro.familia, !!(f.otro.prueba || f.otro.hazana), marca(f, f.otro.descarga))
-    : K.filaLn(K.esc(f.q), K.jer(K.esc(f.n), K.esc(f.nq || "")), f.familia, false, marca(f, f.descarga), f.kg);
+    : K.filaLn(K.esc(f.q), K.jer(K.esc(f.n), K.esc(f.nq || "")), f.familia, false, marca(f, f.descarga), f.kg, f.ej);
   let h = "";
   for (let k = 0; k < fs.length;){
     const f = fs[k];
@@ -165,7 +169,7 @@ K.filasMolde = bs => {
     if (m === "entrada") continue;
     const para = K.paraTx(b);
     /* una estrella de tu rumbo: el ejercicio y lo que se pide, con la meta debajo (la prueba, como siempre) */
-    const fs = b.constelaciones && !b.pasos && !b.prueba ? [{q: K.ej(b.ejercicio).nombre, n: K.queToca(b), familia: b.familia, ...(b.descarga ? {descarga: true} : {})}] : K.rutina.filas([b], K.EJ);
+    const fs = b.constelaciones && !b.pasos && !b.prueba ? [{q: K.ej(b.ejercicio).nombre, ej: b.ejercicio, n: K.queToca(b), familia: b.familia, ...(b.descarga ? {descarga: true} : {})}] : K.rutina.filas([b], K.EJ);
     h += K.filasHtml(para.length ? fs.map(f => ({...f, marcas: para})) : fs, {sinPar: !!DE_A_DOS[m]});
   }
   return h;
