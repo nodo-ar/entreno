@@ -36,9 +36,26 @@ K.bienvenida = (() => {
   const ALC = [[-10, "Llego a las canillas"], [0, "Toco los pies"], [5, "Paso los pies unos dedos"], [10, "Paso los pies con la palma"], [15, "Apoyo las palmas más allá"]];
   const BALDE = v => v < 10 ? "0-9" : v < 20 ? "10-19" : v < 30 ? "20-29" : v < 40 ? "30-39" : "40+";
   const R = 46;
+  /* BOCETO · cómo entrenás: cada forma trae su equipo marcado y se ordena según lo que elegiste entrenar */
+  const FORMAS = [
+    {id: "gimnasio", nom: "Gimnasio", tx: "Máquinas, barras y mancuernas.", fig: "press-hombros", f: "fu", para: ["fu"], eq: ["maquinas", "discos", "banco", "mancuernas", "barra", "bici"]},
+    {id: "calistenia", nom: "Calistenia", tx: "Tu peso en barras y paralelas.", fig: "muscle-up", f: "fu", para: ["fu", "ra"], eq: ["barra", "paralelas", "pared", "bandas"]},
+    {id: "rusas", nom: "Pesas rusas", tx: "Swings y arranques con una kettlebell.", fig: "swing-kettlebell", f: "fu", para: ["fu", "mo"], eq: ["kettlebell"]},
+    {id: "conpoco", nom: "En casa, con poco", tx: "Unas mancuernas y unas bandas.", fig: "remo-mancuerna", f: "fu", para: ["fu"], eq: ["mancuernas", "bandas", "colchoneta"]},
+    {id: "sinnada", nom: "En casa, sin nada", tx: "El piso, una pared y tu cuerpo.", fig: "flexion", f: "fu", para: ["fu", "ra"], eq: ["pared"]},
+    {id: "funcional", nom: "Funcional o crossfit", tx: "Circuitos contra reloj: barra, pesas, cajón y soga.", fig: "double-under", f: "mo", para: ["fu", "mo"], eq: ["discos", "barra", "kettlebell", "mancuernas", "cajon", "soga", "bici"]},
+    {id: "boxeo", nom: "Boxeo", tx: "Rounds de sombra o con bolsa, y soga.", fig: "boxeo-sombra", f: "mo", para: ["mo"], eq: ["bolsa", "soga"]},
+    {id: "correr", nom: "Correr o caminar", tx: "Afuera o en una cinta.", fig: "trote", f: "mo", para: ["mo"], eq: []},
+    {id: "bici", nom: "Bici fija", tx: "Pedalear de corrido o por tramos.", fig: "bici", f: "mo", para: ["mo"], eq: ["bici"]},
+    {id: "soga", nom: "Soga", tx: "Saltar en series cortas.", fig: "soga", f: "mo", para: ["mo"], eq: ["soga"]},
+    {id: "yoga", nom: "Yoga y movilidad", tx: "Posturas, respiración y estirar.", fig: "gato-camello", f: "ra", para: ["ra"], eq: ["colchoneta"]}];
+  const opcion = () => K.bvOpcion || "A";
+  const ordenFormas = () => { const q = S.que.length ? S.que : ["fu"], r = x => { const i = q.findIndex(f => x.para.includes(f)); return i < 0 ? 9 : i; };
+    return FORMAS.map((x, i) => [x, i]).sort((a, b) => r(a[0]) - r(b[0]) || a[1] - b[1]).map(a => a[0]); };
+  const eqDeFormas = ids => [...new Set(FORMAS.filter(x => ids.includes(x.id)).flatMap(x => x.eq))];
 
   let S = null, raiz = null, tel = null, arriba = null, actual = null, pila = [], ocupado = false;
-  const nuevo = () => ({que: [], eq: [], eqVisto: false, min: 30, dias: 3, niveles: {}, test: null, sesion: null});
+  const nuevo = () => ({que: [], formas: [], eq: [], eqVisto: false, min: 30, dias: 3, niveles: {}, test: null, sesion: null});
 
   /* ===== cuándo se muestra y el borrador ===== */
   const fresco = () => { const d = K.diario, p = d.perfil; return !d.sesiones.length && !d.mediciones.length && !(p.rumbo || []).length && !p.rutina && !p.equipo && !p.nivel; };
@@ -48,7 +65,7 @@ K.bienvenida = (() => {
   const toca = () => K.diario.guarda && !K.diario.perfil.bienvenida && K.prefs.get("bienvenida") !== "vista" && !K.sesion.activa() && (fresco() || !!leerB());
 
   /* ===== las pantallas: cada paso tiene nombre (y un número, si es uno de los movimientos), así se apilan y se retoman ===== */
-  const PASOS = {que: () => que(), equipo: () => equipo(), tiempo: () => tiempo(), como: () => como(), mov: i => mov(i), resumen: () => resumen(), nivel: () => nivel(), prueba: () => prueba(), dia: () => dia()};
+  const PASOS = {que: () => que(), forma: () => forma(), equipo: () => equipo(), tiempo: () => tiempo(), como: () => como(), mov: i => mov(i), resumen: () => resumen(), nivel: () => nivel(), prueba: () => prueba(), dia: () => dia()};
   const montar = (cls, html) => { const p = h("section", "b-pan " + cls, html); tel.appendChild(p); setTimeout(() => K.fig.animar(), 30); return p; };
   const pasos = n => `<div class="b-pasos" role="img" aria-label="Paso ${n} de 3">${[1, 2, 3].map(k => `<i class="${k < n ? "si ya" : k === n ? "si ahora" : ""}"></i>`).join("")}</div>`;
   const entrada = (p, sel) => { if (quieto()) return; p.querySelectorAll(sel).forEach((x, k) => an(x, [{opacity: 0, transform: "translateY(18px)"}, {opacity: 1, transform: "none"}], {duration: 460, delay: 60 + k * 70})); };
@@ -135,7 +152,7 @@ K.bienvenida = (() => {
       <div class="b-ops">${FAM.map(x => { const on = S.que.includes(x.f); return `<button type="button" class="b-op${on ? " on" : ""}" data-f="${x.f}" style="${fv(x.f)}" aria-pressed="${on}"><div class="b-cv">${anillo(on)}<div class="b-dentro">${figura(x.fig, x.f, on)}</div><i class="b-ord num" aria-hidden="true"></i></div><div><b>${x.nom}</b><span>${x.tx}</span></div></button>`; }).join("")}</div>
       <div class="b-pie"><button type="button" class="btn" id="b-seguir"${S.que.length ? "" : " disabled"}>Seguir</button></div>`);
     p.querySelectorAll(".b-op").forEach(b => b.onclick = () => tocarQue(p, b));
-    p.querySelector("#b-seguir").onclick = () => { if (S.que.length) ir("equipo"); };
+    p.querySelector("#b-seguir").onclick = () => { if (S.que.length) ir("forma"); };
     ordenes(p, false);
     return p;
   }
@@ -171,6 +188,70 @@ K.bienvenida = (() => {
     ordenes(p);
   }
 
+  /* ===== BOCETO · 2 · cómo entrenás: una rueda que girás con el pulgar. La de arriba se agranda en el centro, moviéndose;
+     «Es lo mío» la suma y su anillo se cierra, también en la rueda. Primero, las que van con lo que elegiste entrenar ===== */
+  function forma(){
+    const L = ordenFormas(), n = L.length, paso = 360 / n, RR = 150;
+    let pos = 0, foco = 0, dir = 1, vActual = null;
+    const p = montar("b-forma", `<div class="b-cab">${pasos(2)}<h1>¿Cómo entrenás?</h1><p class="mute">Girá la rueda. Elegí una o más.</p></div>
+      <div class="b-vit"></div>
+      <div class="b-arco"><div class="b-pista"></div><div class="b-guia"></div>${L.map((x, i) => { const on = S.formas.includes(x.id); return `<div class="b-ri${on ? " on" : ""}" data-i="${i}" style="${fv(x.f)}"><div class="b-rin"><div class="b-cv">${anillo(on)}<div class="b-dentro">${figura(x.fig, x.f, on)}</div></div></div><span>${K.esc(x.nom)}</span></div>`; }).join("")}</div>
+      <div class="b-pie"><button type="button" class="btn" id="b-seguir"${S.formas.length ? "" : " disabled"}>Seguir</button></div>`);
+    const arco = p.querySelector(".b-arco"), its = [...arco.querySelectorAll(".b-ri")], vit = p.querySelector(".b-vit"), pista = arco.querySelector(".b-pista");
+    const ang = i => { let a = (i - pos) * paso; return ((a + 180) % 360 + 360) % 360 - 180; };
+    const poner = () => its.forEach((it, i) => { const a = ang(i), v = Math.max(0, Math.cos(a * Math.PI / 180));
+      it.style.transform = `rotate(${a}deg)`; it.firstElementChild.style.transform = `rotate(${-a}deg) scale(${.8 + .2 * v ** 6})`; it.style.opacity = Math.abs(a) > 110 ? 0 : (.3 + .7 * v ** 3).toFixed(3);
+      it.classList.toggle("sel", (((Math.round(pos)) % n) + n) % n === i); });
+    const vitrina = x => { const on = S.formas.includes(x.id);
+      return `<div class="b-cv b-grande" style="${fv(x.f)}">${anillo(on)}<div class="b-dentro" style="background:var(--${x.f}-disco)">${K.fig.grande(x.fig, x.f)}</div></div>
+        <div class="b-vnom">${K.esc(x.nom)}</div><p class="b-vtx">${K.esc(x.tx)}</p>
+        <button type="button" class="b-mio${on ? " on" : ""}" aria-pressed="${on}">${on ? K.ic("check") + "<span>Es lo mío</span>" : "<span>Es lo mío</span>"}</button>`; };
+    const enfocar = (i, primera) => { i = ((i % n) + n) % n; if (i === foco && vActual && !primera) return; const viejo = vActual; foco = i;
+      vit.querySelectorAll(".b-vi.sale").forEach(x => x.remove());
+      const nuevo = h("div", "b-vi", vitrina(L[i])); nuevo.style.cssText = fv(L[i].f); vit.appendChild(nuevo); vActual = nuevo; setTimeout(() => K.fig.animar(), 20);
+      nuevo.querySelector(".b-mio").onclick = () => tocar(i);
+      nuevo.querySelector(".b-cv").onclick = () => tocar(i);
+      if (viejo && !quieto()){ viejo.classList.add("sale"); const piv = "50% 900px"; viejo.style.transformOrigin = nuevo.style.transformOrigin = piv;
+        an(viejo, [{transform: "none", opacity: 1}, {transform: `rotate(${-14 * dir}deg)`, opacity: 0}], {duration: 300}).then(() => viejo.remove());
+        an(nuevo, [{transform: `rotate(${14 * dir}deg)`, opacity: 0}, {transform: "none", opacity: 1}], {duration: 380}); }
+      else if (viejo) viejo.remove(); };
+    /* sumarla o sacarla: el anillo grande se cierra dando la vuelta, el satélite llega orbitando y el de la rueda lo acompaña */
+    function tocar(i){
+      const x = L[i], on = !S.formas.includes(x.id); S.formas = on ? [...S.formas, x.id] : S.formas.filter(y => y !== x.id); vibrar(on ? 14 : 6);
+      const pinta = (raiz, grande) => { const arc = raiz.querySelector(".arc"), sat = raiz.querySelector(".sat"); sat.style.transformBox = "view-box"; sat.style.transformOrigin = "50px 50px";
+        arc.setAttribute("stroke-dasharray", on ? "100 0" : "0 100"); sat.setAttribute("opacity", on ? 1 : 0);
+        if (on && !quieto()){ an(arc, [{strokeDasharray: "0 100"}, {strokeDasharray: "100 0"}], {duration: grande ? 640 : 520, fill: "none"});
+          an(sat, [{transform: "rotate(-405deg)", opacity: 0}, {transform: "rotate(-405deg)", opacity: 1, offset: .05}, {transform: "rotate(0)", opacity: 1}], {duration: grande ? 640 : 520, fill: "none"}); } };
+      pinta(vActual.querySelector(".b-cv"), true);
+      const it = its[i]; it.classList.toggle("on", on); it.querySelector(".b-dentro").innerHTML = figura(x.fig, x.f, on); pinta(it, false); setTimeout(() => K.fig.animar(), 20);
+      const m = vActual.querySelector(".b-mio"); m.classList.toggle("on", on); m.setAttribute("aria-pressed", on); m.innerHTML = (on ? K.ic("check") : "") + "<span>Es lo mío</span>";
+      if (on && !quieto()) an(vActual.querySelector(".b-cv"), [{transform: "scale(1)"}, {transform: "scale(1.05)", offset: .4}, {transform: "none"}], {duration: 420});
+      p.querySelector("#b-seguir").disabled = !S.formas.length; guardarB(actual._paso);
+    }
+    poner(); enfocar(0, true);
+    /* la rueda llega girando, como en la de objetivos */
+    if (!quieto()){
+      an(pista, [{transform: "rotate(-90deg)", opacity: 0}, {transform: "none", opacity: 1}], {duration: 700, delay: 150});
+      its.forEach((it, i) => an(it.firstElementChild, [{opacity: 0, translate: "0 24px"}, {opacity: 1, translate: "0 0"}], {duration: 420, delay: 220 + Math.abs(ang(i)) / paso * 70}));
+      an(vit.firstElementChild, [{transform: "scale(.7)", opacity: 0}, {transform: "none", opacity: 1}], {duration: 520, delay: 120});
+      const d0 = pos - 1.6, t0 = performance.now(); pos = d0; const f = t => { const x = Math.min(1, (t - t0) / 1100), e = 1 - (1 - x) ** 3; pos = d0 + 1.6 * e; poner(); if (x < 1) requestAnimationFrame(f); }; requestAnimationFrame(f);
+    }
+    /* el dial: arrastrar con el pulgar en cualquier parte, soltar y se acomoda; tocar una de la rueda la trae arriba */
+    let x0 = null, p0 = 0, xs = [], anim = 0, movio = false;
+    const girar = (dest, ms = 420) => { cancelAnimationFrame(anim); const a = pos, t0 = performance.now(); dir = dest > a ? 1 : -1;
+      const f = t => { const x = Math.min(1, (t - t0) / ms), e = 1 - (1 - x) ** 3; pos = a + (dest - a) * e; poner(); if (x < 1) anim = requestAnimationFrame(f); else enfocar(Math.round(dest)); }; anim = requestAnimationFrame(f); };
+    p.addEventListener("pointerdown", ev => { if (ev.target.closest("button, .b-vi .b-cv")) return; x0 = ev.clientX; p0 = pos; xs = [[performance.now(), x0]]; movio = false; cancelAnimationFrame(anim); p.setPointerCapture(ev.pointerId); });
+    p.addEventListener("pointermove", ev => { if (x0 === null) return; const dx = ev.clientX - x0; if (Math.abs(dx) > 6) movio = true;
+      pos = p0 - dx / 82; xs.push([performance.now(), ev.clientX]); xs = xs.slice(-5); dir = dx < 0 ? 1 : -1;
+      poner(); const fo = ((Math.round(pos) % n) + n) % n; if (fo !== foco){ enfocar(fo); vibrar(4); } });
+    p.addEventListener("pointerup", ev => { if (x0 === null) return; const [ta, xa] = xs[0], v = (ev.clientX - xa) / Math.max(16, performance.now() - ta); x0 = null;
+      if (!movio){ const it = document.elementsFromPoint(ev.clientX, ev.clientY).find(e => e.classList?.contains("b-ri")); if (it){ const i = +it.dataset.i; let d = i - (((Math.round(pos)) % n) + n) % n; if (d > n / 2) d -= n; if (d < -n / 2) d += n; girar(Math.round(pos) + d, 360 + Math.abs(d) * 60); } return; }
+      girar(Math.round(pos - v * 4)); });
+    p.querySelector("#b-seguir").onclick = () => { S.eqVisto = true; S.eq = eqDeFormas(S.formas); S.eqVista = [...S.eq]; ir("equipo"); };
+    entrada(p, ".b-cab, .b-pie");
+    return p;
+  }
+
   /* ===== 2 · qué tenés: todo tu equipo, el mismo de la app; «Nada, solo el piso» es no tener nada. La marca es el logo, que se arma ===== */
   const marca = si => si ? `<svg class="b-mk" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="34" fill="var(--ink)"/><circle cx="42" cy="42" r="9" fill="var(--s1)"/><circle cx="60" cy="24" r="4.5" fill="var(--s1)"/></svg>`
     : `<svg class="b-mk" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="32" fill="none" stroke="var(--off)" stroke-width="5"/></svg>`;
@@ -179,19 +260,26 @@ K.bienvenida = (() => {
     an(ho, [{transform: "scale(0)"}, {transform: "none"}], {duration: 260, delay: 120});
     an(e, [{transform: "scale(0)"}, {transform: "scale(1.5)", offset: .6}, {transform: "none"}], {duration: 300, delay: 240}); }
   function equipo(){
-    const piso = !S.eq.length && S.eqVisto;
-    const it = (id, nom, on) => `<button type="button" class="b-eq${on ? " on" : ""}" data-id="${id}" aria-pressed="${on}"><span class="tile">${K.ic(id === "piso" ? "persona" : id === "lastre" ? "peso" : id)}</span><b>${K.esc(nom)}</b>${marca(on)}</button>`;
-    const p = montar("b-equipo", `<div class="b-cab">${pasos(2)}<h1>¿Qué tenés para entrenar?</h1><p class="mute">Marcá todo lo que tengas. Se cambia cuando quieras.</p></div>
-      <div class="b-eqs">${it("piso", "Nada, solo el piso", piso)}<div class="b-eqg">${K.EQUIPOS.map(([id, nom]) => it(id, nom, S.eq.includes(id))).join("")}</div></div>
-      <div class="b-pie"><button type="button" class="btn" id="b-seguir"${S.eq.length || piso ? "" : " disabled"}>Seguir</button></div>`);
+    if (!S.eqVista) S.eqVista = [...S.eq];
+    const it = id => { const on = S.eq.includes(id); return `<button type="button" class="b-et${on ? " on" : ""}" data-id="${id}" aria-pressed="${on}"><span class="tile">${K.ic(id === "lastre" ? "peso" : id)}</span><b>${K.esc(K.equipoNombre(id))}</b>${marca(on)}</button>`; };
+    const vacio = `<p class="b-evac">Para esto no hace falta nada: el piso y vos.</p>`;
+    const p = montar("b-equipo", `<div class="b-cab">${pasos(2)}<h1>Esto es lo que vas a usar</h1><p class="mute">Tocá lo que no tengas.</p></div>
+      <div class="b-egr">${S.eqVista.length ? S.eqVista.map(it).join("") : vacio}</div>
+      <button type="button" class="b-sumar" id="b-sumar" aria-haspopup="true" aria-expanded="false">${K.ic("mas")}<span>Sumar algo más</span>${K.ic("chevd")}</button>
+      <div class="b-pie"><button type="button" class="btn" id="b-seguir">Seguir</button></div>`);
+    const gr = p.querySelector(".b-egr");
     const poner = (b, on) => { b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); b.querySelector(".b-mk").outerHTML = marca(on); if (on) armarMarca(b.querySelector(".b-mk")); };
-    p.querySelectorAll(".b-eq").forEach(b => b.onclick = () => {
-      const id = b.dataset.id, pb = p.querySelector('.b-eq[data-id="piso"]'); vibrar(10); S.eqVisto = true;
-      if (id === "piso"){ S.eq = []; p.querySelectorAll(".b-eq.on").forEach(o => o !== b && poner(o, false)); if (!b.classList.contains("on")) poner(b, true); }
-      else { const on = !S.eq.includes(id); S.eq = on ? [...S.eq, id] : S.eq.filter(x => x !== id); poner(b, on); if (pb.classList.contains("on")) poner(pb, false); }
-      p.querySelector("#b-seguir").disabled = !S.eq.length && !pb.classList.contains("on"); guardarB(actual._paso); });
+    const tocar = b => { const id = b.dataset.id, on = !S.eq.includes(id); S.eq = on ? [...S.eq, id] : S.eq.filter(x => x !== id); vibrar(10); poner(b, on); guardarB(actual._paso); };
+    gr.querySelectorAll(".b-et").forEach(b => b.onclick = () => tocar(b));
+    const sumar = p.querySelector("#b-sumar"), resto = () => K.EQUIPOS.filter(([id]) => !S.eqVista.includes(id));
+    sumar.hidden = !resto().length;
+    sumar.onclick = () => K.menu.abrir(sumar, {titulo: "Sumar", items: resto().map(([id, nom]) => ({id, texto: nom, ic: id === "lastre" ? "peso" : id})), elegir: id => {
+      S.eqVista = [...S.eqVista, id]; S.eq = [...S.eq, id];
+      gr.querySelector(".b-evac")?.remove(); gr.insertAdjacentHTML("beforeend", it(id)); const b = gr.lastElementChild; b.onclick = () => tocar(b);
+      armarMarca(b.querySelector(".b-mk")); an(b, [{opacity: 0, transform: "scale(.8)"}, {opacity: 1, transform: "none"}], {duration: 300});
+      sumar.hidden = !resto().length; vibrar(10); guardarB(actual._paso); }});
     p.querySelector("#b-seguir").onclick = () => ir("tiempo");
-    entrada(p, ".b-cab, .b-eqs > .b-eq, .b-eqg > *, .b-pie");
+    entrada(p, ".b-cab, .b-egr > *, .b-sumar, .b-pie");
     return p;
   }
 
@@ -518,5 +606,7 @@ K.bienvenida = (() => {
     S = nuevo(); arranque();
   }
   /* el atrás de Android: vuelve un paso; en el primero (o en la prueba y el resultado) no hace nada y la app sigue abierta */
-  return {toca, abrir, cerrar, atras: () => { if (!raiz || !pila.length) return false; atras(); return true; }, abierta: () => !!raiz};
+  /* BOCETO · para recorrer los caminos: el perfil que guardaría la bienvenida con estas elecciones, sin tocar nada */
+  const simular = x => { const viejo = S; S = {...nuevo(), ...x}; try { return {equipo: [...S.eq], minutos: S.min, dias: diasDe(S.dias), rumbo: rumbo(), nivel: nivelDe() || undefined}; } finally { S = viejo; } };
+  return {simular, FORMAS, eqDeFormas, toca, abrir, cerrar, atras: () => { if (!raiz || !pila.length) return false; atras(); return true; }, abierta: () => !!raiz};
 })();
