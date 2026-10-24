@@ -36,20 +36,20 @@ K.bienvenida = (() => {
   const ALC = [[-10, "Llego a las canillas"], [0, "Toco los pies"], [5, "Paso los pies unos dedos"], [10, "Paso los pies con la palma"], [15, "Apoyo las palmas más allá"]];
   const BALDE = v => v < 10 ? "0-9" : v < 20 ? "10-19" : v < 30 ? "20-29" : v < 40 ? "30-39" : "40+";
   const R = 46;
-  /* BOCETO · cómo entrenás: cada forma trae su equipo marcado y se ordena según lo que elegiste entrenar */
+  /* cómo entrenás: cada forma trae su equipo marcado y se ordena según lo que elegiste entrenar. Los ids de las que orientan
+     la resistencia son los de K.dia (GUSTO): correr, bici, remo, soga, rusas, funcional, sinnada, calistenia */
   const FORMAS = [
     {id: "gimnasio", nom: "Gimnasio", tx: "Máquinas, barras y mancuernas.", fig: "press-hombros", f: "fu", para: ["fu"], eq: ["maquinas", "discos", "banco", "mancuernas", "barra", "bici"]},
-    {id: "calistenia", nom: "Calistenia", tx: "Tu peso en barras y paralelas.", fig: "muscle-up", f: "fu", para: ["fu", "ra"], eq: ["barra", "paralelas", "pared", "bandas"]},
+    {id: "calistenia", nom: "Calistenia", tx: "Tu peso en barras y paralelas.", fig: "muscle-up", f: "fu", para: ["fu", "ra"], eq: ["barra", "paralelas", "anillas", "bandas", "pared"]},
     {id: "rusas", nom: "Pesas rusas", tx: "Swings y arranques con una kettlebell.", fig: "swing-kettlebell", f: "fu", para: ["fu", "mo"], eq: ["kettlebell"]},
-    {id: "conpoco", nom: "En casa, con poco", tx: "Unas mancuernas y unas bandas.", fig: "remo-mancuerna", f: "fu", para: ["fu"], eq: ["mancuernas", "bandas", "colchoneta"]},
+    {id: "conpoco", nom: "En casa, con poco", tx: "Unas mancuernas y unas bandas.", fig: "remo-mancuerna", f: "fu", para: ["fu"], eq: ["mancuernas", "bandas"]},
     {id: "sinnada", nom: "En casa, sin nada", tx: "El piso, una pared y tu cuerpo.", fig: "flexion", f: "fu", para: ["fu", "ra"], eq: ["pared"]},
-    {id: "funcional", nom: "Funcional o crossfit", tx: "Circuitos contra reloj: barra, pesas, cajón y soga.", fig: "double-under", f: "mo", para: ["fu", "mo"], eq: ["discos", "barra", "kettlebell", "mancuernas", "cajon", "soga", "bici"]},
-    {id: "boxeo", nom: "Boxeo", tx: "Rounds de sombra o con bolsa, y soga.", fig: "boxeo-sombra", f: "mo", para: ["mo"], eq: ["bolsa", "soga"]},
+    {id: "funcional", nom: "Funcional o crossfit", tx: "Circuitos contra reloj: barra, pesas, cajón y soga.", fig: "double-under", f: "mo", para: ["fu", "mo"], eq: ["discos", "barra", "kettlebell", "mancuernas", "cajon", "soga", "remadora"]},
     {id: "correr", nom: "Correr o caminar", tx: "Afuera o en una cinta.", fig: "trote", f: "mo", para: ["mo"], eq: []},
     {id: "bici", nom: "Bici fija", tx: "Pedalear de corrido o por tramos.", fig: "bici", f: "mo", para: ["mo"], eq: ["bici"]},
+    {id: "remo", nom: "Máquina de remo", tx: "Remar por tramos o de corrido.", fig: "remo-maquina", f: "mo", para: ["mo"], eq: ["remadora"]},
     {id: "soga", nom: "Soga", tx: "Saltar en series cortas.", fig: "soga", f: "mo", para: ["mo"], eq: ["soga"]},
-    {id: "yoga", nom: "Yoga y movilidad", tx: "Posturas, respiración y estirar.", fig: "gato-camello", f: "ra", para: ["ra"], eq: ["colchoneta"]}];
-  const opcion = () => K.bvOpcion || "A";
+    {id: "yoga", nom: "Yoga y movilidad", tx: "Posturas, respiración y estirar.", fig: "gato-camello", f: "ra", para: ["ra"], eq: []}];
   const ordenFormas = () => { const q = S.que.length ? S.que : ["fu"], r = x => { const i = q.findIndex(f => x.para.includes(f)); return i < 0 ? 9 : i; };
     return FORMAS.map((x, i) => [x, i]).sort((a, b) => r(a[0]) - r(b[0]) || a[1] - b[1]).map(a => a[0]); };
   const eqDeFormas = ids => [...new Set(FORMAS.filter(x => ids.includes(x.id)).flatMap(x => x.eq))];
@@ -188,7 +188,7 @@ K.bienvenida = (() => {
     ordenes(p);
   }
 
-  /* ===== BOCETO · 2 · cómo entrenás: una rueda que girás con el pulgar. La de arriba se agranda en el centro, moviéndose;
+  /* ===== 2 · cómo entrenás: una rueda que girás con el pulgar. La de arriba se agranda en el centro, moviéndose;
      «Es lo mío» la suma y su anillo se cierra, también en la rueda. Primero, las que van con lo que elegiste entrenar ===== */
   function forma(){
     const L = ordenFormas(), n = L.length, paso = 360 / n, RR = 150;
@@ -247,7 +247,9 @@ K.bienvenida = (() => {
     p.addEventListener("pointerup", ev => { if (x0 === null) return; const [ta, xa] = xs[0], v = (ev.clientX - xa) / Math.max(16, performance.now() - ta); x0 = null;
       if (!movio){ const it = document.elementsFromPoint(ev.clientX, ev.clientY).find(e => e.classList?.contains("b-ri")); if (it){ const i = +it.dataset.i; let d = i - (((Math.round(pos)) % n) + n) % n; if (d > n / 2) d -= n; if (d < -n / 2) d += n; girar(Math.round(pos) + d, 360 + Math.abs(d) * 60); } return; }
       girar(Math.round(pos - v * 4)); });
-    p.querySelector("#b-seguir").onclick = () => { S.eqVisto = true; S.eq = eqDeFormas(S.formas); S.eqVista = [...S.eq]; ir("equipo"); };
+    /* tu equipo sale de lo que elegiste; si volviste sin cambiar nada, queda como lo dejaste */
+    p.querySelector("#b-seguir").onclick = () => { const k = [...S.formas].sort().join(); S.eqVisto = true;
+      if (k !== S.eqDe){ S.eq = eqDeFormas(S.formas); S.eqVista = [...S.eq]; S.eqDe = k; } ir("equipo"); };
     entrada(p, ".b-cab, .b-pie");
     return p;
   }
@@ -267,7 +269,8 @@ K.bienvenida = (() => {
       <div class="b-egr">${S.eqVista.length ? S.eqVista.map(it).join("") : vacio}</div>
       <button type="button" class="b-sumar" id="b-sumar" aria-haspopup="true" aria-expanded="false">${K.ic("mas")}<span>Sumar algo más</span>${K.ic("chevd")}</button>
       <div class="b-pie"><button type="button" class="btn" id="b-seguir">Seguir</button></div>`);
-    const gr = p.querySelector(".b-egr");
+    /* con muchas cosas, filas bajas: todo entra en una pantalla, sin desplazar */
+    const gr = p.querySelector(".b-egr"), apretar = () => gr.classList.toggle("muchas", S.eqVista.length > 9); apretar();
     const poner = (b, on) => { b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); b.querySelector(".b-mk").outerHTML = marca(on); if (on) armarMarca(b.querySelector(".b-mk")); };
     const tocar = b => { const id = b.dataset.id, on = !S.eq.includes(id); S.eq = on ? [...S.eq, id] : S.eq.filter(x => x !== id); vibrar(10); poner(b, on); guardarB(actual._paso); };
     gr.querySelectorAll(".b-et").forEach(b => b.onclick = () => tocar(b));
@@ -277,7 +280,7 @@ K.bienvenida = (() => {
       S.eqVista = [...S.eqVista, id]; S.eq = [...S.eq, id];
       gr.querySelector(".b-evac")?.remove(); gr.insertAdjacentHTML("beforeend", it(id)); const b = gr.lastElementChild; b.onclick = () => tocar(b);
       armarMarca(b.querySelector(".b-mk")); an(b, [{opacity: 0, transform: "scale(.8)"}, {opacity: 1, transform: "none"}], {duration: 300});
-      sumar.hidden = !resto().length; vibrar(10); guardarB(actual._paso); }});
+      sumar.hidden = !resto().length; apretar(); vibrar(10); guardarB(actual._paso); }});
     p.querySelector("#b-seguir").onclick = () => ir("tiempo");
     entrada(p, ".b-cab, .b-egr > *, .b-sumar, .b-pie");
     return p;
@@ -522,7 +525,7 @@ K.bienvenida = (() => {
   const PAT = {2: [0, 3], 3: [0, 2, 4], 4: [0, 1, 3, 4], 5: [0, 1, 2, 3, 4], 6: [0, 1, 2, 3, 4, 5]};
   const diasDe = n => { const hoy = K.rutina.diaSemana(K.hoy()); return (PAT[n] || PAT[3]).map(k => (k + hoy) % 7).sort((a, b) => a - b); };
   async function guardarPerfil(){
-    const perfil = {equipo: [...S.eq], minutos: S.min, dias: diasDe(S.dias), enfoque: [...S.que], rumbo: rumbo(), nivel: nivelDe() || undefined, bienvenida: K.hoy()};
+    const perfil = {equipo: [...S.eq], minutos: S.min, dias: diasDe(S.dias), enfoque: [...S.que], formas: [...S.formas], rumbo: rumbo(), nivel: nivelDe() || undefined, bienvenida: K.hoy()};
     try { await K.diario.lote({perfil}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); }
     K.prefs.set("bienvenida", "vista");
   }
@@ -606,7 +609,7 @@ K.bienvenida = (() => {
     S = nuevo(); arranque();
   }
   /* el atrás de Android: vuelve un paso; en el primero (o en la prueba y el resultado) no hace nada y la app sigue abierta */
-  /* BOCETO · para recorrer los caminos: el perfil que guardaría la bienvenida con estas elecciones, sin tocar nada */
-  const simular = x => { const viejo = S; S = {...nuevo(), ...x}; try { return {equipo: [...S.eq], minutos: S.min, dias: diasDe(S.dias), rumbo: rumbo(), nivel: nivelDe() || undefined}; } finally { S = viejo; } };
+  /* para recorrer los caminos: el perfil que guardaría la bienvenida con estas elecciones, sin tocar nada */
+  const simular = x => { const viejo = S; S = {...nuevo(), ...x}; try { return {equipo: [...S.eq], formas: [...S.formas], minutos: S.min, dias: diasDe(S.dias), rumbo: rumbo(), nivel: nivelDe() || undefined}; } finally { S = viejo; } };
   return {simular, FORMAS, eqDeFormas, toca, abrir, cerrar, atras: () => { if (!raiz || !pila.length) return false; atras(); return true; }, abierta: () => !!raiz};
 })();

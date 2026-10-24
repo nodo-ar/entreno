@@ -895,16 +895,35 @@ prueba("tu-tiempo", async () => {
 /* ===== Bienvenida (vuelta 35): la primera vez, qué → con qué y cuánto → tu nivel → tu primer día ===== */
 const bienvenida = async (vp = {width: 390, height: 844}) => { const r = await pagina(vp, {bienvenida: true, reducedMotion: "reduce"}); await r.p.goto(URL0); await r.p.waitForSelector("#bv"); return r; };
 const bvPaso = (p, cls) => p.waitForSelector(`#bv .b-pan.${cls}`);
+/* «¿Cómo entrenás?»: girar la rueda con el pulgar hasta que la de arriba sea esa forma, y «Es lo mío» */
+async function bvFormas(p, ids){
+  await bvPaso(p, "b-forma");
+  for (const id of ids){
+    const nom = await p.evaluate(id => K.bienvenida.FORMAS.find(x => x.id === id).nom, id);
+    for (let k = 0; k < 14 && await p.textContent(".b-vi:not(.sale) .b-vnom") !== nom; k++){
+      const [x, y] = await p.$eval(".b-arco", e => { const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + 40]; });
+      await p.mouse.move(x, y); await p.mouse.down(); await p.mouse.move(x - 90, y, {steps: 6}); await p.mouse.up(); await p.waitForTimeout(500); }
+    await p.click(".b-vi:not(.sale) .b-mio"); await p.waitForTimeout(150);
+  }
+}
 prueba("bienvenida-elijo", async () => {
   const {ctx, p} = await bienvenida();
   /* el arranque del logo y, solo, el primer paso; sin elegir no se sigue */
   await bvPaso(p, "b-que");
   ok(await p.isDisabled("#b-seguir"), "se sigue sin elegir qué entrenar");
   await p.click('.b-op[data-f="fu"]'); ok(await p.getAttribute('.b-op[data-f="fu"]', "aria-pressed") === "true", "Fuerza no queda elegida");
+  await p.click("#b-seguir"); await bvPaso(p, "b-forma");
+  /* cómo entrenás: sin elegir no se sigue; primero van las formas de lo que elegiste entrenar */
+  ok(await p.isDisabled("#bv .b-forma #b-seguir"), "se sigue sin elegir cómo entrenás");
+  ok(await p.evaluate(() => K.bienvenida.FORMAS.find(x => x.nom === document.querySelector(".b-vi .b-vnom").textContent).para.includes("fu")), "la primera forma no es de fuerza");
+  await bvFormas(p, ["sinnada"]);
+  ok(await p.getAttribute(".b-vi:not(.sale) .b-mio", "aria-pressed") === "true" && !(await p.isDisabled("#bv .b-forma #b-seguir")), "«Es lo mío» no la suma");
   await p.click("#b-seguir"); await bvPaso(p, "b-equipo");
-  /* «Nada, solo el piso» saca lo demás */
-  await p.click('.b-eq[data-id="barra"]'); await p.click('.b-eq[data-id="piso"]');
-  ok(await p.$$eval(".b-eq.on", x => x.map(y => y.dataset.id).join()) === "piso", "el piso no saca lo demás");
+  /* tu equipo sale de cómo entrenás: sin nada, la pared; tocarla la saca, y «Sumar algo más» suma */
+  ok(await p.$$eval(".b-et.on", x => x.map(y => y.dataset.id).join()) === "pared", "el equipo no sale de cómo entrenás");
+  await p.click("#b-sumar"); await p.waitForSelector(".pop .pmi"); await p.click('.pop .pmi[data-id="barra"]'); await p.waitForSelector('.b-et[data-id="barra"].on');
+  await p.click('.b-et[data-id="barra"]'); await p.click('.b-et[data-id="pared"]');
+  ok(await p.$$eval(".b-et.on", x => x.length) === 0, "tocar no saca");
   await p.click("#b-seguir"); await bvPaso(p, "b-tiempo");
   await p.focus(".b-dial"); await p.keyboard.press("ArrowRight"); await p.keyboard.press("ArrowRight"); await p.click("#b-dmenos");
   ok(await p.textContent(".b-dial .b-cen b") === "40" && await p.textContent(".b-dias b") === "2", "el reloj o los días no cambian");
@@ -920,7 +939,7 @@ prueba("bienvenida-elijo", async () => {
   await p.click("#b-dia"); await bvPaso(p, "b-dia");
   /* al llegar al primer día queda todo guardado y el día es el de Hoy */
   const per = await p.evaluate(() => K.diario.perfil);
-  ok(JSON.stringify(per.equipo) === "[]" && per.minutos === 40 && per.dias.length === 2 && per.rumbo.length === 3 && per.bienvenida, "lo guardado: " + JSON.stringify(per));
+  ok(JSON.stringify(per.equipo) === "[]" && JSON.stringify(per.formas) === '["sinnada"]' && per.minutos === 40 && per.dias.length === 2 && per.rumbo.length === 3 && per.bienvenida, "lo guardado: " + JSON.stringify(per));
   ok(per.nivel.empujar === "2" && per.nivel.piernas === "nose" && per.nivel.cadera === "1" && !("tirar" in per.nivel), "el nivel: " + JSON.stringify(per.nivel));
   ok(await p.evaluate(() => K.hoyPlan().minutos) <= 40 && Number(await p.textContent(".b-reloj .b-cen b")) === await p.evaluate(() => K.hoyPlan().minutos), "el reloj no dice los minutos del día");
   /* más tarde: Hoy con todo armado, sin la bienvenida ni «Que Kozmos arme tu día» */
@@ -934,7 +953,8 @@ prueba("bienvenida-elijo", async () => {
 prueba("bienvenida-prueba", async () => {
   const {ctx, p} = await bienvenida();
   await bvPaso(p, "b-que"); await p.click('.b-op[data-f="ra"]'); await p.click('.b-op[data-f="mo"]');
-  await p.click("#b-seguir"); await bvPaso(p, "b-equipo"); await p.click('.b-eq[data-id="bici"]'); await p.click("#b-seguir");
+  await p.click("#b-seguir"); await bvFormas(p, ["bici"]); await p.click("#b-seguir");
+  await bvPaso(p, "b-equipo"); ok(await p.$$eval(".b-et.on", x => x.map(y => y.dataset.id).join()) === "bici", "con bici fija, la bici no viene marcada"); await p.click("#b-seguir");
   await bvPaso(p, "b-tiempo"); await p.click("#b-seguir"); await bvPaso(p, "b-como");
   /* sin fuerza, «Lo elijo yo» va a la prueba: lo primero que elegiste fue flexibilidad */
   await p.click("#b-elijo"); await bvPaso(p, "b-niv");
@@ -960,11 +980,18 @@ prueba("bienvenida-retoma", async () => {
   /* si se cierra a la mitad, sigue en el mismo paso con lo elegido; volver lleva al anterior y en la primera, sale */
   const {ctx, p} = await bienvenida();
   await bvPaso(p, "b-que"); await p.click('.b-op[data-f="fu"]'); await p.click("#b-seguir");
-  await bvPaso(p, "b-equipo"); await p.click('.b-eq[data-id="barra"]'); await p.click("#b-seguir"); await bvPaso(p, "b-tiempo");
+  await bvFormas(p, ["conpoco"]); await p.click("#b-seguir");
+  await bvPaso(p, "b-equipo"); await p.click('.b-et[data-id="bandas"]'); await p.click("#b-seguir"); await bvPaso(p, "b-tiempo");
   await p.reload(); await p.waitForSelector("#bv"); await bvPaso(p, "b-tiempo");
   ok(!(await p.$eval(".b-atras", x => x.classList.contains("oculto"))), "sin volver al retomar");
   await p.click(".b-atras"); await bvPaso(p, "b-equipo"); await p.waitForTimeout(200);
-  ok(await p.$$eval(".b-eq.on", x => x.map(y => y.dataset.id).join()) === "barra", "el equipo elegido se perdió");
+  ok(await p.$$eval(".b-et.on", x => x.map(y => y.dataset.id).join()) === "mancuernas", "el equipo elegido se perdió");
+  /* volver a cómo entrenás y seguir sin cambiar nada deja tu equipo como estaba */
+  await p.click(".b-atras"); await bvPaso(p, "b-forma"); await p.waitForTimeout(200);
+  ok(await p.$$eval(".b-ri.on", x => x.length) === 1, "cómo entrenás se perdió");
+  await p.click("#b-seguir"); await bvPaso(p, "b-equipo"); await p.waitForTimeout(200);
+  ok(await p.$$eval(".b-et.on", x => x.map(y => y.dataset.id).join()) === "mancuernas", "volver a cómo entrenás pisó tu equipo");
+  await p.click(".b-atras"); await bvPaso(p, "b-forma"); await p.waitForTimeout(200);
   await p.click(".b-atras"); await bvPaso(p, "b-que"); await p.waitForTimeout(200);
   ok(await p.getAttribute('.b-op[data-f="fu"]', "aria-pressed") === "true", "lo de qué entrenar se perdió");
   /* el atrás de Android en la primera pregunta no se queda con el toque: sale, como en Hoy */
