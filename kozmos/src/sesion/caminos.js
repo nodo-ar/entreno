@@ -47,14 +47,16 @@ K.caminos = (() => {
     }
     return ["barra", "manos", "piernas"].filter(x => r.has(x));
   }
-  function entrada(bs = [], {equipo = null, ej = {}, familia} = {}){
+  function entrada(bs = [], {equipo = null, ej = {}, familia, corta = false} = {}){
+    /* un día corto (15 minutos o menos): la entrada, de unos 2 minutos y medio */
+    const OBJ = corta ? 150 : OBJETIVO, TOP = corta ? 180 : TOPE;
     const usa = new Set(ejerciciosDe(bs).flatMap(id => ej[id]?.equipo || [])), tengo = equipo || [...usa];
     const puede = x => (x.equipo || []).every(e => tengo.includes(e));
     const todas = piezas(), ult = todas.find(x => x.ultima), sirve = todas.filter(x => !x.ultima && !x.pulso && puede(x));
     const pulso = todas.find(x => x.pulso && puede(x));
     const elegidas = [pulso, ult].filter(Boolean);
     let t = elegidas.reduce((a, x) => a + x.seg, 0);
-    const meter = x => { if (!x || elegidas.includes(x) || t >= OBJETIVO || t + x.seg > TOPE) return; elegidas.push(x); t += x.seg; };
+    const meter = x => { if (!x || elegidas.includes(x) || t >= OBJ || t + x.seg > TOP) return; elegidas.push(x); t += x.seg; };
     /* de a una pieza por cada cosa que pide el día, en rondas (primero las que son solo para eso); después, lo general */
     const propias = n => sirve.filter(x => x.para.includes(n)), listas = pide(bs, ej).map(n => [...propias(n).filter(x => !x.para.includes("general")), ...propias(n).filter(x => x.para.includes("general"))]);
     for (let r = 0; listas.some(l => l[r]); r++) for (const l of listas) meter(l[r]);

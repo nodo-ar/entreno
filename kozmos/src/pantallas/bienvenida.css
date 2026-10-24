@@ -79,6 +79,20 @@ body.en-bienvenida{overflow:hidden}
 #bv .b-cen{position:absolute; inset:0; display:grid; place-items:center; align-content:center; gap:2px; pointer-events:none}
 #bv .b-dial .b-cen b{font-size:84px; font-weight:700; line-height:1; letter-spacing:-.04em}
 #bv .b-cen span{font:700 var(--t-sm)/1 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2)}
+/* el reparto de tus minutos, debajo del reloj */
+#bv .b-rep{max-width:320px; margin:20px auto 0; display:grid; gap:8px}
+#bv .b-rbar{display:flex; gap:3px; height:10px}
+#bv .b-rbar i{border-radius:5px; min-width:6px; transition:flex-grow .25s}
+#bv .b-rbar i.ent{background:var(--ink-3); opacity:.5}
+#bv .b-rley{display:flex; flex-wrap:wrap; justify-content:center; gap:4px 14px; font-size:var(--t-sm); font-weight:700; color:var(--ink-2)}
+#bv .b-rley .ent{--c:var(--ink-3)}
+#bv .b-rley > span{display:inline-flex; align-items:center; gap:6px}
+#bv .b-rley > span::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--c, var(--line))}
+#bv .b-rley b{font-weight:700; color:var(--ink)}
+#bv .b-rtx{margin:0; text-align:center; font-size:var(--t-md); font-weight:600; color:var(--ink-2); text-wrap:balance}
+/* el orden en que elegiste, en el anillo */
+#bv .b-ord{position:absolute; left:-2px; top:-2px; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; background:var(--c); color:var(--s1); font-style:normal; font-size:13px; font-weight:700; box-shadow:0 0 0 3px var(--s1)}
+#bv .b-ord[hidden]{display:none}
 #bv .b-dias{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px; margin:26px auto 0; max-width:320px; background:var(--s1); border:1px solid var(--line); border-radius:24px; padding:10px 12px}
 #bv .b-tx{text-align:center}
 #bv .b-tx b{font-size:var(--t-2xl); font-weight:700; display:block; line-height:1}
@@ -172,6 +186,11 @@ body.en-bienvenida{overflow:hidden}
   #bv .b-dial{width:220px; height:220px; margin:0 auto}
   #bv .b-dial .b-cen b{font-size:64px}
   #bv .b-dias{margin-top:14px}
+  #bv .b-tiempo .b-dial{width:150px; height:150px}
+  #bv .b-tiempo .b-dial .b-cen b{font-size:48px}
+  #bv .b-rep{margin:12px 0 0; max-width:none; min-width:0; gap:6px}
+  #bv .b-rley{gap:2px 12px}
+  #bv .b-rtx{font-size:var(--t-sm); font-weight:700}
   #bv .b-cv.b-grande, #bv .b-pru .b-cv.b-grande{--d:200px}
   #bv .b-niv, #bv .b-pru, #bv .b-res{text-align:left; justify-items:stretch}
   #bv .b-niv .b-cab, #bv .b-pru .b-cab{justify-items:start}

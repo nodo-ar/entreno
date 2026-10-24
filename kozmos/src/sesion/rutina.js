@@ -65,7 +65,7 @@ K.rutina = (() => {
     const pasos = deTuEquipo.length ? deTuEquipo : todos;
     const indice = Object.fromEntries(esc.pasos.flatMap((p, k) => idsPaso(p).map(e => [e, k])));
     /* pesas primero: con una pesa, la escalera arranca por lo menos en su primer escalón con kilos (los kilos se ajustan a vos;
-       lo de abajo, sin peso, queda para bajar). Remo con una pesa arranca en el remo a un brazo, no agarrado de un poste */
+       lo de abajo, sin peso, queda para bajar). Remo con una pesa arranca en el remo a un brazo, no agarrado del marco de la puerta */
     const conKg = equipo ? pasos.find(p => p.kgInicial !== undefined && puede(p.ejercicio, ej, equipo)) : null;
     const d = Math.max(desde === undefined ? 0 : indice[desde] ?? 0, conKg ? conKg.k : 0);
     return {id: esc.id, real: true, nombre: esc.nombre, pasos, indice, rango, desde: Math.max(0, pasos.reduce((j, p, i) => p.k <= d ? i : j, 0))};

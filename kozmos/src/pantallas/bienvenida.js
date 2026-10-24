@@ -131,12 +131,23 @@ K.bienvenida = (() => {
   /* quieta mientras no la elegís; se mueve cuando es tuya */
   const figura = (id, f, vive) => vive ? K.fig.grande(id, f) : K.fig.grande(id, f, .5);
   function que(){
-    const p = montar("b-que", `<div class="b-cab">${pasos(1)}<h1>¿Qué querés entrenar?</h1><p class="mute">Elegí uno o más. Lo cambiás cuando quieras.</p></div>
-      <div class="b-ops">${FAM.map(x => { const on = S.que.includes(x.f); return `<button type="button" class="b-op${on ? " on" : ""}" data-f="${x.f}" style="${fv(x.f)}" aria-pressed="${on}"><div class="b-cv">${anillo(on)}<div class="b-dentro">${figura(x.fig, x.f, on)}</div></div><div><b>${x.nom}</b><span>${x.tx}</span></div></button>`; }).join("")}</div>
+    const p = montar("b-que", `<div class="b-cab">${pasos(1)}<h1>¿Qué querés entrenar?</h1><p class="mute" id="b-que-tx">${queTx()}</p></div>
+      <div class="b-ops">${FAM.map(x => { const on = S.que.includes(x.f); return `<button type="button" class="b-op${on ? " on" : ""}" data-f="${x.f}" style="${fv(x.f)}" aria-pressed="${on}"><div class="b-cv">${anillo(on)}<div class="b-dentro">${figura(x.fig, x.f, on)}</div><i class="b-ord num" aria-hidden="true"></i></div><div><b>${x.nom}</b><span>${x.tx}</span></div></button>`; }).join("")}</div>
       <div class="b-pie"><button type="button" class="btn" id="b-seguir"${S.que.length ? "" : " disabled"}>Seguir</button></div>`);
     p.querySelectorAll(".b-op").forEach(b => b.onclick = () => tocarQue(p, b));
     p.querySelector("#b-seguir").onclick = () => { if (S.que.length) ir("equipo"); };
+    ordenes(p, false);
     return p;
+  }
+  /* el orden en que elegís se ve: con dos o más, cada una lleva su número, y lo primero se lleva más tiempo (K.dia.reparto) */
+  const queTx = () => S.que.length > 1 ? "Lo primero que elegís se lleva más tiempo." : "Elegí uno o más. Lo cambiás cuando quieras.";
+  function ordenes(p, animar = true){
+    p.querySelector("#b-que-tx").textContent = queTx();
+    p.querySelectorAll(".b-op").forEach(b => {
+      const i = S.que.indexOf(b.dataset.f), o = b.querySelector(".b-ord"), ver = S.que.length > 1 && i >= 0, tx = ver ? String(i + 1) : "";
+      if (o.textContent !== tx){ o.textContent = tx; if (ver && animar) an(o, [{transform: "scale(0)"}, {transform: "scale(1.2)", offset: .6}, {transform: "none"}], {duration: 280, fill: "none"}); }
+      o.hidden = !ver; b.setAttribute("aria-label", `${FAM.find(y => y.f === b.dataset.f).nom}${ver ? `, ${i + 1}.º` : ""}`);
+    });
   }
   function tocarQue(p, b){
     const f = b.dataset.f, x = FAM.find(y => y.f === f), on = !S.que.includes(f);
@@ -157,6 +168,7 @@ K.bienvenida = (() => {
       an(sat, [{opacity: 1, transform: "none"}, {opacity: 0, transform: "scale(.4)"}], {duration: 200, fill: "none"});
     }
     p.querySelector("#b-seguir").disabled = !S.que.length;
+    ordenes(p);
   }
 
   /* ===== 2 · qué tenés: todo tu equipo, el mismo de la app; «Nada, solo el piso» es no tener nada. La marca es el logo, que se arma ===== */
@@ -183,6 +195,18 @@ K.bienvenida = (() => {
     return p;
   }
 
+  /* cómo se reparten tus minutos: una barra con la entrada en calor y una parte por cosa elegida, en el orden en que las elegiste.
+     Con poco tiempo para todo, una cosa por día: se dice cuáles se turnan */
+  function repartoHtml(){
+    const r = K.dia.reparto(S.que.length ? S.que : ["fu"], S.min), nom = f => FAM.find(x => x.f === f).nom;
+    const seg = (c, m, cls = "") => `<i class="${cls}" style="flex:${m} 1 0;${c ? `background:var(--${c})` : ""}"></i>`;
+    const bar = `<div class="b-rbar">${seg(null, r.entrada, "ent")}${r.partes.map(x => seg(x.f, x.minutos)).join("")}</div>`;
+    const ley = r.partes.map(x => `<span style="--c:var(--${x.f})"><b>${nom(x.f)}</b> <span class="num">${x.minutos} min</span></span>`).join("");
+    const todas = [...r.partes, ...r.alterna.map(f => ({f}))].length, cuantas = ["", "una cosa", "dos cosas"][r.partes.length];
+    const turno = r.alterna.length ? `<p class="b-rtx">Con ${S.min} minutos van ${cuantas} por día y ${todas === 2 ? "las dos" : "las tres"} se turnan.</p>` : "";
+    return `${bar}<div class="b-rley">${ley}<span class="ent"><b>Entrada en calor</b> <span class="num">${r.entrada} min</span></span></div>${turno}`;
+  }
+
   /* ===== 2b · cuánto tiempo: un reloj de una hora; girás el punto con el dedo, de a cinco minutos. Debajo, los días por semana ===== */
   function tiempo(){
     const p = montar("b-tiempo", `<div class="b-cab">${pasos(2)}<h1>¿Cuánto tiempo tenés?</h1><p class="mute">Por día. Girá el punto.</p></div>
@@ -192,6 +216,7 @@ K.bienvenida = (() => {
         <circle class="arc" cx="50" cy="50" r="${R}" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" pathLength="100" transform="rotate(-90 50 50)"/>
         <g class="sat"><circle cx="50" cy="${50 - R}" r="6.5" fill="var(--ink)"/><circle cx="50" cy="${50 - R}" r="2.4" fill="var(--bg)"/></g></svg>
         <div class="b-cen"><b class="reloj">${S.min}</b><span>minutos</span></div></div>
+      <div class="b-rep" aria-live="polite">${repartoHtml()}</div>
       <div class="b-dias"><button type="button" class="b-mm" id="b-dmenos" aria-label="Un día menos">−</button><div class="b-tx"><b class="num">${S.dias}</b><span>días por semana</span></div><button type="button" class="b-mm" id="b-dmas" aria-label="Un día más">+</button></div>
       <div class="b-pie"><button type="button" class="btn" id="b-seguir">Seguir</button></div>`);
     const dial = p.querySelector(".b-dial"), arc = dial.querySelector(".arc"), sat = dial.querySelector(".sat"), num = dial.querySelector(".b-cen b");
@@ -201,7 +226,7 @@ K.bienvenida = (() => {
     let m = S.min; pintar(m);
     /* llega dando la vuelta desde cero */
     if (!quieto()){ const t0 = performance.now(); const f = t => { const x = Math.min(1, (t - t0) / 900), e = 1 - (1 - x) ** 3; if (!tomado) pintar(Math.max(.01, S.min * e)); if (x < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }
-    const poner = nm => { nm = Math.max(10, Math.min(60, nm)); if (nm !== S.min){ S.min = nm; num.textContent = nm; vibrar(5); an(num, [{transform: "scale(1.06)"}, {transform: "none"}], {duration: 160, fill: "none"}); guardarB(actual._paso); } dial.setAttribute("aria-valuenow", nm); };
+    const poner = nm => { nm = Math.max(10, Math.min(60, nm)); if (nm !== S.min){ S.min = nm; num.textContent = nm; vibrar(5); an(num, [{transform: "scale(1.06)"}, {transform: "none"}], {duration: 160, fill: "none"}); guardarB(actual._paso); p.querySelector(".b-rep").innerHTML = repartoHtml(); } dial.setAttribute("aria-valuenow", nm); };
     let tomado = false;
     const angulo = ev => { const r = dial.getBoundingClientRect(), a = Math.atan2(ev.clientX - (r.left + r.width / 2), -(ev.clientY - (r.top + r.height / 2))) * 180 / Math.PI; return (a + 360) % 360; };
     const mover = ev => { if (!tomado) return; const a = angulo(ev);
@@ -218,7 +243,7 @@ K.bienvenida = (() => {
       an(db, [{transform: `translateY(${d * -8}px)`, opacity: 0}, {transform: "none", opacity: 1}], {duration: 220, fill: "none"}); };
     dm.onclick = () => dias(-1); dM.onclick = () => dias(1); dm.disabled = S.dias <= 2; dM.disabled = S.dias >= 6;
     p.querySelector("#b-seguir").onclick = () => ir("como");
-    entrada(p, ".b-cab, .b-dial, .b-dias, .b-pie");
+    entrada(p, ".b-cab, .b-dial, .b-rep, .b-dias, .b-pie");
     return p;
   }
 
@@ -409,7 +434,7 @@ K.bienvenida = (() => {
   const PAT = {2: [0, 3], 3: [0, 2, 4], 4: [0, 1, 3, 4], 5: [0, 1, 2, 3, 4], 6: [0, 1, 2, 3, 4, 5]};
   const diasDe = n => { const hoy = K.rutina.diaSemana(K.hoy()); return (PAT[n] || PAT[3]).map(k => (k + hoy) % 7).sort((a, b) => a - b); };
   async function guardarPerfil(){
-    const perfil = {equipo: [...S.eq], minutos: S.min, dias: diasDe(S.dias), rumbo: rumbo(), nivel: nivelDe() || undefined, bienvenida: K.hoy()};
+    const perfil = {equipo: [...S.eq], minutos: S.min, dias: diasDe(S.dias), enfoque: [...S.que], rumbo: rumbo(), nivel: nivelDe() || undefined, bienvenida: K.hoy()};
     try { await K.diario.lote({perfil}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); }
     K.prefs.set("bienvenida", "vista");
   }
@@ -417,13 +442,13 @@ K.bienvenida = (() => {
     const plan = K.hoyPlan(), eqTx = S.eq.map(id => K.equipoNombre(id).toLowerCase());
     const f0 = S.que[0] || "fu";
     /* las partes del día, en orden, con sus minutos repartidos sobre el total */
-    const NOM = {entrada: "Entrada en calor", prueba: "Pruebas", habilidad: "Habilidad", fuerza: "Fuerza", abdomen: "Abdomen", motor: "Motor", cierre: "Cierre"};
+    const NOM = {entrada: "Entrada en calor", prueba: "Pruebas", habilidad: "Habilidad", fuerza: "Fuerza", abdomen: "Abdomen", motor: "Motor", resistencia: "Resistencia", flexibilidad: "Flexibilidad", cierre: "Cierre"};
     const grupos = []; for (const bl of plan.bloques){ const m = bl.molde || "prueba", g = grupos[grupos.length - 1]; if (g && g.m === m) g.bs.push(bl); else grupos.push({m, bs: [bl]}); }
     const crudo = grupos.map(g => K.dia.minutosDe(g.bs)), tot = crudo.reduce((x, y) => x + y, 0) || 1;
     let resta = plan.minutos;
     const partes = grupos.map((g, k) => { const mm = k === grupos.length - 1 ? resta : Math.max(1, Math.round(crudo[k] / tot * plan.minutos)); resta -= mm;
       const fam = g.bs.find(x => x.familia)?.familia || f0;
-      const col = {entrada: "var(--ink-3)", habilidad: `var(--${fam})`, prueba: `var(--${fam})`, fuerza: `var(--${fam}-disco)`, abdomen: `color-mix(in srgb, var(--${fam}) 45%, var(--s2))`, motor: `var(--${fam})`, cierre: `var(--${fam})`}[g.m] || `var(--${fam})`;
+      const col = {entrada: "var(--ink-3)", habilidad: `var(--${fam})`, prueba: `var(--${fam})`, fuerza: `var(--${fam}-disco)`, abdomen: `color-mix(in srgb, var(--${fam}) 45%, var(--s2))`, motor: `var(--${fam})`, resistencia: `var(--${fam})`, flexibilidad: `var(--${fam})`, cierre: `var(--${fam})`}[g.m] || `var(--${fam})`;
       const n = g.bs.reduce((x, bl) => x + (bl.pasos ? new Set(bl.pasos.map(q => q.ejercicio)).size : 1), 0);
       return {...g, mm: Math.max(0, mm), col, n}; });
     const GAP = 1.6; let acc = 0;

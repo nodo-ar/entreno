@@ -1,8 +1,10 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-23 (Planes en estantes) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-24 (cada camino, su día) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
+
+- **Cada camino, su día** (2026-10-24): vuelta 36 (acta `docs/actas/036-kozmos-cada-camino-su-dia.md`). El motor reparte el tiempo según lo que elegiste entrenar y en qué orden; cómo te gusta entrenar orienta la resistencia y la flexibilidad; el día respeta tus minutos; el reparto se ve en la bienvenida y en Vos. El árbol de 202.752 caminos es una prueba (`kozmos/pruebas/arbol.mjs`). **Esperando a Fer**: el OK al tablero. Después: ejercicios de gimnasio y la rueda de «¿Cómo entrenás?».
 
 - **Planes en estantes** (2026-10-23): vuelta 32 (acta `docs/actas/032-kozmos-planes-en-estantes.md`), rama local `planes-estantes` sobre `claude/project-thread-985fzq`, sin PR ni push.
   - Lo que Fer eligió: opción A del boceto m28, más el corazón, el nivel en satélites, la biblioteca dentro de Planes, los nombres de Hoy que abren cada ejercicio y un cuerpo con la silueta del maniquí y sus músculos.
