@@ -86,7 +86,8 @@ K.icono = (() => {
       const P0 = K.fig.muestra(id, u), J = K.fig.esqueleto(vista !== undefined ? {...f, vista} : f, P0), p = {};
       for (const k of ["hd", "sh", "hip", "sN", "sF", "eN", "eF", "hN", "hF", "pN", "pF", "kN", "kF", "fN", "fF", "tN", "tF"]) p[k] = J[k] || (k[0] === "s" ? J.sh : J.hip);
       const barra = ["barra", "barra-baja"].includes(f.con), ruedas = f.con === "bici" ? [[f.en[0] - 34, K.fig.PISO - 30], [f.en[0] + 70, K.fig.PISO - 30]] : null;
-      return {f, p, barra, ruedas, soga: f.con === "soga", pesa: f.con === "pesa", mancuernas: /^mancuerna/.test(f.con || ""), pared: f.pared, paralelas: f.con === "paralelas", poste: f.poste, banco: f.banco};
+      return {f, p, barra, ruedas, soga: f.con === "soga", pesa: f.con === "pesa", mancuernas: /^mancuerna/.test(f.con || ""), pared: f.pared, paralelas: f.con === "paralelas", poste: f.poste, banco: f.banco,
+        discos: f.con === "discos", copa: !!f.copa, bancoPlano: f.bancoPlano, maq: f.maq, mov: f.mov};
     });
   }
 
@@ -111,13 +112,29 @@ K.icono = (() => {
       eq.push({t: "l", pts: [[a, y], [b, y]], w: 1.4}, {t: "l", pts: [[a + 6, y], [a + 6, y1]]}, {t: "l", pts: [[b - 6, y], [b - 6, y1]]}); extra.push([a, y], [b, y], [a, y1]); }
     /* lo que se tiene en la mano: la kettlebell sigue el antebrazo; las mancuernas, cruzadas en cada mano */
     const ante = s => { const d = sub(p["h" + s], p["e" + s]); return mul(d, 1 / (len(d) || 1)); };
-    if (e.pesa){ const h = mul(add(p.hN, p.hF), .5), q = add(h, mul(ante("N"), 15)); eq.push({t: "o", c: q, r: 12, delante: true}); extra.push([q[0] - 12, q[1] - 12], [q[0] + 12, q[1] + 12]); }
+    /* en la copa, la kettlebell cuelga abajo de las manos, contra el pecho */
+    if (e.pesa){ const h = mul(add(p.hN, p.hF), .5), q = add(h, e.copa ? [0, 15] : mul(ante("N"), 15)); eq.push({t: "o", c: q, r: 12, delante: true}); extra.push([q[0] - 12, q[1] - 12], [q[0] + 12, q[1] + 12]); }
     if (e.mancuernas) for (const s of ["F", "N"]){ const d = ante(s), n = [-d[1], d[0]], q = add(p["h" + s], mul(d, 3)); eq.push({t: "l", pts: [add(q, mul(n, -14)), add(q, mul(n, 14))], w: 2.6}); }
     /* la pared en la que se apoya */
     if (e.pared !== undefined){ const y0 = Math.min(...cuerpoY) - 14; eq.push({t: "l", pts: [[e.pared, y0], [e.pared, K.fig.PISO]]}); extra.push([e.pared, y0], [e.pared, K.fig.PISO]); }
     /* el poste de la bandera, de arriba hasta el piso; el banco del dragon flag, con su pata */
     if (e.poste !== undefined){ const y0 = Math.min(...cuerpoY) - 16; eq.push({t: "l", pts: [[e.poste, y0], [e.poste, K.fig.PISO]], w: 1.2}); extra.push([e.poste, y0], [e.poste, K.fig.PISO]); }
     if (e.banco){ const [x, y] = e.banco; eq.push({t: "l", pts: [[x - 30, y], [x + 30, y]], w: 1.3}, {t: "l", pts: [[x, y], [x, K.fig.PISO]]}); extra.push([x - 30, y], [x + 30, K.fig.PISO]); }
+    /* el gimnasio: el disco de la barra es un aro en la mano; el banco plano, la colchoneta con dos patas */
+    if (e.discos){ const q = add(p.hN, mul(ante("N"), 3)), r = 19; eq.push({t: "c", c: q, r}); extra.push([q[0] - r, q[1] - r], [q[0] + r, q[1] + r]); }
+    if (e.bancoPlano){ const [a, b, y] = e.bancoPlano, y1 = y + 4; eq.push({t: "l", pts: [[a, y1], [b, y1]], w: 1.3}, {t: "l", pts: [[a + 16, y1], [a + 16, K.fig.PISO]]}, {t: "l", pts: [[b - 16, y1], [b - 16, K.fig.PISO]]}); extra.push([a, y1], [b, K.fig.PISO]); }
+    /* las máquinas, como el banco: solo las colchonetas (y el volante del remo), sin el cuadro ni las pesas */
+    if (e.maq) for (const [t, ...q] of e.maq){
+      if (t === "p"){ const y = q[1] + q[3] / 2, a = q[0] + 4, b = q[0] + q[2] - 4; eq.push({t: "l", pts: [[a, y], [b, y]], w: 1.3}); extra.push([a, y], [b, y]); }
+      if (t === "a"){ eq.push({t: "l", pts: [[q[0], q[1]], [q[2], q[3]]], w: 1.3}); extra.push([q[0], q[1]], [q[2], q[3]]); }
+      if (t === "r" && q[2] >= 10){ const r = q[2] + 4; eq.push({t: "c", c: [q[0], q[1]], r}); extra.push([q[0] - r, q[1] - r], [q[0] + r, q[1] + r]); } }
+    /* lo que se mueve: el asiento del remo bajo la cadera, la placa de la prensa bajo los pies, la barra del jalón y las anillas con su cinta */
+    if (e.mov) for (const [t, ...q] of e.mov){
+      if (t === "carro"){ const y = q[0] + 4, a = p.hip[0] + q[1], b = p.hip[0] + q[2]; eq.push({t: "l", pts: [[a, y], [b, y]], w: 1.3}); extra.push([a, y], [b, y]); }
+      if (t === "plataforma"){ const f0 = p.fN, d = [Math.sin(q[0] * Math.PI / 180), Math.cos(q[0] * Math.PI / 180)], n = [d[1], -d[0]], c = add(f0, mul(d, 9));
+        eq.push({t: "l", pts: [add(c, mul(n, 14)), add(c, mul(n, -18))], w: 1.3}); extra.push(add(c, mul(n, 14)), add(c, mul(n, -18))); }
+      if (t === "cable" && q[2]){ const c = add(p.hN, mul(ante("N"), 3)); eq.push({t: "l", pts: [[c[0] - 14, c[1]], [c[0] + 14, c[1]]], w: 1.3}); extra.push([c[0] - 14, c[1]], [c[0] + 14, c[1]]); }
+      if (t === "anilla"){ const y0 = Math.min(...cuerpoY) - 24; for (const s of ["F", "N"]){ const c = add(p["h" + s], [0, -2]); eq.push({t: "c", c, r: 9}, {t: "l", pts: [[c[0], c[1] - 9], [c[0], y0]], w: .5}); extra.push([c[0] - 9, c[1] - 9], [c[0] + 9, c[1] + 9], [c[0], y0]); } } }
     if (e.ruedas){ const [R, F] = e.ruedas, r = 27; eq.push({t: "c", c: R, r}, {t: "c", c: F, r});
       const pedal = [(p.fN[0] + p.fF[0]) / 2 + 6, (p.fN[1] + p.fF[1]) / 2 + 2], asiento = [p.hip[0] + 2, p.hip[1] + 12], manubrio = [F[0] - 10, p.hN[1] + 14];
       eq.push({t: "l", pts: [R, pedal, asiento, R]}, {t: "l", pts: [asiento, manubrio, F]}, {t: "l", pts: [pedal, manubrio]}, {t: "l", pts: [manubrio, [p.hN[0] - 2, p.hN[1]]]});

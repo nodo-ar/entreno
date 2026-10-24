@@ -28,10 +28,13 @@ Una escalera es una fila de ejercicios del más fácil al más difícil. Las rut
 - Un escalón de `repeticiones` puede traer su propio `rango`; si no, vale el del bloque.
 - Un escalón de `segundos` es un sostén: lleva `meta`, los segundos que hay que juntar para subir.
 - Los escalones que tu equipo no permite se saltean (y no cuentan en el total).
-- `patron`: lo que entrena la escalera (tirar y remo → `tirar`; empujar y fondos → `empujar`; piernas; isquios → `bisagra`; L-sit y bandera acostada → `abdomen`; cadera y puente → `movilidad`).
+- `patron`: lo que entrena la escalera (tirar y remo → `tirar`; empujar, empujar arriba y fondos → `empujar`; piernas; isquios → `bisagra`; L-sit y bandera acostada → `abdomen`; cadera y puente → `movilidad`).
 - **Variantes de un escalón** (cuentan como el mismo escalón, también en el diario):
   - `tambien`: ejercicios que lo reemplazan si tu equipo no permite el de siempre, sin kilos (sin barra, el remo invertido es el remo debajo de la mesa; sin mancuernas, el remo con mancuerna es el remo con toalla en la puerta).
-  - `conPeso`: `{ejercicio, carga, kgInicial, hastaKg}`, el mismo escalón con una pesa; se usa si la tenés (sentadilla → sentadilla con pesa, puente de glúteo → peso muerto rumano con pesa).
+  - `conPeso`: `{ejercicio, carga, kgInicial, hastaKg}` o una lista de esas, en orden: el mismo escalón con lo que tenés; va la primera que tu equipo permite (sentadilla → con barra, prensa, kettlebell al pecho o con pesa; puente de glúteo → peso muerto con barra o rumano con pesa; remo agarrado del marco → con barra, en polea o en anillas). Puede no llevar kilos (las anillas).
+  - `total: true`: los kilos son de todo lo que levantás (barra, máquina, una kettlebell) y la sesión pide «Kilos», no «Kilos por mano».
+  - `manda: true` (vuelta 37, solo barra y discos o máquinas): la versión con kilos es la escalera entera. Arrancás ahí aunque tu nivel diga un escalón más alto, y cada escalón de nivel por encima suma dos `carga` a los kilos de arranque (hasta la mitad de `hastaKg`). Con la versión que manda solo cuenta lo hecho con ella.
+  - **La habilidad va con tu cuerpo**: el camino a una estrella usa la escalera sin `conPeso` (`sinPeso`), y lo hecho con kilos no le cuenta. Así el press de banca no baja tu planche y la planche no te saca del press.
   - Sin decir tu equipo, siempre el de siempre.
 - **Una pesa** (`pesa`, vuelta 35): los ejercicios que se hacen con una sola pesa (remo a un brazo, sentadilla con pesa, sentadilla búlgara, peso muerto rumano y a una pierna) piden `pesa`, no `mancuernas`. Con mancuernas o con una kettlebell tenés pesa: las pantallas le pasan al motor tu equipo con `K.rutina.conPesa` (`K.tuEquipo()`). Lo que pide dos mancuernas (press de hombros, remo con dos, el circuito con mancuernas) sigue pidiendo mancuernas.
 - **Pesas primero** (`K.rutina.defEscalera`): con una pesa, la escalera arranca por lo menos en su primer escalón con kilos. Los kilos se ajustan a vos y lo de abajo, sin peso, queda para bajar: con una pesa, el remo arranca en el remo a un brazo con pesa (6 kg) aunque tu nivel diga el poste. Tu nivel más arriba manda, y lo hecho manda sobre los dos.
@@ -272,6 +275,14 @@ Sin rutina, con tu rumbo, cuenta semanas de calendario con alguna sesión: despu
 ## Lo que guarda el diario
 
 Una sesión de rutina guarda `rutina: {id, sesion}`. Cada bloque del día del motor guarda `molde` (la parte: `entrada`, `habilidad`, `fuerza`, `abdomen`, `cierre`) y, si era para metas de tu rumbo, `constelaciones` (la lista; los bloques de antes guardan una sola, `constelacion`, y las dos cuentan para rotar). La serie de una entrada en calor no guarda ejercicio: las calorías la cuentan como el resto del día. Cada serie de una escalera guarda además `escalera`, `rango`, `n` (cuántas series pedía), `descarga` si era una descarga y, si la tocaste, `sensacion` (`sobro`, `justo` o `no-llego`). Una serie con lastre guarda `lastreKg` y `pesoKg`; una con mancuernas, `kg` (por mano, sin tu peso). Las sesiones viejas, sin esos campos, siguen contando: sus series entran en la escalera del ejercicio que hicieron. Una prueba (hazaña) guarda `hazana: {id, v: 2, valor, completa, ejercicio, tipo}` y su serie lleva `hazana` con el id; esa serie cuenta como marca en el Cielo. Una sesión de la semana de prueba guarda `semanaPrueba: {bloque, rutina, semana, pruebas}`. Las hazañas de antes (versión 1) guardaban `hazana: {id, nivel, valor}`, con `valor` en segundos (tiempo, chipper), rondas (amrap) o 1 (completada): se siguen viendo en tu historia y en la prueba, como «versión anterior», y no cuentan como marcas. El perfil guarda `rutina: {id, desde}` mientras la seguís y `dias`: los días de la semana que entrenás (0 = lunes).
+
+## Equipo de gimnasio, anillas y máquina de remo (vuelta 37)
+
+- Equipo nuevo en `K.EQUIPOS`: `anillas`, `discos` (barra y discos), `banco`, `maquinas` (máquinas y poleas) y `remadora` (máquina de remo). La bienvenida los muestra en filas bajas, de a dos (de a tres en horizontal), sin desplazar.
+- 18 ejercicios nuevos, cada uno como versión de un escalón: sentadilla con barra y prensa (piernas), peso muerto con barra (isquios), curl de piernas en máquina (isquios, en el curl deslizando), press de banca, press de pecho en máquina, press de banca con mancuernas y press en el piso (empujar), jalón al pecho (tirar, en la dominada asistida), remo con barra, remo en polea y remo en anillas (remo), fondo en anillas (fondos), sentadilla con kettlebell al pecho.
+- Escalera nueva **Empujar arriba** (`arriba`): flexión de hombros → con pies en alto → cabeza abajo contra la pared, con press de hombros con barra, con mancuernas o con kettlebell. Tu nivel de empujar dice su escalón.
+- **Los empujes y los tirones se turnan**: de las escaleras de un movimiento (flexiones, arriba y fondos; remo y dominada) va la que más hace que no tocás.
+- Motor: «Remo a intervalos» con la máquina de remo y «Mancuerna a intervalos» con mancuernas.
 
 ## La bienvenida (`src/pantallas/bienvenida.js`, vuelta 35)
 

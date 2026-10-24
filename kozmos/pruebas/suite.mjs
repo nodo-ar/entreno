@@ -2689,7 +2689,7 @@ prueba("primer-dia-equipo", async () => {
   await ir(p, "#/hoy");
   ok(await p.evaluate(() => K.diario.perfil.equipo == null), "arranca con equipo elegido");
   await p.click('.como-op[data-ir="#/hoy/equipo"]'); await esperarTitulo(p, "Tu equipo");
-  ok(await p.$$eval("[data-equipo]", x => x.length) === 9 && await p.$$eval('[data-equipo][aria-pressed="true"], [data-equipo] .ck', x => x.length) === 0, "el primer día hay equipo marcado de entrada");
+  ok(await p.$$eval("[data-equipo]", x => x.length) === await p.evaluate(() => K.EQUIPOS.length) && await p.$$eval('[data-equipo][aria-pressed="true"], [data-equipo] .ck', x => x.length) === 0, "el primer día hay equipo marcado de entrada");
   ok((await p.textContent("main.view .ayuda")) === "Marcá lo que tenés. Sin nada también se entrena.", "la ayuda: " + await p.textContent("main.view .ayuda"));
   ok((await p.textContent("main.view .enc-tit small")) === "Para empezar", "el paso no dice Para empezar");
   ok(JSON.stringify(await p.$$eval(".pasos li span", x => x.map(y => y.textContent))) === '["Tu equipo","Tu nivel","Tu rumbo"]', "los pasos no son Tu equipo, Tu nivel y Tu rumbo");

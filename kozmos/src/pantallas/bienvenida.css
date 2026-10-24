@@ -59,7 +59,8 @@ body.en-bienvenida{overflow:hidden}
 
 /* 2 · qué tenés */
 #bv .b-eqs{display:grid; gap:10px; margin-top:18px; min-width:0}
-#bv .b-eqg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; min-width:0}
+/* catorce cosas en una pantalla, sin desplazar: filas bajas de a dos (de a tres en horizontal) */
+#bv .b-eqg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; min-width:0}
 #bv .b-eq{position:relative; display:grid; grid-template-columns:56px 1fr 28px; align-items:center; gap:14px; min-width:0; text-align:left; background:var(--s1); border:1px solid var(--line); border-radius:24px; padding:14px 16px 14px 14px; color:var(--ink); cursor:pointer; font:inherit; transition:border-color .25s, transform .12s}
 #bv .b-eq .tile{width:56px; height:56px; border-radius:18px; background:var(--s2); display:grid; place-items:center; transition:background .25s, color .25s}
 #bv .b-eq.on .tile{background:var(--solid); color:var(--on-solid)}
@@ -67,11 +68,11 @@ body.en-bienvenida{overflow:hidden}
 #bv .b-eq b{font-size:var(--t-xl); font-weight:700; line-height:1.15; display:block}
 #bv .b-eq span{color:var(--ink-2); font-size:var(--t-md); display:block; margin-top:3px}
 #bv .b-eq .b-mk{width:28px; height:28px}
-#bv .b-eqg .b-eq{grid-template-columns:40px 1fr; padding:10px 12px 10px 10px; gap:10px; border-radius:18px}
-#bv .b-eqg .b-eq .tile{width:40px; height:40px; border-radius:13px}
-#bv .b-eqg .b-eq .tile svg{width:20px; height:20px}
-#bv .b-eqg .b-eq b{font-size:var(--t-md); padding-right:12px}
-#bv .b-eqg .b-eq .b-mk{position:absolute; top:8px; right:8px; width:16px; height:16px}
+#bv .b-eqg .b-eq{grid-template-columns:32px 1fr; min-height:50px; padding:6px 10px 6px 7px; gap:9px; border-radius:16px}
+#bv .b-eqg .b-eq .tile{width:32px; height:32px; border-radius:11px}
+#bv .b-eqg .b-eq .tile svg{width:18px; height:18px}
+#bv .b-eqg .b-eq b{font-size:var(--t-sm); font-weight:700; line-height:1.15; padding-right:12px}
+#bv .b-eqg .b-eq .b-mk{position:absolute; top:7px; right:7px; width:14px; height:14px}
 
 /* 2b · cuánto tiempo: un reloj de una hora que se gira con el dedo */
 #bv .b-dial{position:relative; width:270px; height:270px; margin:26px auto 0; touch-action:none; cursor:grab; border-radius:50%}
@@ -179,6 +180,17 @@ body.en-bienvenida{overflow:hidden}
   #bv .b-arr > *{grid-column:auto}
   #bv h1{font-size:var(--t-3xl)}
   #bv .b-ops, #bv .b-eqs, #bv .b-figs, #bv .b-lista{margin-top:0}
+  #bv .b-eqs{gap:6px}
+  #bv .b-eqs > .b-eq{padding:6px 14px 6px 6px; grid-template-columns:36px 1fr 22px; border-radius:18px}
+  #bv .b-eqs > .b-eq .tile{width:36px; height:36px; border-radius:12px}
+  #bv .b-eqs > .b-eq b{font-size:var(--t-lg)}
+  #bv .b-eqs > .b-eq .b-mk{width:22px; height:22px}
+  #bv .b-eqg{grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px}
+  #bv .b-eqg .b-eq{min-height:44px; grid-template-columns:28px 1fr; gap:7px; padding:5px 8px 5px 6px; border-radius:14px}
+  #bv .b-eqg .b-eq .tile{width:28px; height:28px; border-radius:9px}
+  #bv .b-eqg .b-eq .tile svg{width:16px; height:16px}
+  #bv .b-eqg .b-eq b{font-size:var(--t-s); padding-right:10px}
+  #bv .b-eqg .b-eq .b-mk{top:5px; right:5px; width:12px; height:12px}
   #bv .b-op{grid-template-columns:72px 1fr; padding:8px 14px 8px 8px}
   #bv .b-op .b-cv{--d:72px}
   #bv .b-figs{grid-template-columns:repeat(4, minmax(0,1fr))}

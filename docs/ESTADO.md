@@ -1,8 +1,10 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-24 (cada camino, su día) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-24 (con equipo) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
+
+- **Con equipo** (2026-10-24): vuelta 37 (acta `docs/actas/037-kozmos-con-equipo.md`). Barra y discos, banco, máquinas, anillas y máquina de remo, con 18 ejercicios dibujados como versiones de los escalones de siempre; escalera nueva «Empujar arriba»; los empujes y tirones se turnan. «Cada camino, su día» publicada como kozmos-44. **Esperando a Fer**: el OK al tablero y dos decisiones del acta. Después: tanda 2 (bandas, cajón), tanda 3 (boxeo, remo por metros, Hyrox) y la rueda.
 
 - **Cada camino, su día** (2026-10-24): vuelta 36 (acta `docs/actas/036-kozmos-cada-camino-su-dia.md`). El motor reparte el tiempo según lo que elegiste entrenar y en qué orden; cómo te gusta entrenar orienta la resistencia y la flexibilidad; el día respeta tus minutos; el reparto se ve en la bienvenida y en Vos. El árbol de 202.752 caminos es una prueba (`kozmos/pruebas/arbol.mjs`). **Esperando a Fer**: el OK al tablero. Después: ejercicios de gimnasio y la rueda de «¿Cómo entrenás?».
 

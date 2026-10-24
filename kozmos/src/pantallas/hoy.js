@@ -30,7 +30,7 @@ const PREGUNTA = {segundos: "¿Cuántos segundos?", repeticiones: "¿Cuántas sa
 const UNI = {segundos: "segundos", repeticiones: "repeticiones", minutos: "minutos", "menos-minutos": "minutos", puntos: "puntos, de 0 a 10", cm: "cm más allá de los pies", km: "km en la pantalla"};
 /* cuánto suma cada toque de − y +, y hasta dónde baja: los centímetros pueden ser negativos, los puntos van de medio en medio;
    los kilos de las mancuernas, de a uno */
-K.pasoDe = (tipo, campo = "valor") => campo === "kg" ? {inc: 1, min: 0, max: 200} : campo !== "valor" ? {inc: .5, min: 0, max: 1e5} : ({puntos: {inc: .5, min: 0, max: 10}, cm: {inc: 1, min: -50, max: 100}, km: {inc: .1, min: 0, max: 1e3}})[tipo] || {inc: 1, min: 0, max: 1e5};
+K.pasoDe = (tipo, campo = "valor") => campo === "kg" ? {inc: 1, min: 0, max: 500} : campo !== "valor" ? {inc: .5, min: 0, max: 1e5} : ({puntos: {inc: .5, min: 0, max: 10}, cm: {inc: 1, min: -50, max: 100}, km: {inc: .1, min: 0, max: 1e3}})[tipo] || {inc: 1, min: 0, max: 1e5};
 
 K.P.hoy = r => r.sub === "rumbo" ? K.P.rumbo() : r.sub === "equipo" ? K.P.equipo("hoy") : r.sub === "nivel" ? K.P.nivel("hoy") : r.sub === "sesion" ? K.P.sesion() : r.sub === "resumen" ? K.P.resumen(r.sub2) : K.P.hoyInicio();
 
@@ -121,7 +121,9 @@ K.filaToca = b => {
    «kg»: los kilos van debajo de lo que toca, en la misma columna, como su propia ficha con la mancuerna.
    «ej»: el ejercicio de la fila; su nombre abre su página en la biblioteca (Planes, Ejercicios). El resto de la fila no cambia */
 K.ejLink = (id, q) => id && K.EJ[id] ? `<button type="button" class="ej-ln" data-ir="#/planes/ejercicios/${id}">${q}</button>` : q;
-K.filaLn = (q, n, fam, prueba = false, marcas = [], kg = "", ej = "") => `<div class="ln toca${prueba ? " es-prueba" : ""}" style="--c:var(--${fam})"><span class="toca-q"><span class="tg"><i class="dot"></i>${K.ejLink(ej, q)}</span>${marcas.filter(Boolean).map(m => ` <small class="toca-marca">${K.esc(m)}</small>`).join("")}</span><span class="num toca-n"><span>${n}</span>${kg ? " " + K.pesa(K.esc(kg)) : ""}</span></div>`;
+/* el ícono de los kilos: lo que levantás (barra y discos, máquina, kettlebell; una pesa cualquiera, la mancuerna) */
+K.kgIc = ej => ({discos: "discos", maquinas: "maquinas", kettlebell: "kettlebell"})[(K.ej(ej)?.equipo || []).find(e => ["discos", "maquinas", "kettlebell"].includes(e))] || "mancuernas";
+K.filaLn = (q, n, fam, prueba = false, marcas = [], kg = "", ej = "") => `<div class="ln toca${prueba ? " es-prueba" : ""}" style="--c:var(--${fam})"><span class="toca-q"><span class="tg"><i class="dot"></i>${K.ejLink(ej, q)}</span>${marcas.filter(Boolean).map(m => ` <small class="toca-marca">${K.esc(m)}</small>`).join("")}</span><span class="num toca-n"><span>${n}</span>${kg ? " " + K.pesa(K.esc(kg), ej ? K.kgIc(ej) : undefined) : ""}</span></div>`;
 /* las filas de una sesión armada (K.rutina.filas): una por ejercicio. Los de una superserie van juntos, con su nota */
 const PAR = {2: "en superserie", 3: "en triserie"};
 K.filasHtml = (fs, {sinPar = false} = {}) => {
@@ -404,7 +406,7 @@ K.P.sesion = () => {
     const o = b.objetivo, corre = CORRE.includes(b.tipo) || !!b.reloj;
     const [gn, gl] = corre ? grandeSerie(b) : [];
     const grande = corre ? `<span class="reloj big num" data-r="fase">${gn}</span><span class="lb" data-r="fase-lb">${gl}</span>`
-      : b.tipo === "repeticiones" ? (o === "max" ? `<span class="reloj big num">Máx</span><span class="lb">todas las que salgan</span>` : `<span class="reloj big num">${o}</span><span class="lb">${b.carga && b.kg ? `repeticiones ${K.pesa(`${String(b.kg).replace(".", ",")} kg${b.mano ? " por mano" : ""}`, b.mano ? "mancuernas" : "peso")}` : K.jer("repeticiones", b.antes !== undefined ? `la vez pasada ${b.antes}` : "")}</span>`)
+      : b.tipo === "repeticiones" ? (o === "max" ? `<span class="reloj big num">Máx</span><span class="lb">todas las que salgan</span>` : `<span class="reloj big num">${o}</span><span class="lb">${b.carga && b.kg ? `repeticiones ${K.pesa(`${String(b.kg).replace(".", ",")} kg${b.mano && !b.total ? " por mano" : ""}`, b.mano ? K.kgIc(b.ejercicio) : "peso")}` : K.jer("repeticiones", b.antes !== undefined ? `la vez pasada ${b.antes}` : "")}</span>`)
       : b.tipo === "porcentaje" ? `<span class="reloj big num">+${o} %</span><span class="lb">de tu peso${K.diario.perfil.peso ? ` ${K.pesa(`${String(Math.round(o * K.diario.perfil.peso / 100 * 2) / 2).replace(".", ",")} kg`, "peso")}` : ""}</span>`
       : b.tipo === "puntos" ? `<span class="reloj big num">10</span><span class="lb">arrancás con 10 puntos</span>`
       : b.tipo === "cm" ? `<span class="reloj big num">cm</span><span class="lb">más allá de la punta de los pies</span>`
@@ -422,7 +424,7 @@ K.P.sesion = () => {
   /* sí o no, de un toque: dos botones grandes, el elegido en tinta */
   if (b.tipo === "logrado" || b.tipo === "sesiones") campo = `<div class="si-no" role="group" aria-label="${PREGUNTA[b.tipo]}"><button type="button" class="btn sec" data-salio="0" aria-pressed="${!(Number(v) > 0)}">Todavía no</button><button type="button" class="btn sec" data-salio="1" aria-pressed="${Number(v) > 0}">${K.ic("check")}Sí, salió</button></div>`;
   /* con mancuernas: las repeticiones y los kilos de cada mancuerna; con lastre, los kilos colgados (y tu peso, para el %) */
-  else if (b.carga && b.mano) campo = `<div class="dos-pasos">${paso("valor", PREGUNTA.repeticiones, v?.valor, "repeticiones")}${paso("kg", "Kilos por mano", v?.kg, "kg por mano")}</div>`;
+  else if (b.carga && b.mano) campo = `<div class="dos-pasos">${paso("valor", PREGUNTA.repeticiones, v?.valor, "repeticiones")}${b.total ? paso("kg", "Kilos", v?.kg, "kg") : paso("kg", "Kilos por mano", v?.kg, "kg por mano")}</div>`;
   else if (b.carga) campo = `<div class="dos-pasos">${paso("valor", PREGUNTA.repeticiones, v?.valor, "repeticiones")}${paso("lastre", "Lastre en kilos", v?.lastre, "kg de lastre")}</div>${K.diario.perfil.peso ? "" : paso("peso", "Tu peso en kilos", v?.peso, "kg tu peso")}`;
   else if (b.tipo === "porcentaje") campo = `<div class="dos-pasos">${paso("lastre", "Lastre en kilos", v?.lastre, "kg de lastre")}${K.diario.perfil.peso ? "" : paso("peso", "Tu peso en kilos", v?.peso, "kg tu peso")}</div>`;
   else campo = paso("valor", PREGUNTA[b.tipo], v, UNI[b.tipo]);

@@ -407,7 +407,7 @@ prueba("respaldo-ida-y-vuelta", () => {
 /* ===== Rutinas y hazañas (etapa 5) ===== */
 const EJM = () => Object.fromEntries(EJ.ejercicios.map(e => [e.id, e]));
 const ESTRELLAS = new Set(CAT.constelaciones.flatMap(c => c.estrellas.map(e => e.id)));
-const EQUIPOS = ["barra", "paralelas", "pared", "poste", "lastre", "bici", "soga", "mancuernas", "kettlebell", "pesa"];
+const EQUIPOS = ["barra", "paralelas", "anillas", "pared", "poste", "lastre", "bici", "remadora", "soga", "mancuernas", "kettlebell", "discos", "banco", "maquinas", "pesa"];
 const CLASES = ["entrada", "fuerte", "suave", "pausa", "trabajo", "postura", "vuelta"];
 const alts = x => [].concat(x || []);
 function revisarTramos(ts, ej, donde){
@@ -595,7 +595,7 @@ prueba("respaldo-rutinas", () => {
 const ESTRELLA = new Map(CAT.constelaciones.flatMap(c => c.estrellas.map(e => [e.id, e])));
 prueba("catalogo-escaleras", () => {
   const ej = EJM(), ids = new Set(), fams = new Set(CAT.familias.map(f => f.id));
-  ok(ESC.escaleras.length >= 8 && ESC.escaleras.length <= 10, `esperaba de 8 a 10 escaleras, hay ${ESC.escaleras.length}`);
+  ok(ESC.escaleras.length >= 8 && ESC.escaleras.length <= 12, `esperaba de 8 a 12 escaleras, hay ${ESC.escaleras.length}`);
   /* qué mide cada ejercicio según las estrellas */
   const mide = new Map(CAT.constelaciones.flatMap(c => c.estrellas.map(e => [e.prueba.ejercicio, e.prueba.tipo])));
   for (const e of ESC.escaleras){
@@ -606,11 +606,15 @@ prueba("catalogo-escaleras", () => {
     ok(new Set(todos).size === todos.length, `${e.id}: un ejercicio repetido`);
     ok(["tirar", "empujar", "piernas", "bisagra", "abdomen", "movilidad"].includes(e.patron), `${e.id}: sin patrón`);
     for (const p of e.pasos){
-      /* las variantes del escalón: existen, y los kilos (de mancuernas) arrancan abajo del techo y suben de a algo */
+      /* las variantes del escalón: existen, y los kilos (de mancuernas, kettlebell, barra y discos o máquina) arrancan abajo del techo
+         y suben de a algo; «total» (los kilos de todo lo que levantás) es de lo que se levanta con una sola cosa; «manda», de barra o máquina */
       for (const id of rutina.idsPaso(p)) ok(ej[id], `${e.id}: la variante ${id} no existe`);
-      for (const q of [p, p.conPeso].filter(x => x && x.carga !== undefined)){
+      for (const q of [p, ...[].concat(p.conPeso || [])].filter(x => x && x.carga !== undefined)){
         ok(q.carga > 0 && q.kgInicial > 0 && q.hastaKg > q.kgInicial && Number.isInteger((q.hastaKg - q.kgInicial) / q.carga), `${e.id}: kilos de ${q.ejercicio}: ${[q.carga, q.kgInicial, q.hastaKg]}`);
-        ok(["pesa", "mancuernas"].some(x => (ej[q.ejercicio].equipo || []).includes(x)), `${e.id}: ${q.ejercicio} lleva kilos y no pide pesas`); }
+        const eq = ej[q.ejercicio].equipo || [];
+        ok(["pesa", "mancuernas", "kettlebell", "discos", "maquinas"].some(x => eq.includes(x)), `${e.id}: ${q.ejercicio} lleva kilos y no pide pesas`);
+        ok(!q.total || ["kettlebell", "discos", "maquinas", "pesa"].some(x => eq.includes(x)), `${e.id}: ${q.ejercicio} con kilos en total y dos mancuernas`);
+        ok(!q.manda || ["discos", "maquinas"].some(x => eq.includes(x)), `${e.id}: ${q.ejercicio} manda sin barra ni máquina`); }
       ok(ej[p.ejercicio], `${e.id}: el ejercicio ${p.ejercicio} no existe`);
       ok(["repeticiones", "segundos"].includes(p.tipo), `${e.id}: ${p.ejercicio} con tipo ${p.tipo}`);
       ok(!mide.has(p.ejercicio) || mide.get(p.ejercicio) === p.tipo, `${e.id}: ${p.ejercicio} se mide como ${mide.get(p.ejercicio)} en el cielo y como ${p.tipo} en la escalera`);
@@ -799,7 +803,7 @@ let ICX = null;
 const icx = () => ICX || (ICX = (() => {
   const fx = {K: {reduce: () => true, esc: s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c])),
     CATALOGO: CAT, HAZANAS, ESCALERAS: ESC, RUTINAS: RUTINAS.map(([, r]) => r)}, document: {}}; vm.createContext(fx);
-  for (const f of ["piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/vistas.js", "poses/pruebas.js", "piezas/iconos.js"])
+  for (const f of ["piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/gimnasio.js", "poses/vistas.js", "poses/pruebas.js", "piezas/iconos.js"])
     vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", f), "utf8"), fx);
   return fx.K;
 })());
@@ -1418,7 +1422,8 @@ prueba("pesas-primero", () => {
   for (const id of ["remo-mancuerna", "sentadilla-bulgara", "peso-muerto-una-pierna", "sentadilla-mancuernas", "peso-muerto-rumano"]) ok(ej[id].equipo.join() === "pesa", id + " no es de una pesa");
   /* solo con una kettlebell: la sentadilla y el peso muerto llevan la pesa y sus kilos */
   const kb = conP(["kettlebell"]);
-  ok(paso("piernas", kb).ejercicio === "sentadilla-mancuernas" && paso("piernas", kb).kgInicial === 4 && paso("isquios", kb).ejercicio === "peso-muerto-rumano", "con una kettlebell, sin pesa en piernas o isquios");
+  ok(paso("piernas", kb).ejercicio === "sentadilla-copa" && paso("piernas", kb).kgInicial === 8 && paso("isquios", kb).ejercicio === "peso-muerto-rumano", "con una kettlebell, sin pesa en piernas o isquios");
+  ok(paso("piernas", conP(["mancuernas"])).ejercicio === "sentadilla-mancuernas" && paso("piernas", conP(["mancuernas"])).kgInicial === 4, "con mancuernas, la sentadilla con pesa");
   /* pesas primero: con una pesa, el remo arranca en el remo a un brazo con pesa aunque tu nivel diga el poste; sin pesa, en el poste */
   for (const eq of [kb, conP(["mancuernas"]), conP(["mancuernas", "barra"])]) ok(paso("remo", eq).ejercicio === "remo-mancuerna" && paso("remo", eq, "remo-poste").ejercicio === "remo-mancuerna" && paso("remo", eq).kgInicial === 6, "con pesa, el remo no arranca con kilos: " + JSON.stringify(eq));
   ok(paso("remo", []).ejercicio === "remo-poste" && paso("remo", ["barra"]).ejercicio === "remo-poste" && paso("remo", null).ejercicio === "remo-poste", "sin pesa, el remo no arranca en el poste");
@@ -1429,6 +1434,38 @@ prueba("pesas-primero", () => {
   /* el día del motor: con una kettlebell, sin barra, el remo y las piernas van con la pesa */
   const d = armarDia(["front-lever", "una-pierna"], {equipo: kb}), ejs = d.bloques.flatMap(b => b.pasos || []).map(x => x.ejercicio);
   ok(ejs.includes("remo-mancuerna") && !ejs.includes("remo-poste"), "el día con una kettlebell: " + [...new Set(ejs)]);
+});
+prueba("gimnasio-kilos", () => {
+  /* con barra y discos o con máquinas, la versión con kilos es la escalera: arrancás ahí, tu nivel pone los kilos (vuelta 37) */
+  const ej = EJM(), gym = ["discos", "banco", "maquinas"], paso = (id, equipo, o = {}) => rutina.escalonDe(id, {ej, equipo: rutina.conPesa(equipo), ...o});
+  const sb = paso("piernas", gym);
+  ok(sb.paso.ejercicio === "sentadilla-barra" && sb.paso.total && sb.kg === 20, "sentadilla con barra: " + JSON.stringify([sb.paso.ejercicio, sb.kg]));
+  ok(paso("piernas", gym, {desde: "pistol"}).paso.ejercicio === "sentadilla-barra" && paso("piernas", gym, {desde: "pistol"}).kg === 70, "experto con barra: arranca con más kilos, no en la pistol");
+  ok(paso("piernas", ["maquinas"]).paso.ejercicio === "prensa" && paso("empujar", gym).paso.ejercicio === "press-banca" && paso("empujar", ["maquinas"]).paso.ejercicio === "press-pecho-maquina", "máquinas y banca");
+  ok(paso("empujar", ["discos"]).paso.ejercicio === "flexion-inclinada" && paso("arriba", ["discos"]).paso.ejercicio === "press-militar", "sin banco no hay press de banca; el press de hombros sí");
+  ok(paso("tirar", ["maquinas"]).paso.ejercicio === "jalon-pecho" && paso("tirar", ["barra", "maquinas"], {desde: "dominada"}).paso.ejercicio === "dominada", "el jalón es para llegar a la dominada, no la reemplaza");
+  ok(paso("arriba", ["kettlebell"]).paso.ejercicio === "press-kettlebell" && paso("arriba", ["mancuernas"]).paso.ejercicio === "press-hombros" && paso("arriba", []).paso.ejercicio === "flexion-pike", "empujar arriba");
+  ok(paso("remo", ["anillas"]).paso.ejercicio === "remo-anillas" && paso("fondos", ["anillas"], {desde: "fondo"}).paso.ejercicio === "fondo-anillas", "anillas");
+  /* la habilidad va con tu cuerpo, y cada cuenta por su lado: el press no baja la planche ni la planche te saca del press */
+  ok(paso("empujar", gym, {sinPeso: true}).paso.ejercicio === "flexion-inclinada", "sin peso, la flexión");
+  const press = ["1", "3"].map(d => deDia("p" + d, "2026-10-0" + d, "empujar", "press-banca", [8, 8, 8], {rango: [5, 8], kg: 40}));
+  const flex = ["5", "7"].map(d => deDia("f" + d, "2026-10-0" + d, "empujar", "flexion-arquera", [6, 6, 6], {rango: [3, 6]}));
+  ok(paso("empujar", gym, {sesiones: [...press, ...flex]}).paso.ejercicio === "press-banca" && paso("empujar", gym, {sesiones: [...press, ...flex]}).kg === 45, "la planche te sacó del press: " + JSON.stringify(paso("empujar", gym, {sesiones: [...press, ...flex]}).paso.ejercicio));
+  ok(paso("empujar", gym, {sinPeso: true, sesiones: [...flex, ...press]}).paso.ejercicio === "flexion-pseudo-planche", "el press bajó la planche");
+  /* el día: con gimnasio, la fuerza lleva kilos en total; el motor, la máquina de remo o la mancuerna */
+  const d = armarDia(["front-lever"], {equipo: rutina.conPesa(gym), minutos: 45}), xs = deMolde(d.bloques, "fuerza").flatMap(b => b.pasos);
+  ok(xs.some(x => x.ejercicio === "sentadilla-barra" || x.ejercicio === "peso-muerto-barra") && xs.filter(x => x.kg).every(x => x.total && x.mano), "el día de gimnasio: " + xs.map(x => x.ejercicio));
+  ok(molde.motor(["remadora"]).nombre === "Remo a intervalos" && molde.motor(["mancuernas"]).nombre === "Mancuerna a intervalos", "el motor con máquina de remo o mancuernas");
+});
+prueba("empujes-se-turnan", () => {
+  /* los tres empujes (flexiones, arriba y fondos) se turnan entre días: va el que más hace que no tocás */
+  const ss = [], usados = [];
+  for (const d of ["02", "04", "06", "08"]){
+    const p = armarDia(["front-lever"], {equipo: ["barra"], ss, hoy: "2026-10-" + d, minutos: 30});
+    const e = deMolde(p.bloques, "fuerza").flatMap(b => b.pasos).find(x => ["empujar", "arriba", "fondos"].includes(x.escalera));
+    if (e){ usados.push(e.escalera); ss.push(deDia("d" + d, "2026-10-" + d, e.escalera, e.ejercicio, [6, 6, 6])); }
+  }
+  ok(usados.length >= 3 && new Set(usados.slice(0, 3)).size === 3, "no se turnan: " + usados);
 });
 prueba("entrada-elige", () => {
   const ej = EJM(), b = (...ids) => ids.map(e => ({familia: "fu", pasos: [{ejercicio: e, tipo: "repeticiones", objetivo: 5}]}));
@@ -1477,7 +1514,9 @@ prueba("rutina-armar-bloques", () => {
     const ejV = Object.fromEntries(JSON.parse(ejM).ejercicios.map(e => [e.id, e]));
     const antes = ctx.K.ESCALERAS; ctx.K.ESCALERAS = JSON.parse(escM);
     try {
-      for (const [f, r] of RUTINAS) for (let i = 0; i < r.sesiones.length; i++) for (const equipo of equipos) for (const descarga of [false, true]) for (const sesiones of [[], hist]){
+      /* las escaleras que main no tiene (vuelta 37: empujar arriba) cambian su día a propósito: ese día no se compara */
+      const enMain = new Set(JSON.parse(escM).escaleras.map(e => e.id)), nueva = s => s.bloques.some(b => alts(b.escalera).some(e => !enMain.has(e)));
+      for (const [f, r] of RUTINAS) for (let i = 0; i < r.sesiones.length; i++) if (!nueva(r.sesiones[i])) for (const equipo of equipos) for (const descarga of [false, true]) for (const sesiones of [[], hist]){
         const o = {ej: ejV, equipo, sesiones, marcas: [], descarga};
         const n = rutina.deRutina(r, i, {...o, equipo: rutina.conPesa(equipo)}), v = cx.K.rutina.deRutina(r, i, cx.K.rutina.conPesa ? {...o, equipo: cx.K.rutina.conPesa(equipo)} : o);
         /* lo único que cambia a propósito: sin el equipo de su primera escalera, la misma escalera no va dos veces en un día; la segunda se saltea (vuelta 33) */
@@ -1559,7 +1598,7 @@ prueba("dia-equilibrio", () => {
   /* front lever tira: el primer par empuja, con piernas; el segundo tira, con bisagra */
   const p = armarDia(["front-lever"], {equipo: ["barra", "paralelas"]}), [f1, f2] = deMolde(p.bloques, "fuerza");
   ok(pats(f1).join() === "empujar,piernas" && pats(f2).join() === "tirar,bisagra", "el equilibrio con front lever: " + [pats(f1), pats(f2)]);
-  ok(f1.pasos[0].escalera === "fondos" && f2.pasos[0].escalera === "remo", "fuerza con fondos y remo, no lo de las habilidades: " + [f1.pasos[0].escalera, f2.pasos[0].escalera]);
+  ok(f1.pasos[0].escalera === "empujar" && f2.pasos[0].escalera === "remo", "fuerza con flexiones y remo, no lo de las habilidades: " + [f1.pasos[0].escalera, f2.pasos[0].escalera]);
   /* planche empuja: el primer par tira */
   const q = armarDia(["planche"], {equipo: ["barra"]});
   ok(pats(deMolde(q.bloques, "fuerza")[0])[0] === "tirar", "con planche, el primer par tira");
@@ -1580,11 +1619,13 @@ prueba("dia-equilibrio", () => {
 });
 prueba("dia-desde-tu-escalon", () => {
   /* tu nivel (PR3) dice dónde arrancás en cada escalera; lo que hiciste manda */
+  /* (las flexiones y los hombros, hechos hace poco, dejan a los fondos como el empuje que más hace que no tocás) */
   const fondo = p => deMolde(p.bloques, "fuerza").flatMap(b => b.pasos).find(x => x.escalera === "fondos")?.ejercicio;
-  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"]})) === "flexion-cerrada", "sin nivel, el primer escalón");
-  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], nivelDesde: {fondos: "fondo"}})) === "fondo", "con nivel, desde el fondo");
+  const otros = [deDia("e", "2026-10-12", "empujar", "flexion", [6, 6, 6]), deDia("a", "2026-10-12", "arriba", "flexion-pike", [6, 6, 6])];
+  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], ss: otros})) === "flexion-cerrada", "sin nivel, el primer escalón");
+  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], nivelDesde: {fondos: "fondo"}, ss: otros})) === "fondo", "con nivel, desde el fondo");
   const hist = deDia("h", "2026-10-10", "fondos", "fondo-banco", [8, 8, 8], {rango: [5, 8]});
-  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], nivelDesde: {fondos: "fondo"}, ss: [hist]})) === "fondo-banco", "lo hecho manda sobre el nivel");
+  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], nivelDesde: {fondos: "fondo"}, ss: [hist, ...otros]})) === "fondo-banco", "lo hecho manda sobre el nivel");
   /* el camino también arranca en tu escalón: muscle-up desde la dominada es la estrella, no el camino */
   const mu = armarDia(["muscle-up"], {equipo: ["barra"], nivelDesde: {tirar: "dominada"}}), h = deMolde(mu.bloques, "habilidad")[0];
   ok(!h.camino && h.estrella === "muscle-up.dominadas-10", "desde la dominada, la estrella: " + JSON.stringify([h.ejercicio, h.camino]));
@@ -1685,7 +1726,9 @@ prueba("dia-sesiones-viejas", () => {
   ok(molde.tocadas(vieja).has("front-lever"), "la sesión vieja no toca front lever");
   /* las series de una rutina mueven las escaleras del molde */
   const rut = {...deDia("r", "2026-10-15", "remo", "remo-invertido", [8, 8, 8], {rango: [5, 8]}), rutina: {id: "base_cali", sesion: 0}};
-  ok(deMolde(armarDia(["planche"], {ss: [rut], equipo: ["barra"]}).bloques, "fuerza").flatMap(b => b.pasos).some(x => x.ejercicio === "remo-invertido"), "el remo de la rutina no cuenta");
+  /* (la dominada, hecha después, deja al remo como el tirón que más hace que no tocás) */
+  const dom = deDia("t", "2026-10-16", "tirar", "dominada", [5, 5, 5], {rango: [5, 8]});
+  ok(deMolde(armarDia(["planche"], {ss: [rut, dom], equipo: ["barra"]}).bloques, "fuerza").flatMap(b => b.pasos).some(x => x.ejercicio === "remo-invertido"), "el remo de la rutina no cuenta");
 });
 prueba("respaldo-rumbo-sin-tope", () => {
   const ids = CAT.constelaciones.map(c => c.id), arch = r => JSON.stringify({app: "kozmos", formato: 2, mediciones: [], sesiones: [], perfil: {rumbo: r}});
@@ -1725,7 +1768,7 @@ prueba("nivel-desde", () => {
   const d = n => nivel.desde(n, TODO_EQ);
   ok(JSON.stringify(d({tirar: "0"})) === '{"tirar":"dominada-negativa","remo":"remo-poste"}', "tirar inicial: " + JSON.stringify(d({tirar: "0"})));
   ok(d({tirar: "1"}).tirar === "dominada" && d({tirar: "1"}).remo === "remo-invertido" && d({tirar: "2"}).tirar === "dominada-explosiva" && d({tirar: "3"}).tirar === "dominada-arquera" && d({tirar: "3"}).remo === "remo-un-brazo", "tirar");
-  ok(JSON.stringify(d({empujar: "0"})) === '{"empujar":"flexion-inclinada","fondos":"flexion-cerrada"}' && d({empujar: "1"}).fondos === "fondo-banco" && d({empujar: "2"}).empujar === "flexion-declinada" && d({empujar: "3"}).empujar === "flexion-arquera", "empujar");
+  ok(JSON.stringify(d({empujar: "0"})) === '{"empujar":"flexion-inclinada","fondos":"flexion-cerrada","arriba":"flexion-pike"}' && d({empujar: "1"}).fondos === "fondo-banco" && d({empujar: "2"}).empujar === "flexion-declinada" && d({empujar: "3"}).empujar === "flexion-arquera", "empujar");
   ok(d({piernas: "1"}).piernas === "sentadilla-bulgara" && d({piernas: "3"}).piernas === "pistol" && d({cadera: "2"}).isquios === "curl-femoral-deslizante" && d({cadera: "3"}).isquios === "nordico-negativa", "piernas y atrás de las piernas");
   ok(d({abdomen: "0"}).lsit === "plancha" && d({abdomen: "2"}).lsit === "l-sit" && d({abdomen: "3"}).lsit === "v-sit", "abdomen");
   /* un movimiento no mueve las escaleras de otro: empujar ya no decide el abdomen */
@@ -1993,14 +2036,14 @@ let fallas = 0;
    no tenés; nada repetido; la flexibilidad al final). El árbol entero: node kozmos/pruebas/arbol.mjs */
 const arbol = await import("./arbol.mjs");
 prueba("arbol-caminos", () => {
-  const K = arbol.cargar(), eqs = [[], ["pared"], ["barra", "paralelas"], ["mancuernas"], ["kettlebell", "soga"], ["bici"], arbol.CONOCE];
+  const K = arbol.cargar(), eqs = [[], ["pared"], ["barra", "paralelas"], ["mancuernas"], ["kettlebell", "soga"], ["bici"], ["discos", "banco", "maquinas"], ["maquinas"], ["anillas", "remadora"], arbol.TODO];
   const mal = [];
   for (const c of arbol.casos({eqs, niveles: ["mezclado", "experto"]})){ const m = arbol.revisar(K, c, arbol.dia(K, c)); if (m.length) mal.push(JSON.stringify(c) + " " + m); }
   ok(!mal.length, `${mal.length} caminos fallan: ${mal.slice(0, 3).join(" | ")}`);
 });
 prueba("arbol-formas", () => {
   /* cómo te gusta entrenar orienta la resistencia y la flexibilidad: con qué es el motor y su meta, y las posturas de yoga */
-  const K = arbol.cargar(), todo = arbol.CONOCE, nombres = p => p.bloques.filter(b => b.molde === "resistencia").map(b => b.nombre || b.ejercicio);
+  const K = arbol.cargar(), todo = arbol.TODO, nombres = p => p.bloques.filter(b => b.molde === "resistencia").map(b => b.nombre || b.ejercicio);
   const con = f => arbol.dia(K, {que: ["mo"], eq: todo, min: 40, formas: [f]});
   ok(nombres(con("correr")).includes("Trote y caminata"), "correr: " + nombres(con("correr")));
   ok(nombres(con("bici")).some(n => /bici/i.test(n)), "bici: " + nombres(con("bici")));

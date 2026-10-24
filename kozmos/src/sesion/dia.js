@@ -7,7 +7,7 @@
 K.dia = (() => {
   const HABILIDADES = 2, SERIES = 3, RANGO = [5, 8], ENTRE = 120, TOPE = 60;
   /* las escaleras de fuerza para cada patrón, en orden: la primera que tu equipo permite y que el día no usó */
-  const ESCALERAS = {tirar: ["remo", "tirar"], empujar: ["fondos", "empujar"], piernas: ["piernas"], bisagra: ["isquios"]};
+  const ESCALERAS = {tirar: ["remo", "tirar"], empujar: ["empujar", "arriba", "fondos"], piernas: ["piernas"], bisagra: ["isquios"]};
   const ABDOMEN = ["lsit", "dragon"];
   /* el cierre sin rango ni motor en tu rumbo: tres posturas de 40 s, según lo que entrenó el día */
   const POSTURA = {tirar: "postura-nino", empujar: "codos-atras", piernas: "sentadilla-profunda", bisagra: "isquios-sentado", abdomen: "respiracion-90-90"};
@@ -66,12 +66,14 @@ K.dia = (() => {
   const deEscalera = (familia, id, {series = SERIES, rango = RANGO, grupo, descanso, ctx}) => {
     const st = ctx.escalones[id], tipo = st?.paso.tipo || "repeticiones";
     return K.rutina.armarBloques(familia, [{escalera: id, series, rango, desde: ctx.desde?.[id], ...(grupo ? {grupo} : {}), descanso: descanso ?? (tipo === "segundos" ? 90 : 120)}],
-      {ej: ctx.ej, equipo: ctx.equipo, sesiones: ctx.sesiones, marcas: ctx.marcas, descarga: ctx.descarga})[0];
+      {ej: ctx.ej, equipo: ctx.equipo, sesiones: ctx.sesiones, marcas: ctx.marcas, descarga: ctx.descarga, sinPeso: ctx.sinPeso})[0];
   };
 
   /* la habilidad de una meta: la prueba si la ventana está abierta; el camino si estás abajo en la escalera que lleva a la
      estrella; si no, la estrella misma (los sostenes, del 50 al 80 % de tu mejor marca, hasta sumar unos 60 s) */
   function habilidad(c, ctx){
+    /* el camino a una estrella va con tu cuerpo aunque tengas kilos: sus escalones, sin la versión con peso */
+    ctx = {...ctx, escalones: ctx.escalonesSinPeso || ctx.escalones, sinPeso: true};
     if (ctx.abiertas.has(c.id)) return {...K.plan.prueba(c), molde: "habilidad", constelaciones: [c.id]};
     const cam = K.caminos.caminoDe(c.proxima, {escalones: ctx.escalones});
     if (cam.camino) return {...deEscalera(c.familia, cam.escalera, {ctx: {...ctx, descarga: ctx.descarga || ctx.volviste}}), molde: "habilidad", nombre: cam.nombre,
@@ -139,7 +141,7 @@ K.dia = (() => {
     return {entrada: ent, partes, alterna: van.length < F.length ? F.filter(f => !van.includes(f)) : []};
   }
 
-  /* motor a intervalos: con lo que tengas (kettlebell, bici, soga o nada) o lo que dijiste que te gusta (correr, bici, soga,
+  /* motor a intervalos: con lo que tengas (kettlebell, bici, máquina de remo, mancuernas, soga o nada) o lo que dijiste que te gusta (correr, bici, soga,
      pesas rusas); el que menos hiciste. Cada uno tiene sus escalones: cada tres veces, el que sigue (más trabajo, menos pausa) */
   const MOTORES = [
     {con: "kettlebell", nombre: "Kettlebell a intervalos", pasos: [
@@ -147,6 +149,10 @@ K.dia = (() => {
       {ej: "arranque-kettlebell", t: 15, p: 15, n: 16, nota: "Brazo alterno"}, {ej: "arranque-kettlebell", t: 20, p: 10, n: 20, nota: "Brazo alterno"}]},
     {con: "bici", nombre: "Bici a intervalos", fuerte: true, pasos: [
       {ej: "bici", t: 30, p: 90, n: 6}, {ej: "bici", t: 30, p: 60, n: 8}, {ej: "bici", t: 40, p: 40, n: 8}, {ej: "bici", t: 20, p: 10, n: 8}]},
+    {con: "remadora", nombre: "Remo a intervalos", fuerte: true, pasos: [
+      {ej: "remo-maquina", t: 30, p: 90, n: 6}, {ej: "remo-maquina", t: 40, p: 80, n: 6}, {ej: "remo-maquina", t: 60, p: 60, n: 8}, {ej: "remo-maquina", t: 90, p: 60, n: 6}]},
+    {con: "mancuernas", nombre: "Mancuerna a intervalos", pasos: [
+      {ej: "swing-mancuerna", t: 20, p: 40, n: 10}, {ej: "swing-mancuerna", t: 30, p: 30, n: 10}, {ej: "swing-mancuerna", t: 40, p: 20, n: 10}]},
     {con: "soga", nombre: "Soga a intervalos", pasos: [{ej: "soga", t: 30, p: 30, n: 8}, {ej: "soga", t: 40, p: 20, n: 10}, {ej: "soga", t: 60, p: 30, n: 10}]},
     /* trotar y caminar: no pide equipo, va si correr es lo tuyo */
     {con: "trote", gusto: true, nombre: "Trote y caminata", fuerte: true, nota: ["Trotá", "Caminá"], pasos: [
@@ -156,7 +162,7 @@ K.dia = (() => {
   ];
   /* lo que cada forma de entrenar pide del motor, en orden de gusto */
   const META_CON = {"diez-km": "trote", motor: "bici", soga: "soga"};
-  const GUSTO = {correr: ["trote"], bici: ["bici"], soga: ["soga"], rusas: ["kettlebell"], funcional: ["soga", "kettlebell", null], sinnada: [null], calistenia: [null]};
+  const GUSTO = {correr: ["trote"], bici: ["bici"], remo: ["remadora"], soga: ["soga"], rusas: ["kettlebell"], funcional: ["soga", "kettlebell", null], sinnada: [null], calistenia: [null]};
   const vecesMotor = (nombre, sesiones) => sesiones.filter(s => (s.bloques || []).some(b => (b.molde === "motor" || b.molde === "resistencia") && b.nombre === nombre)).length;
   /* motor(equipo, sesiones, volviste, extra, {formas, seg}): con seg, las vueltas que entran en esos segundos (de 3 al doble) */
   function motor(equipo, sesiones = [], volviste = false, extra = 0, {formas = [], seg = null} = {}){
@@ -220,7 +226,8 @@ K.dia = (() => {
     const volviste = volvisteDe(sesiones, hoy);
     const abiertas = new Set(volviste ? [] : vivas.filter(abre).map(c => c.id));
     const escalones = K.rutina.escalonesTodos({ej, equipo, sesiones, marcas, desde: nivelDesde});
-    const ctx = {ej, equipo, sesiones, marcas, escalones, desde: nivelDesde, descarga, volviste, abiertas};
+    const escalonesSinPeso = K.rutina.escalonesTodos({ej, equipo, sesiones, marcas, desde: nivelDesde, sinPeso: true});
+    const ctx = {ej, equipo, sesiones, marcas, escalones, escalonesSinPeso, desde: nivelDesde, descarga, volviste, abiertas};
     const usadosEj = new Set(), usadasEsc = new Set(), usar = b => { ejerciciosDe(b).forEach(e => usadosEj.add(e)); escaleraDe(b).forEach(e => usadasEsc.add(e)); };
     const choca = b => ejerciciosDe(b).some(e => usadosEj.has(e)) || escaleraDe(b).some(e => usadasEsc.has(e));
     const M = Number.isFinite(minutos) && minutos > 0 ? minutos : TOPE, corta = M <= 15;
@@ -261,7 +268,11 @@ K.dia = (() => {
       for (const s of sesiones) if (d(hoy) - d(s.fecha) < 7 && d(hoy) >= d(s.fecha)) for (const b of s.bloques || []) for (const x of b.series || [])
         for (const p of K.caminos.patronDe(x.ejercicio, ej)) if (p in semana) semana[p]++;
       const cubre = new Set(hab.flatMap(b => patronesDe(b, ej)));
-      const elegir = pat => (ESCALERAS[pat] || []).find(id => !usadasEsc.has(id) && sePuedeEscalera(id, ej, equipo) && escalones[id] && !usadosEj.has(escalones[id].paso.ejercicio)) || null;
+      /* de las escaleras de un movimiento, la que hace más que no tocás (empatadas, en su orden): así se turnan el pecho, los hombros
+         y los fondos, y el remo con la dominada */
+      const ultima = id => { let f = ""; for (const s of sesiones) if (s.fecha > f && (s.bloques || []).some(b => (b.series || []).some(x => x.escalera === id))) f = s.fecha; return f; };
+      const elegir = pat => (ESCALERAS[pat] || []).filter(id => !usadasEsc.has(id) && sePuedeEscalera(id, ej, equipo) && escalones[id] && !usadosEj.has(escalones[id].paso.ejercicio))
+        .map((id, i) => [id, ultima(id), i]).sort((a, b) => a[1].localeCompare(b[1]) || a[2] - b[2])[0]?.[0] || null;
       /* el de arriba que más falta: menos series hoy, después menos esta semana; empatados, el que todavía tiene escalera libre */
       const falta = () => ["tirar", "empujar"].sort((a, b) => sets[a] - sets[b] || semana[a] - semana[b] || !elegir(a) - !elegir(b))[0];
       const lugares = [];
