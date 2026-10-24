@@ -1388,7 +1388,7 @@ prueba("escalera-con-peso", () => {
   ok(rutina.defEscalera(rutina.escalera("remo"), ej, []).pasos.map(p => p.ejercicio).join() === "remo-poste,remo-toalla-puerta,remo-mesa", "el remo sin equipo");
 });
 prueba("dia-a-tu-tiempo", () => {
-  /* tus minutos (vuelta 36): el día entra en lo que elegiste; sin elegir, como siempre (hasta la hora) */
+  /* tus minutos (vuelta 35): el día entra en lo que elegiste; sin elegir, como siempre (hasta la hora) */
   const eq = rutina.conPesa(["barra", "paralelas", "mancuernas", "kettlebell", "bici"]), rumbo = ["front-lever", "una-pierna", "planche"];
   const dia = m => armarDia(rumbo, {equipo: eq, minutos: m}), partes = d => d.bloques.map(b => b.molde);
   ok(JSON.stringify(dia(null)) === JSON.stringify(armarDia(rumbo, {equipo: eq})), "sin elegir cambió el día");

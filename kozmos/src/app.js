@@ -221,7 +221,9 @@ K.fig.fijar(K.prefs.get("persona", {}));
 K.sesion.alCambiar = () => K.refrescar(); /* otra pestaña tocó la sesión */
 K.diario.abrir().then(async () => {
   const r = await K.sesion.restaurar();
-  K.mostrar(); K.mov.arranque();
+  K.mostrar();
+  /* la primera vez, la bienvenida (trae su propio arranque del logo); si no, el de siempre */
+  if (K.bienvenida.toca()) K.bienvenida.abrir(); else K.mov.arranque();
   if (r === "guardada") K.aviso("La sesión que quedó abierta se guardó como cortada.");
 });
 

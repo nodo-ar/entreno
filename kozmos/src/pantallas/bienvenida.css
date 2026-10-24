@@ -1,0 +1,182 @@
+/* ===== Bienvenida: la primera vez (bienvenida.js). Una capa arriba de todo, con sus pasos girando como las pestañas ===== */
+#bv{position:fixed; inset:0; z-index:9000; background:var(--bg); color:var(--ink); overflow:hidden; user-select:none; -webkit-user-select:none}
+body.en-bienvenida{overflow:hidden}
+#bv .b-tel{position:absolute; inset:0; margin:0 auto; max-width:430px; overflow:hidden}
+#bv .b-pan{position:absolute; inset:0; padding:calc(env(safe-area-inset-top,0px) + 58px) max(20px, env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 132px) max(20px, env(safe-area-inset-left,0px)); overflow-y:auto; overscroll-behavior:contain}
+#bv .lb{font:700 var(--t-xs)/1 var(--f-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2)}
+#bv h1{font-size:var(--t-4xl); line-height:1.04}
+#bv h2{font-size:var(--t-2xl)}
+#bv p{margin:0}
+#bv .mute{color:var(--ink-2)}
+#bv .small{font-size:var(--t-sm); font-weight:700}
+#bv .b-cab{display:grid; gap:8px}
+#bv .b-cab p{font-size:var(--t-lg); line-height:1.35}
+#bv .b-pie{position:fixed; left:0; right:0; bottom:0; max-width:430px; margin:0 auto; padding:16px max(20px, env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) max(20px, env(safe-area-inset-left,0px)); display:grid; gap:6px; background:linear-gradient(to bottom, transparent, var(--bg) 22px)}
+#bv .b-pie .btn{width:100%}
+#bv .btn[disabled]{opacity:.3}
+#bv .btn.b-lnk{background:none; border:0; color:var(--ink-2); height:40px; box-shadow:none}
+
+/* volver, arriba a la izquierda */
+#bv .b-arriba{position:absolute; z-index:6; top:calc(env(safe-area-inset-top,0px) + 10px); left:0; right:0; margin:0 auto; max-width:430px; padding:0 max(12px, env(safe-area-inset-left,0px)); display:flex; pointer-events:none}
+#bv .b-ib{pointer-events:auto; width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--s1); color:var(--ink); display:grid; place-items:center; cursor:pointer; transition:opacity .25s}
+#bv .b-ib svg{width:18px; height:18px}
+#bv .b-ib.oculto{opacity:0; pointer-events:none}
+
+/* los tres pasos: tres puntos en una órbita, el de ahora con su anillo */
+#bv .b-pasos{display:flex; align-items:center; height:16px}
+#bv .b-pasos i{width:8px; height:8px; border-radius:50%; background:var(--off); display:block; position:relative; transition:background .3s}
+#bv .b-pasos i + i{margin-left:22px}
+#bv .b-pasos i + i::before{content:""; position:absolute; right:10px; top:3.25px; width:18px; height:1.5px; background:var(--off)}
+#bv .b-pasos i.si{background:var(--ink)}
+#bv .b-pasos i.ya + i::before{background:var(--ink)}
+#bv .b-pasos i.ahora::after{content:""; position:absolute; inset:-5px; border-radius:50%; border:1.5px solid var(--ink)}
+
+/* 0 · arranque */
+#bv .b-arr{display:grid; place-items:center; align-content:center; gap:22px; text-align:center; padding-top:0; padding-bottom:0}
+#bv .b-marca-w{display:grid; gap:8px}
+#bv .b-marca{font-size:44px; font-weight:800; font-stretch:125%; letter-spacing:-.03em; line-height:1}
+#bv .b-lema{font-style:italic; color:var(--ink-2); font-size:var(--t-lg)}
+
+/* el disco con la persona adentro y su anillo alrededor */
+#bv .b-cv{position:relative; width:var(--d,96px); height:var(--d,96px); flex:none}
+#bv .b-cv > svg.b-anillo{position:absolute; inset:0; width:100%; height:100%; overflow:visible}
+#bv .b-cv .b-dentro{position:absolute; inset:var(--in,13%); border-radius:50%; overflow:hidden; background:var(--c-soft); display:grid; place-items:center; transition:background .35s}
+#bv .b-cv .b-dentro svg.fig{width:118%; height:auto; margin-top:6%}
+#bv .b-cv.b-grande{--d:250px; justify-self:center}
+
+/* 1 · qué querés entrenar */
+#bv .b-ops{display:grid; gap:12px; margin-top:24px}
+#bv .b-op{display:grid; grid-template-columns:96px 1fr; align-items:center; gap:16px; text-align:left; background:var(--s1); border:1px solid var(--line); border-radius:28px; padding:12px 16px 12px 12px; color:var(--ink); cursor:pointer; font:inherit; transition:border-color .25s, transform .12s}
+#bv .b-op:active, #bv .b-eq:active, #bv .b-fg:active{transform:scale(.98)}
+#bv .b-op.on, #bv .b-eq.on, #bv .b-fg.on, #bv .b-alc button.on{border-color:var(--ink); box-shadow:inset 0 0 0 1px var(--ink)}
+#bv .b-op b{font-size:var(--t-2xl); font-weight:700; line-height:1.1; letter-spacing:-.01em; display:block}
+#bv .b-op span{color:var(--ink-2); font-size:var(--t-md); line-height:1.3; display:block; margin-top:4px}
+#bv .b-op .b-cv{--in:9%}
+#bv .b-op .b-dentro, #bv .b-fg .b-dentro{background:var(--s2)}
+#bv .b-op.on .b-dentro, #bv .b-fg.on .b-dentro{background:var(--c-disco)}
+#bv .b-op .b-dentro svg.fig, #bv .b-fg .b-dentro svg.fig{opacity:.55; transition:opacity .3s}
+#bv .b-op.on .b-dentro svg.fig, #bv .b-fg.on .b-dentro svg.fig{opacity:1}
+
+/* 2 · qué tenés */
+#bv .b-eqs{display:grid; gap:10px; margin-top:18px; min-width:0}
+#bv .b-eqg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; min-width:0}
+#bv .b-eq{position:relative; display:grid; grid-template-columns:56px 1fr 28px; align-items:center; gap:14px; min-width:0; text-align:left; background:var(--s1); border:1px solid var(--line); border-radius:24px; padding:14px 16px 14px 14px; color:var(--ink); cursor:pointer; font:inherit; transition:border-color .25s, transform .12s}
+#bv .b-eq .tile{width:56px; height:56px; border-radius:18px; background:var(--s2); display:grid; place-items:center; transition:background .25s, color .25s}
+#bv .b-eq.on .tile{background:var(--solid); color:var(--on-solid)}
+#bv .b-eq .tile svg{width:26px; height:26px}
+#bv .b-eq b{font-size:var(--t-xl); font-weight:700; line-height:1.15; display:block}
+#bv .b-eq span{color:var(--ink-2); font-size:var(--t-md); display:block; margin-top:3px}
+#bv .b-eq .b-mk{width:28px; height:28px}
+#bv .b-eqg .b-eq{grid-template-columns:40px 1fr; padding:10px 12px 10px 10px; gap:10px; border-radius:18px}
+#bv .b-eqg .b-eq .tile{width:40px; height:40px; border-radius:13px}
+#bv .b-eqg .b-eq .tile svg{width:20px; height:20px}
+#bv .b-eqg .b-eq b{font-size:var(--t-md); padding-right:12px}
+#bv .b-eqg .b-eq .b-mk{position:absolute; top:8px; right:8px; width:16px; height:16px}
+
+/* 2b · cuánto tiempo: un reloj de una hora que se gira con el dedo */
+#bv .b-dial{position:relative; width:270px; height:270px; margin:26px auto 0; touch-action:none; cursor:grab; border-radius:50%}
+#bv .b-dial svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible}
+#bv .b-cen{position:absolute; inset:0; display:grid; place-items:center; align-content:center; gap:2px; pointer-events:none}
+#bv .b-dial .b-cen b{font-size:84px; font-weight:700; line-height:1; letter-spacing:-.04em}
+#bv .b-cen span{font:700 var(--t-sm)/1 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2)}
+#bv .b-dias{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px; margin:26px auto 0; max-width:320px; background:var(--s1); border:1px solid var(--line); border-radius:24px; padding:10px 12px}
+#bv .b-tx{text-align:center}
+#bv .b-tx b{font-size:var(--t-2xl); font-weight:700; display:block; line-height:1}
+#bv .b-tx span{font-size:var(--t-sm); font-weight:700; color:var(--ink-2)}
+#bv .b-mm{width:52px; height:52px; border-radius:50%; border:1px solid var(--line); background:var(--s2); display:grid; place-items:center; font:700 26px/1 var(--f-ui); color:var(--ink); cursor:pointer}
+#bv .b-mm:active{transform:scale(.94)}
+#bv .b-mm[disabled]{opacity:.3}
+
+/* 3 · tu nivel */
+#bv .b-modo{grid-template-columns:56px 1fr auto}
+#bv .b-rec{font:700 var(--t-2xs)/1 var(--f-mono); font-style:normal; letter-spacing:.08em; text-transform:uppercase; background:var(--solid); color:var(--on-solid); padding:6px 8px; border-radius:10px; align-self:start}
+#bv .b-nota{max-width:34ch; margin-top:14px}
+#bv .b-q{font-size:var(--t-3xl)}
+#bv .b-figs{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; margin-top:16px}
+#bv .b-fg{--d:118px; display:grid; justify-items:center; gap:6px; min-width:0; background:var(--s1); border:1px solid var(--line); border-radius:24px; padding:12px 8px; color:var(--ink); cursor:pointer; font:inherit; text-align:center; transition:border-color .25s, transform .12s}
+#bv .b-fg .b-dentro{inset:6%}
+#bv .b-fg b{font-size:var(--t-sm); font-weight:700; line-height:1.2; min-height:2.4em; display:grid; align-items:center}
+#bv .b-nv{font:700 var(--t-2xs)/1 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2)}
+#bv .b-sats{display:inline-flex; gap:3px; align-items:center; vertical-align:middle}
+#bv .b-sats i{width:6px; height:6px; border-radius:50%; background:var(--off); display:block}
+#bv .b-sats i.si{background:var(--fu)}
+#bv .b-lista{margin-top:16px; background:var(--s1); border:1px solid var(--line); border-radius:24px; padding:4px 16px}
+#bv .b-fila{display:grid; grid-template-columns:44px 1fr auto; align-items:center; gap:12px; padding:11px 0; border-top:1px solid var(--line)}
+#bv .b-fila:first-child{border-top:0}
+#bv .b-fila em{display:flex; gap:6px; align-items:center; font:700 var(--t-sm)/1 var(--f-mono); font-style:normal; color:var(--ink-2)}
+#bv .b-prend{display:grid; gap:10px; margin-top:18px; justify-items:center; text-align:center}
+#bv .b-consf{display:flex; justify-content:center; flex-wrap:wrap; gap:14px}
+#bv .b-cons{display:grid; justify-items:center; gap:4px; max-width:150px}
+#bv .b-cons small{color:var(--ink-2); font-size:var(--t-sm); font-weight:700; line-height:1.25}
+
+/* la prueba y su resultado */
+#bv .b-niv, #bv .b-pru, #bv .b-res{display:grid; justify-items:center; align-content:start; gap:12px; text-align:center}
+#bv .b-niv .b-cab, #bv .b-pru .b-cab{justify-items:center}
+#bv .b-hz{display:grid; gap:4px}
+#bv .b-hz b{font-size:var(--t-xl)}
+#bv .b-hz p{max-width:32ch}
+#bv .b-pru .b-cv.b-grande{--d:240px}
+#bv .b-marcador{font-size:84px; font-weight:700; line-height:1; letter-spacing:-.04em; min-width:2ch}
+#bv .b-cuenta{display:flex; align-items:center; justify-content:center; gap:22px}
+#bv .b-cuenta .b-mm{width:64px; height:64px; font-size:30px}
+#bv .b-alc{display:grid; gap:8px; width:100%}
+#bv .b-alc button{display:flex; justify-content:space-between; align-items:center; gap:12px; background:var(--s1); border:1px solid var(--line); border-radius:18px; padding:13px 16px; font:600 var(--t-md)/1.2 var(--f-ui); color:var(--ink); cursor:pointer; text-align:left}
+#bv .b-alc button.on{font-weight:700}
+#bv .b-alc em{font:700 var(--t-xs)/1 var(--f-mono); font-style:normal; color:var(--ink-2)}
+#bv .b-astro{position:relative; width:200px; height:200px; display:grid; place-items:center; margin-top:4px}
+#bv .b-mag{position:relative; font-size:120px; font-weight:800; line-height:1; letter-spacing:-.05em; color:var(--c)}
+#bv .b-brillo{position:absolute; inset:-20px; border-radius:50%; background:radial-gradient(circle, color-mix(in srgb, var(--c) 28%, transparent), transparent 66%)}
+#bv .b-txt{display:grid; gap:8px}
+#bv .b-txt p{font-size:var(--t-lg)}
+#bv .b-esc{width:100%; text-align:left}
+#bv .b-chispa{position:absolute; width:6px; height:6px; margin:-3px 0 0 -3px; border-radius:50%; background:var(--c); pointer-events:none}
+#bv .b-onda{position:absolute; border-radius:50%; border:2px solid var(--c); pointer-events:none}
+#bv .b-iris{position:absolute; border-radius:50%; pointer-events:none; z-index:4}
+
+/* 4 · tu primer día */
+#bv .b-dia{display:grid; align-content:start; gap:18px}
+#bv .b-diatop{display:grid; grid-template-columns:auto 1fr; align-items:center; gap:18px}
+#bv .b-reloj{position:relative; width:176px; height:176px}
+#bv .b-reloj svg{width:100%; height:100%; overflow:visible}
+#bv .b-reloj .b-cen b{font-size:56px; font-weight:700; line-height:1; letter-spacing:-.04em}
+#bv .b-reloj .b-cen span{font-size:var(--t-xs)}
+#bv .b-partes{display:grid; gap:9px; min-width:0}
+#bv .b-pt{display:grid; grid-template-columns:10px 1fr auto; align-items:center; gap:8px; font-size:var(--t-sm); font-weight:700}
+#bv .b-pt i{width:10px; height:10px; border-radius:50%}
+#bv .b-pt em{font-size:var(--t-sm); font-style:normal; color:var(--ink-2)}
+#bv .b-sec{display:grid; gap:10px}
+#bv .b-semana{display:grid; grid-template-columns:repeat(7,1fr); gap:6px}
+#bv .b-sd{aspect-ratio:1; max-width:44px; justify-self:center; width:100%; border-radius:50%; display:grid; place-items:center; background:var(--s1); border:1px solid var(--line); color:var(--ink-3); font:700 var(--t-sm)/1 var(--f-mono)}
+#bv .b-sd i{font-style:normal}
+#bv .b-sd.si{background:var(--solid); color:var(--on-solid); border-color:var(--solid)}
+#bv .b-sd.hoy{box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--fu)}
+#bv .b-rumbo{display:flex; gap:10px; flex-wrap:wrap}
+#bv .b-ruc{display:flex; align-items:center; gap:8px; background:var(--s1); border:1px solid var(--line); border-radius:999px; padding:4px 14px 4px 4px; font-weight:700; font-size:var(--t-sm)}
+#bv .b-verej{justify-self:start; padding:0; height:auto; text-decoration:underline; text-underline-offset:3px}
+
+/* horizontal (844 × 390): como Ajustes, la pregunta a la izquierda y lo que se elige a la derecha; los botones, abajo a la izquierda */
+@media (orientation: landscape) and (max-height: 520px){
+  #bv .b-tel, #bv .b-arriba{max-width:none}
+  #bv .b-pan{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); column-gap:32px; align-content:start; padding-top:calc(env(safe-area-inset-top,0px) + 58px); padding-bottom:24px; padding-left:max(24px, env(safe-area-inset-left,0px)); padding-right:max(24px, env(safe-area-inset-right,0px))}
+  #bv .b-pan > *{grid-column:2}
+  #bv .b-pan > .b-cab{grid-column:1; grid-row:1 / span 12; align-self:start; position:sticky; top:0}
+  #bv .b-pan > .b-pie{grid-column:1; position:fixed; left:0; right:auto; width:calc((100vw - 48px - 32px) * .45 + 24px); max-width:none; padding-left:max(24px, env(safe-area-inset-left,0px)); padding-right:0; background:none}
+  #bv .b-arr{display:grid; grid-template-columns:none}
+  #bv .b-arr > *{grid-column:auto}
+  #bv h1{font-size:var(--t-3xl)}
+  #bv .b-ops, #bv .b-eqs, #bv .b-figs, #bv .b-lista{margin-top:0}
+  #bv .b-op{grid-template-columns:72px 1fr; padding:8px 14px 8px 8px}
+  #bv .b-op .b-cv{--d:72px}
+  #bv .b-figs{grid-template-columns:repeat(4, minmax(0,1fr))}
+  #bv .b-fg{--d:88px}
+  #bv .b-dial{width:220px; height:220px; margin:0 auto}
+  #bv .b-dial .b-cen b{font-size:64px}
+  #bv .b-dias{margin-top:14px}
+  #bv .b-cv.b-grande, #bv .b-pru .b-cv.b-grande{--d:200px}
+  #bv .b-niv, #bv .b-pru, #bv .b-res{text-align:left; justify-items:stretch}
+  #bv .b-niv .b-cab, #bv .b-pru .b-cab{justify-items:start}
+  #bv .b-res > .b-astro{grid-column:1; grid-row:1; width:160px; height:160px; justify-self:center}
+  #bv .b-res > .b-txt{grid-column:2; grid-row:1}
+  #bv .b-mag{font-size:96px}
+  #bv .b-reloj{width:150px; height:150px}
+}

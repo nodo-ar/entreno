@@ -43,8 +43,10 @@ const b = await chromium.launch();
 const PRUEBAS = [];
 const prueba = (nombre, fn) => PRUEBAS.push([nombre, fn]);
 const ok = (c, m) => { if (!c) throw new Error(m); };
-async function pagina(vp = {width: 390, height: 844}, extra = {}){
+async function pagina(vp = {width: 390, height: 844}, {bienvenida = false, ...extra} = {}){
   const ctx = await b.newContext({viewport: vp, ...extra});
+  /* la bienvenida sale solo la primera vez: las pruebas que no son de ella arrancan con la app ya vista */
+  if (!bienvenida) await ctx.addInitScript(() => { try { const k = "kozmos.prefs.v1", p = JSON.parse(localStorage.getItem(k) || "{}"); if (!p.bienvenida){ p.bienvenida = "vista"; localStorage.setItem(k, JSON.stringify(p)); } } catch (e) {} });
   const p = await ctx.newPage(); p._errores = [];
   p.on("pageerror", e => p._errores.push(String(e)));
   p.on("console", m => { if (m.type() === "error") p._errores.push(m.text()); });
@@ -867,7 +869,7 @@ prueba("ventana-de-prueba", async () => {
 });
 
 prueba("tu-tiempo", async () => {
-  /* Vos: Tu tiempo es un menú (sin chips); elegir queda guardado y Hoy entra en esos minutos (vuelta 36) */
+  /* Vos: Tu tiempo es un menú (sin chips); elegir queda guardado y Hoy entra en esos minutos (vuelta 35) */
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await p.evaluate(async () => { await K.diario.perfilPoner("equipo", ["barra", "kettlebell"]); await K.diario.perfilPoner("rumbo", ["front-lever", "una-pierna"]); K.refrescar(); });
   await ir(p, "#/vos");
@@ -889,6 +891,101 @@ prueba("tu-tiempo", async () => {
   await ir(p, "#/vos"); await p.click("#tiempo-menu"); await p.waitForSelector(".pop .pmi"); await p.click('.pop .pmi[data-id="0"]'); await p.waitForFunction(() => K.diario.perfil.minutos === undefined);
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
+});
+/* ===== Bienvenida (vuelta 35): la primera vez, qué → con qué y cuánto → tu nivel → tu primer día ===== */
+const bienvenida = async (vp = {width: 390, height: 844}) => { const r = await pagina(vp, {bienvenida: true, reducedMotion: "reduce"}); await r.p.goto(URL0); await r.p.waitForSelector("#bv"); return r; };
+const bvPaso = (p, cls) => p.waitForSelector(`#bv .b-pan.${cls}`);
+prueba("bienvenida-elijo", async () => {
+  const {ctx, p} = await bienvenida();
+  /* el arranque del logo y, solo, el primer paso; sin elegir no se sigue */
+  await bvPaso(p, "b-que");
+  ok(await p.isDisabled("#b-seguir"), "se sigue sin elegir qué entrenar");
+  await p.click('.b-op[data-f="fu"]'); ok(await p.getAttribute('.b-op[data-f="fu"]', "aria-pressed") === "true", "Fuerza no queda elegida");
+  await p.click("#b-seguir"); await bvPaso(p, "b-equipo");
+  /* «Nada, solo el piso» saca lo demás */
+  await p.click('.b-eq[data-id="barra"]'); await p.click('.b-eq[data-id="piso"]');
+  ok(await p.$$eval(".b-eq.on", x => x.map(y => y.dataset.id).join()) === "piso", "el piso no saca lo demás");
+  await p.click("#b-seguir"); await bvPaso(p, "b-tiempo");
+  await p.focus(".b-dial"); await p.keyboard.press("ArrowRight"); await p.keyboard.press("ArrowRight"); await p.click("#b-dmenos");
+  ok(await p.textContent(".b-dial .b-cen b") === "40" && await p.textContent(".b-dias b") === "2", "el reloj o los días no cambian");
+  await p.click("#b-seguir"); await bvPaso(p, "b-como");
+  await p.click("#b-elijo");
+  /* sin barra no se pregunta por tirar: cuatro movimientos */
+  const vistos = [];
+  for (let i = 0; i < 4; i++){ await p.waitForFunction(i => document.querySelector("#bv .b-mov .lb")?.textContent.includes(`${i + 1} de 4`), i); vistos.push(await p.textContent("#bv .b-mov .lb"));
+    if (i === 1) await p.click("#b-nose"); else await p.click(`#bv .b-mov .b-fg[data-k="${i === 0 ? 2 : 1}"]`); await p.waitForTimeout(150); }
+  ok(!vistos.some(x => x.startsWith("Tirar")), "pregunta por tirar sin barra: " + vistos);
+  await bvPaso(p, "b-res-n");
+  ok((await p.textContent("#bv .b-res-n")).includes("Desde el principio"), "«No sé» no arranca desde el principio");
+  await p.click("#b-dia"); await bvPaso(p, "b-dia");
+  /* al llegar al primer día queda todo guardado y el día es el de Hoy */
+  const per = await p.evaluate(() => K.diario.perfil);
+  ok(JSON.stringify(per.equipo) === "[]" && per.minutos === 40 && per.dias.length === 2 && per.rumbo.length === 3 && per.bienvenida, "lo guardado: " + JSON.stringify(per));
+  ok(per.nivel.empujar === "2" && per.nivel.piernas === "nose" && per.nivel.cadera === "1" && !("tirar" in per.nivel), "el nivel: " + JSON.stringify(per.nivel));
+  ok(await p.evaluate(() => K.hoyPlan().minutos) <= 40 && Number(await p.textContent(".b-reloj .b-cen b")) === await p.evaluate(() => K.hoyPlan().minutos), "el reloj no dice los minutos del día");
+  /* más tarde: Hoy con todo armado, sin la bienvenida ni «Que Kozmos arme tu día» */
+  await p.click("#b-luego"); await p.waitForFunction(() => !document.querySelector("#bv"));
+  ok(await p.$(".hoy-toca") && !(await p.$(".como")), "Hoy no muestra el día armado");
+  await p.reload(); await p.waitForSelector("main.view"); await p.waitForTimeout(400);
+  ok(!(await p.$("#bv")), "la bienvenida vuelve a salir");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("bienvenida-prueba", async () => {
+  const {ctx, p} = await bienvenida();
+  await bvPaso(p, "b-que"); await p.click('.b-op[data-f="ra"]'); await p.click('.b-op[data-f="mo"]');
+  await p.click("#b-seguir"); await bvPaso(p, "b-equipo"); await p.click('.b-eq[data-id="bici"]'); await p.click("#b-seguir");
+  await bvPaso(p, "b-tiempo"); await p.click("#b-seguir"); await bvPaso(p, "b-como");
+  /* sin fuerza, «Lo elijo yo» va a la prueba: lo primero que elegiste fue flexibilidad */
+  await p.click("#b-elijo"); await bvPaso(p, "b-niv");
+  ok((await p.textContent("#bv .b-hz b")) === "Alcance de piernas", "la prueba no es la de flexibilidad");
+  await p.click("#b-probar"); await bvPaso(p, "b-pru");
+  ok(await p.isDisabled("#b-listo"), "Listo sin marca");
+  await p.click('.b-alc button[data-v="5"]'); await p.click("#b-listo"); await bvPaso(p, "b-res");
+  ok((await p.textContent("#bv .b-res h1")).includes("magnitud 3"), "el resultado: " + await p.textContent("#bv .b-res h1"));
+  const s = await p.evaluate(() => K.diario.sesiones.map(x => ({h: x.hazana?.id, v: x.hazana?.valor, e: x.encendio})));
+  ok(s.length === 1 && s[0].h === "casiopea" && s[0].v === 5 && s[0].e.includes("draco.alcance-5"), "la prueba no quedó como sesión: " + JSON.stringify(s));
+  /* la prueba y su resultado no tienen volver; el primer día, tampoco */
+  ok(await p.$eval(".b-atras", x => x.classList.contains("oculto")), "el resultado tiene volver");
+  await p.click("#b-dia"); await bvPaso(p, "b-dia");
+  const per = await p.evaluate(() => K.diario.perfil);
+  ok(per.rumbo.every(id => ["espagat", "puente", "diez-km", "motor", "soga"].includes(id)) && per.rumbo.includes("espagat") && !per.nivel, "rumbo o nivel: " + JSON.stringify(per));
+  /* empezar abre la sesión de verdad */
+  await p.click("#b-empezar"); await p.waitForFunction(() => location.hash === "#/hoy/sesion" && !document.querySelector("#bv"));
+  ok(await p.evaluate(() => K.sesion.activa()), "no arrancó la sesión");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("bienvenida-retoma", async () => {
+  /* si se cierra a la mitad, sigue en el mismo paso con lo elegido; volver lleva al anterior */
+  const {ctx, p} = await bienvenida();
+  await bvPaso(p, "b-que"); await p.click('.b-op[data-f="fu"]'); await p.click("#b-seguir");
+  await bvPaso(p, "b-equipo"); await p.click('.b-eq[data-id="barra"]'); await p.click("#b-seguir"); await bvPaso(p, "b-tiempo");
+  await p.reload(); await p.waitForSelector("#bv"); await bvPaso(p, "b-tiempo");
+  ok(!(await p.$eval(".b-atras", x => x.classList.contains("oculto"))), "sin volver al retomar");
+  await p.click(".b-atras"); await bvPaso(p, "b-equipo"); await p.waitForTimeout(200);
+  ok(await p.$$eval(".b-eq.on", x => x.map(y => y.dataset.id).join()) === "barra", "el equipo elegido se perdió");
+  await p.click(".b-atras"); await bvPaso(p, "b-que"); await p.waitForTimeout(200);
+  ok(await p.getAttribute('.b-op[data-f="fu"]', "aria-pressed") === "true", "lo de qué entrenar se perdió");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("bienvenida-ya-usa", async () => {
+  /* quien ya tiene algo en este teléfono no la ve; tampoco se guarda nada por abrirla */
+  const {ctx, p} = await pagina(undefined, {bienvenida: true, reducedMotion: "reduce"});
+  await p.goto(URL0); await p.waitForSelector("#bv");
+  await p.evaluate(async () => { K.bienvenida.cerrar(); await K.diario.perfilPoner("equipo", ["barra"]); localStorage.clear(); });
+  await p.reload(); await p.waitForSelector("main.view"); await p.waitForTimeout(500);
+  ok(!(await p.$("#bv")), "la ve alguien con equipo elegido");
+  ok(await p.evaluate(() => !K.diario.perfil.bienvenida && !K.diario.perfil.rumbo), "abrirla guardó algo");
+  /* en horizontal, sin desbordar */
+  const h = await pagina({width: 844, height: 390}, {bienvenida: true, reducedMotion: "reduce"});
+  await h.p.goto(URL0); await h.p.waitForSelector("#bv"); await bvPaso(h.p, "b-que");
+  ok(await h.p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "la bienvenida desborda en horizontal");
+  const [cab, op] = await h.p.$$eval("#bv .b-que .b-cab, #bv .b-que .b-ops", xs => xs.map(x => x.getBoundingClientRect().left));
+  ok(op > cab + 200, "en horizontal no va la pregunta a la izquierda y las opciones a la derecha");
+  ok(p._errores.length === 0 && h.p._errores.length === 0, "errores: " + [...p._errores, ...h.p._errores].join(" | "));
+  await h.ctx.close(); await ctx.close();
 });
 prueba("tu-equipo", async () => {
   const {ctx, p} = await pagina();
