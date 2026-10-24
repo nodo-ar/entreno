@@ -493,5 +493,5 @@ K.bienvenida = (() => {
     S = nuevo(); arranque();
   }
   /* el atrás de Android: vuelve un paso; en el primero (o en la prueba y el resultado) no hace nada y la app sigue abierta */
-  return {toca, abrir, cerrar, atras: () => { if (!raiz) return false; atras(); return true; }, abierta: () => !!raiz};
+  return {toca, abrir, cerrar, atras: () => { if (!raiz || !pila.length) return false; atras(); return true; }, abierta: () => !!raiz};
 })();

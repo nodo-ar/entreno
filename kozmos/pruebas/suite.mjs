@@ -957,7 +957,7 @@ prueba("bienvenida-prueba", async () => {
   await ctx.close();
 });
 prueba("bienvenida-retoma", async () => {
-  /* si se cierra a la mitad, sigue en el mismo paso con lo elegido; volver lleva al anterior */
+  /* si se cierra a la mitad, sigue en el mismo paso con lo elegido; volver lleva al anterior y en la primera, sale */
   const {ctx, p} = await bienvenida();
   await bvPaso(p, "b-que"); await p.click('.b-op[data-f="fu"]'); await p.click("#b-seguir");
   await bvPaso(p, "b-equipo"); await p.click('.b-eq[data-id="barra"]'); await p.click("#b-seguir"); await bvPaso(p, "b-tiempo");
@@ -967,6 +967,8 @@ prueba("bienvenida-retoma", async () => {
   ok(await p.$$eval(".b-eq.on", x => x.map(y => y.dataset.id).join()) === "barra", "el equipo elegido se perdió");
   await p.click(".b-atras"); await bvPaso(p, "b-que"); await p.waitForTimeout(200);
   ok(await p.getAttribute('.b-op[data-f="fu"]', "aria-pressed") === "true", "lo de qué entrenar se perdió");
+  /* el atrás de Android en la primera pregunta no se queda con el toque: sale, como en Hoy */
+  ok(await p.evaluate(() => K.bienvenida.atras()) === false, "en la primera pregunta el atrás no sale");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });

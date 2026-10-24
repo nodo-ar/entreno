@@ -26,7 +26,7 @@ K.apk = (() => {
     /* el botón atrás de Android */
     atras(){
       if (K.menu._abierto){ K.menu.cerrar(); return "menu"; }
-      /* en la bienvenida, un paso atrás (o nada, si no hay a dónde volver) */
+      /* en la bienvenida, un paso atrás; en la primera pregunta sale, como en Hoy */
       if (K.bienvenida?.atras()) return "bienvenida";
       const {tab, hondo} = K.ruta();
       /* en Hoy, sale; con una sesión en curso queda en segundo plano y sigue corriendo */
