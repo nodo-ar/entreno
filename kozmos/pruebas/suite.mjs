@@ -895,6 +895,8 @@ prueba("tu-tiempo", async () => {
 /* ===== Bienvenida (vuelta 35): la primera vez, qué → con qué y cuánto → tu nivel → tu primer día ===== */
 const bienvenida = async (vp = {width: 390, height: 844}) => { const r = await pagina(vp, {bienvenida: true, reducedMotion: "reduce"}); await r.p.goto(URL0); await r.p.waitForSelector("#bv"); return r; };
 const bvPaso = (p, cls) => p.waitForSelector(`#bv .b-pan.${cls}`);
+/* la rueda se acomoda después de soltar: esperar a que la de arriba quede fija (con la máquina cargada tarda más) */
+async function ruedaQuieta(p){ let a = null; for (let k = 0; k < 20; k++){ await p.waitForTimeout(250); const b = await p.textContent(".b-vi:not(.sale) .b-vnom"); if (b === a) return; a = b; } }
 /* «¿Cómo entrenás?»: girar la rueda con el pulgar hasta que la de arriba sea esa forma, y «Es lo mío» */
 async function bvFormas(p, ids){
   await bvPaso(p, "b-forma");
@@ -902,7 +904,7 @@ async function bvFormas(p, ids){
     const nom = await p.evaluate(id => K.bienvenida.FORMAS.find(x => x.id === id).nom, id);
     for (let k = 0; k < 14 && await p.textContent(".b-vi:not(.sale) .b-vnom") !== nom; k++){
       const [x, y] = await p.$eval(".b-arco", e => { const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + 40]; });
-      await p.mouse.move(x, y); await p.mouse.down(); await p.mouse.move(x - 90, y, {steps: 6}); await p.mouse.up(); await p.waitForTimeout(500); }
+      await p.mouse.move(x, y); await p.mouse.down(); await p.mouse.move(x - 90, y, {steps: 6}); await p.mouse.up(); await ruedaQuieta(p); }
     await p.click(".b-vi:not(.sale) .b-mio"); await p.waitForTimeout(150);
   }
 }
