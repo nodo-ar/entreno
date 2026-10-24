@@ -12,24 +12,25 @@
   const pmPiso = pie({torso: 112, head: 134, armN: [344.7, 349.5], legN: [69.5, 341.6]});
   const pmRodilla = pie({torso: 124, head: 148, armN: [349.7, 354.5], legN: [49.5, 352]});
   const pmMuslo = pie({torso: 148, head: 166, armN: [355.7, .5], legN: [35.9, 347.8]});
-  const pmArriba = pie({torso: 181, head: 181, armN: [3.7, 8.5], legN: [356.2, 356.2]});
+  const pmArriba = pie({torso: 184, head: 180, armN: [1, 4], legN: [358.5, 358.5]});
 
   /* sentadilla con barra: la barra sobre los trapecios, detrás del cuello, y siempre sobre el medio del pie.
      Las manos la agarran abiertas (los brazos salen al costado: van en 3D) y los codos apuntan abajo.
      Abajo la cadera pasa la línea de la rodilla, el tronco inclinado como la tibia, los talones en el piso */
-  const atras = (t, a0, a1) => ({armN: [a0 + t - 180, a1 + t - 180], armF: [a0 + t - 180, a1 + t - 180], abd: {armN: [33, -12], armF: [33, -12]}});
-  const sqArriba = pie({torso: 177, head: 180, ...atras(177, 354.6, 191.1), legN: [355.8, 355.8]});
-  const sqUno = pie({torso: 166, head: 172, ...atras(166, 354.6, 191.1), legN: [25.3, 340.3]});
-  const sqDos = pie({torso: 156, head: 166, ...atras(156, 354.6, 191.1), legN: [57.3, 327.3]});
-  const sqAbajo = pie({torso: 148, head: 160, ...atras(148, 354.6, 191.1), legN: [96.6, 328.6]});
+  const atras = (t, a0, a1) => ({armN: [a0 + t - 180, a1 + t - 180], armF: [a0 + t - 180, a1 + t - 180], abd: {armN: [21.3, .5], armF: [21.3, .5]}});
+  const sqArriba = pie({torso: 177, head: 180, ...atras(177, 336.4, 182.4), legN: [355.8, 355.8]});
+  const sqUno = pie({torso: 166, head: 172, ...atras(166, 336.4, 182.4), legN: [25.3, 340.3]});
+  const sqDos = pie({torso: 153, head: 165, ...atras(153, 336.4, 182.4), legN: [57.3, 327.3]});
+  const sqAbajo = pie({torso: 147, head: 159, ...atras(147, 336.4, 182.4), legN: [96.6, 328.6]});
 
-  /* press con barra: la barra sale de adelante de los hombros, la cabeza se corre atrás para dejarla pasar y vuelve
-     adelante cuando la barra queda arriba, sobre el medio del pie. Los codos, adelante y un poco afuera (van en 3D) */
+  /* press con barra: la barra sale apoyada en los hombros, sobre las clavículas, con los codos adelante; la cabeza se corre atrás
+     para dejarla pasar y vuelve adelante cuando los brazos quedan estirados arriba, la barra sobre el medio del pie.
+     El agarre, apenas más abierto que los hombros (van en 3D, casi de perfil: los brazos se ven enteros) */
   const brazos = (a, b) => ({armN: a, armF: a, abd: {armN: b, armF: b}});
-  const prAbajo = pie({torso: 181, head: 181, ...brazos([5, 154.4], [31.7, 9.5]), legN: [0, 0], legF: [0, 0]});
-  const prCara = pie({torso: 181, head: 189, ...brazos([29.1, 185.5], [100.8, 31.8]), legN: [0, 0], legF: [0, 0]});
-  const prFrente = pie({torso: 180, head: 184, ...brazos([9.5, 182], [135.9, 19.1]), legN: [0, 0], legF: [0, 0]});
-  const prArriba = pie({torso: 179, head: 178, ...brazos([.6, 178.6], [156.5, .7]), legN: [0, 0], legF: [0, 0]});
+  const prAbajo = pie({torso: 181, head: 181, ...brazos([22.4, 178.7], [19, 7.1]), legN: [0, 0], legF: [0, 0]});
+  const prCara = pie({torso: 181, head: 190, ...brazos([119.2, 219.1], [-72.5, 21]), legN: [0, 0], legF: [0, 0]});
+  const prFrente = pie({torso: 180, head: 184, ...brazos([144.2, 210.2], [-28.4, 14.2]), legN: [0, 0], legF: [0, 0]});
+  const prArriba = pie({torso: 179, head: 162, ...brazos([171.5, 187.2], [-5.9, -5.9]), legN: [0, 0], legF: [0, 0]});
 
   /* remo con barra: bisagra quieta (el tronco a unos 45°, rodillas blandas, la barra bajo los hombros);
      los codos van atrás pegados al cuerpo y la barra toca la panza, abajo del ombligo */
@@ -37,11 +38,12 @@
   const rbArriba = {...rbColgando, armN: [296.1, 14], armF: [294.1, 12]};
 
   /* press de banca: acostado en el banco, la espalda y la cola apoyadas, los pies firmes en el piso.
-     La barra baja hasta tocar el pecho (los codos un poco abajo del banco) y sube hasta estirar los brazos sobre los hombros */
+     La barra baja hasta tocar el pecho a la altura de las tetillas (los codos abajo de la línea del banco, hacia los pies)
+     y sube hasta estirar los brazos verticales sobre los hombros */
   const banca = {torso: 270, head: 268, legN: [78.9, 6.7], legF: [80.9, 8.7]};
-  const bcArriba = plano({...banca, armN: [176, 182], armF: [174, 180]});
-  const bcMedio = plano({...banca, armN: [111.8, 224.3], armF: [109.8, 222.3]});
-  const bcPecho = plano({...banca, armN: [66.7, 210.2], armF: [64.7, 208.2]});
+  const bcArriba = plano({...banca, armN: [171, 171], armF: [169, 169]});
+  const bcMedio = plano({...banca, armN: [106, 208.4], armF: [104, 206.4]});
+  const bcPecho = plano({...banca, armN: [53.6, 186.7], armF: [51.6, 184.7]});
   /* en el piso: acostado, rodillas dobladas; abajo el brazo apoya en el piso y el antebrazo queda vertical */
   const piso = {torso: 270, head: 264, legN: [140.2, 17.7], legF: [142.2, 19.7]};
   const ppArriba = plano({...piso, armN: [176, 182], armF: [174, 180]});
@@ -55,17 +57,18 @@
   /* press con kettlebell a una mano: sale del hombro (la pesa apoyada en el dorso del antebrazo, el codo pegado), el codo se abre
      apenas al subir y termina con el brazo recto arriba; la otra mano, al costado */
   const kb = (a, b, head = 180) => pie({torso: 180, head, armN: a, armF: [2, 4], abd: {armN: b}, legN: [0, 0], legF: [0, 0]});
-  const kbHombro = kb([22.8, 177.1], [-8, 13.5]), kbMedio = kb([145.4, 195], [-63.2, 49.9], 183), kbAlto = kb([169.4, 185.4], [-36.6, 36.3], 182), kbArriba = kb([172.6, 186.2], [-3.3, 2], 178);
-  /* flexión pike: manos y pies en el piso, la cadera arriba; baja la cabeza adelante de las manos con los codos atrás.
-     Los pies en punta, quietos */
-  const pkArriba = {torso: 40.9, head: 46, armN: [40.9, 40.9], armF: [42.9, 42.9], legN: [340.6, 340.6], legF: [339.6, 339.6], pies: [-20.6, -19.6]};
-  const pkAbajo = {torso: 44, head: 50, armN: [335.4, 76.3], armF: [337.4, 77.3], legN: [324, 324], legF: [323, 323], pies: [-4, -3]};
+  const kbHombro = kb([22.8, 177.1], [-8, 13.5]), kbMedio = kb([145.4, 195], [-63.2, 49.9], 183), kbAlto = kb([169.4, 185.4], [-36.6, 36.3], 174), kbArriba = kb([177, 179], [-3, -2], 162);
+  /* flexión pike: manos y pies en el piso, la cadera arriba en V invertida; se doblan los codos (atrás, el antebrazo casi vertical)
+     y la cabeza baja hasta cerca del piso, adelante de las manos. Para que la cabeza llegue, la cadera se corre apenas adelante
+     sobre las manos (baja poco: la V se cierra menos, no se aplana). Los pies en punta, quietos */
+  const pkArriba = {torso: 39.1, head: 46, armN: [39.1, 39.1], armF: [41.1, 41.1], legN: [345.8, 345.8], legF: [344.8, 344.8], pies: [-25.8, -24.8]};
+  const pkAbajo = {torso: 53, head: 60, armN: [310.8, 44.3], armF: [312.8, 45.3], legN: [322.5, 322.5], legF: [321.5, 321.5], pies: [-2.5, -1.5]};
 
-  /* jalón al pecho: sentado con los muslos trabados bajo el rodillo, el tronco apenas atrás; la barra ancha baja del cable
-     hasta arriba del pecho con los codos hacia abajo (los brazos abiertos van en 3D) */
-  const jalon = (a, b) => ({torso: 192, head: 186, armN: a, armF: a, abd: {armN: b, armF: b}, legN: [80, 2], legF: [80, 2], pies: [-2, -2]});
-  const jlArriba = jalon([160.4, 161.5], [-28.3, -24.4]), jlMedio = {...jalon([167.8, 159.4], [-91.3, 3.6]), head: 188}, jlPecho = {...jalon([207.9, 137.8], [-140.3, -20.6]), head: 184};
-  const JALON = [["l", 232, PISO, 232, 58, 152, 58], ["r", 159, 65, 5], ["k", 238, 200, 16, 66], ["l", 112, PISO - 1, 250, PISO - 1],
+  /* jalón al pecho: sentado con los muslos trabados bajo el rodillo; arranca con los brazos estirados arriba y la barra ancha
+     baja hasta la clavícula, los codos abajo y atrás, el tronco se va unos 15° atrás (los brazos abiertos van en 3D) */
+  const jalon = (t, hd, a, b) => ({torso: t, head: hd, armN: a, armF: a, abd: {armN: b, armF: b}, legN: [80, 2], legF: [80, 2], pies: [-2, -2]});
+  const jlArriba = jalon(188, 182, [168, 168], [-12, -12]), jlMedio = jalon(191, 186, [187.4, 154.6], [-77.1, 44.2]), jlPecho = jalon(195, 184, [220.1, 144.4], [-146, 13.3]);
+  const JALON = [["l", 232, PISO, 232, 58, 146, 58], ["r", 157, 65, 5], ["k", 238, 200, 16, 66], ["l", 112, PISO - 1, 250, PISO - 1],
     ["l", 143, 230, 143, PISO], ["p", 116, 223, 54, 8], ["l", 232, 205, 192, 205], ["c", 188, 205, 6.5]];
 
   /* remo sentado en polea: sentado en el banco bajo, los pies contra la plataforma y las rodillas apenas dobladas;
@@ -104,10 +107,11 @@
   const raAbajo = {torso: 250, head: 248, armN: [135, 135], armF: [133, 133], legN: [70, 70], legF: [71, 71]};
   const raMedio = {torso: 242, head: 241, armN: [78, 176], armF: [76, 174], legN: [62, 62], legF: [63, 63]};
   const raArriba = {torso: 233, head: 233, armN: [39, 178], armF: [37, 176], legN: [53, 53], legF: [54, 54]};
-  /* fondo en anillas: arriba los brazos estirados con las anillas pegadas al cuerpo; baja hasta que el hombro pasa el codo
-     (el tronco se inclina adelante) y vuelve; las piernas, dobladas atrás como en las paralelas */
-  const faArriba = {torso: 177, head: 178, armN: [358, 2], armF: [360, 4], legN: [14, 292], legF: [10, 288]};
-  const faAbajo = {torso: 142, head: 150, armN: [265, 20], armF: [266, 25], legN: [26, 270], legF: [22, 266]};
+  /* fondo en anillas: arriba los brazos estirados con las anillas al lado de la cadera; baja hasta que el hombro queda abajo del codo
+     y las anillas, a la altura de las costillas (el tronco se inclina adelante), y vuelve; las piernas, dobladas atrás como en las paralelas.
+     La anilla lejana va apenas corrida atrás, así se ven las dos cintas */
+  const faArriba = {torso: 177, head: 178, armN: [358, 2], armF: [350, 352], legN: [14, 292], legF: [10, 288]};
+  const faAbajo = {torso: 142, head: 156, armN: [262, 45], armF: [262, 26], legN: [26, 270], legF: [22, 266]};
 
   /* remo en máquina: los pies atados a los apoyos y el asiento que corre por el riel bajo la cadera (la cadera no sube ni baja).
      La pasada: el enganche (rodillas al pecho, brazos estirados), empujan las piernas, el tronco va atrás y los brazos llevan el agarre
@@ -129,7 +133,7 @@
     "prensa": {fijo: "hip", en: [120, 215], maq: PRENSA, mov: [["plataforma", 135, 26]], k: [pnArriba, pnMedio, pnAbajo], ritmo: [1.8, .3, 1.3, .5], muestra: 2},
     "press-pecho-maquina": {fijo: "hip", en: [130, 214], maq: PECHO, mov: [["palanca", 159, 86]], k: [ppPecho, ppMedio, ppLejos], ritmo: [1.1, .3, 1.7, .5], muestra: 0},
     "remo-polea": {fijo: "hip", en: [130, 219], maq: POLEA, mov: [["cable", 226, 214]], k: [rpLejos, rpMedio, rpPanza], ritmo: [1, .6, 1.6, .4], muestra: 2},
-    "jalon-pecho": {fijo: "hip", en: [150, 214], maq: JALON, mov: [["cable", 159, 70]], k: [jlArriba, jlMedio, jlPecho], ritmo: [1.1, .4, 1.8, .5], muestra: 2},
+    "jalon-pecho": {fijo: "hip", en: [150, 214], maq: JALON, mov: [["cable", 157, 70, 9]], k: [jlArriba, jlMedio, jlPecho], ritmo: [1.1, .4, 1.8, .5], muestra: 2},
     "sentadilla-copa": {con: "pesa", copa: true, fijo: "fN", en: [150, T], k: [cpArriba, cpAbajo], ritmo: [1.8, .3, 1.2, .5]},
     "press-kettlebell": {con: "pesa", unaMano: true, fijo: "fN", en: [150, T], k: [kbHombro, kbMedio, kbAlto, kbArriba], ritmo: [1.1, .4, 1.6, .5], muestra: 0},
     "flexion-pike": {fijo: "hN", en: [150, 264], muestra: .6, k: [pkArriba, pkAbajo], ritmo: [1.8, .2, 1.1, .4]},

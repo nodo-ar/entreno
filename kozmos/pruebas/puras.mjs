@@ -803,7 +803,7 @@ let ICX = null;
 const icx = () => ICX || (ICX = (() => {
   const fx = {K: {reduce: () => true, esc: s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c])),
     CATALOGO: CAT, HAZANAS, ESCALERAS: ESC, RUTINAS: RUTINAS.map(([, r]) => r)}, document: {}}; vm.createContext(fx);
-  for (const f of ["piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/vistas.js", "poses/pruebas.js", "piezas/iconos.js"])
+  for (const f of ["piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/gimnasio.js", "poses/vistas.js", "poses/pruebas.js", "piezas/iconos.js"])
     vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", f), "utf8"), fx);
   return fx.K;
 })());

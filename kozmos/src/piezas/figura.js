@@ -402,17 +402,18 @@ K.fig = (() => {
     if (c === "paralelas") o.push(`<path class="par" d="M${x - 70} ${y}H${x + 70}M${x - 54} ${y}V${PISO}M${x + 54} ${y}V${PISO}"/>`);
     if (c === "bici") o.push(bici(f));
     /* las máquinas del gimnasio: un dibujo simple, con el mismo trazo que la bici y el banco (ver «maquina») */
-    if (f.maq) o.push(maquina(f.maq));
+    if (f.maq) o.push(maquina(f.maq, chica));
     /* la silla va detrás del cuerpo: se sienta, apoya la mano o el pie */
     if (f.silla){ const [sx, sy, lado] = f.silla, rx = lado === "der" ? sx + 18 : sx - 18;
       o.push(`<path class="silla" d="M${sx - 22} ${sy}H${sx + 22}M${sx - 18} ${sy}V${PISO}M${sx + 18} ${sy}V${PISO}M${rx} ${sy}V${sy - 48}"/>`); }
     return o.length ? `<g class="fig-el">${o.join("")}</g>` : "";
   }
   /* lo que se mueve con el cuerpo pero queda detrás: el disco lejano, la anilla lejana, el carro de la máquina */
-  function detras(f, J){
+  function detras(f, J, chica){
     const c = f.con, o = [];
     if (c === "discos") o.push(discos(f, J)[0]);
-    if (f.mov) o.push(...f.mov.map(m => m[0] === "anilla" ? mueve([m[0], m[1], "cinta"], J, f) + mueve([m[0], m[1], "F"], J, f) : mueve(m, J, f)));
+    /* en la miniatura, sin el cable: queda la estructura */
+    if (f.mov) o.push(...f.mov.filter(m => !chica || m[0] !== "cable").map(m => m[0] === "anilla" ? mueve([m[0], m[1], "cinta"], J, f) + mueve([m[0], m[1], "F"], J, f) : mueve(m, J, f)));
     return o.length ? `<g class="fig-el">${o.join("")}</g>` : "";
   }
   /* lo que va delante del cuerpo: la barra que se agarra y lo que se tiene en las manos */
@@ -421,6 +422,9 @@ K.fig = (() => {
     if (c === "discos") o.push(discos(f, J)[1]);
     /* la anilla cercana va delante: la mano la agarra */
     if (f.mov) for (const m of f.mov) if (m[0] === "anilla") o.push(mueve([m[0], m[1], "N"], J, f));
+    /* la barra del jalón: de perfil, un caño corto en las manos, con las puntas caídas (q[2]: medio largo) */
+    if (f.mov) for (const [t, , , l] of f.mov) if (t === "cable" && l){ const m = palma(J);
+      o.push(`<path d="M${n1(m[0] - l)} ${n1(m[1] + 3)}L${n1(m[0] - l + 3)} ${n1(m[1])}H${n1(m[0] + l - 3)}L${n1(m[0] + l)} ${n1(m[1] + 3)}" class="gancho"/>`); }
     if ((c === "barra" || c === "barra-baja") && !f.barraAtras){ const bx = f.barraX ?? x; o.push(ln(bx - 80, y, bx + 80, y, "barra")); }
     /* la kettlebell sigue la línea del antebrazo: cuelga abajo, y arriba descansa sobre el dorso del brazo */
     /* en la sentadilla copa se agarra de los cuernos contra el pecho: cuelga abajo de las manos aunque el antebrazo apunte arriba */
@@ -461,7 +465,8 @@ K.fig = (() => {
     return [disco("disco"), ""]; }
   /* una máquina es una lista de partes quietas: «l» un caño (x, y, x, y…), «p» una colchoneta (x, y, ancho, alto),
      «r» una roldana (x, y, radio), «k» la pila de pesas (x, y, ancho, alto), «c» un rodillo (x, y, radio), «a» una colchoneta inclinada (de x, y a x, y) */
-  function maquina(L){ return L.map(([t, ...q]) => t === "l" ? `<path d="M${q.map(n1).join(" ").replace(/^(\S+ \S+) /, "$1L")}" class="cuadro"/>`
+  /* en la miniatura queda solo lo principal (el cuadro, las colchonetas y las ruedas grandes), con trazo grueso: sin pesas ni roldanas */
+  function maquina(L, chica){ return L.filter(([t, ...q]) => !chica || !(t === "k" || t === "r" && q[2] < 10)).map(([t, ...q]) => t === "l" ? `<path d="M${q.map(n1).join(" ").replace(/^(\S+ \S+) /, "$1L")}" class="cuadro"/>`
     : t === "p" ? `<rect x="${n1(q[0])}" y="${n1(q[1])}" width="${n1(q[2])}" height="${n1(q[3])}" rx="${n1(Math.min(q[2], q[3]) / 2)}" class="banco"/>`
     : t === "r" ? `<circle cx="${n1(q[0])}" cy="${n1(q[1])}" r="${n1(q[2])}" class="roldana"/>`
     : t === "k" ? `<rect x="${n1(q[0])}" y="${n1(q[1])}" width="${n1(q[2])}" height="${n1(q[3])}" rx="2" class="pila"/>`
@@ -536,8 +541,8 @@ K.fig = (() => {
   /* lo que se mueve: el cuerpo y lo que tiene en las manos */
   /* colgado de la barra no hay colchoneta, aunque los pies queden cerca del piso; tampoco en la bandera (el poste con la cámara girada).
      De perfil el poste también sirve de apoyo parado (remo, marco de la puerta) y ahí la colchoneta sigue */
-  const frente = (f, P, pe, sw = 0, u) => { const J = ubicar(f, P, pe), sa = f.con === "soga" && !J.plano ? soga(f, J, u) : null;
-    return lastre(f, J) + detras(f, J) + (sa && sa[1] ? `<g class="fig-el">${sa[0]}</g>` : "") + cuerpo(J, pe, sw) + enMano(f, J, u); };
+  const frente = (f, P, pe, sw = 0, u, chica) => { const J = ubicar(f, P, pe), sa = f.con === "soga" && !J.plano ? soga(f, J, u) : null;
+    return lastre(f, J) + detras(f, J, chica) + (sa && sa[1] ? `<g class="fig-el">${sa[0]}</g>` : "") + cuerpo(J, pe, sw) + enMano(f, J, u); };
   const piso = (f, poses, pe) => f.con === "barra" || f.maq || f.poste !== undefined && (f.vista || f.alzada) ? "" : colchoneta(poses.map(P => ubicar(f, P, pe)), pe.mat);
   /* el lastre cuelga del cinturón por detrás de las piernas, siempre hacia abajo */
   const lastre = (f, J) => !f.lastre ? "" : `<g class="fig-el"><line x1="${n1(J.hip[0] - 3)}" y1="${n1(J.hip[1] + 2)}" x2="${n1(J.hip[0] - 3)}" y2="${n1(J.hip[1] + 20)}" class="cadena"/><circle cx="${n1(J.hip[0] - 3)}" cy="${n1(J.hip[1] + 29)}" r="10" class="hierro"/></g>`;
@@ -600,7 +605,7 @@ K.fig = (() => {
   /* chica: una sola pose, la que más dice, recortada al cuerpo en un círculo */
   const chica = (id, fam, pe) => { const f = K.POSES[id]; if (!f) return ""; const P = pMuestra(f), e = encuadre(f, [P], true);
     const q = pe || persona(id, fam);
-    return `<span class="fig-chica" style="--cd:var(--${fam}-disco)">${caja("chica", fam, e.vb, fondo(f, e, true, apoya(f, P), piso(f, [P], q)) + frente(f, P, q))}</span>`; };
+    return `<span class="fig-chica" style="--cd:var(--${fam}-disco)">${caja("chica", fam, e.vb, fondo(f, e, true, apoya(f, P), piso(f, [P], q)) + frente(f, P, q, 0, undefined, true))}</span>`; };
 
   /* el ritmo: [ida, quieto, vuelta, quieto] en segundos; en un ciclo, [segundos por vuelta] */
   const fase = (f, t) => {
