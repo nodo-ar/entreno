@@ -98,7 +98,8 @@ K.P.vos = r => {
   const fila = (id, ic, nom, val) => `<button type="button" class="ajr" data-ir="#/vos/${id}" data-quieto="1"${abre === id ? " data-sel" : ""}><span class="tile">${K.ic(ic)}</span><span>${nom}</span><em>${K.esc(val)}</em>${K.ic("chev", "chev")}</button>`;
   const peso = K.diario.perfil.peso;
   return `<div class="split${sub ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Vos", sub: "Ajustes"})}
-    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("nivel", "nivel", "Tu nivel", K.resumenNivel())}${fila("dias", "dias", "Tus días", K.resumenDias())}
+    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}
+      <button type="button" class="ajr" id="formas-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("ruta")}</span><span>Cómo entrenás</span><em>${K.esc(K.formasNombre())}</em>${K.ic("chevd", "chev")}</button>${fila("nivel", "nivel", "Tu nivel", K.resumenNivel())}${fila("dias", "dias", "Tus días", K.resumenDias())}
       <button type="button" class="ajr" id="tiempo-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("reloj")}</span><span>Tu tiempo</span><em>${K.esc(K.tiempoNombre())}</em>${K.ic("chevd", "chev")}</button>${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
       <button type="button" class="ajr" id="avisos-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("vibra")}</span><span>Avisos</span><em>${K.esc(K.avisosNombre())}</em>${K.ic("chevd", "chev")}</button></div>
     <span class="lb pie">La persona de los dibujos</span>
@@ -291,6 +292,20 @@ K.menuTiempo = btn => K.menu.abrir(btn, {titulo: "Cuánto tiempo por día",
   items: [{id: "0", texto: "Lo que pida el día", nota: "hasta una hora", elegido: !K.diario.perfil.minutos}, ...K.dia.MINUTOS.map(m => ({id: String(m), texto: `${m} minutos`, ...(K.repartoTx(m) ? {nota: K.repartoTx(m)} : {}), elegido: K.diario.perfil.minutos === m}))],
   elegir: async id => { const m = +id || undefined; if (m === K.diario.perfil.minutos) return;
     try { await K.diario.lote({perfil: {minutos: m}}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); } finally { K.refrescar(); } }});
+/* cómo entrenás: las formas de la bienvenida (perfil.formas), varias a la vez; cada toque suma o saca una.
+   Sumar una trae a tu equipo lo que esa forma usa y te faltaba; sacarla no te saca nada del equipo */
+K.formasNombre = (xs = K.diario.perfil.formas) => {
+  const ns = K.bienvenida.FORMAS.filter(x => (xs || []).includes(x.id)).map(x => x.nom);
+  if (!ns.length) return "Sin elegir";
+  return ns.length > 2 ? `${ns[0]} y ${ns.length - 1} más` : ns.join(" y ");
+};
+K.menuFormas = btn => { const xs = K.diario.perfil.formas || [];
+  K.menu.abrir(btn, {titulo: "Cómo entrenás",
+    items: K.bienvenida.FORMAS.map(x => ({id: x.id, texto: x.nom, fig: K.icono.ejercicio(x.fig, x.f, 36), elegido: xs.includes(x.id)})),
+    elegir: async id => { const on = !xs.includes(id), formas = on ? [...xs, id] : xs.filter(y => y !== id), eq = K.diario.perfil.equipo;
+      const cambio = {formas};
+      if (on && eq){ const falta = K.bienvenida.eqDeFormas([id]).filter(y => !eq.includes(y)); if (falta.length) cambio.equipo = [...eq, ...falta]; }
+      try { await K.diario.lote({perfil: cambio}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); } finally { K.refrescar(); } }}); };
 K.menuAvisos = btn => K.menu.abrir(btn, {titulo: "Avisos",
   items: AVISOS.map(([v, n]) => ({id: v, texto: n, elegido: K.prefs.get("avisos", "todo") === v})),
   elegir: id => { if (id === K.prefs.get("avisos", "todo")) return; K.prefs.set("avisos", id); K.refrescar(); }});

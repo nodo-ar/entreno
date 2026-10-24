@@ -42,6 +42,9 @@ K.respaldo = (() => {
     rutina: v => obj(v) && txt(v.id) && fecha(v.desde),
     /* los minutos de cada día: uno de los de Tu tiempo */
     minutos: v => Number.isInteger(v) && v >= 10 && v <= 120,
+    /* lo que entrenás, en orden (lo primero pesa más), y cómo te gusta entrenar: lo que elegiste en la bienvenida o en Vos */
+    enfoque: v => Array.isArray(v) && v.length <= 3 && new Set(v).size === v.length && v.every(x => ["fu", "mo", "ra"].includes(x)),
+    formas: v => Array.isArray(v) && v.length <= 32 && new Set(v).size === v.length && v.every(x => txt(x, 40)),
     /* el día que hiciste la bienvenida: con eso no vuelve a aparecer */
     bienvenida: v => fecha(v),
     dias: v => Array.isArray(v) && v.length <= 7 && v.every(d => entero(d, 6)) && new Set(v).size === v.length,

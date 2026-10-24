@@ -892,6 +892,41 @@ prueba("tu-tiempo", async () => {
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
+prueba("como-entrenas-vos", async () => {
+  /* Vos: Cómo entrenás es un menú de varias (vuelta 40); cada toque suma o saca una. Sumar trae lo que esa forma usa a tu equipo; sacar no saca nada */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await p.evaluate(async () => { await K.diario.perfilPoner("equipo", ["barra"]); K.refrescar(); });
+  await ir(p, "#/vos");
+  ok((await p.textContent("#formas-menu em")) === "Sin elegir", "Cómo entrenás sin elegir: " + await p.textContent("#formas-menu em"));
+  await p.click("#formas-menu"); await p.waitForSelector(".pop:not(.out) .pmi");
+  const ops = await p.$$eval(".pop:not(.out) .pmi", xs => xs.map(x => x.textContent.trim()));
+  ok(ops.length === 11 && ops[0] === "Gimnasio" && ops.at(-1) === "Yoga y movilidad", "el menú: " + JSON.stringify(ops));
+  ok(await p.$$eval(".pop:not(.out) .pmi .pfig svg", x => x.length) === 11, "cada forma no lleva su figura");
+  await p.click('.pop:not(.out) .pmi[data-id="bici"]'); await p.waitForFunction(() => (K.diario.perfil.formas || []).join() === "bici");
+  ok((await p.textContent("#formas-menu em")) === "Bici fija", "lo elegido no se ve");
+  ok(await p.evaluate(() => K.diario.perfil.equipo.join()) === "barra,bici", "sumar la bici no la trae a tu equipo: " + await p.evaluate(() => K.diario.perfil.equipo.join()));
+  await p.click("#formas-menu"); await p.waitForSelector(".pop:not(.out) .pmi");
+  ok(await p.getAttribute('.pop:not(.out) .pmi[data-id="bici"]', "aria-checked") === "true", "la bici no aparece marcada");
+  await p.click('.pop:not(.out) .pmi[data-id="calistenia"]'); await p.waitForFunction(() => (K.diario.perfil.formas || []).length === 2);
+  ok((await p.textContent("#formas-menu em")) === "Calistenia y Bici fija", "dos formas: " + await p.textContent("#formas-menu em"));
+  await p.click("#formas-menu"); await p.waitForSelector(".pop:not(.out) .pmi"); await p.click('.pop:not(.out) .pmi[data-id="yoga"]'); await p.waitForFunction(() => (K.diario.perfil.formas || []).length === 3);
+  ok((await p.textContent("#formas-menu em")) === "Calistenia y 2 más", "tres formas: " + await p.textContent("#formas-menu em"));
+  /* sacar la bici: deja de ser tuya, pero la bici sigue en tu equipo */
+  await p.click("#formas-menu"); await p.waitForSelector(".pop:not(.out) .pmi"); await p.click('.pop:not(.out) .pmi[data-id="bici"]'); await p.waitForFunction(() => !(K.diario.perfil.formas || []).includes("bici"));
+  ok(await p.evaluate(() => K.diario.perfil.equipo.includes("bici")), "sacar la forma sacó la bici del equipo");
+  /* el respaldo lo lleva */
+  const r = await p.evaluate(async () => { await K.diario.perfilPoner("enfoque", ["mo", "fu"]); return K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, 1))).perfil; });
+  ok((r.formas || []).join() === "calistenia,yoga", "el respaldo no lleva cómo entrenás: " + JSON.stringify(r.formas));
+  ok((r.enfoque || []).join() === "mo,fu", "el respaldo no lleva qué entrenás: " + JSON.stringify(r.enfoque));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+  /* en horizontal, las once entran en la pantalla: el menú se desplaza adentro y no se sale */
+  const h = await pagina({width: 844, height: 390}); await ir(h.p, "#/vos"); await h.p.waitForSelector("#formas-menu");
+  await h.p.click("#formas-menu"); await h.p.waitForSelector(".pop:not(.out) .pmi");
+  const b = await h.p.$eval(".pop:not(.out)", m => { const r = m.getBoundingClientRect(); return {top: r.top, bottom: r.bottom, sh: m.scrollHeight, ch: m.clientHeight}; });
+  ok(b.top >= 0 && b.bottom <= 390 && b.sh > b.ch, "el menú en horizontal: " + JSON.stringify(b));
+  await h.ctx.close();
+});
 /* ===== Bienvenida (vuelta 35): la primera vez, qué → con qué y cuánto → tu nivel → tu primer día ===== */
 const bienvenida = async (vp = {width: 390, height: 844}) => { const r = await pagina(vp, {bienvenida: true, reducedMotion: "reduce"}); await r.p.goto(URL0); await r.p.waitForSelector("#bv"); return r; };
 const bvPaso = (p, cls) => p.waitForSelector(`#bv .b-pan.${cls}`);
