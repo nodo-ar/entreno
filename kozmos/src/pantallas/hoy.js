@@ -78,7 +78,7 @@ K.hoyPlan = () => {
   if (!ru || ru.cur.terminada){
     /* tu nivel: el escalón de arranque de cada escalera y lo que da por hecho (el cosmos ya lo trae; K.dia.armar lo vuelve a mirar) */
     const dadas = K.nivel.activas(cielo, K.dadasDeTuNivel(), {fecha: K.diario.perfil.nivel?.fecha});
-    const dia = K.dia.armar(cielo, K.rumbo(), ses, hoy, {ej: K.EJ, equipo: ctx.equipo, marcas: ctx.marcas, nivelDesde: K.desdeTuNivel(), dadas, descarga: !!(sp && sp.toca)});
+    const dia = K.dia.armar(cielo, K.rumbo(), ses, hoy, {ej: K.EJ, equipo: ctx.equipo, marcas: ctx.marcas, nivelDesde: K.desdeTuNivel(), dadas, descarga: !!(sp && sp.toca), minutos: K.diario.perfil.minutos || null});
     return sp && sp.toca && dia.bloques.length ? K.dia.deSemanaDePrueba(dia, sp, {...pc, cons: K.rumbo(), ejs: []}) : dia;
   }
   /* boceto: la rutina en el mismo molde que Hoy, con sus escaleras desde tu nivel */

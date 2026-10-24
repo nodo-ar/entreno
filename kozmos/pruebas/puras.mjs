@@ -1387,6 +1387,27 @@ prueba("escalera-con-peso", () => {
   /* sin equipo el remo tiene sus tres primeros escalones */
   ok(rutina.defEscalera(rutina.escalera("remo"), ej, []).pasos.map(p => p.ejercicio).join() === "remo-poste,remo-toalla-puerta,remo-mesa", "el remo sin equipo");
 });
+prueba("dia-a-tu-tiempo", () => {
+  /* tus minutos (vuelta 36): el día entra en lo que elegiste; sin elegir, como siempre (hasta la hora) */
+  const eq = rutina.conPesa(["barra", "paralelas", "mancuernas", "kettlebell", "bici"]), rumbo = ["front-lever", "una-pierna", "planche"];
+  const dia = m => armarDia(rumbo, {equipo: eq, minutos: m}), partes = d => d.bloques.map(b => b.molde);
+  ok(JSON.stringify(dia(null)) === JSON.stringify(armarDia(rumbo, {equipo: eq})), "sin elegir cambió el día");
+  for (const m of molde.MINUTOS){ const d = dia(m);
+    ok(d.minutos <= Math.max(m, 20), `${m} min: el día dura ${d.minutos}`);
+    ok(partes(d)[0] === "entrada" && partes(d).includes("habilidad") && partes(d).at(-1) === "cierre", `${m} min: le falta la entrada, una habilidad o el cierre: ${partes(d)}`);
+    if (m >= 45) ok(d.minutos >= m - 10, `${m} min: sobran más de 10 (${d.minutos})`); }
+  /* poco tiempo: la fuerza se achica antes que la habilidad; mucho, la fuerza va con 4 series y hay motor a intervalos */
+  const c = dia(30), l = dia(90), fz = d => d.bloques.filter(b => b.molde === "fuerza");
+  ok(fz(c).length <= 1 && fz(c).every(b => b.pasos.every(x => x.n === 2)), "a 30 min, la fuerza: " + fz(c).map(b => b.pasos.length));
+  ok(fz(l).length === 2 && fz(l).every(b => b.pasos.every(x => x.n === 4)) && partes(l).includes("motor") && partes(l).indexOf("motor") === partes(l).length - 2, "a 90 min: " + partes(l));
+  /* el motor: con kettlebell, swings; el que menos hiciste; cada tres veces, el escalón que sigue */
+  const m0 = molde.motor(["kettlebell"]);
+  ok(m0.nombre === "Kettlebell a intervalos" && m0.tramos[0].ejercicio === "swing-kettlebell" && m0.escalon === 0 && m0.molde === "motor", "el motor con kettlebell: " + JSON.stringify(m0).slice(0, 200));
+  const ses = n => Array.from({length: n}, (_, i) => ({id: "m" + i, fecha: "2026-10-0" + (i + 1), bloques: [{molde: "motor", nombre: "Kettlebell a intervalos", series: [{valor: 1}]}]}));
+  ok(molde.motor(["kettlebell"], ses(3)).escalon === 1 && molde.motor(["kettlebell"], ses(6)).tramos[0].ejercicio === "arranque-kettlebell", "el motor no sube");
+  ok(molde.motor(["kettlebell", "soga"], ses(1)).nombre === "Soga a intervalos" && molde.motor(null).nombre === "Intervalos sin equipo", "el motor no rota");
+  for (const x of molde.MOTORES) for (const q of x.pasos) ok(EJM()[q.ej], "el motor pide un ejercicio que no existe: " + q.ej);
+});
 prueba("pesas-primero", () => {
   /* una pesa es una pesa: con mancuernas o con una kettlebell salen los ejercicios de una sola pesa (vuelta 35) */
   const ej = EJM(), conP = rutina.conPesa, paso = (id, equipo, desde) => rutina.escalonDe(id, {ej, equipo, desde}).paso;

@@ -866,6 +866,30 @@ prueba("ventana-de-prueba", async () => {
   await ctx.close();
 });
 
+prueba("tu-tiempo", async () => {
+  /* Vos: Tu tiempo es un menú (sin chips); elegir queda guardado y Hoy entra en esos minutos (vuelta 36) */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await p.evaluate(async () => { await K.diario.perfilPoner("equipo", ["barra", "kettlebell"]); await K.diario.perfilPoner("rumbo", ["front-lever", "una-pierna"]); K.refrescar(); });
+  await ir(p, "#/vos");
+  ok((await p.textContent("#tiempo-menu em")) === "Lo que pida el día", "Tu tiempo sin elegir: " + await p.textContent("#tiempo-menu em"));
+  await p.click("#tiempo-menu"); await p.waitForSelector(".pop .pmi");
+  const ops = await p.$$eval(".pop .pmi", xs => xs.map(x => x.textContent.trim()));
+  ok(ops.length === 9 && ops[0].startsWith("Lo que pida el día") && ops[1] === "20 minutos" && ops.at(-1) === "90 minutos", "el menú: " + JSON.stringify(ops));
+  await p.click('.pop .pmi[data-id="30"]'); await p.waitForFunction(() => K.diario.perfil.minutos === 30);
+  ok((await p.textContent("#tiempo-menu em")) === "30 min", "lo elegido no se ve");
+  ok(await p.evaluate(() => K.hoyPlan().minutos) <= 30, "Hoy no entra en 30 minutos: " + await p.evaluate(() => K.hoyPlan().minutos));
+  await p.click("#tiempo-menu"); await p.waitForSelector(".pop .pmi"); await p.click('.pop .pmi[data-id="90"]'); await p.waitForFunction(() => K.diario.perfil.minutos === 90);
+  const pl = await p.evaluate(() => { const x = K.hoyPlan(); return {m: x.minutos, motor: x.bloques.filter(b => b.molde === "motor").map(b => b.nombre)}; });
+  ok(pl.m > 60 && pl.m <= 90 && pl.motor.join() === "Kettlebell a intervalos", "a 90 minutos: " + JSON.stringify(pl));
+  await ir(p, "#/hoy"); await p.waitForSelector(".hoy-toca");
+  ok((await p.textContent(".hoy-toca")).includes("Motor") && (await p.textContent(".hoy-toca")).includes("Swing con kettlebell"), "Hoy no muestra el motor");
+  /* volver a «Lo que pida el día» lo saca del perfil; el respaldo lo lleva */
+  const r = await p.evaluate(() => K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, 1))).perfil.minutos);
+  ok(r === 90, "el respaldo no lleva tus minutos: " + r);
+  await ir(p, "#/vos"); await p.click("#tiempo-menu"); await p.waitForSelector(".pop .pmi"); await p.click('.pop .pmi[data-id="0"]'); await p.waitForFunction(() => K.diario.perfil.minutos === undefined);
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
 prueba("tu-equipo", async () => {
   const {ctx, p} = await pagina();
   await ir(p, "#/vos");

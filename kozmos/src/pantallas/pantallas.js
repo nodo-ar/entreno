@@ -97,7 +97,8 @@ K.P.vos = r => {
   const fila = (id, ic, nom, val) => `<button type="button" class="ajr" data-ir="#/vos/${id}" data-quieto="1"${abre === id ? " data-sel" : ""}><span class="tile">${K.ic(ic)}</span><span>${nom}</span><em>${K.esc(val)}</em>${K.ic("chev", "chev")}</button>`;
   const peso = K.diario.perfil.peso;
   return `<div class="split${sub ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Vos", sub: "Ajustes"})}
-    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("nivel", "nivel", "Tu nivel", K.resumenNivel())}${fila("dias", "dias", "Tus días", K.resumenDias())}${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
+    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}${fila("nivel", "nivel", "Tu nivel", K.resumenNivel())}${fila("dias", "dias", "Tus días", K.resumenDias())}
+      <button type="button" class="ajr" id="tiempo-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("reloj")}</span><span>Tu tiempo</span><em>${K.esc(K.tiempoNombre())}</em>${K.ic("chevd", "chev")}</button>${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
       <button type="button" class="ajr" id="avisos-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("vibra")}</span><span>Avisos</span><em>${K.esc(K.avisosNombre())}</em>${K.ic("chevd", "chev")}</button></div>
     <span class="lb pie">La persona de los dibujos</span>
     <div class="aj">${K.personaFilas()}</div>
@@ -279,6 +280,12 @@ K.menuRasgo = btn => { const k = btn.dataset.rasgo, r = RASGOS[k];
 K.menuTema = btn => K.menu.abrir(btn, {titulo: "Tema",
   items: K.TEMAS.map(([v, n, ic]) => ({id: v, texto: n, ic, elegido: K.tema.actual() === v})),
   elegir: id => K.cambiarTema(id)});
+/* tu tiempo: los minutos de cada día (perfil.minutos). Sin elegir, lo que pida el día (hasta la hora). Hoy se arma para que entre */
+K.tiempoNombre = (m = K.diario.perfil.minutos) => m ? `${m} min` : "Lo que pida el día";
+K.menuTiempo = btn => K.menu.abrir(btn, {titulo: "Cuánto tiempo por día",
+  items: [{id: "0", texto: "Lo que pida el día", nota: "hasta una hora", elegido: !K.diario.perfil.minutos}, ...K.dia.MINUTOS.map(m => ({id: String(m), texto: `${m} minutos`, elegido: K.diario.perfil.minutos === m}))],
+  elegir: async id => { const m = +id || undefined; if (m === K.diario.perfil.minutos) return;
+    try { await K.diario.lote({perfil: {minutos: m}}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); } finally { K.refrescar(); } }});
 K.menuAvisos = btn => K.menu.abrir(btn, {titulo: "Avisos",
   items: AVISOS.map(([v, n]) => ({id: v, texto: n, elegido: K.prefs.get("avisos", "todo") === v})),
   elegir: id => { if (id === K.prefs.get("avisos", "todo")) return; K.prefs.set("avisos", id); K.refrescar(); }});

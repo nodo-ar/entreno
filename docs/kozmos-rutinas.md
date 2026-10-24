@@ -96,6 +96,8 @@ Sin ninguna habilidad posible (lo de tu rumbo pide equipo que no marcaste), rang
 
 `K.dia.frecuencia(n, D) = min(D, 2D/n)`: cada cuánto toca cada meta con n metas y D días por semana (`K.dia.diasSemana`: tus días; si no, lo de las últimas 4 semanas; si no, 3). Tu rumbo no tiene tope y lo dice: «5 elegidas · cada una, 1 o 2 veces por semana».
 
+**Tu tiempo** (`minutos`, de `perfil.minutos`; vuelta 36, `K.dia.aTuTiempo`): el día entra en los minutos que elegiste en Ajustes (20, 30, 40, 45, 50, 60, 75 o 90). Sin elegir, como siempre: hasta la hora. Para achicar, en este orden y hasta que entre: el abdomen queda para otro día, la fuerza va con 2 series, la bici del cierre pasa a posturas, se va el segundo par de fuerza y después la segunda habilidad. La entrada en calor, una habilidad y el cierre quedan siempre. Para agrandar (sobran 10 minutos o más): la fuerza va con 4 series; después, **motor a intervalos** (`motor`, antes del cierre) con lo que tengas: kettlebell (swing y después arranque), bici, soga o, sin nada, saltos, escaladores y burpees. Va el que menos hiciste; cada tres veces sube un escalón (más trabajo, menos pausa) y suma vueltas hasta llenar tu tiempo (como mucho el doble). Si todavía sobra y el cierre es la bici suave, se estira hasta 20 minutos. Nunca pasa de lo que elegiste.
+
 `nivelDesde` (el escalón de arranque de cada escalera) y `dadas` (estrellas que tu nivel da por hechas) salen de Tu nivel (abajo): lo que hiciste manda sobre el nivel.
 
 ## Tu nivel (`src/sesion/nivel.js`)

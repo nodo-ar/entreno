@@ -96,12 +96,78 @@ K.dia = (() => {
   }
 
   const dur = b => b.pasos || b.clase ? K.rutina.duracion(b) : K.plan.duracion(b);
+
+  /* ===== Tus minutos =====
+     aTuTiempo(bloques, minutos, partes): el día armado, ajustado a los minutos que elegiste (perfil.minutos).
+     Sin elegir, como siempre: hasta la hora (TOPE). Para achicar, en este orden y hasta entrar: el abdomen queda para otro día,
+     la fuerza va con 2 series, la bici del cierre pasa a posturas, se va el segundo par de fuerza y después la segunda habilidad.
+     La entrada en calor, una habilidad y el cierre quedan siempre. Para agrandar (sobran 10 minutos o más): la fuerza va
+     con 4 series y, si el cierre es la bici suave, se estira hasta 20 minutos. Nunca pasa de lo que elegiste. */
+  const MINUTOS = [20, 30, 40, 45, 50, 60, 75, 90];
+  /* motor a intervalos, para un día largo: con lo que tengas (kettlebell, bici, soga o nada), el que menos hiciste.
+     Cada uno tiene sus escalones: cada tres veces, el que sigue (más trabajo, menos pausa; del swing al arranque) */
+  const MOTORES = [
+    {con: "kettlebell", nombre: "Kettlebell a intervalos", pasos: [
+      {ej: "swing-kettlebell", t: 20, p: 40, n: 10}, {ej: "swing-kettlebell", t: 30, p: 30, n: 10},
+      {ej: "arranque-kettlebell", t: 15, p: 15, n: 16, nota: "Brazo alterno"}, {ej: "arranque-kettlebell", t: 20, p: 10, n: 20, nota: "Brazo alterno"}]},
+    {con: "bici", nombre: "Bici a intervalos", fuerte: true, pasos: [
+      {ej: "bici", t: 30, p: 90, n: 6}, {ej: "bici", t: 30, p: 60, n: 8}, {ej: "bici", t: 40, p: 40, n: 8}, {ej: "bici", t: 20, p: 10, n: 8}]},
+    {con: "soga", nombre: "Soga a intervalos", pasos: [{ej: "soga", t: 30, p: 30, n: 8}, {ej: "soga", t: 40, p: 20, n: 10}, {ej: "soga", t: 60, p: 30, n: 10}]},
+    {con: null, nombre: "Intervalos sin equipo", pasos: [
+      {ej: "saltos-tijera", t: 20, p: 40, n: 10}, {ej: "escaladores", t: 30, p: 30, n: 10}, {ej: "burpee", t: 20, p: 20, n: 12}, {ej: "burpee", t: 20, p: 10, n: 16}]}
+  ];
+  const vecesMotor = (nombre, sesiones) => sesiones.filter(s => (s.bloques || []).some(b => b.molde === "motor" && b.nombre === nombre)).length;
+  function motor(equipo, sesiones = [], volviste = false, extra = 0){
+    /* con equipo para el motor, ese; sin nada, los intervalos sin equipo */
+    const con = MOTORES.filter(m => m.con && equipo && equipo.includes(m.con)), xs = con.length ? con : MOTORES.filter(m => !m.con), veces = m => vecesMotor(m.nombre, sesiones);
+    const m = xs.sort((a, b) => veces(a) - veces(b))[0]; if (!m) return null;
+    const k = Math.min(m.pasos.length - 1, Math.max(0, Math.floor(veces(m) / 3) - (volviste ? 1 : 0))), x = {...m.pasos[k], n: m.pasos[k].n + extra};
+    const [tr, pa] = m.fuerte ? ["fuerte", "suave"] : ["trabajo", "pausa"], tramos = [];
+    for (let i = 0; i < x.n; i++){ tramos.push({clase: tr, seg: x.t, ejercicio: x.ej, ...(x.nota ? {nota: x.nota} : {})}); if (i < x.n - 1) tramos.push({clase: pa, seg: x.p, ...(m.fuerte ? {ejercicio: x.ej} : {})}); }
+    return {clase: "tramos", familia: "mo", nombre: m.nombre, molde: "motor", escalon: k, tramos, series: x.n};
+  }
+  /* el cierre de bici suave que arma suave() */
+  const esBici = b => b.familia === "mo" && b.tramos?.length === 1 && b.tramos[0].ejercicio === "bici" && b.tramos[0].clase === "suave";
+  function aTuTiempo(bloques, minutos, {abdomen, hab = [], cierre, conSeries, ej, equipo, usados, sesiones = [], volviste = false}){
+    const M = Number.isFinite(minutos) && minutos > 0 ? minutos : TOPE, entra = bs => minutosDe(bs) <= M;
+    const dos = bs => bs.map(b => b.molde === "fuerza" && b.series > 4 ? {...b, pasos: b.pasos.slice(0, 4).map(x => ({...x, n: 2})), series: 4} : b);
+    const achicar = [
+      bs => bs.filter(b => b !== abdomen),
+      dos,
+      bs => bs.map(b => b === cierre && esBici(b) ? suave(bs.filter(x => x !== b && x.molde !== "entrada"), {ej, equipo: null, usados}) : b),
+      bs => { const f = bs.filter(b => b.molde === "fuerza"); return f.length > 1 ? bs.filter(b => b !== f[f.length - 1]) : bs; },
+      bs => { const h = bs.filter(b => b.molde === "habilidad"); return h.length > 1 ? bs.filter(b => b !== h[h.length - 1]) : bs; },
+      bs => { const f = bs.filter(b => b.molde === "fuerza"); return hab.length && f.length ? bs.filter(b => b !== f[0]) : bs; }
+    ];
+    let bs = bloques;
+    for (const paso of achicar){ if (entra(bs)) break; bs = paso(bs); }
+    if (!Number.isFinite(minutos) || M - minutosDe(bs) < 10) return bs;
+    /* agrandar: cada paso solo si sigue entrando */
+    const mas = bs.map(b => b.molde === "fuerza" ? conSeries(b, 4) : b);
+    if (entra(mas)) bs = mas;
+    /* con 10 minutos o más de sobra, motor a intervalos antes del cierre; si todavía sobra, más vueltas (hasta el doble) */
+    if (M - minutosDe(bs) >= 10){
+      const i = bs.findIndex(b => b.molde === "cierre"), con = m => [...bs.slice(0, i < 0 ? bs.length : i), m, ...(i < 0 ? [] : bs.slice(i))];
+      const m0 = motor(equipo, sesiones, volviste);
+      if (m0 && entra(con(m0))){
+        let m = m0;
+        for (let extra = 1; extra <= m0.series; extra++){ const mx = motor(equipo, sesiones, volviste, extra); if (!entra(con(mx))) break; m = mx; }
+        bs = con(m);
+      }
+    }
+    const bici = bs.find(b => b.molde === "cierre" && esBici(b));
+    if (bici){
+      const libre = (M - minutosDe(bs)) * 60, seg = Math.min(1200, bici.tramos[0].seg + Math.floor(libre / 300) * 300);
+      if (seg > bici.tramos[0].seg) bs = bs.map(b => b === bici ? {...b, tramos: [{...b.tramos[0], seg}]} : b);
+    }
+    return bs;
+  }
   const minutosDe = bs => Math.max(5, Math.round((bs.reduce((t, b) => t + dur(b), 0) + Math.max(0, bs.length - 1) * ENTRE) / 300) * 5);
 
   /* armar(cielo, rumbo, sesiones, hoy, ctx) → {bloques, minutos, volviste, ventana, rotacion, pide, pie, molde: true}
      ctx: {ej, equipo, marcas, nivelDesde (el escalón de arranque de cada escalera), dadas (estrellas que tu nivel da por hechas),
      descarga (la semana de prueba: las escaleras a la mitad), dias (tus días por semana)} */
-  function armar(cielo, rumbo = [], sesiones = [], hoy, {ej = {}, equipo = null, marcas = [], nivelDesde, dadas, descarga = false} = {}){
+  function armar(cielo, rumbo = [], sesiones = [], hoy, {ej = {}, equipo = null, marcas = [], nivelDesde, dadas, descarga = false, minutos = null} = {}){
     const por = id => cielo.constelaciones.find(c => c.id === id);
     const delRumbo = (rumbo || []).map(por).filter(Boolean).map(c => conDadas(c, dadas));
     /* lo que pide equipo que no marcaste queda afuera, y se dice */
@@ -159,7 +225,7 @@ K.dia = (() => {
       const arriba = falta(); lugares.push(arriba); sets[arriba] += SERIES;
       const abajo = cubre.has(pierna) ? falta() : pierna; lugares.push(abajo); sets[abajo] += SERIES;
     }
-    const fuerza = [];
+    const fuerza = [], pares = [];
     for (let k = 0; k < lugares.length; k += 2){
       const ids = [];
       /* si lo de arriba que tocaba no tiene escalera libre con tu equipo, el otro de arriba */
@@ -168,8 +234,10 @@ K.dia = (() => {
       const grupo = ids.length > 1 ? "AB"[k / 2] : null;
       const cbs = ids.map((id, i) => ({escalera: id, series: SERIES, rango: RANGO, desde: nivelDesde?.[id], ...(grupo ? {grupo} : {}), descanso: grupo && i === 0 ? 0 : ENTRE}));
       const b = K.rutina.armarBloques("fu", cbs, {ej, equipo, sesiones, marcas, descarga: descarga || volviste})[0];
-      fuerza.push({...b, molde: "fuerza"});
+      fuerza.push({...b, molde: "fuerza"}); pares.push(cbs);
     }
+    /* la fuerza de a dos con más series (para un día más largo): el mismo par, armado de nuevo */
+    const conSeries = (b, n) => { const i = fuerza.indexOf(b); return i < 0 ? b : {...K.rutina.armarBloques("fu", pares[i].map(x => ({...x, series: n})), {ej, equipo, sesiones, marcas, descarga: descarga || volviste})[0], molde: "fuerza"}; };
 
     /* 3 · abdomen: si ninguna habilidad lo entrena (la bandera acostada y la bandera humana ya lo hacen), la escalera que hace más que no tocás */
     let abdomen = null;
@@ -190,9 +258,7 @@ K.dia = (() => {
     let cuerpo = [...hab, ...fuerza, ...(abdomen ? [abdomen] : []), cierre];
     const entrada = {...K.caminos.entrada(cuerpo, {equipo, ej}), molde: "entrada"};
     let bloques = [entrada, ...cuerpo];
-    /* de 40 a 55 minutos: si pasa de 60, el abdomen queda para otro día; si igual pasa, la fuerza va con 2 series */
-    if (abdomen && minutosDe(bloques) > TOPE) bloques = bloques.filter(b => b !== abdomen);
-    if (minutosDe(bloques) > TOPE) bloques = bloques.map(b => b.molde === "fuerza" ? {...b, pasos: b.pasos.slice(0, 4).map(x => ({...x, n: 2})), series: 4} : b);
+    bloques = aTuTiempo(bloques, minutos, {abdomen, hab, cierre, conSeries, ej, equipo, usados: usadosEj, sesiones, volviste});
 
     const rotacion = orden.map(c => c.id), hoyVan = new Set(hab.flatMap(b => b.constelaciones));
     const despues = orden.filter(c => !hoyVan.has(c.id)).slice(0, 2);
@@ -239,5 +305,5 @@ K.dia = (() => {
     return {...p, bloques, minutos: minutosDe(bloques), molde: true};
   }
 
-  return {armar, deRutina, suave, rotar, frecuencia, diasSemana, ventana, deSemanaDePrueba, conDadas, tocadas, minutosDe, patronesDe, ejerciciosDe, escaleraDe, ESCALERAS, POSTURA};
+  return {armar, deRutina, suave, aTuTiempo, MINUTOS, MOTORES, motor, rotar, frecuencia, diasSemana, ventana, deSemanaDePrueba, conDadas, tocadas, minutosDe, patronesDe, ejerciciosDe, escaleraDe, ESCALERAS, POSTURA};
 })();
