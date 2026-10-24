@@ -39,6 +39,11 @@ K.I = {
   subir:'<path d="M12 15V4M7 9l5-5 5 5M5 20h14"/>',
   bici:'<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8 8.5 5H7M12 16l3-8"/>',
   soga:'<path d="M5 3v6M19 3v6M5 9c0 9 14 9 14 0"/>',
+  discos:'<path d="M2 12h20"/><rect x="5" y="6" width="3" height="12" rx="1"/><rect x="16" y="6" width="3" height="12" rx="1"/>',
+  banco:'<path d="M3 10h18M6 10v8M18 10v8M9 6h6"/>',
+  maquinas:'<path d="M5 3v18M5 4h11v6"/><rect x="13" y="10" width="6" height="8" rx="1"/><path d="M13 13h6M13 15.5h6M3 21h4"/>',
+  anillas:'<path d="M8 3v8M16 3v8"/><circle cx="8" cy="15" r="4"/><circle cx="16" cy="15" r="4"/>',
+  remadora:'<circle cx="6" cy="13" r="4"/><path d="M3 19h18M14 17h5M9.5 11.5 15 14"/>',
   mancuernas:'<path d="M3 10v4M6 8v8M18 8v8M21 10v4M6 12h12"/>',
   kettlebell:'<path d="M9 8a3 3 0 0 1 6 0"/><path d="M8.5 8h7l2 4a6 6 0 1 1-11 0z"/>',
   /* una rutina: sus semanas como fases de la luna, de nueva a llena, cruzando el cielo */

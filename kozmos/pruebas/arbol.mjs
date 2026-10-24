@@ -26,6 +26,10 @@ export const RUMBO = {fu: ["planche", "un-brazo", "parada-de-manos", "draco", "u
 export const NIV = {inicial: {empujar: "0", tirar: "0", piernas: "0", cadera: "0", abdomen: "0"}, experto: {empujar: "3", tirar: "3", piernas: "3", cadera: "3", abdomen: "3"},
   mezclado: {empujar: "2", tirar: "0", piernas: "1", cadera: "3", abdomen: "1"}, nose: {empujar: "nose", tirar: "nose", piernas: "nose", cadera: "nose", abdomen: "nose"}};
 export const CONOCE = ["barra", "paralelas", "pared", "poste", "lastre", "mancuernas", "kettlebell", "bici", "soga"];
+/* el equipo de gimnasio, anillas y la máquina de remo (vuelta 37): cada uno, y el gimnasio entero, sobre lo de casa más común */
+export const EXTRA = [["discos"], ["banco"], ["maquinas"], ["anillas"], ["remadora"], ["discos", "banco", "maquinas"]];
+export const TODO = [...CONOCE, "anillas", "discos", "banco", "maquinas", "remadora"];
+const CASA = ["barra", "paralelas", "mancuernas", "kettlebell", "bici", "soga"];
 export const QUE = [["fu"], ["mo"], ["ra"], ["fu", "mo"], ["mo", "fu"], ["fu", "ra"], ["ra", "fu"], ["mo", "ra"], ["ra", "mo"], ["fu", "mo", "ra"], ["mo", "fu", "ra"], ["ra", "mo", "fu"]];
 export const MINUTOS = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
 const HOY = "2026-10-24";
@@ -67,7 +71,8 @@ export function revisar(K, caso, p){
 }
 
 export function* casos({eqs = null, niveles = Object.keys(NIV), minutos = MINUTOS, ques = QUE} = {}){
-  const EQS = eqs || Array.from({length: 512}, (_, k) => CONOCE.filter((_, i) => k >> i & 1));
+  const EQS = eqs || [...Array.from({length: 512}, (_, k) => CONOCE.filter((_, i) => k >> i & 1)),
+    ...EXTRA.flatMap(x => Array.from({length: 64}, (_, k) => [...CASA.filter((_, i) => k >> i & 1), ...x]))];
   for (const que of ques) for (const nv of (que.includes("fu") ? niveles : [null])) for (const eq of EQS) for (const min of minutos) yield {que, eq, min, niv: nv};
 }
 

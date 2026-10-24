@@ -41,34 +41,50 @@ K.rutina = (() => {
   /* «pesa» es una pesa cualquiera: con mancuernas o con una kettlebell salen los ejercicios de una sola pesa
      (remo a un brazo, sentadilla, peso muerto). conPesa(equipo) lo suma a lo que marcaste; las pantallas pasan tu equipo así */
   const conPesa = equipo => equipo && !equipo.includes("pesa") && (equipo.includes("mancuernas") || equipo.includes("kettlebell")) ? [...equipo, "pesa"] : equipo;
-  /* los ejercicios de un escalón: el de peso («conPeso», si tenés mancuernas), el de siempre y los que lo reemplazan («tambien») */
-  const idsPaso = p => [...(p.conPeso ? [p.conPeso.ejercicio] : []), p.ejercicio, ...(p.tambien || [])];
+  /* «conPeso» es una versión con kilos (o con algo que tenés, como las anillas) o una lista, en orden: la primera que tu equipo
+     permite (barra y discos, máquina, mancuernas…).
+     «total»: los kilos son de todo lo que levantás (barra, máquina, una kettlebell), no por mano. «manda»: con barra y discos o
+     con máquinas la versión con kilos es la escalera entera: arrancás ahí aunque tu nivel diga un escalón más alto, y tu nivel
+     pone los kilos de arranque */
+  const conPesos = p => [].concat(p.conPeso || []);
+  /* los ejercicios de un escalón: los de peso, el de siempre y los que lo reemplazan («tambien») */
+  const idsPaso = p => [...conPesos(p).map(c => c.ejercicio), p.ejercicio, ...(p.tambien || [])];
   /* el ejercicio de ese escalón con tu equipo: sin decir tu equipo, el de siempre; con lo que pide el de peso, ese (con sus kilos);
      si no podés el de siempre, el primero de «tambien» que sí (sin kilos: es otro ejercicio) */
-  function variante(p, ej, equipo){
+  function variante(p, ej, equipo, sinPeso = false){
     const {conPeso, tambien, ...base} = p;
     if (!equipo) return base;
-    if (conPeso && puede(conPeso.ejercicio, ej, equipo)) return {...base, ...conPeso};
+    const cp = sinPeso ? null : conPesos(p).find(c => puede(c.ejercicio, ej, equipo));
+    if (cp) return {...base, ...cp};
     if (puede(p.ejercicio, ej, equipo)) return base;
     const t = (tambien || []).find(id => puede(id, ej, equipo));
     if (!t) return base;
-    const {carga, kgInicial, hastaKg, ...sin} = base;
+    const {carga, kgInicial, hastaKg, total, manda, ...sin} = base;
     return {...sin, ejercicio: t};
   }
   /* de una lista de escaleras, la primera que tiene algún escalón que tu equipo permite */
   const elegirEscalera = (ids, ej, equipo) => { const xs = [].concat(ids || []).map(escalera).filter(Boolean);
     return xs.find(e => e.pasos.some(p => puede(p.ejercicio, ej, equipo))) || xs[xs.length - 1] || null; };
-  /* la escalera que podés hacer: solo los escalones que tu equipo permite, con su lugar en la escalera entera */
-  function defEscalera(esc, ej = {}, equipo = null, desde, rango){
-    const todos = esc.pasos.map((p, k) => ({...variante(p, ej, equipo), k})), deTuEquipo = todos.filter(p => puede(p.ejercicio, ej, equipo));
+  /* la escalera que podés hacer: solo los escalones que tu equipo permite, con su lugar en la escalera entera.
+     «sinPeso»: la de propio peso aunque tengas kilos (la habilidad, camino a una estrella, va siempre con tu cuerpo) */
+  function defEscalera(esc, ej = {}, equipo = null, desde, rango, sinPeso = false){
+    const todos = esc.pasos.map((p, k) => ({...variante(p, ej, equipo, sinPeso), k})), deTuEquipo = todos.filter(p => puede(p.ejercicio, ej, equipo));
     /* si tu equipo no permite ningún escalón, la escalera entera: la rutina ya avisa lo que pide */
     const pasos = deTuEquipo.length ? deTuEquipo : todos;
     const indice = Object.fromEntries(esc.pasos.flatMap((p, k) => idsPaso(p).map(e => [e, k])));
     /* pesas primero: con una pesa, la escalera arranca por lo menos en su primer escalón con kilos (los kilos se ajustan a vos;
        lo de abajo, sin peso, queda para bajar). Remo con una pesa arranca en el remo a un brazo, no agarrado del marco de la puerta */
-    const conKg = equipo ? pasos.find(p => p.kgInicial !== undefined && puede(p.ejercicio, ej, equipo)) : null;
-    const d = Math.max(desde === undefined ? 0 : indice[desde] ?? 0, conKg ? conKg.k : 0);
-    return {id: esc.id, real: true, nombre: esc.nombre, pasos, indice, rango, desde: Math.max(0, pasos.reduce((j, p, i) => p.k <= d ? i : j, 0))};
+    const conKg = equipo && !sinPeso ? pasos.find(p => p.kgInicial !== undefined && puede(p.ejercicio, ej, equipo)) : null;
+    const nivel = desde === undefined ? 0 : indice[desde] ?? 0;
+    let d = Math.max(nivel, conKg ? conKg.k : 0);
+    /* con barra o máquina, la versión con kilos manda: cada escalón de nivel por encima suma dos cargas al arranque (hasta la mitad del tope) */
+    if (conKg && conKg.manda){ d = conKg.k; if (nivel > conKg.k) conKg.kgArranque = Math.min(conKg.hastaKg / 2, conKg.kgInicial + 2 * conKg.carga * (nivel - conKg.k)); }
+    /* los kilos y tu cuerpo llevan cuentas separadas en la misma escalera: con la versión que manda solo cuenta lo hecho con ella
+       (un día de habilidad no te saca del press), y sin peso no cuenta lo hecho con kilos (un día de press no te baja la planche) */
+    const kilos = new Set(esc.pasos.flatMap(p => conPesos(p).map(c => c.ejercicio)));
+    const cuenta = conKg && conKg.manda ? new Set([conKg.ejercicio]) : null, noCuenta = sinPeso ? kilos : null;
+    return {id: esc.id, real: true, nombre: esc.nombre, pasos, indice, rango, desde: Math.max(0, pasos.reduce((j, p, i) => p.k <= d ? i : j, 0)),
+      ...(cuenta ? {cuenta} : {}), ...(noCuenta ? {noCuenta} : {})};
   }
   /* un bloque suelto con rango es una escalera de un solo escalón: suma por serie, descarga y, con carga, suma kilos */
   const defSuelto = (e, b, ej = {}) => ({id: "ej:" + e, real: false, pasos: [{ejercicio: e, tipo: b.tipo, k: 0, rango: b.rango,
@@ -83,7 +99,7 @@ K.rutina = (() => {
 
   /* las series de una sesión que son de esta escalera: las que la nombran o, en sesiones viejas de rutina, las de sus ejercicios */
   const tipoDe = (def, e) => def.pasos.find(p => p.ejercicio === e)?.tipo || (escalera(def.id)?.pasos.find(p => idsPaso(p).includes(e)) || {}).tipo;
-  const pertenece = (def, s, x) => !Number.isFinite(x.valor) || !x.ejercicio ? false : def.real
+  const pertenece = (def, s, x) => !Number.isFinite(x.valor) || !x.ejercicio || def.cuenta && !def.cuenta.has(x.ejercicio) || def.noCuenta?.has(x.ejercicio) ? false : def.real
     ? (x.escalera === def.id || (!x.escalera && !x.estrella && !!s.rutina && def.indice[x.ejercicio] !== undefined && tipoDe(def, x.ejercicio) === x.tipo))
     : (!x.escalera && !x.estrella && x.ejercicio === def.pasos[0].ejercicio && x.tipo === def.pasos[0].tipo);
 
@@ -109,7 +125,7 @@ K.rutina = (() => {
         const p = P[i], sosten = def.real && p.tipo === "segundos", ys = xs.filter(x => pos(x.ejercicio) === i);
         /* con mancuernas la serie guarda «kg»; con lastre, «lastreKg» */
         const kgS = Math.max(0, ...ys.map(x => x.kg ?? x.lastreKg ?? 0)); if (p.carga && kgS > 0){ kg = kgS; kgDe[p.ejercicio] = kg; }
-        const mano = !!p.carga && p.kgInicial !== undefined, kgAhora = kg ?? p.kgInicial ?? 0;
+        const mano = !!p.carga && p.kgInicial !== undefined, kgAhora = kg ?? p.kgArranque ?? p.kgInicial ?? 0;
         /* la descarga no cuenta para subir ni bajar: después de ella se vuelve a probar */
         if (ys.some(x => x.descarga)){ descarga = false; retest = true; evento = "descarga"; nuevo = null; }
         else {
@@ -156,7 +172,7 @@ K.rutina = (() => {
       for (const x of todas) if (x.tipo === "segundos") anotar(x.ejercicio, x.valor);
     }
     /* con mancuernas y sin historia en ese escalón, los kilos de arranque */
-    return {id: def.id, i, total: P.length, paso: P[i], pasos: P, de: P[desdeI], evento, nuevo, descarga, retest, ultimo, kg: kg ?? P[i].kgInicial ?? null, mejor: mejor[P[i].ejercicio] ?? null, sesion, arranque: arr};
+    return {id: def.id, i, total: P.length, paso: P[i], pasos: P, de: P[desdeI], evento, nuevo, descarga, retest, ultimo, kg: kg ?? P[i].kgArranque ?? P[i].kgInicial ?? null, mejor: mejor[P[i].ejercicio] ?? null, sesion, arranque: arr};
   }
 
   /* dónde arrancás después de una prueba con tu máximo «v» en el escalón j: se trabaja al 75 % del máximo.
@@ -248,13 +264,13 @@ K.rutina = (() => {
   const tramos = (ts, ej, equipo) => desplegar(ts).map(t => t.ejercicio ? {...t, ejercicio: elegir(t.ejercicio, ej, equipo)} : {...t});
 
   /* un bloque de series, listo para el motor: con escalera, el escalón que toca y sus objetivos; suelto, el ejercicio que tu equipo permite */
-  function bloqueSeries(r, cb, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false, nivelDesde}){
+  function bloqueSeries(r, cb, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false, nivelDesde, sinPeso = false}){
     /* «dura»: los segundos que lleva una serie larga (1000 saltos), para que los minutos del día no mientan */
     const base = {tipo: cb.tipo, descanso: cb.descanso ?? 90, ...(cb.dura ? {dura: cb.dura} : {})};
     let e, tipo = cb.tipo, m, st = null, def = null, extra = {};
     if (cb.escalera){
       const esc = elegirEscalera(cb.escalera, ej, equipo);
-      def = defEscalera(esc, ej, equipo, nivelDesde?.[esc.id] ?? cb.desde, cb.rango); st = escalon(def, sesiones, {marcas});
+      def = defEscalera(esc, ej, equipo, nivelDesde?.[esc.id] ?? cb.desde, cb.rango, sinPeso); st = escalon(def, sesiones, {marcas});
       if (descarga) st = {...st, descarga: true, retest: false};
       e = st.paso.ejercicio; tipo = st.paso.tipo; m = metas(def, st, cb);
       extra = {escalera: esc.id, ...(st.nuevo ? {nuevo: st.nuevo} : {})};
@@ -267,8 +283,8 @@ K.rutina = (() => {
     /* en la descarga, «n» sigue siendo lo que pide la rutina: lo que se compara la próxima vez */
     if (m.evalua) extra = {...extra, rango: m.rango, n: descarga ? metas(def, {...st, descarga: false}, cb).objetivos.length : m.objetivos.length, ...(st.descarga ? {descarga: true} : {})};
     else if (descarga) extra = {...extra, descarga: true};
-    /* «mano»: los kilos son de las mancuernas (por mano), no lastre */
-    if (carga) extra = {...extra, carga, ...(st.kg ? {kg: st.kg} : {}), ...(st.paso.kgInicial !== undefined ? {mano: true} : {})};
+    /* «mano»: los kilos son de lo que tenés en la mano, no lastre; «total», de todo lo que levantás y no por mano */
+    if (carga) extra = {...extra, carga, ...(st.kg ? {kg: st.kg} : {}), ...(st.paso.kgInicial !== undefined ? {mano: true} : {}), ...(st.paso.total ? {total: true} : {})};
     return {familia: cb.familia || r.familia, grupo: cb.grupo || null, pasos: m.objetivos.map((o, k) => ({...base, ejercicio: e, tipo, objetivo: o, ...extra,
       ...(m.antes ? {antes: m.antes[Math.min(k, m.antes.length - 1)]} : {})}))};
   }
@@ -276,7 +292,7 @@ K.rutina = (() => {
   /* armarBloques(familia, bloques del catálogo, ctx) → los bloques listos para el motor: lo de tramos con su nombre, cada bloque
      de series con su escalón y los del mismo grupo alternados serie a serie. Lo usa la rutina y sirve para cualquier día armado
      con bloques como los de una rutina. «equipoRutina» y «dia» solo nombran un bloque de tramos sin nombre. */
-  function armarBloques(familia, cbs, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false, nivelDesde, equipoRutina, dia} = {}){
+  function armarBloques(familia, cbs, {ej = {}, equipo = null, sesiones = [], marcas = [], descarga = false, nivelDesde, equipoRutina, dia, sinPeso = false} = {}){
     const r = {familia};
     /* sin el equipo de su primera escalera, un bloque con alternativas («tirar» o, sin barra, «remo») puede caer en una escalera
        que otro bloque del día ya hace: la misma escalera dos veces daría el mismo escalón dos veces. Queda la primera vez; la otra se saltea */
@@ -286,7 +302,7 @@ K.rutina = (() => {
       if (cb.tramos){ const ts = tramos(cb.tramos, ej, equipo);
         /* sin nombre en el catálogo, el bloque se llama por lo que se hace («Trote», «Bici», «Posturas»), no por el día */
         return {clase: "tramos", familia: cb.familia || familia, nombre: cb.nombre || nombreTramos(ts, {mide: cb.mide, equipo: equipoRutina, sesion: dia}, ej), tramos: ts, ...(cb.mide ? {mide: cb.mide} : {}), grupo: null}; }
-      return bloqueSeries(r, cb, {ej, equipo, sesiones, marcas, descarga, nivelDesde});
+      return bloqueSeries(r, cb, {ej, equipo, sesiones, marcas, descarga, nivelDesde, sinPeso});
     });
     const bloques = [];
     for (let k = 0; k < crudos.length;){
@@ -306,9 +322,9 @@ K.rutina = (() => {
     return {bloques, minutos: minutos(bloques), rutina: {id: r.id, sesion: i}, nombre: s.nombre, ...(s.nota ? {nota: s.nota} : {})};
   }
   /* dónde estás en una escalera, fuera de cualquier rutina: «desde» es el escalón de arranque si todavía no la hiciste */
-  function escalonDe(id, {ej = {}, equipo = null, sesiones = [], marcas = [], desde, rango} = {}){
+  function escalonDe(id, {ej = {}, equipo = null, sesiones = [], marcas = [], desde, rango, sinPeso = false} = {}){
     const esc = escalera(id); if (!esc) return null;
-    const st = escalon(defEscalera(esc, ej, equipo, desde, rango), sesiones, {marcas});
+    const st = escalon(defEscalera(esc, ej, equipo, desde, rango, sinPeso), sesiones, {marcas});
     return st && {...st, nombre: esc.nombre, familia: esc.familia, patron: esc.patron};
   }
   /* todas las escaleras y por dónde vas en cada una ({id: escalón}); «desde» puede traer el arranque de cada una ({tirar: "dominada"}) */

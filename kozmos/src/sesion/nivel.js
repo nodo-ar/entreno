@@ -14,10 +14,10 @@ K.nivel = (() => {
   /* por movimiento: la pregunta y, por nivel, lo que se ve (texto y figura), el escalón de arranque y lo que da por hecho */
   const MOVIMIENTOS = [
     {id: "empujar", nombre: "Empujar", pregunta: "¿Cuál te sale, 8 seguidas?", niveles: [
-      {texto: "Flexión con las manos en alto", ej: "flexion-inclinada", desde: {empujar: "flexion-inclinada", fondos: "flexion-cerrada"}},
-      {texto: "Flexión en el piso", ej: "flexion", desde: {empujar: "flexion", fondos: "fondo-banco"}},
-      {texto: "Flexión con los pies en alto", ej: "flexion-declinada", desde: {empujar: "flexion-declinada", fondos: "fondo"}, dadas: ["planche.flexiones-30"]},
-      {texto: "Flexión cargando un brazo", ej: "flexion-arquera", desde: {empujar: "flexion-arquera", fondos: "fondo"}, dadas: ["un-brazo.flexiones-40"]}]},
+      {texto: "Flexión con las manos en alto", ej: "flexion-inclinada", desde: {empujar: "flexion-inclinada", fondos: "flexion-cerrada", arriba: "flexion-pike"}},
+      {texto: "Flexión en el piso", ej: "flexion", desde: {empujar: "flexion", fondos: "fondo-banco", arriba: "flexion-pike"}},
+      {texto: "Flexión con los pies en alto", ej: "flexion-declinada", desde: {empujar: "flexion-declinada", fondos: "fondo", arriba: "pike-elevado"}, dadas: ["planche.flexiones-30"]},
+      {texto: "Flexión cargando un brazo", ej: "flexion-arquera", desde: {empujar: "flexion-arquera", fondos: "fondo", arriba: "pike-elevado"}, dadas: ["un-brazo.flexiones-40"]}]},
     {id: "tirar", nombre: "Tirar", pide: "barra", pregunta: "¿Cuál te sale, 5 seguidas?", niveles: [
       {texto: "Colgarme de la barra", ej: "colgado-activo", desde: {tirar: "dominada-negativa", remo: "remo-poste"}},
       {texto: "Dominada", ej: "dominada", desde: {tirar: "dominada", remo: "remo-invertido"}, dadas: ["front-lever.colgado-60s"]},
