@@ -21,10 +21,25 @@
 .fig-el .cadena{stroke:var(--ap); stroke-width:1.5}
 .fig-el .toalla{fill:var(--ap); opacity:.6}
 .fig-el .rueda{fill:none; stroke:var(--ap); stroke-width:3}
+.fig-el .parante{stroke:var(--ap); stroke-width:4; stroke-linecap:round}
+.fig-el .gancho{stroke:var(--ap); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.fig-el .almohada{stroke:var(--off); stroke-width:9; stroke-linecap:round}
+.fig-el .roldana{fill:var(--off); stroke:var(--ap); stroke-width:3}
+.fig-el .pila{fill:var(--ap)}
+.fig-el .cable{stroke:var(--ap); stroke-width:1.6}
+.fig-el .mango{stroke:var(--ap); stroke-width:4; stroke-linecap:round}
+.fig-el .placa{stroke:var(--ap); stroke-width:6; stroke-linecap:round}
+.fig-el .cinta{stroke:var(--ap); stroke-width:2.6}
+.fig-el .anilla{fill:none; stroke:var(--ap); stroke-width:3}
+.fig-el .disco{fill:var(--ap)}
+.fig-el .disco-aro{fill:none; stroke:var(--cd); stroke-width:1.4; opacity:.35}
+.fig-el .manga{fill:var(--off)}
 .fig-el .cuadro{fill:none; stroke:var(--ap); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round}
 /* en la miniatura el trazo engorda, para que a 44 px se siga viendo */
 .fig.chica .barra{stroke-width:9}
 .fig.chica .par,.fig.chica .silla,.fig.chica .soga,.fig.chica .cuadro,.fig.chica .rueda{stroke-width:6}
+.fig.chica .cable,.fig.chica .cinta{stroke-width:4}
+.fig.chica .anilla{stroke-width:5}
 /* en la serie: el centro de la pantalla, entre la indicación y el número */
 /* en vertical el envoltorio no existe para el diseño: la figura y el número siguen siendo hijos de la columna */
 .ses-cuerpo{display:contents}
