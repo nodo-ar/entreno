@@ -300,8 +300,11 @@ prueba("plan-rumbo", () => {
   ok(h.length === 1 && h[0].constelaciones.join() === "front-lever" && h[0].ejercicio === "colgado-activo" && h[0].series === 2 && h[0].objetivo === 30, "front lever arranca con colgado 2 × 30 s: " + JSON.stringify(h.map(b => [b.ejercicio, b.series, b.objetivo])));
   ok(!p.bloques.some(b => (b.constelaciones || []).some(id => id !== "front-lever")), "suma constelaciones de regalo: " + p.bloques.map(b => b.constelaciones));
   ok(p.minutos >= 15 && p.minutos % 5 === 0, "minutos redondos: " + p.minutos);
-  const t = armarDia(["front-lever", "diez-km", "puente"]), c = deMolde(t.bloques, "cierre")[0];
-  ok(c.constelaciones.join() === "diez-km" && c.extra && c.objetivo <= 15, "con motor y rango en el rumbo, el cierre es uno de los dos, corto: " + JSON.stringify([c.constelaciones, c.objetivo]));
+  /* con motor y rango en el rumbo, cada uno tiene su parte del día (vuelta 36): la resistencia con los 10 km y la flexibilidad
+     al final con el puente, sin otro cierre */
+  const t = armarDia(["front-lever", "diez-km", "puente"]), r = deMolde(t.bloques, "resistencia"), fl = deMolde(t.bloques, "flexibilidad");
+  ok(r.some(b => (b.constelaciones || []).join() === "diez-km") && fl.some(b => (b.constelaciones || []).join() === "puente"), "cada uno en su parte: " + t.bloques.map(b => b.molde + ":" + (b.constelaciones || "")));
+  ok(t.bloques[t.bloques.length - 1].molde === "flexibilidad" && !deMolde(t.bloques, "cierre").length, "la flexibilidad cierra el día: " + t.bloques.map(b => b.molde));
   ok(armarDia([]).bloques.every(b => !b.constelaciones), "sin rumbo, nada de constelaciones");
   ok(armarDia(["no-existe"]).bloques.length >= 4, "un id viejo en el rumbo no rompe");
 });
@@ -1479,7 +1482,7 @@ prueba("rutina-armar-bloques", () => {
         const n = rutina.deRutina(r, i, {...o, equipo: rutina.conPesa(equipo)}), v = cx.K.rutina.deRutina(r, i, cx.K.rutina.conPesa ? {...o, equipo: cx.K.rutina.conPesa(equipo)} : o);
         /* lo único que cambia a propósito: sin el equipo de su primera escalera, la misma escalera no va dos veces en un día; la segunda se saltea (vuelta 33) */
         const escs = d => d.bloques.flatMap(b => b.pasos || []).map(x => x.escalera).filter(Boolean), salteado = JSON.stringify([...new Set(escs(n))].sort()) === JSON.stringify([...new Set(escs(v))].sort()) && escs(n).length < escs(v).length;
-        /* y con pesas, el remo arranca en el remo a un brazo con pesa, no agarrado de un poste (vuelta 35): lo demás, igual.
+        /* y con pesas, el remo arranca en el remo a un brazo con pesa, no agarrado del marco de la puerta (vuelta 35): lo demás, igual.
            Si main ya sabe de pesas, se le pasa el mismo equipo y tiene que dar idéntico */
         const sinRemo = d => JSON.stringify(d.bloques.map(b => ({...b, pasos: (b.pasos || []).filter(x => x.escalera !== "remo")}))).replaceAll('"remo-mancuerna"', '"remo-poste"'), pesas = !!equipo && equipo.includes("mancuernas") && sinRemo(n) === sinRemo(v);
         if (!(JSON.stringify(n) === JSON.stringify(v) || salteado || pesas) && process.env.DIF) console.log(f, i, JSON.stringify(equipo), sesiones.length, "\n", sinRemo(n).slice(0, 3000), "\n", sinRemo(v).slice(0, 3000));
@@ -1642,11 +1645,12 @@ prueba("dia-equipo", () => {
   /* nada de tu rumbo se puede: el día se arma igual, con fuerza (D2) */
   const s = armarDia(["bandera"], {equipo: []});
   ok(!deMolde(s.bloques, "habilidad").length && deMolde(s.bloques, "fuerza").length === 2 && s.pide.length === 1, "solo con fuerza: " + s.bloques.map(b => b.molde));
-  /* con rango en tu rumbo, toma el lugar de la habilidad */
-  const e = armarDia(["bandera", "espagat"], {equipo: []}), he = deMolde(e.bloques, "habilidad");
-  ok(he.length === 1 && he[0].constelaciones.join() === "espagat" && !he[0].extra, "espagat a la habilidad: " + JSON.stringify(he.map(b => b.constelaciones)));
-  /* el cierre: rango o motor de tu rumbo; si no, bici suave con bici; si no, posturas */
-  ok(deMolde(armarDia(["planche", "puente"], {equipo: []}).bloques, "cierre")[0].constelaciones.join() === "puente", "el cierre con puente");
+  /* con rango en tu rumbo, va en su parte, la flexibilidad (vuelta 36: ya no toma el lugar de la habilidad) */
+  const e = armarDia(["bandera", "espagat"], {equipo: []}), fe = deMolde(e.bloques, "flexibilidad");
+  ok(!deMolde(e.bloques, "habilidad").length && fe[0]?.constelaciones?.join() === "espagat", "espagat en la flexibilidad: " + JSON.stringify(e.bloques.map(b => [b.molde, b.constelaciones])));
+  /* el cierre: con rango en tu rumbo, la flexibilidad con la meta; si no, bici suave con bici; si no, posturas */
+  const pu = armarDia(["planche", "puente"], {equipo: []}).bloques;
+  ok(pu[pu.length - 1].molde === "flexibilidad" && deMolde(pu, "flexibilidad")[0].constelaciones.join() === "puente", "el final con puente");
   const cb = deMolde(armarDia(["planche"], {equipo: ["bici"]}).bloques, "cierre")[0];
   ok(cb.clase === "tramos" && cb.tramos[0].ejercicio === "bici" && cb.tramos[0].seg === 300, "con bici, 5 min suaves");
   const cp = deMolde(armarDia(["planche"], {equipo: []}).bloques, "cierre")[0];
@@ -1984,6 +1988,38 @@ prueba("sin-punto-medio", () => {
 });
 
 let fallas = 0;
+/* el árbol de la bienvenida (vuelta 36): una muestra de los caminos contra el motor de verdad, con lo que cada uno tiene que dar
+   (el tiempo que elegiste, cinco menos como mucho; una parte por cosa elegida y la primera pesa más; nada que pida equipo que
+   no tenés; nada repetido; la flexibilidad al final). El árbol entero: node kozmos/pruebas/arbol.mjs */
+const arbol = await import("./arbol.mjs");
+prueba("arbol-caminos", () => {
+  const K = arbol.cargar(), eqs = [[], ["pared"], ["barra", "paralelas"], ["mancuernas"], ["kettlebell", "soga"], ["bici"], arbol.CONOCE];
+  const mal = [];
+  for (const c of arbol.casos({eqs, niveles: ["mezclado", "experto"]})){ const m = arbol.revisar(K, c, arbol.dia(K, c)); if (m.length) mal.push(JSON.stringify(c) + " " + m); }
+  ok(!mal.length, `${mal.length} caminos fallan: ${mal.slice(0, 3).join(" | ")}`);
+});
+prueba("arbol-formas", () => {
+  /* cómo te gusta entrenar orienta la resistencia y la flexibilidad: con qué es el motor y su meta, y las posturas de yoga */
+  const K = arbol.cargar(), todo = arbol.CONOCE, nombres = p => p.bloques.filter(b => b.molde === "resistencia").map(b => b.nombre || b.ejercicio);
+  const con = f => arbol.dia(K, {que: ["mo"], eq: todo, min: 40, formas: [f]});
+  ok(nombres(con("correr")).includes("Trote y caminata"), "correr: " + nombres(con("correr")));
+  ok(nombres(con("bici")).some(n => /bici/i.test(n)), "bici: " + nombres(con("bici")));
+  ok(nombres(con("soga")).includes("Soga a intervalos"), "soga: " + nombres(con("soga")));
+  ok(nombres(con("rusas")).includes("Kettlebell a intervalos"), "pesas rusas: " + nombres(con("rusas")));
+  ok(con("soga").bloques.find(b => b.molde === "resistencia").constelaciones?.join() === "soga", "la meta de soga primero");
+  const y = arbol.dia(K, {que: ["ra"], eq: [], min: 20, formas: ["yoga"]}).bloques.find(b => b.nombre === "Secuencia de posturas");
+  ok(y && y.tramos[0].ejercicio === "gato-camello" && y.tramos.every(t => t.seg >= 60), "yoga: " + JSON.stringify(y?.tramos?.slice(0, 2)));
+});
+prueba("arbol-turnos", () => {
+  /* con poco tiempo para todo, una o dos cosas por día y se turnan: lo que viene más atrasado contra su parte, primero */
+  const K = arbol.cargar(), r = K.dia.reparto(["fu", "mo", "ra"], 20);
+  ok(r.partes.length === 1 && r.partes[0].f === "fu" && r.alterna.join() === "mo,ra", "20 min, el primer día: " + JSON.stringify(r));
+  const hecha = f => ({id: f, fecha: "2026-10-23", bloques: [{familia: f, molde: f === "fu" ? "fuerza" : "resistencia"}]});
+  ok(K.dia.hoyVan(["fu", "mo"], 15, [hecha("fu")], "2026-10-24").join() === "mo", "después de fuerza, resistencia");
+  ok(K.dia.reparto(["mo", "fu"], 30).partes.map(x => x.f + x.minutos).join() === "mo15,fu10", "60 y 40, en el orden elegido: " + JSON.stringify(K.dia.reparto(["mo", "fu"], 30)));
+  ok(K.dia.reparto(["fu", "mo", "ra"], 50).partes.map(x => x.minutos).join() === "23,14,8", "50, 30 y 20: " + JSON.stringify(K.dia.reparto(["fu", "mo", "ra"], 50)));
+});
+
 for (const [n, fn] of PRUEBAS){
   try { fn(); console.log("ok    ", n); } catch (e) { fallas++; console.log("FALLA ", n, "·", e.message); }
 }

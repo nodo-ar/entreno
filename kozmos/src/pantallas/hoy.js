@@ -78,7 +78,8 @@ K.hoyPlan = () => {
   if (!ru || ru.cur.terminada){
     /* tu nivel: el escalón de arranque de cada escalera y lo que da por hecho (el cosmos ya lo trae; K.dia.armar lo vuelve a mirar) */
     const dadas = K.nivel.activas(cielo, K.dadasDeTuNivel(), {fecha: K.diario.perfil.nivel?.fecha});
-    const dia = K.dia.armar(cielo, K.rumbo(), ses, hoy, {ej: K.EJ, equipo: ctx.equipo, marcas: ctx.marcas, nivelDesde: K.desdeTuNivel(), dadas, descarga: !!(sp && sp.toca), minutos: K.diario.perfil.minutos || null});
+    const dia = K.dia.armar(cielo, K.rumbo(), ses, hoy, {ej: K.EJ, equipo: ctx.equipo, marcas: ctx.marcas, nivelDesde: K.desdeTuNivel(), dadas, descarga: !!(sp && sp.toca), minutos: K.diario.perfil.minutos || null,
+      enfoque: K.diario.perfil.enfoque || null, formas: K.diario.perfil.formas || []});
     return sp && sp.toca && dia.bloques.length ? K.dia.deSemanaDePrueba(dia, sp, {...pc, cons: K.rumbo(), ejs: []}) : dia;
   }
   /* boceto: la rutina en el mismo molde que Hoy, con sus escaleras desde tu nivel */
@@ -142,7 +143,9 @@ const filasToca = bs => K.filasHtml(K.rutina.filas(bs, K.EJ));
    Las habilidades dicen para qué meta de tu rumbo son («Para Muscle-up y Un brazo»; «Camino a …» si vas por la escalera) */
 const PARTE = {entrada: "Entrada en calor", prueba: K.jer("Pruebas", "descansado"), habilidad: K.jer("Habilidad", "descansado"), fuerza: K.jer("Fuerza", "de a dos"), abdomen: "Abdomen", cierre: "Cierre",
   /* boceto: lo de una rutina de motor o de rango, con el nombre de su familia; la fuerza que no va de a dos, sin «de a dos» */
-  motor: "Motor", rango: "Rango"};
+  motor: "Motor", rango: "Rango",
+  /* las partes de lo que elegiste entrenar además de la fuerza */
+  resistencia: "Resistencia", flexibilidad: "Flexibilidad"};
 /* la fuerza (y el abdomen de una rutina) dicen «de a dos» solo si todo lo de esa parte va de a dos; sin eso, solo su nombre */
 const DE_A_DOS = {fuerza: ["Fuerza", K.jer("Fuerza", "de a dos")], abdomen: ["Abdomen", K.jer("Abdomen", "de a dos")]};
 const minDe = ts => `${Math.max(1, Math.round(ts.reduce((t, x) => t + x.seg, 0) / 60))} min`;
@@ -213,9 +216,11 @@ K.P.hoyInicio = () => {
   const delRumbo = cielo.constelaciones.filter(c => rumbo.includes(c.id));
   if (delRumbo.length && delRumbo.every(c => c.completa)) return enc + hecho + `<section class="cd"><span class="lb">Tu rumbo, completo</span><b class="t1">Llegaste.</b><p class="mute">¿Cuál sigue?</p></section>
     <button type="button" class="btn" data-ir="#/hoy/rumbo">Elegir la que sigue</button>`;
-  /* la próxima estrella de la primera habilidad del día: su constelación en su anillo, como la próxima prueba en Planes.
-     Un día solo de fuerza (lo de tu rumbo pide equipo que no marcaste) no la muestra */
-  const cid = plan.bloques.filter(b => b.molde === "habilidad" || b.prueba).flatMap(b => b.constelaciones || [b.constelacion])[0];
+  /* la próxima estrella de la primera meta del día (la de lo que elegiste primero: habilidad, resistencia o flexibilidad):
+     su constelación en su anillo, como la próxima prueba en Planes. Un día solo de fuerza (lo de tu rumbo pide equipo que
+     no marcaste) no la muestra */
+  const META = new Set(["habilidad", "resistencia", "flexibilidad"]);
+  const cid = plan.bloques.filter(b => META.has(b.molde) || b.prueba).flatMap(b => b.constelaciones || [b.constelacion]).filter(Boolean)[0];
   const c = cid && cielo.constelaciones.find(x => x.id === cid), p = c && c.proxima;
   const proxima = p ? `<section class="cd hoy-prox" style="--c:var(--${c.familia})"><div class="pl-prox-cab"><span class="pl-prox-fig">${K.icono.constelacion(c, 64)}</span><div class="pl-prox-tx">
       <span class="lb">${K.jer("Próxima estrella", K.esc(c.nombre))}</span><b class="t1">${K.nw(p.nombre)}</b></div></div>

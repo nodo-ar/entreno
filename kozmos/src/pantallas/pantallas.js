@@ -282,8 +282,12 @@ K.menuTema = btn => K.menu.abrir(btn, {titulo: "Tema",
   elegir: id => K.cambiarTema(id)});
 /* tu tiempo: los minutos de cada día (perfil.minutos). Sin elegir, lo que pida el día (hasta la hora). Hoy se arma para que entre */
 K.tiempoNombre = (m = K.diario.perfil.minutos) => m ? `${m} min` : "Lo que pida el día";
+/* con más de una cosa para entrenar, cada opción dice cómo se reparte: lo que elegiste primero se lleva más */
+const FAM_NOM = {fu: "fuerza", mo: "resistencia", ra: "flexibilidad"};
+K.repartoTx = m => { const F = K.dia.enfoqueDe(K.diario.perfil.enfoque, K.rumbo(), K.cieloActual()); if (F.length < 2) return "";
+  const r = K.dia.reparto(F, m); return r.alterna.length ? "una cosa por día" : r.partes.map(x => `${x.minutos} de ${FAM_NOM[x.f]}`).join(", "); };
 K.menuTiempo = btn => K.menu.abrir(btn, {titulo: "Cuánto tiempo por día",
-  items: [{id: "0", texto: "Lo que pida el día", nota: "hasta una hora", elegido: !K.diario.perfil.minutos}, ...K.dia.MINUTOS.map(m => ({id: String(m), texto: `${m} minutos`, elegido: K.diario.perfil.minutos === m}))],
+  items: [{id: "0", texto: "Lo que pida el día", nota: "hasta una hora", elegido: !K.diario.perfil.minutos}, ...K.dia.MINUTOS.map(m => ({id: String(m), texto: `${m} minutos`, ...(K.repartoTx(m) ? {nota: K.repartoTx(m)} : {}), elegido: K.diario.perfil.minutos === m}))],
   elegir: async id => { const m = +id || undefined; if (m === K.diario.perfil.minutos) return;
     try { await K.diario.lote({perfil: {minutos: m}}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); } finally { K.refrescar(); } }});
 K.menuAvisos = btn => K.menu.abrir(btn, {titulo: "Avisos",
