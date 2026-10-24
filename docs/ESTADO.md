@@ -1,10 +1,12 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-24 (con accesorios) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-24 (cómo entrenás) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
-- **Con accesorios** (2026-10-24): vuelta 38 (acta `docs/actas/038-kozmos-con-accesorios.md`). Bandas y cajón en Tu equipo, 8 ejercicios dibujados (bandas, cajón y paralelas) como versiones de los escalones de siempre, motor «Cajón a intervalos», y la bienvenida que entra en teléfonos bajos. «Con equipo» publicada como kozmos-45. **Esperando a Fer**: el OK al tablero y dos decisiones del acta.
+- **Cómo entrenás** (2026-10-24): vuelta 39 (acta `docs/actas/039-kozmos-como-entrenas.md`). La rueda de «¿Cómo entrenás?» en la bienvenida; tu equipo sale de las formas elegidas, con «Sumar algo más». «Con accesorios» publicada como kozmos-46. **Esperando a Fer**: el OK al tablero y dos decisiones del acta.
+
+- **Con accesorios** (2026-10-24): vuelta 38 (acta `docs/actas/038-kozmos-con-accesorios.md`). Bandas y cajón en Tu equipo, 8 ejercicios dibujados (bandas, cajón y paralelas) como versiones de los escalones de siempre, motor «Cajón a intervalos», y la bienvenida que entra en teléfonos bajos. «Con equipo» publicada como kozmos-45. Aprobada por Fer y publicada como kozmos-46.
 
 - **Con equipo** (2026-10-24): vuelta 37 (acta `docs/actas/037-kozmos-con-equipo.md`). Barra y discos, banco, máquinas, anillas y máquina de remo, con 18 ejercicios dibujados como versiones de los escalones de siempre; escalera nueva «Empujar arriba»; los empujes y tirones se turnan. «Cada camino, su día» publicada como kozmos-44. Aprobada por Fer y publicada como kozmos-45.
 

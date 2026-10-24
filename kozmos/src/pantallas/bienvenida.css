@@ -60,11 +60,6 @@ body.en-bienvenida{overflow:hidden}
 /* 2 · qué tenés */
 #bv .b-eqs{display:grid; gap:10px; margin-top:18px; min-width:0}
 /* catorce cosas en una pantalla, sin desplazar: filas bajas de a dos (de a tres en horizontal) */
-#bv .b-eqg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:6px; min-width:0}
-/* «Nada, solo el piso» en una fila baja: dieciséis cosas entran en una pantalla sin desplazar */
-#bv .b-eqs > .b-eq[data-id="piso"]{grid-template-columns:40px 1fr 24px; padding:6px 14px 6px 6px; border-radius:18px}
-#bv .b-eqs > .b-eq[data-id="piso"] .tile{width:40px; height:40px; border-radius:13px}
-#bv .b-eqs > .b-eq[data-id="piso"] .b-mk{width:24px; height:24px}
 #bv .b-eq{position:relative; display:grid; grid-template-columns:56px 1fr 28px; align-items:center; gap:14px; min-width:0; text-align:left; background:var(--s1); border:1px solid var(--line); border-radius:24px; padding:14px 16px 14px 14px; color:var(--ink); cursor:pointer; font:inherit; transition:border-color .25s, transform .12s}
 #bv .b-eq .tile{width:56px; height:56px; border-radius:18px; background:var(--s2); display:grid; place-items:center; transition:background .25s, color .25s}
 #bv .b-eq.on .tile{background:var(--solid); color:var(--on-solid)}
@@ -72,11 +67,6 @@ body.en-bienvenida{overflow:hidden}
 #bv .b-eq b{font-size:var(--t-xl); font-weight:700; line-height:1.15; display:block}
 #bv .b-eq span{color:var(--ink-2); font-size:var(--t-md); display:block; margin-top:3px}
 #bv .b-eq .b-mk{width:28px; height:28px}
-#bv .b-eqg .b-eq{grid-template-columns:32px 1fr; min-height:44px; padding:5px 10px 5px 7px; gap:9px; border-radius:16px}
-#bv .b-eqg .b-eq .tile{width:32px; height:32px; border-radius:11px}
-#bv .b-eqg .b-eq .tile svg{width:18px; height:18px}
-#bv .b-eqg .b-eq b{font-size:var(--t-sm); font-weight:700; line-height:1.15; padding-right:12px}
-#bv .b-eqg .b-eq .b-mk{position:absolute; top:7px; right:7px; width:14px; height:14px}
 
 /* 2b · cuánto tiempo: un reloj de una hora que se gira con el dedo */
 #bv .b-dial{position:relative; width:270px; height:270px; margin:26px auto 0; touch-action:none; cursor:grab; border-radius:50%}
@@ -173,22 +163,18 @@ body.en-bienvenida{overflow:hidden}
 #bv .b-ruc{display:flex; align-items:center; gap:8px; background:var(--s1); border:1px solid var(--line); border-radius:999px; padding:4px 14px 4px 4px; font-weight:700; font-size:var(--t-sm)}
 #bv .b-verej{justify-self:start; padding:0; height:auto; text-decoration:underline; text-underline-offset:3px}
 
-/* teléfonos bajos (360 × 740): lo que tenés sigue entrando en una pantalla, con filas más bajas */
+/* teléfonos bajos (360 × 740): lo que vas a usar sigue entrando en una pantalla */
 @media (orientation: portrait) and (max-height: 800px){
   #bv .b-equipo h1{font-size:var(--t-3xl)}
   #bv .b-equipo .b-cab p{font-size:var(--t-md)}
-  #bv .b-equipo .b-eqs{margin-top:12px; gap:6px}
-  #bv .b-eqs > .b-eq[data-id="piso"]{padding:4px 12px 4px 4px; grid-template-columns:34px 1fr 22px}
-  #bv .b-eqs > .b-eq[data-id="piso"] .tile{width:34px; height:34px; border-radius:11px}
-  #bv .b-eqs > .b-eq[data-id="piso"] b{font-size:var(--t-lg)}
-  #bv .b-eqg{gap:5px}
-  #bv .b-eqg .b-eq{min-height:38px; padding:3px 9px 3px 5px; grid-template-columns:28px 1fr; gap:8px; border-radius:14px}
-  #bv .b-eqg .b-eq .tile{width:28px; height:28px; border-radius:9px}
-  #bv .b-eqg .b-eq .tile svg{width:16px; height:16px}
 }
 
+/* teléfonos muy bajos (375 × 667): la forma de arriba, más chica, para que la rueda no la tape */
 @media (orientation: portrait) and (max-height: 700px){
-  #bv .b-equipo .b-cab p{display:none}
+  #bv .b-forma .b-vit{top:168px}
+  #bv .b-forma .b-vi .b-cv.b-grande{--d:118px}
+  #bv .b-forma .b-vnom{font-size:var(--t-2xl); margin-top:4px}
+  #bv .b-forma .b-mio{margin-top:4px; padding:8px 18px}
 }
 
 /* horizontal (844 × 390): como Ajustes, la pregunta a la izquierda y lo que se elige a la derecha; los botones, abajo a la izquierda */
@@ -205,17 +191,8 @@ body.en-bienvenida{overflow:hidden}
   #bv .b-eqs{gap:5px}
   #bv .b-eqs > .b-eq{padding:6px 14px 6px 6px; grid-template-columns:36px 1fr 22px; border-radius:18px}
   #bv .b-eqs > .b-eq .tile{width:36px; height:36px; border-radius:12px}
-  #bv .b-eqs > .b-eq[data-id="piso"]{padding:4px 12px 4px 4px; grid-template-columns:30px 1fr 20px; border-radius:15px}
-  #bv .b-eqs > .b-eq[data-id="piso"] .tile{width:30px; height:30px; border-radius:10px}
-  #bv .b-eqs > .b-eq[data-id="piso"] .b-mk{width:20px; height:20px}
   #bv .b-eqs > .b-eq b{font-size:var(--t-lg)}
   #bv .b-eqs > .b-eq .b-mk{width:22px; height:22px}
-  #bv .b-eqg{grid-template-columns:repeat(3, minmax(0,1fr)); gap:5px}
-  #bv .b-eqg .b-eq{min-height:37px; grid-template-columns:26px 1fr; gap:7px; padding:3px 8px 3px 5px; border-radius:13px}
-  #bv .b-eqg .b-eq .tile{width:26px; height:26px; border-radius:9px}
-  #bv .b-eqg .b-eq .tile svg{width:16px; height:16px}
-  #bv .b-eqg .b-eq b{font-size:var(--t-s); padding-right:10px}
-  #bv .b-eqg .b-eq .b-mk{top:5px; right:5px; width:12px; height:12px}
   #bv .b-op{grid-template-columns:72px 1fr; padding:8px 14px 8px 8px}
   #bv .b-op .b-cv{--d:72px}
   #bv .b-figs{grid-template-columns:repeat(4, minmax(0,1fr))}
@@ -237,10 +214,71 @@ body.en-bienvenida{overflow:hidden}
   #bv .b-reloj{width:150px; height:150px}
 }
 
-/* horizontal en teléfonos bajos (740 × 360): las filas de tu equipo, un poco más bajas */
+/* horizontal en teléfonos bajos (740 × 360): lo que vas a usar, un poco más arriba */
 @media (orientation: landscape) and (max-height: 375px){
   #bv .b-pan.b-equipo{padding-top:calc(env(safe-area-inset-top,0px) + 50px)}
-  #bv .b-eqg .b-eq{min-height:33px; padding-block:2px}
-  #bv .b-eqg .b-eq .tile{width:24px; height:24px; border-radius:8px}
-  #bv .b-eqs > .b-eq[data-id="piso"]{padding-block:2px}
+}
+
+/* cómo entrenás: la rueda abajo, la forma de arriba grande en el centro; el tamaño de la figura sale del alto de la pantalla */
+/* nada se desplaza: el pulgar gira la rueda (overflow-x solo dejaba desplazar en vertical) */
+#bv .b-forma{touch-action:none; overflow:hidden; overflow:clip}
+#bv .b-vit{position:absolute; left:0; right:0; top:200px; display:grid; justify-items:center}
+#bv .b-vi{grid-area:1 / 1; display:grid; justify-items:center; gap:6px; text-align:center; padding:0 24px}
+#bv .b-vi .b-cv.b-grande{--d:clamp(150px, calc(100dvh - 650px), 210px); --in:7%; cursor:pointer}
+#bv .b-vnom{font:800 var(--t-3xl)/1.05 var(--f-ui); letter-spacing:-.02em; margin-top:8px}
+#bv .b-vtx{color:var(--ink-2); font-size:var(--t-md); line-height:1.3; margin:0; max-width:30ch}
+#bv .b-mio{display:inline-flex; align-items:center; gap:8px; margin-top:8px; background:var(--s1); color:var(--ink); border:1.5px solid var(--ink); border-radius:999px; padding:10px 20px; font:inherit; font-weight:700; cursor:pointer; transition:background .25s, color .25s}
+#bv .b-mio.on{background:var(--c); border-color:var(--c); color:var(--on-solid, #fff)}
+#bv .b-mio svg{width:18px; height:18px}
+#bv .b-arco{position:absolute; left:0; right:0; bottom:calc(env(safe-area-inset-bottom,0px) + 104px); height:118px; -webkit-mask-image:linear-gradient(#000 50%, transparent 98%); mask-image:linear-gradient(#000 50%, transparent 98%)}
+#bv .b-ri{position:absolute; left:50%; top:0; width:64px; margin-left:-32px; display:grid; justify-items:center; transform-origin:32px 182px; cursor:pointer}
+#bv .b-ri .b-rin{width:64px; height:64px}
+#bv .b-ri .b-cv{--d:64px; --in:9%}
+#bv .b-ri .b-dentro{background:var(--s2)}
+#bv .b-ri.on .b-dentro{background:var(--c-disco)}
+#bv .b-ri .b-dentro svg.fig{opacity:.55}
+#bv .b-ri.on .b-dentro svg.fig{opacity:1}
+#bv .b-ri span{display:none}
+#bv .b-guia{position:absolute; left:50%; top:-8px; width:80px; height:80px; margin-left:-40px; border-radius:50%; border:2px solid var(--ink); pointer-events:none}
+#bv .b-pista{position:absolute; left:50%; top:32px; width:300px; height:300px; margin-left:-150px; border-radius:50%; border:1.5px dashed var(--off); pointer-events:none}
+#bv .b-egr{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; margin-top:18px}
+#bv .b-et{position:relative; display:grid; justify-items:center; gap:8px; background:var(--s1); border:1px solid var(--line); border-radius:22px; padding:14px 6px 12px; color:var(--ink-2); cursor:pointer; font:inherit; min-width:0; transition:border-color .25s, color .25s, transform .12s}
+#bv .b-et.on{border-color:var(--ink); box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink)}
+#bv .b-et .tile{width:48px; height:48px; border-radius:16px; background:var(--s2); display:grid; place-items:center; transition:background .25s, color .25s}
+#bv .b-et.on .tile{background:var(--solid); color:var(--on-solid)}
+#bv .b-et .tile svg{width:24px; height:24px}
+#bv .b-et b{font-size:var(--t-sm, 13px); font-weight:700; line-height:1.15; text-align:center; text-wrap:balance}
+#bv .b-et .b-mk{position:absolute; top:8px; right:8px; width:18px; height:18px}
+#bv .b-evac{grid-column:1 / -1; color:var(--ink-2); margin:4px 0}
+#bv .b-egr.muchas{grid-template-columns:repeat(2, minmax(0,1fr)); gap:6px}
+#bv .b-egr.muchas .b-et{grid-template-columns:32px 1fr; justify-items:start; align-items:center; text-align:left; gap:9px; min-height:44px; padding:5px 22px 5px 7px; border-radius:16px}
+#bv .b-egr.muchas .b-et .tile{width:32px; height:32px; border-radius:11px}
+#bv .b-egr.muchas .b-et .tile svg{width:18px; height:18px}
+#bv .b-egr.muchas .b-et b{text-align:left}
+#bv .b-egr.muchas .b-et .b-mk{top:7px; right:7px; width:14px; height:14px}
+#bv .b-sumar{display:flex; align-items:center; gap:10px; margin-top:12px; background:var(--s1); border:1px dashed var(--ink-3); border-radius:999px; padding:12px 18px; color:var(--ink); font:inherit; font-weight:700; cursor:pointer; justify-self:start}
+#bv .b-sumar[hidden]{display:none}
+#bv .b-sumar svg:last-child{width:16px; height:16px}
+
+/* el menú de «Sumar algo más» va por encima de la bienvenida */
+body:has(#bv) .popscrim{z-index:9001}
+body:has(#bv) .pop{z-index:9002}
+/* horizontal: la rueda queda a la izquierda, debajo de la pregunta; la forma de arriba, grande a la derecha */
+@media (orientation: landscape) and (max-height: 520px){
+  /* en la grilla de dos columnas, lo absoluto se ubica dentro de su columna */
+  #bv .b-forma .b-vit{grid-column:2 / 3; left:0; right:0; top:calc(env(safe-area-inset-top,0px) + 24px)}
+  #bv .b-forma .b-vi .b-cv.b-grande{--d:178px}
+  #bv .b-forma .b-vnom{font-size:var(--t-2xl); margin-top:4px}
+  #bv .b-forma .b-arco{grid-column:1 / 2; left:0; right:0; bottom:calc(env(safe-area-inset-bottom,0px) + 100px); height:104px}
+  #bv .b-egr{margin-top:0; gap:6px}
+  #bv .b-et{padding:8px 6px 8px; gap:5px; border-radius:18px}
+  #bv .b-et .tile{width:38px; height:38px; border-radius:13px}
+  #bv .b-et .tile svg{width:20px; height:20px}
+  #bv .b-egr.muchas{grid-template-columns:repeat(3, minmax(0,1fr)); gap:5px}
+  #bv .b-egr.muchas .b-et{min-height:37px; grid-template-columns:26px 1fr; gap:7px; padding:3px 18px 3px 5px; border-radius:13px}
+  #bv .b-egr.muchas .b-et .tile{width:26px; height:26px; border-radius:9px}
+  #bv .b-egr.muchas .b-et .tile svg{width:16px; height:16px}
+  #bv .b-egr.muchas .b-et b{font-size:var(--t-s)}
+  #bv .b-egr.muchas .b-et .b-mk{top:5px; right:5px; width:12px; height:12px}
+  #bv .b-sumar{margin-top:8px; padding:8px 16px}
 }
