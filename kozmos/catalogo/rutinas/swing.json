@@ -1,0 +1,1220 @@
+{
+ "id": "swing",
+ "nombre": "Swing para empezar",
+ "familia": "mo",
+ "texto": "Swing con una kettlebell o una mancuerna, a intervalos. Primero aprendés el gesto con pausas largas; cada semana trabajás más y descansás menos.",
+ "semanas": 6,
+ "dias": 3,
+ "minutos": 15,
+ "nivel": 1,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
+ "equipo": [
+  "pesa"
+ ],
+ "alimenta": [
+  "motor.intervalos-1"
+ ],
+ "fuente": "Jay y otros (2011) y Falatic y otros (2015), swing y arranque con kettlebell",
+ "sesiones": [
+  {
+   "nombre": "Día 1",
+   "nota": "1 bloque de 8 × 20 s de swing, 40 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 40
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "1 bloque de 10 × 20 s de swing, 40 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 40
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 bloques de 8 × 20 s de swing, 40 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 40
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 40
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 bloques de 10 × 20 s de swing, 40 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 40
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 40
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "1 bloque de 8 × 30 s de swing, 30 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "1 bloque de 10 × 30 s de swing, 30 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 bloques de 8 × 30 s de swing, 30 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 bloques de 10 × 30 s de swing, 30 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 bloques de 8 × 30 s de swing, 30 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "1 bloque de 10 × 20 s de swing, 40 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 40
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "1 bloque de 8 × 30 s de swing, 30 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "1 bloque de 10 × 20 s de swing, 40 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 20,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 40
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 20,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "1 bloque de 8 × 40 s de swing, 20 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 40,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 20
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "1 bloque de 10 × 40 s de swing, 20 s de pausa.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 40,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 20
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 bloques de 10 × 30 s de swing, 30 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 30,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 30
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 30,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 1",
+   "nota": "2 bloques de 8 × 40 s de swing, 20 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 40,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 20
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 7,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 40,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 20
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2",
+   "nota": "2 bloques de 10 × 40 s de swing, 20 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 40,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 20
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 9,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 40,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 20
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3",
+   "nota": "2 bloques de 12 × 40 s de swing, 20 s de pausa. 2 min entre bloques.",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "entrada",
+       "seg": 180,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ],
+       "nota": "Liviano, aprendiendo el gesto"
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 40,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 20
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "pausa",
+       "seg": 120
+      },
+      {
+       "repetir": 11,
+       "tramos": [
+        {
+         "clase": "trabajo",
+         "seg": 40,
+         "ejercicio": [
+          "swing-kettlebell",
+          "swing-mancuerna"
+         ]
+        },
+        {
+         "clase": "pausa",
+         "seg": 20
+        }
+       ]
+      },
+      {
+       "clase": "trabajo",
+       "seg": 40,
+       "ejercicio": [
+        "swing-kettlebell",
+        "swing-mancuerna"
+       ]
+      },
+      {
+       "clase": "vuelta",
+       "seg": 120
+      }
+     ],
+     "mide": {
+      "ejercicio": "intervalos",
+      "tipo": "sesiones"
+     }
+    }
+   ]
+  }
+ ]
+}

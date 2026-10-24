@@ -1,0 +1,1311 @@
+{
+ "id": "rango",
+ "nombre": "Movilidad con fuerza",
+ "familia": "ra",
+ "texto": "Tres días: cadera, hombros y todo el cuerpo. Posturas que se alargan cada semana y fuerza al final del recorrido, para que lo que ganás quede.",
+ "semanas": 8,
+ "dias": 3,
+ "minutos": 15,
+ "nivel": 2,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
+ "equipo": [],
+ "alimenta": [
+  "espagat.cosaca-15s",
+  "puente.pared-20s",
+  "espagat.lateral-90-10s"
+ ],
+ "fuente": "Afonso y otros (2021), estiramiento y entrenamiento de fuerza en todo el recorrido",
+ "sesiones": [
+  {
+   "nombre": "Cadera",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "cosaca"
+    },
+    {
+     "escalera": "isquios",
+     "series": 2,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 60,
+     "desde": "puente-gluteo"
+    }
+   ]
+  },
+  {
+   "nombre": "Hombros",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-pared"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-arriba"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Todo el cuerpo",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 2,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
+    },
+    {
+     "escalera": "puente",
+     "series": 2,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Cadera",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "cosaca"
+    },
+    {
+     "escalera": "isquios",
+     "series": 2,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 60,
+     "desde": "puente-gluteo"
+    }
+   ]
+  },
+  {
+   "nombre": "Hombros",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-pared"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-arriba"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Todo el cuerpo",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 2,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
+    },
+    {
+     "escalera": "puente",
+     "series": 2,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Cadera",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "cosaca"
+    },
+    {
+     "escalera": "isquios",
+     "series": 2,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 60,
+     "desde": "puente-gluteo"
+    }
+   ]
+  },
+  {
+   "nombre": "Hombros",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "pecho-pared"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "dorsal-arriba"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Todo el cuerpo",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 2,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
+    },
+    {
+     "escalera": "puente",
+     "series": 2,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Cadera",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "cosaca"
+    },
+    {
+     "escalera": "isquios",
+     "series": 2,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 60,
+     "desde": "puente-gluteo"
+    }
+   ]
+  },
+  {
+   "nombre": "Hombros",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "pecho-pared"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "dorsal-arriba"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Todo el cuerpo",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 45,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 2,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
+    },
+    {
+     "escalera": "puente",
+     "series": 2,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Cadera",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "cosaca"
+    },
+    {
+     "escalera": "isquios",
+     "series": 2,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 60,
+     "desde": "puente-gluteo"
+    }
+   ]
+  },
+  {
+   "nombre": "Hombros",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "pecho-pared"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "dorsal-arriba"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Todo el cuerpo",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 2,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
+    },
+    {
+     "escalera": "puente",
+     "series": 2,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Cadera",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "cosaca"
+    },
+    {
+     "escalera": "isquios",
+     "series": 2,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 60,
+     "desde": "puente-gluteo"
+    }
+   ]
+  },
+  {
+   "nombre": "Hombros",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "pecho-pared"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "dorsal-arriba"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Todo el cuerpo",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 75,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 2,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
+    },
+    {
+     "escalera": "puente",
+     "series": 2,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Cadera",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "cosaca"
+    },
+    {
+     "escalera": "isquios",
+     "series": 2,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 60,
+     "desde": "puente-gluteo"
+    }
+   ]
+  },
+  {
+   "nombre": "Hombros",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "pecho-pared"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "dorsal-arriba"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Todo el cuerpo",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 90,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 2,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
+    },
+    {
+     "escalera": "puente",
+     "series": 2,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Cadera",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "mariposa-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "gluteo-tobillo-rodilla",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "aductores-acostado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "estiramiento-corredor",
+       "nota": "El otro lado"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 3,
+     "descanso": 45,
+     "desde": "cosaca"
+    },
+    {
+     "escalera": "isquios",
+     "series": 2,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 60,
+     "desde": "puente-gluteo"
+    }
+   ]
+  },
+  {
+   "nombre": "Hombros",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "pecho-pared"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "dorsal-arriba"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "hombros-silla"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "triceps-sobre-cabeza",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "manos-atras-sentado"
+      }
+     ]
+    },
+    {
+     "escalera": "puente",
+     "series": 3,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  },
+  {
+   "nombre": "Todo el cuerpo",
+   "bloques": [
+    {
+     "tramos": [
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "isquios-pierna-arriba",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "piernas-abiertas"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "Un lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "flexor-cuadriceps-estocada",
+       "nota": "El otro lado"
+      },
+      {
+       "clase": "postura",
+       "seg": 60,
+       "ejercicio": "postura-nino"
+      }
+     ]
+    },
+    {
+     "escalera": "cadera",
+     "series": 2,
+     "descanso": 45,
+     "desde": "sentadilla-profunda"
+    },
+    {
+     "escalera": "puente",
+     "series": 2,
+     "descanso": 45,
+     "desde": "hombros-pared"
+    }
+   ]
+  }
+ ]
+}

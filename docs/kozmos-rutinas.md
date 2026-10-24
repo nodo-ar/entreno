@@ -158,6 +158,17 @@ Una rutina que seguís conserva sus ejercicios, series, semanas, semana de prueb
 - `familia`: `fu`, `ra` o `mo`, como las constelaciones.
 - `alimenta`: ids de estrellas hacia las que lleva. Al menos una.
 - `sesiones`: todas, en orden (semanas × días). La sesión `i` es la que toca después de hacer `i` sesiones de la rutina.
+- `equipo` puede pedir `pesa`: una mancuerna o una kettlebell, cualquiera de las dos (la app la suma sola si tenés alguna).
+
+**Cada familia, en los tres niveles (vuelta 35).** Para hacer cualquier cosa por tu cuenta, sin depender del día que arma Kozmos, se sumaron cinco rutinas, todas con escalones o tiempos que crecen semana a semana:
+
+| Rutina | Familia | Nivel | Qué progresa |
+| --- | --- | --- | --- |
+| Fuerza en casa (`casa`) | fuerza | 1 | Escaleras de todo el cuerpo, 3 series y 4 desde la semana 5; con una pesa, el remo, la sentadilla y el peso muerto arrancan con kilos |
+| Fuerza con una pesa (`una_pesa`) | fuerza | 2 | Las mismas escaleras con kilos, más swing y paseo de la maleta; primero suben las repeticiones, después los kilos |
+| Movilidad con fuerza (`rango`) | movilidad | 2 | Cadera, hombros y todo el cuerpo: posturas de 45 s a 1:30 y escaleras de cadera, puente e isquios |
+| Movilidad avanzada (`abierto`) | movilidad | 3 | Espagat, piernas abiertas y puente: posturas de 1 a 2 min y los últimos escalones de cadera y puente |
+| Swing para empezar (`swing`) | motor | 1 | Swing a intervalos: de 20 s con 40 de pausa a 40 s con 20, y de un bloque a dos |
 
 ### Bloques
 

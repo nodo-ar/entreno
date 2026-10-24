@@ -1030,7 +1030,7 @@ prueba("rutina-cardio-entera", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["motor"]);
   await aPlanes(p);
-  ok(await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "no están las 26 rutinas");
+  ok(await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 31, "no están las 31 rutinas");
   await p.click('[data-ir="#/planes/rutinas/c0a5"]'); await esperarTitulo(p, "Correr tus primeros 5 km");
   ok(await p.$$eval(".rut-dia", x => x.length) === 3, "la semana no tiene 3 días");
   await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
@@ -1239,11 +1239,11 @@ prueba("escalera-diario-viejo", async () => {
 });
 /* ===== Los días de una rutina: qué toca cada día, sin «Día 1 · Día 1» ===== */
 prueba("rutina-dias-nombres", async () => {
-  /* en las 26 rutinas: un día por tarjeta, sin el nombre repetido, y cada día dice qué se hace */
+  /* en las 31 rutinas: un día por tarjeta, sin el nombre repetido, y cada día dice qué se hace */
   const {ctx, p} = await pagina();
   await ir(p, "#/planes");
   const rs = await p.evaluate(() => K.RUTINAS.map(r => [r.id, r.dias]));
-  ok(rs.length === 26, "no están las 26 rutinas");
+  ok(rs.length === 31, "no están las 31 rutinas");
   for (const [id, dias] of rs){
     await ir(p, `#/planes/rutinas/${id}`); await p.waitForSelector(".rut-dia");
     const ds = await p.$$eval(".rut-dia", xs => xs.map(x => ({t: x.querySelector(".lb, span")?.textContent || "", filas: x.querySelectorAll(".ln.toca").length})));
@@ -1768,7 +1768,7 @@ prueba("planes-pestana", async () => {
   /* para vos arriba; después rutinas, ejercicios y pruebas (vuelta 32) */
   const [yv, yr, ye, yh] = await p.evaluate(() => [".pv-fila", "#pl-rutinas", "#pl-ejercicios", "#pl-hazanas"].map(s => document.querySelector(s).getBoundingClientRect().top));
   ok(yv < yr && yr < ye && ye < yh, "el orden de Planes no es para vos, rutinas, ejercicios y pruebas");
-  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 14 && await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "Planes no tiene las 14 pruebas y las 26 rutinas");
+  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 14 && await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 31, "Planes no tiene las 14 pruebas y las 31 rutinas");
   /* abrir una hazaña y volver a Planes */
   await p.click('[data-ir="#/planes/hazanas/orion"]'); await esperarTitulo(p, "1000 saltos de soga");
   ok(await p.evaluate(() => location.hash) === "#/planes/hazanas/orion", "la hazaña no vive en Planes");

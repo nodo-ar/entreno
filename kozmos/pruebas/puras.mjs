@@ -404,7 +404,7 @@ prueba("respaldo-ida-y-vuelta", () => {
 /* ===== Rutinas y hazañas (etapa 5) ===== */
 const EJM = () => Object.fromEntries(EJ.ejercicios.map(e => [e.id, e]));
 const ESTRELLAS = new Set(CAT.constelaciones.flatMap(c => c.estrellas.map(e => e.id)));
-const EQUIPOS = ["barra", "paralelas", "pared", "poste", "lastre", "bici", "soga", "mancuernas", "kettlebell"];
+const EQUIPOS = ["barra", "paralelas", "pared", "poste", "lastre", "bici", "soga", "mancuernas", "kettlebell", "pesa"];
 const CLASES = ["entrada", "fuerte", "suave", "pausa", "trabajo", "postura", "vuelta"];
 const alts = x => [].concat(x || []);
 function revisarTramos(ts, ej, donde){
@@ -417,7 +417,7 @@ function revisarTramos(ts, ej, donde){
 }
 prueba("catalogo-rutinas", () => {
   const ej = EJM(), ids = new Set(), fams = new Set(CAT.familias.map(f => f.id));
-  ok(RUTINAS.length === 26, `esperaba 26 rutinas, hay ${RUTINAS.length}`);
+  ok(RUTINAS.length === 31, `esperaba 31 rutinas, hay ${RUTINAS.length}`);
   for (const [f, r] of RUTINAS){
     ok(f === r.id + ".json", `${f}: el archivo se llama como su id`);
     ok(!ids.has(r.id), `rutina repetida: ${r.id}`); ids.add(r.id);
@@ -1464,7 +1464,7 @@ prueba("camino-de-estrella", () => {
 });
 prueba("rutina-armar-bloques", () => {
   /* armarBloques es lo que hacía deRutina por dentro: con el catálogo de main, el código de main y el de ahora dan lo mismo,
-     byte a byte, en las 26 rutinas, todos sus días, cinco equipos, con y sin descarga y con historia */
+     byte a byte, en las 31 rutinas, todos sus días, cinco equipos, con y sin descarga y con historia */
   const viejo = desdeMain("src/sesion/rutina.js"), escM = desdeMain("catalogo/escaleras.json"), ejM = desdeMain("catalogo/ejercicios.json");
   const ej = EJM(), equipos = [null, [], ["barra"], ["mancuernas"], ["barra", "paralelas", "pared", "poste", "lastre", "bici", "soga", "mancuernas", "kettlebell"]];
   const hist = ESC.escaleras.flatMap((e, i) => [0, 1].map(j => deDia(`h${i}${j}`, `2026-09-${String(i * 2 + j + 1).padStart(2, "0")}`, e.id, e.pasos[Math.min(2, e.pasos.length - 1)].ejercicio, [8, 8, 8], {rango: [5, 8]})));
