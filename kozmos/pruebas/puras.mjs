@@ -1667,7 +1667,7 @@ prueba("dia-serie-escalera", () => {
   ok(cam().pasos[0].ejercicio === "dominada-negativa" && cam().pasos[0].nuevo === "sube", "no subió: " + cam().pasos[0].ejercicio);
 });
 
-/* ===== Tu nivel: cinco movimientos y cuatro niveles (vuelta 36; antes, cuatro preguntas por cantidad) ===== */
+/* ===== Tu nivel: cinco movimientos y cuatro niveles (vuelta 34; antes, cuatro preguntas por cantidad) ===== */
 const TODO_EQ = ["barra", "paralelas", "pared", "poste", "lastre", "mancuernas", "kettlebell", "bici", "soga"];
 prueba("nivel-desde", () => {
   /* cada movimiento, sus cuatro niveles (Inicial a Experto) y «No sé» al final; cada nivel es un ejercicio que existe */
