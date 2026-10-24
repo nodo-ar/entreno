@@ -38,6 +38,9 @@ K.rutina = (() => {
   const escaleras = () => (K.ESCALERAS && K.ESCALERAS.escaleras) || [];
   const escalera = id => escaleras().find(e => e.id === id) || null;
   const puede = (id, ej, equipo) => !equipo || (ej[id]?.equipo || []).every(e => equipo.includes(e));
+  /* «pesa» es una pesa cualquiera: con mancuernas o con una kettlebell salen los ejercicios de una sola pesa
+     (remo a un brazo, sentadilla, peso muerto). conPesa(equipo) lo suma a lo que marcaste; las pantallas pasan tu equipo así */
+  const conPesa = equipo => equipo && !equipo.includes("pesa") && (equipo.includes("mancuernas") || equipo.includes("kettlebell")) ? [...equipo, "pesa"] : equipo;
   /* los ejercicios de un escalón: el de peso («conPeso», si tenés mancuernas), el de siempre y los que lo reemplazan («tambien») */
   const idsPaso = p => [...(p.conPeso ? [p.conPeso.ejercicio] : []), p.ejercicio, ...(p.tambien || [])];
   /* el ejercicio de ese escalón con tu equipo: sin decir tu equipo, el de siempre; con lo que pide el de peso, ese (con sus kilos);
@@ -61,7 +64,10 @@ K.rutina = (() => {
     /* si tu equipo no permite ningún escalón, la escalera entera: la rutina ya avisa lo que pide */
     const pasos = deTuEquipo.length ? deTuEquipo : todos;
     const indice = Object.fromEntries(esc.pasos.flatMap((p, k) => idsPaso(p).map(e => [e, k])));
-    const d = desde === undefined ? 0 : indice[desde] ?? 0;
+    /* pesas primero: con una pesa, la escalera arranca por lo menos en su primer escalón con kilos (los kilos se ajustan a vos;
+       lo de abajo, sin peso, queda para bajar). Remo con una pesa arranca en el remo a un brazo, no agarrado de un poste */
+    const conKg = equipo ? pasos.find(p => p.kgInicial !== undefined && puede(p.ejercicio, ej, equipo)) : null;
+    const d = Math.max(desde === undefined ? 0 : indice[desde] ?? 0, conKg ? conKg.k : 0);
     return {id: esc.id, real: true, nombre: esc.nombre, pasos, indice, rango, desde: Math.max(0, pasos.reduce((j, p, i) => p.k <= d ? i : j, 0))};
   }
   /* un bloque suelto con rango es una escalera de un solo escalón: suma por serie, descarga y, con carga, suma kilos */
@@ -507,6 +513,6 @@ K.rutina = (() => {
   const faltan = (dias, f) => { if (!dias || !dias.length) return 1; const h = diaSemana(f); for (let k = 1; k <= 7; k++) if (dias.includes((h + k) % 7)) return k; return 1; };
 
   return {NIVELES, SENS, duracion, minutos, nombreDia, serie, semanas, tipoSemana, esSemanaDePrueba, esMeta, metaDe, nombreTramos, filasTramos, filasSeries, filas, dia, desplegar, elegir, sePuede, falta, objetivos, deRutina, deHazana, mejorEs, medir, enCurso, diaSemana, toca, faltan, vezPasada, deSiempre,
-    escalera, escaleras, elegirEscalera, defEscalera, defSuelto, escalon, idsPaso, variante, armarBloques, escalonDe, escalonesTodos, metas, arranque, inferir, sensDe, escalerasDe, cambios,
+    escalera, escaleras, elegirEscalera, conPesa, defEscalera, defSuelto, escalon, idsPaso, variante, armarBloques, escalonDe, escalonesTodos, metas, arranque, inferir, sensDe, escalerasDe, cambios,
     veces, anteriores, umbrales, magnitud, cuando, proximaPrueba, hazanasDe, supera, CADA};
 })();

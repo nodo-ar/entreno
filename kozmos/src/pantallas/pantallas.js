@@ -6,9 +6,11 @@ K.vacio = (dibujo, titulo, texto, cls = "") => `<section class="cd vacio ${cls}"
 
 /* el equipo que pide alguna estrella o rutina del catálogo */
 K.EQUIPOS = [["barra", "Barra"], ["paralelas", "Paralelas"], ["pared", "Pared libre"], ["poste", "Poste"], ["lastre", "Lastre"], ["mancuernas", "Mancuernas"], ["kettlebell", "Kettlebell"], ["bici", "Bici"], ["soga", "Soga"]];
-K.equipoNombre = id => (K.EQUIPOS.find(x => x[0] === id) || [id, id])[1];
+K.equipoNombre = id => id === "pesa" ? "Una mancuerna o kettlebell" : (K.EQUIPOS.find(x => x[0] === id) || [id, id])[1];
 /* lo que marcaste. Sin elegir todavía (null) no se ve nada marcado; el cielo, en cambio, muestra todo hasta que lo digas (ver cielo.js) */
 K.equipo = () => K.diario.perfil.equipo || [];
+/* tu equipo como lo mira el motor: con mancuernas o una kettlebell, también «pesa» (K.rutina.conPesa); sin decirlo, null */
+K.tuEquipo = () => K.rutina.conPesa(K.diario.perfil.equipo || null);
 /* 70.5 → «70,5» */
 K.kg = v => String(v).replace(".", ",");
 
@@ -139,14 +141,14 @@ K.equipoTocar = async id => {
    cada escalera arranca más arriba y lo de abajo se da por hecho.
    Desde Vos es un ajuste; desde Hoy, el primer día, el segundo paso de «Que Kozmos arme tu día». ===== */
 K.resumenNivel = () => {
-  const eq = K.diario.perfil.equipo || null, k = K.nivel.respondidas(K.diario.perfil.nivel, eq);
+  const eq = K.tuEquipo(), k = K.nivel.respondidas(K.diario.perfil.nivel, eq);
   return k ? `${k} de ${K.nivel.preguntas(eq).length}` : "Sin decir";
 };
 /* las escaleras de fuerza que mueve tu nivel, en el orden del molde */
 const ESC_NIVEL = ["tirar", "remo", "empujar", "fondos", "piernas", "isquios", "lsit"];
 K.P.nivel = (desde = "vos") => {
   const hoy = desde === "hoy", paso = hoy && K.primerDia() && K.pasoArmar("nivel"), panel = !hoy && K.horizontal();
-  const n = K.nivel.normal(K.diario.perfil.nivel) || {}, eq = K.diario.perfil.equipo || null;
+  const n = K.nivel.normal(K.diario.perfil.nivel) || {}, eq = K.tuEquipo();
   const filas = K.nivel.preguntas(eq).map(q => { const o = q.opciones.find(x => x[0] === n[q.id]), nv = q.niveles[o && o[0] !== "nose" ? +o[0] : 0];
     return `<button type="button" class="ajr" id="nv-${q.id}" data-nivel="${q.id}" aria-haspopup="menu" aria-expanded="false"><span class="tile ico-tile">${K.icono.ejercicio(nv.ej, "fu", 40)}</span><span class="ses-fila">${K.esc(q.nombre)}<small class="mute">${K.esc(o && o[2] ? o[2] : q.pregunta)}</small></span><em${o ? "" : ' class="nv-sin"'}>${K.esc(o ? o[1] : "Elegí")}</em>${K.ic("chevd", "chev")}</button>`; }).join("");
   /* dónde arrancás con esto: el escalón de cada escalera que tu equipo permite (lo que ya hiciste manda) */

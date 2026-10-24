@@ -1313,8 +1313,8 @@ prueba("serie-con-kilos", async () => {
   const fila = async (sel, q) => p.$$eval(sel + " .ln.toca", (ls, q) => { const l = ls.find(l => l.querySelector(".tg").textContent.startsWith(q)); if (!l) return "";
     const n = l.querySelector(".toca-n"), k = n.querySelector(".kg"), a = n.firstElementChild.getBoundingClientRect(), b = k ? k.getBoundingClientRect() : null;
     return `${n.firstElementChild.textContent}|${k ? k.textContent : ""}|${k && k.querySelector("svg") && Math.abs(a.right - b.right) < 1.5 && b.top >= a.bottom - 1 ? "debajo" : "fuera"}`; }, q);
-  ok((await fila("main", "Remo unilateral con mancuerna")) === "3 × 8–12|8 kg|debajo", "Hoy: " + await fila("main", "Remo unilateral con mancuerna"));
-  ok((await fila("main", "Sentadilla con mancuernas")).endsWith("|4 kg|debajo"), "la sentadilla con mancuernas: " + await fila("main", "Sentadilla con mancuernas"));
+  ok((await fila("main", "Remo a un brazo con pesa")) === "3 × 8–12|8 kg|debajo", "Hoy: " + await fila("main", "Remo a un brazo con pesa"));
+  ok((await fila("main", "Sentadilla con pesa")).endsWith("|4 kg|debajo"), "la sentadilla con mancuernas: " + await fila("main", "Sentadilla con pesa"));
   /* la serie: los kilos de la mancuerna y que es más peso */
   await aLaSerie(p);
   ok(await p.evaluate(() => K.sesion.paso().ejercicio) === "remo-mancuerna", "la primera serie: " + await p.evaluate(() => K.sesion.paso().ejercicio));
@@ -1343,7 +1343,26 @@ prueba("serie-con-kilos", async () => {
   ok(li.some(([c, g, t]) => c === "sube" && g === "▲" && t.startsWith("Remo") && t.includes("+2 kg ahora 8 kg")), "el resumen: " + JSON.stringify(li));
   /* la rutina en Planes: los días dicen los kilos, los últimos que pusiste (9, aunque la sesión se cortó) */
   await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia");
-  ok((await fila(".rut-dia", "Remo unilateral con mancuerna")).endsWith("|9 kg|debajo"), "Planes: " + await fila(".rut-dia", "Remo unilateral con mancuerna"));
+  ok((await fila(".rut-dia", "Remo a un brazo con pesa")).endsWith("|9 kg|debajo"), "Planes: " + await fila(".rut-dia", "Remo a un brazo con pesa"));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+/* ===== Pesas primero (vuelta 35): con una kettlebell sola hay remo, sentadilla y peso muerto con la pesa ===== */
+prueba("solo-kettlebell", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await p.evaluate(async () => { await K.diario.perfilPoner("equipo", ["kettlebell"]); await K.diario.perfilPoner("rumbo", ["front-lever", "una-pierna"]); K.refrescar(); });
+  await p.waitForSelector("#s-empezar");
+  const ejs = await p.evaluate(() => K.hoyPlan().bloques.flatMap(b => b.pasos || []).map(x => x.ejercicio));
+  ok(ejs.includes("remo-mancuerna") && !ejs.includes("remo-poste") && ejs.some(e => ["sentadilla-mancuernas", "peso-muerto-rumano"].includes(e)), "el día con una kettlebell: " + [...new Set(ejs)]);
+  ok((await p.textContent("main .hoy-toca")).includes("Remo a un brazo con pesa"), "Hoy no muestra el remo con pesa");
+  /* en la biblioteca: con kettlebell aparece lo de una pesa, y lo dice «Con una mancuerna o kettlebell» */
+  await p.evaluate(() => { K.prefs.set("ejercicios.que", "todo"); K.prefs.set("ejercicios.con", "kettlebell"); }); await ir(p, "#/planes/ejercicios");
+  ok(await p.$('[data-ir="#/planes/ejercicios/remo-mancuerna"]') && await p.$('[data-ir="#/planes/ejercicios/swing-kettlebell"]') && !(await p.$('[data-ir="#/planes/ejercicios/press-hombros"]')), "con kettlebell, la biblioteca no muestra lo de una pesa");
+  await ir(p, "#/planes/ejercicios/remo-mancuerna"); await esperarTitulo(p, "Remo a un brazo con pesa");
+  ok((await p.textContent(".ej-como")).includes("Una mancuerna o kettlebell") && !(await p.$(".aviso-tenue")), "el ejercicio no dice con qué: " + await p.textContent(".ej-como"));
+  /* sin pesas, pide una */
+  await p.evaluate(() => K.diario.perfilPoner("equipo", ["barra"])); await ir(p, "#/planes/ejercicios/sentadilla-mancuernas"); await esperarTitulo(p, "Sentadilla con pesa");
+  ok((await p.textContent(".aviso-tenue")).startsWith("Pide una mancuerna o kettlebell."), "sin pesas no la pide: " + await p.textContent(".aviso-tenue"));
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
