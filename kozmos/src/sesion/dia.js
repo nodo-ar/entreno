@@ -153,6 +153,8 @@ K.dia = (() => {
       {ej: "remo-maquina", t: 30, p: 90, n: 6}, {ej: "remo-maquina", t: 40, p: 80, n: 6}, {ej: "remo-maquina", t: 60, p: 60, n: 8}, {ej: "remo-maquina", t: 90, p: 60, n: 6}]},
     {con: "mancuernas", nombre: "Mancuerna a intervalos", pasos: [
       {ej: "swing-mancuerna", t: 20, p: 40, n: 10}, {ej: "swing-mancuerna", t: 30, p: 30, n: 10}, {ej: "swing-mancuerna", t: 40, p: 20, n: 10}]},
+    {con: "cajon", nombre: "Cajón a intervalos", pasos: [
+      {ej: "salto-cajon", t: 20, p: 40, n: 8}, {ej: "salto-cajon", t: 20, p: 30, n: 10}, {ej: "salto-cajon", t: 30, p: 30, n: 10}]},
     {con: "soga", nombre: "Soga a intervalos", pasos: [{ej: "soga", t: 30, p: 30, n: 8}, {ej: "soga", t: 40, p: 20, n: 10}, {ej: "soga", t: 60, p: 30, n: 10}]},
     /* trotar y caminar: no pide equipo, va si correr es lo tuyo */
     {con: "trote", gusto: true, nombre: "Trote y caminata", fuerte: true, nota: ["Trotá", "Caminá"], pasos: [

@@ -43,6 +43,8 @@ K.I = {
   banco:'<path d="M3 10h18M6 10v8M18 10v8M9 6h6"/>',
   maquinas:'<path d="M5 3v18M5 4h11v6"/><rect x="13" y="10" width="6" height="8" rx="1"/><path d="M13 13h6M13 15.5h6M3 21h4"/>',
   anillas:'<path d="M8 3v8M16 3v8"/><circle cx="8" cy="15" r="4"/><circle cx="16" cy="15" r="4"/>',
+  bandas:'<path d="M6 4c-3 5-3 11 0 16M18 4c3 5 3 11 0 16M6 4h12M6 20h12"/>',
+  cajon:'<path d="M4 9l3-4h13l-3 4zM4 9h13v11H4zM17 9l3-4v11l-3 4"/>',
   remadora:'<circle cx="6" cy="13" r="4"/><path d="M3 19h18M14 17h5M9.5 11.5 15 14"/>',
   mancuernas:'<path d="M3 10v4M6 8v8M18 8v8M21 10v4M6 12h12"/>',
   kettlebell:'<path d="M9 8a3 3 0 0 1 6 0"/><path d="M8.5 8h7l2 4a6 6 0 1 1-11 0z"/>',

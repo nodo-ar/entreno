@@ -407,7 +407,7 @@ prueba("respaldo-ida-y-vuelta", () => {
 /* ===== Rutinas y hazañas (etapa 5) ===== */
 const EJM = () => Object.fromEntries(EJ.ejercicios.map(e => [e.id, e]));
 const ESTRELLAS = new Set(CAT.constelaciones.flatMap(c => c.estrellas.map(e => e.id)));
-const EQUIPOS = ["barra", "paralelas", "anillas", "pared", "poste", "lastre", "bici", "remadora", "soga", "mancuernas", "kettlebell", "discos", "banco", "maquinas", "pesa"];
+const EQUIPOS = ["barra", "paralelas", "anillas", "bandas", "cajon", "pared", "poste", "lastre", "bici", "remadora", "soga", "mancuernas", "kettlebell", "discos", "banco", "maquinas", "pesa"];
 const CLASES = ["entrada", "fuerte", "suave", "pausa", "trabajo", "postura", "vuelta"];
 const alts = x => [].concat(x || []);
 function revisarTramos(ts, ej, donde){
@@ -1456,6 +1456,20 @@ prueba("gimnasio-kilos", () => {
   const d = armarDia(["front-lever"], {equipo: rutina.conPesa(gym), minutos: 45}), xs = deMolde(d.bloques, "fuerza").flatMap(b => b.pasos);
   ok(xs.some(x => x.ejercicio === "sentadilla-barra" || x.ejercicio === "peso-muerto-barra") && xs.filter(x => x.kg).every(x => x.total && x.mano), "el día de gimnasio: " + xs.map(x => x.ejercicio));
   ok(molde.motor(["remadora"]).nombre === "Remo a intervalos" && molde.motor(["mancuernas"]).nombre === "Mancuerna a intervalos", "el motor con máquina de remo o mancuernas");
+});
+prueba("accesorios", () => {
+  /* bandas, cajón y paralelas: la versión con lo que tenés, sin kilos, en la misma escalera (vuelta 38) */
+  const ej = EJM(), paso = (id, equipo, o = {}) => rutina.escalonDe(id, {ej, equipo: rutina.conPesa(equipo), ...o});
+  ok(paso("remo", ["bandas"]).paso.ejercicio === "remo-banda" && paso("arriba", ["bandas"]).paso.ejercicio === "press-banda" && paso("isquios", ["bandas"]).paso.ejercicio === "buenos-dias-banda", "con bandas");
+  ok(paso("tirar", ["barra", "bandas"], {desde: "dominada-asistida"}).paso.ejercicio === "dominada-banda" && paso("tirar", ["bandas"]).paso.ejercicio !== "dominada-banda", "la dominada con banda pide barra");
+  ok(paso("piernas", ["cajon"], {desde: "zancada"}).paso.ejercicio === "subida-cajon", "con cajón, la subida");
+  ok(paso("lsit", ["paralelas"], {desde: "l-sit"}).paso.ejercicio === "l-sit-paralelas" && paso("remo", ["paralelas"], {desde: "remo-invertido"}).paso.ejercicio === "remo-paralelas", "con paralelas");
+  ok(!paso("remo", ["bandas"]).paso.kgInicial && !paso("remo", ["bandas"]).kg, "las bandas no llevan kilos");
+  ok(molde.motor(["cajon"]).nombre === "Cajón a intervalos", "el motor con cajón");
+  /* lo que va sin kilos cuenta también para la habilidad: el L-sit en paralelas te sube en el L-sit del piso */
+  const ls = [{id: "l1", fecha: "2026-10-01", bloques: [{familia: "fu", series: [20, 20, 20].map(v => ({ejercicio: "l-sit-paralelas", tipo: "segundos", valor: v, escalera: "lsit"}))}]}];
+  const conCuerpo = paso("lsit", ["paralelas"], {sinPeso: true, desde: "hollow", sesiones: ls});
+  ok(conCuerpo.paso.ejercicio === "l-sit", "el L-sit en paralelas cuenta sin peso: " + conCuerpo.paso.ejercicio);
 });
 prueba("empujes-se-turnan", () => {
   /* los tres empujes (flexiones, arriba y fondos) se turnan entre días: va el que más hace que no tocás */
