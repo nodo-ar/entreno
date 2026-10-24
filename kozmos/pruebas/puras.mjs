@@ -1476,10 +1476,11 @@ prueba("rutina-armar-bloques", () => {
     try {
       for (const [f, r] of RUTINAS) for (let i = 0; i < r.sesiones.length; i++) for (const equipo of equipos) for (const descarga of [false, true]) for (const sesiones of [[], hist]){
         const o = {ej: ejV, equipo, sesiones, marcas: [], descarga};
-        const n = rutina.deRutina(r, i, {...o, equipo: rutina.conPesa(equipo)}), v = cx.K.rutina.deRutina(r, i, o);
+        const n = rutina.deRutina(r, i, {...o, equipo: rutina.conPesa(equipo)}), v = cx.K.rutina.deRutina(r, i, cx.K.rutina.conPesa ? {...o, equipo: cx.K.rutina.conPesa(equipo)} : o);
         /* lo único que cambia a propósito: sin el equipo de su primera escalera, la misma escalera no va dos veces en un día; la segunda se saltea (vuelta 33) */
         const escs = d => d.bloques.flatMap(b => b.pasos || []).map(x => x.escalera).filter(Boolean), salteado = JSON.stringify([...new Set(escs(n))].sort()) === JSON.stringify([...new Set(escs(v))].sort()) && escs(n).length < escs(v).length;
-        /* y con pesas, el remo arranca en el remo a un brazo con pesa, no agarrado de un poste (vuelta 35): lo demás, igual */
+        /* y con pesas, el remo arranca en el remo a un brazo con pesa, no agarrado de un poste (vuelta 35): lo demás, igual.
+           Si main ya sabe de pesas, se le pasa el mismo equipo y tiene que dar idéntico */
         const sinRemo = d => JSON.stringify(d.bloques.map(b => ({...b, pasos: (b.pasos || []).filter(x => x.escalera !== "remo")}))).replaceAll('"remo-mancuerna"', '"remo-poste"'), pesas = !!equipo && equipo.includes("mancuernas") && sinRemo(n) === sinRemo(v);
         if (!(JSON.stringify(n) === JSON.stringify(v) || salteado || pesas) && process.env.DIF) console.log(f, i, JSON.stringify(equipo), sesiones.length, "\n", sinRemo(n).slice(0, 3000), "\n", sinRemo(v).slice(0, 3000));
         ok(JSON.stringify(n) === JSON.stringify(v) || salteado || pesas, `${f} día ${i + 1} (${JSON.stringify(equipo)}, ${descarga ? "descarga" : "carga"}): cambió`);
