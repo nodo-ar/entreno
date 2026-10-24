@@ -98,8 +98,11 @@
     "burpee-flexion": {fijo: "hN", en: [194, 264], rango: "avanzado", ciclo: true, muestra: .44, k: [paradoB, agachando, cuclillas, vueloAtras, arriba, abajo, arriba, vueloAdelante, cuclillas, agachando, paradoB, saltoB], ritmo: [4.6]},
     /* sostenido en el piso: manos al lado de la cadera, la cola despegada, piernas al frente a la altura de la cadera */
     "l-sit": {fijo: "hN", en: [150, 264], k: respira({torso: 157, head: 168, armN: [0, 0], armF: [357, 358], legN: [90, 90], legF: [92, 92], pies: [-80, -80]}, 1, 0), ritmo: RESPIRA},
+    /* sostenido en paralelas: brazos rectos y hombros abajo, las piernas estiradas al frente a la altura de la cadera; la cadera queda
+       apenas detrás de las manos y el tronco, un poco adelante, para que el peso caiga sobre ellas */
+    "l-sit-paralelas": {con: "paralelas", patas: true, fijo: "hN", en: [150, 150], k: respira({torso: 166, head: 175, armN: [0, 0], armF: [357, 358], legN: [93, 93], legF: [95, 95], pies: [-80, -80]}, 1, 0), ritmo: RESPIRA},
     /* sostenido en paralelas: los pies por encima de la cadera */
-    "l-sit-alto": {con: "paralelas", fijo: "hN", en: [150, 196], k: respira({torso: 168, head: 176, armN: [0, 0], armF: [357, 358], legN: [118, 118], legF: [116, 116], pies: [-80, -80]}, 1, 0), ritmo: RESPIRA},
+    "l-sit-alto": {con: "paralelas", patas: true, fijo: "hN", en: [150, 196], k: respira({torso: 168, head: 176, armN: [0, 0], armF: [357, 358], legN: [118, 118], legF: [116, 116], pies: [-80, -80]}, 1, 0), ritmo: RESPIRA},
     /* sostenido: torso atrás, manos empujando atrás, piernas cerca de la cara */
     "v-sit": {fijo: "hN", en: [150, 264], rango: "avanzado", k: respira({torso: 210, head: 196, armN: [0, 0], armF: [357, 358], legN: [170, 170], legF: [172, 172], pies: [-80, -80]}, 1, 0), ritmo: RESPIRA}
   });

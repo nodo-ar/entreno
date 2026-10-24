@@ -2223,6 +2223,90 @@
     "piernas"
    ],
    "grupo": "motor"
+  },
+  {
+   "id": "dominada-banda",
+   "nombre": "Dominada con banda",
+   "indicacion": "La banda colgada de la barra, una rodilla adentro. Te ayuda abajo, donde más cuesta.",
+   "equipo": [
+    "barra",
+    "bandas"
+   ],
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "remo-banda",
+   "nombre": "Remo con banda",
+   "indicacion": "La banda atada a algo firme, a la altura del pecho. Tirá con los codos pegados.",
+   "equipo": [
+    "bandas"
+   ],
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "press-banda",
+   "nombre": "Press de hombros con banda",
+   "indicacion": "Pisá la banda y empujala arriba de la cabeza, panza dura.",
+   "equipo": [
+    "bandas"
+   ],
+   "patron": [
+    "empujar"
+   ]
+  },
+  {
+   "id": "buenos-dias-banda",
+   "nombre": "Buenos días con banda",
+   "indicacion": "Pisá la banda y pasala por la nuca. Cola atrás, espalda recta.",
+   "equipo": [
+    "bandas"
+   ]
+  },
+  {
+   "id": "subida-cajon",
+   "nombre": "Subida al cajón",
+   "indicacion": "Un pie entero arriba del cajón. Subí empujando con esa pierna, sin impulso de la de abajo.",
+   "equipo": [
+    "cajon"
+   ],
+   "lado": true
+  },
+  {
+   "id": "salto-cajon",
+   "nombre": "Salto al cajón",
+   "indicacion": "Saltá con los dos pies y caé suave arriba. Bajá caminando, no saltando.",
+   "equipo": [
+    "cajon"
+   ],
+   "zonas": [
+    "corazon",
+    "piernas"
+   ],
+   "grupo": "motor"
+  },
+  {
+   "id": "l-sit-paralelas",
+   "nombre": "L-sit en paralelas",
+   "indicacion": "Brazos rectos en las paralelas, piernas estiradas al frente, a la altura de la cadera.",
+   "equipo": [
+    "paralelas"
+   ],
+   "mide": "segundos"
+  },
+  {
+   "id": "remo-paralelas",
+   "nombre": "Remo debajo de las paralelas",
+   "indicacion": "Acostado entre las paralelas, agarrate y subí el pecho con el cuerpo recto.",
+   "equipo": [
+    "paralelas"
+   ],
+   "patron": [
+    "tirar"
+   ]
   }
  ]
 }

@@ -284,6 +284,13 @@ Una sesión de rutina guarda `rutina: {id, sesion}`. Cada bloque del día del mo
 - **Los empujes y los tirones se turnan**: de las escaleras de un movimiento (flexiones, arriba y fondos; remo y dominada) va la que más hace que no tocás.
 - Motor: «Remo a intervalos» con la máquina de remo y «Mancuerna a intervalos» con mancuernas.
 
+## Bandas, cajón y paralelas (vuelta 38)
+
+- Equipo nuevo en `K.EQUIPOS`: `bandas` y `cajon` (dieciséis cosas). La bienvenida las muestra en una pantalla sin desplazar, también en teléfonos bajos (filas más bajas desde 800 px de alto; sin la bajada desde 700).
+- 8 ejercicios nuevos, cada uno como versión de un escalón y sin kilos: dominada con banda (tirar, en la dominada asistida; pide barra), remo con banda (remo, primer escalón), press de hombros con banda (arriba), buenos días con banda (isquios), subida al cajón (piernas, en la zancada), L-sit en paralelas (L-sit) y remo debajo de las paralelas (remo, `tambien` del remo horizontal, antes que la mesa). Salto al cajón va en el motor.
+- Una versión de `conPeso` sin kilos es tu cuerpo: cuenta también para la habilidad (`sinPeso`). Solo lo que lleva `kgInicial` va en la cuenta aparte de los kilos.
+- Motor: «Cajón a intervalos». Con tiempo dicho, el motor elige el primero que llena esos minutos y, si ninguno, el que más llena (los saltos al cajón no dan para una hora).
+
 ## La bienvenida (`src/pantallas/bienvenida.js`, vuelta 35)
 
 La primera vez que se abre la app en un teléfono sin nada (ni sesiones, ni marcas, ni rumbo, ni rutina, ni equipo, ni nivel), una capa arriba de todo pregunta en tres pasos: qué querés entrenar (fuerza, resistencia, flexibilidad; uno o más, y el orden importa), qué tenés y cuánto tiempo (minutos por día de 10 a 60 y días por semana de 2 a 6), y desde dónde arrancás: eligiéndolo por movimiento (las figuras de `K.nivel.PREGUNTAS`; sin barra no pregunta por tirar) o con una prueba de un minuto (flexiones si elegiste fuerza primero, alcance de piernas si fue flexibilidad; solo resistencia, la prueba es correr y va en el primer día). Al llegar a «Tu primer día» guarda todo junto en el perfil: `equipo`, `minutos`, `dias` (repartidos desde hoy), `rumbo` (dos o tres constelaciones por cosa elegida, las que tu equipo permite y primero las que tu nivel ya empezó), `nivel` y `bienvenida` (la fecha; con eso no vuelve, y viaja en el respaldo). La prueba queda como una sesión de prueba, igual que la de Planes. El día lo arma `K.hoyPlan`. Si se cierra a la mitad, un borrador en este teléfono (`localStorage`, `kozmos.bienvenida.v1`) la retoma en el mismo paso. Las pruebas de pantalla que no son de la bienvenida la marcan como vista (`prefs.bienvenida`).
