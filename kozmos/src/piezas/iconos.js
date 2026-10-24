@@ -87,7 +87,7 @@ K.icono = (() => {
       for (const k of ["hd", "sh", "hip", "sN", "sF", "eN", "eF", "hN", "hF", "pN", "pF", "kN", "kF", "fN", "fF", "tN", "tF"]) p[k] = J[k] || (k[0] === "s" ? J.sh : J.hip);
       const barra = ["barra", "barra-baja"].includes(f.con), ruedas = f.con === "bici" ? [[f.en[0] - 34, K.fig.PISO - 30], [f.en[0] + 70, K.fig.PISO - 30]] : null;
       return {f, p, barra, ruedas, soga: f.con === "soga", pesa: f.con === "pesa", mancuernas: /^mancuerna/.test(f.con || ""), pared: f.pared, paralelas: f.con === "paralelas", poste: f.poste, banco: f.banco,
-        discos: f.con === "discos", copa: !!f.copa, bancoPlano: f.bancoPlano, maq: f.maq, mov: f.mov};
+        discos: f.con === "discos", copa: !!f.copa, bancoPlano: f.bancoPlano, maq: f.maq, mov: f.mov, banda: f.banda, cajon: f.cajon};
     });
   }
 
@@ -107,9 +107,10 @@ K.icono = (() => {
     const cuerpoX = Object.values(p).map(q => q[0]), cuerpoY = Object.values(p).map(q => q[1]), acostado = Math.max(...cuerpoX) - Math.min(...cuerpoX) > Math.max(...cuerpoY) - Math.min(...cuerpoY);
     if (e.barra){ const y = (p.hN[1] + p.hF[1]) / 2, xs = [p.hN[0], p.hF[0]], m = acostado ? 26 : 34, a = Math.min(...xs) - m, b = Math.max(...xs) + m;
       eq.push({t: "l", pts: [[a, y], [b, y]], w: 1.4}); extra.push([a, y], [b, y]); }
-    /* las paralelas: la barra en las manos y el parante hasta el piso */
+    /* las paralelas: la barra en las manos y el parante hasta el piso; acostado debajo (el remo), solo la barra, como la barra baja */
     if (e.paralelas){ const y = (p.hN[1] + p.hF[1]) / 2, x = (p.hN[0] + p.hF[0]) / 2, a = x - 30, b = x + 30, y1 = Math.max(...cuerpoY) + 8;
-      eq.push({t: "l", pts: [[a, y], [b, y]], w: 1.4}, {t: "l", pts: [[a + 6, y], [a + 6, y1]]}, {t: "l", pts: [[b - 6, y], [b - 6, y1]]}); extra.push([a, y], [b, y], [a, y1]); }
+      eq.push({t: "l", pts: [[a, y], [b, y]], w: 1.4}); extra.push([a, y], [b, y]);
+      if (!acostado){ eq.push({t: "l", pts: [[a + 6, y], [a + 6, y1]]}, {t: "l", pts: [[b - 6, y], [b - 6, y1]]}); extra.push([a, y1]); } }
     /* lo que se tiene en la mano: la kettlebell sigue el antebrazo; las mancuernas, cruzadas en cada mano */
     const ante = s => { const d = sub(p["h" + s], p["e" + s]); return mul(d, 1 / (len(d) || 1)); };
     /* en la copa, la kettlebell cuelga abajo de las manos, contra el pecho */
@@ -135,6 +136,11 @@ K.icono = (() => {
         eq.push({t: "l", pts: [add(c, mul(n, 14)), add(c, mul(n, -18))], w: 1.3}); extra.push(add(c, mul(n, 14)), add(c, mul(n, -18))); }
       if (t === "cable" && q[2]){ const c = add(p.hN, mul(ante("N"), 3)); eq.push({t: "l", pts: [[c[0] - 14, c[1]], [c[0] + 14, c[1]]], w: 1.3}); extra.push([c[0] - 14, c[1]], [c[0] + 14, c[1]]); }
       if (t === "anilla"){ const y0 = Math.min(...cuerpoY) - 24; for (const s of ["F", "N"]){ const c = add(p["h" + s], [0, -2]); eq.push({t: "c", c, r: 9}, {t: "l", pts: [[c[0], c[1] - 9], [c[0], y0]], w: .5}); extra.push([c[0] - 9, c[1] - 9], [c[0] + 9, c[1] + 9], [c[0], y0]); } } }
+    /* el cajón: el contorno de la caja apoyada en el piso */
+    if (e.cajon){ const [a, b, h] = e.cajon, y0 = K.fig.PISO - h; eq.push({t: "l", pts: [[a, K.fig.PISO], [a, y0], [b, y0], [b, K.fig.PISO], [a, K.fig.PISO]], w: 1.1}); extra.push([a, y0], [b, K.fig.PISO]); }
+    /* la banda, un trazo fino como la cinta de las anillas: del anclaje (el poste, la barra o el piso bajo el pie) a la mano, o hasta la rodilla */
+    if (e.banda){ const [de, a] = e.banda, A = de === "pie" ? [p.fN[0] + 6, K.fig.PISO] : de;
+      eq.push({t: "l", pts: a === "rodilla" ? [A, p.kN] : a === "nuca" ? [A, p.hN, p.sh] : [A, p.hN], w: .5}); extra.push(A); }
     if (e.ruedas){ const [R, F] = e.ruedas, r = 27; eq.push({t: "c", c: R, r}, {t: "c", c: F, r});
       const pedal = [(p.fN[0] + p.fF[0]) / 2 + 6, (p.fN[1] + p.fF[1]) / 2 + 2], asiento = [p.hip[0] + 2, p.hip[1] + 12], manubrio = [F[0] - 10, p.hN[1] + 14];
       eq.push({t: "l", pts: [R, pedal, asiento, R]}, {t: "l", pts: [asiento, manubrio, F]}, {t: "l", pts: [pedal, manubrio]}, {t: "l", pts: [manubrio, [p.hN[0] - 2, p.hN[1]]]});

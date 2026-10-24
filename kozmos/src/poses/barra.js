@@ -20,6 +20,11 @@
   const asisAbajo = {...colgado, legN: [20, 280], legF: [24, 286], pies: [-30, -26]};
   const asisMedio = {...medio, legN: [26, 284], legF: [30, 290], pies: [-30, -26]};
   const asisArriba = {...arriba, legN: [32, 290], legF: [36, 296], pies: [-30, -26]};
+  /* con banda: la banda cuelga de la barra y abraza la rodilla cercana (doblada, el pie atrás); la otra pierna, cruzada detrás.
+     Abajo es donde más se estira y más ayuda; arriba casi no tira */
+  const bandaAbajo = {...colgado, legN: [16, 276], legF: [22, 290], pies: [-30, -26]};
+  const bandaMedio = {...medio, legN: [22, 280], legF: [28, 294], pies: [-30, -26]};
+  const bandaArriba = {...arriba, legN: [28, 284], legF: [34, 298], pies: [-30, -26]};
   /* explosiva: el pecho llega a la barra, los hombros por encima y los codos bien abajo */
   const pecho = {torso: 200, head: 192, armN: [4, 144], armF: [2, 141], legN: [26, 12], legF: [29, 16], pies: [-34, -30]};
   /* supina: palmas hacia uno, codos adelante, el cuerpo más derecho */
@@ -70,6 +75,7 @@
     "dominada": {...B, k: [colgado, medio, arriba], ritmo: [1, .4, 1.6, .5]},
     /* asistida: un pie atrás en una silla, la rodilla doblada; la pierna empuja lo justo */
     "dominada-asistida": {...B, k: [asisAbajo, asisMedio, asisArriba], ritmo: [1.2, .4, 1.8, .5]},
+    "dominada-banda": {...B, banda: [[150, 42], "rodilla", 90], k: [bandaAbajo, bandaMedio, bandaArriba], ritmo: [1.1, .4, 1.7, .5]},
     "dominada-explosiva": {...B, k: [colgado, medio, pecho], ritmo: [.45, .25, 1.5, .8]},
     "dominada-lastre": {...B, lastre: true, k: [colgado, medio, arriba], ritmo: [1.2, .5, 1.8, .6]},
     "dominada-supina": {...B, k: [colgado, supMedio, supina], ritmo: [1, .4, 1.6, .5]},
@@ -97,6 +103,9 @@
     "remo-invertido": {con: "barra-baja", fijo: "hN", en: [170, 174], barraAtras: true, k: [remoAbajo, remoMedio, remoArriba], ritmo: [1, .5, 1.5, .5]},
     /* a un brazo: tira el de adelante y el de atrás va al costado, a lo largo del cuerpo */
     "remo-un-brazo": {con: "barra-baja", fijo: "hN", en: [170, 174], barraAtras: true, k: [unBrazo(remoAbajo), unBrazo(remoMedio), unBrazo(remoArriba)], ritmo: [1, .5, 1.8, .5]},
+    /* debajo de las paralelas: acostado entre las dos barras, una mano en cada una (agarre neutro, los codos pegados); el mismo remo
+       invertido, con las barras a lo largo del cuerpo */
+    "remo-paralelas": {con: "paralelas", barraX: 190, fijo: "hN", en: [170, 174], k: [remoAbajo, remoMedio, remoArriba], ritmo: [1, .5, 1.5, .5]},
     /* elevaciones colgado */
     "rodillas-colgado": {...B, k: [colgado, rodillas], ritmo: [1, .4, 1.6, .5]},
     "piernas-colgado": {...B, k: [piernasCol, piernas], ritmo: [1.2, .4, 1.8, .5]},

@@ -153,6 +153,8 @@ K.dia = (() => {
       {ej: "remo-maquina", t: 30, p: 90, n: 6}, {ej: "remo-maquina", t: 40, p: 80, n: 6}, {ej: "remo-maquina", t: 60, p: 60, n: 8}, {ej: "remo-maquina", t: 90, p: 60, n: 6}]},
     {con: "mancuernas", nombre: "Mancuerna a intervalos", pasos: [
       {ej: "swing-mancuerna", t: 20, p: 40, n: 10}, {ej: "swing-mancuerna", t: 30, p: 30, n: 10}, {ej: "swing-mancuerna", t: 40, p: 20, n: 10}]},
+    {con: "cajon", nombre: "Cajón a intervalos", pasos: [
+      {ej: "salto-cajon", t: 20, p: 40, n: 8}, {ej: "salto-cajon", t: 20, p: 30, n: 10}, {ej: "salto-cajon", t: 30, p: 30, n: 10}]},
     {con: "soga", nombre: "Soga a intervalos", pasos: [{ej: "soga", t: 30, p: 30, n: 8}, {ej: "soga", t: 40, p: 20, n: 10}, {ej: "soga", t: 60, p: 30, n: 10}]},
     /* trotar y caminar: no pide equipo, va si correr es lo tuyo */
     {con: "trote", gusto: true, nombre: "Trote y caminata", fuerte: true, nota: ["Trotá", "Caminá"], pasos: [
@@ -171,8 +173,11 @@ K.dia = (() => {
     const veces = m => vecesMotor(m.nombre, sesiones), rank = m => { const i = gusto.indexOf(m.con); return i < 0 ? 99 : i; };
     /* lo que te gusta primero; si no dijiste, con equipo antes que sin nada; empate: el que menos hiciste */
     const xs = MOTORES.filter(hay).sort((a, b) => rank(a) - rank(b) || (gusto.length ? 0 : (a.con === null) - (b.con === null)) || veces(a) - veces(b));
-    const m = xs[0]; if (!m) return null;
-    const k = Math.min(m.pasos.length - 1, Math.max(0, Math.floor(veces(m) / 3) - (volviste ? 1 : 0)));
+    const kDe = m => Math.min(m.pasos.length - 1, Math.max(0, Math.floor(veces(m) / 3) - (volviste ? 1 : 0)));
+    /* con tiempo dicho, el primero que lo llena (los saltos al cajón no dan para una hora); si ninguno, el que más llena */
+    const tope = m => { const x = m.pasos[kDe(m)]; return x.n * 3 * (x.t + x.p) - x.p; };
+    const m = seg === null || !xs.length ? xs[0] : xs.find(m => tope(m) >= seg) || xs.reduce((a, b) => tope(b) > tope(a) ? b : a); if (!m) return null;
+    const k = kDe(m);
     let n = m.pasos[k].n + extra;
     if (seg !== null){ const x = m.pasos[k]; n = Math.min(x.n * 3, Math.floor((seg + x.p) / (x.t + x.p))); if (n < 3) return null; }
     const x = {...m.pasos[k], n};

@@ -34,6 +34,9 @@
 .fig-el .disco{fill:var(--ap)}
 .fig-el .disco-aro{fill:none; stroke:var(--cd); stroke-width:1.4; opacity:.35}
 .fig-el .manga{fill:var(--off)}
+.fig-el .banda{stroke:var(--ap); fill:none; stroke-linecap:round; stroke-linejoin:round}
+.fig-el .cajon{fill:var(--off)}
+.fig-el .calado{fill:var(--cd)}
 .fig-el .cuadro{fill:none; stroke:var(--ap); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round}
 /* en la miniatura el trazo engorda, para que a 44 px se siga viendo */
 .fig.chica .barra{stroke-width:9}

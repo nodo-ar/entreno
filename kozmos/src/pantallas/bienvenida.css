@@ -60,7 +60,11 @@ body.en-bienvenida{overflow:hidden}
 /* 2 · qué tenés */
 #bv .b-eqs{display:grid; gap:10px; margin-top:18px; min-width:0}
 /* catorce cosas en una pantalla, sin desplazar: filas bajas de a dos (de a tres en horizontal) */
-#bv .b-eqg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; min-width:0}
+#bv .b-eqg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:6px; min-width:0}
+/* «Nada, solo el piso» en una fila baja: dieciséis cosas entran en una pantalla sin desplazar */
+#bv .b-eqs > .b-eq[data-id="piso"]{grid-template-columns:40px 1fr 24px; padding:6px 14px 6px 6px; border-radius:18px}
+#bv .b-eqs > .b-eq[data-id="piso"] .tile{width:40px; height:40px; border-radius:13px}
+#bv .b-eqs > .b-eq[data-id="piso"] .b-mk{width:24px; height:24px}
 #bv .b-eq{position:relative; display:grid; grid-template-columns:56px 1fr 28px; align-items:center; gap:14px; min-width:0; text-align:left; background:var(--s1); border:1px solid var(--line); border-radius:24px; padding:14px 16px 14px 14px; color:var(--ink); cursor:pointer; font:inherit; transition:border-color .25s, transform .12s}
 #bv .b-eq .tile{width:56px; height:56px; border-radius:18px; background:var(--s2); display:grid; place-items:center; transition:background .25s, color .25s}
 #bv .b-eq.on .tile{background:var(--solid); color:var(--on-solid)}
@@ -68,7 +72,7 @@ body.en-bienvenida{overflow:hidden}
 #bv .b-eq b{font-size:var(--t-xl); font-weight:700; line-height:1.15; display:block}
 #bv .b-eq span{color:var(--ink-2); font-size:var(--t-md); display:block; margin-top:3px}
 #bv .b-eq .b-mk{width:28px; height:28px}
-#bv .b-eqg .b-eq{grid-template-columns:32px 1fr; min-height:50px; padding:6px 10px 6px 7px; gap:9px; border-radius:16px}
+#bv .b-eqg .b-eq{grid-template-columns:32px 1fr; min-height:44px; padding:5px 10px 5px 7px; gap:9px; border-radius:16px}
 #bv .b-eqg .b-eq .tile{width:32px; height:32px; border-radius:11px}
 #bv .b-eqg .b-eq .tile svg{width:18px; height:18px}
 #bv .b-eqg .b-eq b{font-size:var(--t-sm); font-weight:700; line-height:1.15; padding-right:12px}
@@ -169,6 +173,24 @@ body.en-bienvenida{overflow:hidden}
 #bv .b-ruc{display:flex; align-items:center; gap:8px; background:var(--s1); border:1px solid var(--line); border-radius:999px; padding:4px 14px 4px 4px; font-weight:700; font-size:var(--t-sm)}
 #bv .b-verej{justify-self:start; padding:0; height:auto; text-decoration:underline; text-underline-offset:3px}
 
+/* teléfonos bajos (360 × 740): lo que tenés sigue entrando en una pantalla, con filas más bajas */
+@media (orientation: portrait) and (max-height: 800px){
+  #bv .b-equipo h1{font-size:var(--t-3xl)}
+  #bv .b-equipo .b-cab p{font-size:var(--t-md)}
+  #bv .b-equipo .b-eqs{margin-top:12px; gap:6px}
+  #bv .b-eqs > .b-eq[data-id="piso"]{padding:4px 12px 4px 4px; grid-template-columns:34px 1fr 22px}
+  #bv .b-eqs > .b-eq[data-id="piso"] .tile{width:34px; height:34px; border-radius:11px}
+  #bv .b-eqs > .b-eq[data-id="piso"] b{font-size:var(--t-lg)}
+  #bv .b-eqg{gap:5px}
+  #bv .b-eqg .b-eq{min-height:38px; padding:3px 9px 3px 5px; grid-template-columns:28px 1fr; gap:8px; border-radius:14px}
+  #bv .b-eqg .b-eq .tile{width:28px; height:28px; border-radius:9px}
+  #bv .b-eqg .b-eq .tile svg{width:16px; height:16px}
+}
+
+@media (orientation: portrait) and (max-height: 700px){
+  #bv .b-equipo .b-cab p{display:none}
+}
+
 /* horizontal (844 × 390): como Ajustes, la pregunta a la izquierda y lo que se elige a la derecha; los botones, abajo a la izquierda */
 @media (orientation: landscape) and (max-height: 520px){
   #bv .b-tel, #bv .b-arriba{max-width:none}
@@ -180,14 +202,17 @@ body.en-bienvenida{overflow:hidden}
   #bv .b-arr > *{grid-column:auto}
   #bv h1{font-size:var(--t-3xl)}
   #bv .b-ops, #bv .b-eqs, #bv .b-figs, #bv .b-lista{margin-top:0}
-  #bv .b-eqs{gap:6px}
+  #bv .b-eqs{gap:5px}
   #bv .b-eqs > .b-eq{padding:6px 14px 6px 6px; grid-template-columns:36px 1fr 22px; border-radius:18px}
   #bv .b-eqs > .b-eq .tile{width:36px; height:36px; border-radius:12px}
+  #bv .b-eqs > .b-eq[data-id="piso"]{padding:4px 12px 4px 4px; grid-template-columns:30px 1fr 20px; border-radius:15px}
+  #bv .b-eqs > .b-eq[data-id="piso"] .tile{width:30px; height:30px; border-radius:10px}
+  #bv .b-eqs > .b-eq[data-id="piso"] .b-mk{width:20px; height:20px}
   #bv .b-eqs > .b-eq b{font-size:var(--t-lg)}
   #bv .b-eqs > .b-eq .b-mk{width:22px; height:22px}
-  #bv .b-eqg{grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px}
-  #bv .b-eqg .b-eq{min-height:44px; grid-template-columns:28px 1fr; gap:7px; padding:5px 8px 5px 6px; border-radius:14px}
-  #bv .b-eqg .b-eq .tile{width:28px; height:28px; border-radius:9px}
+  #bv .b-eqg{grid-template-columns:repeat(3, minmax(0,1fr)); gap:5px}
+  #bv .b-eqg .b-eq{min-height:37px; grid-template-columns:26px 1fr; gap:7px; padding:3px 8px 3px 5px; border-radius:13px}
+  #bv .b-eqg .b-eq .tile{width:26px; height:26px; border-radius:9px}
   #bv .b-eqg .b-eq .tile svg{width:16px; height:16px}
   #bv .b-eqg .b-eq b{font-size:var(--t-s); padding-right:10px}
   #bv .b-eqg .b-eq .b-mk{top:5px; right:5px; width:12px; height:12px}
@@ -210,4 +235,12 @@ body.en-bienvenida{overflow:hidden}
   #bv .b-res > .b-txt{grid-column:2; grid-row:1}
   #bv .b-mag{font-size:96px}
   #bv .b-reloj{width:150px; height:150px}
+}
+
+/* horizontal en teléfonos bajos (740 × 360): las filas de tu equipo, un poco más bajas */
+@media (orientation: landscape) and (max-height: 375px){
+  #bv .b-pan.b-equipo{padding-top:calc(env(safe-area-inset-top,0px) + 50px)}
+  #bv .b-eqg .b-eq{min-height:33px; padding-block:2px}
+  #bv .b-eqg .b-eq .tile{width:24px; height:24px; border-radius:8px}
+  #bv .b-eqs > .b-eq[data-id="piso"]{padding-block:2px}
 }

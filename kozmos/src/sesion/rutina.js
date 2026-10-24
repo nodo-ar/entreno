@@ -80,8 +80,9 @@ K.rutina = (() => {
     /* con barra o máquina, la versión con kilos manda: cada escalón de nivel por encima suma dos cargas al arranque (hasta la mitad del tope) */
     if (conKg && conKg.manda){ d = conKg.k; if (nivel > conKg.k) conKg.kgArranque = Math.min(conKg.hastaKg / 2, conKg.kgInicial + 2 * conKg.carga * (nivel - conKg.k)); }
     /* los kilos y tu cuerpo llevan cuentas separadas en la misma escalera: con la versión que manda solo cuenta lo hecho con ella
-       (un día de habilidad no te saca del press), y sin peso no cuenta lo hecho con kilos (un día de press no te baja la planche) */
-    const kilos = new Set(esc.pasos.flatMap(p => conPesos(p).map(c => c.ejercicio)));
+       (un día de habilidad no te saca del press), y sin peso no cuenta lo hecho con kilos (un día de press no te baja la planche).
+       Lo que va sin kilos (anillas, bandas, cajón, paralelas) es tu cuerpo: cuenta para los dos */
+    const kilos = new Set(esc.pasos.flatMap(p => conPesos(p).filter(c => c.kgInicial !== undefined).map(c => c.ejercicio)));
     const cuenta = conKg && conKg.manda ? new Set([conKg.ejercicio]) : null, noCuenta = sinPeso ? kilos : null;
     return {id: esc.id, real: true, nombre: esc.nombre, pasos, indice, rango, desde: Math.max(0, pasos.reduce((j, p, i) => p.k <= d ? i : j, 0)),
       ...(cuenta ? {cuenta} : {}), ...(noCuenta ? {noCuenta} : {})};

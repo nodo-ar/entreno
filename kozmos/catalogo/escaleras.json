@@ -11,7 +11,9 @@
    "texto": "De colgarte a la negativa a un brazo, pasando por tu primera dominada.",
    "pasos": [
     {"ejercicio": "colgado-activo", "tipo": "segundos", "meta": 60},
-    {"ejercicio": "dominada-asistida", "tipo": "repeticiones", "rango": [5, 8], "conPeso": {"ejercicio": "jalon-pecho", "rango": [8, 12], "carga": 5, "kgInicial": 25, "hastaKg": 120, "total": true}},
+    {"ejercicio": "dominada-asistida", "tipo": "repeticiones", "rango": [5, 8], "conPeso": [
+     {"ejercicio": "jalon-pecho", "rango": [8, 12], "carga": 5, "kgInicial": 25, "hastaKg": 120, "total": true},
+     {"ejercicio": "dominada-banda"}]},
     {"ejercicio": "dominada-negativa", "tipo": "repeticiones", "rango": [3, 5]},
     {"ejercicio": "dominada", "tipo": "repeticiones"},
     {"ejercicio": "dominada-explosiva", "tipo": "repeticiones", "rango": [3, 5]},
@@ -31,9 +33,10 @@
     {"ejercicio": "remo-poste", "tipo": "repeticiones", "rango": [8, 12], "conPeso": [
      {"ejercicio": "remo-barra", "carga": 5, "kgInicial": 20, "hastaKg": 120, "total": true, "manda": true},
      {"ejercicio": "remo-polea", "carga": 5, "kgInicial": 20, "hastaKg": 120, "total": true, "manda": true},
-     {"ejercicio": "remo-anillas"}]},
+     {"ejercicio": "remo-anillas"},
+     {"ejercicio": "remo-banda"}]},
     {"ejercicio": "remo-mancuerna", "tipo": "repeticiones", "rango": [8, 12], "carga": 2, "kgInicial": 6, "hastaKg": 16, "tambien": ["remo-toalla-puerta"]},
-    {"ejercicio": "remo-invertido", "tipo": "repeticiones", "tambien": ["remo-mesa"]},
+    {"ejercicio": "remo-invertido", "tipo": "repeticiones", "tambien": ["remo-paralelas", "remo-mesa"]},
     {"ejercicio": "remo-fl-tuck", "tipo": "repeticiones", "rango": [3, 6]},
     {"ejercicio": "remo-un-brazo", "tipo": "repeticiones", "rango": [3, 6]}
    ]
@@ -86,7 +89,8 @@
     {"ejercicio": "flexion-pike", "tipo": "repeticiones", "rango": [6, 10], "conPeso": [
      {"ejercicio": "press-militar", "rango": [5, 8], "carga": 2.5, "kgInicial": 20, "hastaKg": 100, "total": true, "manda": true},
      {"ejercicio": "press-hombros", "rango": [8, 12], "carga": 2, "kgInicial": 4, "hastaKg": 24},
-     {"ejercicio": "press-kettlebell", "rango": [6, 10], "carga": 4, "kgInicial": 8, "hastaKg": 32, "total": true}]},
+     {"ejercicio": "press-kettlebell", "rango": [6, 10], "carga": 4, "kgInicial": 8, "hastaKg": 32, "total": true},
+     {"ejercicio": "press-banda"}]},
     {"ejercicio": "pike-elevado", "tipo": "repeticiones", "rango": [5, 8]},
     {"ejercicio": "flexion-vertical-pared", "tipo": "repeticiones", "rango": [3, 6]}
    ]
@@ -105,7 +109,7 @@
      {"ejercicio": "prensa", "carga": 10, "kgInicial": 40, "hastaKg": 300, "total": true, "manda": true},
      {"ejercicio": "sentadilla-copa", "carga": 4, "kgInicial": 8, "hastaKg": 32, "total": true},
      {"ejercicio": "sentadilla-mancuernas", "carga": 2, "kgInicial": 4, "hastaKg": 16}]},
-    {"ejercicio": "zancada", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "zancada", "tipo": "repeticiones", "rango": [6, 10], "conPeso": {"ejercicio": "subida-cajon"}},
     {"ejercicio": "sentadilla-bulgara", "tipo": "repeticiones", "carga": 2, "kgInicial": 6, "hastaKg": 14},
     {"ejercicio": "pistol-silla", "tipo": "repeticiones"},
     {"ejercicio": "shrimp", "tipo": "repeticiones", "rango": [3, 6]},
@@ -123,7 +127,8 @@
    "pasos": [
     {"ejercicio": "puente-gluteo", "tipo": "repeticiones", "rango": [8, 12], "conPeso": [
      {"ejercicio": "peso-muerto-barra", "rango": [5, 8], "carga": 5, "kgInicial": 30, "hastaKg": 220, "total": true, "manda": true},
-     {"ejercicio": "peso-muerto-rumano", "carga": 2, "kgInicial": 6, "hastaKg": 20}]},
+     {"ejercicio": "peso-muerto-rumano", "carga": 2, "kgInicial": 6, "hastaKg": 20},
+     {"ejercicio": "buenos-dias-banda", "rango": [10, 15]}]},
     {"ejercicio": "peso-muerto-una-pierna", "tipo": "repeticiones", "rango": [6, 10], "carga": 2, "kgInicial": 8, "hastaKg": 16},
     {"ejercicio": "curl-femoral-deslizante", "tipo": "repeticiones", "rango": [6, 10], "conPeso": {"ejercicio": "curl-femoral-maquina", "rango": [8, 12], "carga": 5, "kgInicial": 15, "hastaKg": 80, "total": true}},
     {"ejercicio": "nordico-negativa", "tipo": "repeticiones", "rango": [3, 5]},
@@ -141,7 +146,7 @@
    "pasos": [
     {"ejercicio": "plancha", "tipo": "segundos", "meta": 60},
     {"ejercicio": "hollow", "tipo": "segundos", "meta": 45},
-    {"ejercicio": "l-sit", "tipo": "segundos", "meta": 25},
+    {"ejercicio": "l-sit", "tipo": "segundos", "meta": 25, "conPeso": {"ejercicio": "l-sit-paralelas"}},
     {"ejercicio": "l-sit-alto", "tipo": "segundos", "meta": 15},
     {"ejercicio": "v-sit", "tipo": "segundos", "meta": 10}
    ]
