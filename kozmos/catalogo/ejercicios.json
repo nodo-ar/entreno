@@ -2018,6 +2018,296 @@
    "apoyo": [
     "gluteos"
    ]
+  },
+  {
+   "id": "sentadilla-barra",
+   "nombre": "Sentadilla con barra",
+   "indicacion": "La barra apoyada atrás, sobre los hombros. Bajá con la espalda larga.",
+   "equipo": [
+    "discos"
+   ],
+   "zonas": [
+    "piernas",
+    "gluteos"
+   ],
+   "apoyo": [
+    "abdomen",
+    "espalda"
+   ]
+  },
+  {
+   "id": "peso-muerto-barra",
+   "nombre": "Peso muerto con barra",
+   "indicacion": "La barra pegada a las piernas. Empujá el piso y pará con la cadera.",
+   "equipo": [
+    "discos"
+   ],
+   "zonas": [
+    "gluteos",
+    "piernas",
+    "espalda"
+   ],
+   "apoyo": [
+    "abdomen"
+   ]
+  },
+  {
+   "id": "press-banca",
+   "nombre": "Press de banca",
+   "indicacion": "Acostado en el banco, bajá la barra al pecho y empujá hasta estirar.",
+   "equipo": [
+    "discos",
+    "banco"
+   ],
+   "patron": [
+    "empujar"
+   ],
+   "zonas": [
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
+  },
+  {
+   "id": "press-militar",
+   "nombre": "Press de hombros con barra",
+   "indicacion": "De pie, la barra en los hombros. Empujala arriba de la cabeza, panza dura.",
+   "equipo": [
+    "discos"
+   ],
+   "patron": [
+    "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
+   ]
+  },
+  {
+   "id": "remo-barra",
+   "nombre": "Remo con barra",
+   "indicacion": "Inclinado, espalda recta. Llevá la barra a la panza con los codos atrás.",
+   "equipo": [
+    "discos"
+   ],
+   "patron": [
+    "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos"
+   ],
+   "apoyo": [
+    "gluteos"
+   ]
+  },
+  {
+   "id": "prensa",
+   "nombre": "Prensa de piernas",
+   "indicacion": "La espalda pegada al respaldo. Bajá hasta doblar bien las rodillas.",
+   "equipo": [
+    "maquinas"
+   ],
+   "zonas": [
+    "piernas",
+    "gluteos"
+   ]
+  },
+  {
+   "id": "jalon-pecho",
+   "nombre": "Jalón al pecho",
+   "indicacion": "Sentado, tirá la barra al pecho con los codos hacia abajo.",
+   "equipo": [
+    "maquinas"
+   ],
+   "patron": [
+    "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos"
+   ]
+  },
+  {
+   "id": "remo-polea",
+   "nombre": "Remo sentado en polea",
+   "indicacion": "Espalda recta, tirá el agarre a la panza y juntá los omóplatos.",
+   "equipo": [
+    "maquinas"
+   ],
+   "patron": [
+    "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos"
+   ]
+  },
+  {
+   "id": "press-pecho-maquina",
+   "nombre": "Press de pecho en máquina",
+   "indicacion": "Sentado, la espalda en el respaldo. Empujá hasta estirar sin trabar.",
+   "equipo": [
+    "maquinas"
+   ],
+   "patron": [
+    "empujar"
+   ],
+   "zonas": [
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
+  },
+  {
+   "id": "curl-femoral-maquina",
+   "nombre": "Curl de piernas en máquina",
+   "indicacion": "Boca abajo, llevá los talones a la cola sin despegar la cadera.",
+   "equipo": [
+    "maquinas"
+   ],
+   "zonas": [
+    "piernas"
+   ]
+  },
+  {
+   "id": "press-banca-mancuernas",
+   "nombre": "Press de banca con mancuernas",
+   "indicacion": "Acostado en el banco, una mancuerna en cada mano. Bajá hasta el pecho.",
+   "equipo": [
+    "banco",
+    "mancuernas"
+   ],
+   "patron": [
+    "empujar"
+   ],
+   "zonas": [
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
+  },
+  {
+   "id": "press-piso-mancuernas",
+   "nombre": "Press de pecho en el piso",
+   "indicacion": "Acostado, una mancuerna en cada mano. Bajá hasta que el codo toque el piso.",
+   "equipo": [
+    "mancuernas"
+   ],
+   "patron": [
+    "empujar"
+   ],
+   "zonas": [
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
+  },
+  {
+   "id": "sentadilla-copa",
+   "nombre": "Sentadilla con kettlebell al pecho",
+   "indicacion": "La kettlebell agarrada del asa, contra el pecho. Bajá con la espalda larga.",
+   "equipo": [
+    "kettlebell"
+   ],
+   "zonas": [
+    "piernas",
+    "gluteos"
+   ],
+   "apoyo": [
+    "abdomen"
+   ]
+  },
+  {
+   "id": "press-kettlebell",
+   "nombre": "Press de hombros con kettlebell",
+   "indicacion": "La kettlebell en el hombro. Empujala arriba de la cabeza, panza dura.",
+   "equipo": [
+    "kettlebell"
+   ],
+   "patron": [
+    "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
+   ]
+  },
+  {
+   "id": "flexion-pike",
+   "nombre": "Flexión de hombros",
+   "indicacion": "Manos y pies en el piso, cadera arriba. Bajá la cabeza entre las manos.",
+   "patron": [
+    "empujar"
+   ],
+   "zonas": [
+    "hombros",
+    "brazos"
+   ]
+  },
+  {
+   "id": "remo-anillas",
+   "nombre": "Remo en anillas",
+   "indicacion": "Colgado de las anillas, cuerpo en tabla. Llevá el pecho a las manos.",
+   "equipo": [
+    "anillas"
+   ],
+   "patron": [
+    "tirar"
+   ],
+   "zonas": [
+    "espalda",
+    "brazos"
+   ],
+   "apoyo": [
+    "abdomen"
+   ]
+  },
+  {
+   "id": "fondo-anillas",
+   "nombre": "Fondo en anillas",
+   "indicacion": "Las anillas pegadas al cuerpo. Bajá hasta que el hombro pase el codo.",
+   "equipo": [
+    "anillas"
+   ],
+   "patron": [
+    "empujar"
+   ],
+   "zonas": [
+    "pecho",
+    "brazos"
+   ],
+   "apoyo": [
+    "hombros"
+   ]
+  },
+  {
+   "id": "remo-maquina",
+   "nombre": "Remo en máquina",
+   "indicacion": "Piernas, cadera y brazos, en ese orden. Volvé en el orden contrario.",
+   "equipo": [
+    "remadora"
+   ],
+   "zonas": [
+    "corazon",
+    "espalda",
+    "piernas"
+   ],
+   "grupo": "motor"
   }
  ]
 }
