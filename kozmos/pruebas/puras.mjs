@@ -1667,47 +1667,47 @@ prueba("dia-serie-escalera", () => {
   ok(cam().pasos[0].ejercicio === "dominada-negativa" && cam().pasos[0].nuevo === "sube", "no subió: " + cam().pasos[0].ejercicio);
 });
 
-/* ===== Tu nivel (PR3): cuatro preguntas, dónde arrancás y lo que se da por hecho ===== */
+/* ===== Tu nivel: cinco movimientos y cuatro niveles (vuelta 36; antes, cuatro preguntas por cantidad) ===== */
 const TODO_EQ = ["barra", "paralelas", "pared", "poste", "lastre", "mancuernas", "kettlebell", "bici", "soga"];
 prueba("nivel-desde", () => {
-  /* la tabla conservadora (D1): cada respuesta, el escalón de arranque de sus escaleras */
+  /* cada movimiento, sus cuatro niveles (Inicial a Experto) y «No sé» al final; cada nivel es un ejercicio que existe */
+  ok(nivel.PREGUNTAS.map(q => q.id).join() === "empujar,tirar,piernas,cadera,abdomen", "los movimientos: " + nivel.PREGUNTAS.map(q => q.id));
+  ok(nivel.PREGUNTAS.every(q => q.opciones.map(o => o[1]).join() === "Inicial,Intermedio,Avanzado,Experto,No sé" && q.pregunta && q.niveles.every(n => n.texto && EJM()[n.ej])), "un movimiento sin sus cuatro niveles, su pregunta o su figura");
+  /* la tabla conservadora (D1): cada nivel, el escalón de arranque de sus escaleras */
   const d = n => nivel.desde(n, TODO_EQ);
-  ok(JSON.stringify(d({dominadas: "0"})) === '{"tirar":"dominada-negativa","remo":"remo-poste"}', "dominadas 0: " + JSON.stringify(d({dominadas: "0"})));
-  ok(d({dominadas: "1-4"}).tirar === "dominada" && d({dominadas: "5-9"}).tirar === "dominada" && d({dominadas: "5-9"}).remo === "remo-invertido", "de 1 a 9, la dominada y el remo invertido");
-  ok(d({dominadas: "10-14"}).tirar === "dominada-explosiva" && d({dominadas: "15+"}).tirar === "dominada-arquera", "10 o más");
-  ok(JSON.stringify(d({flexiones: "0-9"})) === '{"empujar":"flexion-inclinada","fondos":"flexion-cerrada","lsit":"plancha"}', "flexiones 0-9");
-  ok(d({flexiones: "10-19"}).empujar === "flexion" && d({flexiones: "10-19"}).fondos === "fondo-banco", "flexiones 10-19");
-  ok(d({flexiones: "20-29"}).empujar === "flexion-pausa" && d({flexiones: "20-29"}).lsit === "hollow", "flexiones 20-29");
-  ok(d({flexiones: "30-39"}).empujar === "flexion-declinada" && d({flexiones: "30-39"}).fondos === "fondo" && d({flexiones: "30-39"}).lsit === "l-sit", "flexiones 30-39");
-  ok(d({flexiones: "40+"}).empujar === "flexion-arquera", "flexiones 40+");
-  ok(JSON.stringify(d({unaPierna: "no"})) === '{"piernas":"sentadilla","isquios":"puente-gluteo"}' && d({unaPierna: "silla"}).piernas === "pistol-silla" && d({unaPierna: "silla"}).isquios === "peso-muerto-una-pierna"
-    && d({unaPierna: "completa"}).piernas === "pistol" && d({unaPierna: "completa"}).isquios === "curl-femoral-deslizante", "una pierna");
+  ok(JSON.stringify(d({tirar: "0"})) === '{"tirar":"dominada-negativa","remo":"remo-poste"}', "tirar inicial: " + JSON.stringify(d({tirar: "0"})));
+  ok(d({tirar: "1"}).tirar === "dominada" && d({tirar: "1"}).remo === "remo-invertido" && d({tirar: "2"}).tirar === "dominada-explosiva" && d({tirar: "3"}).tirar === "dominada-arquera" && d({tirar: "3"}).remo === "remo-un-brazo", "tirar");
+  ok(JSON.stringify(d({empujar: "0"})) === '{"empujar":"flexion-inclinada","fondos":"flexion-cerrada"}' && d({empujar: "1"}).fondos === "fondo-banco" && d({empujar: "2"}).empujar === "flexion-declinada" && d({empujar: "3"}).empujar === "flexion-arquera", "empujar");
+  ok(d({piernas: "1"}).piernas === "sentadilla-bulgara" && d({piernas: "3"}).piernas === "pistol" && d({cadera: "2"}).isquios === "curl-femoral-deslizante" && d({cadera: "3"}).isquios === "nordico-negativa", "piernas y atrás de las piernas");
+  ok(d({abdomen: "0"}).lsit === "plancha" && d({abdomen: "2"}).lsit === "l-sit" && d({abdomen: "3"}).lsit === "v-sit", "abdomen");
+  /* un movimiento no mueve las escaleras de otro: empujar ya no decide el abdomen */
+  ok(!("lsit" in d({empujar: "3"})) && !("piernas" in d({cadera: "3"})), "un movimiento movió otra escalera");
   /* todos los escalones existen en su escalera */
   for (const q of nivel.PREGUNTAS) for (const [v] of q.opciones) for (const [esc, e] of Object.entries(d({[q.id]: v}))){
     const x = ESC.escaleras.find(y => y.id === esc); ok(x && x.pasos.some(p => rutina.idsPaso(p).includes(e)), `${q.id} ${v}: ${esc}/${e} no existe`);
   }
   /* sin el equipo del escalón, la escalera usa el de abajo que sí: el fondo sin paralelas es el fondo en banco */
   const ej = EJM();
-  ok(rutina.escalonesTodos({ej, equipo: [], desde: d({flexiones: "40+"})}).fondos.paso.ejercicio === "fondo-banco", "sin paralelas, el fondo en banco");
-  ok(rutina.escalonesTodos({ej, equipo: ["paralelas"], desde: d({flexiones: "40+"})}).fondos.paso.ejercicio === "fondo", "con paralelas, el fondo");
-  /* sin barra no se pregunta por dominadas, y lo que dijiste antes no cuenta */
-  ok(!nivel.preguntas([]).some(q => q.id === "dominadas") && !nivel.preguntas([]).some(q => q.id === "vertical") && nivel.preguntas(null).length === 4, "las preguntas con tu equipo");
-  ok(!nivel.desde({dominadas: "15+"}, []).tirar, "sin barra, las dominadas no mueven nada");
+  ok(rutina.escalonesTodos({ej, equipo: [], desde: d({empujar: "3"})}).fondos.paso.ejercicio === "fondo-banco", "sin paralelas, el fondo en banco");
+  ok(rutina.escalonesTodos({ej, equipo: ["paralelas"], desde: d({empujar: "3"})}).fondos.paso.ejercicio === "fondo", "con paralelas, el fondo");
+  /* sin barra no se pregunta por tirar, y lo que dijiste antes no cuenta */
+  ok(nivel.preguntas([]).map(q => q.id).join() === "empujar,piernas,cadera,abdomen" && nivel.preguntas(null).length === 5, "los movimientos con tu equipo");
+  ok(!nivel.desde({tirar: "3"}, []).tirar, "sin barra, tirar mueve algo");
 });
 prueba("nivel-dadas", () => {
   const dd = (n, eq = TODO_EQ) => nivel.dadas(n, eq);
-  ok(dd({dominadas: "1-4"}).length === 0, "de 1 a 4 no da nada");
-  ok(dd({dominadas: "5-9"}).join() === "front-lever.colgado-60s", "de 5 a 9: " + dd({dominadas: "5-9"}));
-  ok(dd({dominadas: "10-14"}).join() === "front-lever.colgado-60s,muscle-up.dominadas-10,front-lever.bolita-10s", "de 10 a 14: " + dd({dominadas: "10-14"}));
-  ok(dd({dominadas: "15+"}).includes("un-brazo.dominadas-15") && dd({dominadas: "15+"}).length === 4, "15 o más");
-  ok(dd({flexiones: "20-29"}).length === 0 && dd({flexiones: "30-39"}).join() === "planche.flexiones-30" && dd({flexiones: "40+"}).join() === "planche.flexiones-30,un-brazo.flexiones-40", "flexiones");
-  ok(dd({unaPierna: "silla"}).join() === "una-pierna.pistol-silla-5" && dd({unaPierna: "completa"}).join() === "una-pierna.pistol-silla-5,una-pierna.pistol-3", "una pierna");
-  ok(dd({vertical: "pared"}).length === 3 && dd({vertical: "libre"}).length === 4 && dd({vertical: "libre"}).includes("parada-de-manos.pared-60s"), "parada de manos");
-  /* todas existen en el catálogo; sin pared no se da nada de la parada de manos */
+  ok(dd({tirar: "0"}).length === 0, "inicial da algo");
+  ok(dd({tirar: "1"}).join() === "front-lever.colgado-60s", "tirar intermedio: " + dd({tirar: "1"}));
+  ok(dd({tirar: "2"}).join() === "front-lever.colgado-60s,muscle-up.dominadas-10,front-lever.bolita-10s", "tirar avanzado: " + dd({tirar: "2"}));
+  ok(dd({tirar: "3"}).includes("un-brazo.dominadas-15") && dd({tirar: "3"}).length === 4, "tirar experto");
+  ok(dd({empujar: "1"}).length === 0 && dd({empujar: "2"}).join() === "planche.flexiones-30" && dd({empujar: "3"}).join() === "planche.flexiones-30,un-brazo.flexiones-40", "empujar");
+  ok(dd({piernas: "2"}).join() === "una-pierna.pistol-silla-5" && dd({piernas: "3"}).join() === "una-pierna.pistol-silla-5,una-pierna.pistol-3", "piernas");
+  ok(dd({abdomen: "2"}).join() === "draco.lsit-10s" && dd({abdomen: "3"}).join() === "draco.lsit-10s,draco.lsit-20s" && dd({cadera: "3"}).length === 0, "abdomen y atrás de las piernas");
+  /* todas existen en el catálogo */
   for (const q of nivel.PREGUNTAS) for (const [v] of q.opciones) for (const e of dd({[q.id]: v})) ok(ESTRELLAS.has(e), "no existe: " + e);
-  ok(dd({vertical: "libre"}, ["barra"]).length === 0, "sin pared, la parada de manos no da nada");
+  ok(dd({tirar: "3"}, []).length === 0, "sin barra, tirar da algo");
   /* en tu cosmos se ven dadas, sin encender: lo encendido y los totales no cambian, la próxima es la que sigue */
-  const c0 = cielo.calcular(CAT, [], HOY, [], TODO_EQ), c1 = nivel.aplicar(c0, dd({dominadas: "10-14"}), {fecha: HOY});
+  const c0 = cielo.calcular(CAT, [], HOY, [], TODO_EQ), c1 = nivel.aplicar(c0, dd({tirar: "2"}), {fecha: HOY});
   const fl = c1.constelaciones.find(c => c.id === "front-lever");
   ok(c1.encendidas === 0 && c1.total === c0.total && fl.encendidas === 0, "las dadas encendieron algo");
   ok(fl.dadas === 2 && fl.estrellas.filter(e => e.estado === "dada").map(e => e.id).join() === "front-lever.colgado-60s,front-lever.bolita-10s" && fl.estrellas.every(e => !e.dada || !e.encendida), "las dadas del front lever");
@@ -1718,18 +1718,27 @@ prueba("nivel-dadas", () => {
 });
 prueba("nivel-no-se", () => {
   /* «No sé» (o no contestar) es arrancar desde el principio: ni escalones ni dadas */
-  const nose = {dominadas: "nose", flexiones: "nose", unaPierna: "nose", vertical: "nose", fecha: HOY};
+  const nose = {empujar: "nose", tirar: "nose", piernas: "nose", cadera: "nose", abdomen: "nose", fecha: HOY};
   ok(JSON.stringify(nivel.desde(nose, TODO_EQ)) === "{}" && nivel.dadas(nose, TODO_EQ).length === 0, "No sé movió algo");
   ok(JSON.stringify(nivel.desde(undefined, TODO_EQ)) === "{}" && nivel.dadas(null, TODO_EQ).length === 0, "sin nivel movió algo");
-  ok(nivel.PREGUNTAS.every(q => q.opciones[q.opciones.length - 1][0] === "nose" && q.opciones[q.opciones.length - 1][1] === "No sé"), "alguna pregunta no ofrece No sé al final");
-  /* una respuesta rara no cuenta y no se guarda */
-  ok(JSON.stringify(nivel.desde({dominadas: "99"}, TODO_EQ)) === "{}", "una respuesta rara cuenta");
-  ok(nivel.poner({}, "dominadas", "99", HOY).dominadas === undefined, "se guardó una respuesta rara");
-  const n = nivel.poner(nivel.poner({}, "dominadas", "5-9", "2026-10-01"), "flexiones", "nose", HOY);
-  ok(n.dominadas === "5-9" && n.flexiones === "nose" && n.fecha === HOY && nivel.respondidas(n) === 2, "poner: " + JSON.stringify(n));
+  /* una respuesta rara no cuenta y no se guarda; lo de antes no se guarda con la forma de antes */
+  ok(JSON.stringify(nivel.desde({tirar: "9"}, TODO_EQ)) === "{}", "una respuesta rara cuenta");
+  ok(nivel.poner({}, "tirar", "9", HOY).tirar === undefined && nivel.poner({}, "dominadas", "5-9", HOY).dominadas === undefined, "se guardó una respuesta rara");
+  const n = nivel.poner(nivel.poner({}, "tirar", "1", "2026-10-01"), "empujar", "nose", HOY);
+  ok(n.tirar === "1" && n.empujar === "nose" && n.fecha === HOY && nivel.respondidas(n) === 2 && nivel.respondidas(n, []) === 1, "poner: " + JSON.stringify(n));
   /* el día sin nivel es el mismo que con todo en No sé */
   const a = armarDia(["front-lever", "planche"], {equipo: ["barra"]}), b = armarDia(["front-lever", "planche"], {equipo: ["barra"], nivelDesde: nivel.desde(nose, ["barra"]), dadas: nivel.dadas(nose, ["barra"])});
   ok(JSON.stringify(a.bloques) === JSON.stringify(b.bloques), "No sé cambió el día");
+});
+prueba("nivel-de-antes", () => {
+  /* lo guardado con las cuatro preguntas de antes se lee como movimientos, un escalón abajo ante la duda */
+  ok(JSON.stringify(nivel.normal({dominadas: "5-9", flexiones: "30-39", unaPierna: "silla", vertical: "pared", fecha: "2026-10-01"})) === '{"tirar":"1","empujar":"2","abdomen":"2","piernas":"2","cadera":"1","fecha":"2026-10-01"}', "normal: " + JSON.stringify(nivel.normal({dominadas: "5-9", flexiones: "30-39", unaPierna: "silla", vertical: "pared", fecha: "2026-10-01"})));
+  ok(nivel.desde({dominadas: "10-14"}, TODO_EQ).tirar === "dominada-explosiva" && nivel.desde({flexiones: "20-29"}, TODO_EQ).lsit === "hollow" && nivel.desde({unaPierna: "completa"}, TODO_EQ).piernas === "pistol", "lo de antes no mueve sus escaleras");
+  /* lo dicho por movimiento manda sobre lo de antes; poner guarda la forma nueva */
+  ok(nivel.normal({flexiones: "40+", empujar: "1"}).empujar === "1", "lo de antes ganó");
+  const p = nivel.poner({dominadas: "15+", flexiones: "nose", fecha: "2026-10-01"}, "piernas", "1", HOY);
+  ok(JSON.stringify(p) === `{"tirar":"3","empujar":"nose","piernas":"1","fecha":"${HOY}"}`, "poner sobre lo de antes: " + JSON.stringify(p));
+  ok(nivel.valida("dominadas", "5-9") && nivel.valida("vertical", "libre") && nivel.valida("abdomen", "3") && !nivel.valida("abdomen", "4") && !nivel.valida("vertical", "3"), "valida");
 });
 prueba("nivel-confirma", () => {
   /* lo dado se confirma haciéndolo: si llegás, se enciende de verdad; un intento real que no llega le saca lo de dada */
@@ -1776,6 +1785,9 @@ prueba("respaldo-nivel", () => {
   ok(JSON.stringify(respaldo.leer(arch(n)).perfil.nivel) === JSON.stringify(n), "tu nivel no vuelve: " + JSON.stringify(respaldo.leer(arch(n)).perfil));
   ok(JSON.stringify(respaldo.leer(arch({flexiones: "10-19"})).perfil.nivel) === '{"flexiones":"10-19"}', "una sola respuesta no vuelve");
   ok(!respaldo.leer(arch({dominadas: "mil"})).perfil.nivel, "una respuesta rara vuelve");
+  /* el de ahora, por movimiento, también; un nivel que no existe, no */
+  const m = {empujar: "2", tirar: "nose", abdomen: "3", fecha: HOY};
+  ok(JSON.stringify(respaldo.leer(arch(m)).perfil.nivel) === JSON.stringify(m) && !respaldo.leer(arch({empujar: "4"})).perfil.nivel, "el nivel por movimiento no vuelve");
   ok(!respaldo.leer(arch({...n, otra: "x"})).perfil.nivel, "una pregunta que no existe vuelve");
   ok(!respaldo.leer(arch({...n, fecha: "2026-13-40"})).perfil.nivel, "una fecha rota vuelve");
   ok(!respaldo.leer(arch("5-9")).perfil.nivel && !respaldo.leer(arch(["5-9"])).perfil.nivel, "un nivel que no es un objeto vuelve");

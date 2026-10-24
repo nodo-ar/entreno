@@ -98,29 +98,29 @@ Sin ninguna habilidad posible (lo de tu rumbo pide equipo que no marcaste), rang
 
 ## Tu nivel (`src/sesion/nivel.js`)
 
-Cuatro preguntas, cada una un menú con «No sé» al final. Se guardan en el perfil como `nivel: {dominadas, flexiones, unaPierna, vertical, fecha}` (la fecha es la del último cambio). «No sé» o no contestar es arrancar desde el principio. Dominadas se pregunta solo con barra y parada de manos solo con pared (sin decir tu equipo, las cuatro); si después sacás ese equipo, esa respuesta deja de contar.
+Cinco movimientos, cada uno un menú con cuatro niveles y «No sé» al final. Cada nivel es un ejercicio que se ve (la figura en la fila): el que te sale con las repeticiones de la pregunta. Se guardan en el perfil como `nivel: {empujar, tirar, piernas, cadera, abdomen, fecha}` con `"0"` Inicial, `"1"` Intermedio, `"2"` Avanzado, `"3"` Experto o `"nose"` (la fecha es la del último cambio). «No sé» o no contestar es arrancar desde el principio. Tirar se pregunta solo con barra (sin decir tu equipo, los cinco); si después sacás la barra, ese nivel deja de contar.
 
-| Pregunta | Respuestas (`id` · lo que se ve) |
-| --- | --- |
-| `dominadas` (Dominadas seguidas) | `0` Ninguna · `1-4` · `5-9` · `10-14` · `15+` · `nose` |
-| `flexiones` (Flexiones seguidas) | `0-9` Menos de 10 · `10-19` · `20-29` · `30-39` · `40+` · `nose` |
-| `unaPierna` (Sentadilla a una pierna) | `no` Todavía no · `silla` Hasta una silla · `completa` Completa, hasta abajo · `nose` |
-| `vertical` (Parada de manos) | `no` Todavía no · `pared` Contra la pared · `libre` Libre · `nose` |
+| Movimiento (pregunta) | Inicial | Intermedio | Avanzado | Experto |
+| --- | --- | --- | --- | --- |
+| `empujar` (8 seguidas) | flexión con las manos en alto | flexión en el piso | flexión con los pies en alto | flexión cargando un brazo |
+| `tirar` (5 seguidas, con barra) | colgarme de la barra | dominada | dominada rápida, pecho a la barra | dominada cargando un brazo |
+| `piernas` (8 por pierna) | sentadilla | un pie atrás, en alto | una pierna, hasta una silla | una pierna, hasta abajo |
+| `cadera` · Atrás de las piernas (8 seguidas) | puente de glúteo | bisagra en una pierna | curl deslizando los pies | de rodillas, bajar despacio |
+| `abdomen` (20 s) | plancha | banana boca arriba | piernas en L, en el aire | piernas en V, en el aire |
 
-**Dónde arrancás** (`K.nivel.desde`, la tabla conservadora D1): el escalón de arranque por escalera. Si tu equipo no permite ese escalón, la escalera usa el de abajo que sí (el fondo sin paralelas es el fondo en banco). Lo que ya hiciste en una escalera manda sobre esto.
+**Dónde arrancás** (`K.nivel.desde`, conservador: D1): el escalón de arranque por escalera. Si tu equipo no permite ese escalón, la escalera usa el de abajo que sí (el fondo sin paralelas es el fondo en banco). Lo que ya hiciste en una escalera manda sobre esto.
 
-| Respuesta | Escalones |
-| --- | --- |
-| dominadas `0` | tirar: dominada negativa; remo: remo agarrado de un poste |
-| dominadas `1-4`, `5-9` | tirar: dominada; remo: remo invertido |
-| dominadas `10-14` / `15+` | tirar: dominada explosiva / dominada arquera; remo: remo invertido |
-| flexiones `0-9` | empujar: flexión inclinada; fondos: flexión cerrada; L-sit: plancha |
-| flexiones `10-19` | empujar: flexión; fondos: fondo en banco; L-sit: plancha |
-| flexiones `20-29` | empujar: flexión con pausa; fondos: fondo en banco; L-sit: hollow |
-| flexiones `30-39` / `40+` | empujar: flexión declinada / arquera; fondos: fondo; L-sit: l-sit |
-| una pierna `no` / `silla` / `completa` | piernas: sentadilla / hasta una silla / pistol; isquios: puente de glúteo / peso muerto a una pierna / curl femoral deslizante |
+| Movimiento | Inicial | Intermedio | Avanzado | Experto |
+| --- | --- | --- | --- | --- |
+| empujar | empujar: flexión inclinada; fondos: flexión cerrada | flexión; fondo en banco | flexión declinada; fondo | flexión arquera; fondo |
+| tirar | tirar: dominada negativa; remo: agarrado de un poste | dominada; remo invertido | dominada explosiva; remo invertido | dominada arquera; remo invertido a un brazo |
+| piernas | sentadilla | sentadilla búlgara | hasta una silla | pistol |
+| cadera (isquios) | puente de glúteo | peso muerto a una pierna | curl femoral deslizante | nórdico negativo |
+| abdomen (L-sit) | plancha | hollow | l-sit | v-sit |
 
-**Lo que se da por hecho** (`K.nivel.dadas`; cada respuesta suma las de las de abajo): dominadas `5-9` el colgado de 60 s (Front lever); `10-14` además Dominadas ×10 (Muscle-up) y la bolita 10 s (Front lever); `15+` además Dominadas ×15 (Un brazo). Flexiones `30-39` Flexiones ×30 (Planche); `40+` además Flexiones ×40 (Un brazo). Una pierna `silla` la de 5 hasta la silla; `completa` además Pistol ×3. Parada de manos `pared` muñecas 15 s, cuervo 10 s y pared 30 s; `libre` además pared 60 s.
+**Lo que se da por hecho** (`K.nivel.dadas`; cada nivel suma lo de los de abajo): tirar Intermedio el colgado de 60 s (Front lever); Avanzado además Dominadas ×10 (Muscle-up) y la bolita 10 s (Front lever); Experto además Dominadas ×15 (Un brazo). Empujar Avanzado Flexiones ×30 (Planche); Experto además Flexiones ×40 (Un brazo). Piernas Avanzado la de 5 hasta la silla; Experto además Pistol ×3. Abdomen Avanzado L-sit 10 s; Experto además L-sit 20 s. Atrás de las piernas no da estrellas.
+
+**Lo de antes** (`K.nivel.normal`): un nivel guardado con las cuatro preguntas por cantidad (dominadas, flexiones, una pierna, parada de manos) se lee por movimiento, un escalón abajo ante la duda: dominadas `0` → tirar Inicial, `1-9` → Intermedio, `10-14` → Avanzado, `15+` → Experto; flexiones `0-9` / `10-29` / `30-39` / `40+` → empujar Inicial a Experto, y abdomen Inicial (hasta 19), Intermedio (20-29) o Avanzado (30 o más); una pierna `no` / `silla` / `completa` → piernas Inicial / Avanzado / Experto y atrás de las piernas Inicial / Intermedio / Avanzado. La parada de manos ya no se pregunta: se prueba haciéndola. Lo dicho por movimiento manda; al cambiar un nivel se guarda la forma nueva. Un respaldo con la forma de antes se trae igual.
 
 Una estrella dada no se enciende ni escribe marcas: en tu cosmos se ve punteada con «N estrellas dadas por hechas», los totales no cambian y la próxima es la que sigue (`K.nivel.efectiva`, la misma regla en Hoy, el cosmos, la ventana y la semana de prueba). Se enciende de verdad cuando la hacés. Un intento real a esa estrella que no llega (anotado, o una serie que la probaba, desde la fecha de tu nivel) le saca lo de dada y vuelve a ser la próxima. Las series de una escalera no cuentan como intento.
 

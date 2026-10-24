@@ -41,7 +41,7 @@ K.respaldo = (() => {
     equipo: v => Array.isArray(v) && v.every(x => txt(x, 40)),
     rutina: v => obj(v) && txt(v.id) && fecha(v.desde),
     dias: v => Array.isArray(v) && v.length <= 7 && v.every(d => entero(d, 6)) && new Set(v).size === v.length,
-    /* tu nivel: solo respuestas que existen (K.nivel.PREGUNTAS) y la fecha en que las diste */
+    /* tu nivel: solo respuestas que existen (K.nivel.PREGUNTAS, o las cuatro preguntas de antes) y la fecha en que las diste */
     nivel: v => obj(v) && Object.keys(v).length > 0 && Object.entries(v).every(([k, x]) => k === "fecha" ? fecha(x) : !!K.nivel && K.nivel.valida(k, x))
   };
 

@@ -10,3 +10,7 @@
 /* una muestra de color en lugar del ícono (la piel, el pelo) */
 .pmi .sw{width:16px; height:16px; justify-self:center}
 .ajr .tile .sw{width:16px; height:16px}
+/* con figura (los niveles de Tu nivel): la figura a la izquierda, el nombre y debajo lo que es */
+.pop:has(.pfig) .pmi{grid-template-columns:36px 1fr 20px; gap:12px}
+.pmi .pfig{display:block; width:36px; height:36px} .pmi .pfig svg{display:block}
+.pmi .pfig + span .q{display:block; margin-top:2px; font-size:var(--t-md)}

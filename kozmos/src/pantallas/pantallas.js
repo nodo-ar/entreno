@@ -134,21 +134,21 @@ K.equipoTocar = async id => {
   try { await K.diario.lote({perfil: {equipo: n}}); } catch (e) { K.aviso("No se pudo guardar en este teléfono."); } finally { K.refrescar(); }
 };
 
-/* ===== Tu nivel: cuatro preguntas, cada una un menú; «No sé» siempre está. Elegir queda guardado y se ve en la fila
-   (otro toque lo cambia: no ofrece deshacer). Con tu nivel, cada escalera arranca más arriba y lo de abajo se da por hecho.
+/* ===== Tu nivel: cinco movimientos, cada uno un menú con sus cuatro niveles y «No sé». Cada fila muestra la figura del
+   ejercicio de tu nivel. Elegir queda guardado y se ve en la fila (otro toque lo cambia: no ofrece deshacer). Con tu nivel,
+   cada escalera arranca más arriba y lo de abajo se da por hecho.
    Desde Vos es un ajuste; desde Hoy, el primer día, el segundo paso de «Que Kozmos arme tu día». ===== */
-const ICONO_NIVEL = {dominadas: "barra", flexiones: "flexion", unaPierna: "unapierna", vertical: "pared"};
 K.resumenNivel = () => {
-  const n = K.diario.perfil.nivel, qs = K.nivel.preguntas(K.diario.perfil.equipo || null), k = qs.filter(q => n && K.nivel.valida(q.id, n[q.id])).length;
-  return k ? `${k} de ${qs.length}` : "Sin decir";
+  const eq = K.diario.perfil.equipo || null, k = K.nivel.respondidas(K.diario.perfil.nivel, eq);
+  return k ? `${k} de ${K.nivel.preguntas(eq).length}` : "Sin decir";
 };
 /* las escaleras de fuerza que mueve tu nivel, en el orden del molde */
 const ESC_NIVEL = ["tirar", "remo", "empujar", "fondos", "piernas", "isquios", "lsit"];
 K.P.nivel = (desde = "vos") => {
   const hoy = desde === "hoy", paso = hoy && K.primerDia() && K.pasoArmar("nivel"), panel = !hoy && K.horizontal();
-  const n = K.diario.perfil.nivel || {}, eq = K.diario.perfil.equipo || null;
-  const filas = K.nivel.preguntas(eq).map(q => { const o = q.opciones.find(x => x[0] === n[q.id]);
-    return `<button type="button" class="ajr" id="nv-${q.id}" data-nivel="${q.id}" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic(ICONO_NIVEL[q.id])}</span><span>${K.esc(q.nombre)}</span><em${o ? "" : ' class="nv-sin"'}>${K.esc(o ? o[1] : "Elegí")}</em>${K.ic("chevd", "chev")}</button>`; }).join("");
+  const n = K.nivel.normal(K.diario.perfil.nivel) || {}, eq = K.diario.perfil.equipo || null;
+  const filas = K.nivel.preguntas(eq).map(q => { const o = q.opciones.find(x => x[0] === n[q.id]), nv = q.niveles[o && o[0] !== "nose" ? +o[0] : 0];
+    return `<button type="button" class="ajr" id="nv-${q.id}" data-nivel="${q.id}" aria-haspopup="menu" aria-expanded="false"><span class="tile ico-tile">${K.icono.ejercicio(nv.ej, "fu", 40)}</span><span class="ses-fila">${K.esc(q.nombre)}<small class="mute">${K.esc(o && o[2] ? o[2] : q.pregunta)}</small></span><em${o ? "" : ' class="nv-sin"'}>${K.esc(o ? o[1] : "Elegí")}</em>${K.ic("chevd", "chev")}</button>`; }).join("");
   /* dónde arrancás con esto: el escalón de cada escalera que tu equipo permite (lo que ya hiciste manda) */
   const puede = id => K.rutina.escalera(id)?.pasos.some(p => K.rutina.idsPaso(p).some(e => (K.EJ[e]?.equipo || []).every(x => !eq || eq.includes(x))));
   const todos = K.rutina.escalonesTodos({...K.ctxRutina(), desde: K.desdeTuNivel()});
@@ -157,12 +157,12 @@ K.P.nivel = (desde = "vos") => {
   const boton = paso ? `<button type="button" class="btn" id="nv-seguir" data-sigue="${paso.sigue}">Seguir</button>`
     : `<button type="button" class="btn" data-volver="${hoy ? "#/hoy" : "#/vos"}">Listo</button>`;
   return K.enc({titulo: "Tu nivel", sub: paso ? "Para empezar" : hoy ? "Hoy" : "Ajustes", volver: hoy ? (paso ? paso.antes : "#/hoy") : "#/vos", raiz: !hoy, det: true, sinNav: !panel}) + (paso ? paso.pasos : "") +
-    `<p class="ayuda">Lo que te sale hoy, sin forzar. Kozmos arranca desde ahí y lo de abajo lo da por hecho.</p>
+    `<p class="ayuda">Lo que te sale hoy, sin forzar, en cada movimiento. Kozmos arranca desde ahí y lo de abajo lo da por hecho.</p>
     <section class="aj">${filas}</section>${arranca}` + (panel ? "" : K.pie(boton));
 };
 K.menuNivel = btn => {
-  const q = K.nivel.PREGUNTAS.find(x => x.id === btn.dataset.nivel), n = K.diario.perfil.nivel || {};
-  K.menu.abrir(btn, {titulo: q.nombre, items: q.opciones.map(([v, t]) => ({id: v, texto: t, elegido: n[q.id] === v})),
+  const q = K.nivel.PREGUNTAS.find(x => x.id === btn.dataset.nivel), n = K.nivel.normal(K.diario.perfil.nivel) || {};
+  K.menu.abrir(btn, {titulo: q.pregunta, items: q.opciones.map(([v, t, nota]) => ({id: v, texto: t, nota, ...(nota ? {fig: K.icono.ejercicio(q.niveles[+v].ej, "fu", 36)} : {}), elegido: n[q.id] === v})),
     elegir: async v => {
       if (n[q.id] === v) return;
       const nuevo = K.nivel.poner(n, q.id, v, K.hoy());
