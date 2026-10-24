@@ -11,7 +11,7 @@
    "texto": "De colgarte a la negativa a un brazo, pasando por tu primera dominada.",
    "pasos": [
     {"ejercicio": "colgado-activo", "tipo": "segundos", "meta": 60},
-    {"ejercicio": "dominada-asistida", "tipo": "repeticiones", "rango": [5, 8]},
+    {"ejercicio": "dominada-asistida", "tipo": "repeticiones", "rango": [5, 8], "conPeso": {"ejercicio": "jalon-pecho", "rango": [8, 12], "carga": 5, "kgInicial": 25, "hastaKg": 120, "total": true}},
     {"ejercicio": "dominada-negativa", "tipo": "repeticiones", "rango": [3, 5]},
     {"ejercicio": "dominada", "tipo": "repeticiones"},
     {"ejercicio": "dominada-explosiva", "tipo": "repeticiones", "rango": [3, 5]},
@@ -28,7 +28,10 @@
    "apoyo": ["hombros"],
    "texto": "Tirar hacia el pecho, del poste a la barra baja, al remo en horizontal y a un brazo.",
    "pasos": [
-    {"ejercicio": "remo-poste", "tipo": "repeticiones", "rango": [8, 12]},
+    {"ejercicio": "remo-poste", "tipo": "repeticiones", "rango": [8, 12], "conPeso": [
+     {"ejercicio": "remo-barra", "carga": 5, "kgInicial": 20, "hastaKg": 120, "total": true, "manda": true},
+     {"ejercicio": "remo-polea", "carga": 5, "kgInicial": 20, "hastaKg": 120, "total": true, "manda": true},
+     {"ejercicio": "remo-anillas"}]},
     {"ejercicio": "remo-mancuerna", "tipo": "repeticiones", "rango": [8, 12], "carga": 2, "kgInicial": 6, "hastaKg": 16, "tambien": ["remo-toalla-puerta"]},
     {"ejercicio": "remo-invertido", "tipo": "repeticiones", "tambien": ["remo-mesa"]},
     {"ejercicio": "remo-fl-tuck", "tipo": "repeticiones", "rango": [3, 6]},
@@ -44,7 +47,11 @@
    "apoyo": ["abdomen"],
    "texto": "De la flexión en la mesa a la flexión a un brazo.",
    "pasos": [
-    {"ejercicio": "flexion-inclinada", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "flexion-inclinada", "tipo": "repeticiones", "rango": [6, 10], "conPeso": [
+     {"ejercicio": "press-banca", "rango": [5, 8], "carga": 5, "kgInicial": 20, "hastaKg": 160, "total": true, "manda": true},
+     {"ejercicio": "press-pecho-maquina", "rango": [8, 12], "carga": 5, "kgInicial": 15, "hastaKg": 120, "total": true, "manda": true},
+     {"ejercicio": "press-banca-mancuernas", "rango": [8, 12], "carga": 2, "kgInicial": 6, "hastaKg": 30},
+     {"ejercicio": "press-piso-mancuernas", "rango": [8, 12], "carga": 2, "kgInicial": 6, "hastaKg": 24}]},
     {"ejercicio": "flexion", "tipo": "repeticiones"},
     {"ejercicio": "flexion-pausa", "tipo": "repeticiones"},
     {"ejercicio": "flexion-declinada", "tipo": "repeticiones"},
@@ -64,7 +71,24 @@
    "pasos": [
     {"ejercicio": "flexion-cerrada", "tipo": "repeticiones"},
     {"ejercicio": "fondo-banco", "tipo": "repeticiones", "rango": [6, 10]},
-    {"ejercicio": "fondo", "tipo": "repeticiones"}
+    {"ejercicio": "fondo", "tipo": "repeticiones", "tambien": ["fondo-anillas"]}
+   ]
+  },
+  {
+   "id": "arriba",
+   "nombre": "Empujar arriba",
+   "familia": "fu",
+   "patron": "empujar",
+   "zonas": ["hombros", "brazos"],
+   "apoyo": ["abdomen"],
+   "texto": "Empujar por encima de la cabeza: de la flexión de hombros a la pared.",
+   "pasos": [
+    {"ejercicio": "flexion-pike", "tipo": "repeticiones", "rango": [6, 10], "conPeso": [
+     {"ejercicio": "press-militar", "rango": [5, 8], "carga": 2.5, "kgInicial": 20, "hastaKg": 100, "total": true, "manda": true},
+     {"ejercicio": "press-hombros", "rango": [8, 12], "carga": 2, "kgInicial": 4, "hastaKg": 24},
+     {"ejercicio": "press-kettlebell", "rango": [6, 10], "carga": 4, "kgInicial": 8, "hastaKg": 32, "total": true}]},
+    {"ejercicio": "pike-elevado", "tipo": "repeticiones", "rango": [5, 8]},
+    {"ejercicio": "flexion-vertical-pared", "tipo": "repeticiones", "rango": [3, 6]}
    ]
   },
   {
@@ -76,7 +100,11 @@
    "apoyo": ["cadera"],
    "texto": "De la sentadilla común a la de una pierna.",
    "pasos": [
-    {"ejercicio": "sentadilla", "tipo": "repeticiones", "rango": [8, 12], "conPeso": {"ejercicio": "sentadilla-mancuernas", "carga": 2, "kgInicial": 4, "hastaKg": 16}},
+    {"ejercicio": "sentadilla", "tipo": "repeticiones", "rango": [8, 12], "conPeso": [
+     {"ejercicio": "sentadilla-barra", "rango": [5, 8], "carga": 5, "kgInicial": 20, "hastaKg": 200, "total": true, "manda": true},
+     {"ejercicio": "prensa", "carga": 10, "kgInicial": 40, "hastaKg": 300, "total": true, "manda": true},
+     {"ejercicio": "sentadilla-copa", "carga": 4, "kgInicial": 8, "hastaKg": 32, "total": true},
+     {"ejercicio": "sentadilla-mancuernas", "carga": 2, "kgInicial": 4, "hastaKg": 16}]},
     {"ejercicio": "zancada", "tipo": "repeticiones", "rango": [6, 10]},
     {"ejercicio": "sentadilla-bulgara", "tipo": "repeticiones", "carga": 2, "kgInicial": 6, "hastaKg": 14},
     {"ejercicio": "pistol-silla", "tipo": "repeticiones"},
@@ -93,9 +121,11 @@
    "apoyo": ["espalda"],
    "texto": "La parte de atrás de la pierna, del puente al nórdico.",
    "pasos": [
-    {"ejercicio": "puente-gluteo", "tipo": "repeticiones", "rango": [8, 12], "conPeso": {"ejercicio": "peso-muerto-rumano", "carga": 2, "kgInicial": 6, "hastaKg": 20}},
+    {"ejercicio": "puente-gluteo", "tipo": "repeticiones", "rango": [8, 12], "conPeso": [
+     {"ejercicio": "peso-muerto-barra", "rango": [5, 8], "carga": 5, "kgInicial": 30, "hastaKg": 220, "total": true, "manda": true},
+     {"ejercicio": "peso-muerto-rumano", "carga": 2, "kgInicial": 6, "hastaKg": 20}]},
     {"ejercicio": "peso-muerto-una-pierna", "tipo": "repeticiones", "rango": [6, 10], "carga": 2, "kgInicial": 8, "hastaKg": 16},
-    {"ejercicio": "curl-femoral-deslizante", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "curl-femoral-deslizante", "tipo": "repeticiones", "rango": [6, 10], "conPeso": {"ejercicio": "curl-femoral-maquina", "rango": [8, 12], "carga": 5, "kgInicial": 15, "hastaKg": 80, "total": true}},
     {"ejercicio": "nordico-negativa", "tipo": "repeticiones", "rango": [3, 5]},
     {"ejercicio": "nordico", "tipo": "repeticiones", "rango": [1, 3]}
    ]

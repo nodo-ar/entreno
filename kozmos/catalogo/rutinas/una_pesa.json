@@ -120,7 +120,7 @@
      "desde": "peso-muerto-una-pierna"
     },
     {
-     "escalera": "fondos",
+     "escalera": "arriba",
      "series": 3,
      "rango": [
       6,
@@ -128,7 +128,7 @@
      ],
      "descanso": 120,
      "grupo": "B",
-     "desde": "flexion-cerrada"
+     "desde": "flexion-pike"
     },
     {
      "ejercicio": [
@@ -306,7 +306,7 @@
      "desde": "peso-muerto-una-pierna"
     },
     {
-     "escalera": "fondos",
+     "escalera": "arriba",
      "series": 3,
      "rango": [
       6,
@@ -314,7 +314,7 @@
      ],
      "descanso": 120,
      "grupo": "B",
-     "desde": "flexion-cerrada"
+     "desde": "flexion-pike"
     },
     {
      "ejercicio": [
@@ -492,7 +492,7 @@
      "desde": "peso-muerto-una-pierna"
     },
     {
-     "escalera": "fondos",
+     "escalera": "arriba",
      "series": 3,
      "rango": [
       6,
@@ -500,7 +500,7 @@
      ],
      "descanso": 120,
      "grupo": "B",
-     "desde": "flexion-cerrada"
+     "desde": "flexion-pike"
     },
     {
      "ejercicio": [
@@ -678,7 +678,7 @@
      "desde": "peso-muerto-una-pierna"
     },
     {
-     "escalera": "fondos",
+     "escalera": "arriba",
      "series": 3,
      "rango": [
       6,
@@ -686,7 +686,7 @@
      ],
      "descanso": 120,
      "grupo": "B",
-     "desde": "flexion-cerrada"
+     "desde": "flexion-pike"
     },
     {
      "ejercicio": [

@@ -5,7 +5,8 @@ K.P = {};
 K.vacio = (dibujo, titulo, texto, cls = "") => `<section class="cd vacio ${cls}"><div class="ilus" aria-hidden="true">${dibujo}</div><b>${titulo}</b><p>${texto}</p></section>`;
 
 /* el equipo que pide alguna estrella o rutina del catálogo */
-K.EQUIPOS = [["barra", "Barra"], ["paralelas", "Paralelas"], ["pared", "Pared libre"], ["poste", "Poste"], ["lastre", "Lastre"], ["mancuernas", "Mancuernas"], ["kettlebell", "Kettlebell"], ["bici", "Bici"], ["soga", "Soga"]];
+K.EQUIPOS = [["barra", "Barra"], ["paralelas", "Paralelas"], ["anillas", "Anillas"], ["pared", "Pared libre"], ["poste", "Poste"], ["lastre", "Lastre"], ["mancuernas", "Mancuernas"], ["kettlebell", "Kettlebell"],
+  ["discos", "Barra y discos"], ["banco", "Banco"], ["maquinas", "Máquinas y poleas"], ["bici", "Bici"], ["remadora", "Máquina de remo"], ["soga", "Soga"]];
 K.equipoNombre = id => id === "pesa" ? "Una mancuerna o kettlebell" : (K.EQUIPOS.find(x => x[0] === id) || [id, id])[1];
 /* lo que marcaste. Sin elegir todavía (null) no se ve nada marcado; el cielo, en cambio, muestra todo hasta que lo digas (ver cielo.js) */
 K.equipo = () => K.diario.perfil.equipo || [];
@@ -146,7 +147,7 @@ K.resumenNivel = () => {
   return k ? `${k} de ${K.nivel.preguntas(eq).length}` : "Sin decir";
 };
 /* las escaleras de fuerza que mueve tu nivel, en el orden del molde */
-const ESC_NIVEL = ["tirar", "remo", "empujar", "fondos", "piernas", "isquios", "lsit"];
+const ESC_NIVEL = ["tirar", "remo", "empujar", "arriba", "fondos", "piernas", "isquios", "lsit"];
 K.P.nivel = (desde = "vos") => {
   const hoy = desde === "hoy", paso = hoy && K.primerDia() && K.pasoArmar("nivel"), panel = !hoy && K.horizontal();
   const n = K.nivel.normal(K.diario.perfil.nivel) || {}, eq = K.tuEquipo();

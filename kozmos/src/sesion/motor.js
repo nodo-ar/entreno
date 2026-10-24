@@ -234,7 +234,7 @@ K.sesion = (() => {
     if (b.carga && b.mano){
       const n = numero(v.valor), k = numero(v.kg);
       if (!(n > 0 && n <= 100000)) return;
-      S.hechos.push({b: S.b, s: S.s, ...marca, valor: n, ...(k >= 0 && k <= 200 ? {kg: k} : {})});
+      S.hechos.push({b: S.b, s: S.s, ...marca, valor: n, ...(k >= 0 && k <= 500 ? {kg: k} : {})});
       return;
     }
     if (b.carga){

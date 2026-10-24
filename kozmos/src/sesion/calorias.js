@@ -5,7 +5,7 @@
 K.calorias = (() => {
   /* MET por familia, y por ejercicio cuando el ejercicio dice algo más preciso */
   const FAMILIA = {fu: 3.8, ra: 2.3, mo: 7.0};      /* calistenia moderada · elongación suave · bici fija, general */
-  const EJERCICIO = {bici: 7.0, intervalos: 8.8, trote: 7.0, "10km": 9.8, soga: 11.8, "double-under": 11.8, "criss-cross": 11.8};
+  const EJERCICIO = {bici: 7.0, "remo-maquina": 7.0, intervalos: 8.8, trote: 7.0, "10km": 9.8, soga: 11.8, "double-under": 11.8, "criss-cross": 11.8};
   const SALTOS_POR_MIN = 110, INTERVALOS_MIN = 28;
   const met = b => EJERCICIO[b.series?.[0]?.ejercicio] ?? FAMILIA[b.familia] ?? 3.5;
   /* los segundos que se saben de un bloque, o null si se reparten con el resto */
