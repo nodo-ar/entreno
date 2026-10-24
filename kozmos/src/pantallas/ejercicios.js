@@ -49,14 +49,15 @@ const pasa = (x, que, con) => {
   if (que !== "todo" && K.ejGrupo(x.id)[0] !== que) return false;
   const eq = x.equipo || [];
   if (con === "nada") return !eq.length;
-  if (con === "tuyo") return eq.every(e => K.diario.perfil.equipo.includes(e));
-  if (con !== "todo") return eq.includes(con);
+  if (con === "tuyo") return eq.every(e => K.tuEquipo().includes(e));
+  /* lo de una pesa sale con mancuernas y con kettlebell */
+  if (con !== "todo") return eq.includes(con) || (eq.includes("pesa") && (con === "mancuernas" || con === "kettlebell"));
   return true;
 };
 /* con qué se hace, con mayúscula: «Barra», «Barra y paralelas» */
 const conQue = eq => eq.length ? K.pide(eq).replace(/^./, c => c.toUpperCase()) : "";
 /* lo que va debajo del nombre: con qué se hace o, si pide algo que no marcaste, «Pide barra» */
-const ejSub = x => { const eq = x.equipo || [], q = K.diario.perfil.equipo, falta = q ? eq.filter(e => !q.includes(e)) : [];
+const ejSub = x => { const eq = x.equipo || [], q = K.tuEquipo(), falta = q ? eq.filter(e => !q.includes(e)) : [];
   return falta.length ? `Pide ${K.pide(falta)}` : conQue(eq); };
 const ejFila = (x, sel) => { const [, , fam] = K.ejGrupo(x.id), m = K.ejMejor(K.ejVeces(x.id)), sub = ejSub(x);
   return `<button type="button" class="ajr" data-ir="#/planes/ejercicios/${x.id}" data-quieto="1"${sel === x.id ? " data-sel" : ""}><span class="tile ico-tile">${K.icono.ejercicio(x.id, fam, 40)}</span>
@@ -82,7 +83,7 @@ const ejVolver = () => { const P = K._pila || [], a = P[P.length - 2]; return a 
 
 /* ===== Un ejercicio ===== */
 K.P.ejercicio = id => {
-  const x = K.ej(id), [, gt, fam] = K.ejGrupo(id), eq = x.equipo || [], q = K.diario.perfil.equipo, falta = q ? eq.filter(e => !q.includes(e)) : [];
+  const x = K.ej(id), [, gt, fam] = K.ejGrupo(id), eq = x.equipo || [], q = K.tuEquipo(), falta = q ? eq.filter(e => !q.includes(e)) : [];
   const enc = K.enc({titulo: x.nombre, sub: gt, volver: K.horizontal() ? "#/planes/ejercicios" : ejVolver(), raiz: true, det: true});
   /* la persona haciéndolo, grande y moviéndose, como en la serie */
   const fig = K.POSES[id] ? `<div class="ej-fig">${K.fig.grande(id, fam)}</div>` : "";

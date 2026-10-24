@@ -58,7 +58,7 @@ K.hzLinea = (h, vs) => {
   return `<svg class="hz-linea" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true" style="--c:var(--${h.familia})"><polyline points="${p.map(q => q.map(n => n.toFixed(1)).join(",")).join(" ")}"/>
     <circle cx="${p[p.length - 1][0].toFixed(1)}" cy="${p[p.length - 1][1].toFixed(1)}" r="3"/></svg>`;
 };
-const hzPuede = h => { const q = K.diario.perfil.equipo; if (!q) return []; return [...new Set([h.mide.ejercicio, ...(h.items || []).map(x => x.ejercicio)].flatMap(e => K.ej(e).equipo || []).filter(x => !q.includes(x)))]; };
+const hzPuede = h => { const q = K.tuEquipo(); if (!q) return []; return [...new Set([h.mide.ejercicio, ...(h.items || []).map(x => x.ejercicio)].flatMap(e => K.ej(e).equipo || []).filter(x => !q.includes(x)))]; };
 
 /* «Prueba en la semana 5», «Esta semana: semana de prueba» */
 K.pruebaTx = (sp, r) => !sp ? "" : sp.meta ? "Esta semana es la meta" : sp.toca ? "Esta semana es de prueba" : sp.aplazada ? "La prueba espera: volvé a agarrar ritmo"
@@ -77,7 +77,7 @@ K.bloqueTx = r => {
 /* una rutina: qué es, hacia qué estrellas lleva, cómo es una semana y la fuente al pie */
 K.P.rutina = id => {
   const r = K.rutinaDe(id), ru = K.rutinaActual(), sigo = ru && ru.r.id === id;
-  const cielo = K.cieloActual(), falta = K.rutina.falta(r, K.EJ, K.diario.perfil.equipo || null);
+  const cielo = K.cieloActual(), falta = K.rutina.falta(r, K.EJ, K.tuEquipo());
   const enc = K.enc({titulo: r.nombre, sub: "Planes", volver: "#/planes", raiz: true, det: true, acciones: sigo ? K.mas("rut-mas", "Opciones de la rutina") : ""});
   const est = r.alimenta.map(eid => { const c = cielo.constelaciones.find(k => k.estrellas.some(y => y.id === eid)); return c && {c, e: c.estrellas.find(y => y.id === eid)}; }).filter(Boolean);
   const lleva = est.length ? `<span class="lb pie">Entrena para</span><section class="aj">${est.map(({c, e}) => estFila(c, e, K.esc(c.nombre), e.encendida ? "Encendida" : e.estado === "proxima" ? "La próxima" : "")).join("")}</section>` : "";

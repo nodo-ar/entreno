@@ -1,9 +1,9 @@
 /* ===== Cielo y Constelación (etapa 2): el catálogo, tu cielo calculado y las marcas anotadas a mano ===== */
 K.hoy = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 /* tu cosmos con lo que tu nivel da por hecho: esas estrellas se ven dadas (sin encender) y la próxima es la que sigue */
-K.cieloActual = () => K.nivel.aplicar(K.cielo.calcular(K.CATALOGO, K.diario.mediciones, K.hoy(), K.diario.sesiones, K.diario.perfil.equipo || null), K.dadasDeTuNivel(), {fecha: K.diario.perfil.nivel?.fecha});
-K.dadasDeTuNivel = () => K.nivel.dadas(K.diario.perfil.nivel, K.diario.perfil.equipo || null);
-K.desdeTuNivel = () => K.nivel.desde(K.diario.perfil.nivel, K.diario.perfil.equipo || null);
+K.cieloActual = () => K.nivel.aplicar(K.cielo.calcular(K.CATALOGO, K.diario.mediciones, K.hoy(), K.diario.sesiones, K.tuEquipo()), K.dadasDeTuNivel(), {fecha: K.diario.perfil.nivel?.fecha});
+K.dadasDeTuNivel = () => K.nivel.dadas(K.diario.perfil.nivel, K.tuEquipo());
+K.desdeTuNivel = () => K.nivel.desde(K.diario.perfil.nivel, K.tuEquipo());
 K.familia = id => K.CATALOGO.familias.find(f => f.id === id);
 /* la que se abre sola en horizontal: la última que practicaste, o la primera */
 K.destacada = cielo => (cielo.constelaciones.filter(c => c.ultima).sort((a, b) => b.ultima.localeCompare(a.ultima))[0] || cielo.constelaciones[0]).id;

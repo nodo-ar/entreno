@@ -1,0 +1,1376 @@
+{
+ "id": "casa",
+ "nombre": "Fuerza en casa",
+ "familia": "fu",
+ "texto": "Todo el cuerpo, tres días por semana, sin equipo. Cada ejercicio sube de a un escalón cuando lo dominás; si tenés una pesa, arranca con kilos.",
+ "semanas": 8,
+ "dias": 3,
+ "minutos": 45,
+ "nivel": 1,
+ "bloque": {
+  "carga": 3,
+  "prueba": 1
+ },
+ "equipo": [],
+ "alimenta": [
+  "una-pierna.pistol-silla-5",
+  "un-brazo.flexion-arquera-5",
+  "una-pierna.nordico-negativa-5",
+  "draco.lsit-10s"
+ ],
+ "fuente": "Colegio Americano de Medicina del Deporte (2009), progresión en el entrenamiento de fuerza",
+ "sesiones": [
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "empujar",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "zancada"
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "fondos",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-cerrada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "dragon",
+     "series": 2,
+     "rango": [
+      12,
+      20
+     ],
+     "descanso": 60,
+     "desde": "hollow-rock"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "escalera": "empujar",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "empujar",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "zancada"
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "fondos",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-cerrada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "dragon",
+     "series": 2,
+     "rango": [
+      12,
+      20
+     ],
+     "descanso": 60,
+     "desde": "hollow-rock"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "escalera": "empujar",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "empujar",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "zancada"
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "fondos",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-cerrada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "dragon",
+     "series": 2,
+     "rango": [
+      12,
+      20
+     ],
+     "descanso": 60,
+     "desde": "hollow-rock"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "escalera": "empujar",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "empujar",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "zancada"
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "fondos",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-cerrada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "dragon",
+     "series": 2,
+     "rango": [
+      12,
+      20
+     ],
+     "descanso": 60,
+     "desde": "hollow-rock"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "escalera": "empujar",
+     "series": 3,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "remo",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "isquios",
+     "series": 3,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "empujar",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "zancada"
+    },
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "fondos",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-cerrada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "dragon",
+     "series": 2,
+     "rango": [
+      12,
+      20
+     ],
+     "descanso": 60,
+     "desde": "hollow-rock"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "escalera": "empujar",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "empujar",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "zancada"
+    },
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "fondos",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-cerrada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "dragon",
+     "series": 2,
+     "rango": [
+      12,
+      20
+     ],
+     "descanso": 60,
+     "desde": "hollow-rock"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "escalera": "empujar",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "empujar",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "zancada"
+    },
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "fondos",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-cerrada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "dragon",
+     "series": 2,
+     "rango": [
+      12,
+      20
+     ],
+     "descanso": 60,
+     "desde": "hollow-rock"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "escalera": "empujar",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día A",
+   "bloques": [
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "empujar",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  },
+  {
+   "nombre": "Día B",
+   "bloques": [
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "zancada"
+    },
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "fondos",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "flexion-cerrada"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "dragon",
+     "series": 2,
+     "rango": [
+      12,
+      20
+     ],
+     "descanso": 60,
+     "desde": "hollow-rock"
+    }
+   ]
+  },
+  {
+   "nombre": "Día C",
+   "bloques": [
+    {
+     "escalera": "empujar",
+     "series": 4,
+     "rango": [
+      6,
+      10
+     ],
+     "descanso": 0,
+     "grupo": "A",
+     "desde": "flexion-inclinada"
+    },
+    {
+     "escalera": "remo",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "A",
+     "desde": "remo-poste"
+    },
+    {
+     "escalera": "piernas",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 0,
+     "grupo": "B",
+     "desde": "sentadilla"
+    },
+    {
+     "escalera": "isquios",
+     "series": 4,
+     "rango": [
+      8,
+      12
+     ],
+     "descanso": 120,
+     "grupo": "B",
+     "desde": "puente-gluteo"
+    },
+    {
+     "escalera": "lsit",
+     "series": 2,
+     "descanso": 60,
+     "desde": "plancha"
+    }
+   ]
+  }
+ ]
+}

@@ -119,14 +119,14 @@ document.addEventListener("click", e => {
   if (e.target.closest(".ses.prueba.serie") && !e.target.closest("button, a, input")){ K.ses.listo(); return; }
   const ra = e.target.closest("[data-rasgo]");
   if (ra){ K.menuRasgo(ra); return; }
-  const m = e.target.closest("#tema-menu, #avisos-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-empezar, #pl-probar, #ej-que, #ej-con, #pl-fam-rutinas, #rut-sem, #eq-seguir, #nv-seguir, [data-probar], [data-equipo], [data-nivel], [data-ppaso], [data-dia]");
+  const m = e.target.closest("#tema-menu, #avisos-menu, #tiempo-menu, #res-mas, #rs-guardar, #rs-traer, #v-peso-listo, #hoy-igual, #rut-seguir, #rut-mas, #hz-empezar, #pl-probar, #ej-que, #ej-con, #pl-fam-rutinas, #rut-sem, #eq-seguir, #nv-seguir, [data-probar], [data-equipo], [data-nivel], [data-ppaso], [data-dia]");
   if (m){
     if (m.dataset.probar) K.ses.probar(m.dataset.probar, m);
     else if (m.dataset.equipo) K.equipoTocar(m.dataset.equipo);
     else if (m.dataset.nivel) K.menuNivel(m);
     else if (m.dataset.ppaso) K.pesoPaso(Number(m.dataset.ppaso));
     else if (m.dataset.dia) K.diaTocar(Number(m.dataset.dia));
-    else ({"tema-menu": () => K.menuTema(m), "avisos-menu": () => K.menuAvisos(m), "res-mas": () => K.resumenMenu(m),
+    else ({"tema-menu": () => K.menuTema(m), "avisos-menu": () => K.menuAvisos(m), "tiempo-menu": () => K.menuTiempo(m), "res-mas": () => K.resumenMenu(m),
       "rs-guardar": () => K.mov.girando(m, K.resp.guardar), "rs-traer": () => K.$("#rs-archivo").click(), "v-peso-listo": () => K.pesoListo(),
       "hoy-igual": () => { K._igual = K.hoy(); K.refrescar(); }, "rut-seguir": () => K.rutinaSeguir(m.dataset.rutina), "rut-mas": () => K.rutinaMenu(m),
       "hz-empezar": () => K.ses.hazana(m.dataset.hazana, m), "pl-probar": () => K.ses.hazana(m.dataset.hazana, m), "ej-que": () => K.ejMenu(m), "ej-con": () => K.ejMenu(m), "pl-fam-rutinas": () => K.planesFamilia(m), "rut-sem": () => K.rutinaSemana(m), "eq-seguir": () => K.equipoSeguir(m), "nv-seguir": () => K.ir(m.dataset.sigue)})[m.id]();
@@ -221,7 +221,9 @@ K.fig.fijar(K.prefs.get("persona", {}));
 K.sesion.alCambiar = () => K.refrescar(); /* otra pestaña tocó la sesión */
 K.diario.abrir().then(async () => {
   const r = await K.sesion.restaurar();
-  K.mostrar(); K.mov.arranque();
+  K.mostrar();
+  /* la primera vez, la bienvenida (trae su propio arranque del logo); si no, el de siempre */
+  if (K.bienvenida.toca()) K.bienvenida.abrir(); else K.mov.arranque();
   if (r === "guardada") K.aviso("La sesión que quedó abierta se guardó como cortada.");
 });
 

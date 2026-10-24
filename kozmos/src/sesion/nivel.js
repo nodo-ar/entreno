@@ -1,54 +1,83 @@
-/* ===== Tu nivel: cuatro preguntas para no arrancar de cero (funciones puras) =====
-   perfil.nivel = {dominadas, flexiones, unaPierna, vertical, fecha}. Cada respuesta es una de las opciones de abajo;
-   «nose» (No sé) y la que falta valen lo mismo: arrancás desde el principio.
+/* ===== Tu nivel: cinco movimientos, cuatro niveles (funciones puras) =====
+   perfil.nivel = {empujar, tirar, piernas, cadera, abdomen, fecha}. Cada movimiento es "0" Inicial, "1" Intermedio,
+   "2" Avanzado, "3" Experto o «nose» (No sé). «No sé» y el que falta valen lo mismo: arrancás desde el principio.
+   Cada nivel es un ejercicio que se ve (la figura): el que te sale con las repeticiones de la pregunta.
    · desde(nivel, equipo): el escalón de arranque de cada escalera ({tirar: "dominada"}). Lo que hiciste manda sobre esto.
    · dadas(nivel, equipo): las estrellas que tu nivel da por hechas. No se encienden ni escriben marcas: solo corren la próxima.
    · efectiva(c, dadas, {fecha}): la constelación con las dadas a la vista (estado «dada») y la próxima que sigue.
      Un intento real a esa estrella que no llega (anotado o en una sesión, desde que dijiste tu nivel) le saca lo de dada.
    · arrancasEn(c, {escalones, ej}): dónde arranca esa meta hoy: el escalón del camino o la estrella.
+   · normal(nivel): lo guardado con las cuatro preguntas de antes (dominadas, flexiones, unaPierna, vertical), pasado a movimientos.
    Conservador a propósito (D1): ante la duda, un escalón más abajo. Detalle en docs/kozmos-rutinas.md («Tu nivel»). */
 K.nivel = (() => {
-  const PREGUNTAS = [
-    {id: "dominadas", nombre: "Dominadas seguidas", pide: "barra", opciones: [["0", "Ninguna"], ["1-4", "De 1 a 4"], ["5-9", "De 5 a 9"], ["10-14", "De 10 a 14"], ["15+", "15 o más"], ["nose", "No sé"]]},
-    {id: "flexiones", nombre: "Flexiones seguidas", opciones: [["0-9", "Menos de 10"], ["10-19", "De 10 a 19"], ["20-29", "De 20 a 29"], ["30-39", "De 30 a 39"], ["40+", "40 o más"], ["nose", "No sé"]]},
-    {id: "unaPierna", nombre: "Sentadilla a una pierna", opciones: [["no", "Todavía no"], ["silla", "Hasta una silla"], ["completa", "Completa, hasta abajo"], ["nose", "No sé"]]},
-    {id: "vertical", nombre: "Parada de manos", pide: "pared", opciones: [["no", "Todavía no"], ["pared", "Contra la pared"], ["libre", "Libre"], ["nose", "No sé"]]}
+  const NIVELES = ["Inicial", "Intermedio", "Avanzado", "Experto"];
+  /* por movimiento: la pregunta y, por nivel, lo que se ve (texto y figura), el escalón de arranque y lo que da por hecho */
+  const MOVIMIENTOS = [
+    {id: "empujar", nombre: "Empujar", pregunta: "¿Cuál te sale, 8 seguidas?", niveles: [
+      {texto: "Flexión con las manos en alto", ej: "flexion-inclinada", desde: {empujar: "flexion-inclinada", fondos: "flexion-cerrada"}},
+      {texto: "Flexión en el piso", ej: "flexion", desde: {empujar: "flexion", fondos: "fondo-banco"}},
+      {texto: "Flexión con los pies en alto", ej: "flexion-declinada", desde: {empujar: "flexion-declinada", fondos: "fondo"}, dadas: ["planche.flexiones-30"]},
+      {texto: "Flexión cargando un brazo", ej: "flexion-arquera", desde: {empujar: "flexion-arquera", fondos: "fondo"}, dadas: ["un-brazo.flexiones-40"]}]},
+    {id: "tirar", nombre: "Tirar", pide: "barra", pregunta: "¿Cuál te sale, 5 seguidas?", niveles: [
+      {texto: "Colgarme de la barra", ej: "colgado-activo", desde: {tirar: "dominada-negativa", remo: "remo-poste"}},
+      {texto: "Dominada", ej: "dominada", desde: {tirar: "dominada", remo: "remo-invertido"}, dadas: ["front-lever.colgado-60s"]},
+      {texto: "Dominada rápida, pecho a la barra", ej: "dominada-explosiva", desde: {tirar: "dominada-explosiva", remo: "remo-invertido"}, dadas: ["muscle-up.dominadas-10", "front-lever.bolita-10s"]},
+      {texto: "Dominada cargando un brazo", ej: "dominada-arquera", desde: {tirar: "dominada-arquera", remo: "remo-un-brazo"}, dadas: ["un-brazo.dominadas-15"]}]},
+    {id: "piernas", nombre: "Piernas", pregunta: "¿Cuál te sale, 8 por pierna?", niveles: [
+      {texto: "Sentadilla", ej: "sentadilla", desde: {piernas: "sentadilla"}},
+      {texto: "Un pie atrás, en alto", ej: "sentadilla-bulgara", desde: {piernas: "sentadilla-bulgara"}},
+      {texto: "Una pierna, hasta una silla", ej: "pistol-silla", desde: {piernas: "pistol-silla"}, dadas: ["una-pierna.pistol-silla-5"]},
+      {texto: "Una pierna, hasta abajo", ej: "pistol", desde: {piernas: "pistol"}, dadas: ["una-pierna.pistol-3"]}]},
+    {id: "cadera", nombre: "Atrás de las piernas", pregunta: "¿Cuál te sale, 8 seguidas?", niveles: [
+      {texto: "Puente de glúteo", ej: "puente-gluteo", desde: {isquios: "puente-gluteo"}},
+      {texto: "Bisagra en una pierna", ej: "peso-muerto-una-pierna", desde: {isquios: "peso-muerto-una-pierna"}},
+      {texto: "Curl deslizando los pies", ej: "curl-femoral-deslizante", desde: {isquios: "curl-femoral-deslizante"}},
+      {texto: "De rodillas, bajar despacio", ej: "nordico", desde: {isquios: "nordico-negativa"}}]},
+    {id: "abdomen", nombre: "Abdomen", pregunta: "¿Cuál aguantás 20 segundos?", niveles: [
+      {texto: "Plancha", ej: "plancha", desde: {lsit: "plancha"}},
+      {texto: "Banana boca arriba", ej: "hollow", desde: {lsit: "hollow"}},
+      {texto: "Piernas en L, en el aire", ej: "l-sit", desde: {lsit: "l-sit"}, dadas: ["draco.lsit-10s"]},
+      {texto: "Piernas en V, en el aire", ej: "v-sit", desde: {lsit: "v-sit"}, dadas: ["draco.lsit-20s"]}]}
   ];
-  /* las preguntas que valen con tu equipo: sin barra no se pregunta por dominadas; sin decir tu equipo, todas */
+  /* cada movimiento como pregunta de menú: los cuatro niveles y «No sé» al final */
+  const PREGUNTAS = MOVIMIENTOS.map(m => ({...m, opciones: [...m.niveles.map((n, i) => [String(i), NIVELES[i], n.texto]), ["nose", "No sé"]]}));
+  /* los movimientos que valen con tu equipo: sin barra no se pregunta por tirar; sin decir tu equipo, todos */
   const preguntas = equipo => PREGUNTAS.filter(q => !q.pide || !equipo || equipo.includes(q.pide));
-  const valida = (id, v) => PREGUNTAS.some(q => q.id === id && q.opciones.some(o => o[0] === v));
-  /* lo que dijiste en una pregunta que vale con tu equipo; si no, nada */
-  const de = (nivel, id, equipo) => nivel && preguntas(equipo).some(q => q.id === id) && valida(id, nivel[id]) && nivel[id] !== "nose" ? nivel[id] : null;
+
+  /* lo de antes: cuatro preguntas por cantidad. Se aceptan al leer (y en un respaldo) y se pasan a movimientos */
+  const VIEJAS = {dominadas: ["0", "1-4", "5-9", "10-14", "15+", "nose"], flexiones: ["0-9", "10-19", "20-29", "30-39", "40+", "nose"], unaPierna: ["no", "silla", "completa", "nose"], vertical: ["no", "pared", "libre", "nose"]};
+  const PASA = {
+    dominadas: {"0": {tirar: "0"}, "1-4": {tirar: "1"}, "5-9": {tirar: "1"}, "10-14": {tirar: "2"}, "15+": {tirar: "3"}, nose: {tirar: "nose"}},
+    flexiones: {"0-9": {empujar: "0", abdomen: "0"}, "10-19": {empujar: "1", abdomen: "0"}, "20-29": {empujar: "1", abdomen: "1"}, "30-39": {empujar: "2", abdomen: "2"}, "40+": {empujar: "3", abdomen: "2"}, nose: {empujar: "nose"}},
+    unaPierna: {no: {piernas: "0", cadera: "0"}, silla: {piernas: "2", cadera: "1"}, completa: {piernas: "3", cadera: "2"}, nose: {piernas: "nose", cadera: "nose"}}
+  };
+  const nueva = (id, v) => PREGUNTAS.some(q => q.id === id && q.opciones.some(o => o[0] === v));
+  const valida = (id, v) => nueva(id, v) || !!VIEJAS[id]?.includes(v);
+  /* normal(nivel) → {empujar, …, fecha} con solo respuestas que existen; lo dicho por movimiento manda sobre lo de antes */
+  function normal(nivel){
+    if (!nivel || typeof nivel !== "object") return nivel;
+    const r = {};
+    for (const [k, v] of Object.entries(nivel)) for (const [m, x] of Object.entries(PASA[k]?.[v] || {})) if (!(m in r)) r[m] = x;
+    for (const q of PREGUNTAS) if (nueva(q.id, nivel[q.id])) r[q.id] = nivel[q.id];
+    if (nivel.fecha) r.fecha = nivel.fecha;
+    return r;
+  }
+  /* el nivel (0 a 3) de un movimiento que vale con tu equipo; si no, null */
+  const de = (nivel, id, equipo) => { const n = normal(nivel), v = n?.[id]; return preguntas(equipo).some(q => q.id === id) && nueva(id, v) && v !== "nose" ? +v : null; };
 
   /* el escalón de arranque por escalera (ids de K.ESCALERAS). Si tu equipo no permite ese escalón, la escalera usa el
      de abajo que sí (K.rutina.defEscalera): el fondo sin paralelas es el fondo en banco */
-  const DESDE = {
-    dominadas: {"0": {tirar: "dominada-negativa", remo: "remo-poste"}, "1-4": {tirar: "dominada", remo: "remo-invertido"}, "5-9": {tirar: "dominada", remo: "remo-invertido"},
-      "10-14": {tirar: "dominada-explosiva", remo: "remo-invertido"}, "15+": {tirar: "dominada-arquera", remo: "remo-invertido"}},
-    flexiones: {"0-9": {empujar: "flexion-inclinada", fondos: "flexion-cerrada", lsit: "plancha"}, "10-19": {empujar: "flexion", fondos: "fondo-banco", lsit: "plancha"},
-      "20-29": {empujar: "flexion-pausa", fondos: "fondo-banco", lsit: "hollow"}, "30-39": {empujar: "flexion-declinada", fondos: "fondo", lsit: "l-sit"},
-      "40+": {empujar: "flexion-arquera", fondos: "fondo", lsit: "l-sit"}},
-    unaPierna: {no: {piernas: "sentadilla", isquios: "puente-gluteo"}, silla: {piernas: "pistol-silla", isquios: "peso-muerto-una-pierna"}, completa: {piernas: "pistol", isquios: "curl-femoral-deslizante"}}
-  };
-  /* las estrellas dadas por hechas: cada respuesta suma las suyas a las de la de abajo */
-  const DADAS = {
-    dominadas: {"5-9": ["front-lever.colgado-60s"], "10-14": ["muscle-up.dominadas-10", "front-lever.bolita-10s"], "15+": ["un-brazo.dominadas-15"]},
-    flexiones: {"30-39": ["planche.flexiones-30"], "40+": ["un-brazo.flexiones-40"]},
-    unaPierna: {silla: ["una-pierna.pistol-silla-5"], completa: ["una-pierna.pistol-3"]},
-    vertical: {pared: ["parada-de-manos.munecas-15s", "parada-de-manos.cuervo-10s", "parada-de-manos.pared-30s"], libre: ["parada-de-manos.pared-60s"]}
-  };
-
   function desde(nivel, equipo = null){
     const r = {};
-    for (const id of Object.keys(DESDE)){ const v = de(nivel, id, equipo); if (v && DESDE[id][v]) Object.assign(r, DESDE[id][v]); }
+    for (const m of MOVIMIENTOS){ const i = de(nivel, m.id, equipo); if (i !== null) Object.assign(r, m.niveles[i].desde); }
     return r;
   }
+  /* las estrellas dadas por hechas: cada nivel suma las suyas a las de los de abajo */
   function dadas(nivel, equipo = null){
     const r = [];
-    for (const q of PREGUNTAS){
-      const v = de(nivel, q.id, equipo); if (!v) continue;
-      const orden = q.opciones.map(o => o[0]), hasta = orden.indexOf(v);
-      for (const o of orden.slice(0, hasta + 1)) for (const e of DADAS[q.id]?.[o] || []) if (!r.includes(e)) r.push(e);
+    for (const m of MOVIMIENTOS){
+      const i = de(nivel, m.id, equipo); if (i === null) continue;
+      for (const n of m.niveles.slice(0, i + 1)) for (const e of n.dadas || []) if (!r.includes(e)) r.push(e);
     }
     return r;
   }
@@ -86,8 +115,9 @@ K.nivel = (() => {
   }
 
   /* lo que se guarda: solo respuestas que existen, con la fecha de hoy */
-  const poner = (nivel = {}, id, v, hoy) => valida(id, v) ? {...Object.fromEntries(Object.entries(nivel || {}).filter(([k, x]) => valida(k, x))), [id]: v, fecha: hoy} : nivel;
-  const respondidas = nivel => PREGUNTAS.filter(q => nivel && valida(q.id, nivel[q.id])).length;
+  /* lo que se guarda: lo de antes pasado a movimientos, solo niveles que existen, con la fecha de hoy */
+  const poner = (nivel = {}, id, v, hoy) => { if (!nueva(id, v)) return nivel; const n = normal(nivel || {}) || {}; delete n.fecha; return {...n, [id]: v, fecha: hoy}; };
+  const respondidas = (nivel, equipo = null) => { const n = normal(nivel); return preguntas(equipo).filter(q => n && nueva(q.id, n[q.id])).length; };
 
-  return {PREGUNTAS, preguntas, valida, desde, dadas, efectiva, aplicar, activas, arrancasEn, poner, respondidas};
+  return {NIVELES, MOVIMIENTOS, PREGUNTAS, preguntas, valida, normal, desde, dadas, efectiva, aplicar, activas, arrancasEn, poner, respondidas};
 })();

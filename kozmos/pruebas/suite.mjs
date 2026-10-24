@@ -43,8 +43,10 @@ const b = await chromium.launch();
 const PRUEBAS = [];
 const prueba = (nombre, fn) => PRUEBAS.push([nombre, fn]);
 const ok = (c, m) => { if (!c) throw new Error(m); };
-async function pagina(vp = {width: 390, height: 844}, extra = {}){
+async function pagina(vp = {width: 390, height: 844}, {bienvenida = false, ...extra} = {}){
   const ctx = await b.newContext({viewport: vp, ...extra});
+  /* la bienvenida sale solo la primera vez: las pruebas que no son de ella arrancan con la app ya vista */
+  if (!bienvenida) await ctx.addInitScript(() => { try { const k = "kozmos.prefs.v1", p = JSON.parse(localStorage.getItem(k) || "{}"); if (!p.bienvenida){ p.bienvenida = "vista"; localStorage.setItem(k, JSON.stringify(p)); } } catch (e) {} });
   const p = await ctx.newPage(); p._errores = [];
   p.on("pageerror", e => p._errores.push(String(e)));
   p.on("console", m => { if (m.type() === "error") p._errores.push(m.text()); });
@@ -866,6 +868,127 @@ prueba("ventana-de-prueba", async () => {
   await ctx.close();
 });
 
+prueba("tu-tiempo", async () => {
+  /* Vos: Tu tiempo es un menú (sin chips); elegir queda guardado y Hoy entra en esos minutos (vuelta 35) */
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await p.evaluate(async () => { await K.diario.perfilPoner("equipo", ["barra", "kettlebell"]); await K.diario.perfilPoner("rumbo", ["front-lever", "una-pierna"]); K.refrescar(); });
+  await ir(p, "#/vos");
+  ok((await p.textContent("#tiempo-menu em")) === "Lo que pida el día", "Tu tiempo sin elegir: " + await p.textContent("#tiempo-menu em"));
+  await p.click("#tiempo-menu"); await p.waitForSelector(".pop .pmi");
+  const ops = await p.$$eval(".pop .pmi", xs => xs.map(x => x.textContent.trim()));
+  ok(ops.length === 9 && ops[0].startsWith("Lo que pida el día") && ops[1] === "20 minutos" && ops.at(-1) === "90 minutos", "el menú: " + JSON.stringify(ops));
+  await p.click('.pop .pmi[data-id="30"]'); await p.waitForFunction(() => K.diario.perfil.minutos === 30);
+  ok((await p.textContent("#tiempo-menu em")) === "30 min", "lo elegido no se ve");
+  ok(await p.evaluate(() => K.hoyPlan().minutos) <= 30, "Hoy no entra en 30 minutos: " + await p.evaluate(() => K.hoyPlan().minutos));
+  await p.click("#tiempo-menu"); await p.waitForSelector(".pop .pmi"); await p.click('.pop .pmi[data-id="90"]'); await p.waitForFunction(() => K.diario.perfil.minutos === 90);
+  const pl = await p.evaluate(() => { const x = K.hoyPlan(); return {m: x.minutos, motor: x.bloques.filter(b => b.molde === "motor").map(b => b.nombre)}; });
+  ok(pl.m > 60 && pl.m <= 90 && pl.motor.join() === "Kettlebell a intervalos", "a 90 minutos: " + JSON.stringify(pl));
+  await ir(p, "#/hoy"); await p.waitForSelector(".hoy-toca");
+  ok((await p.textContent(".hoy-toca")).includes("Motor") && (await p.textContent(".hoy-toca")).includes("Swing con kettlebell"), "Hoy no muestra el motor");
+  /* volver a «Lo que pida el día» lo saca del perfil; el respaldo lo lleva */
+  const r = await p.evaluate(() => K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, 1))).perfil.minutos);
+  ok(r === 90, "el respaldo no lleva tus minutos: " + r);
+  await ir(p, "#/vos"); await p.click("#tiempo-menu"); await p.waitForSelector(".pop .pmi"); await p.click('.pop .pmi[data-id="0"]'); await p.waitForFunction(() => K.diario.perfil.minutos === undefined);
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+/* ===== Bienvenida (vuelta 35): la primera vez, qué → con qué y cuánto → tu nivel → tu primer día ===== */
+const bienvenida = async (vp = {width: 390, height: 844}) => { const r = await pagina(vp, {bienvenida: true, reducedMotion: "reduce"}); await r.p.goto(URL0); await r.p.waitForSelector("#bv"); return r; };
+const bvPaso = (p, cls) => p.waitForSelector(`#bv .b-pan.${cls}`);
+prueba("bienvenida-elijo", async () => {
+  const {ctx, p} = await bienvenida();
+  /* el arranque del logo y, solo, el primer paso; sin elegir no se sigue */
+  await bvPaso(p, "b-que");
+  ok(await p.isDisabled("#b-seguir"), "se sigue sin elegir qué entrenar");
+  await p.click('.b-op[data-f="fu"]'); ok(await p.getAttribute('.b-op[data-f="fu"]', "aria-pressed") === "true", "Fuerza no queda elegida");
+  await p.click("#b-seguir"); await bvPaso(p, "b-equipo");
+  /* «Nada, solo el piso» saca lo demás */
+  await p.click('.b-eq[data-id="barra"]'); await p.click('.b-eq[data-id="piso"]');
+  ok(await p.$$eval(".b-eq.on", x => x.map(y => y.dataset.id).join()) === "piso", "el piso no saca lo demás");
+  await p.click("#b-seguir"); await bvPaso(p, "b-tiempo");
+  await p.focus(".b-dial"); await p.keyboard.press("ArrowRight"); await p.keyboard.press("ArrowRight"); await p.click("#b-dmenos");
+  ok(await p.textContent(".b-dial .b-cen b") === "40" && await p.textContent(".b-dias b") === "2", "el reloj o los días no cambian");
+  await p.click("#b-seguir"); await bvPaso(p, "b-como");
+  await p.click("#b-elijo");
+  /* sin barra no se pregunta por tirar: cuatro movimientos */
+  const vistos = [];
+  for (let i = 0; i < 4; i++){ await p.waitForFunction(i => document.querySelector("#bv .b-mov .lb")?.textContent.includes(`${i + 1} de 4`), i); vistos.push(await p.textContent("#bv .b-mov .lb"));
+    if (i === 1) await p.click("#b-nose"); else await p.click(`#bv .b-mov .b-fg[data-k="${i === 0 ? 2 : 1}"]`); await p.waitForTimeout(150); }
+  ok(!vistos.some(x => x.startsWith("Tirar")), "pregunta por tirar sin barra: " + vistos);
+  await bvPaso(p, "b-res-n");
+  ok((await p.textContent("#bv .b-res-n")).includes("Desde el principio"), "«No sé» no arranca desde el principio");
+  await p.click("#b-dia"); await bvPaso(p, "b-dia");
+  /* al llegar al primer día queda todo guardado y el día es el de Hoy */
+  const per = await p.evaluate(() => K.diario.perfil);
+  ok(JSON.stringify(per.equipo) === "[]" && per.minutos === 40 && per.dias.length === 2 && per.rumbo.length === 3 && per.bienvenida, "lo guardado: " + JSON.stringify(per));
+  ok(per.nivel.empujar === "2" && per.nivel.piernas === "nose" && per.nivel.cadera === "1" && !("tirar" in per.nivel), "el nivel: " + JSON.stringify(per.nivel));
+  ok(await p.evaluate(() => K.hoyPlan().minutos) <= 40 && Number(await p.textContent(".b-reloj .b-cen b")) === await p.evaluate(() => K.hoyPlan().minutos), "el reloj no dice los minutos del día");
+  /* más tarde: Hoy con todo armado, sin la bienvenida ni «Que Kozmos arme tu día» */
+  await p.click("#b-luego"); await p.waitForFunction(() => !document.querySelector("#bv"));
+  ok(await p.$(".hoy-toca") && !(await p.$(".como")), "Hoy no muestra el día armado");
+  await p.reload(); await p.waitForSelector("main.view"); await p.waitForTimeout(400);
+  ok(!(await p.$("#bv")), "la bienvenida vuelve a salir");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("bienvenida-prueba", async () => {
+  const {ctx, p} = await bienvenida();
+  await bvPaso(p, "b-que"); await p.click('.b-op[data-f="ra"]'); await p.click('.b-op[data-f="mo"]');
+  await p.click("#b-seguir"); await bvPaso(p, "b-equipo"); await p.click('.b-eq[data-id="bici"]'); await p.click("#b-seguir");
+  await bvPaso(p, "b-tiempo"); await p.click("#b-seguir"); await bvPaso(p, "b-como");
+  /* sin fuerza, «Lo elijo yo» va a la prueba: lo primero que elegiste fue flexibilidad */
+  await p.click("#b-elijo"); await bvPaso(p, "b-niv");
+  ok((await p.textContent("#bv .b-hz b")) === "Alcance de piernas", "la prueba no es la de flexibilidad");
+  await p.click("#b-probar"); await bvPaso(p, "b-pru");
+  ok(await p.isDisabled("#b-listo"), "Listo sin marca");
+  await p.click('.b-alc button[data-v="5"]'); await p.click("#b-listo"); await bvPaso(p, "b-res");
+  ok((await p.textContent("#bv .b-res h1")).includes("magnitud 3"), "el resultado: " + await p.textContent("#bv .b-res h1"));
+  const s = await p.evaluate(() => K.diario.sesiones.map(x => ({h: x.hazana?.id, v: x.hazana?.valor, e: x.encendio})));
+  ok(s.length === 1 && s[0].h === "casiopea" && s[0].v === 5 && s[0].e.includes("draco.alcance-5"), "la prueba no quedó como sesión: " + JSON.stringify(s));
+  /* la prueba y su resultado no tienen volver; el primer día, tampoco */
+  ok(await p.$eval(".b-atras", x => x.classList.contains("oculto")), "el resultado tiene volver");
+  await p.click("#b-dia"); await bvPaso(p, "b-dia");
+  const per = await p.evaluate(() => K.diario.perfil);
+  ok(per.rumbo.every(id => ["espagat", "puente", "diez-km", "motor", "soga"].includes(id)) && per.rumbo.includes("espagat") && !per.nivel, "rumbo o nivel: " + JSON.stringify(per));
+  /* empezar abre la sesión de verdad */
+  await p.click("#b-empezar"); await p.waitForFunction(() => location.hash === "#/hoy/sesion" && !document.querySelector("#bv"));
+  ok(await p.evaluate(() => K.sesion.activa()), "no arrancó la sesión");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("bienvenida-retoma", async () => {
+  /* si se cierra a la mitad, sigue en el mismo paso con lo elegido; volver lleva al anterior y en la primera, sale */
+  const {ctx, p} = await bienvenida();
+  await bvPaso(p, "b-que"); await p.click('.b-op[data-f="fu"]'); await p.click("#b-seguir");
+  await bvPaso(p, "b-equipo"); await p.click('.b-eq[data-id="barra"]'); await p.click("#b-seguir"); await bvPaso(p, "b-tiempo");
+  await p.reload(); await p.waitForSelector("#bv"); await bvPaso(p, "b-tiempo");
+  ok(!(await p.$eval(".b-atras", x => x.classList.contains("oculto"))), "sin volver al retomar");
+  await p.click(".b-atras"); await bvPaso(p, "b-equipo"); await p.waitForTimeout(200);
+  ok(await p.$$eval(".b-eq.on", x => x.map(y => y.dataset.id).join()) === "barra", "el equipo elegido se perdió");
+  await p.click(".b-atras"); await bvPaso(p, "b-que"); await p.waitForTimeout(200);
+  ok(await p.getAttribute('.b-op[data-f="fu"]', "aria-pressed") === "true", "lo de qué entrenar se perdió");
+  /* el atrás de Android en la primera pregunta no se queda con el toque: sale, como en Hoy */
+  ok(await p.evaluate(() => K.bienvenida.atras()) === false, "en la primera pregunta el atrás no sale");
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+prueba("bienvenida-ya-usa", async () => {
+  /* quien ya tiene algo en este teléfono no la ve; tampoco se guarda nada por abrirla */
+  const {ctx, p} = await pagina(undefined, {bienvenida: true, reducedMotion: "reduce"});
+  await p.goto(URL0); await p.waitForSelector("#bv");
+  await p.evaluate(async () => { K.bienvenida.cerrar(); await K.diario.perfilPoner("equipo", ["barra"]); localStorage.clear(); });
+  await p.reload(); await p.waitForSelector("main.view"); await p.waitForTimeout(500);
+  ok(!(await p.$("#bv")), "la ve alguien con equipo elegido");
+  ok(await p.evaluate(() => !K.diario.perfil.bienvenida && !K.diario.perfil.rumbo), "abrirla guardó algo");
+  /* en horizontal, sin desbordar */
+  const h = await pagina({width: 844, height: 390}, {bienvenida: true, reducedMotion: "reduce"});
+  await h.p.goto(URL0); await h.p.waitForSelector("#bv"); await bvPaso(h.p, "b-que");
+  ok(await h.p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "la bienvenida desborda en horizontal");
+  const [cab, op] = await h.p.$$eval("#bv .b-que .b-cab, #bv .b-que .b-ops", xs => xs.map(x => x.getBoundingClientRect().left));
+  ok(op > cab + 200, "en horizontal no va la pregunta a la izquierda y las opciones a la derecha");
+  ok(p._errores.length === 0 && h.p._errores.length === 0, "errores: " + [...p._errores, ...h.p._errores].join(" | "));
+  await h.ctx.close(); await ctx.close();
+});
 prueba("tu-equipo", async () => {
   const {ctx, p} = await pagina();
   await ir(p, "#/vos");
@@ -1006,7 +1129,7 @@ prueba("rutina-cardio-entera", async () => {
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await rumbo(p, ["motor"]);
   await aPlanes(p);
-  ok(await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "no están las 26 rutinas");
+  ok(await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 31, "no están las 31 rutinas");
   await p.click('[data-ir="#/planes/rutinas/c0a5"]'); await esperarTitulo(p, "Correr tus primeros 5 km");
   ok(await p.$$eval(".rut-dia", x => x.length) === 3, "la semana no tiene 3 días");
   await p.click("#rut-seguir"); await esperarTitulo(p, "Hoy");
@@ -1215,11 +1338,11 @@ prueba("escalera-diario-viejo", async () => {
 });
 /* ===== Los días de una rutina: qué toca cada día, sin «Día 1 · Día 1» ===== */
 prueba("rutina-dias-nombres", async () => {
-  /* en las 26 rutinas: un día por tarjeta, sin el nombre repetido, y cada día dice qué se hace */
+  /* en las 31 rutinas: un día por tarjeta, sin el nombre repetido, y cada día dice qué se hace */
   const {ctx, p} = await pagina();
   await ir(p, "#/planes");
   const rs = await p.evaluate(() => K.RUTINAS.map(r => [r.id, r.dias]));
-  ok(rs.length === 26, "no están las 26 rutinas");
+  ok(rs.length === 31, "no están las 31 rutinas");
   for (const [id, dias] of rs){
     await ir(p, `#/planes/rutinas/${id}`); await p.waitForSelector(".rut-dia");
     const ds = await p.$$eval(".rut-dia", xs => xs.map(x => ({t: x.querySelector(".lb, span")?.textContent || "", filas: x.querySelectorAll(".ln.toca").length})));
@@ -1313,8 +1436,8 @@ prueba("serie-con-kilos", async () => {
   const fila = async (sel, q) => p.$$eval(sel + " .ln.toca", (ls, q) => { const l = ls.find(l => l.querySelector(".tg").textContent.startsWith(q)); if (!l) return "";
     const n = l.querySelector(".toca-n"), k = n.querySelector(".kg"), a = n.firstElementChild.getBoundingClientRect(), b = k ? k.getBoundingClientRect() : null;
     return `${n.firstElementChild.textContent}|${k ? k.textContent : ""}|${k && k.querySelector("svg") && Math.abs(a.right - b.right) < 1.5 && b.top >= a.bottom - 1 ? "debajo" : "fuera"}`; }, q);
-  ok((await fila("main", "Remo unilateral con mancuerna")) === "3 × 8–12|8 kg|debajo", "Hoy: " + await fila("main", "Remo unilateral con mancuerna"));
-  ok((await fila("main", "Sentadilla con mancuernas")).endsWith("|4 kg|debajo"), "la sentadilla con mancuernas: " + await fila("main", "Sentadilla con mancuernas"));
+  ok((await fila("main", "Remo a un brazo con pesa")) === "3 × 8–12|8 kg|debajo", "Hoy: " + await fila("main", "Remo a un brazo con pesa"));
+  ok((await fila("main", "Sentadilla con pesa")).endsWith("|4 kg|debajo"), "la sentadilla con mancuernas: " + await fila("main", "Sentadilla con pesa"));
   /* la serie: los kilos de la mancuerna y que es más peso */
   await aLaSerie(p);
   ok(await p.evaluate(() => K.sesion.paso().ejercicio) === "remo-mancuerna", "la primera serie: " + await p.evaluate(() => K.sesion.paso().ejercicio));
@@ -1343,7 +1466,26 @@ prueba("serie-con-kilos", async () => {
   ok(li.some(([c, g, t]) => c === "sube" && g === "▲" && t.startsWith("Remo") && t.includes("+2 kg ahora 8 kg")), "el resumen: " + JSON.stringify(li));
   /* la rutina en Planes: los días dicen los kilos, los últimos que pusiste (9, aunque la sesión se cortó) */
   await ir(p, "#/planes/rutinas/base_cali"); await p.waitForSelector(".rut-dia");
-  ok((await fila(".rut-dia", "Remo unilateral con mancuerna")).endsWith("|9 kg|debajo"), "Planes: " + await fila(".rut-dia", "Remo unilateral con mancuerna"));
+  ok((await fila(".rut-dia", "Remo a un brazo con pesa")).endsWith("|9 kg|debajo"), "Planes: " + await fila(".rut-dia", "Remo a un brazo con pesa"));
+  ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
+  await ctx.close();
+});
+/* ===== Pesas primero (vuelta 35): con una kettlebell sola hay remo, sentadilla y peso muerto con la pesa ===== */
+prueba("solo-kettlebell", async () => {
+  const {ctx, p} = await conReloj();
+  await ir(p, "#/hoy"); await p.evaluate(async () => { await K.diario.perfilPoner("equipo", ["kettlebell"]); await K.diario.perfilPoner("rumbo", ["front-lever", "una-pierna"]); K.refrescar(); });
+  await p.waitForSelector("#s-empezar");
+  const ejs = await p.evaluate(() => K.hoyPlan().bloques.flatMap(b => b.pasos || []).map(x => x.ejercicio));
+  ok(ejs.includes("remo-mancuerna") && !ejs.includes("remo-poste") && ejs.some(e => ["sentadilla-mancuernas", "peso-muerto-rumano"].includes(e)), "el día con una kettlebell: " + [...new Set(ejs)]);
+  ok((await p.textContent("main .hoy-toca")).includes("Remo a un brazo con pesa"), "Hoy no muestra el remo con pesa");
+  /* en la biblioteca: con kettlebell aparece lo de una pesa, y lo dice «Con una mancuerna o kettlebell» */
+  await p.evaluate(() => { K.prefs.set("ejercicios.que", "todo"); K.prefs.set("ejercicios.con", "kettlebell"); }); await ir(p, "#/planes/ejercicios");
+  ok(await p.$('[data-ir="#/planes/ejercicios/remo-mancuerna"]') && await p.$('[data-ir="#/planes/ejercicios/swing-kettlebell"]') && !(await p.$('[data-ir="#/planes/ejercicios/press-hombros"]')), "con kettlebell, la biblioteca no muestra lo de una pesa");
+  await ir(p, "#/planes/ejercicios/remo-mancuerna"); await esperarTitulo(p, "Remo a un brazo con pesa");
+  ok((await p.textContent(".ej-como")).includes("Una mancuerna o kettlebell") && !(await p.$(".aviso-tenue")), "el ejercicio no dice con qué: " + await p.textContent(".ej-como"));
+  /* sin pesas, pide una */
+  await p.evaluate(() => K.diario.perfilPoner("equipo", ["barra"])); await ir(p, "#/planes/ejercicios/sentadilla-mancuernas"); await esperarTitulo(p, "Sentadilla con pesa");
+  ok((await p.textContent(".aviso-tenue")).startsWith("Pide una mancuerna o kettlebell."), "sin pesas no la pide: " + await p.textContent(".aviso-tenue"));
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -1725,7 +1867,7 @@ prueba("planes-pestana", async () => {
   /* para vos arriba; después rutinas, ejercicios y pruebas (vuelta 32) */
   const [yv, yr, ye, yh] = await p.evaluate(() => [".pv-fila", "#pl-rutinas", "#pl-ejercicios", "#pl-hazanas"].map(s => document.querySelector(s).getBoundingClientRect().top));
   ok(yv < yr && yr < ye && ye < yh, "el orden de Planes no es para vos, rutinas, ejercicios y pruebas");
-  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 14 && await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 26, "Planes no tiene las 14 pruebas y las 26 rutinas");
+  ok(await p.$$eval('.lado [data-ir^="#/planes/hazanas/"]', x => new Set(x.map(y => y.dataset.ir)).size) === 14 && await p.$$eval('.lado .ru-card[data-ir^="#/planes/rutinas/"]', x => x.length) === 31, "Planes no tiene las 14 pruebas y las 31 rutinas");
   /* abrir una hazaña y volver a Planes */
   await p.click('[data-ir="#/planes/hazanas/orion"]'); await esperarTitulo(p, "1000 saltos de soga");
   ok(await p.evaluate(() => location.hash) === "#/planes/hazanas/orion", "la hazaña no vive en Planes");
@@ -2635,7 +2777,7 @@ prueba("sin-nav-al-elegir", async () => {
 /* ===== Tu nivel (PR3) ===== */
 const elegirNivel = async (p, q, v) => { await p.click(`[data-nivel="${q}"]`); await p.waitForSelector(".pop .pmi"); await p.click(`.pop .pmi[data-id="${v}"]`); await p.waitForFunction(([q, v]) => K.diario.perfil.nivel?.[q] === v, [q, v]); await p.waitForTimeout(150); };
 prueba("primer-dia-nivel", async () => {
-  /* el segundo paso del primer día: cuatro menús (sin chips), «No sé» en todos, sin barra abajo; elegir queda guardado sin deshacer */
+  /* el segundo paso del primer día: cinco movimientos, cada uno un menú (sin chips) con sus cuatro niveles y «No sé»; sin barra abajo; elegir queda guardado sin deshacer */
   const {ctx, p} = await conReloj();
   await ir(p, "#/hoy"); await p.click('.como-op[data-ir="#/hoy/equipo"]'); await esperarTitulo(p, "Tu equipo");
   await p.click('[data-equipo="barra"]'); await p.waitForSelector('[data-equipo="barra"][aria-pressed="true"]');
@@ -2643,30 +2785,34 @@ prueba("primer-dia-nivel", async () => {
   await p.click("#eq-seguir"); await esperarTitulo(p, "Tu nivel");
   ok(await p.$eval('.pasos [aria-current="step"]', x => x.textContent) === "2Tu nivel" && (await p.textContent("main.view .enc-tit small")) === "Para empezar", "Tu nivel no es el paso 2");
   ok(JSON.stringify(await p.$$eval("[data-nivel]", xs => xs.map(x => [x.dataset.nivel, x.getAttribute("aria-haspopup"), x.querySelector("em").textContent]))) ===
-    '[["dominadas","menu","Elegí"],["flexiones","menu","Elegí"],["unaPierna","menu","Elegí"],["vertical","menu","Elegí"]]', "las cuatro preguntas, vacías y con menú");
+    '[["empujar","menu","Elegí"],["tirar","menu","Elegí"],["piernas","menu","Elegí"],["cadera","menu","Elegí"],["abdomen","menu","Elegí"]]', "los cinco movimientos, vacíos y con menú");
+  ok(await p.$$eval("[data-nivel] .tile svg", x => x.length) === 5, "un movimiento sin su figura");
   ok(await p.$("[data-sin-nav]") && (await p.textContent(".pie-fijo .btn")) === "Seguir", "Tu nivel con barra o sin Seguir");
   ok(!(await p.$(".chip, .chips")), "Tu nivel usa chips");
-  /* cada menú termina en «No sé» */
-  for (const q of ["dominadas", "flexiones", "unaPierna", "vertical"]){
+  /* cada menú: los cuatro niveles, cada uno con su ejercicio, y «No sé» al final */
+  for (const q of ["empujar", "tirar", "piernas", "cadera", "abdomen"]){
     await p.click(`[data-nivel="${q}"]`); await p.waitForSelector(".pop .pmi");
-    const ops = await p.$$eval(".pop .pmi", xs => xs.map(x => [x.getAttribute("role"), x.textContent.trim()]));
-    ok(ops.length >= 4 && ops[ops.length - 1][1] === "No sé" && ops.every(o => o[0] === "menuitemradio"), q + ": " + JSON.stringify(ops));
+    const ops = await p.$$eval(".pop .pmi", xs => xs.map(x => [x.getAttribute("role"), x.textContent.trim(), !!x.querySelector(".q")]));
+    ok(ops.length === 5 && ops.map(o => o[1].split(" ")[0]).join() === "Inicial,Intermedio,Avanzado,Experto,No" && ops.slice(0, 4).every(o => o[2]) && ops[4][1] === "No sé" && ops.every(o => o[0] === "menuitemradio"), q + ": " + JSON.stringify(ops));
     await p.keyboard.press("Escape"); await p.waitForTimeout(250);
   }
   ok(await p.evaluate(() => K.diario.perfil.nivel === undefined), "abrir un menú guardó algo");
   /* elegir: queda en la fila, guardado con la fecha, y sin deshacer; la escalerita de Tirar sube */
   const tirar = () => p.$$eval(".nv-arranca .esc-sub", xs => xs[0].getAttribute("aria-label"));
   ok((await tirar()).includes("Colgado"), "sin nivel, Tirar no arranca abajo: " + await tirar());
-  await elegirNivel(p, "dominadas", "10-14");
-  ok((await p.textContent('[data-nivel="dominadas"] em')) === "De 10 a 14" && await p.evaluate(() => K.diario.perfil.nivel.fecha === K.hoy()), "la elección no se ve o no tiene fecha");
+  const fig = q => p.$eval(`[data-nivel="${q}"] .tile`, x => x.innerHTML);
+  const fig0 = await fig("tirar");
+  await elegirNivel(p, "tirar", "2");
+  ok((await p.textContent('[data-nivel="tirar"] em')) === "Avanzado" && (await p.textContent('[data-nivel="tirar"] small')) === "Dominada rápida, pecho a la barra" && await p.evaluate(() => K.diario.perfil.nivel.fecha === K.hoy()), "la elección no se ve o no tiene fecha");
+  ok(await fig("tirar") !== fig0, "la figura no cambió con el nivel");
   ok(!(await p.$(".utoast")), "elegir ofrece deshacer");
-  ok((await tirar()).includes("Dominada explosiva"), "con 10 a 14, Tirar no arranca en la explosiva: " + await tirar());
-  await elegirNivel(p, "flexiones", "nose");
-  ok((await p.textContent('[data-nivel="flexiones"] em')) === "No sé", "No sé no se ve elegido");
+  ok((await tirar()).includes("Dominada explosiva"), "con tirar avanzado, Tirar no arranca en la explosiva: " + await tirar());
+  await elegirNivel(p, "empujar", "nose");
+  ok((await p.textContent('[data-nivel="empujar"] em')) === "No sé", "No sé no se ve elegido");
   /* volver y entrar de nuevo: lo elegido sigue */
   await p.click("#nv-seguir"); await esperarTitulo(p, "Tu rumbo");
   await p.click(".enc-acc [data-volver]"); await esperarTitulo(p, "Tu nivel");
-  ok((await p.textContent('[data-nivel="dominadas"] em')) === "De 10 a 14", "volver perdió lo elegido");
+  ok((await p.textContent('[data-nivel="tirar"] em')) === "Avanzado", "volver perdió lo elegido");
   await p.click("#nv-seguir"); await esperarTitulo(p, "Tu rumbo");
   await p.click('[data-rumbo="muscle-up"]'); await p.waitForSelector('[data-rumbo="muscle-up"][aria-pressed="true"]');
   await p.click('[data-rumbo="front-lever"]'); await p.waitForSelector('[data-rumbo="front-lever"][aria-pressed="true"]');
@@ -2676,9 +2822,12 @@ prueba("primer-dia-nivel", async () => {
   ok(!plan.est.some(e => ["muscle-up.dominadas-10", "front-lever.colgado-60s", "front-lever.bolita-10s"].includes(e)), "Hoy pide una dada: " + JSON.stringify(plan.est));
   ok(plan.tirar.every(e => e === "dominada-explosiva"), "tirar no arranca en tu escalón: " + JSON.stringify(plan.tirar));
   ok(!(await p.$(".pasos")), "Hoy sigue con la guía");
-  /* sin barra no se pregunta por dominadas */
+  /* sin barra no se pregunta por tirar */
   await p.evaluate(() => K.diario.perfilPoner("equipo", [])); await ir(p, "#/vos/nivel");
-  ok(!(await p.$('[data-nivel="dominadas"]')) && !(await p.$('[data-nivel="vertical"]')) && await p.$$eval("[data-nivel]", x => x.length) === 2, "sin barra ni pared, igual pregunta por ellas");
+  ok(!(await p.$('[data-nivel="tirar"]')) && await p.$$eval("[data-nivel]", x => x.length) === 4, "sin barra, igual pregunta por tirar");
+  /* lo guardado con las preguntas de antes se ve por movimiento */
+  await p.evaluate(() => K.diario.perfilPoner("nivel", {flexiones: "30-39", unaPierna: "silla", fecha: K.hoy()})); await p.evaluate(() => K.refrescar());
+  ok((await p.textContent('[data-nivel="empujar"] em')) === "Avanzado" && (await p.textContent('[data-nivel="piernas"] em')) === "Avanzado" && (await p.textContent('[data-nivel="cadera"] em')) === "Intermedio", "lo de antes no se ve por movimiento");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -2692,9 +2841,9 @@ prueba("rumbo-arrancas-en", async () => {
   const colgado = await p.evaluate(() => K.ej("colgado-activo").nombre), dom10 = await p.evaluate(() => K.estrella("muscle-up.dominadas-10").nombre), ruso = await p.evaluate(() => K.estrella("muscle-up.fondo-ruso").nombre);
   ok(await tx() === "Arrancás en " + colgado, "sin nivel: " + await tx());
   ok(!(await p.$('[data-rumbo="front-lever"] .rumbo-arranca')), "una no elegida dice dónde arranca");
-  await p.evaluate(() => K.diario.perfilPoner("nivel", {dominadas: "5-9", fecha: K.hoy()})); await p.evaluate(() => K.refrescar());
-  ok(await tx() === "Arrancás en " + dom10, "con 5 a 9: " + await tx());
-  await p.evaluate(() => K.diario.perfilPoner("nivel", {dominadas: "10-14", fecha: K.hoy()})); await p.evaluate(() => K.refrescar());
+  await p.evaluate(() => K.diario.perfilPoner("nivel", {tirar: "1", fecha: K.hoy()})); await p.evaluate(() => K.refrescar());
+  ok(await tx() === "Arrancás en " + dom10, "con tirar intermedio: " + await tx());
+  await p.evaluate(() => K.diario.perfilPoner("nivel", {tirar: "2", fecha: K.hoy()})); await p.evaluate(() => K.refrescar());
   ok((await tx()).startsWith("Arrancás en ") && !(await tx()).includes(dom10) && !(await tx()).includes("·"), "con 10 a 14, la dada: " + await tx());
   ok(await p.evaluate(() => K.cieloActual().constelaciones.find(c => c.id === "muscle-up").proxima.id) === "muscle-up.fondo-ruso" && (await tx()).length > 12, "la próxima con 10 a 14 no es " + ruso);
   /* empezada (con una marca), ya no dice dónde arranca */
@@ -2711,25 +2860,26 @@ prueba("vos-tu-nivel", async () => {
   ok((await p.textContent('[data-ir="#/vos/nivel"] em')) === "Sin decir", "la fila dice: " + await p.textContent('[data-ir="#/vos/nivel"] em'));
   await p.click('[data-ir="#/vos/nivel"]'); await esperarTitulo(p, "Tu nivel");
   ok((await p.textContent("main.view .enc-tit small")) === "Ajustes" && !(await p.$(".pasos")) && (await p.textContent(".pie-fijo .btn")) === "Listo", "Tu nivel desde Vos no es un ajuste");
-  ok(await p.$$eval("[data-nivel]", x => x.length) === 4, "sin decir tu equipo, no están las cuatro");
-  await elegirNivel(p, "vertical", "libre");
+  ok(await p.$$eval("[data-nivel]", x => x.length) === 5, "sin decir tu equipo, no están los cinco");
+  await elegirNivel(p, "abdomen", "3");
   await p.click(".pie-fijo .btn"); await esperarTitulo(p, "Vos");
-  ok((await p.textContent('[data-ir="#/vos/nivel"] em')) === "1 de 4", "la fila no cuenta lo dicho: " + await p.textContent('[data-ir="#/vos/nivel"] em'));
-  /* la constelación: cuatro dadas, punteadas, ninguna encendida; tu cosmos sin estrellas */
-  await ir(p, "#/cielo/parada-de-manos"); await esperarTitulo(p, "Parada de manos");
+  ok((await p.textContent('[data-ir="#/vos/nivel"] em')) === "1 de 5", "la fila no cuenta lo dicho: " + await p.textContent('[data-ir="#/vos/nivel"] em'));
+  /* la constelación: dos dadas, punteadas, ninguna encendida; tu cosmos sin estrellas */
+  const draco = await p.evaluate(() => K.CATALOGO.constelaciones.find(c => c.id === "draco").nombre);
+  await ir(p, "#/cielo/draco"); await esperarTitulo(p, draco);
   const est = () => p.$$eval(".est-fila", fs => fs.map(f => f.classList.contains("dada") ? "d" : f.classList.contains("encendida") ? "e" : f.classList.contains("proxima") ? "p" : "-").join(""));
-  ok(await est() === "ddddp----", "las estrellas: " + await est());
-  ok((await p.textContent(".cons-dadas b")) === "4 estrellas dadas por hechas", "la línea de dadas: " + await p.textContent(".cons-dadas b"));
+  ok(await est() === "ddp-----", "las estrellas: " + await est());
+  ok((await p.textContent(".cons-dadas b")) === "2 estrellas dadas por hechas", "la línea de dadas: " + await p.textContent(".cons-dadas b"));
   ok(await p.$eval(".est-fila.dada .st", x => getComputedStyle(x).borderTopStyle) === "dashed", "la dada no es punteada");
   ok((await p.textContent(".est-fila.dada")).includes("dada por hecha"), "el lector no dice que es dada");
   await ir(p, "#/cielo"); ok((await p.textContent("main.view .enc-tit small")) === "Todavía sin estrellas", "las dadas encendieron estrellas");
-  /* un intento real a los 60 s contra la pared que llega a 40: le saca lo de dada (vuelve a ser la próxima) y enciende de verdad la de 30 s */
-  await p.evaluate(() => K.diario.anotar({estrella: "parada-de-manos.pared-60s", ejercicio: "vertical-pared", tipo: "segundos", valor: 40, fecha: K.hoy()}));
-  await ir(p, "#/cielo/parada-de-manos"); await esperarTitulo(p, "Parada de manos");
-  ok(await est() === "ddep-----" && (await p.textContent(".cons-dadas b")) === "2 estrellas dadas por hechas", "el intento corto no la sacó: " + await est());
+  /* un intento real al L-sit de 20 s que llega a 15: le saca lo de dada (vuelve a ser la próxima) y enciende de verdad la de 10 s */
+  await p.evaluate(() => K.diario.anotar({estrella: "draco.lsit-20s", ejercicio: "l-sit", tipo: "segundos", valor: 15, fecha: K.hoy()}));
+  await ir(p, "#/cielo/draco"); await esperarTitulo(p, draco);
+  ok(await est() === "ep------" && !(await p.$(".cons-dadas")), "el intento corto no la sacó: " + await est());
   /* el respaldo lleva tu nivel */
   const r = await p.evaluate(() => K.respaldo.leer(JSON.stringify(K.respaldo.armar(K.diario, K.VERSION, 1))).perfil.nivel);
-  ok(r && r.vertical === "libre", "el respaldo no lleva tu nivel: " + JSON.stringify(r));
+  ok(r && r.abdomen === "3", "el respaldo no lleva tu nivel: " + JSON.stringify(r));
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();
 });
@@ -2742,14 +2892,14 @@ prueba("nivel-horizontal", async () => {
   const b = await p.$eval(".pie-fijo .btn", x => { const r = x.getBoundingClientRect(); return {l: r.left, b: r.bottom, t: x.textContent}; });
   ok(b.t === "Seguir" && b.l > 844 / 2 && 390 - b.b <= 60, "Seguir no queda abajo a la derecha: " + JSON.stringify(b));
   /* el menú entra entero en la pantalla */
-  await p.click('[data-nivel="unaPierna"]'); await p.waitForSelector(".pop .pmi");
+  await p.click('[data-nivel="piernas"]'); await p.waitForSelector(".pop .pmi");
   const m = await p.$eval(".pop", x => { const r = x.getBoundingClientRect(); return {t: r.top, b: r.bottom, l: r.left, r: r.right}; });
   ok(m.t >= 0 && m.b <= 390 && m.l >= 0 && m.r <= 844, "el menú se sale: " + JSON.stringify(m));
-  await p.click('.pop .pmi[data-id="completa"]'); await p.waitForFunction(() => K.diario.perfil.nivel?.unaPierna === "completa");
+  await p.click('.pop .pmi[data-id="3"]'); await p.waitForFunction(() => K.diario.perfil.nivel?.piernas === "3");
   ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, "desborda");
   await ir(p, "#/vos/nivel"); await p.waitForTimeout(300);
   ok(await p.$(".split .abierto [data-nivel]") && !(await p.$(".pie-fijo")) && await p.$('.lado [data-ir="#/vos/nivel"][data-sel]'), "en Vos, Tu nivel no es lo abierto a la derecha");
-  ok((await p.textContent('[data-nivel="unaPierna"] em')) === "Completa, hasta abajo", "lo elegido no se ve en Vos");
+  ok((await p.textContent('[data-nivel="piernas"] em')) === "Experto" && (await p.textContent('[data-nivel="piernas"] small')) === "Una pierna, hasta abajo", "lo elegido no se ve en Vos");
   ok(await p.evaluate(() => document.documentElement.scrollWidth) <= 844, "Vos desborda");
   ok(p._errores.length === 0, "errores: " + p._errores.join(" | "));
   await ctx.close();

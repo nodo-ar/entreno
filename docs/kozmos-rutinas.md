@@ -31,8 +31,10 @@ Una escalera es una fila de ejercicios del más fácil al más difícil. Las rut
 - `patron`: lo que entrena la escalera (tirar y remo → `tirar`; empujar y fondos → `empujar`; piernas; isquios → `bisagra`; L-sit y bandera acostada → `abdomen`; cadera y puente → `movilidad`).
 - **Variantes de un escalón** (cuentan como el mismo escalón, también en el diario):
   - `tambien`: ejercicios que lo reemplazan si tu equipo no permite el de siempre, sin kilos (sin barra, el remo invertido es el remo debajo de la mesa; sin mancuernas, el remo con mancuerna es el remo con toalla en la puerta).
-  - `conPeso`: `{ejercicio, carga, kgInicial, hastaKg}`, el mismo escalón con mancuernas; se usa si las tenés (sentadilla → sentadilla con mancuernas, puente de glúteo → peso muerto rumano).
+  - `conPeso`: `{ejercicio, carga, kgInicial, hastaKg}`, el mismo escalón con una pesa; se usa si la tenés (sentadilla → sentadilla con pesa, puente de glúteo → peso muerto rumano con pesa).
   - Sin decir tu equipo, siempre el de siempre.
+- **Una pesa** (`pesa`, vuelta 35): los ejercicios que se hacen con una sola pesa (remo a un brazo, sentadilla con pesa, sentadilla búlgara, peso muerto rumano y a una pierna) piden `pesa`, no `mancuernas`. Con mancuernas o con una kettlebell tenés pesa: las pantallas le pasan al motor tu equipo con `K.rutina.conPesa` (`K.tuEquipo()`). Lo que pide dos mancuernas (press de hombros, remo con dos, el circuito con mancuernas) sigue pidiendo mancuernas.
+- **Pesas primero** (`K.rutina.defEscalera`): con una pesa, la escalera arranca por lo menos en su primer escalón con kilos. Los kilos se ajustan a vos y lo de abajo, sin peso, queda para bajar: con una pesa, el remo arranca en el remo a un brazo con pesa (6 kg) aunque tu nivel diga el poste. Tu nivel más arriba manda, y lo hecho manda sobre los dos.
 - **Kilos con mancuernas**: un escalón con `carga`, `kgInicial` y `hastaKg` (remo con mancuerna 2/6/16, sentadilla búlgara 2/6/14, peso muerto a una pierna 2/8/16). Arrancás en `kgInicial`; con el tope del rango dos veces (o una con «Sobró») sumás `carga` y volvés al mínimo; si pasarías de `hastaKg`, subís al escalón siguiente (sin esos kilos). Dos veces sin el mínimo: `carga` de menos, nunca debajo de `kgInicial`; ya en `kgInicial`, el escalón de abajo. Los kilos que pusiste mandan. La sesión pide «Kilos por mano» y nunca tu peso: no son % de tu peso ni encienden estrellas de Lastre.
 
 Las reglas, en `src/sesion/rutina.js`:
@@ -94,33 +96,35 @@ Sin ninguna habilidad posible (lo de tu rumbo pide equipo que no marcaste), rang
 
 `K.dia.frecuencia(n, D) = min(D, 2D/n)`: cada cuánto toca cada meta con n metas y D días por semana (`K.dia.diasSemana`: tus días; si no, lo de las últimas 4 semanas; si no, 3). Tu rumbo no tiene tope y lo dice: «5 elegidas · cada una, 1 o 2 veces por semana».
 
+**Tu tiempo** (`minutos`, de `perfil.minutos`; vuelta 35, `K.dia.aTuTiempo`): el día entra en los minutos que elegiste en Ajustes (20, 30, 40, 45, 50, 60, 75 o 90) o en el reloj de la bienvenida (de 10 a 60, de a 5). Sin elegir, como siempre: hasta la hora. Para achicar, en este orden y hasta que entre: el abdomen queda para otro día, la fuerza va con 2 series, la bici del cierre pasa a posturas, se va el segundo par de fuerza y después la segunda habilidad. La entrada en calor, una habilidad y el cierre quedan siempre. Para agrandar (sobran 10 minutos o más): la fuerza va con 4 series; después, **motor a intervalos** (`motor`, antes del cierre) con lo que tengas: kettlebell (swing y después arranque), bici, soga o, sin nada, saltos, escaladores y burpees. Va el que menos hiciste; cada tres veces sube un escalón (más trabajo, menos pausa) y suma vueltas hasta llenar tu tiempo (como mucho el doble). Si todavía sobra y el cierre es la bici suave, se estira hasta 20 minutos. Nunca pasa de lo que elegiste.
+
 `nivelDesde` (el escalón de arranque de cada escalera) y `dadas` (estrellas que tu nivel da por hechas) salen de Tu nivel (abajo): lo que hiciste manda sobre el nivel.
 
 ## Tu nivel (`src/sesion/nivel.js`)
 
-Cuatro preguntas, cada una un menú con «No sé» al final. Se guardan en el perfil como `nivel: {dominadas, flexiones, unaPierna, vertical, fecha}` (la fecha es la del último cambio). «No sé» o no contestar es arrancar desde el principio. Dominadas se pregunta solo con barra y parada de manos solo con pared (sin decir tu equipo, las cuatro); si después sacás ese equipo, esa respuesta deja de contar.
+Cinco movimientos, cada uno un menú con cuatro niveles y «No sé» al final. Cada nivel es un ejercicio que se ve (la figura en la fila): el que te sale con las repeticiones de la pregunta. Se guardan en el perfil como `nivel: {empujar, tirar, piernas, cadera, abdomen, fecha}` con `"0"` Inicial, `"1"` Intermedio, `"2"` Avanzado, `"3"` Experto o `"nose"` (la fecha es la del último cambio). «No sé» o no contestar es arrancar desde el principio. Tirar se pregunta solo con barra (sin decir tu equipo, los cinco); si después sacás la barra, ese nivel deja de contar.
 
-| Pregunta | Respuestas (`id` · lo que se ve) |
-| --- | --- |
-| `dominadas` (Dominadas seguidas) | `0` Ninguna · `1-4` · `5-9` · `10-14` · `15+` · `nose` |
-| `flexiones` (Flexiones seguidas) | `0-9` Menos de 10 · `10-19` · `20-29` · `30-39` · `40+` · `nose` |
-| `unaPierna` (Sentadilla a una pierna) | `no` Todavía no · `silla` Hasta una silla · `completa` Completa, hasta abajo · `nose` |
-| `vertical` (Parada de manos) | `no` Todavía no · `pared` Contra la pared · `libre` Libre · `nose` |
+| Movimiento (pregunta) | Inicial | Intermedio | Avanzado | Experto |
+| --- | --- | --- | --- | --- |
+| `empujar` (8 seguidas) | flexión con las manos en alto | flexión en el piso | flexión con los pies en alto | flexión cargando un brazo |
+| `tirar` (5 seguidas, con barra) | colgarme de la barra | dominada | dominada rápida, pecho a la barra | dominada cargando un brazo |
+| `piernas` (8 por pierna) | sentadilla | un pie atrás, en alto | una pierna, hasta una silla | una pierna, hasta abajo |
+| `cadera` · Atrás de las piernas (8 seguidas) | puente de glúteo | bisagra en una pierna | curl deslizando los pies | de rodillas, bajar despacio |
+| `abdomen` (20 s) | plancha | banana boca arriba | piernas en L, en el aire | piernas en V, en el aire |
 
-**Dónde arrancás** (`K.nivel.desde`, la tabla conservadora D1): el escalón de arranque por escalera. Si tu equipo no permite ese escalón, la escalera usa el de abajo que sí (el fondo sin paralelas es el fondo en banco). Lo que ya hiciste en una escalera manda sobre esto.
+**Dónde arrancás** (`K.nivel.desde`, conservador: D1): el escalón de arranque por escalera. Si tu equipo no permite ese escalón, la escalera usa el de abajo que sí (el fondo sin paralelas es el fondo en banco). Lo que ya hiciste en una escalera manda sobre esto.
 
-| Respuesta | Escalones |
-| --- | --- |
-| dominadas `0` | tirar: dominada negativa; remo: remo agarrado de un poste |
-| dominadas `1-4`, `5-9` | tirar: dominada; remo: remo invertido |
-| dominadas `10-14` / `15+` | tirar: dominada explosiva / dominada arquera; remo: remo invertido |
-| flexiones `0-9` | empujar: flexión inclinada; fondos: flexión cerrada; L-sit: plancha |
-| flexiones `10-19` | empujar: flexión; fondos: fondo en banco; L-sit: plancha |
-| flexiones `20-29` | empujar: flexión con pausa; fondos: fondo en banco; L-sit: hollow |
-| flexiones `30-39` / `40+` | empujar: flexión declinada / arquera; fondos: fondo; L-sit: l-sit |
-| una pierna `no` / `silla` / `completa` | piernas: sentadilla / hasta una silla / pistol; isquios: puente de glúteo / peso muerto a una pierna / curl femoral deslizante |
+| Movimiento | Inicial | Intermedio | Avanzado | Experto |
+| --- | --- | --- | --- | --- |
+| empujar | empujar: flexión inclinada; fondos: flexión cerrada | flexión; fondo en banco | flexión declinada; fondo | flexión arquera; fondo |
+| tirar | tirar: dominada negativa; remo: agarrado de un poste | dominada; remo invertido | dominada explosiva; remo invertido | dominada arquera; remo invertido a un brazo |
+| piernas | sentadilla | sentadilla búlgara | hasta una silla | pistol |
+| cadera (isquios) | puente de glúteo | peso muerto a una pierna | curl femoral deslizante | nórdico negativo |
+| abdomen (L-sit) | plancha | hollow | l-sit | v-sit |
 
-**Lo que se da por hecho** (`K.nivel.dadas`; cada respuesta suma las de las de abajo): dominadas `5-9` el colgado de 60 s (Front lever); `10-14` además Dominadas ×10 (Muscle-up) y la bolita 10 s (Front lever); `15+` además Dominadas ×15 (Un brazo). Flexiones `30-39` Flexiones ×30 (Planche); `40+` además Flexiones ×40 (Un brazo). Una pierna `silla` la de 5 hasta la silla; `completa` además Pistol ×3. Parada de manos `pared` muñecas 15 s, cuervo 10 s y pared 30 s; `libre` además pared 60 s.
+**Lo que se da por hecho** (`K.nivel.dadas`; cada nivel suma lo de los de abajo): tirar Intermedio el colgado de 60 s (Front lever); Avanzado además Dominadas ×10 (Muscle-up) y la bolita 10 s (Front lever); Experto además Dominadas ×15 (Un brazo). Empujar Avanzado Flexiones ×30 (Planche); Experto además Flexiones ×40 (Un brazo). Piernas Avanzado la de 5 hasta la silla; Experto además Pistol ×3. Abdomen Avanzado L-sit 10 s; Experto además L-sit 20 s. Atrás de las piernas no da estrellas.
+
+**Lo de antes** (`K.nivel.normal`): un nivel guardado con las cuatro preguntas por cantidad (dominadas, flexiones, una pierna, parada de manos) se lee por movimiento, un escalón abajo ante la duda: dominadas `0` → tirar Inicial, `1-9` → Intermedio, `10-14` → Avanzado, `15+` → Experto; flexiones `0-9` / `10-29` / `30-39` / `40+` → empujar Inicial a Experto, y abdomen Inicial (hasta 19), Intermedio (20-29) o Avanzado (30 o más); una pierna `no` / `silla` / `completa` → piernas Inicial / Avanzado / Experto y atrás de las piernas Inicial / Intermedio / Avanzado. La parada de manos ya no se pregunta: se prueba haciéndola. Lo dicho por movimiento manda; al cambiar un nivel se guarda la forma nueva. Un respaldo con la forma de antes se trae igual.
 
 Una estrella dada no se enciende ni escribe marcas: en tu cosmos se ve punteada con «N estrellas dadas por hechas», los totales no cambian y la próxima es la que sigue (`K.nivel.efectiva`, la misma regla en Hoy, el cosmos, la ventana y la semana de prueba). Se enciende de verdad cuando la hacés. Un intento real a esa estrella que no llega (anotado, o una serie que la probaba, desde la fecha de tu nivel) le saca lo de dada y vuelve a ser la próxima. Las series de una escalera no cuentan como intento.
 
@@ -154,6 +158,17 @@ Una rutina que seguís conserva sus ejercicios, series, semanas, semana de prueb
 - `familia`: `fu`, `ra` o `mo`, como las constelaciones.
 - `alimenta`: ids de estrellas hacia las que lleva. Al menos una.
 - `sesiones`: todas, en orden (semanas × días). La sesión `i` es la que toca después de hacer `i` sesiones de la rutina.
+- `equipo` puede pedir `pesa`: una mancuerna o una kettlebell, cualquiera de las dos (la app la suma sola si tenés alguna).
+
+**Cada familia, en los tres niveles (vuelta 35).** Para hacer cualquier cosa por tu cuenta, sin depender del día que arma Kozmos, se sumaron cinco rutinas, todas con escalones o tiempos que crecen semana a semana:
+
+| Rutina | Familia | Nivel | Qué progresa |
+| --- | --- | --- | --- |
+| Fuerza en casa (`casa`) | fuerza | 1 | Escaleras de todo el cuerpo, 3 series y 4 desde la semana 5; con una pesa, el remo, la sentadilla y el peso muerto arrancan con kilos |
+| Fuerza con una pesa (`una_pesa`) | fuerza | 2 | Las mismas escaleras con kilos, más swing y paseo de la maleta; primero suben las repeticiones, después los kilos |
+| Movilidad con fuerza (`rango`) | movilidad | 2 | Cadera, hombros y todo el cuerpo: posturas de 45 s a 1:30 y escaleras de cadera, puente e isquios |
+| Movilidad avanzada (`abierto`) | movilidad | 3 | Espagat, piernas abiertas y puente: posturas de 1 a 2 min y los últimos escalones de cadera y puente |
+| Swing para empezar (`swing`) | motor | 1 | Swing a intervalos: de 20 s con 40 de pausa a 40 s con 20, y de un bloque a dos |
 
 ### Bloques
 
@@ -245,3 +260,7 @@ Sin rutina, con tu rumbo, cuenta semanas de calendario con alguna sesión: despu
 ## Lo que guarda el diario
 
 Una sesión de rutina guarda `rutina: {id, sesion}`. Cada bloque del día del motor guarda `molde` (la parte: `entrada`, `habilidad`, `fuerza`, `abdomen`, `cierre`) y, si era para metas de tu rumbo, `constelaciones` (la lista; los bloques de antes guardan una sola, `constelacion`, y las dos cuentan para rotar). La serie de una entrada en calor no guarda ejercicio: las calorías la cuentan como el resto del día. Cada serie de una escalera guarda además `escalera`, `rango`, `n` (cuántas series pedía), `descarga` si era una descarga y, si la tocaste, `sensacion` (`sobro`, `justo` o `no-llego`). Una serie con lastre guarda `lastreKg` y `pesoKg`; una con mancuernas, `kg` (por mano, sin tu peso). Las sesiones viejas, sin esos campos, siguen contando: sus series entran en la escalera del ejercicio que hicieron. Una prueba (hazaña) guarda `hazana: {id, v: 2, valor, completa, ejercicio, tipo}` y su serie lleva `hazana` con el id; esa serie cuenta como marca en el Cielo. Una sesión de la semana de prueba guarda `semanaPrueba: {bloque, rutina, semana, pruebas}`. Las hazañas de antes (versión 1) guardaban `hazana: {id, nivel, valor}`, con `valor` en segundos (tiempo, chipper), rondas (amrap) o 1 (completada): se siguen viendo en tu historia y en la prueba, como «versión anterior», y no cuentan como marcas. El perfil guarda `rutina: {id, desde}` mientras la seguís y `dias`: los días de la semana que entrenás (0 = lunes).
+
+## La bienvenida (`src/pantallas/bienvenida.js`, vuelta 35)
+
+La primera vez que se abre la app en un teléfono sin nada (ni sesiones, ni marcas, ni rumbo, ni rutina, ni equipo, ni nivel), una capa arriba de todo pregunta en tres pasos: qué querés entrenar (fuerza, resistencia, flexibilidad; uno o más, y el orden importa), qué tenés y cuánto tiempo (minutos por día de 10 a 60 y días por semana de 2 a 6), y desde dónde arrancás: eligiéndolo por movimiento (las figuras de `K.nivel.PREGUNTAS`; sin barra no pregunta por tirar) o con una prueba de un minuto (flexiones si elegiste fuerza primero, alcance de piernas si fue flexibilidad; solo resistencia, la prueba es correr y va en el primer día). Al llegar a «Tu primer día» guarda todo junto en el perfil: `equipo`, `minutos`, `dias` (repartidos desde hoy), `rumbo` (dos o tres constelaciones por cosa elegida, las que tu equipo permite y primero las que tu nivel ya empezó), `nivel` y `bienvenida` (la fecha; con eso no vuelve, y viaja en el respaldo). La prueba queda como una sesión de prueba, igual que la de Planes. El día lo arma `K.hoyPlan`. Si se cierra a la mitad, un borrador en este teléfono (`localStorage`, `kozmos.bienvenida.v1`) la retoma en el mismo paso. Las pruebas de pantalla que no son de la bienvenida la marcan como vista (`prefs.bienvenida`).

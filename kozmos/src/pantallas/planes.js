@@ -96,7 +96,7 @@ K.rutinaHace = r => {
 
 /* ===== La tarjeta de una rutina: el cuerpo, el nivel, el nombre y los minutos; sus semanas; sus ejercicios ===== */
 K.rutCard = (r, {sel = "", cur = null} = {}) => {
-  const h = K.rutinaHace(r), falta = K.rutina.falta(r, K.EJ, K.diario.perfil.equipo || null);
+  const h = K.rutinaHace(r), falta = K.rutina.falta(r, K.EJ, K.tuEquipo());
   const sem = K.aparte(`${r.semanas} semanas`, `${r.dias} por semana`);
   return `<button type="button" class="ru-card" data-ir="#/planes/rutinas/${r.id}" data-quieto="1" style="--c:var(--${r.familia})"${sel === r.id ? " data-sel" : ""}>
     <span class="ru-top">${K.cuerpo(h.zonas, r.familia, {alto: 92})}<span class="ru-tx">${K.nivelTx(r.nivel)}<b class="ru-nom">${K.esc(r.nombre)}</b><span class="num ru-min">${K.dur(`${r.minutos} min`)}</span></span></span>
@@ -151,7 +151,7 @@ const famBoton = () => { const n = (FAM().find(f => f.id === famDe()) || FAM()[0
   return `<button type="button" class="pl-fam" id="pl-fam-rutinas" aria-haspopup="menu" aria-expanded="false" aria-label="Familia: ${K.esc(n)}"><span>${K.esc(n)}</span>${K.ic("chevd")}</button>`; };
 /* de inicial a avanzado; dentro de cada nivel, por nombre */
 const ordenRut = (a, b) => a.nivel - b.nivel || a.nombre.localeCompare(b.nombre, "es");
-K.proximaPrueba = () => { const hs = K.HAZANAS.hazanas; return K.rutina.proximaPrueba(hs, K.diario.sesiones, K.hoy(), {ej: K.EJ, equipo: K.diario.perfil.equipo || null}) || hs[0]; };
+K.proximaPrueba = () => { const hs = K.HAZANAS.hazanas; return K.rutina.proximaPrueba(hs, K.diario.sesiones, K.hoy(), {ej: K.EJ, equipo: K.tuEquipo()}) || hs[0]; };
 
 K.P.planes = r => {
   if (r.sub === "ejercicios") return K.P.ejercicios(r);

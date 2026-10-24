@@ -828,10 +828,10 @@
   },
   {
    "id": "remo-mancuerna",
-   "nombre": "Remo unilateral con mancuerna",
-   "indicacion": "Apoyado en una silla. El codo va a la cadera.",
+   "nombre": "Remo a un brazo con pesa",
+   "indicacion": "Apoyado en una silla, la pesa en la otra mano. El codo va a la cadera.",
    "equipo": [
-    "mancuernas"
+    "pesa"
    ],
    "lado": true
   },
@@ -932,9 +932,9 @@
   {
    "id": "sentadilla-bulgara",
    "nombre": "Sentadilla búlgara",
-   "indicacion": "Pie de atrás en la silla.",
+   "indicacion": "Pie de atrás en la silla, la pesa contra el pecho o una en cada mano.",
    "equipo": [
-    "mancuernas"
+    "pesa"
    ],
    "lado": true
   },
@@ -949,9 +949,9 @@
   {
    "id": "peso-muerto-una-pierna",
    "nombre": "Peso muerto rumano unilateral",
-   "indicacion": "Mancuerna en la mano contraria a la pierna de apoyo.",
+   "indicacion": "La pesa en la mano contraria a la pierna de apoyo.",
    "equipo": [
-    "mancuernas"
+    "pesa"
    ],
    "lado": true
   },
@@ -1886,10 +1886,10 @@
   },
   {
    "id": "sentadilla-mancuernas",
-   "nombre": "Sentadilla con mancuernas",
-   "indicacion": "Mancuernas a los costados, espalda larga, bajá hasta pasar la línea de la rodilla.",
+   "nombre": "Sentadilla con pesa",
+   "indicacion": "La pesa contra el pecho, espalda larga. Bajá hasta pasar la línea de la rodilla.",
    "equipo": [
-    "mancuernas"
+    "pesa"
    ]
   },
   {
@@ -1910,10 +1910,10 @@
   },
   {
    "id": "peso-muerto-rumano",
-   "nombre": "Peso muerto rumano con mancuernas",
-   "indicacion": "Cola atrás, espalda recta.",
+   "nombre": "Peso muerto rumano con pesa",
+   "indicacion": "La pesa con las dos manos (o una en cada mano). Cola atrás, espalda recta.",
    "equipo": [
-    "mancuernas"
+    "pesa"
    ]
   },
   {
