@@ -20,3 +20,11 @@ Fer aprobó el plan del motor («Si perfecto, dále») y pidió que fuerza, movi
 ## Decisiones que esperan a Fer
 
 1. OK al tablero de punta a punta para publicar.
+2. El reloj de la bienvenida llega a 60 y el de Vos a 90. Fer siguió la recomendación: queda así.
+
+Fer dio el OK («Ok y tus recomendaciones»). Se mergeó el PR #44.
+
+## Después del merge
+
+- **La prueba en el emulador** abre una instalación limpia y espera que el atrás salga de la app. Con la bienvenida, el atrás quedaba en la primera pregunta. Ahora, si no hay a dónde volver, sale, como en Hoy (`bienvenida-retoma` lo prueba).
+- **La publicación de la v42 se frenó en `rutina-armar-bloques`.** Esa prueba compara el código nuevo con el de main. Ya en main, comparaba el código consigo mismo pero con distinto equipo: uno con la pesa y el otro sin. Ahora, si main ya conoce la pesa, los dos reciben el mismo equipo y tienen que dar idéntico. Probada contra el main de antes y el de ahora.
