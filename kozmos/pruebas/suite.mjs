@@ -908,9 +908,9 @@ prueba("como-entrenas-vos", async () => {
   await p.click("#formas-menu"); await p.waitForSelector(".pop:not(.out) .pmi");
   ok(await p.getAttribute('.pop:not(.out) .pmi[data-id="bici"]', "aria-checked") === "true", "la bici no aparece marcada");
   await p.click('.pop:not(.out) .pmi[data-id="calistenia"]'); await p.waitForFunction(() => (K.diario.perfil.formas || []).length === 2);
-  ok((await p.textContent("#formas-menu em")) === "Calistenia y Bici fija", "dos formas: " + await p.textContent("#formas-menu em"));
+  ok((await p.textContent("#formas-menu em")) === "2 formas", "dos formas: " + await p.textContent("#formas-menu em"));
   await p.click("#formas-menu"); await p.waitForSelector(".pop:not(.out) .pmi"); await p.click('.pop:not(.out) .pmi[data-id="yoga"]'); await p.waitForFunction(() => (K.diario.perfil.formas || []).length === 3);
-  ok((await p.textContent("#formas-menu em")) === "Calistenia y 2 más", "tres formas: " + await p.textContent("#formas-menu em"));
+  ok((await p.textContent("#formas-menu em")) === "3 formas", "tres formas: " + await p.textContent("#formas-menu em"));
   /* sacar la bici: deja de ser tuya, pero la bici sigue en tu equipo */
   await p.click("#formas-menu"); await p.waitForSelector(".pop:not(.out) .pmi"); await p.click('.pop:not(.out) .pmi[data-id="bici"]'); await p.waitForFunction(() => !(K.diario.perfil.formas || []).includes("bici"));
   ok(await p.evaluate(() => K.diario.perfil.equipo.includes("bici")), "sacar la forma sacó la bici del equipo");

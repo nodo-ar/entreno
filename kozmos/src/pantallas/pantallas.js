@@ -98,13 +98,13 @@ K.P.vos = r => {
   const fila = (id, ic, nom, val) => `<button type="button" class="ajr" data-ir="#/vos/${id}" data-quieto="1"${abre === id ? " data-sel" : ""}><span class="tile">${K.ic(ic)}</span><span>${nom}</span><em>${K.esc(val)}</em>${K.ic("chev", "chev")}</button>`;
   const peso = K.diario.perfil.peso;
   return `<div class="split${sub ? " en-detalle" : ""}"><div class="lado">${K.enc({titulo: "Vos", sub: "Ajustes"})}
-    <div class="aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}
+    <div class="aj vos-aj">${fila("equipo", "barra", "Tu equipo", resumenEquipo())}
       <button type="button" class="ajr" id="formas-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("ruta")}</span><span>Cómo entrenás</span><em>${K.esc(K.formasNombre())}</em>${K.ic("chevd", "chev")}</button>${fila("nivel", "nivel", "Tu nivel", K.resumenNivel())}${fila("dias", "dias", "Tus días", K.resumenDias())}
       <button type="button" class="ajr" id="tiempo-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("reloj")}</span><span>Tu tiempo</span><em>${K.esc(K.tiempoNombre())}</em>${K.ic("chevd", "chev")}</button>${fila("peso", "peso", "Tu peso", peso ? `${K.kg(peso)} kg` : "Sin cargar")}
       <button type="button" class="ajr" id="avisos-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("vibra")}</span><span>Avisos</span><em>${K.esc(K.avisosNombre())}</em>${K.ic("chevd", "chev")}</button></div>
     <span class="lb pie">La persona de los dibujos</span>
-    <div class="aj">${K.personaFilas()}</div>
-    <div class="aj">
+    <div class="aj vos-aj">${K.personaFilas()}</div>
+    <div class="aj vos-aj">
       <button type="button" class="ajr" id="tema-menu" aria-haspopup="menu" aria-expanded="false"><span class="tile">${K.ic("auto")}</span><span>Tema</span><em>${K.esc(K.tema.nombre())}</em>${K.ic("chevd", "chev")}</button>
       ${fila("respaldo", "caja", "Respaldo", K.ultimoRespaldo())}${fila("acerca", "info", "Acerca de Kozmos", "")}
     </div></div>
@@ -297,7 +297,7 @@ K.menuTiempo = btn => K.menu.abrir(btn, {titulo: "Cuánto tiempo por día",
 K.formasNombre = (xs = K.diario.perfil.formas) => {
   const ns = K.bienvenida.FORMAS.filter(x => (xs || []).includes(x.id)).map(x => x.nom);
   if (!ns.length) return "Sin elegir";
-  return ns.length > 2 ? `${ns[0]} y ${ns.length - 1} más` : ns.join(" y ");
+  return ns.length > 1 ? `${ns.length} formas` : ns[0];
 };
 K.menuFormas = btn => { const xs = K.diario.perfil.formas || [];
   K.menu.abrir(btn, {titulo: "Cómo entrenás",
