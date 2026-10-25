@@ -1,6 +1,6 @@
-# Kozmos · versión 48 (k-d8a4613) · 2026-10-24
+# Kozmos · versión 48 (k-d8a4613) · 2026-10-25
 
-Publicada en GitHub Releases por el workflow «Kozmos · versión» el 2026-10-24.
+Publicada en GitHub Releases por el workflow «Kozmos · versión» el 2026-10-25.
 
 - **Enlace**: https://github.com/nodo-ar/entreno/releases/tag/kozmos-48 · siempre la última: https://github.com/nodo-ar/entreno/releases/latest/download/kozmos.apk
 - **Qué trae**: «Cómo entrenás» en Vos, como menú con las once formas. Sumar una forma trae a tu equipo lo que usa. El respaldo guarda qué y cómo entrenás (antes los perdía). En horizontal, los nombres de Vos ya no se parten (PR #50, acta 040).
