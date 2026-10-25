@@ -1,10 +1,12 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-25 (motor por días) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-25 (bíceps y tríceps) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
-- **Motor por días** (2026-10-25): vuelta 41 (acta `docs/actas/041-kozmos-motor-por-dias.md`). Fer aprobó las reglas del motor (simulador https://claude.ai/artifact/DuBKX763h64pDodc6xNExh, reglas en `docs/kozmos-motor.md`). Construido: el tipo de día de fuerza según tus días y los ejercicios en orden (principales, secundarios, accesorios, abdomen). «Cómo entrenás en Vos» publicada como kozmos-48. **Esperando a Fer**: el OK al tablero. Después, en orden: bíceps y tríceps, versiones por forma, resistencia y flexibilidad, las preguntas de semana y nivel, yoga. Pendiente aparte: pruebas en el teléfono.
+- **Bíceps y tríceps** (2026-10-25): vuelta 42 (acta `docs/actas/042-kozmos-biceps-y-triceps.md`). Escaleras nuevas de bíceps y tríceps con 16 ejercicios dibujados (con tu cuerpo y con barra, polea, mancuernas, kettlebell o banda); Tu nivel de tirar y empujar dice dónde arrancan; de un par que no entra en tus minutos entra el primero solo. «Motor por días» publicada como kozmos-49. **Esperando a Fer**: el OK al tablero. Después: versiones por forma con su progresión.
+
+- **Motor por días** (2026-10-25): vuelta 41 (acta `docs/actas/041-kozmos-motor-por-dias.md`). Fer aprobó las reglas del motor (simulador https://claude.ai/artifact/DuBKX763h64pDodc6xNExh, reglas en `docs/kozmos-motor.md`). Construido: el tipo de día de fuerza según tus días y los ejercicios en orden (principales, secundarios, accesorios, abdomen). Aprobada por Fer y publicada como kozmos-49. Lo que sigue, en orden: versiones por forma, resistencia y flexibilidad, las preguntas de semana y nivel, yoga. Pendiente aparte: pruebas en el teléfono.
 
 - **Cómo entrenás en Vos** (2026-10-24): vuelta 40 (acta `docs/actas/040-kozmos-como-entrenas-en-vos.md`). «Cómo entrenás» en Vos como menú; sumar una forma trae su equipo; el respaldo guarda qué y cómo entrenás (antes los perdía); Vos en horizontal sin nombres partidos. La rueda publicada como kozmos-47. **Esperando a Fer**: el OK al tablero. Después: pruebas en el teléfono (pitidos con la pantalla apagada, vibración, respaldo).
 

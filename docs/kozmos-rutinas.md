@@ -130,8 +130,8 @@ Cinco movimientos, cada uno un menú con cuatro niveles y «No sé» al final. C
 
 | Movimiento | Inicial | Intermedio | Avanzado | Experto |
 | --- | --- | --- | --- | --- |
-| empujar | empujar: flexión inclinada; fondos: flexión cerrada | flexión; fondo en banco | flexión declinada; fondo | flexión arquera; fondo |
-| tirar | tirar: dominada negativa; remo: agarrado del marco de la puerta | dominada; remo invertido | dominada explosiva; remo invertido | dominada arquera; remo invertido a un brazo |
+| empujar | empujar: flexión inclinada; fondos: flexión cerrada; tríceps: en la mesa | flexión; fondo en banco; tríceps en la mesa | flexión declinada; fondo; tríceps en la barra baja | flexión arquera; fondo; tríceps en el piso |
+| tirar | tirar: dominada negativa; remo: agarrado del marco de la puerta; bíceps: curl en el marco | dominada; remo invertido; remo con palmas hacia vos | dominada explosiva; remo invertido; dominada con palmas hacia vos | dominada arquera; remo invertido a un brazo; curl con tu peso en la barra baja |
 | piernas | sentadilla | sentadilla búlgara | hasta una silla | pistol |
 | cadera (isquios) | puente de glúteo | peso muerto a una pierna | curl femoral deslizante | nórdico negativo |
 | abdomen (L-sit) | plancha | hollow | l-sit | v-sit |
@@ -289,6 +289,15 @@ Una sesión de rutina guarda `rutina: {id, sesion}`. Cada bloque del día del mo
 - 8 ejercicios nuevos, cada uno como versión de un escalón y sin kilos: dominada con banda (tirar, en la dominada asistida; pide barra), remo con banda (remo, primer escalón), press de hombros con banda (arriba), buenos días con banda (isquios), subida al cajón (piernas, en la zancada), L-sit en paralelas (L-sit) y remo debajo de las paralelas (remo, `tambien` del remo horizontal, antes que la mesa). Salto al cajón va en el motor.
 - Una versión de `conPeso` sin kilos es tu cuerpo: cuenta también para la habilidad (`sinPeso`). Solo lo que lleva `kgInicial` va en la cuenta aparte de los kilos.
 - Motor: «Cajón a intervalos». Con tiempo dicho, el motor elige el primero que llena esos minutos y, si ninguno, el que más llena (los saltos al cajón no dan para una hora).
+
+## Bíceps y tríceps (vuelta 42)
+
+- Dos escaleras nuevas para el día del motor (los días de arriba, empujar, tirar, pecho y bíceps, espalda y tríceps):
+  - **Bíceps** (`biceps`, patrón tirar): curl agarrado del marco de la puerta → remo invertido con las palmas hacia vos → dominada con las palmas hacia vos → curl con tu peso en la barra baja. Con peso, en el primer escalón: curl con barra (discos) o en polea (máquinas), que mandan; con mancuernas, con kettlebell o con banda.
+  - **Tríceps** (`triceps`, patrón empujar): extensión en la mesa → en la barra baja → en el piso. Con peso: press francés con barra o tríceps en polea, que mandan; extensión con mancuerna o con kettlebell, o tríceps con banda.
+- 16 ejercicios nuevos, cada uno con su maniquí (`src/poses/brazos.js`). En los de tu cuerpo, la mano no se mueve del marco, la barra o la mesa y los pies no se mueven del piso: el tronco y el codo salen de esas dos cosas.
+- Tu nivel de tirar y de empujar dice dónde arrancan (tabla de arriba). Tu nivel no pregunta por los brazos.
+- El orden del día ya los tenía como accesorios (después de los secundarios y antes del abdomen). Arreglo: de un par que no entra en tus minutos entra el primero solo; antes se salteaba el par entero y podía quedar un tríceps donde cabía el tirar.
 
 ## Cómo entrenás (vuelta 39)
 

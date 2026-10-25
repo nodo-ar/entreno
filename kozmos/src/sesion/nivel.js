@@ -14,15 +14,15 @@ K.nivel = (() => {
   /* por movimiento: la pregunta y, por nivel, lo que se ve (texto y figura), el escalón de arranque y lo que da por hecho */
   const MOVIMIENTOS = [
     {id: "empujar", nombre: "Empujar", pregunta: "¿Cuál te sale, 8 seguidas?", niveles: [
-      {texto: "Flexión con las manos en alto", ej: "flexion-inclinada", desde: {empujar: "flexion-inclinada", fondos: "flexion-cerrada", arriba: "flexion-pike"}},
-      {texto: "Flexión en el piso", ej: "flexion", desde: {empujar: "flexion", fondos: "fondo-banco", arriba: "flexion-pike"}},
-      {texto: "Flexión con los pies en alto", ej: "flexion-declinada", desde: {empujar: "flexion-declinada", fondos: "fondo", arriba: "pike-elevado"}, dadas: ["planche.flexiones-30"]},
-      {texto: "Flexión cargando un brazo", ej: "flexion-arquera", desde: {empujar: "flexion-arquera", fondos: "fondo", arriba: "pike-elevado"}, dadas: ["un-brazo.flexiones-40"]}]},
+      {texto: "Flexión con las manos en alto", ej: "flexion-inclinada", desde: {empujar: "flexion-inclinada", fondos: "flexion-cerrada", arriba: "flexion-pike", triceps: "extension-triceps-mesada"}},
+      {texto: "Flexión en el piso", ej: "flexion", desde: {empujar: "flexion", fondos: "fondo-banco", arriba: "flexion-pike", triceps: "extension-triceps-mesada"}},
+      {texto: "Flexión con los pies en alto", ej: "flexion-declinada", desde: {empujar: "flexion-declinada", fondos: "fondo", arriba: "pike-elevado", triceps: "extension-triceps-barra"}, dadas: ["planche.flexiones-30"]},
+      {texto: "Flexión cargando un brazo", ej: "flexion-arquera", desde: {empujar: "flexion-arquera", fondos: "fondo", arriba: "pike-elevado", triceps: "extension-triceps-piso"}, dadas: ["un-brazo.flexiones-40"]}]},
     {id: "tirar", nombre: "Tirar", pide: "barra", pregunta: "¿Cuál te sale, 5 seguidas?", niveles: [
-      {texto: "Colgarme de la barra", ej: "colgado-activo", desde: {tirar: "dominada-negativa", remo: "remo-poste"}},
-      {texto: "Dominada", ej: "dominada", desde: {tirar: "dominada", remo: "remo-invertido"}, dadas: ["front-lever.colgado-60s"]},
-      {texto: "Dominada rápida, pecho a la barra", ej: "dominada-explosiva", desde: {tirar: "dominada-explosiva", remo: "remo-invertido"}, dadas: ["muscle-up.dominadas-10", "front-lever.bolita-10s"]},
-      {texto: "Dominada cargando un brazo", ej: "dominada-arquera", desde: {tirar: "dominada-arquera", remo: "remo-un-brazo"}, dadas: ["un-brazo.dominadas-15"]}]},
+      {texto: "Colgarme de la barra", ej: "colgado-activo", desde: {tirar: "dominada-negativa", remo: "remo-poste", biceps: "curl-puerta"}},
+      {texto: "Dominada", ej: "dominada", desde: {tirar: "dominada", remo: "remo-invertido", biceps: "remo-supino"}, dadas: ["front-lever.colgado-60s"]},
+      {texto: "Dominada rápida, pecho a la barra", ej: "dominada-explosiva", desde: {tirar: "dominada-explosiva", remo: "remo-invertido", biceps: "dominada-supina"}, dadas: ["muscle-up.dominadas-10", "front-lever.bolita-10s"]},
+      {texto: "Dominada cargando un brazo", ej: "dominada-arquera", desde: {tirar: "dominada-arquera", remo: "remo-un-brazo", biceps: "curl-barra-baja"}, dadas: ["un-brazo.dominadas-15"]}]},
     {id: "piernas", nombre: "Piernas", pregunta: "¿Cuál te sale, 8 por pierna?", niveles: [
       {texto: "Sentadilla", ej: "sentadilla", desde: {piernas: "sentadilla"}},
       {texto: "Un pie atrás, en alto", ej: "sentadilla-bulgara", desde: {piernas: "sentadilla-bulgara"}},

@@ -968,8 +968,8 @@
   },
   {
    "id": "dominada-supina",
-   "nombre": "Dominada supina",
-   "indicacion": "Manos al ancho de hombros. Más brazo.",
+   "nombre": "Dominada con las palmas hacia vos",
+   "indicacion": "Manos al ancho de los hombros, palmas hacia vos. Pecho a la barra.",
    "equipo": [
     "barra"
    ],
@@ -2306,6 +2306,175 @@
    ],
    "patron": [
     "tirar"
+   ]
+  },
+  {
+   "id": "curl-puerta",
+   "nombre": "Curl agarrado del marco de la puerta",
+   "indicacion": "Agarrate del marco con una mano, inclinate atrás y doblá el codo hasta la frente.",
+   "lado": true,
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "remo-supino",
+   "nombre": "Remo invertido con las palmas hacia vos",
+   "indicacion": "Cuerpo recto bajo la barra, palmas hacia vos. Codos pegados al cuerpo.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "curl-barra-baja",
+   "nombre": "Curl con tu peso en la barra baja",
+   "indicacion": "Colgado de la barra baja, palmas hacia vos. Doblá solo los codos hasta la frente.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "curl-mancuernas",
+   "nombre": "Curl con mancuernas",
+   "indicacion": "Codos pegados al cuerpo. Subí sin hamacarte y bajá lento.",
+   "equipo": [
+    "mancuernas"
+   ],
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "curl-kettlebell",
+   "nombre": "Curl con kettlebell",
+   "indicacion": "El codo pegado al cuerpo. Subila sin hamacarte y bajala lento.",
+   "equipo": [
+    "kettlebell"
+   ],
+   "lado": true,
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "curl-barra",
+   "nombre": "Curl con barra",
+   "indicacion": "Palmas hacia adelante, codos pegados. Subí sin hamacarte y bajá lento.",
+   "equipo": [
+    "discos"
+   ],
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "curl-polea",
+   "nombre": "Curl en polea",
+   "indicacion": "De frente a la polea baja, codos pegados. Subí el agarre a los hombros.",
+   "equipo": [
+    "maquinas"
+   ],
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "curl-banda",
+   "nombre": "Curl con banda",
+   "indicacion": "Pisá la banda. Codos pegados, subí las manos a los hombros.",
+   "equipo": [
+    "bandas"
+   ],
+   "patron": [
+    "tirar"
+   ]
+  },
+  {
+   "id": "extension-triceps-mesada",
+   "nombre": "Extensión de tríceps en la mesa",
+   "indicacion": "Manos en el borde de una mesa firme. Doblá solo los codos hasta la frente.",
+   "patron": [
+    "empujar"
+   ]
+  },
+  {
+   "id": "extension-triceps-barra",
+   "nombre": "Extensión de tríceps en la barra baja",
+   "indicacion": "Manos en la barra baja, cuerpo recto. Doblá solo los codos hasta la frente.",
+   "equipo": [
+    "barra"
+   ],
+   "patron": [
+    "empujar"
+   ]
+  },
+  {
+   "id": "extension-triceps-piso",
+   "nombre": "Extensión de tríceps en el piso",
+   "indicacion": "En plancha sobre los antebrazos. Empujá con las manos hasta estirar los brazos.",
+   "patron": [
+    "empujar"
+   ]
+  },
+  {
+   "id": "extension-mancuerna",
+   "nombre": "Extensión de tríceps con mancuerna",
+   "indicacion": "Una mancuerna con las dos manos sobre la cabeza. Codos al techo, bajala detrás de la nuca.",
+   "equipo": [
+    "mancuernas"
+   ],
+   "patron": [
+    "empujar"
+   ]
+  },
+  {
+   "id": "extension-kettlebell",
+   "nombre": "Extensión de tríceps con kettlebell",
+   "indicacion": "La kettlebell con las dos manos sobre la cabeza. Codos al techo, bajala a la nuca.",
+   "equipo": [
+    "kettlebell"
+   ],
+   "patron": [
+    "empujar"
+   ]
+  },
+  {
+   "id": "press-frances",
+   "nombre": "Press francés con barra",
+   "indicacion": "Acostado, la barra arriba. Doblá solo los codos hasta que pase por arriba de la frente.",
+   "equipo": [
+    "discos"
+   ],
+   "patron": [
+    "empujar"
+   ]
+  },
+  {
+   "id": "extension-polea",
+   "nombre": "Tríceps en polea",
+   "indicacion": "De frente a la polea alta, codos pegados. Empujá abajo hasta estirar los brazos.",
+   "equipo": [
+    "maquinas"
+   ],
+   "patron": [
+    "empujar"
+   ]
+  },
+  {
+   "id": "extension-banda",
+   "nombre": "Tríceps con banda",
+   "indicacion": "La banda atada arriba, codos pegados. Empujá abajo hasta estirar los brazos.",
+   "equipo": [
+    "bandas"
+   ],
+   "patron": [
+    "empujar"
    ]
   }
  ]

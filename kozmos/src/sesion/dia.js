@@ -278,7 +278,7 @@ K.dia = (() => {
     /* ===== la fuerza: habilidad (dos metas de tu rumbo, rotando), fuerza de a dos y abdomen ===== */
     const orden = rotar(de("fu"), sesiones, hoy, {ventana: [...abiertas]});
     const hab = [], fuerza = [];
-    let conSeries = b => b;
+    let conSeries = b => b, primero = () => null;
     /* el tipo de día: el que sigue en el ciclo de tu semana (los días con fuerza que ya hiciste lo hacen avanzar) */
     const T = TIPOS[tipoPedido] || TIPOS[tipoDelDia(semana, diasSemana({dias: dias || []}, sesiones, hoy), sesiones)], tipo = T.id;
     if (van.includes("fu")){
@@ -335,6 +335,8 @@ K.dia = (() => {
       };
       grupos.forEach((g, k) => fuerza.push(armarG(g, k, SERIES)));
       conSeries = (b, n) => { const k = fuerza.indexOf(b); return k < 0 || b.molde === "abdomen" ? b : armarG(grupos[k], k, n); };
+      /* de un par que no entra, el primero solo (el segundo es de más abajo en el orden o del mismo escalón) */
+      primero = (b, n) => { const k = fuerza.indexOf(b); return k < 0 || grupos[k].length < 2 ? null : armarG(grupos[k].slice(0, 1), k, n); };
     }
     /* la fuerza a su tiempo: de todas las formas de armarla (una o dos habilidades; los movimientos en orden, así lo primero
        que se cae es el abdomen y después los accesorios; 3, 2 o 4 series), la que entra. Primero, que haya
@@ -343,8 +345,9 @@ K.dia = (() => {
     function parteFu(seg){
       const H = hab.length > 1 ? [hab, hab.slice(0, 1)] : [hab];
       /* en orden: entra cada uno que quepa en lo que queda; lo que no entra se saltea (nunca va algo de más abajo en su lugar
-         si cabía lo de más arriba) */
-      const enOrden = (h, n) => { const p = []; for (const b of fuerza){ const x = n === 3 ? b : conSeries(b, n); if (segDe([...h, ...p, x]) <= seg) p.push(x); } return p; };
+         si cabía lo de más arriba; de un par que no entra, entra el primero solo) */
+      const enOrden = (h, n) => { const p = [], entra = x => x && segDe([...h, ...p, x]) <= seg;
+        for (const b of fuerza){ const x = n === 3 ? b : conSeries(b, n), y = entra(x) ? x : primero(b, n); if (entra(y)) p.push(y); } return p; };
       let mejor = null;
       for (const h of H) for (const {p, n} of [3, 2, ...(minutos ? [4] : [])].map(n => ({p: enOrden(h, n), n})).concat([{p: [], n: 3}])){
         const bs = [...h, ...p], t = segDe(bs);
