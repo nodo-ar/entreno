@@ -726,7 +726,7 @@ prueba("hoy-molde", async () => {
   ok(marcas[0] === "Para Front lever" && /^Camino a .+/.test(marcas[1]) && marcas[2] === "Para Planche", "las habilidades no dicen para qué meta son: " + marcas);
   ok(await p.$$eval(".hoy-toca .toca-par", x => x.length) === 2 && !(await p.$(".hoy-toca .toca-par-tx")), "la fuerza no va de a dos (o repite «en superserie»)");
   /* «Hoy toca» a la izquierda; a la derecha, el reloj y los minutos (sin la cuenta de bloques) */
-  ok((await p.textContent(".hoy-toca .ln .lb")) === "Hoy toca" && /^\d+ min$/.test(await p.textContent(".hoy-toca > .ln:first-child .num")) && await p.$(".hoy-toca > .ln:first-child .num .dur svg"), "no dice los minutos con su reloj: " + await p.textContent(".hoy-toca > .ln:first-child"));
+  ok(/^Hoy toca(Cuerpo entero|Arriba|Abajo)?$/.test(await p.textContent(".hoy-toca .ln .lb")) && /^\d+ min$/.test(await p.textContent(".hoy-toca > .ln:first-child .num")) && await p.$(".hoy-toca > .ln:first-child .num .dur svg"), "no dice los minutos con su reloj: " + await p.textContent(".hoy-toca > .ln:first-child"));
   /* la sesión arranca por la entrada en calor (con la bici) y sigue con la primera habilidad */
   await p.click("#s-empezar"); await p.waitForSelector(".ses.tramo");
   ok((await p.textContent(".ses-tit .lb")).startsWith("Entrada en calor"), "no arranca por la entrada en calor: " + await p.textContent(".ses-tit .lb"));

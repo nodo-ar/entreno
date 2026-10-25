@@ -1403,9 +1403,10 @@ prueba("dia-a-tu-tiempo", () => {
     ok(d.minutos <= Math.max(m, 20), `${m} min: el día dura ${d.minutos}`);
     ok(partes(d)[0] === "entrada" && partes(d).includes("habilidad") && partes(d).at(-1) === "cierre", `${m} min: le falta la entrada, una habilidad o el cierre: ${partes(d)}`);
     if (m >= 45) ok(d.minutos >= m - 10, `${m} min: sobran más de 10 (${d.minutos})`); }
-  /* poco tiempo: la fuerza se achica antes que la habilidad; mucho, la fuerza va con 4 series y hay motor a intervalos */
+  /* poco tiempo: la fuerza se achica antes que la habilidad, cortando movimientos antes que series; mucho, la fuerza va con
+     4 series y hay motor a intervalos */
   const c = dia(30), l = dia(90), fz = d => d.bloques.filter(b => b.molde === "fuerza");
-  ok(fz(c).length <= 1 && fz(c).every(b => b.pasos.every(x => x.n === 2)), "a 30 min, la fuerza: " + fz(c).map(b => b.pasos.length));
+  ok(fz(c).length <= 1 && fz(c).every(b => b.pasos.every(x => x.n >= 3)), "a 30 min, la fuerza: " + fz(c).map(b => b.pasos.length));
   ok(fz(l).length === 2 && fz(l).every(b => b.pasos.every(x => x.n === 4)) && partes(l).includes("motor") && partes(l).indexOf("motor") === partes(l).length - 2, "a 90 min: " + partes(l));
   /* el motor: con kettlebell, swings; el que menos hiciste; cada tres veces, el escalón que sigue */
   const m0 = molde.motor(["kettlebell"]);
@@ -1472,14 +1473,19 @@ prueba("accesorios", () => {
   ok(conCuerpo.paso.ejercicio === "l-sit", "el L-sit en paralelas cuenta sin peso: " + conCuerpo.paso.ejercicio);
 });
 prueba("empujes-se-turnan", () => {
-  /* los tres empujes (flexiones, arriba y fondos) se turnan entre días: va el que más hace que no tocás */
+  /* el principal no se turna con los secundarios: en cuerpo entero, las flexiones son el empuje y los hombros vienen después.
+     Los secundarios se turnan entre ellos cuando no entran todos: el que más hace que no tocás */
+  const p = armarDia(["front-lever"], {equipo: ["barra", "paralelas"]}), es = deMolde(p.bloques, "fuerza").flatMap(b => [...new Set(b.pasos.map(x => x.escalera))]);
+  ok(es.includes("empujar") && (!es.includes("arriba") || es.indexOf("empujar") < es.indexOf("arriba")), "las flexiones antes que los hombros: " + es);
   const ss = [], usados = [];
-  for (const d of ["02", "04", "06", "08"]){
-    const p = armarDia(["front-lever"], {equipo: ["barra"], ss, hoy: "2026-10-" + d, minutos: 30});
-    const e = deMolde(p.bloques, "fuerza").flatMap(b => b.pasos).find(x => ["empujar", "arriba", "fondos"].includes(x.escalera));
+  for (const d of ["02", "04", "06"]){
+    const q = armarDia([], {equipo: ["barra", "paralelas"], ss, hoy: "2026-10-" + d, minutos: 30, tipo: "empujar"});
+    const xs = deMolde(q.bloques, "fuerza").flatMap(b => b.pasos);
+    ok(xs[0].escalera === "empujar", "el día de empujar arranca por el pecho: " + xs.map(x => x.escalera));
+    const e = xs.find(x => ["arriba", "fondos"].includes(x.escalera));
     if (e){ usados.push(e.escalera); ss.push(deDia("d" + d, "2026-10-" + d, e.escalera, e.ejercicio, [6, 6, 6])); }
   }
-  ok(usados.length >= 3 && new Set(usados.slice(0, 3)).size === 3, "no se turnan: " + usados);
+  ok(usados.length >= 2 && usados[0] !== usados[1], "los secundarios no se turnan: " + usados);
 });
 prueba("entrada-elige", () => {
   const ej = EJM(), b = (...ids) => ids.map(e => ({familia: "fu", pasos: [{ejercicio: e, tipo: "repeticiones", objetivo: 5}]}));
@@ -1578,8 +1584,41 @@ prueba("dia-molde", () => {
   ok(!p.ventana.length && !p.volviste, "sin ventana ni vuelta");
   /* sin rumbo: igual hay día (fuerza, abdomen y cierre), sin habilidad */
   const s = armarDia([], {equipo: []});
-  ok(!deMolde(s.bloques, "habilidad").length && deMolde(s.bloques, "fuerza").length === 2 && s.bloques[0].molde === "entrada", "sin rumbo: " + s.bloques.map(b => b.molde));
+  ok(!deMolde(s.bloques, "habilidad").length && deMolde(s.bloques, "fuerza").length >= 2 && s.bloques[0].molde === "entrada", "sin rumbo: " + s.bloques.map(b => b.molde));
   ok(armarDia(["no-existe", "planche"], {equipo: []}).bloques.some(b => (b.constelaciones || []).includes("planche")), "un id viejo en el rumbo no rompe");
+});
+prueba("dia-tu-semana", () => {
+  /* el tipo de cada día de fuerza (docs/kozmos-motor.md): «Que Kozmos elija» según tus días; si no, el ciclo que elegiste,
+     que avanza con cada día que tuvo fuerza */
+  const dias = n => Array(n).fill(0), eq = ["barra", "paralelas", "pared"];
+  ok(molde.semanaDe("auto", 3) === "entero" && molde.semanaDe("auto", 4) === "aa" && molde.semanaDe("auto", 5) === "etp" && molde.semanaDe("auto", 6) === "etp" && molde.semanaDe("mus", 3) === "mus", "que Kozmos elija");
+  let ss = []; const tipos = [];
+  for (const f of ["2026-10-12", "2026-10-13", "2026-10-15", "2026-10-16", "2026-10-19"]){ const p = armarDia(["front-lever", "una-pierna"], {equipo: eq, ss, hoy: f, dias: dias(4)}); tipos.push(p.dia); ss = [...ss, hechaDia("d" + f, f, p)]; }
+  ok(tipos.join() === "arriba,abajo,arriba,abajo,arriba", "con cuatro días, arriba y abajo: " + tipos);
+  ok(armarDia([], {equipo: eq, semana: "etp", ss: [hechaDia("x", "2026-10-20", armarDia([], {equipo: eq}))]}).dia === "tirar", "el ciclo sigue donde quedó");
+  /* las habilidades van en los días de su movimiento: front lever los de arriba, una pierna los de abajo */
+  const ar = armarDia(["front-lever", "una-pierna"], {equipo: eq, tipo: "arriba"}), ab = armarDia(["front-lever", "una-pierna"], {equipo: eq, tipo: "abajo"});
+  ok(deMolde(ar.bloques, "habilidad").flatMap(b => b.constelaciones).join() === "front-lever" && deMolde(ab.bloques, "habilidad").flatMap(b => b.constelaciones).join() === "una-pierna", "cada habilidad en su día");
+  ok(!deMolde(ab.bloques, "fuerza").flatMap(b => b.pasos).some(x => ["tirar", "empujar"].includes(rutina.escalera(x.escalera).patron)), "el día de abajo no tira ni empuja");
+});
+prueba("dia-orden", () => {
+  /* en todos los tipos de día, con cualquier equipo y tiempo: principales, secundarios, accesorios y abdomen, en ese orden;
+     de a dos, solo lo que no se pisa */
+  const NIV = Object.fromEntries(Object.entries(molde.MOV).map(([k, v]) => [k, v.t]));
+  const nivEsc = {tirar: 1, empujar: 1, piernas: 1, isquios: 1, remo: 2, arriba: 2, fondos: 2, lsit: 4, dragon: 4};
+  const lado = {tirar: "tira", remo: "tira", empujar: "empuja", arriba: "empuja", fondos: "empuja", piernas: "piernas", isquios: "piernas", lsit: "abdomen", dragon: "abdomen"};
+  let n = 0;
+  for (const tipo of Object.keys(molde.TIPOS)) for (const equipo of [[], ["barra"], ["barra", "paralelas", "pared"], TODO]) for (const minutos of [20, 30, 45, 60, 90]){
+    const p = armarDia(["front-lever", "planche", "una-pierna"], {equipo, tipo, minutos});
+    const bs = p.bloques.filter(b => b.molde === "fuerza" || b.molde === "abdomen"), xs = bs.map(b => [...new Set(b.pasos.map(x => x.escalera))]);
+    /* el primer movimiento de cada bloque marca su lugar en el orden; un movimiento que cayó a otra escalera (sin barra, el remo) conserva el suyo */
+    const lug = xs.map(e => Math.min(...e.map(id => nivEsc[id] ?? 3)));
+    ok(lug.every((v, i) => i === 0 || v >= lug[i - 1] || (lug[i - 1] === 2 && v === 1)), `${tipo} ${equipo} ${minutos}: fuera de orden: ${JSON.stringify(xs)}`);
+    for (const e of xs) if (e.length === 2) ok(lado[e[0]] !== lado[e[1]], `${tipo} ${equipo} ${minutos}: un par que se pisa: ${e}`);
+    ok(p.minutos <= Math.max(minutos, 20), `${tipo} ${minutos}: se pasa (${p.minutos})`);
+    n++;
+  }
+  ok(n === 180 && NIV.tirar === 1 && NIV.biceps === 3, "casos: " + n);
 });
 prueba("dia-sin-repetidos", () => {
   /* todas las combinaciones de tres metas de fuerza, con cuatro equipos: nada dos veces y todo posible con tu equipo */
@@ -1609,16 +1648,16 @@ prueba("dia-dos-metas-un-ejercicio", () => {
 });
 prueba("dia-equilibrio", () => {
   const pats = b => [...new Set(b.pasos.map(x => rutina.escalera(x.escalera).patron))];
-  /* front lever tira: el primer par empuja, con piernas; el segundo tira, con bisagra */
+  /* cuerpo entero: los cuatro principales de a dos, uno de arriba con uno de abajo. Front lever tira: el tirón va al final de los principales */
   const p = armarDia(["front-lever"], {equipo: ["barra", "paralelas"]}), [f1, f2] = deMolde(p.bloques, "fuerza");
-  ok(pats(f1).join() === "empujar,piernas" && pats(f2).join() === "tirar,bisagra", "el equilibrio con front lever: " + [pats(f1), pats(f2)]);
-  ok(f1.pasos[0].escalera === "empujar" && f2.pasos[0].escalera === "remo", "fuerza con flexiones y remo, no lo de las habilidades: " + [f1.pasos[0].escalera, f2.pasos[0].escalera]);
-  /* planche empuja: el primer par tira */
+  ok(pats(f1).sort().join() === "empujar,piernas" && pats(f2).sort().join() === "bisagra,tirar", "el equilibrio con front lever: " + [pats(f1), pats(f2)]);
+  ok(f2.pasos.some(x => x.escalera === "remo") && f1.pasos.some(x => x.escalera === "empujar"), "fuerza con flexiones y remo, no lo de las habilidades: " + [f1.pasos.map(x => x.escalera), f2.pasos.map(x => x.escalera)]);
+  /* planche empuja: el primer par no empuja */
   const q = armarDia(["planche"], {equipo: ["barra"]});
-  ok(pats(deMolde(q.bloques, "fuerza")[0])[0] === "tirar", "con planche, el primer par tira");
-  /* una pierna ya entrena piernas: ese lugar es para arriba, y la bisagra queda */
+  ok(!pats(deMolde(q.bloques, "fuerza")[0]).includes("empujar"), "con planche, el primer par empuja");
+  /* una pierna ya entrena piernas: las piernas van al final de los principales y la bisagra queda */
   const u = armarDia(["una-pierna"], {equipo: ["barra"]}), fu = deMolde(u.bloques, "fuerza").flatMap(pats);
-  ok(!fu.includes("piernas") && fu.includes("bisagra") && fu.filter(x => x === "tirar" || x === "empujar").length === 3, "con una pierna: " + fu);
+  ok(!pats(deMolde(u.bloques, "fuerza")[0]).includes("piernas") && fu.includes("bisagra"), "con una pierna: " + fu);
   /* la bandera humana entrena abdomen: el día no suma abdomen; sin abdomen en las habilidades, sí */
   ok(!deMolde(armarDia(["bandera"], {equipo: ["poste"]}).bloques, "abdomen").length, "con bandera, abdomen de más");
   ok(deMolde(p.bloques, "abdomen").length === 1, "sin abdomen");
@@ -1626,20 +1665,21 @@ prueba("dia-equilibrio", () => {
   /* con bici y sin meta de rango o motor, el cierre es de 5 min de bici y el abdomen queda */
   const bc = armarDia(["front-lever", "planche"], {equipo: ["barra", "paralelas", "bici"]}), ci = deMolde(bc.bloques, "cierre")[0];
   ok(ci && ci.tramos?.[0]?.ejercicio === "bici" && ci.tramos[0].seg === 300 && deMolde(bc.bloques, "abdomen").length === 1 && bc.minutos <= 60, "bici de 5 min con abdomen: " + bc.bloques.map(b => b.molde) + " · " + bc.minutos + " min");
-  /* empate en series: el que menos hiciste esta semana */
-  const tiro = {id: "t", fecha: "2026-10-18", bloques: [{familia: "fu", series: Array(6).fill({ejercicio: "dominada", tipo: "repeticiones", valor: 6})}]};
+  /* dentro de los principales, primero el que hace más que no tocás */
+  const tiro = {id: "t", fecha: "2026-10-18", bloques: [{familia: "fu", series: Array(6).fill({ejercicio: "dominada", escalera: "tirar", tipo: "repeticiones", valor: 6})}]};
   const v = armarDia([], {equipo: ["barra"], ss: [tiro]});
-  ok(pats(deMolde(v.bloques, "fuerza")[0])[0] === "empujar", "después de tirar esta semana, el primer par empuja");
+  ok(!pats(deMolde(v.bloques, "fuerza")[0]).includes("tirar"), "después de tirar, el primer par no tira: " + pats(deMolde(v.bloques, "fuerza")[0]));
 });
 prueba("dia-desde-tu-escalon", () => {
   /* tu nivel (PR3) dice dónde arrancás en cada escalera; lo que hiciste manda */
   /* (las flexiones y los hombros, hechos hace poco, dejan a los fondos como el empuje que más hace que no tocás) */
   const fondo = p => deMolde(p.bloques, "fuerza").flatMap(b => b.pasos).find(x => x.escalera === "fondos")?.ejercicio;
   const otros = [deDia("e", "2026-10-12", "empujar", "flexion", [6, 6, 6]), deDia("a", "2026-10-12", "arriba", "flexion-pike", [6, 6, 6])];
-  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], ss: otros})) === "flexion-cerrada", "sin nivel, el primer escalón");
-  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], nivelDesde: {fondos: "fondo"}, ss: otros})) === "fondo", "con nivel, desde el fondo");
+  const emp = {equipo: ["barra", "paralelas"], tipo: "empujar"};
+  ok(fondo(armarDia(["front-lever"], {...emp, ss: otros})) === "flexion-cerrada", "sin nivel, el primer escalón");
+  ok(fondo(armarDia(["front-lever"], {...emp, nivelDesde: {fondos: "fondo"}, ss: otros})) === "fondo", "con nivel, desde el fondo");
   const hist = deDia("h", "2026-10-10", "fondos", "fondo-banco", [8, 8, 8], {rango: [5, 8]});
-  ok(fondo(armarDia(["front-lever"], {equipo: ["barra", "paralelas"], nivelDesde: {fondos: "fondo"}, ss: [hist, ...otros]})) === "fondo-banco", "lo hecho manda sobre el nivel");
+  ok(fondo(armarDia(["front-lever"], {...emp, nivelDesde: {fondos: "fondo"}, ss: [hist, ...otros]})) === "fondo-banco", "lo hecho manda sobre el nivel");
   /* el camino también arranca en tu escalón: muscle-up desde la dominada es la estrella, no el camino */
   const mu = armarDia(["muscle-up"], {equipo: ["barra"], nivelDesde: {tirar: "dominada"}}), h = deMolde(mu.bloques, "habilidad")[0];
   ok(!h.camino && h.estrella === "muscle-up.dominadas-10", "desde la dominada, la estrella: " + JSON.stringify([h.ejercicio, h.camino]));
@@ -1695,11 +1735,11 @@ prueba("dia-equipo", () => {
   ok(ejsDia(p.bloques).every(e => !(ej[e]?.equipo || []).length), "un ejercicio pide equipo: " + ejsDia(p.bloques).filter(e => (ej[e]?.equipo || []).length));
   /* sin barra el tirón es el remo (en el poste, debajo de la mesa o con toalla) */
   ok(deMolde(p.bloques, "fuerza").some(b => b.pasos.some(x => x.escalera === "remo")), "sin barra no tira");
-  /* sin barra, el segundo tirón no tiene escalera: ese lugar es para empujar, y los dos pares siguen de a dos */
-  ok(deMolde(p.bloques, "fuerza").every(b => new Set(b.pasos.map(x => x.ejercicio)).size === 2), "un par quedó solo: " + deMolde(p.bloques, "fuerza").map(b => b.pasos.map(x => x.ejercicio)));
+  /* sin barra, el segundo tirón no tiene escalera: los principales siguen de a dos */
+  ok(deMolde(p.bloques, "fuerza").slice(0, 2).every(b => new Set(b.pasos.map(x => x.ejercicio)).size === 2), "un par quedó solo: " + deMolde(p.bloques, "fuerza").map(b => b.pasos.map(x => x.ejercicio)));
   /* nada de tu rumbo se puede: el día se arma igual, con fuerza (D2) */
   const s = armarDia(["bandera"], {equipo: []});
-  ok(!deMolde(s.bloques, "habilidad").length && deMolde(s.bloques, "fuerza").length === 2 && s.pide.length === 1, "solo con fuerza: " + s.bloques.map(b => b.molde));
+  ok(!deMolde(s.bloques, "habilidad").length && deMolde(s.bloques, "fuerza").length >= 2 && s.pide.length === 1, "solo con fuerza: " + s.bloques.map(b => b.molde));
   /* con rango en tu rumbo, va en su parte, la flexibilidad (vuelta 36: ya no toma el lugar de la habilidad) */
   const e = armarDia(["bandera", "espagat"], {equipo: []}), fe = deMolde(e.bloques, "flexibilidad");
   ok(!deMolde(e.bloques, "habilidad").length && fe[0]?.constelaciones?.join() === "espagat", "espagat en la flexibilidad: " + JSON.stringify(e.bloques.map(b => [b.molde, b.constelaciones])));
@@ -1730,7 +1770,7 @@ prueba("dia-semana-de-prueba", () => {
   ok(pd.bloques[1].prueba && pd.semanaPrueba.pruebas >= 1, "después, las pruebas");
   const fl = pd.bloques.find(b => b.constelacion === "front-lever" && !b.prueba), fl0 = deMolde(base.bloques, "habilidad")[0];
   ok(fl && fl.descarga && fl.series === Math.ceil(fl0.series / 2), "la habilidad, a la mitad");
-  ok(deMolde(pd.bloques, "fuerza").every(b => b.pasos.every(x => x.descarga && x.n === 3) && b.pasos.length === 4), "la fuerza, a la mitad: " + deMolde(pd.bloques, "fuerza").map(b => b.pasos.length));
+  ok(deMolde(pd.bloques, "fuerza").every(b => b.pasos.every(x => x.descarga && x.n === 3) && b.pasos.length === 2 * new Set(b.pasos.map(x => x.ejercicio)).size), "la fuerza, a la mitad: " + deMolde(pd.bloques, "fuerza").map(b => b.pasos.length));
 });
 prueba("dia-sesiones-viejas", () => {
   /* una sesión del plan de antes (un bloque por constelación) cuenta para rotar */

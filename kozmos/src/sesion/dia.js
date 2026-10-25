@@ -9,6 +9,42 @@ K.dia = (() => {
   /* las escaleras de fuerza para cada patrón, en orden: la primera que tu equipo permite y que el día no usó */
   const ESCALERAS = {tirar: ["remo", "tirar"], empujar: ["empujar", "arriba", "fondos"], piernas: ["piernas"], bisagra: ["isquios"]};
   const ABDOMEN = ["lsit", "dragon"];
+
+  /* ===== Tu semana: el tipo de cada día de fuerza (docs/kozmos-motor.md) =====
+     Cada movimiento: sus escaleras en orden (la primera que tu equipo permite), su escalón en el orden del día (1 principales,
+     de varias articulaciones; 2 secundarios; 3 accesorios, de una articulación; 4 abdomen, al final) y de qué lado trabaja,
+     para armar los pares. Bíceps y tríceps entran cuando existan sus escaleras */
+  const MOV = {
+    tirar: {esc: ["tirar", "remo"], t: 1, patron: "tirar"}, empujar: {esc: ["empujar", "fondos"], t: 1, patron: "empujar"},
+    piernas: {esc: ["piernas"], t: 1, patron: "piernas"}, bisagra: {esc: ["isquios"], t: 1, patron: "bisagra"},
+    remo: {esc: ["remo", "tirar"], t: 2, patron: "tirar"}, hombros: {esc: ["arriba", "empujar"], t: 2, patron: "empujar"}, fondos: {esc: ["fondos", "empujar"], t: 2, patron: "empujar"},
+    biceps: {esc: ["biceps"], t: 3, patron: "tirar"}, triceps: {esc: ["triceps", "fondos"], t: 3, patron: "empujar"},
+    abdomen: {t: 4, patron: "abdomen"}, abdomen2: {t: 4, patron: "abdomen"}};
+  const LADO = {tirar: "tira", remo: "tira", biceps: "tira", empujar: "empuja", fondos: "empuja", hombros: "empuja", triceps: "empuja", piernas: "piernas", bisagra: "piernas", abdomen: "abdomen", abdomen2: "abdomen"};
+  /* los tipos de día: sus movimientos (en el orden en que se turnan dentro de cada escalón) y qué habilidades van ese día (en cuerpo entero, todas) */
+  const TIPOS = Object.fromEntries(Object.entries({
+    entero: {nombre: "Cuerpo entero", mov: ["tirar", "piernas", "empujar", "bisagra", "abdomen", "remo", "hombros"], hab: null},
+    arriba: {nombre: "Arriba", mov: ["tirar", "empujar", "remo", "hombros", "biceps", "triceps"], hab: ["tirar", "empujar"]},
+    abajo: {nombre: "Abajo", mov: ["piernas", "bisagra", "abdomen", "abdomen2"], hab: ["piernas", "bisagra", "abdomen"]},
+    empujar: {nombre: "Empujar", mov: ["empujar", "hombros", "fondos", "triceps"], hab: ["empujar"]},
+    tirar: {nombre: "Tirar", mov: ["tirar", "remo", "biceps", "abdomen"], hab: ["tirar"]},
+    piernas: {nombre: "Piernas", mov: ["piernas", "bisagra", "abdomen", "abdomen2"], hab: ["piernas", "bisagra", "abdomen"]},
+    pb: {nombre: "Pecho y bíceps", mov: ["empujar", "fondos", "hombros", "biceps"], hab: ["empujar"]},
+    et: {nombre: "Espalda y tríceps", mov: ["tirar", "remo", "triceps"], hab: ["tirar"]},
+    pa: {nombre: "Piernas y abdomen", mov: ["piernas", "bisagra", "abdomen", "abdomen2"], hab: ["piernas", "bisagra", "abdomen"]}}).map(([id, t]) => [id, {id, ...t}]));
+  /* lo que entrena cada meta cuando su bloque de hoy no lo dice (un camino de movilidad, por ejemplo): para elegir su día */
+  const MOV_PATRONES = new Set(["tirar", "empujar", "piernas", "bisagra", "abdomen"]);
+  const META_PATRON = {planche: "empujar", "un-brazo": "empujar", "parada-de-manos": "empujar", draco: "abdomen", "una-pierna": "piernas", "front-lever": "tirar", "muscle-up": "tirar", bandera: "abdomen", lastre: "tirar"};
+  const CICLO = {entero: ["entero"], aa: ["arriba", "abajo"], etp: ["empujar", "tirar", "piernas"], mus: ["pb", "et", "pa"]};
+  const SEMANAS = ["auto", "entero", "aa", "etp", "mus"];
+  /* «Que Kozmos elija»: con tres días o menos, cuerpo entero; con cuatro, arriba y abajo; con cinco o seis, empujar, tirar y piernas */
+  const semanaDe = (semana, n) => CICLO[semana] ? semana : n <= 3 ? "entero" : n === 4 ? "aa" : "etp";
+  /* el tipo de hoy: el que sigue a los días con fuerza que ya hiciste (una sesión cuenta si tuvo fuerza o habilidad) */
+  const conFuerza = s => (s.bloques || []).some(b => b.familia === "fu" && b.molde !== "entrada" && b.molde !== "cierre");
+  function tipoDelDia(semana, n, sesiones = []){
+    const c = CICLO[semanaDe(semana, n)];
+    return c[sesiones.filter(conFuerza).length % c.length];
+  }
   /* el cierre sin rango ni motor en tu rumbo: tres posturas de 40 s, según lo que entrenó el día */
   const POSTURA = {tirar: "postura-nino", empujar: "codos-atras", piernas: "sentadilla-profunda", bisagra: "isquios-sentado", abdomen: "respiracion-90-90"};
   const POSTURAS = ["mariposa-acostado", "tocar-los-pies", "postura-nino", "isquios-sentado"];
@@ -221,7 +257,7 @@ K.dia = (() => {
   /* armar(cielo, rumbo, sesiones, hoy, ctx) → {bloques, minutos, volviste, ventana, rotacion, pide, proxima, partes, molde: true}
      ctx: {ej, equipo, marcas, nivelDesde (el escalón de arranque de cada escalera), dadas (estrellas que tu nivel da por hechas),
      descarga (la semana de prueba: las escaleras a la mitad), minutos, enfoque (lo que entrenás, en orden), formas (cómo te gusta)} */
-  function armar(cielo, rumbo = [], sesiones = [], hoy, {ej = {}, equipo = null, marcas = [], nivelDesde, dadas, descarga = false, minutos = null, enfoque = null, formas = []} = {}){
+  function armar(cielo, rumbo = [], sesiones = [], hoy, {ej = {}, equipo = null, marcas = [], nivelDesde, dadas, descarga = false, minutos = null, enfoque = null, formas = [], semana = "auto", dias = null, tipo: tipoPedido = null} = {}){
     const por = id => cielo.constelaciones.find(c => c.id === id);
     const delRumbo = (rumbo || []).map(por).filter(Boolean).map(c => conDadas(c, dadas));
     /* lo que pide equipo que no marcaste queda afuera, y se dice */
@@ -241,13 +277,17 @@ K.dia = (() => {
 
     /* ===== la fuerza: habilidad (dos metas de tu rumbo, rotando), fuerza de a dos y abdomen ===== */
     const orden = rotar(de("fu"), sesiones, hoy, {ventana: [...abiertas]});
-    const hab = [], fuerza = [], pares = [];
-    let abdomen = null, conSeries = b => b;
+    const hab = [], fuerza = [];
+    let conSeries = b => b;
+    /* el tipo de día: el que sigue en el ciclo de tu semana (los días con fuerza que ya hiciste lo hacen avanzar) */
+    const T = TIPOS[tipoPedido] || TIPOS[tipoDelDia(semana, diasSemana({dias: dias || []}, sesiones, hoy), sesiones)], tipo = T.id;
     if (van.includes("fu")){
       /* 1 · habilidad: dos metas distintas en el orden de la rotación. Dos metas con el mismo ejercicio (o la misma escalera)
          van en un solo bloque «para» las dos. Si la segunda entrena lo mismo que la primera y la que sigue no, va la que sigue. */
-      const cand = orden.map(c => ({c, b: habilidad(c, ctx)})).filter(x => x.b);
+      /* solo las metas que entrenan lo de este tipo de día (en cuerpo entero, todas) */
       const principal = b => patronesDe(b, ej)[0];
+      const patHab = x => { const p = principal(x.b); return MOV_PATRONES.has(p) ? p : META_PATRON[x.c.id]; };
+      const cand = orden.map(c => ({c, b: habilidad(c, ctx)})).filter(x => x.b && (!T.hab || !patHab(x) || T.hab.includes(patHab(x))));
       /* el bloque de hoy que ya hace lo mismo (mismo ejercicio o misma escalera); una prueba no se junta */
       const destino = b => hab.find(h => !h.prueba && !b.prueba && (ejerciciosDe(h).some(e => ejerciciosDe(b).includes(e)) || escaleraDe(h).some(e => escaleraDe(b).includes(e))));
       const libre = x => !x.usada && !destino(x.b) && !choca(x.b);
@@ -265,59 +305,51 @@ K.dia = (() => {
         if (elegido !== x) k--; /* la salteada se vuelve a mirar: si hace lo mismo que la elegida, va «para» las dos */
       }
 
-      /* 2 · fuerza de a dos: lo que le falta al día. Cada par lleva un tirón o un empuje (el que menos series tiene) y
-         piernas o bisagra; si una habilidad ya entrena piernas o bisagra, ese lugar es para el tirón o el empuje que más falta */
-      const sets = {tirar: 0, empujar: 0, piernas: 0, bisagra: 0, abdomen: 0};
-      for (const b of hab) for (const p of patronesDe(b, ej)) if (p in sets) sets[p] += b.series || 1;
-      const semana = {tirar: 0, empujar: 0, piernas: 0, bisagra: 0};
-      for (const s of sesiones) if (d(hoy) - d(s.fecha) < 7 && d(hoy) >= d(s.fecha)) for (const b of s.bloques || []) for (const x of b.series || [])
-        for (const p of K.caminos.patronDe(x.ejercicio, ej)) if (p in semana) semana[p]++;
+      /* 2 · los movimientos del día, por orden: principales, secundarios, accesorios y abdomen (NIVEL_MOV). Dentro de cada escalón
+         del orden se turnan (va primero el que hace más que no tocás) y lo que ya entrena una habilidad va al final de su escalón.
+         Si la habilidad ya entrena el abdomen, no se suma otro. Cada movimiento, la primera escalera de MOV que tu equipo permite */
       const cubre = new Set(hab.flatMap(b => patronesDe(b, ej)));
-      /* de las escaleras de un movimiento, la que hace más que no tocás (empatadas, en su orden): así se turnan el pecho, los hombros
-         y los fondos, y el remo con la dominada */
       const ultima = id => { let f = ""; for (const s of sesiones) if (s.fecha > f && (s.bloques || []).some(b => (b.series || []).some(x => x.escalera === id))) f = s.fecha; return f; };
-      const elegir = pat => (ESCALERAS[pat] || []).filter(id => !usadasEsc.has(id) && sePuedeEscalera(id, ej, equipo) && escalones[id] && !usadosEj.has(escalones[id].paso.ejercicio))
-        .map((id, i) => [id, ultima(id), i]).sort((a, b) => a[1].localeCompare(b[1]) || a[2] - b[2])[0]?.[0] || null;
-      /* el de arriba que más falta: menos series hoy, después menos esta semana; empatados, el que todavía tiene escalera libre */
-      const falta = () => ["tirar", "empujar"].sort((a, b) => sets[a] - sets[b] || semana[a] - semana[b] || !elegir(a) - !elegir(b))[0];
-      const lugares = [];
-      /* el primer par lleva lo de abajo que menos hiciste esta semana: en un día corto, que queda con un par, piernas y bisagra se turnan */
-      for (const pierna of ["piernas", "bisagra"].sort((a, b) => semana[a] - semana[b])){
-        const arriba = falta(); lugares.push(arriba); sets[arriba] += SERIES;
-        const abajo = cubre.has(pierna) ? falta() : pierna; lugares.push(abajo); sets[abajo] += SERIES;
+      const libreEsc = id => !usadasEsc.has(id) && sePuedeEscalera(id, ej, equipo) && escalones[id] && !usadosEj.has(escalones[id].paso.ejercicio);
+      /* abdomen y abdomen2: las dos escaleras de abdomen, primero la que hace más que no tocás */
+      const escDe = mv => mv.startsWith("abdomen") ? [...ABDOMEN].sort((a, b) => ultima(a).localeCompare(ultima(b))).slice(mv === "abdomen2" ? 1 : 0) : MOV[mv].esc;
+      const elegirEsc = mv => escDe(mv).find(libreEsc) || null;
+      const lista = [];
+      for (const t of [1, 2, 3, 4]){
+        const xs = T.mov.filter(mv => MOV[mv].t === t && !(t === 4 && cubre.has("abdomen"))).map((mv, i) => ({mv, i, esc: elegirEsc(mv)})).filter(x => x.esc);
+        xs.sort((a, b) => cubre.has(MOV[a.mv].patron) - cubre.has(MOV[b.mv].patron) || ultima(a.esc).localeCompare(ultima(b.esc)) || a.i - b.i);
+        for (const x of xs){ const id = elegirEsc(x.mv); if (!id) continue; usadasEsc.add(id); usadosEj.add(escalones[id].paso.ejercicio); lista.push({mv: x.mv, t, esc: id}); }
       }
-      for (let k = 0; k < lugares.length; k += 2){
-        const ids = [];
-        /* si lo de arriba que tocaba no tiene escalera libre con tu equipo, el otro de arriba */
-        for (const pat of lugares.slice(k, k + 2)){ const otro = {tirar: "empujar", empujar: "tirar"}[pat], id = elegir(pat) || (otro && elegir(otro)); if (id){ ids.push(id); usadasEsc.add(id); usadosEj.add(escalones[id].paso.ejercicio); } }
-        if (!ids.length) continue;
-        const grupo = ids.length > 1 ? "AB"[k / 2] : null;
-        const cbs = ids.map((id, i) => ({escalera: id, series: SERIES, rango: RANGO, desde: nivelDesde?.[id], ...(grupo ? {grupo} : {}), descanso: grupo && i === 0 ? 0 : ENTRE}));
-        const b = K.rutina.armarBloques("fu", cbs, {ej, equipo, sesiones, marcas, descarga: descarga || volviste})[0];
-        fuerza.push({...b, molde: "fuerza"}); pares.push(cbs);
+      /* de a dos, solo los que no se pisan: lados distintos y del mismo escalón del orden o del siguiente. El abdomen va solo */
+      const grupos = [];
+      for (let k = 0, usado = new Set(); k < lista.length; k++){
+        if (usado.has(k)) continue; usado.add(k);
+        const a = lista[k], j = a.t < 4 ? lista.findIndex((b, j) => j > k && !usado.has(j) && b.t < 4 && LADO[b.mv] !== LADO[a.mv] && Math.abs(b.t - a.t) <= 1) : -1;
+        if (j >= 0){ usado.add(j); grupos.push([a, lista[j]]); } else grupos.push([a]);
       }
-      /* la fuerza de a dos con más series (para un día más largo): el mismo par, armado de nuevo */
-      conSeries = (b, n) => { const i = fuerza.indexOf(b); return i < 0 ? b : {...K.rutina.armarBloques("fu", pares[i].map(x => ({...x, series: n})), {ej, equipo, sesiones, marcas, descarga: descarga || volviste})[0], molde: "fuerza"}; };
-
-      /* 3 · abdomen: si ninguna habilidad lo entrena (la bandera acostada y la bandera humana ya lo hacen), la escalera que hace más que no tocás */
-      if (!cubre.has("abdomen")){
-        const ult = id => { let f = ""; for (const s of sesiones) if ((s.bloques || []).some(b => (b.series || []).some(x => x.escalera === id)) && s.fecha > f) f = s.fecha; return f; };
-        const id = ABDOMEN.filter(x => !usadasEsc.has(x) && escalones[x] && !usadosEj.has(escalones[x].paso.ejercicio)).sort((a, b) => ult(a).localeCompare(ult(b)))[0];
-        if (id){ abdomen = {...deEscalera("fu", id, {series: escalones[id].paso.tipo === "segundos" ? 2 : SERIES, descanso: 60, ctx: {...ctx, descarga: descarga || volviste}}), molde: "abdomen"}; usar(abdomen); }
-      }
+      const armarG = (g, k, n) => {
+        if (g[0].t === 4){ const id = g[0].esc; return {...deEscalera("fu", id, {series: escalones[id].paso.tipo === "segundos" ? 2 : n, descanso: 60, ctx: {...ctx, descarga: descarga || volviste}}), molde: "abdomen"}; }
+        const grupo = g.length > 1 ? "ABCDEF"[k] : null;
+        const cbs = g.map((x, i) => ({escalera: x.esc, series: n, rango: RANGO, desde: nivelDesde?.[x.esc], ...(grupo ? {grupo} : {}), descanso: grupo && i === 0 ? 0 : ENTRE}));
+        return {...K.rutina.armarBloques("fu", cbs, {ej, equipo, sesiones, marcas, descarga: descarga || volviste})[0], molde: "fuerza"};
+      };
+      grupos.forEach((g, k) => fuerza.push(armarG(g, k, SERIES)));
+      conSeries = (b, n) => { const k = fuerza.indexOf(b); return k < 0 || b.molde === "abdomen" ? b : armarG(grupos[k], k, n); };
     }
-    /* la fuerza a su tiempo: de todas las formas de armarla (una o dos habilidades, uno, dos o ningún par de fuerza, con o sin
-       abdomen, la fuerza con 2, 3 o 4 series), la que entra con habilidad y al menos un par; de esas, la más larga.
+    /* la fuerza a su tiempo: de todas las formas de armarla (una o dos habilidades; los movimientos en orden, así lo primero
+       que se cae es el abdomen y después los accesorios; 3, 2 o 4 series), la que entra. Primero, que haya
+       habilidad; después, al menos un movimiento; después, tres series o más; después, más movimientos; y lo más largo.
        Si nada entra, la habilidad sola con menos series */
     function parteFu(seg){
-      const H = hab.length > 1 ? [hab, hab.slice(0, 1)] : [hab], A = abdomen ? [[abdomen], []] : [[]];
-      const P = [...[3, 2, ...(minutos ? [4] : [])].flatMap(n => [fuerza, fuerza.slice(0, 1)].filter(x => x.length).map(x => n === 3 ? x : x.map(b => conSeries(b, n)))), []];
+      const H = hab.length > 1 ? [hab, hab.slice(0, 1)] : [hab];
+      /* en orden: entra cada uno que quepa en lo que queda; lo que no entra se saltea (nunca va algo de más abajo en su lugar
+         si cabía lo de más arriba) */
+      const enOrden = (h, n) => { const p = []; for (const b of fuerza){ const x = n === 3 ? b : conSeries(b, n); if (segDe([...h, ...p, x]) <= seg) p.push(x); } return p; };
       let mejor = null;
-      for (const h of H) for (const p of P) for (const a of A){
-        const bs = [...h, ...p, ...a], t = segDe(bs);
+      for (const h of H) for (const {p, n} of [3, 2, ...(minutos ? [4] : [])].map(n => ({p: enOrden(h, n), n})).concat([{p: [], n: 3}])){
+        const bs = [...h, ...p], t = segDe(bs);
         if (t > seg) continue;
-        /* primero, que haya habilidad; después, que haya un par de fuerza; después, lo más largo */
-        const pref = (h.length > 0) * 1e6 + (p.length > 0) * 1e5 + t + h.length * 20 + p.length * 10 + a.length;
+        const pref = (h.length > 0) * 1e8 + (p.length > 0) * 1e7 + (n >= 3) * 1e6 + h.length * 1e5 + p.length * 1e4 + t;
         if (!mejor || pref > mejor.pref) mejor = {bs, t, pref};
       }
       if (mejor && (mejor.bs.length || !hab.length)) return mejor.bs;
@@ -413,7 +445,7 @@ K.dia = (() => {
     /* «La próxima»: las dos que siguen en la rotación (sus ids; la pantalla las dibuja con el punto de su familia) */
     const proxima = despues.map(c => c.id);
     const ventanaHoy = bloques.filter(b => b.prueba).flatMap(b => b.constelaciones || [b.constelacion]);
-    return {bloques, minutos: minutosDe(bloques), volviste, ventana: ventanaHoy, rotacion, pide, proxima, enfoque: F, partes: van, molde: true};
+    return {bloques, minutos: minutosDe(bloques), volviste, ventana: ventanaHoy, rotacion, pide, proxima, enfoque: F, partes: van, dia: van.includes("fu") ? tipo : null, molde: true};
   }
 
   /* la semana de prueba sobre el día (K.plan.deSemanaDePrueba, igual que con rutina) con la entrada en calor siempre adelante */
@@ -453,5 +485,5 @@ K.dia = (() => {
     return {...p, bloques, minutos: minutosDe(bloques), molde: true};
   }
 
-  return {armar, deRutina, suave, reparto, enfoqueDe, hoyVan, posturas, REPARTO, MINUTOS, MOTORES, motor, rotar, frecuencia, diasSemana, ventana, deSemanaDePrueba, conDadas, tocadas, minutosDe, patronesDe, ejerciciosDe, escaleraDe, ESCALERAS, POSTURA};
+  return {armar, deRutina, TIPOS, CICLO, SEMANAS, MOV, semanaDe, tipoDelDia, suave, reparto, enfoqueDe, hoyVan, posturas, REPARTO, MINUTOS, MOTORES, motor, rotar, frecuencia, diasSemana, ventana, deSemanaDePrueba, conDadas, tocadas, minutosDe, patronesDe, ejerciciosDe, escaleraDe, ESCALERAS, POSTURA};
 })();

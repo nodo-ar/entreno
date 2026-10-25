@@ -79,7 +79,7 @@ K.hoyPlan = () => {
     /* tu nivel: el escalón de arranque de cada escalera y lo que da por hecho (el cosmos ya lo trae; K.dia.armar lo vuelve a mirar) */
     const dadas = K.nivel.activas(cielo, K.dadasDeTuNivel(), {fecha: K.diario.perfil.nivel?.fecha});
     const dia = K.dia.armar(cielo, K.rumbo(), ses, hoy, {ej: K.EJ, equipo: ctx.equipo, marcas: ctx.marcas, nivelDesde: K.desdeTuNivel(), dadas, descarga: !!(sp && sp.toca), minutos: K.diario.perfil.minutos || null,
-      enfoque: K.diario.perfil.enfoque || null, formas: K.diario.perfil.formas || []});
+      enfoque: K.diario.perfil.enfoque || null, formas: K.diario.perfil.formas || [], semana: K.diario.perfil.semana || "auto", dias: K.diario.perfil.dias || null});
     return sp && sp.toca && dia.bloques.length ? K.dia.deSemanaDePrueba(dia, sp, {...pc, cons: K.rumbo(), ejs: []}) : dia;
   }
   /* boceto: la rutina en el mismo molde que Hoy, con sus escaleras desde tu nivel */
@@ -238,7 +238,9 @@ K.P.hoyInicio = () => {
   /* lo que pide equipo: cada una en su renglón */
   const pide = plan.pide && plan.pide.length ? `<button type="button" class="ln hoy-pide small" data-ir="#/vos/equipo"><span class="hoy-pide-tx">${plan.pide.map(x => `<span>${K.esc(x.nombre)} pide ${K.esc(K.pide(x.pide))}</span>`).join(" ")}</span><span class="hoy-pide-ir">Tu equipo${K.ic("chev", "chev")}</span></button>` : "";
   /* arriba, lo que toca y cuánto dura, con su reloj */
-  const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">Hoy toca</span><span class="num lb">${K.dur(`${plan.minutos} min`)}</span></div>${pruebaLn(plan)}${ventana}${filas}
+  /* el tipo de día de fuerza (cuerpo entero, arriba, empujar…) va al lado de «Hoy toca» */
+  const tipoDia = plan.dia && K.dia.TIPOS[plan.dia] ? K.dia.TIPOS[plan.dia].nombre : "";
+  const toca = `<section class="cd hoy-toca"><div class="ln"><span class="lb">${tipoDia ? K.jer("Hoy toca", K.esc(tipoDia)) : "Hoy toca"}</span><span class="num lb">${K.dur(`${plan.minutos} min`)}</span></div>${pruebaLn(plan)}${ventana}${filas}
     ${plan.volviste ? `<p class="mute small">Tu cosmos te esperó. Hoy arrancás más suave.</p>` : ""}${pie}${pide}</section>`;
   return enc + `<div class="hoy"><div class="hoy-a">${hecho}${K.hoyOrigen()}${proxima}</div><div class="hoy-b">${toca}${sin}${ctaHoy()}</div></div>`;
 };
