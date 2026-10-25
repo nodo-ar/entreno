@@ -9,7 +9,7 @@ Fer aprobó el motor por días («Dale»), que salió como kozmos-49. Esta vuelt
 - Con peso, en el primer escalón de cada una: barra con discos o polea (mandan los kilos), mancuernas, kettlebell o banda. Es la misma regla que el resto de las escaleras.
 - 16 ejercicios nuevos con su maniquí (`src/poses/brazos.js`). En los de tu cuerpo, la mano no se mueve del marco, la barra o la mesa y los pies no se mueven del piso: el ángulo del tronco y el del codo se calcularon para que así sea en cada cuadro.
 - «Dominada supina» pasa a llamarse «Dominada con las palmas hacia vos» (nombres claros). El id no cambia.
-- Tu nivel de tirar y de empujar dice dónde arrancan los brazos, un escalón conservador.
+- Tu nivel de tirar y de empujar dice dónde arrancan los brazos, un escalón más abajo que el resto: con tirar Intermedio, el bíceps arranca en el curl (con kettlebell si la tenés) y no en el remo con palmas hacia vos, que se juntaba con el remo invertido el mismo día.
 - Arreglo del orden: de un par que no entra en tus minutos, entra el primero solo. Antes se salteaba el par entero y, en media hora de arriba sin equipo, quedaba un tríceps donde cabía el remo.
 
 ## Evidencia
@@ -21,6 +21,7 @@ Fer aprobó el motor por días («Dale»), que salió como kozmos-49. Esta vuelt
 
 1. OK al tablero para publicar.
 2. Tu nivel no pregunta por los brazos: los deduce de tirar y empujar (recomendado, la bienvenida queda igual de corta).
+3. Con 45 minutos los brazos no entran en el día de arriba de Fer (son lo primero que se cae); desde unos 70, sí. Recomendado: dejarlo así, es la regla aprobada.
 
 ## Lo que queda
 
