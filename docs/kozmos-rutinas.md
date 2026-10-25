@@ -131,7 +131,7 @@ Cinco movimientos, cada uno un menú con cuatro niveles y «No sé» al final. C
 | Movimiento | Inicial | Intermedio | Avanzado | Experto |
 | --- | --- | --- | --- | --- |
 | empujar | empujar: flexión inclinada; fondos: flexión cerrada; tríceps: en la mesa | flexión; fondo en banco; tríceps en la mesa | flexión declinada; fondo; tríceps en la barra baja | flexión arquera; fondo; tríceps en el piso |
-| tirar | tirar: dominada negativa; remo: agarrado del marco de la puerta; bíceps: curl en el marco | dominada; remo invertido; remo con palmas hacia vos | dominada explosiva; remo invertido; dominada con palmas hacia vos | dominada arquera; remo invertido a un brazo; curl con tu peso en la barra baja |
+| tirar | tirar: dominada negativa; remo: agarrado del marco de la puerta; bíceps: curl en el marco | dominada; remo invertido; curl en el marco | dominada explosiva; remo invertido; remo con palmas hacia vos | dominada arquera; remo invertido a un brazo; dominada con palmas hacia vos |
 | piernas | sentadilla | sentadilla búlgara | hasta una silla | pistol |
 | cadera (isquios) | puente de glúteo | peso muerto a una pierna | curl femoral deslizante | nórdico negativo |
 | abdomen (L-sit) | plancha | hollow | l-sit | v-sit |
@@ -296,7 +296,7 @@ Una sesión de rutina guarda `rutina: {id, sesion}`. Cada bloque del día del mo
   - **Bíceps** (`biceps`, patrón tirar): curl agarrado del marco de la puerta → remo invertido con las palmas hacia vos → dominada con las palmas hacia vos → curl con tu peso en la barra baja. Con peso, en el primer escalón: curl con barra (discos) o en polea (máquinas), que mandan; con mancuernas, con kettlebell o con banda.
   - **Tríceps** (`triceps`, patrón empujar): extensión en la mesa → en la barra baja → en el piso. Con peso: press francés con barra o tríceps en polea, que mandan; extensión con mancuerna o con kettlebell, o tríceps con banda.
 - 16 ejercicios nuevos, cada uno con su maniquí (`src/poses/brazos.js`). En los de tu cuerpo, la mano no se mueve del marco, la barra o la mesa y los pies no se mueven del piso: el tronco y el codo salen de esas dos cosas.
-- Tu nivel de tirar y de empujar dice dónde arrancan (tabla de arriba). Tu nivel no pregunta por los brazos.
+- Tu nivel de tirar y de empujar dice dónde arrancan (tabla de arriba), un escalón más abajo que el resto: el remo con palmas hacia vos no se junta con el remo invertido el mismo día. Tu nivel no pregunta por los brazos.
 - El orden del día ya los tenía como accesorios (después de los secundarios y antes del abdomen). Arreglo: de un par que no entra en tus minutos entra el primero solo; antes se salteaba el par entero y podía quedar un tríceps donde cabía el tirar.
 
 ## Cómo entrenás (vuelta 39)

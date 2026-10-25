@@ -20,9 +20,9 @@ K.nivel = (() => {
       {texto: "Flexión cargando un brazo", ej: "flexion-arquera", desde: {empujar: "flexion-arquera", fondos: "fondo", arriba: "pike-elevado", triceps: "extension-triceps-piso"}, dadas: ["un-brazo.flexiones-40"]}]},
     {id: "tirar", nombre: "Tirar", pide: "barra", pregunta: "¿Cuál te sale, 5 seguidas?", niveles: [
       {texto: "Colgarme de la barra", ej: "colgado-activo", desde: {tirar: "dominada-negativa", remo: "remo-poste", biceps: "curl-puerta"}},
-      {texto: "Dominada", ej: "dominada", desde: {tirar: "dominada", remo: "remo-invertido", biceps: "remo-supino"}, dadas: ["front-lever.colgado-60s"]},
-      {texto: "Dominada rápida, pecho a la barra", ej: "dominada-explosiva", desde: {tirar: "dominada-explosiva", remo: "remo-invertido", biceps: "dominada-supina"}, dadas: ["muscle-up.dominadas-10", "front-lever.bolita-10s"]},
-      {texto: "Dominada cargando un brazo", ej: "dominada-arquera", desde: {tirar: "dominada-arquera", remo: "remo-un-brazo", biceps: "curl-barra-baja"}, dadas: ["un-brazo.dominadas-15"]}]},
+      {texto: "Dominada", ej: "dominada", desde: {tirar: "dominada", remo: "remo-invertido", biceps: "curl-puerta"}, dadas: ["front-lever.colgado-60s"]},
+      {texto: "Dominada rápida, pecho a la barra", ej: "dominada-explosiva", desde: {tirar: "dominada-explosiva", remo: "remo-invertido", biceps: "remo-supino"}, dadas: ["muscle-up.dominadas-10", "front-lever.bolita-10s"]},
+      {texto: "Dominada cargando un brazo", ej: "dominada-arquera", desde: {tirar: "dominada-arquera", remo: "remo-un-brazo", biceps: "dominada-supina"}, dadas: ["un-brazo.dominadas-15"]}]},
     {id: "piernas", nombre: "Piernas", pregunta: "¿Cuál te sale, 8 por pierna?", niveles: [
       {texto: "Sentadilla", ej: "sentadilla", desde: {piernas: "sentadilla"}},
       {texto: "Un pie atrás, en alto", ej: "sentadilla-bulgara", desde: {piernas: "sentadilla-bulgara"}},

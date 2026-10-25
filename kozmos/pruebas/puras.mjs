@@ -1843,7 +1843,7 @@ prueba("nivel-desde", () => {
   ok(JSON.stringify(d({tirar: "0"})) === '{"tirar":"dominada-negativa","remo":"remo-poste","biceps":"curl-puerta"}', "tirar inicial: " + JSON.stringify(d({tirar: "0"})));
   ok(d({tirar: "1"}).tirar === "dominada" && d({tirar: "1"}).remo === "remo-invertido" && d({tirar: "2"}).tirar === "dominada-explosiva" && d({tirar: "3"}).tirar === "dominada-arquera" && d({tirar: "3"}).remo === "remo-un-brazo", "tirar");
   ok(JSON.stringify(d({empujar: "0"})) === '{"empujar":"flexion-inclinada","fondos":"flexion-cerrada","arriba":"flexion-pike","triceps":"extension-triceps-mesada"}' && d({empujar: "1"}).fondos === "fondo-banco" && d({empujar: "2"}).empujar === "flexion-declinada" && d({empujar: "3"}).empujar === "flexion-arquera", "empujar");
-  ok(d({tirar: "1"}).biceps === "remo-supino" && d({tirar: "3"}).biceps === "curl-barra-baja" && d({empujar: "2"}).triceps === "extension-triceps-barra" && d({empujar: "3"}).triceps === "extension-triceps-piso", "bíceps y tríceps");
+  ok(d({tirar: "1"}).biceps === "curl-puerta" && d({tirar: "2"}).biceps === "remo-supino" && d({tirar: "3"}).biceps === "dominada-supina" && d({empujar: "2"}).triceps === "extension-triceps-barra" && d({empujar: "3"}).triceps === "extension-triceps-piso", "bíceps y tríceps");
   ok(d({piernas: "1"}).piernas === "sentadilla-bulgara" && d({piernas: "3"}).piernas === "pistol" && d({cadera: "2"}).isquios === "curl-femoral-deslizante" && d({cadera: "3"}).isquios === "nordico-negativa", "piernas y atrás de las piernas");
   ok(d({abdomen: "0"}).lsit === "plancha" && d({abdomen: "2"}).lsit === "l-sit" && d({abdomen: "3"}).lsit === "v-sit", "abdomen");
   /* un movimiento no mueve las escaleras de otro: empujar ya no decide el abdomen */
