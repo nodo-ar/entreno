@@ -1,10 +1,12 @@
 # Estado · Nodo Entreno
 
-Última actualización: 2026-10-24 (cómo entrenás) · la escribe quien cierra cada sesión.
+Última actualización: 2026-10-24 (cómo entrenás en Vos) · la escribe quien cierra cada sesión.
 
 ## Kozmos (2026-10-20)
 
-- **Cómo entrenás** (2026-10-24): vuelta 39 (acta `docs/actas/039-kozmos-como-entrenas.md`). La rueda de «¿Cómo entrenás?» en la bienvenida; tu equipo sale de las formas elegidas, con «Sumar algo más». «Con accesorios» publicada como kozmos-46. **Esperando a Fer**: el OK al tablero y dos decisiones del acta.
+- **Cómo entrenás en Vos** (2026-10-24): vuelta 40 (acta `docs/actas/040-kozmos-como-entrenas-en-vos.md`). «Cómo entrenás» en Vos como menú; sumar una forma trae su equipo; el respaldo guarda qué y cómo entrenás (antes los perdía); Vos en horizontal sin nombres partidos. La rueda publicada como kozmos-47. **Esperando a Fer**: el OK al tablero. Después: pruebas en el teléfono (pitidos con la pantalla apagada, vibración, respaldo).
+
+- **Cómo entrenás** (2026-10-24): vuelta 39 (acta `docs/actas/039-kozmos-como-entrenas.md`). La rueda de «¿Cómo entrenás?» en la bienvenida; tu equipo sale de las formas elegidas, con «Sumar algo más». «Con accesorios» publicada como kozmos-46. Aprobada por Fer y publicada como kozmos-47.
 
 - **Con accesorios** (2026-10-24): vuelta 38 (acta `docs/actas/038-kozmos-con-accesorios.md`). Bandas y cajón en Tu equipo, 8 ejercicios dibujados (bandas, cajón y paralelas) como versiones de los escalones de siempre, motor «Cajón a intervalos», y la bienvenida que entra en teléfonos bajos. «Con equipo» publicada como kozmos-45. Aprobada por Fer y publicada como kozmos-46.
 

@@ -19,6 +19,7 @@ K.menu = {
     let x = der ? r.right - W : r.left, y = r.bottom + 8;
     x = Math.max(12, Math.min(x, vw - W - 12));
     if (y + H > vh - 12) y = Math.max(12, r.top - H - 8);
+    y = Math.min(y, Math.max(12, vh - H - 12)); /* si no entra ni arriba ni abajo, queda dentro de la pantalla y se desplaza adentro */
     m.style.left = x + "px"; m.style.top = y + "px";
     /* nace como un círculo desde el centro del botón */
     const ox = r.left + r.width / 2 - x, oy = r.top + r.height / 2 - y, R = Math.hypot(Math.max(ox, W - ox), Math.max(oy, H - oy));

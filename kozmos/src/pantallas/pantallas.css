@@ -22,3 +22,7 @@
   .ajr[data-sel] .tile{background:var(--s1)}
   .split>.abierto{padding-top:0}
 }
+/* Vos: el nombre de cada ajuste va en una línea; si no entra todo, lo elegido baja a una segunda línea */
+.vos-aj .ajr{grid-template-columns:32px auto minmax(0,1fr) 14px}
+.vos-aj .ajr>span:nth-child(2){white-space:nowrap}
+.vos-aj .ajr>em{min-width:0; text-align:right; text-wrap:balance}
