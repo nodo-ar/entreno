@@ -136,6 +136,45 @@
    ]
   },
   {
+   "id": "biceps",
+   "nombre": "Bíceps",
+   "familia": "fu",
+   "patron": "tirar",
+   "zonas": ["brazos"],
+   "apoyo": ["espalda"],
+   "texto": "Doblar el codo: del marco de la puerta a la barra baja, con tu peso.",
+   "pasos": [
+    {"ejercicio": "curl-puerta", "tipo": "repeticiones", "rango": [8, 12], "conPeso": [
+     {"ejercicio": "curl-barra", "rango": [8, 12], "carga": 2.5, "kgInicial": 15, "hastaKg": 60, "total": true, "manda": true},
+     {"ejercicio": "curl-polea", "rango": [8, 12], "carga": 2.5, "kgInicial": 10, "hastaKg": 50, "total": true, "manda": true},
+     {"ejercicio": "curl-mancuernas", "rango": [8, 12], "carga": 1, "kgInicial": 4, "hastaKg": 20},
+     {"ejercicio": "curl-kettlebell", "rango": [8, 12], "carga": 4, "kgInicial": 8, "hastaKg": 24, "total": true},
+     {"ejercicio": "curl-banda"}]},
+    {"ejercicio": "remo-supino", "tipo": "repeticiones", "rango": [8, 12]},
+    {"ejercicio": "dominada-supina", "tipo": "repeticiones"},
+    {"ejercicio": "curl-barra-baja", "tipo": "repeticiones", "rango": [3, 6]}
+   ]
+  },
+  {
+   "id": "triceps",
+   "nombre": "Tríceps",
+   "familia": "fu",
+   "patron": "empujar",
+   "zonas": ["brazos"],
+   "apoyo": ["pecho", "hombros"],
+   "texto": "Estirar el codo: de la mesa a la barra baja y al piso.",
+   "pasos": [
+    {"ejercicio": "extension-triceps-mesada", "tipo": "repeticiones", "rango": [8, 12], "conPeso": [
+     {"ejercicio": "press-frances", "rango": [8, 12], "carga": 2.5, "kgInicial": 15, "hastaKg": 50, "total": true, "manda": true},
+     {"ejercicio": "extension-polea", "rango": [8, 12], "carga": 2.5, "kgInicial": 10, "hastaKg": 50, "total": true, "manda": true},
+     {"ejercicio": "extension-mancuerna", "rango": [8, 12], "carga": 2, "kgInicial": 6, "hastaKg": 30},
+     {"ejercicio": "extension-kettlebell", "rango": [8, 12], "carga": 4, "kgInicial": 8, "hastaKg": 24, "total": true},
+     {"ejercicio": "extension-banda"}]},
+    {"ejercicio": "extension-triceps-barra", "tipo": "repeticiones", "rango": [6, 10]},
+    {"ejercicio": "extension-triceps-piso", "tipo": "repeticiones", "rango": [3, 6]}
+   ]
+  },
+  {
    "id": "lsit",
    "nombre": "L-sit",
    "familia": "fu",

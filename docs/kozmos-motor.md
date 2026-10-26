@@ -38,7 +38,7 @@ Las reglas que aprobó Fer el 25 de octubre de 2026 (simulador: https://claude.a
 
 - Dentro de cada escalón del orden se turnan: va primero el que hace más que no tocás. Lo que ya entrena una habilidad va al final de su escalón; si una habilidad ya entrena abdomen, no se suma otro.
 - De a dos, solo lo que no se pisa: lados distintos (tira, empuja, piernas) y del mismo escalón del orden o del siguiente. El abdomen va solo.
-- Si falta tiempo, se cae lo último del orden: primero el abdomen, después los accesorios. Se cortan movimientos antes que bajar a dos series; con tiempo de sobra, cuatro series.
+- Si falta tiempo, se cae lo último del orden: primero el abdomen, después los accesorios. De un par que no entra, entra el primero solo. Se cortan movimientos antes que bajar a dos series; con tiempo de sobra, cuatro series.
 - Por qué: lo que hacés primero progresa más en fuerza y empezar por lo grande deja mover más carga (ACSM 2009; Simão y otros 2012; Nunes y otros 2021). Para el tamaño del músculo, el orden casi no importa (Nunes 2021). Los pares que no se pisan mantienen la carga (Paz y otros 2017).
 
 ## Cuando el día mezcla cosas (construido en parte)
@@ -51,7 +51,7 @@ Las reglas que aprobó Fer el 25 de octubre de 2026 (simulador: https://claude.a
 
 Cada movimiento tiene una versión por estilo de tus formas: con tu cuerpo, kettlebell, mancuernas, barra y discos, máquinas, bandas. Dentro de una sesión se alternan entre movimientos y en la siguiente se cruzan; nunca el mismo ejercicio dos veces en un día. Con tu cuerpo, el escalón de tu nivel; con peso, los kilos de tu nivel. Cada versión progresa por su cuenta.
 
-Huecos que hay que llenar: kettlebell para tirar, empujar y abdomen; gimnasio para fondos y abdomen; las escaleras nuevas de bíceps y tríceps.
+Huecos que hay que llenar: kettlebell para tirar, empujar y abdomen; gimnasio para fondos y abdomen. Bíceps y tríceps ya tienen sus escaleras, con versiones con peso en el primer escalón (vuelta 42).
 
 ## La resistencia (pendiente)
 
@@ -72,8 +72,8 @@ La zona sale de lo que trabajaste ese día; sin fuerza, se turnan cadera y piern
 
 ## Lo que falta construir, en orden
 
-1. Motor por días y orden de la fuerza (este documento, construido).
-2. Escaleras de bíceps y tríceps, con sus dibujos.
+1. Motor por días y orden de la fuerza (construido, vuelta 41).
+2. Escaleras de bíceps y tríceps, con sus dibujos (construido, vuelta 42).
 3. Versiones por forma con su propia progresión, y las versiones con peso que faltan.
 4. Resistencia suave y fuerte, y flexibilidad por zonas.
 5. «¿Cómo repartís tu semana?» en la bienvenida y en Vos; aire y flexibilidad en Tu nivel.

@@ -595,7 +595,7 @@ prueba("respaldo-rutinas", () => {
 const ESTRELLA = new Map(CAT.constelaciones.flatMap(c => c.estrellas.map(e => [e.id, e])));
 prueba("catalogo-escaleras", () => {
   const ej = EJM(), ids = new Set(), fams = new Set(CAT.familias.map(f => f.id));
-  ok(ESC.escaleras.length >= 8 && ESC.escaleras.length <= 12, `esperaba de 8 a 12 escaleras, hay ${ESC.escaleras.length}`);
+  ok(ESC.escaleras.length >= 8 && ESC.escaleras.length <= 14, `esperaba de 8 a 14 escaleras, hay ${ESC.escaleras.length}`);
   /* qué mide cada ejercicio según las estrellas */
   const mide = new Map(CAT.constelaciones.flatMap(c => c.estrellas.map(e => [e.prueba.ejercicio, e.prueba.tipo])));
   for (const e of ESC.escaleras){
@@ -622,9 +622,9 @@ prueba("catalogo-escaleras", () => {
       ok(!p.rango || (p.rango[0] > 0 && p.rango[0] <= p.rango[1]), `${e.id}: ${p.ejercicio} con rango ${p.rango}`);
     }
   }
-  /* toda escalera la usa alguna rutina */
-  const usadas = new Set(RUTINAS.flatMap(([, r]) => r.sesiones.flatMap(s => s.bloques.flatMap(b => alts(b.escalera)))));
-  ok(ESC.escaleras.every(e => usadas.has(e.id)), "escaleras que ninguna rutina usa: " + ESC.escaleras.filter(e => !usadas.has(e.id)).map(e => e.id));
+  /* toda escalera la usa alguna rutina o el día del motor (bíceps y tríceps, los días de arriba, empujar y tirar) */
+  const usadas = new Set([...RUTINAS.flatMap(([, r]) => r.sesiones.flatMap(s => s.bloques.flatMap(b => alts(b.escalera)))), ...Object.values(molde.MOV).flatMap(m => m.esc || [])]);
+  ok(ESC.escaleras.every(e => usadas.has(e.id)), "escaleras que nadie usa: " + ESC.escaleras.filter(e => !usadas.has(e.id)).map(e => e.id));
 });
 prueba("rutina-alimenta-alcanzable", () => {
   /* cada estrella de «Entrena para» tiene que poder encenderse desde la rutina: su ejercicio está en alguna escalera que la
@@ -803,7 +803,7 @@ let ICX = null;
 const icx = () => ICX || (ICX = (() => {
   const fx = {K: {reduce: () => true, esc: s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c])),
     CATALOGO: CAT, HAZANAS, ESCALERAS: ESC, RUTINAS: RUTINAS.map(([, r]) => r)}, document: {}}; vm.createContext(fx);
-  for (const f of ["piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/gimnasio.js", "poses/bandas.js", "poses/vistas.js", "poses/pruebas.js", "piezas/iconos.js"])
+  for (const f of ["piezas/figura.js", "poses/barra.js", "poses/empuje.js", "poses/piernas.js", "poses/movilidad.js", "poses/estirar.js", "poses/cardio.js", "poses/gimnasio.js", "poses/bandas.js", "poses/brazos.js", "poses/vistas.js", "poses/pruebas.js", "piezas/iconos.js"])
     vm.runInContext(fs.readFileSync(path.join(RAIZ, "src", f), "utf8"), fx);
   return fx.K;
 })());
@@ -1605,8 +1605,8 @@ prueba("dia-orden", () => {
   /* en todos los tipos de día, con cualquier equipo y tiempo: principales, secundarios, accesorios y abdomen, en ese orden;
      de a dos, solo lo que no se pisa */
   const NIV = Object.fromEntries(Object.entries(molde.MOV).map(([k, v]) => [k, v.t]));
-  const nivEsc = {tirar: 1, empujar: 1, piernas: 1, isquios: 1, remo: 2, arriba: 2, fondos: 2, lsit: 4, dragon: 4};
-  const lado = {tirar: "tira", remo: "tira", empujar: "empuja", arriba: "empuja", fondos: "empuja", piernas: "piernas", isquios: "piernas", lsit: "abdomen", dragon: "abdomen"};
+  const nivEsc = {tirar: 1, empujar: 1, piernas: 1, isquios: 1, remo: 2, arriba: 2, fondos: 2, biceps: 3, triceps: 3, lsit: 4, dragon: 4};
+  const lado = {tirar: "tira", remo: "tira", biceps: "tira", empujar: "empuja", arriba: "empuja", fondos: "empuja", triceps: "empuja", piernas: "piernas", isquios: "piernas", lsit: "abdomen", dragon: "abdomen"};
   let n = 0;
   for (const tipo of Object.keys(molde.TIPOS)) for (const equipo of [[], ["barra"], ["barra", "paralelas", "pared"], TODO]) for (const minutos of [20, 30, 45, 60, 90]){
     const p = armarDia(["front-lever", "planche", "una-pierna"], {equipo, tipo, minutos});
@@ -1619,6 +1619,26 @@ prueba("dia-orden", () => {
     n++;
   }
   ok(n === 180 && NIV.tirar === 1 && NIV.biceps === 3, "casos: " + n);
+});
+/* vuelta 42: bíceps y tríceps, con tu cuerpo y con lo que tengas; y de un par que no entra, el primero solo */
+prueba("brazos", () => {
+  const ej = EJM(), esc = id => ESC.escaleras.find(e => e.id === id);
+  ok(esc("biceps")?.pasos.length === 4 && esc("triceps")?.pasos.length === 3, "las dos escaleras");
+  /* cada versión con peso pide su equipo; los escalones de tu cuerpo, a lo sumo la barra */
+  for (const id of ["biceps", "triceps"]) for (const p of esc(id).pasos){
+    ok((ej[p.ejercicio].equipo || []).every(e => e === "barra"), `${p.ejercicio}: con tu cuerpo pide ${ej[p.ejercicio].equipo}`);
+    for (const c of p.conPeso || []) ok((ej[c.ejercicio].equipo || []).length === 1, `${c.ejercicio}: sin su equipo`);
+  }
+  const bloque = (equipo, tipo, minutos, id) => armarDia(["front-lever", "planche"], {equipo, tipo, minutos}).bloques.find(b => (b.pasos || []).some(x => x.escalera === id));
+  const ejDe = (b, id) => b && b.pasos.find(x => x.escalera === id).ejercicio;
+  for (const [equipo, bi, tri] of [[[], "curl-puerta", "extension-triceps-mesada"], [["mancuernas"], "curl-mancuernas", "extension-mancuerna"], [["kettlebell"], "curl-kettlebell", "extension-kettlebell"],
+    [["bandas"], "curl-banda", "extension-banda"], [["maquinas"], "curl-polea", "extension-polea"], [["discos", "maquinas"], "curl-barra", "press-frances"]]){
+    ok(ejDe(bloque(equipo, "tirar", 60, "biceps"), "biceps") === bi, `${equipo} tirar: bíceps ${ejDe(bloque(equipo, "tirar", 60, "biceps"), "biceps")}`);
+    ok(ejDe(bloque(equipo, "empujar", 60, "triceps"), "triceps") === tri, `${equipo} empujar: tríceps ${ejDe(bloque(equipo, "empujar", 60, "triceps"), "triceps")}`);
+  }
+  /* con poco tiempo, lo primero que se cae son los brazos: en media hora de arriba va el tirar, no el tríceps */
+  const corto = armarDia(["front-lever", "planche"], {equipo: [], tipo: "arriba", minutos: 30}), escs = escsDia(corto.bloques);
+  ok(escs.includes("remo") && !escs.includes("triceps") && !escs.includes("biceps"), "arriba en 30 minutos: " + escs);
 });
 prueba("dia-sin-repetidos", () => {
   /* todas las combinaciones de tres metas de fuerza, con cuatro equipos: nada dos veces y todo posible con tu equipo */
@@ -1820,9 +1840,10 @@ prueba("nivel-desde", () => {
   ok(nivel.PREGUNTAS.every(q => q.opciones.map(o => o[1]).join() === "Inicial,Intermedio,Avanzado,Experto,No sé" && q.pregunta && q.niveles.every(n => n.texto && EJM()[n.ej])), "un movimiento sin sus cuatro niveles, su pregunta o su figura");
   /* la tabla conservadora (D1): cada nivel, el escalón de arranque de sus escaleras */
   const d = n => nivel.desde(n, TODO_EQ);
-  ok(JSON.stringify(d({tirar: "0"})) === '{"tirar":"dominada-negativa","remo":"remo-poste"}', "tirar inicial: " + JSON.stringify(d({tirar: "0"})));
+  ok(JSON.stringify(d({tirar: "0"})) === '{"tirar":"dominada-negativa","remo":"remo-poste","biceps":"curl-puerta"}', "tirar inicial: " + JSON.stringify(d({tirar: "0"})));
   ok(d({tirar: "1"}).tirar === "dominada" && d({tirar: "1"}).remo === "remo-invertido" && d({tirar: "2"}).tirar === "dominada-explosiva" && d({tirar: "3"}).tirar === "dominada-arquera" && d({tirar: "3"}).remo === "remo-un-brazo", "tirar");
-  ok(JSON.stringify(d({empujar: "0"})) === '{"empujar":"flexion-inclinada","fondos":"flexion-cerrada","arriba":"flexion-pike"}' && d({empujar: "1"}).fondos === "fondo-banco" && d({empujar: "2"}).empujar === "flexion-declinada" && d({empujar: "3"}).empujar === "flexion-arquera", "empujar");
+  ok(JSON.stringify(d({empujar: "0"})) === '{"empujar":"flexion-inclinada","fondos":"flexion-cerrada","arriba":"flexion-pike","triceps":"extension-triceps-mesada"}' && d({empujar: "1"}).fondos === "fondo-banco" && d({empujar: "2"}).empujar === "flexion-declinada" && d({empujar: "3"}).empujar === "flexion-arquera", "empujar");
+  ok(d({tirar: "1"}).biceps === "curl-puerta" && d({tirar: "2"}).biceps === "remo-supino" && d({tirar: "3"}).biceps === "dominada-supina" && d({empujar: "2"}).triceps === "extension-triceps-barra" && d({empujar: "3"}).triceps === "extension-triceps-piso", "bíceps y tríceps");
   ok(d({piernas: "1"}).piernas === "sentadilla-bulgara" && d({piernas: "3"}).piernas === "pistol" && d({cadera: "2"}).isquios === "curl-femoral-deslizante" && d({cadera: "3"}).isquios === "nordico-negativa", "piernas y atrás de las piernas");
   ok(d({abdomen: "0"}).lsit === "plancha" && d({abdomen: "2"}).lsit === "l-sit" && d({abdomen: "3"}).lsit === "v-sit", "abdomen");
   /* un movimiento no mueve las escaleras de otro: empujar ya no decide el abdomen */
